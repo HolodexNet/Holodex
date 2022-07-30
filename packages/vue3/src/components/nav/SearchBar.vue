@@ -6,78 +6,34 @@
     class="ma-auto search-bar"
     :class="{ 'search-bar-small': isMobile }"
     multiple
-    deletable-chips
     chips
     hide-no-data
     hide-selected
-    dense
     :rules="[validate]"
-    :autofocus="autofocus"
     :loading="isLoading"
     :items="results"
     :custom-filter="customFilter"
+    item-value="value"
     no-filter
-    :append-icon="''"
     :label="$t('component.search.searchLabel')"
     return-object
-    hide-details="auto"
-    @input="onInput"
     @keydown.enter="onEnterKeyDown"
   >
     <template #chip="{ item, props }">
-      <v-card
+      <v-chip
         v-bind="props"
         :color="'grey darken-3'"
-        :label="item.raw.type !== 'channel'"
         class="pa-0 selected-card"
       >
-        <v-list-item class="py-0 pl-3 pr-1 ma-n1">
-          <div
-            class="px-1 py-0 rounded selected-card-type ma-0 text--disabled caption"
-          >
-            <v-icon v-if="item.raw.type === 'channel'" x-small>
-              {{ icons.mdiYoutube }}
-            </v-icon>
-            <v-icon v-if="item.raw.type === 'video url'" x-small>
-              {{ icons.mdiYoutube }}
-            </v-icon>
-            <v-icon v-if="item.raw.type === 'topic'" x-small>
-              {{ icons.mdiAnimationPlay }}
-            </v-icon>
-            <v-icon v-if="item.raw.type === 'org'" x-small>
-              {{ mdiAccountMultiple }}
-            </v-icon>
-            <v-icon v-if="item.raw.type === 'title & desc'" x-small>
-              {{ mdiTextSearch }}
-            </v-icon>
-            <v-icon v-if="item.raw.type === 'comments'" x-small>
-              {{ mdiCommentSearch }}
-            </v-icon>
-            {{ i18nItem(item.raw.type) }}
-          </div>
-
-          <v-list-item-content class="py-1 pt-4">
-            <v-list-item-subtitle class="text--primary search-item">{{
-              item.raw.text
-            }}</v-list-item-subtitle>
-          </v-list-item-content>
-
-          <v-list-item-action>
-            <v-icon
-              small
-              color="primary accent-2"
-              @click="deleteChip(item.raw)"
-            >
-              {{ icons.mdiClose }}
-            </v-icon>
-          </v-list-item-action>
-        </v-list-item>
-      </v-card>
+        {{ item.raw }}
+      </v-chip>
     </template>
-    <template #item="{ props, item }">
-      <v-list-item v-bind="props" class="py-0 pl-3 pr-1 ma-n1">
-        <!-- @click="addItem(dropdownItem.item) -->
-        <v-list-item-content class="py-1 pt-1">
+    <template #item="{ item, props }">
+      <div v-bind="props" class="py-0 pl-3 pr-1">
+        <v-list-item-header>
+          {{ item.raw.text }}, {{ props }}
+        </v-list-item-header>
+        <div class="py-1 pt-1">
           <v-list-item-subtitle class="text--primary">
             {{ i18nItem(item.raw.type) }}
             <v-icon v-if="item.raw.type === 'channel'" small>
@@ -98,11 +54,9 @@
             <v-icon v-if="item.raw.type === 'comments'" small>
               {{ mdiCommentSearch }}
             </v-icon>
-
-            {{ item.raw.text }}
           </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+        </div>
+      </div>
     </template>
   </v-autocomplete>
 </template>
@@ -124,8 +78,6 @@ import { useDisplay } from "vuetify";
 
 type Query = {
   type: string;
-  disabled?: boolean;
-  divider?: boolean;
   value: string;
   text: string;
 };
@@ -167,9 +119,7 @@ export default defineComponent({
 
   computed: {
     results() {
-      return this.fromApi.concat(
-        this.query ? this.query : ([] as Array<Query>)
-      );
+      return this.fromApi;
     },
   },
   watch: {
@@ -194,25 +144,11 @@ export default defineComponent({
             let textQueries: Query[] = [];
             if (encodeURIComponent(val).length > 1) {
               textQueries = [
-                // {
-                //   type: "none",
-                //   disabled: true,
-                //   divider: true,
-                //   value: "div",
-                //   text: "div",
-                // },
                 {
                   type: "title & desc",
                   value: `${val}title & desc`,
                   text: val.trim(),
                 },
-                // {
-                //   type: "none",
-                //   disabled: true,
-                //   divider: true,
-                //   value: "div",
-                //   text: "div",
-                // },
                 { type: "comments", value: `${val}comments`, text: val.trim() },
               ];
             }
@@ -223,6 +159,7 @@ export default defineComponent({
               }),
               ...textQueries,
             ];
+            console.log(JSON.stringify(this.fromApi, undefined, 2));
           })
           .catch((e) => console.log(e));
       },
@@ -292,10 +229,6 @@ export default defineComponent({
     addItem(item) {
       // console.log(item);
       this.query.push({ ...item });
-    },
-    onInput() {
-      //   this.search = "";
-      //   this.fromApi = [];
     },
     validate(currentQuery: Query[]) {
       // current limitations:
