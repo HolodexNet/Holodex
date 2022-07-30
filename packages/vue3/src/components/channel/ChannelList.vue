@@ -25,6 +25,14 @@ export default defineComponent({
       type: Object as PropType<QueryType> | undefined,
       default: undefined,
     },
+    variant: {
+      type: String as PropType<"card" | "list">,
+      default: "list",
+    },
+    grouping: {
+      type: String as PropType<"org" | "group" | string>,
+      default: "none",
+    },
   },
   setup(props) {
     const respChannels = useChannels(

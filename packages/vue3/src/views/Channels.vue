@@ -9,71 +9,81 @@
     </v-tabs> -->
 
     <div
-      class="sticky z-10 px-4 mb-4 overflow-x-auto overflow-y-hidden tabs top-14 bg-base-300 flex-nowrap no-scrollbar"
+      class="sticky z-10 flex flex-wrap px-4 mb-4 overflow-x-auto overflow-y-hidden top-12 justify-items-stretch no-scrollbar bg-base-300"
     >
-      <a
-        class="tab tab-lg tab-bordered"
-        :class="category === 0 ? 'tab-active border-primary' : ''"
-        @click="category = 0"
+      <div
+        class="flex-grow mt-2 overflow-x-auto overflow-y-hidden tabs no-scrollbar"
       >
-        {{ $t("views.channels.tabs.Vtuber") }}
-      </a>
-      <a
-        class="tab tab-lg tab-bordered"
-        :class="category === 1 ? 'tab-active' : ''"
-        @click="category = 1"
-      >
-        {{ $t("views.channels.tabs.Subber") }}
-      </a>
-      <a
-        class="tab tab-lg tab-bordered"
-        :class="category === 2 ? 'tab-active' : ''"
-        @click="category = 2"
-      >
-        {{ $t("views.channels.tabs.Favorites") }}
-      </a>
-      <a
-        class="tab tab-lg tab-bordered"
-        :class="category === 3 ? 'tab-active' : ''"
-        @click="category = 3"
-      >
-        {{ $t("views.channels.tabs.Blocked") }}
-      </a>
+        <a
+          class="tab tab-lg tab-bordered"
+          :class="category === 0 ? 'tab-active border-primary' : ''"
+          @click="category = 0"
+        >
+          {{ $t("views.channels.tabs.Vtuber") }}
+        </a>
+        <a
+          class="tab tab-lg tab-bordered"
+          :class="category === 1 ? 'tab-active' : ''"
+          @click="category = 1"
+        >
+          {{ $t("views.channels.tabs.Subber") }}
+        </a>
+        <a
+          class="tab tab-lg tab-bordered"
+          :class="category === 2 ? 'tab-active' : ''"
+          @click="category = 2"
+        >
+          {{ $t("views.channels.tabs.Favorites") }}
+        </a>
+        <a
+          class="tab tab-lg tab-bordered"
+          :class="category === 3 ? 'tab-active' : ''"
+          @click="category = 3"
+        >
+          {{ $t("views.channels.tabs.Blocked") }}
+        </a>
+      </div>
+      <div class="flex gap-2 mt-2 justify-self-end">
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-outline">
+            {{ currentSortValue.text }}
+            <v-icon size="20">{{ mdiArrowDown }}</v-icon>
+          </label>
+          <ul
+            tabindex="0"
+            class="p-2 shadow dropdown-content menu bg-base-100 rounded-box w-52"
+          >
+            <li
+              v-for="(item, index) in sortOptions"
+              :key="index"
+              link
+              @click="sort = item.value"
+            >
+              <a>{{ item.text }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Toggle of Card or Row view -->
+        <div class="btn btn-outline" @click="cardView = !cardView">
+          <v-icon>
+            {{ cardView ? mdiViewModule : mdiViewList }}
+          </v-icon>
+        </div>
+      </div>
     </div>
 
     <!-- Dropdown to pick sort-by into 'sort' data attr -->
-    <div class="flex items-stretch gap-2">
-      <div class="dropdown dropdown-end">
-        <label tabindex="0" class="btn btn-outline">
-          {{ currentSortValue.text }}
-          <v-icon size="20">{{ mdiArrowDown }}</v-icon>
-        </label>
-        <ul
-          tabindex="0"
-          class="p-2 shadow dropdown-content menu bg-base-100 rounded-box w-52"
-        >
-          <li
-            v-for="(item, index) in sortOptions"
-            :key="index"
-            link
-            @click="sort = item.value"
-          >
-            <a>{{ item.text }}</a>
-          </li>
-        </ul>
-      </div>
 
-      <!-- Toggle of Card or Row view -->
-      <div class="btn btn-outline" @click="cardView = !cardView">
-        <v-icon>
-          {{ cardView ? mdiViewModule : mdiViewList }}
-        </v-icon>
-      </div>
-    </div>
     <!-- </portal> -->
 
     <v-container fluid class="pa-0">
-      <channel-list :channels="channelList" :query="query"></channel-list>
+      <channel-list
+        :channels="channelList"
+        :query="query"
+        :variant="cardView ? 'card' : 'list'"
+        :grouping="currentSortValue.value"
+      ></channel-list>
       <!-- Static channel list with no loading for locally stored blocked/favorites list -->
       <!-- <ChannelList
         :channels="channelList"
