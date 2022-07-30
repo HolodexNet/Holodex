@@ -30,9 +30,9 @@
           :icon="icons.mdiMenu"
           @click.stop="navDrawer = !navDrawer"
         ></v-app-bar-nav-icon>
-        <div class="flex flex-row gap-2 items-center ml-md-2">
+        <div class="flex flex-row items-center gap-2 ml-md-2">
           <router-link :to="{ name: settings.defaultOpen || 'Home' }">
-            <logo v-if="!isMobile" width="24" height="24" />
+            <logo v-if="!isMobile" width="32" height="32" :loading="loading" />
           </router-link>
           <OrgSelector
             @changed="(org: Org, close?: Function) => {site.currentOrg = org; close && close();}"
@@ -154,6 +154,7 @@ import { useSiteStore } from "@/stores/site";
 import { useDisplay } from "vuetify";
 import * as icons from "@/utils/icons";
 import { useSettingsStore } from "@/stores/settings";
+import { useIsFetching } from "vue-query";
 
 export default defineComponent({
   components: {},
@@ -161,10 +162,11 @@ export default defineComponent({
     const site = useSiteStore();
     const settings = useSettingsStore();
     const display = useDisplay();
+    const loading = useIsFetching();
 
     const isMobile = display.mobile;
 
-    return { site, display, isMobile, settings };
+    return { site, display, isMobile, settings, loading };
   },
   data() {
     return {
