@@ -1,73 +1,78 @@
 <template>
   <v-container style="min-height: 70vh">
     <!-- <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive"> -->
-    <v-tabs v-model="category" class="channels-tabs secondary darken-1">
+    <!-- <v-tabs v-model="category" class="channels-tabs secondary darken-1">
       <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
       <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
       <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
       <v-tab>{{ $t("views.channels.tabs.Blocked") }}</v-tab>
-    </v-tabs>
+    </v-tabs> -->
+
+    <div
+      class="sticky z-10 px-4 mb-4 overflow-x-auto overflow-y-hidden tabs top-14 bg-base-300 flex-nowrap no-scrollbar"
+    >
+      <a
+        class="tab tab-lg tab-bordered"
+        :class="category === 0 ? 'tab-active border-primary' : ''"
+        @click="category = 0"
+      >
+        {{ $t("views.channels.tabs.Vtuber") }}
+      </a>
+      <a
+        class="tab tab-lg tab-bordered"
+        :class="category === 1 ? 'tab-active' : ''"
+        @click="category = 1"
+      >
+        {{ $t("views.channels.tabs.Subber") }}
+      </a>
+      <a
+        class="tab tab-lg tab-bordered"
+        :class="category === 2 ? 'tab-active' : ''"
+        @click="category = 2"
+      >
+        {{ $t("views.channels.tabs.Favorites") }}
+      </a>
+      <a
+        class="tab tab-lg tab-bordered"
+        :class="category === 3 ? 'tab-active' : ''"
+        @click="category = 3"
+      >
+        {{ $t("views.channels.tabs.Blocked") }}
+      </a>
+    </div>
+
+    <!-- Dropdown to pick sort-by into 'sort' data attr -->
+    <div class="flex items-stretch gap-2">
+      <div class="dropdown dropdown-end">
+        <label tabindex="0" class="btn btn-outline">
+          {{ currentSortValue.text }}
+          <v-icon size="20">{{ mdiArrowDown }}</v-icon>
+        </label>
+        <ul
+          tabindex="0"
+          class="p-2 shadow dropdown-content menu bg-base-100 rounded-box w-52"
+        >
+          <li
+            v-for="(item, index) in sortOptions"
+            :key="index"
+            link
+            @click="sort = item.value"
+          >
+            <a>{{ item.text }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Toggle of Card or Row view -->
+      <div class="btn btn-outline" @click="cardView = !cardView">
+        <v-icon>
+          {{ cardView ? mdiViewModule : mdiViewList }}
+        </v-icon>
+      </div>
+    </div>
     <!-- </portal> -->
 
     <v-container fluid class="pa-0">
-      <v-list
-        v-if="category !== Tabs.BLOCKED"
-        class="d-flex justify-space-between"
-        style="background: none"
-      >
-        <!-- Dropdown to pick sort-by into 'sort' data attr -->
-        <div class="dropdown dropdown-end">
-          <label tabindex="0" class="m-1 btn">
-            {{ currentSortValue.text }}
-            <v-icon size="20">{{ mdiArrowDown }}</v-icon>
-          </label>
-          <ul
-            tabindex="0"
-            class="p-2 shadow dropdown-content menu bg-base-100 rounded-box w-52"
-          >
-            <li><a>Item 1</a></li>
-            <li><a>Item 2</a></li>
-          </ul>
-        </div>
-        <v-menu offset-y>
-          <template #activator="{ props }">
-            <v-btn
-              v-bind="props"
-              text
-              style="border: none; text-transform: initial; font-weight: 400"
-              class="text--secondary pa-1"
-            >
-              {{ currentSortValue.text }}
-              <span
-                :class="{
-                  'rotate-asc': currentSortValue.query_value.order === 'asc',
-                }"
-              >
-                <v-icon size="20">{{ mdiArrowDown }}</v-icon>
-              </span>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              v-for="(item, index) in sortOptions"
-              :key="index"
-              link
-              @click="sort = item.value"
-            >
-              <v-list-item-title>
-                {{ item.text }}
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-
-        <!-- Toggle of Card or Row view -->
-        <v-btn icon @click="cardView = !cardView">
-          <v-icon>
-            {{ cardView ? mdiViewModule : mdiViewList }}
-          </v-icon>
-        </v-btn>
-      </v-list>
       <channel-list :channels="channelList" :query="query"></channel-list>
       <!-- Static channel list with no loading for locally stored blocked/favorites list -->
       <!-- <ChannelList
