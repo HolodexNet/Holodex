@@ -24,6 +24,7 @@
               </div>
             </template>
             <div v-if="b.best" class="highlight-comments">
+              <time :datetime="b.absolute">{{ b.display }}</time>
               {{ b.best }}
             </div>
             <song-item
@@ -115,6 +116,7 @@ export default {
             const TIME_THRESHOLD = 40;
             const MIN_BUCKET_SIZE = 1;
             const MIN_TIMESTAMP_OCCURENCE = 1;
+            const VIDEO_START_TIMESTAMP = +new Date(this.video.start_actual);
 
             const parsed: ParsedComment[] = [];
             for (const comment of this.comments) {
@@ -176,12 +178,16 @@ export default {
                             if (stricter.length > 0) [best] = stricter;
 
                             if (best.length > 60) best = `${best.slice(0, 60)}...`;
+
+                            const medianMS = median * 1000;
+                            const absolute = new Date(VIDEO_START_TIMESTAMP + medianMS).toISOString();
                             // console.log(best, processed);
                             buckets.push({
                                 time: median,
                                 count: subBucket.length,
                                 best,
-                                display: formatDuration(median * 1000),
+                                display: formatDuration(medianMS),
+                                absolute,
                             });
                         }
                     }
@@ -300,6 +306,14 @@ export default {
 
 .highlight-comments {
   margin-top: 2px;
+}
+
+.highlight-comments > time {
+  display: block;
+  font-family: monospace;
+  font-size: 0.7em;
+  line-height: 1em;
+  opacity: 0.5;
 }
 
 .highlight-chip {
