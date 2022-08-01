@@ -76,7 +76,7 @@
         <!-- Channel list -->
         <template v-for="(channel, index2) in group.items">
           <v-divider :key="'divider-' + index2" />
-          <v-lazy :key="channel.id" min-height="100">
+          <v-lazy :key="channel.id" min-height="100" :style="[channel.inactive ? {'opacity' : 0.5} : {'opacity' : 1}]">
             <v-list-item
               v-if="channel"
               :to="`/channel/${channel.id}`"
@@ -100,7 +100,7 @@
   <v-list v-else class="pa-0">
     <template v-for="(channel, index) in channels">
       <v-divider :key="'divider-' + index" />
-      <v-lazy :key="channel.id" min-height="88">
+      <v-lazy :key="channel.id" min-height="88" :style="[channel.inactive ? {'opacity' : 0.5} : {'opacity' : 1}]">
         <v-list-item
           v-if="channel"
           :to="`/channel/${channel.id}`"
