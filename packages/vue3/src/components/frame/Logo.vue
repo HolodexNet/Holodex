@@ -53,32 +53,35 @@ export default {
 </script>
 
 <style>
-.l_loading path {
-  stroke-width: 1.2px;
-  stroke-linejoin: round;
-}
 .l_loading #tri1 {
-  stroke: rgb(255, 187, 217);
-  stroke-dasharray: 12.5;
-  animation: anm-tr-4-move 2.5s cubic-bezier(0.44, 0.01, 0.65, 1) infinite;
-}
+  animation: bounce 0.5s ease-in-out infinite alternate,
+    stroke-move 8s linear infinite;
 
-@keyframes anm-tr-4-move {
-  to {
-    stroke-dashoffset: 250;
-  }
+  stroke: rgb(226, 235, 255);
+  stroke-dasharray: 12;
 }
 
 .l_loading #tri2 {
-  stroke-width: 1px;
+  animation: bounce 0.5s ease-in-out infinite alternate,
+    stroke-move 8s linear infinite;
+  animation-delay: 250ms;
+
   stroke: rgb(226, 235, 255);
-  stroke-dasharray: 7 16;
-  animation: anm-tr-3-move 2.5s linear infinite;
+  stroke-dasharray: 16;
 }
 
-@keyframes anm-tr-3-move {
+@keyframes bounce {
+  from {
+    transform: translateY(0%);
+  }
+
   to {
-    stroke-dashoffset: 230;
+    transform: translateY(10%);
+  }
+}
+@keyframes stroke-move {
+  to {
+    stroke-dashoffset: 190;
   }
 }
 </style>
