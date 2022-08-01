@@ -1,7 +1,7 @@
 ---
 hello: world
 music:
-  title: '{{english_name}} Original- und Cover-Songs - Holodex'
+  title: '{{english_name}} Original- und Cover-Lieder - Holodex'
   description: >-
     Hör dir offizielle Musik und Karaoke-Streams an, die von unserer Community im Holodex Musik-Player getaggt wurden.
 channel:
