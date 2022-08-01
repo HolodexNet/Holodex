@@ -9,10 +9,10 @@
     </v-tabs> -->
 
     <div
-      class="sticky z-10 flex flex-wrap px-4 mb-4 overflow-x-auto overflow-y-hidden top-12 justify-items-stretch no-scrollbar bg-base-300"
+      class="sticky z-10 flex flex-wrap px-4 mb-4 overflow-x-auto overflow-y-hidden top-12 justify-between no-scrollbar bg-base-300"
     >
       <div
-        class="flex-grow mt-2 overflow-x-auto overflow-y-hidden tabs no-scrollbar"
+        class="flex mt-2 overflow-x-auto overflow-y-hidden tabs no-scrollbar"
       >
         <a
           class="tab tab-lg tab-bordered"
@@ -43,7 +43,7 @@
           {{ $t("views.channels.tabs.Blocked") }}
         </a>
       </div>
-      <div class="flex gap-2 mt-2 justify-self-end">
+      <div class="flex gap-2 mt-2">
         <div class="dropdown dropdown-end">
           <label tabindex="0" class="btn btn-outline">
             {{ currentSortValue.text }}

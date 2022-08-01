@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     App: typeof import('./src/App.vue')['default']
     ArchivedTranslations: typeof import('./src/components/tldex/client/ArchivedTranslations.vue')['default']
     Button: typeof import('./src/stories/Button.vue')['default']
+    ChannelCard: typeof import('./src/components/channel/common/ChannelCard.vue')['default']
     ChannelImg: typeof import('./src/components/channel/common/ChannelImg.vue')['default']
     ChannelList: typeof import('./src/components/channel/ChannelList.vue')['default']
     Channels: typeof import('./src/views/Channels.vue')['default']

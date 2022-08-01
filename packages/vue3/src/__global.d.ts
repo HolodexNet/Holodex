@@ -189,7 +189,8 @@ declare global {
     english_name?: string;
     type: CHANNEL_TYPES;
     org?: string;
-    suborg?: string;
+    suborg?: string; // suborg usually doesn't exist
+    group?: string; // usually group exists.
     lang?: string;
     twitter?: string;
     photo?: string;

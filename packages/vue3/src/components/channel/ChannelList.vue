@@ -1,7 +1,10 @@
 <template>
-  <div>{{ list }}</div>
+  <div class="grid gap-4 channel-grid">
+    <template v-for="channel in list" :key="channel.id"
+      ><channel-card :channel="channel" :variant="variant"></channel-card
+    ></template>
+  </div>
 </template>
-
 <script lang="ts">
 import { useChannel } from "@/hooks/common/useChannelService";
 import { useChannels } from "@/services/useChannels";
@@ -51,3 +54,8 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.channel-grid {
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+}
+</style>
