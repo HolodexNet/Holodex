@@ -9,7 +9,6 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     About: typeof import('./src/views/About.vue')['default']
     App: typeof import('./src/App.vue')['default']
-    AppFrame: typeof import('./src/components/AppFrame.vue')['default']
     ArchivedTranslations: typeof import('./src/components/tldex/client/ArchivedTranslations.vue')['default']
     Button: typeof import('./src/stories/Button.vue')['default']
     ChannelImg: typeof import('./src/components/channel/common/ChannelImg.vue')['default']
@@ -17,8 +16,6 @@ declare module '@vue/runtime-core' {
     Channels: typeof import('./src/views/Channels.vue')['default']
     ChatMessage: typeof import('./src/components/tldex/client/ChatMessage.vue')['default']
     GoogleSignInButton: typeof import('./src/components/login/GoogleSignInButton.vue')['default']
-    Hello: typeof import('./src/components/Hello.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     HList: typeof import('./src/components/core/HList.vue')['default']
     HolodexStats: typeof import('./src/components/about/HolodexStats.vue')['default']
     Home: typeof import('./src/views/Home.vue')['default']
