@@ -17,7 +17,9 @@
   >
     <a
       class="gap-2 tab tab-lg tab-bordered whitespace-nowrap flex-nowrap"
-      :class="currentTab === 0 ? 'tab-active border-primary' : ''"
+      :class="
+        currentTab === 0 ? 'tab-active text-secondary !border-secondary' : ''
+      "
       @click="() => updateTab(0)"
     >
       {{ liveUpcomingHeaderSplit[1] }}
@@ -31,14 +33,18 @@
     </a>
     <a
       class="tab tab-lg tab-bordered"
-      :class="currentTab === 1 ? 'tab-active' : ''"
+      :class="
+        currentTab === 1 ? 'tab-active text-secondary !border-secondary' : ''
+      "
       @click="() => updateTab(1)"
     >
       {{ $t("views.home.recentVideoToggles.official") }}
     </a>
     <a
       class="tab tab-lg tab-bordered"
-      :class="currentTab === 2 ? 'tab-active' : ''"
+      :class="
+        currentTab === 2 ? 'tab-active text-secondary !border-secondary' : ''
+      "
       @click="() => updateTab(2)"
     >
       {{ $t("views.home.recentVideoToggles.subber") }}
