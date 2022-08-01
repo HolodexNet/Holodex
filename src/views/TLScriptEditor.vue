@@ -1164,6 +1164,9 @@ export default {
     },
     created() {
         window.addEventListener("resize", this.onResize);
+        if (!this.$refs.tableContainer?.$el) {
+            return;
+        }
         const checker = setInterval(() => {
             this.tableHeight = this.$refs.tableContainer.$el.clientHeight - 20;
             if (this.tableHeight !== 0) {
@@ -1190,6 +1193,9 @@ export default {
         },
         onResize() {
             this.tableHeight = 0;
+            if (!this.$refs.tableContainer?.$el) {
+                return;
+            }
             const checker = setInterval(() => {
                 this.tableHeight = this.$refs.tableContainer.$el.clientHeight - 20;
                 if (this.tableHeight !== 0) {

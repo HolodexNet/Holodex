@@ -22,28 +22,6 @@
       </router-link>
     </v-card-title>
     <v-card-subtitle>
-      <slot name="rightTitleAction">
-        <v-btn
-          id="video-edit-btn"
-          text
-          x-small
-          color="primary"
-          class="float-right"
-          :to="
-            $route.path.includes('edit')
-              ? `/watch/${video.id}`
-              : `/edit/video/${video.id}${
-                video.type !== 'stream' ? '/mentions' : '/'
-              }`
-          "
-        >
-          {{
-            $route.path.includes("edit")
-              ? $t("editor.exitMode")
-              : $t("editor.enterMode")
-          }}
-        </v-btn>
-      </slot>
       {{ formattedTime }}
       <template v-if="video.status === 'live' && liveViewers">
         • {{ $t("component.videoCard.watching", [liveViewers]) }}
@@ -67,6 +45,28 @@
           {{ video.topic_id }}
         </router-link>
       </span>
+      <slot name="rightTitleAction">
+        <v-btn
+          id="video-edit-btn"
+          text
+          x-small
+          color="primary"
+          class="float-right"
+          :to="
+            $route.path.includes('edit')
+              ? `/watch/${video.id}`
+              : `/edit/video/${video.id}${
+                video.type !== 'stream' ? '/mentions' : '/'
+              }`
+          "
+        >
+          {{
+            $route.path.includes("edit")
+              ? $t("editor.exitMode")
+              : $t("editor.enterMode")
+          }}
+        </v-btn>
+      </slot>
       <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
     </v-card-subtitle>
     <v-divider />
