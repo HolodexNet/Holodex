@@ -191,9 +191,12 @@
       <!-- Vertical dots menu -->
       <v-menu
         v-model="showMenu"
+        attach
         bottom
+        left
         :close-on-content-click="false"
         nudge-top="20px"
+        nudge-left="40px"
       >
         <template #activator="{ on, attrs }">
           <v-btn
