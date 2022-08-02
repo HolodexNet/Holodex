@@ -41,13 +41,10 @@
 import { useSettingsStore } from "@/stores/settings";
 import { PropType } from "vue";
 import { useDisplay } from "vuetify/lib/framework.mjs";
-import VideoThumbnail from "./VideoThumbnail.vue";
 
 export default defineComponent({
   name: "VideoCard",
-  components: {
-    VideoThumbnail,
-  },
+  components: {},
   props: {
     video: {
       type: Object as PropType<Video>,

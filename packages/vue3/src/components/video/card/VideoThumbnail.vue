@@ -8,9 +8,10 @@
   >
     <v-img
       :aspect-ratio="16 / 9"
-      :src="imageSrc"
+      :src="(srcs as any)?.[size] || srcs"
+      :srcset="srcset"
       cover
-      class="rounded-md drop-shadow-md"
+      class="rounded-md drop-shadow-md bg-slate-800"
     ></v-img>
     <div
       class="absolute flex flex-col justify-between w-full h-full"
@@ -94,7 +95,7 @@ import { PLACEHOLDER_TYPES, VIDEO_TYPES } from "@/utils/consts";
 /* eslint-disable no-unused-vars */
 
 export default defineComponent({
-  name: "VideoCard",
+  name: "VideoThumbnail",
   components: {},
   props: {
     video: {
@@ -134,7 +135,7 @@ export default defineComponent({
     lang() {
       return this.langStore.lang;
     },
-    imageSrc() {
+    srcs() {
       // load different images based on current column size, which correspond to breakpoints
       if (this.isPlaceholder) {
         if (this.video.thumbnail) {
@@ -145,7 +146,23 @@ export default defineComponent({
         return `/statics/channelImg/${this.video.channel.id}.png`;
       }
       const srcs = getVideoThumbnails(this.video.id, false);
-      return srcs[this.size];
+      return srcs;
+    },
+    srcset(): string {
+      const srcs = this.srcs as any;
+      if (typeof srcs === "string") {
+        return "";
+      } else
+        return (srcs.standard +
+          " 2380w, " +
+          srcs.medium +
+          " 400w, " +
+          srcs.maxres +
+          " 1280w, " +
+          srcs.hq720 +
+          " 1280w, " +
+          srcs.default +
+          " 120w, ") as string;
     },
     placeholderTag() {
       if (this.video.placeholderType === PLACEHOLDER_TYPES.EVENT) {

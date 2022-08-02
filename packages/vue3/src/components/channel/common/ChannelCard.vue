@@ -3,11 +3,7 @@
     class="justify-start items-center flex-row flex shadow-md bg-base-200 hover:bg-base-100 w-80 h-50 overflow-hidden rounded-md"
     :class="channel.inactive ? 'opacity-40' : ''"
   >
-    <channel-img
-      :channel="channel"
-      :size="100"
-      class="m-2 mx-4 mask mask-squircle"
-    />
+    <channel-img :channel="channel" :size="100" class="m-2 mx-4" />
     <div>
       <span class="line-clamp-1">
         {{ preferredName }}
