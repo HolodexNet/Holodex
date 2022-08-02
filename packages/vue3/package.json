@@ -36,6 +36,8 @@
     "vuetify": "npm:@vuetify/nightly@3.0.0-next-20220727.0"
   },
   "devDependencies": {
+    "@iconify-json/carbon": "^1.1.7",
+    "@iconify/json": "^2.1.86",
     "@babel/core": "^7.18.9",
     "@iconify-json/logos": "^1.1.13",
     "@iconify-json/mdi": "^1.1.29",

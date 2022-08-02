@@ -144,6 +144,12 @@ export function decodeHTMLEntities(str) {
   return str.split("&amp;").join("&").split("&quot;").join('"');
 }
 
+export function formatTopic(t: string): string {
+  return t.replace(/\_/g, " ").replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1);
+  });
+}
+
 export function forwardTransformSearchToAPIQuery(obj, initialObject) {
   return obj.reduceRight((req, item) => {
     switch (item.type) {

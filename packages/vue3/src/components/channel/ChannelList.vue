@@ -1,5 +1,5 @@
 <template>
-  <div class="grid gap-4 channel-grid">
+  <div class="grid gap-4 channel-grid justify-items-stretch">
     <template v-for="channel in list" :key="channel.id"
       ><channel-card :channel="channel" :variant="variant"></channel-card
     ></template>
@@ -56,6 +56,6 @@ export default defineComponent({
 </script>
 <style>
 .channel-grid {
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
 }
 </style>
