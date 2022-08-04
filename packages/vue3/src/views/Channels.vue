@@ -9,7 +9,7 @@
     </v-tabs> -->
 
     <div
-      class="sticky z-10 flex flex-wrap px-4 mb-4 overflow-x-auto overflow-y-hidden top-12 justify-between no-scrollbar bg-base-300"
+      class="sticky z-10 flex flex-wrap justify-between px-4 mb-4 top-12 no-scrollbar bg-base-300"
     >
       <div
         class="flex mt-2 overflow-x-auto overflow-y-hidden tabs no-scrollbar"
@@ -44,14 +44,14 @@
         </a>
       </div>
       <div class="flex gap-2 mt-2">
-        <div class="dropdown dropdown-end">
+        <div class="z-40 dropdown dropdown-end">
           <label tabindex="0" class="btn btn-outline">
             {{ currentSortValue.text }}
             <v-icon size="20">{{ mdiArrowDown }}</v-icon>
           </label>
           <ul
             tabindex="0"
-            class="p-2 shadow dropdown-content menu bg-base-100 rounded-box w-52"
+            class="z-50 p-2 shadow dropdown-content menu bg-base-100 rounded-box w-52"
           >
             <li
               v-for="(item, index) in sortOptions"
@@ -65,11 +65,11 @@
         </div>
 
         <!-- Toggle of Card or Row view -->
-        <div class="btn btn-outline" @click="cardView = !cardView">
+        <!-- <div class="btn btn-outline" @click="cardView = !cardView">
           <v-icon>
             {{ cardView ? mdiViewModule : mdiViewList }}
           </v-icon>
-        </div>
+        </div> -->
       </div>
     </div>
 

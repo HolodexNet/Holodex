@@ -1,15 +1,34 @@
 <template>
   <div class="grid gap-4 channel-grid justify-items-stretch">
-    <template v-for="channel in list" :key="channel.id"
-      ><channel-card :channel="channel" :variant="variant"></channel-card
-    ></template>
+    <template v-for="(arr, group) in list" :key="group + '.group'">
+      <div
+        v-if="
+          (groupKey === 'org' || groupKey === 'group') &&
+          Object.keys(list).length > 1
+        "
+        class="p-2 font-semibold rounded-md shadow-md col-span-full bg-base-100"
+      >
+        {{ arr[0] || "Unnamed Group" }}
+      </div>
+      <template v-for="(channel, idx) in (arr[1] as any)" :key="channel.id">
+        <channel-card
+          v-if="idx < 40 && group as number < 2"
+          :channel="channel"
+          :variant="variant"
+        >
+        </channel-card>
+        <v-lazy v-else
+          ><channel-card :channel="channel" :variant="variant"> </channel-card
+        ></v-lazy>
+      </template>
+    </template>
   </div>
 </template>
 <script lang="ts">
-import { useChannel } from "@/hooks/common/useChannelService";
 import { useChannels } from "@/services/useChannels";
 import { PropType } from "vue";
 import flatten from "lodash/flatten";
+import groupBy from "lodash/groupBy";
 
 interface QueryType {
   type: string;
@@ -43,14 +62,22 @@ export default defineComponent({
       computed(() => !props.channels)
     );
 
-    const list = computed(() => {
-      if (props.channels) return props.channels;
-      if (respChannels.data.value)
-        return flatten(respChannels.data.value.pages);
-      return [];
+    const groupKey = computed(() => {
+      return props.grouping === "org" || props.grouping === "group"
+        ? props.grouping
+        : "none";
     });
 
-    return { list };
+    const list = computed(() => {
+      if (props.channels) return groupBy(props.channels, groupKey.value);
+      if (respChannels.data.value)
+        return Object.entries(
+          groupBy(flatten(respChannels.data.value.pages), groupKey.value)
+        );
+      return [["", []]];
+    });
+
+    return { list, groupKey };
   },
 });
 </script>
