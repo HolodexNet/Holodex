@@ -160,7 +160,7 @@ export default defineComponent({
         BLOCKED: 3,
       },
       category: 0,
-      defaultSort: "group",
+      defaultSort: "subscribers",
       cardView: false,
     };
   },
@@ -244,6 +244,7 @@ export default defineComponent({
       return undefined;
     },
     currentSortValue() {
+      const x = this.category;
       return (
         this.findSortValue(this.sort) ||
         (this.findSortValue(this.defaultSort) as {
