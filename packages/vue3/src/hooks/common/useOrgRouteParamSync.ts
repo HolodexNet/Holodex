@@ -27,6 +27,10 @@ export default function useOrgRouteParamSync(): Ref<Org> {
   return computed(() => {
     if (route.params.org && route.params.org !== site.currentOrg.name) {
       if (orgs.data.value && orgs.isSuccess) {
+        // Special handle case for fake org
+        if(route.params.org === "All Vtubers") {
+          return { short: "Vtuber", name: "All Vtubers" }; 
+        }
         const found = orgs.data.value?.find((o) => o.name === route.params.org);
         if (!found) {
           console.error("Org not found - may have moved:", route.params.org);
