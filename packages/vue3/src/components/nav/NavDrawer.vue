@@ -47,8 +47,8 @@
                 max-height="80vh"
                 :close-on-content-click="false"
               >
-                <template #activator="{ on, attrs }">
-                  <v-icon v-bind="attrs" v-on="on" @click.stop.prevent>
+                <template #activator="{ props }">
+                  <v-icon v-bind="props" @click.stop.prevent>
                     {{ mdiTuneVariant }}
                   </v-icon>
                 </template>
