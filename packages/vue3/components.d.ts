@@ -39,6 +39,7 @@ declare module '@vue/runtime-core' {
     TLScriptEditor: typeof import('./src/components/tldex/editor/TLScriptEditor.vue')['default']
     TranslationClient: typeof import('./src/views/TranslationClient.vue')['default']
     TranslationScripter: typeof import('./src/views/TranslationScripter.vue')['default']
+    TwitchPlayer: typeof import('./src/components/player/TwitchPlayer.vue')['default']
     TwitterFeed: typeof import('./src/components/about/TwitterFeed.vue')['default']
     UserCard: typeof import('./src/components/login/UserCard.vue')['default']
     VideoCard: typeof import('./src/components/video/card/VideoCard.vue')['default']
@@ -49,5 +50,6 @@ declare module '@vue/runtime-core' {
     VideoCardText: typeof import('./src/components/video/card/VideoCardText.vue')['default']
     VideoThumbnail: typeof import('./src/components/video/card/VideoThumbnail.vue')['default']
     Watch: typeof import('./src/views/Watch.vue')['default']
+    YoutubePlayer: typeof import('./src/components/player/YoutubePlayer.vue')['default']
   }
 }
