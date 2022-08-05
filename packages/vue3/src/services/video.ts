@@ -3,7 +3,7 @@ import { useSettingsStore } from "@/stores/settings";
 import { useSiteStore } from "@/stores/site";
 import backendApi, { axiosInstance } from "@/utils/backend-api";
 import { MaybeRef } from "@vueuse/core";
-import dayjs from "dayjs";
+import dayjs, { isDayjs } from "dayjs";
 import { Ref } from "vue";
 import { useQuery, UseQueryOptions, useInfiniteQuery } from "vue-query";
 
@@ -296,6 +296,19 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
         out.total = data.total;
       } else if (typeof data === "object") {
         out.items = data;
+      }
+      if (!isDayjs(out.items?.[0]?.available_at)) {
+        out.items = out.items.map((x) => ({
+          ...x,
+          available_at: dayjs(x.available_at),
+        })) as any;
+      }
+      if (q.value.flavor?.favorites) {
+        out.items = out.items.sort(
+          (a, b) =>
+            dayjs(a.available_at).valueOf() - dayjs(b.available_at).valueOf()
+        );
+        console.log(out.items);
       }
       return out;
     },

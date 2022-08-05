@@ -13,7 +13,7 @@
           : 'primary--text text--darken-2'
       " -->
   <div
-    class="sticky z-10 px-4 mb-4 tabs top-14 bg-base-300 overflow-x-auto overflow-y-hidden flex-nowrap no-scrollbar"
+    class="sticky z-10 px-4 mb-4 overflow-x-auto overflow-y-hidden tabs top-14 bg-base-300 flex-nowrap no-scrollbar"
   >
     <a
       class="gap-2 tab tab-lg tab-bordered whitespace-nowrap flex-nowrap"
@@ -123,7 +123,8 @@ const lookupState: Ref<
   // type & status for tab selection.
   // Usually selection has a tab between live and archives. Use this to control that aspect.
   type: "stream_schedule" as const,
-  // optional if using a TabType, if custom type, then must provide custom statuses.
+  // optional if using a enum Type ^,
+  // if custom type, then must provide custom statuses.
   statuses: undefined,
 
   // and regular pagination

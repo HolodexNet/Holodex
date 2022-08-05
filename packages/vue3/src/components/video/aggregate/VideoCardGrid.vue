@@ -30,6 +30,7 @@ const gridStyle = computed(() => {
 .video-card-live + .video-card:not(.video-card-live) {
   grid-column-start: 1;
   &::after {
+    grid-column: 1/-1;
     content: "";
     display: inline-block;
     cursor: pointer;

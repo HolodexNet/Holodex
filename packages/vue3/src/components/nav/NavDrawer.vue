@@ -79,6 +79,8 @@
       </v-btn>
     </div>
 
+    <sidebar-favorites></sidebar-favorites>
+
     <div
       id="bottom-bar"
       class="flex flex-row justify-center gap-1 text-xs text-gray-400"

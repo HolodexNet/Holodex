@@ -12,16 +12,27 @@
       </div>
       <template v-for="(channel, idx) in (arr[1] as any)" :key="channel.id">
         <channel-card
-          v-if="idx < 40 && group as number < 2"
+          v-if="idx < 20 && group as number < 2"
           :channel="channel"
           :variant="variant"
-        >
-        </channel-card>
-        <v-lazy v-else
-          ><channel-card :channel="channel" :variant="variant"> </channel-card
-        ></v-lazy>
+        ></channel-card>
+        <v-lazy v-else>
+          <channel-card :channel="channel" :variant="variant"></channel-card>
+        </v-lazy>
       </template>
     </template>
+
+    <div
+      v-show="resp.hasNextPage?.value || resp.isLoading.value"
+      v-intersect="intersect"
+    >
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        :size="64"
+        class="m-4"
+      ></v-progress-circular>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -29,6 +40,7 @@ import { useChannels } from "@/services/useChannels";
 import { PropType } from "vue";
 import flatten from "lodash/flatten";
 import groupBy from "lodash/groupBy";
+import { useInfiniteScroll } from "@vueuse/core";
 
 interface QueryType {
   type: string;
@@ -69,15 +81,23 @@ export default defineComponent({
     });
 
     const list = computed(() => {
-      if (props.channels) return groupBy(props.channels, groupKey.value);
+      if (props.channels)
+        return Object.entries(groupBy(props.channels, groupKey.value));
       if (respChannels.data.value)
         return Object.entries(
           groupBy(flatten(respChannels.data.value.pages), groupKey.value)
         );
       return [["", []]];
     });
-
-    return { list, groupKey };
+    return { list, groupKey, resp: respChannels };
+  },
+  methods: {
+    async intersect() {
+      console.log("intersecting", this.resp.hasNextPage?.value);
+      if (this.resp.hasNextPage?.value) {
+        await this.resp.fetchNextPage.value();
+      }
+    },
   },
 });
 </script>

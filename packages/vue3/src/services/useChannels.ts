@@ -10,6 +10,7 @@ export function useChannels(query: Ref<object>, enabled: MaybeRef<boolean>) {
       const res = await backendApi.channels({
         ...a.pageParam,
         ...a.queryKey[1],
+        limit: 100,
       });
       return res.data;
     },

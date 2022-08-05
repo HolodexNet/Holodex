@@ -35,6 +35,7 @@ declare module '@vue/runtime-core' {
     PageContainer: typeof import('./src/components/frame/PageContainer.vue')['default']
     Profile: typeof import('./src/views/Profile.vue')['default']
     SearchBar: typeof import('./src/components/nav/SearchBar.vue')['default']
+    SidebarFavorites: typeof import('./src/components/frame/SidebarFavorites.vue')['default']
     TLClient: typeof import('./src/components/tldex/editor/TLClient.vue')['default']
     TLScriptEditor: typeof import('./src/components/tldex/editor/TLScriptEditor.vue')['default']
     TranslationClient: typeof import('./src/views/TranslationClient.vue')['default']
