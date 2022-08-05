@@ -4,7 +4,15 @@
     :class="slim ? '' : 'h-50'"
   >
     <div class="flex-shrink-0 indicator">
-      <span v-if="live" class="mt-4 mr-4 indicator-item live-indicator"></span>
+      <span
+        v-if="live"
+        class="mb-4 mr-4 indicator-item indicator-bottom live-indicator"
+      ></span>
+      <span
+        v-else-if="$slots.default"
+        class="mb-4 right-6 indicator-item live-indicator indicator-bottom bg-slate-500"
+        ><slot></slot
+      ></span>
 
       <channel-img
         :channel="channel"

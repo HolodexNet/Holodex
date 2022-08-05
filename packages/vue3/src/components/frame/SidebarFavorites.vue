@@ -10,7 +10,8 @@
           :channel="v.channel"
           slim
           :live="v.status === 'live'"
-        ></channel-card>
+          >{{ formatDurationUpcoming(v.available_at) }}</channel-card
+        >
       </template>
       <div
         class="max-w-md p-1 rounded-lg shadow-xl w-60 bg-base-300 shadow-base-100"
@@ -23,6 +24,7 @@
 </template>
 <script setup lang="ts">
 import { useVideoListDatasource } from "@/services/video";
+import { dayjs, formatDurationShort } from "@/utils/time";
 
 const lookupState = ref({
   flavor: { favorites: true },
@@ -35,4 +37,9 @@ const videoQuery = useVideoListDatasource(
   lookupState as any,
   ref({ enabled: true })
 );
+
+const formatDurationUpcoming = function (ts: any) {
+  const secs = dayjs(ts).diff(dayjs()) / 1000;
+  return formatDurationShort(Math.abs(secs));
+};
 </script>

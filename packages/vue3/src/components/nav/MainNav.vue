@@ -210,28 +210,28 @@ export default defineComponent({
         {
           name: this.$t("component.mainNav.home"),
           path: "/",
-          icon: this.icons.mdiHome,
+          icon: "i-material-symbols:home-storage-rounded",
         },
         {
           name: this.$t("component.mainNav.favorites"),
           path: "/favorites",
-          icon: this.icons.mdiHeart,
+          icon: "i-material-symbols:favorite-rounded",
         },
         {
           name: this.$t("component.mainNav.channels"),
           path: `/channels`,
-          icon: this.icons.mdiAccountBoxMultiple,
+          icon: "i-ion:people",
         },
         {
           name: this.$t("component.mainNav.playlist"),
           path: "/playlists",
-          icon: this.icons.mdiPlaylistPlay,
+          icon: "i-material-symbols:playlist-play-rounded",
           divider: true,
         },
         {
           name: this.$t("component.mainNav.multiview"),
           path: "/multiview",
-          icon: this.icons.mdiViewDashboard,
+          icon: "i-clarity:grid-chart-solid",
           collapsible: true,
         },
         {
@@ -244,13 +244,13 @@ export default defineComponent({
         {
           name: this.$t("component.mainNav.about"),
           path: "/about",
-          icon: this.icons.mdiHelpCircle,
+          icon: "i-ion:information-circle-outline",
           collapsible: true,
         },
         {
           name: this.$t("component.mainNav.settings"),
           path: "/settings",
-          icon: this.icons.mdiCog,
+          icon: "i-material-symbols:settings-rounded",
           collapsible: true,
         },
         {

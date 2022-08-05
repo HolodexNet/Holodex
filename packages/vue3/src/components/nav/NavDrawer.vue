@@ -15,7 +15,10 @@
     <slot />
     <ul class="gap-1 p-2 menu">
       <!-- <v-list> -->
-      <template v-for="page in pages.filter((e) => !e.extra)" :key="page.name">
+      <template
+        v-for="page in (pages.filter((e) => !e.extra) as any[])"
+        :key="page.name"
+      >
         <li>
           <router-link
             :to="page.path"
@@ -28,6 +31,11 @@
               :icon="icons.mdiStarFourPointsOutline"
             >
             </v-list-item-icon>
+            <div
+              v-else-if="page.icon.startsWith('i')"
+              :class="page.icon"
+              class="v-icon notranslate v-theme--dark v-icon--size-default v-list-item-icon"
+            ></div>
             <v-list-item-icon v-else :icon="page.icon"></v-list-item-icon>
             <v-list-item-title>{{ page.name }}</v-list-item-title>
             <!-- Quick Settings Popup -->
