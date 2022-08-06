@@ -32,11 +32,9 @@
       <span class="-mt-1 line-clamp-1" :class="{ 'text-lg': !slim }">
         {{ preferredName }}
       </span>
-      <span v-if="!slim" class="text-xs line-clamp-1 text-neutral opacity-60">
-        {{ subscribers }}
-      </span>
-      <span v-if="!slim" class="text-xs line-clamp-1 text-neutral opacity-60">
-        {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
+      <span v-if="!slim" class="text-sm line-clamp-1 text-neutral opacity-60">
+        {{ subscribers }} •
+        {{ $t("component.channelInfo.videoCount", [channel.video_count]) }} •
         {{ $t("component.channelInfo.clipCount", { n: channel.clip_count }) }}
       </span>
       <span
@@ -47,7 +45,7 @@
         <div
           v-for="t in channel.top_topics"
           :key="channel.id + 't' + t"
-          class="inline-block ml-1 font-bold align-middle rounded cursor-pointer text-bold badge badge-xs badge-outline border-slate-600 hover:badge-accent hover:badge-outline"
+          class="inline-block ml-1 font-bold align-middle rounded cursor-pointer text-bold badge badge-sm badge-outline border-slate-600 hover:badge-accent hover:badge-outline leading-3"
         >
           {{ formatTopic(t) }}
         </div>

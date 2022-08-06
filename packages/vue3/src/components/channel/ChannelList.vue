@@ -21,18 +21,18 @@
         </v-lazy>
       </template>
     </template>
-
-    <div
-      v-show="resp.hasNextPage?.value || resp.isLoading.value"
-      v-intersect="intersect"
-    >
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        :size="64"
-        class="m-4"
-      ></v-progress-circular>
-    </div>
+  </div>
+  <div
+    v-show="resp.hasNextPage?.value || resp.isLoading.value"
+    v-intersect="intersect"
+    class="flex items-center justify-center"
+  >
+    <v-progress-circular
+      indeterminate
+      color="primary"
+      :size="64"
+      class="m-4"
+    ></v-progress-circular>
   </div>
 </template>
 <script lang="ts">
