@@ -19,7 +19,7 @@
       :width="size"
       :height="size"
       class="d-block"
-      :class="{ 'rounded-md': rounded }"
+      :class="{ 'rounded-full': rounded, 'rounded-md': !rounded }"
       @error="err = true"
     />
   </a>

@@ -17,7 +17,6 @@
       <channel-img
         :channel="channel"
         :size="slim ? 44 : 100"
-        rounded
         class="m-2"
         :class="imgClass"
       />
