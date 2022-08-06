@@ -9,7 +9,6 @@
     <v-img
       :aspect-ratio="16 / 9"
       :src="(srcs as any)?.[size] || srcs"
-      :srcset="srcset"
       cover
       class="rounded-md drop-shadow-md bg-slate-800"
     ></v-img>
@@ -147,22 +146,6 @@ export default defineComponent({
       }
       const srcs = getVideoThumbnails(this.video.id, false);
       return srcs;
-    },
-    srcset(): string {
-      const srcs = this.srcs as any;
-      if (typeof srcs === "string") {
-        return "";
-      } else
-        return (srcs.standard +
-          " 2380w, " +
-          srcs.medium +
-          " 400w, " +
-          srcs.maxres +
-          " 1280w, " +
-          srcs.hq720 +
-          " 1280w, " +
-          srcs.default +
-          " 120w, ") as string;
     },
     placeholderTag() {
       if (this.video.placeholderType === PLACEHOLDER_TYPES.EVENT) {
