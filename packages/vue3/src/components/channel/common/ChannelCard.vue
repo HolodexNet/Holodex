@@ -10,7 +10,7 @@
       ></span>
       <span
         v-else-if="$slots.default"
-        class="mb-4 right-6 indicator-item live-indicator indicator-bottom bg-slate-500 text-white"
+        class="mb-3 right-5 indicator-item live-indicator indicator-bottom bg-slate-500 text-white text-2xs"
         ><slot></slot
       ></span>
 
