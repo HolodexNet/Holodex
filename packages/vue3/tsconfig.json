@@ -22,6 +22,11 @@
       "@modyfi/vite-plugin-yaml/modules" // yaml support
     ]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    "components.d.ts"
+  ],
   "exclude": ["node_modules", "dist", "**/*.stories.tsx"]
 }
