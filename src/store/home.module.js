@@ -32,6 +32,7 @@ const actions = {
             return api
                 .live({
                     type: "placeholder,stream",
+                    include: "mentions",
                     org: rootState.currentOrg.name,
                 })
                 .then((res) => {
