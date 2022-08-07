@@ -403,7 +403,7 @@ export default {
             const query = {
                 status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
                 type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip",
-                include: this.tab === this.Tabs.ARCHIVE ? "clips" : "",
+                include: `mentions${this.tab === this.Tabs.ARCHIVE ? ",clips" : ""}`,
                 lang: this.$store.state.settings.clipLangs.join(","),
                 paginated: !this.scrollMode,
                 ...(this.toDate && { to: nearestUTCDate(dayjs(this.toDate ?? undefined)) }),
