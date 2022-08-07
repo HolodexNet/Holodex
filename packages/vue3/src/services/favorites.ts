@@ -21,6 +21,15 @@ export function useFavoritesList() {
   );
 }
 
+export function useFavoritesListByID() {
+  const list = useFavoritesList();
+  const computedList = computed(() => {
+    const ids = list.data?.value?.map((x) => x.id);
+    return ids !== undefined ? new Set(ids) : undefined;
+  });
+  return computedList;
+}
+
 export function useFavoritesPatcher() {
   const user = useSiteStore();
 

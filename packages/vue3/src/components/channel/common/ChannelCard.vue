@@ -10,7 +10,7 @@
       ></span>
       <span
         v-else-if="$slots.default"
-        class="mb-3 right-5 indicator-item live-indicator indicator-bottom bg-slate-500 text-white text-2xs"
+        class="mb-3 text-white right-5 indicator-item live-indicator indicator-bottom bg-slate-500 text-2xs"
         ><slot></slot
       ></span>
 
@@ -26,7 +26,11 @@
       :class="{ 'opacity-40': channel.inactive, 'ml-2': !slim }"
     >
       <span class="text-xs text-neutral opacity-60"
-        ><b>{{ channel.org || "???" }}</b>
+        ><b>{{
+          channel.org ||
+          (channel.type === "subber" && $t("views.channels.tabs.Subber")) ||
+          "???"
+        }}</b>
         {{ channel.group ? "/ " + channel.group : "" }}
       </span>
       <span class="-mt-1 line-clamp-1" :class="{ 'text-lg': !slim }">
@@ -34,8 +38,12 @@
       </span>
       <span v-if="!slim" class="text-sm line-clamp-1 text-neutral opacity-60">
         {{ subscribers }} •
-        {{ $t("component.channelInfo.videoCount", [channel.video_count]) }} •
-        {{ $t("component.channelInfo.clipCount", { n: channel.clip_count }) }}
+        {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
+        {{
+          channel.clip_count &&
+          " • " +
+            $t("component.channelInfo.clipCount", { n: channel.clip_count })
+        }}
       </span>
       <span
         v-if="channel.top_topics && !slim"
@@ -45,22 +53,42 @@
         <div
           v-for="t in channel.top_topics"
           :key="channel.id + 't' + t"
-          class="inline-block ml-1 font-bold align-middle rounded cursor-pointer text-bold badge badge-sm badge-outline border-slate-600 hover:badge-accent hover:badge-outline leading-3"
+          class="inline-block ml-1 font-bold leading-3 align-middle rounded cursor-pointer text-bold badge badge-sm badge-outline border-slate-600 hover:badge-accent hover:badge-outline"
         >
           {{ formatTopic(t) }}
         </div>
       </span>
     </div>
     <div v-if="!slim" class="flex flex-col h-full gap-1">
-      <div class="c-card-icon">
+      <a
+        class="c-card-icon hover:text-red-500"
+        :href="`https://youtube.com/channel/${channel.id}`"
+        target="_blank"
+        title="Youtube"
+      >
         <div class="i-carbon:logo-youtube"></div>
-      </div>
-      <div class="c-card-icon">
+      </a>
+      <a
+        class="c-card-icon hover:text-cyan-500"
+        :class="{ 'btn-disabled bg-inherit opacity-20': !channel.twitter }"
+        :href="channel.twitter ? `https://twitter.com/${channel.twitter}` : '#'"
+        target="_blank"
+        title="Twitter"
+      >
         <div class="i-carbon:logo-twitter"></div>
-      </div>
-      <div class="c-card-icon">
-        <div class="i-mdi:heart-outline"></div>
-      </div>
+      </a>
+      <button
+        class="c-card-icon"
+        :title="
+          isFav
+            ? $t('component.channelSocials.removeFromFavorites')
+            : $t('component.channelSocials.addToFavorites')
+        "
+      >
+        <div
+          :class="isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'"
+        ></div>
+      </button>
       <!-- <div class="c-card-icon">
         <div class="i-mdi:cancel"></div>
       </div> -->
@@ -69,6 +97,7 @@
 </template>
 <script lang="ts">
 import { useChannel } from "@/hooks/common/useChannelService";
+import { useFavoritesListByID } from "@/services/favorites";
 import { useLangStore } from "@/stores";
 import { formatCount, formatTopic } from "@/utils/functions";
 import { PropType } from "vue";
@@ -89,8 +118,11 @@ export default defineComponent({
   setup(props) {
     const { preferredName } = useChannel(props.channel);
     const lang = useLangStore();
+    const fav = useFavoritesListByID();
 
-    return { preferredName, lang };
+    const isFav = computed(() => fav.value?.has(props.channel.id));
+
+    return { preferredName, lang, isFav };
   },
   computed: {
     rowStyle() {
