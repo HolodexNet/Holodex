@@ -1,7 +1,7 @@
 <template>
   <v-menu
     v-model="showMenu"
-    bottom
+    location="bottom end"
     :close-on-content-click="false"
     transition="slide-y-transition"
   >

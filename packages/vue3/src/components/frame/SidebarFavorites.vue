@@ -7,11 +7,12 @@
           :channel="v.channel"
           slim
           :live="v.status === 'live'"
+          class="hover:text-secondary-content hover:border-r-4 border-secondary"
           >{{ formatDurationUpcoming(v.available_at) }}</channel-card
         >
       </template>
       <div
-        class="max-w-md p-1 -ml-6 rounded-lg shadow-xl w-60 bg-base-300 shadow-base-100"
+        class="max-w-md p-1 -ml-6 border-2 rounded-lg shadow-xl w-60 bg-base-300 shadow-base-100 border-secondary"
       >
         <v-lazy><video-card :video="v"></video-card></v-lazy>
       </div>
