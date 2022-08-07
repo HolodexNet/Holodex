@@ -1,8 +1,5 @@
 <template>
-  <template
-    v-for="v in videoQuery.data?.value?.items?.slice(0, 10)"
-    :key="'sidebar' + v.available_at + v.id"
-  >
+  <template v-for="v in videoList" :key="'sidebar' + v.available_at + v.id">
     <v-tooltip>
       <template #activator="{ props }">
         <channel-card
@@ -14,9 +11,9 @@
         >
       </template>
       <div
-        class="max-w-md p-1 rounded-lg shadow-xl w-60 bg-base-300 shadow-base-100 -ml-6"
+        class="max-w-md p-1 -ml-6 rounded-lg shadow-xl w-60 bg-base-300 shadow-base-100"
       >
-        <video-card :video="v"></video-card>
+        <v-lazy><video-card :video="v"></video-card></v-lazy>
       </div>
     </v-tooltip>
   </template>
@@ -42,4 +39,14 @@ const formatDurationUpcoming = function (ts: any) {
   const secs = dayjs(ts).diff(dayjs()) / 1000;
   return formatDurationShort(Math.abs(secs));
 };
+
+const videoList = computed(() => {
+  const firstUpcoming = videoQuery.data?.value?.items?.findIndex(
+    (x) => x.status === "upcoming"
+  );
+  return videoQuery.data?.value?.items?.slice(
+    0,
+    Math.max(50, (firstUpcoming ?? 0) + 3)
+  );
+});
 </script>
