@@ -1,9 +1,10 @@
 <template>
   <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
+  <span> {{ $t("component.search.searchLabel") }}</span>
   <v-autocomplete
     v-model:model-value="query"
     v-model:search="search"
-    class="ma-auto search-bar"
+    class="mx-auto search-bar input input-bordered bg-base-300"
     :class="{ 'search-bar-small': isMobile }"
     multiple
     chips
@@ -15,47 +16,47 @@
     :custom-filter="customFilter"
     item-value="value"
     no-filter
-    :label="$t('component.search.searchLabel')"
+    density="compact"
+    variant="plain"
     return-object
+    hide-details
+    :menu-icon="null"
     @keydown.enter="onEnterKeyDown"
   >
     <template #chip="{ item, props }">
-      <v-chip
-        v-bind="props"
-        :color="'grey darken-3'"
-        class="pa-0 selected-card"
-      >
-        {{ item.raw }}
-      </v-chip>
+      <div class="px-2 text-gray-100 bg-gray-600 rounded-sm" v-bind="props">
+        <span class="font-semibold">{{ i18nItem(item.raw.type) }}: </span>
+        <span class="rounded-lg">
+          {{ item.raw.text }}
+        </span>
+      </div>
     </template>
     <template #item="{ item, props }">
-      <div v-bind="props" class="py-0 pl-3 pr-1">
-        <v-list-item-header>
-          {{ item.raw.text }}, {{ props }}
-        </v-list-item-header>
-        <div class="py-1 pt-1">
-          <v-list-item-subtitle class="text--primary">
-            {{ i18nItem(item.raw.type) }}
-            <v-icon v-if="item.raw.type === 'channel'" small>
-              {{ icons.mdiYoutube }}
-            </v-icon>
-            <v-icon v-if="item.raw.type === 'video url'" small>
-              {{ icons.mdiYoutube }}
-            </v-icon>
-            <v-icon v-if="item.raw.type === 'topic'" small>
-              {{ icons.mdiAnimationPlay }}
-            </v-icon>
-            <v-icon v-if="item.raw.type === 'org'" small>
-              {{ mdiAccountMultiple }}
-            </v-icon>
-            <v-icon v-if="item.raw.type === 'title & desc'" small>
-              {{ mdiTextSearch }}
-            </v-icon>
-            <v-icon v-if="item.raw.type === 'comments'" small>
-              {{ mdiCommentSearch }}
-            </v-icon>
-          </v-list-item-subtitle>
-        </div>
+      <div v-bind="props" class="px-2">
+        <span class="h-3 text-xs opacity-50">
+          <v-icon v-if="item.raw.type === 'channel'" small>
+            {{ icons.mdiYoutube }}
+          </v-icon>
+          <v-icon v-if="item.raw.type === 'video url'" small>
+            {{ icons.mdiYoutube }}
+          </v-icon>
+          <v-icon v-if="item.raw.type === 'topic'" small>
+            {{ icons.mdiAnimationPlay }}
+          </v-icon>
+          <v-icon v-if="item.raw.type === 'org'" small>
+            {{ mdiAccountMultiple }}
+          </v-icon>
+          <v-icon v-if="item.raw.type === 'title & desc'" small>
+            {{ mdiTextSearch }}
+          </v-icon>
+          <v-icon v-if="item.raw.type === 'comments'" small>
+            {{ mdiCommentSearch }}
+          </v-icon></span
+        >
+        <span class="ml-2 font-semibold"> {{ i18nItem(item.raw.type) }}: </span>
+        <span class="rounded-lg">
+          {{ item.raw.text }}
+        </span>
       </div>
     </template>
   </v-autocomplete>
@@ -282,77 +283,7 @@ export default defineComponent({
 .search-bar {
   // width management.
   max-width: 670px !important;
-
-  &.search-bar-small {
-    max-width: 90vw !important;
-  }
-
-  .selected-card {
-    margin: 3px;
-    max-width: 100%;
-    min-width: 80px;
-    overflow: hidden;
-  }
-
-  &.v-input > .v-input__control {
-    height: auto !important;
-    // min-height: 47px !important;
-  }
-
-  input {
-    padding-left: 10px !important;
-  }
-
-  &.v-input--dense > .v-input__append-outer {
-    // min-height: 47px !important;
-    min-width: 38px;
-    height: 100%;
-    margin: 0 !important;
-    background-color: none;
-    border-radius: inherit;
-
-    .append-btn {
-      min-height: 40px;
-      min-width: 45px;
-      max-width: 45px;
-    }
-  }
-
-  .v-messages.theme--dark.error--text {
-    background-color: rgb(30, 30, 30);
-    font-weight: 600;
-    padding: 2px;
-    border-radius: 2px;
-  }
-
-  .selected-card-type {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    background-color: rgba(100, 100, 100, 0.3);
-    line-height: 1rem;
-  }
-
-  &.v-input .v-input__slot {
-    padding-left: 1px !important;
-    padding-top: 1px !important;
-  }
-
-  & > .v-input__append-outer {
-    flex-shrink: 0;
-    align-items: center;
-  }
-
-  & > .v-input__append-outer > .v-input__icon > .v-icon.primary--text {
-    color: white !important;
-  }
-
-  & > .v-input__control > .v-input__slot > .v-select__slot > label {
-    left: 10px !important;
-  }
-}
-.v-autocomplete__content.v-menu__content {
-  translate: 0 -4px;
+  height: 50px;
 }
 
 /* .search-bar.theme--light > .v-input__append-outer > .v-input__icon > .v-icon {
