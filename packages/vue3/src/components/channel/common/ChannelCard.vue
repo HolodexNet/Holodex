@@ -125,9 +125,6 @@ export default defineComponent({
     return { preferredName, lang, isFav };
   },
   computed: {
-    rowStyle() {
-      return "ok";
-    },
     subscribers() {
       return formatCount(this.channel.subscriber_count, this.lang.lang);
     },

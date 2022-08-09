@@ -13,7 +13,7 @@
         <slot name="visible" :current-org="currentOrg" :activator="activator">
           <div
             v-bind="activator.props"
-            class="inline-block nav-title cursor-pointer"
+            class="inline-block cursor-pointer nav-title"
             style="position: relative"
           >
             <v-fade-transition hide-on-leave>
@@ -36,32 +36,28 @@
           </div>
         </slot>
       </template>
-
-      <v-list
-        style="max-height: 300px; overscroll-behavior: contain"
-        class="overflow-y-auto"
+      <ul
+        class="overflow-y-auto border-2 rounded-md menu bg-base-300 text-base-content border-secondary"
       >
-        <slot name="prepend-dropdown" />
-        <v-list-item
+        <li
           v-for="org in orgFavorites"
           :key="org.name + 'select'"
           :input-value="org.name === currentOrg.name"
           @click="$emit('changed', org)"
         >
-          <v-list-item-title>{{ org.name }}</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="showOrgDialog = true">
-          <v-list-item-title class="primary--text">{{
-            $t("views.favorites.showall")
-          }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
+          <span>{{ org.name }}</span>
+        </li>
+        <li @click="showOrgDialog = true">
+          <span
+            ><i class="i-material-symbols:layers-rounded"></i
+            >{{ $t("views.favorites.showall") }}</span
+          >
+        </li>
+      </ul>
     </v-menu>
   </slot>
   <v-dialog v-model="showOrgDialog">
     <v-card>
-      <v-card-title>{{ $t("views.channels.sortOptions.org") }}</v-card-title>
-
       <v-card-text
         class="px-1 overflow-y-auto h-fit"
         style="width: 30vw; min-width: 340px; max-width: 800px"
