@@ -49,6 +49,7 @@ export const useThemeStore = defineStore("site-theme", {
   getters: {},
   actions: {
     setTheme(name: string) {
+      console.log(name);
       const a = presets.find((x) => x.name === name);
       if (!a) return;
       const init = presets[0].colors;
