@@ -24,7 +24,10 @@ interface CachedTheme {
 export const useThemeStore = defineStore("site-theme", {
   // convert to a function
   state: (): Theme & CachedTheme => {
-    const [convert, colormap] = convertToDaisyHSLAndColor(presets[0].colors);
+    const [convert, colormap] = convertToDaisyHSLAndColor(
+      presets[0].colors,
+      true // default is dark mode.
+    );
 
     const out: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] = [
       {
@@ -78,10 +81,13 @@ export const useThemeStore = defineStore("site-theme", {
     saveAndCacheVuetify() {
       if (this.outTs === this.lastModified) return; // no changes needed.
 
-      const [convert, colormap] = convertToDaisyHSLAndColor({
-        ...this.colors,
-        ...DaisyDefaults,
-      });
+      const [convert, colormap] = convertToDaisyHSLAndColor(
+        {
+          ...this.colors,
+          ...DaisyDefaults,
+        },
+        this.dark
+      );
 
       const out: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] = [
         {

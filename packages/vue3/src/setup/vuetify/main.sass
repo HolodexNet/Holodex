@@ -1,2 +1,16 @@
 
 @use 'vuetify/styles' with ($utilities: false, $color-pack: false)
+
+$themeColours: ( "primary": '--p', "secondary": '--s', "accent": '--a', "background": '--b1', "surface": '--b2')
+$variations: ( "darken-1": '-d1', "darken-2": '-d2', "darken-3": '-d3', "lighten-1": '-l1', "lighten-2": '-l2',"lighten-3": '-l3',)
+
+@each $themeColour, $i in $themeColours
+    @each $variant, $v in $variations
+        .bg-#{$themeColour}.#{$variant}
+            background-color: hsl(var(#{$i}#{$v}))!important
+
+        .border-#{$themeColour}.#{$variant}
+            border-color: hsl(var(#{$i}#{$v}))!important
+
+        .text-#{$themeColour}.#{$variant}
+            color: hsl(var(#{$i}#{$v}))!important

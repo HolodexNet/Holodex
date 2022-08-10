@@ -60,12 +60,45 @@ export const generateForegorundColorFrom = function (
   }
 };
 
+const variants: any = {
+  "-d1": [-0.3, -0.3],
+  "-d2": [-0.6, -0.2],
+  "-d3": [-0.7, -0.1],
+  "-l1": [0.3, -0.1],
+  "-l2": [0.4, -0.2],
+  "-l3": [0.5, -0.3],
+};
+const generateVariants = function (
+  prefix: string,
+  color: Color,
+  darkMode = true
+): Record<string, string> {
+  const toCol = (color2: Color, r1: number, s1: number) => {
+    const c = color2[
+      (darkMode && r1 > 0) || (!darkMode && r1 < 0) ? "lighten" : "darken"
+    ](Math.abs(r1))
+      .saturate(s1)
+      .hsl()
+      .round()
+      .array();
+    return c[0] + " " + c[1] + "%" + " " + c[2] + "%";
+  };
+
+  const out: Record<string, string> = {};
+  for (const i in variants) {
+    out[prefix + i] = toCol(color, variants[i][0], variants[i][1]);
+  }
+  console.log(out);
+  return out;
+};
+
 // https://github.com/saadeghi/daisyui/blob/66ee475b0297fe56c5cef5867e1c83ef9dc6d5cb/src/colors/functions.js#L19
 export const convertToDaisyHSLAndColor = (
-  input: DaisyColorConfig
+  input: DaisyColorConfig,
+  darkMode = true
 ): [
-  Record<DaisyColorShorthand, string>,
-  Record<DaisyColorShorthand, Color>
+  Record<DaisyColorShorthand, string>, // the first result is the compiled daisy colors.
+  Record<DaisyColorShorthand, Color> // the second result is a semi-processed color so we don't convert colors around all the time. it'll get consumed by vuetify color generators.
 ] => {
   const resultObj: Record<string, string> = {};
   const colorObj: Record<string, Color> = {};
@@ -168,10 +201,35 @@ export const convertToDaisyHSLAndColor = (
         "%";
     }
 
+    Object.assign(
+      resultObj,
+      generateVariants("--p", colorObj["--p"], darkMode)
+    );
+    Object.assign(
+      resultObj,
+      generateVariants("--s", colorObj["--s"], darkMode)
+    );
+    Object.assign(
+      resultObj,
+      generateVariants("--a", colorObj["--a"], darkMode)
+    );
+    Object.assign(
+      resultObj,
+      generateVariants("--b1", colorObj["--b1"], darkMode)
+    );
+    Object.assign(
+      resultObj,
+      generateVariants(
+        "--b2",
+        colorObj["--b2"] || Color(`hsl(${resultObj["--b2"]})`),
+        darkMode
+      )
+    );
+
     if (!input.hasOwnProperty("base-300")) {
       if (input.hasOwnProperty("base-200")) {
         const darkerHslArray = colorObj[colorNames["base-200"]]
-          .darken(0.1)
+          .darken(0.15)
           .hsl()
           .round()
           .array();
@@ -185,8 +243,8 @@ export const convertToDaisyHSLAndColor = (
           "%";
       } else {
         const darkerHslArray = colorObj[colorNames["base-100"]]
-          .darken(0.1)
-          .darken(0.1)
+          .darken(0.15)
+          .darken(0.15)
           .hsl()
           .round()
           .array();
