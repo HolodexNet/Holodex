@@ -152,7 +152,6 @@
 import { musicdexURL } from "@/utils/consts";
 import { useSiteStore } from "@/stores/site";
 import { useDisplay } from "vuetify";
-import * as icons from "@/utils/icons";
 import { useSettingsStore } from "@/stores/settings";
 import { useIsFetching } from "vue-query";
 
@@ -175,7 +174,6 @@ export default defineComponent({
       navbarExpanded: false,
 
       navDrawer: true,
-      icons: icons,
     };
   },
   computed: {
@@ -208,6 +206,7 @@ export default defineComponent({
     pages() {
       return [
         {
+          routeName: "Home_Org",
           name: this.$t("component.mainNav.home"),
           path: "/",
           icon: "i-material-symbols:home-storage-rounded",
@@ -221,6 +220,7 @@ export default defineComponent({
           name: this.$t("component.mainNav.channels"),
           path: `/channels`,
           icon: "i-ion:people",
+          routeName: "Channels_Org",
         },
         {
           name: this.$t("component.mainNav.playlist"),

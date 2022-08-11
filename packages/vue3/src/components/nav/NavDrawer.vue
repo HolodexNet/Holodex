@@ -21,8 +21,12 @@
       >
         <li>
           <router-link
+            :class="{
+              active:
+                $route.fullPath === page.path ||
+                ($route.name && $route.name === page.routeName),
+            }"
             :to="page.path"
-            :class="{ 'v-list-item--active': $route.fullPath === page.path }"
             @click="(e) => handlePageClick(page, e)"
           >
             <v-list-item-icon
@@ -91,7 +95,7 @@
 
     <div
       id="bottom-bar"
-      class="flex flex-row justify-center gap-1 text-xs text-gray-400"
+      class="z-50 flex flex-row justify-center gap-1 text-xs text-gray-400"
     >
       <a href="https://twitter.com/holodex" title="Twitter">
         <v-icon size="small" color="#1DA1F2">{{ icons.mdiTwitter }}</v-icon>

@@ -38,8 +38,8 @@
 <script lang="ts">
 import { useChannels } from "@/services/useChannels";
 import { PropType } from "vue";
-import flatten from "lodash/flatten";
-import groupBy from "lodash/groupBy";
+import flatten from "lodash-es/flatten";
+import groupBy from "lodash-es/groupBy";
 import { useInfiniteScroll } from "@vueuse/core";
 
 interface QueryType {

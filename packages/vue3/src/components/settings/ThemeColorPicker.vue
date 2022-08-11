@@ -1,13 +1,25 @@
 <template>
-  <button
-    id="picker"
-    class="h-20 btn"
-    :class="'btn-' + daisyName"
-    :style="{ 'background-color': color, color: foreground }"
-  >
-    {{ daisyName }}
-    <span class="ml-auto mr-auto text-xs font-light">{{ color }}</span>
-  </button>
+  <v-menu :close-on-content-click="false">
+    <template #activator="{ props }">
+      <button
+        id="picker"
+        class="h-20 btn"
+        v-bind="props"
+        :class="'btn-' + daisyName"
+        :style="{ 'background-color': color, color: foreground }"
+      >
+        {{ daisyName }}
+        <span class="ml-auto mr-auto text-xs font-light">{{ color }}</span>
+      </button>
+    </template>
+    {{ theme.colors?.[daisyName] }}
+    <v-color-picker
+      :model-value="theme.colors?.[daisyName]"
+      mode="hex"
+      hide-inputs
+      @update:model-value="(v) => theme.setCustomTheme(daisyName, v)"
+    ></v-color-picker>
+  </v-menu>
 </template>
 <script lang="ts">
 import { generateForegorundColorFrom } from "@/hooks/theme-changer/daisy-utils/daisy-color-fns";
@@ -29,6 +41,9 @@ export default defineComponent({
   setup() {
     const theme = useThemeStore();
     return { theme };
+  },
+  data() {
+    return { c2: this.theme.colors?.[this.daisyName] };
   },
   computed: {
     color() {

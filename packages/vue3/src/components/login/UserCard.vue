@@ -16,49 +16,53 @@
 *
   -->
   <div class="card bg-base-100" style="min-width: 200px">
-    <div class="card-body p-2 pt-4">
+    <div class="p-2 pt-4 card-body">
       <div v-if="user" class="flex flex-row">
-        <div class="flex justify-center items-center p-2 pr-4">
+        <div class="flex items-center justify-center p-2 pr-4">
           <img
             class="w-10 h-10"
             :src="`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`"
           />
         </div>
         <div class="flex flex-col">
-          <v-list-item-title>{{ user.username }}</v-list-item-title>
-          <v-list-item-subtitle>
-            <span v-if="user.role !== 'user'" class="capitalize">
-              {{ user.role }}
+          <div class="text-lg text-primary lighten-1">
+            {{ user.username }}
+          </div>
+          <div class="flex flex-row gap-2 text-2xl">
+            <div
+              :class="
+                icons.discord +
+                (user.discord_id
+                  ? ' text-primary lighten-2'
+                  : '  text-background lighten-3')
+              "
+              class=""
+            ></div>
+            <div
+              :class="
+                icons.google +
+                (user.google_id
+                  ? ' text-primary lighten-2'
+                  : '  text-background lighten-3')
+              "
+              class=""
+            ></div>
+            <div
+              :class="
+                icons.twitter +
+                (user.twitter_id
+                  ? ' text-primary lighten-2'
+                  : '  text-background lighten-3')
+              "
+              class=""
+            ></div>
+          </div>
+          <div class="text-sm text-secondary">
+            <span v-if="user.role !== 'user'" class="font-bold capitalize">
+              {{ user.role }} :
             </span>
-            &nbsp;
-            <v-icon
-              size="small"
-              :color="user.discord_id ? 'green lighten-2' : 'grey'"
-            >
-              {{ icons.mdiDiscord }}
-            </v-icon>
-            &nbsp;
-            <v-icon
-              size="small"
-              :color="user.google_id ? 'green lighten-2' : 'grey'"
-            >
-              {{ icons.mdiGoogle }}
-            </v-icon>
-            &nbsp;
-            <v-icon
-              size="small"
-              :color="user.twitter_id ? 'green lighten-2' : 'grey'"
-            >
-              {{ icons.mdiTwitter }}
-            </v-icon>
-            &nbsp;
-          </v-list-item-subtitle>
-          <v-list-item-content class="primary--text">
-            <v-icon size="x-small">
-              {{ icons.mdiStarFourPointsOutline }}
-            </v-icon>
             {{ user.contribution_count }} {{ $t("component.mainNav.points") }}
-          </v-list-item-content>
+          </div>
         </div>
       </div>
 
@@ -70,7 +74,7 @@
           </router-link>
         </li>
 
-        <v-divider v-if="user && !inNavDrawer" />
+        <div v-if="user && !inNavDrawer" class="my-0 divider" />
         <li v-if="user && !inNavDrawer">
           <router-link to="/login">
             <v-icon :icon="icons.mdiAccountCircleOutline"></v-icon>

@@ -113,7 +113,6 @@
 </template>
 
 <script lang="ts">
-import api from "@/utils/backend-api";
 import { CHANNEL_TYPES } from "@/utils/consts";
 
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";

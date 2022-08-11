@@ -88,7 +88,6 @@ const generateVariants = function (
   for (const i in variants) {
     out[prefix + i] = toCol(color, variants[i][0], variants[i][1]);
   }
-  console.log(out);
   return out;
 };
 

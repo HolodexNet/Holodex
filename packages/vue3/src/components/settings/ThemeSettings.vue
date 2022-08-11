@@ -63,53 +63,56 @@
     <theme-color-picker daisy-name="info" shorthand="--er" />
     <theme-color-picker daisy-name="warning" shorthand="--su" />
     <theme-color-picker daisy-name="error" shorthand="--er" />
-    <div>
-      <span>Color Rendered (for beta only):</span>
-      <div class="btn-group">
-        <div class="btn btn-xs bg-primary darken-3"></div>
-        <div class="btn btn-xs bg-primary darken-2"></div>
-        <div class="btn btn-xs bg-primary darken-1"></div>
-        <div class="btn btn-xs bg-primary"></div>
-        <div class="btn btn-xs bg-primary lighten-1"></div>
-        <div class="btn btn-xs bg-primary lighten-2"></div>
-        <div class="btn btn-xs bg-primary lighten-3"></div>
-      </div>
-      <div class="btn-group">
-        <div class="btn btn-xs bg-secondary darken-3"></div>
-        <div class="btn btn-xs bg-secondary darken-2"></div>
-        <div class="btn btn-xs bg-secondary darken-1"></div>
-        <div class="btn btn-xs bg-secondary"></div>
-        <div class="btn btn-xs bg-secondary lighten-1"></div>
-        <div class="btn btn-xs bg-secondary lighten-2"></div>
-        <div class="btn btn-xs bg-secondary lighten-3"></div>
-      </div>
-      <div class="btn-group">
-        <div class="btn btn-xs bg-accent darken-3"></div>
-        <div class="btn btn-xs bg-accent darken-2"></div>
-        <div class="btn btn-xs bg-accent darken-1"></div>
-        <div class="btn btn-xs bg-accent"></div>
-        <div class="btn btn-xs bg-accent lighten-1"></div>
-        <div class="btn btn-xs bg-accent lighten-2"></div>
-        <div class="btn btn-xs bg-accent lighten-3"></div>
-      </div>
-      <div class="btn-group">
-        <div class="btn btn-xs bg-background darken-3"></div>
-        <div class="btn btn-xs bg-background darken-2"></div>
-        <div class="btn btn-xs bg-background darken-1"></div>
-        <div class="btn btn-xs bg-background"></div>
-        <div class="btn btn-xs bg-background lighten-1"></div>
-        <div class="btn btn-xs bg-background lighten-2"></div>
-        <div class="btn btn-xs bg-background lighten-3"></div>
-      </div>
-      <div class="btn-group">
-        <div class="btn btn-xs bg-surface darken-3"></div>
-        <div class="btn btn-xs bg-surface darken-2"></div>
-        <div class="btn btn-xs bg-surface darken-1"></div>
-        <div class="btn btn-xs bg-surface"></div>
-        <div class="btn btn-xs bg-surface lighten-1"></div>
-        <div class="btn btn-xs bg-surface lighten-2"></div>
-        <div class="btn btn-xs bg-surface lighten-3"></div>
-      </div>
+  </div>
+
+  <div class="divider">
+    <span>Test Color (for beta only):</span>
+  </div>
+  <div class="grid grid-cols-5 gap-2">
+    <div class="btn-group">
+      <div class="btn btn-xs bg-primary darken-3"></div>
+      <div class="btn btn-xs bg-primary darken-2"></div>
+      <div class="btn btn-xs bg-primary darken-1"></div>
+      <div class="btn btn-xs bg-primary"></div>
+      <div class="btn btn-xs bg-primary lighten-1"></div>
+      <div class="btn btn-xs bg-primary lighten-2"></div>
+      <div class="btn btn-xs bg-primary lighten-3"></div>
+    </div>
+    <div class="btn-group">
+      <div class="btn btn-xs bg-secondary darken-3"></div>
+      <div class="btn btn-xs bg-secondary darken-2"></div>
+      <div class="btn btn-xs bg-secondary darken-1"></div>
+      <div class="btn btn-xs bg-secondary"></div>
+      <div class="btn btn-xs bg-secondary lighten-1"></div>
+      <div class="btn btn-xs bg-secondary lighten-2"></div>
+      <div class="btn btn-xs bg-secondary lighten-3"></div>
+    </div>
+    <div class="btn-group">
+      <div class="btn btn-xs bg-accent darken-3"></div>
+      <div class="btn btn-xs bg-accent darken-2"></div>
+      <div class="btn btn-xs bg-accent darken-1"></div>
+      <div class="btn btn-xs bg-accent"></div>
+      <div class="btn btn-xs bg-accent lighten-1"></div>
+      <div class="btn btn-xs bg-accent lighten-2"></div>
+      <div class="btn btn-xs bg-accent lighten-3"></div>
+    </div>
+    <div class="btn-group">
+      <div class="btn btn-xs bg-background darken-3"></div>
+      <div class="btn btn-xs bg-background darken-2"></div>
+      <div class="btn btn-xs bg-background darken-1"></div>
+      <div class="btn btn-xs bg-background"></div>
+      <div class="btn btn-xs bg-background lighten-1"></div>
+      <div class="btn btn-xs bg-background lighten-2"></div>
+      <div class="btn btn-xs bg-background lighten-3"></div>
+    </div>
+    <div class="btn-group">
+      <div class="btn btn-xs bg-surface darken-3"></div>
+      <div class="btn btn-xs bg-surface darken-2"></div>
+      <div class="btn btn-xs bg-surface darken-1"></div>
+      <div class="btn btn-xs bg-surface"></div>
+      <div class="btn btn-xs bg-surface lighten-1"></div>
+      <div class="btn btn-xs bg-surface lighten-2"></div>
+      <div class="btn btn-xs bg-surface lighten-3"></div>
     </div>
   </div>
 </template>

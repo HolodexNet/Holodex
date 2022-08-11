@@ -11,6 +11,8 @@ import visualizer from "rollup-plugin-visualizer";
 import vuetify from "vite-plugin-vuetify";
 import Unocss from "unocss/vite";
 import presetIcons from "@unocss/preset-icons";
+import * as icons from './src/utils/icons.ts'
+import filesize from 'rollup-plugin-filesize';
 
 const path = require('path')
 
@@ -41,6 +43,7 @@ export default defineConfig({
     vue({}),
     Unocss({
       presets: [presetIcons()],
+      safelist: Object.values(icons)
     }),
     vuetify({
       autoImport: true,
@@ -61,6 +64,9 @@ export default defineConfig({
       types: [],
     }),
     ViteAliases(),
+    filesize({
+      showBeforeSizes: 'build', 
+    }),
     visualizer({ gzipSize: true, brotliSize: true }),
   ],
   optimizeDeps: {
