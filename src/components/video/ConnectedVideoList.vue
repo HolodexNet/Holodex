@@ -170,10 +170,8 @@ import {
     mdiFilterVariant,
     mdiFormatListBulleted,
     mdiViewList,
-    mdiCalendar,
 } from "@mdi/js";
 import { syncState } from "@/utils/functions";
-import { json2csvAsync } from "json-2-csv";
 import VideoListFilters from "../setting/VideoListFilters.vue";
 
 function nearestUTCDate(date) {
@@ -218,7 +216,6 @@ export default {
             mdiFilterVariant,
             mdiFormatListBulleted,
             mdiViewList,
-            mdiCalendar,
             identifier: Date.now(),
             pageLength: 24,
             Tabs: Object.freeze({
@@ -240,7 +237,6 @@ export default {
                     value: "viewers",
                 },
             ],
-            initialQueryForCalendar: "",
         };
     },
     computed: {
@@ -258,9 +254,6 @@ export default {
         ...mapGetters("favorites", ["favoriteChannelIDs"]),
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
-        },
-        isMobile() {
-            return this.$store.state.isMobile;
         },
         live() {
             let live = (this.liveContent?.length && this.liveContent)
@@ -386,7 +379,7 @@ export default {
                 this.currentGridSize = 0;
             }
         },
-        async init(updateFavorites) {
+        init(updateFavorites) {
             if (this.isFavPage) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
                 if (this.favoriteChannelIDs.size > 0 && this.isLoggedIn) {
@@ -400,18 +393,6 @@ export default {
                 this.$store.dispatch("home/fetchLive", { force: true });
             }
             this.identifier = Date.now();
-
-            if (this.$store.state.currentOrg.name !== "All Vtubers") {
-                this.initialQueryForCalendar = await json2csvAsync([
-                    {
-                        type: "org",
-                        text: this.$store.state.currentOrg.name,
-                        value: this.$store.state.currentOrg.name,
-                    },
-                ]);
-            } else {
-                this.initialQueryForCalendar = "";
-            }
         },
         reload() {
             this.init();
@@ -419,14 +400,11 @@ export default {
         getLoadFn() {
             const query = {
                 status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip",
-                include: `mentions${this.tab === this.Tabs.ARCHIVE ? ",clips" : ""}`,
+                ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
+                include: "clips",
                 lang: this.$store.state.settings.clipLangs.join(","),
                 paginated: !this.scrollMode,
-                ...(this.toDate && {
-                    to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
-                }),
-                max_upcoming_hours: 1,
+                to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
             };
             if (this.isFavPage) {
                 return async (offset, limit) => {

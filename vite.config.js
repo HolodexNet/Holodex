@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-extraneous-dependencies,prefer-regex-literals */
 import { defineConfig, loadEnv } from "vite";
 import { createVuePlugin } from "vite-plugin-vue2";
 import ViteComponents, { VuetifyResolver } from "vite-plugin-components";
@@ -170,19 +170,18 @@ export default ({ mode }) => {
                         constBindings: true,
                         objectShorthand: true,
                     },
-                    manualChunks: (id) => {
-                        if (id.includes("node_modules")) {
-                            if (id.includes("vuetify")) {
-                                return "vendor_vuetify";
-                            }
-                            if (id.includes("vue")) {
-                                return "vendor_vue";
-                            }
+                    // manualChunks: (id) => {
+                    //     if (id.includes("node_modules")) {
+                    //         if (id.includes("vuetify")) {
+                    //             return "vendor_vuetify";
+                    //         }
+                    //         if (id.includes("vue")) {
+                    //             return "vendor_vue";
+                    //         }
 
-                            return "vendor"; // all other package goes here
-                        }
-                    },
-
+                    //         return "vendor"; // all other package goes here
+                    //     }
+                    // },
                 },
             },
         },
