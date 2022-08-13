@@ -411,6 +411,7 @@ export default {
                 ...(this.toDate && {
                     to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
                 }),
+                max_upcoming_hours: 1,
             };
             if (this.isFavPage) {
                 return async (offset, limit) => {
