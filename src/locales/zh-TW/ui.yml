@@ -428,7 +428,7 @@ views:
   tlClient:
     menu:
       title: 選單
-      setting: TLDex 房間設定
+      setting: TLDex 設定
       loadVideo: 顯示影片
       unloadVideo: 隱藏影片
       loadChat: 將聊天室的訊息新增至翻譯室中
