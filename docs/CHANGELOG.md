@@ -32,6 +32,7 @@ Thanks to sqrtNOT for setting up Holodex - YT-DLP integration - apparently it wo
 
 #### Patches
 
+- Fixed rare issue where members-only videos can not be played on Holodex.
 - Stats on the about page now animate.
 - Video card menus now open bottom left just to make it slightly less buggy.
 - Video comment Highlights now has timestamp on hover.
