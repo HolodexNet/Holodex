@@ -15,9 +15,9 @@
         :disabled="$vuetify.breakpoint.xs"
         class="justify-space-between d-flex flex-grow-1 mx-n2"
       >
-        <v-btn text icon to="/login#calendar">
+        <!-- <v-btn text icon to="/login#calendar">
           <v-icon>{{ mdiCalendar }}</v-icon>
-        </v-btn>
+        </v-btn> -->
 
         <v-menu
           :close-on-content-click="false"
