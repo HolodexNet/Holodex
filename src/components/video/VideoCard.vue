@@ -77,21 +77,29 @@
             {{ formattedDuration }}
           </div>
         </div>
-        <div v-else class="d-flex flex-column align-end ">
+        <div v-else class="d-flex flex-column align-end">
           <!-- (👻✅) -->
           <div class="video-duration">
-            <span v-if="data.placeholderType === 'scheduled-yt-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeScheduledYT') }}</span>
-            <span v-else-if="data.placeholderType === 'external-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeExternalStream') }}</span>
-            <span v-else-if="data.placeholderType === 'event'" class="hover-placeholder">{{ $t('component.videoCard.typeEventPlaceholder') }}</span>
-            <v-icon
-              color="white"
-              class="rounded-sm"
-            >
-
-              {{ twitchPlaceholder ? mdiTwitch : placeholderIconMap[data.placeholderType] }}
+            <span
+              v-if="data.placeholderType === 'scheduled-yt-stream'"
+              class="hover-placeholder"
+            >{{ $t("component.videoCard.typeScheduledYT") }}</span>
+            <span
+              v-else-if="data.placeholderType === 'external-stream'"
+              class="hover-placeholder"
+            >{{ $t("component.videoCard.typeExternalStream") }}</span>
+            <span
+              v-else-if="data.placeholderType === 'event'"
+              class="hover-placeholder"
+            >{{ $t("component.videoCard.typeEventPlaceholder") }}</span>
+            <v-icon color="white" class="rounded-sm">
+              {{
+                twitchPlaceholder
+                  ? mdiTwitch
+                  : placeholderIconMap[data.placeholderType]
+              }}
             </v-icon>
           </div>
-
         </div>
       </div>
       <v-img
@@ -101,7 +109,9 @@
         width="100%"
         :transition="false"
         class="rounded"
-        :class="{'hover-opacity': data.placeholderType === 'scheduled-yt-stream'}"
+        :class="{
+          'hover-opacity': data.placeholderType === 'scheduled-yt-stream',
+        }"
       />
       <v-img
         v-else-if="!horizontal && shouldHideThumbnail"
@@ -117,20 +127,23 @@
     >
       <!-- Channel icon -->
       <div
-        v-if="denseList || (includeChannel && includeAvatar && !horizontal && data.channel)"
+        v-if="
+          denseList ||
+            (includeChannel && includeAvatar && !horizontal && data.channel)
+        "
         class="d-flex align-self-center mx-2 flex-column d-flex"
       >
-        <ChannelImg
-          :channel="data.channel"
-          rounded
-          class="align-self-center"
-        />
+        <ChannelImg :channel="data.channel" rounded class="align-self-center" />
       </div>
       <!-- Three lines for title, channel, available time -->
       <div class="d-flex video-card-lines flex-column">
         <!-- Video title -->
         <div
-          :class="['video-card-title ', { 'video-watched': hasWatched }, {'mt-2' : !horizontal && !denseList}]"
+          :class="[
+            'video-card-title ',
+            { 'video-watched': hasWatched },
+            { 'mt-2': !horizontal && !denseList },
+          ]"
           :title="title"
           style="user-select: text"
           :style="{
@@ -148,10 +161,14 @@
                 data.type === 'stream' || data.channel.type === 'vtuber',
             }"
             :href="`/channel/${data.channel.id}`"
-            :title=" data.channel.name +
-              (data.channel.english_name ? `\nEN: ${data.channel.english_name}` : '') +
-              (data.channel.org ? `\n> ${data.channel.org}` : '') +
-              (data.channel.group ? `\n> ${data.channel.group}` : '') "
+            :title="
+              data.channel.name +
+                (data.channel.english_name
+                  ? `\nEN: ${data.channel.english_name}`
+                  : '') +
+                (data.channel.org ? `\n> ${data.channel.org}` : '') +
+                (data.channel.group ? `\n> ${data.channel.group}` : '')
+            "
             @click.exact.stop.prevent="goToChannel(data.channel.id)"
           >
             {{ channelName }}
@@ -163,7 +180,9 @@
             {{ formattedTime }}
           </span>
           <!-- (👻❌) -->
-          <template v-if="data.clips && data.clips.length > 0 && !isPlaceholder">
+          <template
+            v-if="data.clips && data.clips.length > 0 && !isPlaceholder"
+          >
             •
             <span class="primary--text">
               {{
@@ -191,7 +210,6 @@
       <!-- Vertical dots menu -->
       <v-menu
         v-model="showMenu"
-        attach
         bottom
         left
         :close-on-content-click="false"
@@ -238,7 +256,11 @@
     </v-list-item-action>
 
     <!-- 👻👻👻 Placeholder MODAL 👻👻👻 -->
-    <placeholder-card v-if="placeholderOpen" v-model="placeholderOpen" :video="data" />
+    <placeholder-card
+      v-if="placeholderOpen"
+      v-model="placeholderOpen"
+      :video="data"
+    />
   </a>
 </template>
 
@@ -425,7 +447,9 @@ export default {
                 return `/statics/thumbnail/default/${n}.jpg`;
             }
             if (this.data.type === "placeholder") {
-                return `/statics/channelImg/${this.data.channel_id || this.data.channel.id}.png`;
+                return `/statics/channelImg/${
+                    this.data.channel_id || this.data.channel.id
+                }.png`;
             }
             const srcs = getVideoThumbnails(this.data.id, useWebP);
             if (this.horizontal) return srcs.medium;
@@ -476,7 +500,9 @@ export default {
         },
         href() {
             if (this.isPlaceholder) return undefined;
-            return this.redirectMode ? `https://youtu.be/${this.data.id}` : this.watchLink;
+            return this.redirectMode
+                ? `https://youtu.be/${this.data.id}`
+                : this.watchLink;
         },
         twitchPlaceholder() {
             return this.data.link?.includes("twitch.tv");
@@ -493,10 +519,14 @@ export default {
             .catch((err) => {
                 console.error(err);
             });
-        if (!this.updatecycle && this.data.status === "live") { this.updatecycle = setInterval(this.updateNow, 1000); }
+        if (!this.updatecycle && this.data.status === "live") {
+            this.updatecycle = setInterval(this.updateNow, 1000);
+        }
     },
     activated() {
-        if (!this.updatecycle && this.data.status === "live") { this.updatecycle = setInterval(this.updateNow, 1000); }
+        if (!this.updatecycle && this.data.status === "live") {
+            this.updatecycle = setInterval(this.updateNow, 1000);
+        }
     },
     deactivated() {
         if (this.updatecycle) {
@@ -526,7 +556,8 @@ export default {
 
             if (this.disableDefaultClick) return;
             if (this.isPlaceholder) {
-                this.openPlaceholder(); return;
+                this.openPlaceholder();
+                return;
             }
             // On mobile, clicking on watch links should not increment browser history
             // Back button will always return to the originating video list in one click
@@ -537,7 +568,12 @@ export default {
             }
         },
         onThumbnailClicked(e) {
-            if (this.isPlaceholder && this.data.placeholderType === "external-stream" && this.data.link && !this.disableDefaultClick) {
+            if (
+                this.isPlaceholder
+                && this.data.placeholderType === "external-stream"
+                && this.data.link
+                && !this.disableDefaultClick
+            ) {
                 e.preventDefault();
                 window.open(this.data.link, "_blank", "noopener");
                 return;
@@ -587,7 +623,9 @@ export default {
                     break;
             }
             if (toIdx < 0) throw new Error("can't move stuff before 0");
-            if (toIdx >= playlist.videos.length) { throw new Error("can't move stuff to beyond the end"); }
+            if (toIdx >= playlist.videos.length) {
+                throw new Error("can't move stuff to beyond the end");
+            }
             this.$store.commit("playlist/reorder", { from: curIdx, to: toIdx });
         },
     },
@@ -690,7 +728,7 @@ export default {
   opacity: 0.6;
 }
 .video-card:hover .hover-opacity {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .video-duration {
