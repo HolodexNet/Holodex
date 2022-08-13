@@ -229,7 +229,9 @@ export default {
         favoritesCalendarURL() {
             const { user } = this.$store.state.userdata;
 
-            if (!user.api_key) { return `You need an API Key. Click${this.$t("views.login.apikeyNew")}`; }
+            if (!user.api_key) {
+                return `You need an API Key. Click${this.$t("views.login.apikeyNew")}`;
+            }
             const params = {
                 key: user.api_key || "",
                 ...(this.preferEnglishName ? { preferEnglishName: 1 } : null),
