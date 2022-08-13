@@ -59,7 +59,7 @@
       </v-list-item>
 
       <v-divider v-if="user && !inNavDrawer" />
-      <v-list-item v-if="user && !inNavDrawer" to="/login" link>
+      <v-list-item v-if="user && !inNavDrawer && $route.name !== 'login'" to="/login" link>
         <v-list-item-icon>
           <v-icon>{{ icons.mdiAccountCircleOutline }}</v-icon>
         </v-list-item-icon>
@@ -80,7 +80,7 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/login#calendar">
+      <v-list-item v-if="$route.name !== 'login'" to="/login#calendar" link>
         <v-list-item-icon>
           <v-icon>{{ mdiCalendar }}</v-icon>
         </v-list-item-icon>

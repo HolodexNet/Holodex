@@ -130,6 +130,7 @@
         </v-card-text>
         <v-divider />
         <v-card-text id="calendar">
+          iCal Feed for tracking streams on your Apple Calendar
           <calendar-usage
             :initial-query="initialQueryForCalendar"
           />
