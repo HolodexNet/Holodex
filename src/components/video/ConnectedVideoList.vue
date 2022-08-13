@@ -398,13 +398,18 @@ export default {
             this.init();
         },
         getLoadFn() {
+            let inclusion = "";
+            if (this.tab === this.Tabs.ARCHIVE) inclusion = "mentions,clips";
+            else if (this.tab === this.Tabs.LIVE_UPCOMING) inclusion = "mentions";
+
             const query = {
                 status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                include: "clips",
+                include: inclusion,
                 lang: this.$store.state.settings.clipLangs.join(","),
                 paginated: !this.scrollMode,
-                to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
+                ...(this.toDate && {
+                    to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
+                }),
             };
             if (this.isFavPage) {
                 return async (offset, limit) => {
