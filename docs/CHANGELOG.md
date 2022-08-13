@@ -36,6 +36,8 @@ Thanks to sqrtNOT for setting up Holodex - YT-DLP integration - apparently it wo
 - Video card menus now open bottom left just to make it slightly less buggy.
 - Video comment Highlights now has timestamp on hover.
 
+![img](./tldex_layout.jpg)
+
 ---
 
 ### 2.27.2 Holodex [*April 25th, 2022*]
