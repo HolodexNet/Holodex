@@ -86,7 +86,7 @@
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>
-            Calendar Feed
+            iCal Feed
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
