@@ -404,6 +404,7 @@ export default {
 
             const query = {
                 status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
+                ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
                 include: inclusion,
                 lang: this.$store.state.settings.clipLangs.join(","),
                 paginated: !this.scrollMode,
