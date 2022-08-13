@@ -7,7 +7,7 @@
     </v-row>
     <v-row class="justify-end" style="margin-bottom: -10px">
       <v-col class="py-1">
-        <v-menu
+        <!-- <v-menu
           :key="filter_type + filter_sort + id + executedQuery"
           :close-on-content-click="false"
           offset-y
@@ -24,7 +24,7 @@
             :initial-query="executedQuery"
             :show-favorites-calendar="false"
           />
-        </v-menu>
+        </v-menu> -->
       </v-col>
       <v-col sm="4" md="2" class="py-1">
         <v-select
@@ -94,7 +94,6 @@ import isActive from "@/mixins/isActive";
 import SearchForm from "@/components/search/SearchForm.vue";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
-import CalendarUsage from "@/components/calendar/CalendarUsage.vue";
 import { mdiCalendar } from "@mdi/js";
 
 export default {
@@ -104,7 +103,6 @@ export default {
         SearchForm,
         GenericListLoader,
         SkeletonCardList,
-        CalendarUsage,
     },
     mixins: [isActive],
     metaInfo() {
