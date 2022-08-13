@@ -213,6 +213,7 @@ views:
     sort:
       newest: 新增日期（最新）
       oldest: 新增日期（最舊）
+      longest: 時長最長
     type:
       all: 全部
       official: 官方

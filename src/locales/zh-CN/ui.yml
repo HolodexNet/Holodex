@@ -214,6 +214,7 @@ views:
     sort:
       newest: 最新的
       oldest: 最早的
+      longest: 最长
     type:
       all: 全部
       official: 官方

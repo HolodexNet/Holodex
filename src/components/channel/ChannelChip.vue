@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { resizeChannelPhoto } from "@/utils/functions";
+import { getChannelPhoto } from "@/utils/functions";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 
 export default {
@@ -88,8 +88,7 @@ export default {
             return this.channel.name;
         },
         photo() {
-            if (!this.channel.photo) return "";
-            return resizeChannelPhoto(this.channel.photo, this.size);
+            return getChannelPhoto(this.channel.id, this.size);
         },
     },
 };

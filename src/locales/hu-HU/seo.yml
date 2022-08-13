@@ -6,7 +6,7 @@ music:
     Hallgass hivatalos dalokat és karaoke streameket, a közösség által tagelve a Holodex zenelejátszóban.
 channel:
   normal:
-    title: '{{english_name}} Klippek, Streamek, Zene és Kollaborációk - Holodex'
+    title: '{{english_name}} Klippek, Streamek, Zene és Vendégszereplések - Holodex'
     description: >-
       Találhatsz {{clip_count}} klippet, {{video_count}} streamet {{english_name}}-tól/től. Add hozzá a Holodex kedvenceidhez, hogy értesülj róla amikor streamelnek.
     descriptionWithTopic: >-

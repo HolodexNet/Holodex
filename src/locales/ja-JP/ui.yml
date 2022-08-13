@@ -214,6 +214,7 @@ views:
     sort:
       newest: 新しい順
       oldest: 古い順
+      longest: 長い順
     type:
       all: すべて
       official: 公式
