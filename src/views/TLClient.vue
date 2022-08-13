@@ -99,7 +99,7 @@
             v-if="!isLoading"
             :tl-lang="TLLang.value"
             :tl-client="true"
-            :video="mainLinkIsCustom ? { id: mainStreamLink } : video"
+            :video="mainLinkIsCustom ? { id: 'custom', custom_video_id: mainStreamLink } : video"
             :class="{
               'stick-bottom': $store.state.settings.liveTlStickBottom,
               'tl-full-height': false,
