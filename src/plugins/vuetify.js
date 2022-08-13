@@ -20,6 +20,7 @@ export const langs = [
     { val: "lol-PEKO", display: "English (PEKO)", credit: "Doubleturtle#3660" },
     { val: "ja", display: "日本語", credit: "Yourein#3960,Saginomiya#2353" },
     { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
+    { val: "zh-CN", display: "简体中文", credit: "ttg#6038" },
     { val: "ko", display: "한국어", credit: "AlexKoala#0253" },
     { val: "es-ES", display: "Español España", credit: "TraduSquare (Darkc0m y D3fau4)" },
     { val: "es", display: "Español Latino", credit: "Aldo#3682" },
@@ -56,6 +57,10 @@ export const asyncLang = {
     async zh() {
         await import("dayjs/locale/zh-tw");
         return import("@/locales/zh-TW/ui.yml");
+    },
+    "zh-CN": async () => {
+        await import("dayjs/locale/zh-cn");
+        return import("@/locales/zh-CN/ui.yml");
     },
     async es() {
         await import("dayjs/locale/es");
@@ -168,6 +173,7 @@ const dayjsName = {
     "en-CA": "en-ca",
     "en-GB": "en-gb",
     zh: "zh-tw",
+    "zh-CN": "zh-cn",
     "es-ES": "es",
     pt: "pt-br",
     "lol-UWU": "en",

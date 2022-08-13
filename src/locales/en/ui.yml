@@ -51,6 +51,9 @@ component:
     typeScheduledYT: Scheduled Stream
     typeExternalStream: External Stream
     typeEventPlaceholder: Scheduled Event
+    openClient: Open TL Client
+    openScriptEditor: Open Script Editor
+    uploadScript: Upload TL Script
   videoDescription:
     description: Description
   video:
@@ -225,6 +228,7 @@ views:
     sort:
       newest: Newest
       oldest: Oldest
+      longest: Longest
     type:
       all: All
       official: Official
@@ -318,9 +322,23 @@ views:
       archiveNeedExtension: >-
         Archive chat does not work without the {0} extension or other third
         party extensions.
+      hideSpoiler: Hide Spoiler
     removeFromPlaylist: Remove video from current playlist
     saveToPlaylist: Save video to current playlist
     likeOnYoutube: Like video on Youtube
+    uploadPanel:
+      title: Upload Script
+      usernameText: TL will be uploaded under username
+      usernameChange: Change
+      tlLang: TL Language
+      headerStart: Start
+      headerEnd: End
+      headerText: Text
+      cancelBtn: Cancel
+      okBtn: Ok
+      notifTextErr: UNABLE TO PARSE THE FILE (FILE CORRUPTED?)
+      notifTextParsing: Parsing file...
+      notifTextErrExt: Unrecognized file extension.
   favorites:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on
@@ -359,6 +377,11 @@ views:
       - Login with Google
       - Login with Discord
       - Login with Twitter
+    username: Username
+    usernameBtn:
+      - Change
+      - Confirm
+      - Save
   multiview:
     confirmOverwrite: Overwrite current layout?
     confirmOverwriteYes: Confirm
@@ -437,6 +460,77 @@ views:
       four: >-
         Fixes experimental flags on Youtube player (Like disabling multiple
         streams, waiting room thumbnail not showing) and more!
+  tlClient:
+    menu:
+      title: Menu
+      setting: TLDex Room Settings
+      loadVideo: Show Video
+      unloadVideo: Hide Video
+      loadChat: Add YT Chat to Broadcast TL
+      unloadChat: Detach from YT Chat
+    tlControl:
+      enterBtn: Enter
+      prefix: Prefix
+      suffix: Suffix
+      fontColour: Font Colour
+      outlineColour: Outline Colour
+      localPrefix: Language Tag in Chat
+      addProfile: Add Profile
+      removeProfile: Remove Profile
+      shiftUp: Shift Profile Up
+      shiftDown: Shift Profile Down
+      showSetting: Setting
+      hideSetting: Hide
+    addProfilePanel:
+      title: Add New Profile
+      inputLabel: Profile Name
+    settingPanel:
+      title: Setting
+      mainStreamLink: Main Stream Link
+      collabLink: Collab Links
+    removeProfileTitle: Confirm remove profile
+    loadChatPanel:
+      title: Load Chat
+      inputLabel: Stream Link
+    unloadChatTitle: Unload ALL active chat?
+    pangram: The quick brown fox jumps over the lazy dog
+    cancelBtn: Cancel
+    okBtn: Ok
+  scriptEditor:
+    menu:
+      save: Save
+      continuousEnd: Make Time Continuous (change end)
+      clearAll: Delete Script
+      exportFile: Export File
+      importFile: Import File
+      editorMode: Editor Mode
+    table:
+      headerStart: Start
+      headerEnd: End
+      headerProfile: Profile
+      headerText: Text
+      setAsStart: Set as start
+      shiftCurrentTime: Shift to current time
+      deleteEntry: Delete entry
+    loadVideoPanel:
+      title: Load Video
+      inputLabel: Stream Link
+    setStartTitle: Set selected entry as start, all the previous entries will be deleted.
+    importFile:
+      overwriteBtn: Overwrite
+    editorModePanel:
+      activateMode: Activate Editor Mode
+      deactivateMode: Deactivate Editor Mode
+      roleWarning: You don't have enough privilege
+      filterTranslator: Filter translator
+  tlManager:
+    title: Script Manager
+    headerID: Video ID
+    headerEntries: Entries
+    download: Download
+    delete: Delete
+    deleteTitle: Delete Entries
+    langPick: Language
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})

@@ -52,6 +52,9 @@ component:
     typeScheduledYT: 予定されている配信
     typeExternalStream: 外部配信
     typeEventPlaceholder: 予定されたイベント
+    openClient: ライブラリを開く
+    openScriptEditor: スクリプトエディターを開く
+    uploadScript: ライブラリスクリプトをアップロードする
   videoDescription:
     description: 概要
   video:
@@ -211,6 +214,7 @@ views:
     sort:
       newest: 新しい順
       oldest: 古い順
+      longest: 長い順
     type:
       all: すべて
       official: 公式
@@ -298,9 +302,23 @@ views:
         disconnectedToChat: 切断しました
       archiveNeedExtension: >-
         アーカイブチャットは {0} 拡張機能または他のサードパーティ拡張機能なしでは動作しません。
+      hideSpoiler: ネタバレを隠す
     removeFromPlaylist: 現在のプレイリストから動画を削除
     saveToPlaylist: 現在のプレイリストに動画を保存
     likeOnYoutube: YouTubeで動画に高評価を付ける
+    uploadPanel:
+      title: スクリプトをアップロード
+      usernameText: 翻訳はこのユーザー名の下でアップロードされます
+      usernameChange: 変更
+      tlLang: 翻訳言語
+      headerStart: 開始
+      headerEnd: 終了
+      headerText: テキスト
+      cancelBtn: キャンセル
+      okBtn: 完了
+      notifTextErr: ファイルの解析に失敗しました (ファイルが破損している?)
+      notifTextParsing: ファイルを解析中...
+      notifTextErrExt: 開けない拡張子です。
   favorites:
     promptForAction: >-
       お気に入りのVtuberリストを作るとそのページでお気に入りしたVtuberの最新動画を確認できます。
@@ -333,6 +351,11 @@ views:
       - Googleでログイン
       - Discordでログイン
       - Twitterでログイン
+    username: ユーザー名
+    usernameBtn:
+      - 更新
+      - 確認
+      - 保存
   multiview:
     confirmOverwrite: 既存のレイアウトを上書きしてもよろしいですか？
     confirmOverwriteYes: 確認
@@ -403,6 +426,77 @@ views:
       three: Youtube のライブチャットのメモリリークを修正
       four: >-
         Youtube プレイヤーの実験的フラグ (複数の配信を再生できない、待合室のサムネイルが表示されない) を修正、などなど!
+  tlClient:
+    menu:
+      title: メニュー
+      setting: ライブラリの設定
+      loadVideo: 動画を表示
+      unloadVideo: 動画を隠す
+      loadChat: 配信ライブラリにチャットを追加する
+      unloadChat: チャットを切断
+    tlControl:
+      enterBtn: 観る
+      prefix: 最初に挿入する
+      suffix: 終わりに挿入する
+      fontColour: 文字色
+      outlineColour: 縁取りの色
+      localPrefix: チャットの言語タグ
+      addProfile: プロフィールを追加
+      removeProfile: プロフィールを削除
+      shiftUp: プロフィールを編集する
+      shiftDown: 変更を確定する
+      showSetting: 設定
+      hideSetting: 非表示
+    addProfilePanel:
+      title: プロフィールを追加
+      inputLabel: プロフィール名
+    settingPanel:
+      title: 設定
+      mainStreamLink: メインの配信のリンク
+      collabLink: コラボのリンク
+    removeProfileTitle: プロフィールの削除確認
+    loadChatPanel:
+      title: チャットを読み込む
+      inputLabel: 配信へのリンク
+    unloadChatTitle: すべてのアーカイブチャットを破棄しますか？
+    pangram: あのイーハトーヴォのすきとおった風
+    cancelBtn: キャンセル
+    okBtn: 完了
+  scriptEditor:
+    menu:
+      save: 保存
+      continuousEnd: 終点の作成
+      clearAll: スクリプトの消去
+      exportFile: エクスポート
+      importFile: インポート
+      editorMode: エディターモード
+    table:
+      headerStart: 開始
+      headerEnd: 終了
+      headerProfile: プロフィール
+      headerText: テキスト
+      setAsStart: スタート位置に設定
+      shiftCurrentTime: 現在の再生時間を設定
+      deleteEntry: 項目を削除
+    loadVideoPanel:
+      title: 動画を読み込む
+      inputLabel: 配信へのリンク
+    setStartTitle: 選択した項目を開始位置として設定します。以前の項目はすべて削除されます。
+    importFile:
+      overwriteBtn: 上書き保存
+    editorModePanel:
+      activateMode: エディターモードを有効にする
+      deactivateMode: エディターモードを無効にする
+      roleWarning: この項目を編集する権限がありません。
+      filterTranslator: 翻訳者をフィルタ
+  tlManager:
+    title: スクリプトマネージャー
+    headerID: 動画ID
+    headerEntries: 項目
+    download: ダウンロード
+    delete: 削除
+    deleteTitle: 項目を削除
+    langPick: 言語
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'

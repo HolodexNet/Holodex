@@ -49,6 +49,11 @@
             hide-details
           />
           <v-switch
+            v-model="liveTlHideSpoiler"
+            :label="$t('views.watch.chat.hideSpoiler')"
+            hide-details
+          />
+          <v-switch
             v-model="liveTlStickBottom"
             class="mb-1"
             :label="$t('views.watch.chat.StickBottomSettingLabel')"
@@ -123,6 +128,7 @@ export default {
             "liveTlShowLocalTime",
             "liveTlShowVtuber",
             "liveTlShowSubtitle",
+            "liveTlHideSpoiler",
         ]),
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];

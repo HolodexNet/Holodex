@@ -21,6 +21,7 @@ import multiview from "./multiview.module";
 import playlist from "./playlist.module";
 import history from "./history.module";
 import orgs from "./orgs.module";
+import tlclient from "./tlclient.module";
 import { migrations, VUEX_STATE_VERSION } from "./migrations";
 // import socket from "./socket.module";
 
@@ -73,6 +74,9 @@ function defaultState() {
 
         // Document.visiblityState (eg. backgrounded)
         visibilityState: null,
+
+        // Upload global bus
+        uploadPanel: false,
     };
 }
 
@@ -187,6 +191,9 @@ export default new Vuex.Store({
         setVisiblityState(state, val) {
             state.visibilityState = val;
         },
+        setUploadPanel(state, obj) {
+            state.uploadPanel = obj;
+        },
     },
     actions: {
         checkActiveSockets({ state }) {
@@ -252,6 +259,7 @@ export default new Vuex.Store({
         playlist,
         history,
         orgs,
+        tlclient,
         // socket,
     },
 });

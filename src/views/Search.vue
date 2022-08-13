@@ -6,6 +6,26 @@
       </v-col>
     </v-row>
     <v-row class="justify-end" style="margin-bottom: -10px">
+      <v-col class="py-1">
+        <!-- <v-menu
+          :key="filter_type + filter_sort + id + executedQuery"
+          :close-on-content-click="false"
+          offset-y
+          left
+          :min-width="isMobile ? '100%' : '600px'"
+          max-width="600px"
+        >
+          <template #activator="{ on, attrs }">
+            <v-btn v-bind="attrs" plain v-on="on">
+              <v-icon>{{ mdiCalendar }}</v-icon> Subscribe to Live Calendar
+            </v-btn>
+          </template>
+          <CalendarUsage
+            :initial-query="executedQuery"
+            :show-favorites-calendar="false"
+          />
+        </v-menu> -->
+      </v-col>
       <v-col sm="4" md="2" class="py-1">
         <v-select
           v-model="filter_sort"
@@ -74,6 +94,7 @@ import isActive from "@/mixins/isActive";
 import SearchForm from "@/components/search/SearchForm.vue";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
+import { mdiCalendar } from "@mdi/js";
 
 export default {
     name: "Search",
@@ -122,6 +143,14 @@ export default {
                             order: "asc",
                         },
                     },
+                    {
+                        text: this.$t("views.search.sort.longest"),
+                        value: "longest",
+                        query_value: {
+                            sort: "duration",
+                            order: "desc",
+                        },
+                    },
                 ],
                 type: [
                     {
@@ -146,6 +175,7 @@ export default {
                 ],
             },
             pageLength: 30,
+            mdiCalendar,
         };
     },
     computed: {
@@ -183,7 +213,10 @@ export default {
                 const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
                     sort: self.filter_sort,
                     lang: self.$store.state.settings.clipLangs,
-                    target: self.filter_type === "all" ? ["stream", "clip"] : [self.filter_type],
+                    target:
+                        self.filter_type === "all"
+                            ? ["stream", "clip"]
+                            : [self.filter_type],
                     conditions: [],
                     topic: [],
                     vch: [],
@@ -212,6 +245,9 @@ export default {
                     })
                     .then((x) => x.data);
             };
+        },
+        isMobile() {
+            return this.$store.state.isMobile;
         },
     },
     watch: {
@@ -253,8 +289,12 @@ export default {
     },
     methods: {
         syncFilters() {
-            this.filter_sort = this.query.sort ? this.query.sort.toLowerCase() : this.options.defaults.sort;
-            this.filter_type = this.query.type ? this.query.type.toLowerCase() : this.options.defaults.type;
+            this.filter_sort = this.query.sort
+                ? this.query.sort.toLowerCase()
+                : this.options.defaults.sort;
+            this.filter_type = this.query.type
+                ? this.query.type.toLowerCase()
+                : this.options.defaults.type;
         },
     },
 };

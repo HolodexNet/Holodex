@@ -52,10 +52,11 @@ component:
     typeScheduledYT: Stream Terjadwal
     typeExternalStream: Stream Eksternal
     typeEventPlaceholder: Acara Terjadwal
+    openClient: Buka TL Client
+    openScriptEditor: Buka Editor Naskah
+    uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -281,7 +282,7 @@ views:
       expandTL: Menampilkan kolom TLdex
       tlStart: Pesan Awal
       StickBottomSettingLabel: Sematkan Dibawah
-      StickBottomSettingsDesc: Kolom TL akan diletakkan dibawah Chat Youtube
+      StickBottomSettingsDesc: Kolom TL akan diletakkan di bawah Chat Youtube
       showVerifiedMessages: Menampilkan Pesan Pengguna yang Terverifikasi
       showModeratorMessages: Menampilkan Pesan Moderator
       showVtuberMessages: Menampilkan Pesan Vtuber
@@ -298,9 +299,23 @@ views:
         disconnectedToChat: Terputus
       archiveNeedExtension: >-
         Arsip obrolan tidak dapat bekerja tanpa ekstensi {0} atau ekstensi pihak ketiga lainnya.
+      hideSpoiler: Sembunyikan Spoiler
     removeFromPlaylist: Hapus video dari playlist ini
     saveToPlaylist: Simpan video ke playlist ini
     likeOnYoutube: Suka video ini di Youtube
+    uploadPanel:
+      title: Unggah Naskah
+      usernameText: TL akan diunggah di bawah nama pengguna
+      usernameChange: Ubah
+      tlLang: Bahasa TL
+      headerStart: Mulai
+      headerEnd: Akhir
+      headerText: Teks
+      cancelBtn: Batal
+      okBtn: Oke
+      notifTextErr: GAGAL MEMUAT BERKAS (BERKAS RUSAK?)
+      notifTextParsing: Memuat berkas...
+      notifTextErrExt: Ekstensi berkas tidak dikenali.
   favorites:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada halaman ini.
@@ -333,6 +348,11 @@ views:
       - Masuk dengan Google
       - Masuk dengan Discord
       - Masuk dengan Twitter
+    username: Nama Pengguna
+    usernameBtn:
+      - Ubah
+      - Konfirmasi
+      - Simpan
   multiview:
     confirmOverwrite: Ubah tataletak yang sekarang?
     confirmOverwriteYes: Konfirmasi
@@ -403,6 +423,69 @@ views:
       three: Memperbaiki pembekakan memori dari kolom obrolan Youtube
       four: >-
         Memperbaiki flags eksperimental pada pemutar Youtube (Seperti menonaktifkan siaran multi, thumbnail ruang tunggu tidak tampil) dan masih banyak lagi!
+  tlClient:
+    menu:
+      title: Menu
+    tlControl:
+      enterBtn: Masukkan
+      prefix: Awalan
+      suffix: Akhiran
+      fontColour: Warna Font
+      outlineColour: Warna Outline
+      addProfile: Tambah Profil
+      removeProfile: Hapus Profil
+      showSetting: Pengaturan
+      hideSetting: Sembunyikan
+    addProfilePanel:
+      title: Tambah Profil Baru
+      inputLabel: Nama Profil
+    settingPanel:
+      title: Pengaturan
+      mainStreamLink: Tautan Utama Siaran
+      collabLink: Tautan Kolaborasi
+    removeProfileTitle: Konfirmasi hapus profil
+    loadChatPanel:
+      title: Muat Chat
+      inputLabel: Tautan Siaran
+    unloadChatTitle: Sembunyikan SEMUA chat aktif?
+    pangram: The quick brown fox jumps over the lazy dog
+    cancelBtn: Batal
+    okBtn: Oke
+  scriptEditor:
+    menu:
+      save: Simpan
+      continuousEnd: Jadikan Waktu Berkelanjutan (ubah akhir)
+      clearAll: Hapus Naskah
+      exportFile: Ekspor Berkas
+      importFile: Impor Berkas
+      editorMode: Mode Edit
+    table:
+      headerStart: Awal
+      headerEnd: Akhir
+      headerProfile: Profil
+      headerText: Teks
+      setAsStart: Atur sebagai awal
+      shiftCurrentTime: Pindah ke waktu sekarang
+      deleteEntry: Hapus entri
+    loadVideoPanel:
+      title: Muat Video
+      inputLabel: Tautan Siaran
+    setStartTitle: Gunakan entri terpilih sebagai awal, semua entri sebelumnya akan dihapus.
+    importFile:
+      overwriteBtn: Timpa
+    editorModePanel:
+      activateMode: Aktifkan Mode Edit
+      deactivateMode: Matikan Mode Edit
+      roleWarning: Anda tidak memiliki hak
+      filterTranslator: Saring penerjemah
+  tlManager:
+    title: Pengelola Naskah TL
+    headerID: ID Video
+    headerEntries: Entri
+    download: Unduh
+    delete: Hapus
+    deleteTitle: Hapus Entri
+    langPick: Bahasa
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})

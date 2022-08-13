@@ -1,16 +1,57 @@
 ### Changelog
 
+##### Unreleased
 
+- Development of Vue3 Holodex (release 3.0 ?!?!) is underway... If you like to influence how it looks, now is the best time to let us know.
 
-#### Unreleased
-- iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
+### 2.28 Holodex [*August 13th, 2022*]
+
+Whew. Devs and contributors have been busy at work, playing games, watching vtubers, so we kinda worked on a **ton** of features. It's been four months, did you miss the patch notes?
+
+#### Announcement / お知らせ
+
+##### Mchad / TLdex Merge
+
+**MChad**, an awesome fan-made TLing toolkit and service platform developed by _MonMon Mnemonics#7124_ have been merged into Holodex's TLDex functionality. Many amazing and dedicated fan TLers have been already using it to deliver translations to TLdex and Youtube Chat + other services, and we're happy to be moving this feature into production. He has gone into Postdoc studies. We will be taking over much of the responsibility in maintainance and development while he's unsurprisingly busy with Postdoc things. MonMon will still manage the MChad discord bot which delivers TLs to numerous discord fan servers.
+
+For the specifics on this merge, please take a look at the image attached at the bottom of this release.
+
+##### [Raycast](https://www.raycast.com/uetchy/holodex)
+
+Raycast now support holodex integration! Thank you @uetchy for creating it.
+
+##### [Youtube DLP](https://github.com/yt-dlp/yt-dlp/pull/4434)
+
+Thanks to sqrtNOT for setting up Holodex - YT-DLP integration - apparently it works for holodex playlists as well?
+
+#### New Features
+
+- TLdex can now **hide spoilers** (essentially upcoming TL messages that haven't happened yet) when watching **Archived VODs**.
+- iCal Calendar: offers subscribable calendars for upcoming streams & events (@uetchy)
+- Addition of Kobo theme, very blue.
+
+#### Patches
+
+- Fixed rare issue where members-only videos can not be played on Holodex.
+- Stats on the about page now animate.
+- Video card menus now open bottom left just to make it slightly less buggy.
+- Video comment Highlights now has timestamp on hover.
+
+![img](./tldex_layout.jpg)
+
+---
+
+### 2.27.2 Holodex [*April 25th, 2022*]
+
+Minor Patch with nothing of note.
 
 ### 2.27.1 Holodex & Musicdex [*April 6, 2022*]
 
 > 💬: Hope everyone enjoyed April Fools peko.
 
 #### Bugfixes:
-- Better Multiview channel scrolling. 
+
+- Better Multiview channel scrolling.
 - Fixes TLDex subtitles not wrapping to multiple lines for long TLs.
 - Created a new UI for making requests about Channels (VTubers and Clippers).
 - Updated Pekora theme colors a little
@@ -21,7 +62,9 @@
 It's been a whole month since our last update! There's a ton of changes, a ton of new vtubers, and we're so excited to finally release this update.
 
 #### New Features
+
 - **Musicdex is released**! Please [check it out](https://music.holodex.net/). We'd like to thank the main designers **Madekuji-san** & **Uetchy** for the wonderful UX design direction.
+
   - Localization Credits:
     - JP: Saginomiya & ぴーまん
     - Indonesian: alcyneous
@@ -35,10 +78,13 @@ It's been a whole month since our last update! There's a ton of changes, a ton o
 - With new features surely there's a ton of new bugs, let us know how you feel on twitter and discord.
 
 ### 2.26 Holodex [*Feb 21, 2022*]
+
 💬:
-> Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you are experienced in *React* (Hooks and Functional Components), and don't need micromanaging, we want your help! We are preparing for beta test. Stay tuned
+
+> Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you are experienced in _React_ (Hooks and Functional Components), and don't need micromanaging, we want your help! We are preparing for beta test. Stay tuned
 
 #### New
+
 - Multiview now shows twitch streams in the top header
 - Added a condensed list view (Thanks [Niwsters](https://github.com/Niwsters)!)
 - Added button to home page to change view type from small, medium, large grid, list and condensed list
@@ -46,58 +92,62 @@ It's been a whole month since our last update! There's a ton of changes, a ton o
 - Added global option to hide placeholders
 
 #### Minor changes
+
 - Modifies the "Add Music" menu for video edit pages. You should find it incredibly easy to label music.
 - Archive TL can now be temporally adjusted using the power of Kronii. (Offset TL timestamps to show up earlier/later)
-- Sorted Live frames above other (even future) frames on Streamers' channel pages. 
+- Sorted Live frames above other (even future) frames on Streamers' channel pages.
 - Video Grid sizes are now applicable to also Channel pages.
 - Clicking on a twitch placeholder thumbnail opens to twitch and has it's own icon
 - Home page tabs stick while scrolling
 - TLdex shows blocked message count
 
 #### Bugfixes:
+
 - Github/@Ailre contributed a nice PR [#532](https://github.com/RiceCakess/Holodex/pull/532) for those really long video topics on mobile (Thank you!)
 - Placeholders now properly use JP titles (if available) if you have Use English Names turned off.
 - Fix TLdex not loading more messages
 - Fix multiview tldex not updating
 - Fix time rounding issue with multiview and video cards
 
-
-
 ### 2.25.3 Holodex [*Jan 16, 2022*]
 
 #### Minor changes
+
 - Adds PEKO English to the languages list, it might not be very easy to understand, but she's trying her best!
 - Internal changes to prepare for Musicdex release.
 
-
 ### 2.25.2 Holodex [*Dec 28th, 2021*]
 
 #### Minor changes
+
 - Fixed a bug with TLdex showing up on Membersonly streams. Now it only shows up if you can play it.
 - Fixed a bug with highlights bar not showing up properly.
 
-
-
 ### 2.25.2 Holodex [*Dec 28th, 2021*]
 
 #### Minor changes
+
 - Fixed some bugs regarding malformed comment layout or picking up longer-than-the-video timestamps in comments.
 - Fixed a bug with music playlist not really tracking playback properly.
 
 ### 2.25.1 Holodex [*Dec 8th, 2021*]
+
 #### Minor changes
+
 - Updated watch layout based on feedback, we are still open to more feedback and tweaks!
 - Second fix to iOS TLs not sticking to the bottom
 
 ### 2.25 Holodex [*Dec 6th, 2021*]
 
 #### New
+
 - Updated watch page layout to better use of space, let us know what you think!
 - Added "Clips from the same streams" to the side bar
 - Added on screen subtitles in watch and multiview, as long as TLdex is open
-![img](https://cdn.discordapp.com/attachments/811229830783303720/917157643968200864/unknown.png)
+  ![img](https://cdn.discordapp.com/attachments/811229830783303720/917157643968200864/unknown.png)
 
 #### Minor changes
+
 - Placeholders now use Japanese titles if set
 - Fix bug in Watch page where incorrect timestamping results in wild buckets.
 - MultiView Sync Bar can be opened with 1 video
@@ -109,13 +159,12 @@ It's been a whole month since our last update! There's a ton of changes, a ton o
 ### 2.24 Holodex [*Nov 26th, 2021*]
 
 #### Minor changes
+
 - Groups now show up on Channel Pages
 - You can now navigate to Org specific channel pages and link them, such as [Hololive Channels](https://holodex.net/channel?org=Hololive)
 - Better music editing for tagging Karaoke Streams, you'll love it.
-![img](https://cdn.discordapp.com/attachments/801760512907935764/909550397507653663/unknown.png)
+  ![img](https://cdn.discordapp.com/attachments/801760512907935764/909550397507653663/unknown.png)
 - Placeholders now have mentions.
-
-
 
 ### 2.23 Holodex [*Nov 11th, 2021*]
 
@@ -124,6 +173,7 @@ It's been a whole month since our last update! There's a ton of changes, a ton o
 - Added TLdex vtuber chat messages setting (Filter messages if it's in Holodex's Vtuber database)
 
 #### Bugfixes & improvements
+
 - Fixed Multiview sometimes duplicating wrong stream
 - Shrink top navigation bar slightly
 - TLdex chat now shows channel icons for vtubers in chat
@@ -132,6 +182,7 @@ It's been a whole month since our last update! There's a ton of changes, a ton o
 ### 2.22.3 Holodex [*Nov 10th, 2021*]
 
 #### Hotfix
+
 - Fixed Open on Youtube blank screen for older iOS devices
 - Fixed live video sorting for Safari
 - Fixed clips not showing up on clipper channel pages
@@ -140,6 +191,7 @@ It's been a whole month since our last update! There's a ton of changes, a ton o
 ### 2.22.2 Holodex [*Nov 9th, 2021*]
 
 #### Bugfixes & improvements
+
 - Fixed an issue from today's maintenance causing constant errors
 - Channel page shows placeholder events
 - Clicking on channel img will open channel page again
@@ -148,6 +200,7 @@ It's been a whole month since our last update! There's a ton of changes, a ton o
 ### 2.22.1 Holodex [*Oct 27, 2021*]
 
 #### Bugfixes & improvements
+
 - Fixed cells getting pushed down on multiview in certain cases
 - Buttons show/collapse into three dots depending on screen size
 - Video card text spacing fixed
@@ -162,6 +215,7 @@ It's been a whole month since our last update! There's a ton of changes, a ton o
 - Multiview video picker has access to archives (@RiceCakess)
 - Reorder Layout menu allows swapping video/chat positions without interruption (@RiceCakess)
 - Channels page can sort by recently added (@RiceCakess)
+
 #### Improvements
 
 - Placeholder streams have slight opacity and light up with info on hover (@sphinxrave)

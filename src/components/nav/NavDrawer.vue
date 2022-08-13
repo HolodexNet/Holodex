@@ -12,7 +12,7 @@
     <slot />
     <v-list dense class="pb-0">
       <!-- <v-list> -->
-      <template v-for="page in pages">
+      <template v-for="page in pages.filter(e => !e.extra)">
         <v-list-item
           :key="page.name"
           link
@@ -51,9 +51,38 @@
         </v-list-item>
         <v-divider v-if="page.divider" :key="`${page.path}-divider`" />
       </template>
+      <!-- Expanded part -->
+      <v-divider v-if="expand" />
+
+      <template v-if="expand">
+        <v-list-item
+          v-for="page in pages.filter(e => e.extra)"
+          :key="page.name"
+          link
+          :href="page.path"
+          :class="{ 'v-list-item--active': $route.fullPath === page.path }"
+          @click="(e) => handlePageClick(page, e)"
+        >
+          <v-list-item-icon>
+            <v-icon>{{ page.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title v-html="page.name" />
+          </v-list-item-content>
+        </v-list-item>
+      </template>
       <!-- </v-list> -->
     </v-list>
     <v-divider />
+    <div class="d-flex justify-center">
+      <v-btn
+        icon
+        x-small
+        @click="$emit('expand', {});"
+      >
+        <v-icon>{{ expand ? mdiChevronUp : mdiChevronDown }}</v-icon>
+      </v-btn>
+    </div>
     <v-list dense>
       <v-subheader class="pl-5 text-overline">
         {{ $t("component.mainNav.favorites") }}
@@ -121,7 +150,7 @@ import ChannelImg from "@/components/channel/ChannelImg.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
 import { dayjs, formatDurationShort } from "@/utils/time";
-import { mdiTuneVariant, mdiPatreon } from "@mdi/js";
+import { mdiTuneVariant, mdiPatreon, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import Settings from "@/views/Settings.vue";
 import MusicdexLogo from "@/components/common/MusicdexLogo.vue";
 
@@ -137,6 +166,10 @@ export default {
         pages: {
             required: true,
             type: Array,
+        },
+        expand: {
+            type: Boolean,
+            default: false,
         },
         value: {
             type: Boolean,
@@ -156,6 +189,8 @@ export default {
 
             mdiTuneVariant,
             mdiPatreon,
+            mdiChevronDown,
+            mdiChevronUp,
         };
     },
     computed: {
@@ -320,5 +355,15 @@ export default {
 .ch-upcoming {
     font-size: small;
     line-height: 24px;
+}
+.trapezoid {
+  width: 230px;
+  text-align: center;
+  height: 0;
+  position: relative;
+  border-right: 50px solid transparent;
+  border-top: 40px solid #2963BD;
+  border-left: 50px solid transparent;
+  box-sizing: content-box;
 }
 </style>

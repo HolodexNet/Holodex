@@ -22,6 +22,29 @@
       </router-link>
     </v-card-title>
     <v-card-subtitle>
+      {{ formattedTime }}
+      <template v-if="video.status === 'live' && liveViewers">
+        • {{ $t("component.videoCard.watching", [liveViewers]) }}
+        <span
+          v-if="liveViewerChange"
+          :class="liveViewerChange > 0 ? 'green--text' : 'red--text'"
+        >
+          ({{ (liveViewerChange > 0 ? "+ " : "") + liveViewerChange }})
+        </span>
+      </template>
+      <span
+        v-if="video.topic_id"
+        class="mx-1"
+        style="text-transform: capitalize"
+      >
+        • <router-link
+          :to="searchTopicUrl"
+          style="text-decoration: none"
+        >
+          <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
+          {{ video.topic_id }}
+        </router-link>
+      </span>
       <slot name="rightTitleAction">
         <v-btn
           id="video-edit-btn"
@@ -44,30 +67,6 @@
           }}
         </v-btn>
       </slot>
-      {{ formattedTime }}
-      <template v-if="video.status === 'live' && liveViewers">
-        • {{ $t("component.videoCard.watching", [liveViewers]) }}
-        <span
-          v-if="liveViewerChange"
-          :class="liveViewerChange > 0 ? 'green--text' : 'red--text'"
-        >
-          ({{ (liveViewerChange > 0 ? "+ " : "") + liveViewerChange }})
-        </span>
-      </template>
-      <span
-        v-show="video.topic_id"
-        class="mx-1"
-        style="text-transform: capitalize"
-      >
-        • <a
-          href="/search"
-          style="text-decoration: none"
-          @click.prevent="goToSearchPage()"
-        >
-          <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
-          {{ video.topic_id }}
-        </a>
-      </span>
       <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
     </v-card-subtitle>
     <v-divider />
@@ -239,6 +238,16 @@ export default {
                 },
             );
         },
+        searchTopicUrl() {
+            const topic = this.video.topic_id;
+            const capitalizedTopic = topic[0].toUpperCase() + topic.slice(1);
+            const { org } = this.video.channel;
+            let path = `/search?q=type,value,text%0Atopic,${topic},${capitalizedTopic}`;
+            if (org) {
+                path += `%0Aorg,${org},${org}`;
+            }
+            return path;
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -278,16 +287,6 @@ export default {
                 this.$emit("timeJump", e.target.getAttribute("data-time"));
                 e.preventDefault();
             }
-        },
-        goToSearchPage() {
-            const topic = this.video.topic_id;
-            const capitalizedTopic = topic[0].toUpperCase() + topic.slice(1);
-            const { org } = this.video.channel;
-            let path = `/search?q=type,value,text%0Atopic,${topic},${capitalizedTopic}`;
-            if (org) {
-                path += `%0Aorg,${org},${org}`;
-            }
-            this.$router.push({ path });
         },
     },
 };

@@ -47,11 +47,14 @@ component:
     copyLink: Holodex 링크 복사
     premiere: 최초 공개
     googleCalendar: Google Calendar에 추가
-    totalTLs: 전체 실시간 채팅 TL
+    totalTLs: 전체 실시간 채팅 번역
     tlPresence: 최근 30분간 활동 중인 번역가
     typeScheduledYT: 예정된 방송
     typeExternalStream: 외부 방송
     typeEventPlaceholder: 예정된 이벤트
+    openClient: 번역 클라이언트 열기
+    openScriptEditor: 스크립트 편집기 열기
+    uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
   video:
@@ -195,7 +198,7 @@ views:
     exportCsv: CSV 파일
     selectionSelect50: 50개 선택
     exportYTExplanation: >-
-      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 떄문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
+      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 때문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
     exportYTHeading: YouTube 재생목록을 저장하는 방법
     exportYTInstructions: >-
       <b class="red--text">1단계</b>: YouTube 재생목록을 재생한 다음 미니 플레이어로 플레이어 UI를 변경하세요. <br /><br /> <b class="red--text">2단계</b>: 아무 동영상이나 고른 다음 대기열에 추가하세요. <br /><br /> <b class="red--text">3단계</b>: 이제 재생목록을 저장할 수 있습니다. 저장하려면 저장을 눌러주세요.
@@ -211,6 +214,7 @@ views:
     sort:
       newest: 최신순
       oldest: 오래된순
+      longest: 길이
     type:
       all: 모두
       official: 공식
@@ -281,7 +285,7 @@ views:
       expandTL: TLdex 확장
       tlStart: 메시지 시작
       StickBottomSettingLabel: 하단 고정
-      StickBottomSettingsDesc: TL 상자는 YouTube 채팅 아래에 표시됩니다
+      StickBottomSettingsDesc: 번역 상자는 YouTube 채팅 아래에 표시됩니다
       showVerifiedMessages: 인증된 사용자의 메시지 표시
       showModeratorMessages: 운영자 메시지 표시
       showVtuberMessages: 버튜버의 메시지 표시
@@ -298,9 +302,23 @@ views:
         disconnectedToChat: 연결 끊김
       archiveNeedExtension: >-
         아카이브 채팅은 {0} 확장 프로그램 또는 다른 서드파티 확장 프로그램 없이는 작동하지 않습니다.
+      hideSpoiler: 스포일러 숨기기
     removeFromPlaylist: 현재 재생목록에서 동영상 제거
     saveToPlaylist: 현재 재생목록에 동영상 저장
     likeOnYoutube: YouTube에서 동영상 좋아요하기
+    uploadPanel:
+      title: 스크립트 올리기
+      usernameText: 번역은 아이디로 업로드됩니다
+      usernameChange: 변경
+      tlLang: 번역 언어
+      headerStart: 시작
+      headerEnd: 끝
+      headerText: 텍스트
+      cancelBtn: 취소
+      okBtn: 확인
+      notifTextErr: 이 파일을 분석할 수 없습니다 (파일에 문제가 있을 수도 있어요)
+      notifTextParsing: 분석 중...
+      notifTextErrExt: 파일의 확장자를 식별할 수 없습니다.
   favorites:
     promptForAction: >-
       이 페이지에서 좋아하는 버튜버 목록을 만들고 최신 클립과 삶을 확인해보세요.
@@ -333,6 +351,11 @@ views:
       - Google 계정으로 로그인
       - Discord 계정으로 로그인
       - Twitter 계정으로 로그인
+    username: 아이디
+    usernameBtn:
+      - 변경
+      - 확인
+      - 저장
   multiview:
     confirmOverwrite: 기존 레이아웃에 덮어쓸까요?
     confirmOverwriteYes: 확인
@@ -403,6 +426,77 @@ views:
       three: Youtube 라이브 채팅에서의 메모리 누수 방지
       four: >-
         YouTube 플레이어의 실험적인 플래그 (예: 다중 방송 차단, 방송 대기 썸네일이 미표시되는 문제)등을 수정했으며 몇 가지 추가적인 기능들도 있습니다!
+  tlClient:
+    menu:
+      title: 메뉴
+      setting: TLDex 방 설정
+      loadVideo: 동영상 표시
+      unloadVideo: 동영상 숨기기
+      loadChat: 방송 번역에 YT 채팅 추가
+      unloadChat: YT 채팅에서 분리
+    tlControl:
+      enterBtn: 입력
+      prefix: 접두어
+      suffix: 접미어
+      fontColour: 글꼴 색상
+      outlineColour: 외곽선 색상
+      localPrefix: 채팅 내 언어 태그
+      addProfile: 프로필 추가
+      removeProfile: 프로필 삭제
+      shiftUp: 이전 프로필로
+      shiftDown: 다음 프로필로
+      showSetting: 설정
+      hideSetting: 숨기기
+    addProfilePanel:
+      title: 새 프로필 추가
+      inputLabel: 프로필 이름
+    settingPanel:
+      title: 설정
+      mainStreamLink: 메인 방송 링크
+      collabLink: 콜라보 링크
+    removeProfileTitle: 프로필 삭제 확인
+    loadChatPanel:
+      title: 채팅 불러오기
+      inputLabel: 방송 링크
+    unloadChatTitle: 정말로 모든 아카이브 채팅을 닫으시겠어요?
+    pangram: 다람쥐 헌 쳇바퀴에 타고파
+    cancelBtn: 취소
+    okBtn: 확인
+  scriptEditor:
+    menu:
+      save: 저장
+      continuousEnd: 시간이 다시 흐르게 하기 (변경 종료)
+      clearAll: 스크립트 삭제
+      exportFile: 파일 내보내기
+      importFile: 파일 가져오기
+      editorMode: 편집기 모드
+    table:
+      headerStart: 시작
+      headerEnd: 끝
+      headerProfile: 프로필
+      headerText: 텍스트
+      setAsStart: 시작으로 설정하기
+      shiftCurrentTime: 현재 시간으로 이동하기
+      deleteEntry: 항목 삭제
+    loadVideoPanel:
+      title: 동영상 불러오기
+      inputLabel: 방송 링크
+    setStartTitle: 선택한 부분을 시작점으로 설정하면 그 앞에 있는 항목들은 모두 삭제됩니다.
+    importFile:
+      overwriteBtn: 덮어쓰기
+    editorModePanel:
+      activateMode: 편집기 모드 활성화
+      deactivateMode: 편집기 모드 비활성화
+      roleWarning: 권한이 없습니다
+      filterTranslator: 번역가 필터
+  tlManager:
+    title: 스크립트 관리
+    headerID: ID
+    headerEntries: 항목
+    download: 다운로드
+    delete: 삭제
+    deleteTitle: 항목 삭제
+    langPick: 언어
 time:
   soon: 예정
   diff_future_date: '{0} 시작 ({1})'
@@ -447,7 +541,7 @@ about:
     videoLinkage: 동영상이 버튜버에 제대로 연결되었는지 어떻게 확인하나요?
     videoLinkageContent: >-
       모든 정보는 비디오 설명에서 불러와집니다. 스트림을 클립하는 경우 공식 방송을 연결해야 합니다. 팬이 만든 콘텐츠 (예: bilibili에서 가져온 콘텐츠) 를 클리핑하는 경우 관련 버튜버의 공식 YouTube 채널을 연결해야 합니다. 모든 클립은 Holodex에 알려진 버튜버에 연결되어야하므로 버튜버 채널을 연결하지 않으면 Holodex에 해당 클립이 표시되지 않습니다.
-    quitHolodex: "저는 키리누키 제작자이고 Holodex에서 제 채널을 제거하고 싶습니다\n"
+    quitHolodex: "저는 키리누키 제작자이고 Holodex에서 제 채널을 제거하고 싶습니다\\r"
     quitHolodexContent: >-
       떠나신다니 아쉽습니다 :( 문제가 있다면 도와드리겠습니다. 그래도 제거하고 싶으시다면 Discord를 통해서 메시지를 보내주세요.
     favorite:
@@ -544,7 +638,7 @@ channelRequest:
   VtuberRequirementText: >-
     소속이 없는 경우 최소 2만명의 구독자가 필요합니다. 이미 존재하는 소속의 버튜버는 수락됩니다. <br /><br />새 소속은 평균 구독자 수에 따라서 생성됩니다.
   ClipperRequirementText: >-
-    키리누키의 경우 최소 2개월 이상이면서 정기적으로 올리거나, 한 달에 20개 이상의 클립을 게시해야 합니다. 짧은 클립을 매일 도배하거나, 1분 미만의 짧은 클립만 올리거나, 악의적인 썸네일을 사용하는 경우 채널 검토 시에 영향을 미칠 수 있습니다. 콘텐츠 품질도 평가될 수 있습니다. <br /><br />키리누키는는 채널 링크, @YouTube 채널 멘션 및 원본 영상 링크를 통해 출처를 표시해야 합니다. 과잉 출처 (예: 모든 Nijisanji 멤버 링크 넣기) Holodex 편집자에게 작업이 생성되고, 출처가 없으면 (링크 없음) 클립이 숨겨집니다. <br /><br /> Holodex에는 과잉 출처를 감지하여 자동으로 수정하는 알고리즘이 포함되어 있지만, 항상 완벽하게 작동하는 것은 아닙니다. 너무 자주 과잉 출처를 다는 키리누키의 경우 혼란을 방지하기 위해서 플랫폼에서 제거될 수 있습니다.
+    키리누키의 경우 최소 2개월 이상이면서 정기적으로 올리거나, 한 달에 20개 이상의 클립을 게시해야 합니다. 짧은 클립을 매일 도배하거나, 1분 미만의 짧은 클립만 올리거나, 악의적인 썸네일을 사용하는 경우 채널 검토 시에 영향을 미칠 수 있습니다. 콘텐츠 품질도 평가될 수 있습니다. <br /><br />키리누키는 채널 링크, @YouTube 채널 멘션 및 원본 영상 링크를 통해 출처를 표시해야 합니다. 과잉 출처 (예: 모든 Nijisanji 멤버 링크 넣기) Holodex 편집자에게 작업이 생성되고, 출처가 없으면 (링크 없음) 클립이 숨겨집니다. <br /><br /> Holodex에는 과잉 출처를 감지하여 자동으로 수정하는 알고리즘이 포함되어 있지만, 항상 완벽하게 작동하는 것은 아닙니다. 너무 자주 과잉 출처를 다는 키리누키의 경우 혼란을 방지하기 위해서 플랫폼에서 제거될 수 있습니다.
   DeletionRequirementText: >-
     채널 소유자 측에서만 삭제를 요청할 수 있습니다. 이를 확인할 수 있도록 연락처 정보를 제공해 주세요.
   PageTitle: Holodex 채널 요청

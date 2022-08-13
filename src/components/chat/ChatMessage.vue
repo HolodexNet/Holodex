@@ -7,6 +7,7 @@
         :channel="{ id: source.channel_id, name: source.name }"
         :size="28"
         rounded
+        no-link
       />
     </div>
     <div style="flex-basis: 100%;">
@@ -22,13 +23,13 @@
           <!-- <span v-if="source.is_owner">👑</span> -->
           <span v-if="source.is_vtuber">[Vtuber]</span>
           <span v-if="source.is_moderator">[Mod]</span>
-          <span v-if="source.source">{{ source.source }} - </span> {{ source.name }}<span v-if="source.is_verified" style="font-weight: 800"> ✓</span>:
+          {{ source.name }}<span v-if="source.is_verified" style="font-weight: 800"> ✓</span>:
           <v-icon x-small style="margin-top: 2px; position: absolute; width: 11px">{{ icons.mdiCog }}</v-icon>
         </span>
       </div>
       <a class="tl-message" :data-time="source.relativeMs/1000">
         <span v-if="source.timestamp" class="tl-caption mr-1">
-          {{ liveTlShowLocalTime ? realTime : displayTime }}
+          {{ liveTlShowLocalTime || !displayTime ? realTime : displayTime }}
         </span>
         <span v-if="source.parsed" class="text--primary" v-html="source.parsed" />
         <span v-else class="text--primary">{{ source.message }}</span>
@@ -102,6 +103,7 @@ export default {
             return realTimestamp(this.source.timestamp);
         },
         displayTime() {
+            if (!this.source.relativeMs) return null;
             return (Math.sign(this.source.relativeMs) < 0 ? "-" : "") + formatDuration(Math.abs(this.source.relativeMs));
         },
         ...mapState("settings", [
