@@ -37,6 +37,10 @@ Thanks to sqrtNOT for setting up Holodex - YT-DLP integration - apparently it wo
 - Video card menus now open bottom left just to make it slightly less buggy.
 - Video comment Highlights now has timestamp on hover.
 
+#### Bugfixes (2.28.1)
+
+- Hotfixed Video dropdown Menu opening videos in a trigger happy way.
+
 ![img](./tldex_layout.jpg)
 
 ---

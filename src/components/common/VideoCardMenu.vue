@@ -1,20 +1,34 @@
 <template>
   <v-list v-if="video" dense>
     <template v-if="video.type !== 'placeholder'">
-      <v-list-item target="_blank" :href="`https://youtu.be/${video.id}`" @click.stop="closeMenu()">
+      <v-list-item
+        target="_blank"
+        :href="`https://youtu.be/${video.id}`"
+        @click.stop="closeMenu()"
+      >
         <v-icon left>
           {{ icons.mdiYoutube }}
         </v-icon>
         {{ $t("views.settings.redirectModeLabel") }}
       </v-list-item>
 
-      <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar(); closeMenu()">
+      <v-list-item
+        v-if="video.status === 'upcoming'"
+        @click.prevent.stop="
+          openGoogleCalendar();
+          closeMenu();
+        "
+      >
         <v-icon left>
           {{ icons.mdiCalendar }}
         </v-icon>
         {{ $t("component.videoCard.googleCalendar") }}
       </v-list-item>
-      <v-list-item :to="`/edit/video/${video.id}${video.type !== 'stream' ? '/mentions' : '/'}`">
+      <v-list-item
+        :to="`/edit/video/${video.id}${
+          video.type !== 'stream' ? '/mentions' : '/'
+        }`"
+      >
         <v-icon left>
           {{ icons.mdiPencil }}
         </v-icon>
@@ -40,9 +54,19 @@
             </v-icon>
           </v-list-item>
         </template>
-        <video-quick-playlist :key="video.id + Date.now()" :video-id="video.id" :video="video" />
+        <video-quick-playlist
+          :key="video.id + Date.now()"
+          :video-id="video.id"
+          :video="video"
+        />
       </v-menu>
-      <v-list-item :class="doneCopy ? 'green lighten-2' : ''" @click.stop="copyLink(); closeMenu()">
+      <v-list-item
+        :class="doneCopy ? 'green lighten-2' : ''"
+        @click.stop="
+          copyLink();
+          closeMenu();
+        "
+      >
         <v-icon left>
           {{ icons.mdiClipboardPlusOutline }}
         </v-icon>
@@ -50,28 +74,52 @@
       </v-list-item>
     </template>
     <template v-else>
-      <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar(); closeMenu()">
+      <v-list-item
+        v-if="video.status === 'upcoming'"
+        @click.prevent.stop="
+          openGoogleCalendar();
+          closeMenu();
+        "
+      >
         <v-icon left>
           {{ icons.mdiCalendar }}
         </v-icon>
         {{ $t("component.videoCard.googleCalendar") }}
       </v-list-item>
     </template>
-    <v-list-item @click="openTlClient(); closeMenu()">
+    <v-list-item
+      @click="
+        openTlClient();
+        closeMenu();
+      "
+    >
       <v-icon left>
         {{ icons.mdiTypewriter }}
       </v-icon>
-      {{ isLive || video.status === 'upcoming' ? $t("component.videoCard.openClient") :
-        $t("component.videoCard.openScriptEditor")
+      {{
+        isLive || video.status === "upcoming"
+          ? $t("component.videoCard.openClient")
+          : $t("component.videoCard.openScriptEditor")
       }}
     </v-list-item>
-    <v-list-item v-if="isPast" @click="scriptUploadPanel(); closeMenu()">
+    <v-list-item
+      v-if="isPast"
+      @click="
+        scriptUploadPanel();
+        closeMenu();
+      "
+    >
       <v-icon left>
         {{ icons.mdiClipboardArrowUpOutline }}
       </v-icon>
       {{ $t("component.videoCard.uploadScript") }}
     </v-list-item>
-    <v-list-item @click="$store.commit('setReportVideo', video); closeMenu()">
+    <v-list-item
+      @click="
+        $store.commit('setReportVideo', video);
+        closeMenu();
+      "
+    >
       <v-icon left>
         {{ icons.mdiFlag }}
       </v-icon>
@@ -113,7 +161,10 @@ export default {
             if (this.video.status === "past") {
                 return false;
             }
-            if ((this.video.status === "live") || (Date.parse(this.video.start_scheduled) < Date.now())) {
+            if (
+                this.video.status === "live"
+                || Date.parse(this.video.start_scheduled) < Date.now()
+            ) {
                 return true;
             }
             return false;
@@ -137,9 +188,23 @@ export default {
             const videoTitle = encodeURIComponent(this.video.title);
             const googleCalendarFormat = "YYYYMMDD[T]HHmmss[Z]"; // "Z" suffix for UTC time
             const eventStart = dayjs.utc(startdate).format(googleCalendarFormat);
-            const eventEnd = dayjs.utc(startdate).add(1, "hour").format(googleCalendarFormat);
+            const eventEnd = dayjs
+                .utc(startdate)
+                .add(1, "hour")
+                .format(googleCalendarFormat);
             const details = `<a href="${window.origin}/watch/${this.video.id}">Open Video</a>`;
-            window.open(baseurl.concat(videoTitle, "&dates=", eventStart, "/", eventEnd, "&details=", details), "_blank");
+            window.open(
+                baseurl.concat(
+                    videoTitle,
+                    "&dates=",
+                    eventStart,
+                    "/",
+                    eventEnd,
+                    "&details=",
+                    details,
+                ),
+                "_blank",
+            );
         },
         copyLink() {
             const link = `${window.origin}/watch/${this.video.id}`;
@@ -151,9 +216,20 @@ export default {
         openTlClient() {
             if (this.$store.state.userdata?.user) {
                 if (this.isLive || this.video.status === "upcoming") {
-                    this.$router.push({ path: "/tlclient", query: { video: this.video.type === "placeholder" ? this.video.link : `YT_${this.video.id}` } });
+                    this.$router.push({
+                        path: "/tlclient",
+                        query: {
+                            video:
+                                this.video.type === "placeholder"
+                                    ? this.video.link
+                                    : `YT_${this.video.id}`,
+                        },
+                    });
                 } else {
-                    this.$router.push({ path: "/scripteditor", query: { video: `YT_${this.video.id}` } });
+                    this.$router.push({
+                        path: "/scripteditor",
+                        query: { video: `YT_${this.video.id}` },
+                    });
                 }
             } else {
                 this.$router.push({ path: "/login" });
@@ -170,5 +246,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
