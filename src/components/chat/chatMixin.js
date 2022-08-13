@@ -3,7 +3,6 @@ import api from "@/utils/backend-api";
 import { dayjs } from "@/utils/time";
 import { syncState } from "@/utils/functions";
 import { mdiArrowExpand, mdiSubtitlesOutline } from "@mdi/js";
-import { VIDEO_URL_REGEX } from "@/utils/consts";
 
 export default {
     data() {
@@ -91,7 +90,7 @@ export default {
     },
     methods: {
         loadMessages(firstLoad = false, loadAll = false, tlClient = false) {
-            const isCustom = !this.video.id.match(VIDEO_URL_REGEX);
+            const isCustom = this.video.id === "custom" && this.video.custom_video_id;
             this.historyLoading = true;
             const lastTimestamp = !firstLoad && this.tlHistory[0]?.timestamp;
 
@@ -103,11 +102,11 @@ export default {
                 vtuber: !tlClient && this.liveTlShowVtuber,
                 limit: loadAll ? 100000 : this.limit,
                 ...(lastTimestamp && { before: lastTimestamp }),
-                ...(isCustom && { custom_video_id: this.video.id }),
+                ...(isCustom && { custom_video_id: this.video.custom_video_id }),
             };
 
             api
-                .chatHistory(isCustom ? "custom" : this.video.id, query)
+                .chatHistory(this.video.id, query)
                 .then(({ data }) => {
                     this.completed = data.length !== this.limit || loadAll;
                     if (firstLoad) this.tlHistory = data.map(this.parseMessage);
