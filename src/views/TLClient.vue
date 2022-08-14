@@ -226,26 +226,31 @@
             <span
               v-for="(prf, index) in profile"
               :key="'profilecard' + index"
-            ><span v-if="index === profileIdx">> </span>{{ index + 1 + ". " + prf.Name }}</span>
+            ><span v-if="index === profileIdx">> </span>
+              <kbd v-if="index > 0">Ctrl-{{ index }}</kbd>
+              <kbd v-if="index == 0">Ctrl-{{ index }} | Shift⇧-Tab↹</kbd>
+              {{ " " + prf.Name }}
+            </span>
           </v-card>
         </v-card>
       </div>
 
       <v-container
         @keydown.up.exact="profileUp()"
-        @keydown.down.exact="profileDown()"
-        @keydown.tab.exact.prevent="profileDown()"
+        @keydown.down.exact="profileDown(false)"
+        @keydown.tab.exact.prevent="profileDown(true)"
         @keydown.shift.tab.exact.prevent="profileJumpToDefault()"
-        @keydown.ctrl.50.exact.prevent="profileJump(1)"
-        @keydown.ctrl.51.exact.prevent="profileJump(2)"
-        @keydown.ctrl.52.exact.prevent="profileJump(3)"
-        @keydown.ctrl.53.exact.prevent="profileJump(4)"
-        @keydown.ctrl.54.exact.prevent="profileJump(5)"
-        @keydown.ctrl.55.exact.prevent="profileJump(6)"
-        @keydown.ctrl.56.exact.prevent="profileJump(7)"
-        @keydown.ctrl.57.exact.prevent="profileJump(8)"
+        @keydown.ctrl.48.exact.prevent="profileJump(0)"
+        @keydown.ctrl.49.exact.prevent="profileJump(1)"
+        @keydown.ctrl.50.exact.prevent="profileJump(2)"
+        @keydown.ctrl.51.exact.prevent="profileJump(3)"
+        @keydown.ctrl.52.exact.prevent="profileJump(4)"
+        @keydown.ctrl.53.exact.prevent="profileJump(5)"
+        @keydown.ctrl.54.exact.prevent="profileJump(6)"
+        @keydown.ctrl.55.exact.prevent="profileJump(7)"
+        @keydown.ctrl.56.exact.prevent="profileJump(8)"
+        @keydown.ctrl.59.exact.prevent="profileJump(9)"
       >
-        <!--         @keydown.ctrl.49.exact.prevent="profileJump(0)" -->
         <v-row>
           <v-text-field
             v-model="inputString"
@@ -294,8 +299,16 @@
                   </v-icon>
                 </template>
                 <span>While typing in TL box</span><br>
-                <span><kbd>⇧</kbd><kbd>⇩</kbd> to change Profiles</span><br>
-                <span><kbd>Ctrl+[1~9]</kbd> to quick switch to Profile</span>
+                <span>
+                  <kbd>Up⇧</kbd> or <kbd>Down⇩</kbd> to change Profiles </span><br>
+                <span>
+                  <kbd>Ctrl+[0~9]</kbd> to quick switch to Profile 0-9 </span><br>
+                <span>
+                  <kbd>Tab↹</kbd> to quick switch between Profiles 1-9 (0 is
+                  special) </span><br>
+                <span>
+                  <kbd>Shift⇧-Tab↹</kbd> to quick switch to Profile 0
+                </span>
               </v-tooltip>
             </v-card-subtitle>
             <v-card-text class="d-flex align-stretch">
@@ -529,9 +542,7 @@
             </v-dialog>
           </div>
           <v-card-title>
-            {{
-              $t("views.tlClient.settingPanel.collabLink")
-            }}
+            {{ $t("views.tlClient.settingPanel.collabLink") }}
           </v-card-title>
           <v-text-field
             v-for="(AuxLink, index) in collabLinks"
@@ -1029,9 +1040,9 @@ export default {
             }
             this.showProfileList();
         },
-        profileDown() {
+        profileDown(isTab) {
             if (this.profileIdx === this.profile.length - 1) {
-                this.profileIdx = 0;
+                this.profileIdx = isTab ? 1 : 0;
             } else {
                 this.profileIdx += 1;
             }
