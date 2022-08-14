@@ -338,4 +338,21 @@ export default [
       },
     },
   },
+  {
+    name: "Fauna",
+    id: 21,
+    themes: {
+      dark: {
+        background: "#343431",
+        primary: "#BCA543",
+        secondary: "#A2C79E",
+      },
+      light: {
+        background: "#F0F6E1",
+        primary: "#A2C79E",
+        secondary: "#BCA543",
+      },
+    },
+  },
+
 ];
