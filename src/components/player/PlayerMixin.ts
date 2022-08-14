@@ -49,7 +49,7 @@ export default {
     playerError(e) {
       console.log(`[PLAYER ERROR] - ${this.elementId}`);
       console.error(e);
-      if (!this.retryForMengen) {
+      if (!this.retryForMengen && e.data === "150") {
         e.target.loadVideoById(e.target.getVideoData().video_id);
         this.retryForMengen = true;
       } else {
@@ -91,7 +91,9 @@ export default {
     async updateListeners() {
       const l = this.$listeners;
       if (l.mute) this.$emit("mute", await this.isMuted());
-      if (l.playbackRate) { this.$emit("playbackRate", await this.getPlaybackRate()); }
+      if (l.playbackRate) {
+        this.$emit("playbackRate", await this.getPlaybackRate());
+      }
       if (l.currentTime) this.$emit("currentTime", await this.getCurrentTime());
       if (l.volume) this.$emit("volume", await this.getVolume());
     },
