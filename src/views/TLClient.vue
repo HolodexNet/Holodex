@@ -156,8 +156,15 @@
           >
             <span
               v-for="(prf, index) in profile"
-              :key="index"
-            ><span v-if="index === profileIdx">> </span>{{ index + 1 + ". " + prf.Name }}</span>
+              :key="'profilecard' + index"
+              :class="{
+                'primary--text font-weight-medium': index === profileIdx,
+              }"
+            ><span v-if="index === profileIdx">> </span>
+              <kbd v-if="index > 0">Ctrl-{{ index }}</kbd>
+              <kbd v-if="index == 0">Ctrl-{{ index }} | Shift⇧-Tab↹</kbd>
+              {{ " " + prf.Name }}
+            </span>
           </v-card>
         </v-card>
         <div
@@ -226,9 +233,16 @@
             <span
               v-for="(prf, index) in profile"
               :key="'profilecard' + index"
+              :class="{
+                'primary--text font-weight-medium': index === profileIdx,
+              }"
             ><span v-if="index === profileIdx">> </span>
               <kbd v-if="index > 0">Ctrl-{{ index }}</kbd>
               <kbd v-if="index == 0">Ctrl-{{ index }} | Shift⇧-Tab↹</kbd>
+              <kbd
+                v-if="index === Math.max(1, (profileIdx + 1) % profile.length)"
+                class="ml-1"
+              >Tab↹</kbd>
               {{ " " + prf.Name }}
             </span>
           </v-card>
@@ -646,6 +660,7 @@ import backendApi from "@/utils/backend-api";
 import { mapState } from "vuex";
 import YoutubePlayer from "@/components/player/YoutubePlayer.vue";
 import TwitchPlayer from "@/components/player/TwitchPlayer.vue";
+import { useStorage } from "@vueuse/core";
 
 export default {
     name: "Tlclient",
@@ -662,6 +677,21 @@ export default {
         YoutubePlayer,
         TwitchPlayer,
     },
+    setup() {
+        const profile = useStorage("tldex-profiles", [
+            {
+                Name: "Default",
+                Prefix: "",
+                Suffix: "",
+                useCC: false,
+                CC: "#000000",
+                useOC: false,
+                OC: "#000000",
+            },
+        ]);
+        const mainStreamLink = useStorage("tldex-lastlink", "");
+        return { profile, mainStreamLink };
+    },
     data() {
         return {
             TL_LANGS,
@@ -673,18 +703,7 @@ export default {
             mdiCogOff,
             TLSetting: true,
             firstLoad: true,
-            profile: [
-                {
-                    Name: "Default",
-                    Prefix: "",
-                    Suffix: "",
-                    useCC: false,
-                    CC: "#000000",
-                    useOC: false,
-                    OC: "#000000",
-                },
-            ],
-            profileContainer: {},
+            // ------ PROFILES -----
             profileIdx: 0,
             profileDisplay: false,
             profileDisplayTimer: undefined,
@@ -700,7 +719,6 @@ export default {
             addProfileNameString: "",
             // ------ SETTING ------
             TLLang: TL_LANGS[0],
-            mainStreamLink: "",
             collabLinks: [""],
             videoSelectDialog: false,
             // ---- ACTIVE CHAT ----
@@ -1010,25 +1028,23 @@ export default {
         // ------------------------ PROFILE CONTROLLER ------------------------
         shiftProfileUp() {
             if (this.profileIdx > 1) {
-                this.profileContainer = JSON.parse(
+                const profileContainer = JSON.parse(
                     JSON.stringify(this.profile[this.profileIdx - 1]),
                 );
                 this.profile[this.profileIdx - 1] = this.profile[this.profileIdx];
-                this.profile[this.profileIdx] = this.profileContainer;
+                this.profile[this.profileIdx] = profileContainer;
                 this.profileIdx -= 1;
-                this.profileContainer = {};
             }
             this.showProfileList();
         },
         shiftProfileDown() {
             if (this.profileIdx !== 0 && this.profileIdx < this.profile.length - 1) {
-                this.profileContainer = JSON.parse(
+                const profileContainer = JSON.parse(
                     JSON.stringify(this.profile[this.profileIdx + 1]),
                 );
                 this.profile[this.profileIdx + 1] = this.profile[this.profileIdx];
-                this.profile[this.profileIdx] = this.profileContainer;
+                this.profile[this.profileIdx] = profileContainer;
                 this.profileIdx += 1;
-                this.profileContainer = {};
             }
             this.showProfileList();
         },
