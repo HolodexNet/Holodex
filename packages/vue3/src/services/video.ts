@@ -282,12 +282,16 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
       const path = h.queryKey[0] as string;
       const query = h.queryKey[1] as any;
       const jwt = h.queryKey[2] as string;
+      const out = { items: [] as Video[], total: undefined };
       console.log("Querying", path, "?>>>", query, "auth", jwt);
+      if (q.value.flavor?.favorites && !jwt) return out;
       const { data } = await axiosInstance.get(path, {
         params: query,
-        headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        headers:
+          q.value.flavor?.favorites && jwt
+            ? { Authorization: `BEARER ${jwt}` }
+            : {},
       });
-      const out = { items: [] as Video[], total: undefined };
       if ("items" in data && "total" in data) {
         out.items =
           q.value.type === "stream_schedule"
@@ -297,12 +301,7 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
       } else if (typeof data === "object") {
         out.items = data;
       }
-      if (!isDayjs(out.items?.[0]?.available_at)) {
-        out.items = out.items.map((x) => ({
-          ...x,
-          available_at: dayjs(x.available_at),
-        })) as any;
-      }
+
       if (q.value.flavor?.favorites) {
         out.items = out.items.sort(
           (a, b) =>
@@ -312,7 +311,6 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
       }
       return out;
     },
-    enabled: true,
     ...toRefs(queryCfg),
   });
 }
