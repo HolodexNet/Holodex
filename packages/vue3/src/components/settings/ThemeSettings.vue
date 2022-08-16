@@ -62,8 +62,8 @@
       display-name="bg Color"
     />
     <!-- <theme-color-picker daisy-name="base-200" shorthand="--b2" />
-    <theme-color-picker daisy-name="base-300" shorthand="--b3" /> -->
-    <!-- <theme-color-picker daisy-name="success" shorthand="--su" />
+    <theme-color-picker daisy-name="base-300" shorthand="--b3" />
+    <theme-color-picker daisy-name="success" shorthand="--su" />
     <theme-color-picker daisy-name="info" shorthand="--in" />
     <theme-color-picker daisy-name="warning" shorthand="--wa" />
     <theme-color-picker daisy-name="error" shorthand="--er" /> -->
