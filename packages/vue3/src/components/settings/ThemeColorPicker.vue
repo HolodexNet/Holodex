@@ -24,7 +24,6 @@
 <script lang="ts">
 import { generateForegorundColorFrom } from "@/hooks/theme-changer/daisy-utils/daisy-color-fns";
 import { DaisyColorName } from "@/hooks/theme-changer/daisy-utils/daisy-types";
-import { presets } from "@/hooks/theme-changer/presets";
 import { useThemeStore } from "@/stores";
 import { PropType } from "vue";
 

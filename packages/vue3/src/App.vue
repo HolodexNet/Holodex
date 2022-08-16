@@ -2,7 +2,7 @@
   <v-app>
     <main-nav />
     <!-- Sizes your content based upon application components -->
-    <v-main class="bg-base-300">
+    <v-main class="bg-bgColor-500">
       <!-- Provides the application the proper gutter -->
       <!-- If using vue-router -->
       <router-view />

@@ -57,12 +57,12 @@
     <theme-color-picker daisy-name="accent" shorthand="--a" />
     <theme-color-picker daisy-name="neutral" shorthand="--su" />
     <theme-color-picker daisy-name="base-100" shorthand="--b1" />
-    <theme-color-picker daisy-name="base-200" shorthand="--b2" />
-    <theme-color-picker daisy-name="base-300" shorthand="--b3" />
-    <theme-color-picker daisy-name="success" shorthand="--su" />
-    <theme-color-picker daisy-name="info" shorthand="--er" />
-    <theme-color-picker daisy-name="warning" shorthand="--su" />
-    <theme-color-picker daisy-name="error" shorthand="--er" />
+    <!-- <theme-color-picker daisy-name="base-200" shorthand="--b2" />
+    <theme-color-picker daisy-name="base-300" shorthand="--b3" /> -->
+    <!-- <theme-color-picker daisy-name="success" shorthand="--su" />
+    <theme-color-picker daisy-name="info" shorthand="--in" />
+    <theme-color-picker daisy-name="warning" shorthand="--wa" />
+    <theme-color-picker daisy-name="error" shorthand="--er" /> -->
   </div>
 
   <div class="divider">
@@ -70,49 +70,40 @@
   </div>
   <div class="grid grid-cols-5 gap-2">
     <div class="btn-group">
-      <div class="btn btn-xs bg-primary darken-3"></div>
-      <div class="btn btn-xs bg-primary darken-2"></div>
-      <div class="btn btn-xs bg-primary darken-1"></div>
+      <div class="btn btn-xs bg-primary-700"></div>
+      <div class="btn btn-xs bg-primary-600"></div>
+      <div class="btn btn-xs bg-primary-500"></div>
       <div class="btn btn-xs bg-primary"></div>
-      <div class="btn btn-xs bg-primary lighten-1"></div>
-      <div class="btn btn-xs bg-primary lighten-2"></div>
-      <div class="btn btn-xs bg-primary lighten-3"></div>
+      <div class="btn btn-xs bg-primary-300"></div>
+      <div class="btn btn-xs bg-primary-200"></div>
+      <div class="btn btn-xs bg-primary-100"></div>
     </div>
     <div class="btn-group">
-      <div class="btn btn-xs bg-secondary darken-3"></div>
-      <div class="btn btn-xs bg-secondary darken-2"></div>
-      <div class="btn btn-xs bg-secondary darken-1"></div>
+      <div class="btn btn-xs bg-secondary-700"></div>
+      <div class="btn btn-xs bg-secondary-600"></div>
+      <div class="btn btn-xs bg-secondary-500"></div>
       <div class="btn btn-xs bg-secondary"></div>
-      <div class="btn btn-xs bg-secondary lighten-1"></div>
-      <div class="btn btn-xs bg-secondary lighten-2"></div>
-      <div class="btn btn-xs bg-secondary lighten-3"></div>
+      <div class="btn btn-xs bg-secondary-300"></div>
+      <div class="btn btn-xs bg-secondary-200"></div>
+      <div class="btn btn-xs bg-secondary-100"></div>
     </div>
     <div class="btn-group">
-      <div class="btn btn-xs bg-accent darken-3"></div>
-      <div class="btn btn-xs bg-accent darken-2"></div>
-      <div class="btn btn-xs bg-accent darken-1"></div>
+      <div class="btn btn-xs bg-accent-700"></div>
+      <div class="btn btn-xs bg-accent-600"></div>
+      <div class="btn btn-xs bg-accent-500"></div>
       <div class="btn btn-xs bg-accent"></div>
-      <div class="btn btn-xs bg-accent lighten-1"></div>
-      <div class="btn btn-xs bg-accent lighten-2"></div>
-      <div class="btn btn-xs bg-accent lighten-3"></div>
+      <div class="btn btn-xs bg-accent-300"></div>
+      <div class="btn btn-xs bg-accent-200"></div>
+      <div class="btn btn-xs bg-accent-100"></div>
     </div>
     <div class="btn-group">
-      <div class="btn btn-xs bg-background darken-3"></div>
-      <div class="btn btn-xs bg-background darken-2"></div>
-      <div class="btn btn-xs bg-background darken-1"></div>
-      <div class="btn btn-xs bg-background"></div>
-      <div class="btn btn-xs bg-background lighten-1"></div>
-      <div class="btn btn-xs bg-background lighten-2"></div>
-      <div class="btn btn-xs bg-background lighten-3"></div>
-    </div>
-    <div class="btn-group">
-      <div class="btn btn-xs bg-surface darken-3"></div>
-      <div class="btn btn-xs bg-surface darken-2"></div>
-      <div class="btn btn-xs bg-surface darken-1"></div>
-      <div class="btn btn-xs bg-surface"></div>
-      <div class="btn btn-xs bg-surface lighten-1"></div>
-      <div class="btn btn-xs bg-surface lighten-2"></div>
-      <div class="btn btn-xs bg-surface lighten-3"></div>
+      <div class="btn btn-xs bg-bgColor-700"></div>
+      <div class="btn btn-xs bg-bgColor-600"></div>
+      <div class="btn btn-xs bg-bgColor-500"></div>
+      <div class="btn btn-xs bg-bgColor-400"></div>
+      <div class="btn btn-xs bg-bgColor-300"></div>
+      <div class="btn btn-xs bg-bgColor-200"></div>
+      <div class="btn btn-xs bg-bgColor-100"></div>
     </div>
   </div>
 </template>
