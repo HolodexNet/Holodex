@@ -18,7 +18,7 @@
       </label>
     </template>
     <v-sheet>
-      <ul class="p-2 overflow-y-auto menu bg-base-300 text-base-content">
+      <ul class="p-2 overflow-y-auto menu bg-bgColor-500 text-base-content">
         <!-- Real Videos -->
         <template v-if="video.type !== 'placeholder'">
           <li>

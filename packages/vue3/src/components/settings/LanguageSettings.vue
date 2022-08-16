@@ -146,6 +146,6 @@ label.label {
   padding-left: 2em;
 }
 label.label:nth-child(even) {
-  @apply bg-base-300 rounded;
+  @apply bg-bgColor-500 rounded;
 }
 </style>

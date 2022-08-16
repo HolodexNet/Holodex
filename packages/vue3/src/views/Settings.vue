@@ -5,7 +5,7 @@
   >
     <div
       id="setting-menu"
-      class="flex-grow rounded-md bg-base-100"
+      class="flex-grow rounded-md bg-bgColor"
       style="flex-basis: 160px; min-width: 160px"
     >
       <ul class="w-full menu">
@@ -28,7 +28,7 @@
       </ul>
     </div>
     <div
-      class="flex-grow flex-shrink-0 p-3 rounded-md xs:max-w-full w-80 bg-base-100"
+      class="flex-grow flex-shrink-0 p-3 rounded-md xs:max-w-full w-80 bg-bgColor"
       style="flex-basis: 60%; min-width: 300px"
     >
       <language-settings v-if="tab === 0" />

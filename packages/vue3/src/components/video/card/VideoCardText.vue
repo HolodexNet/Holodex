@@ -28,7 +28,9 @@
               {{ preferredChannelName }} {{ `(+${video.mentions?.length})` }}
             </a>
           </template>
-          <div class="flex flex-col gap-1 p-3 rounded-lg shadow-md bg-base-300">
+          <div
+            class="flex flex-col gap-1 p-3 rounded-lg shadow-md bg-bgColor-500"
+          >
             <template v-for="mention in video.mentions" :key="mention.id">
               <div class="flex items-center">
                 <channel-img

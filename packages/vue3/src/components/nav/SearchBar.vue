@@ -4,7 +4,7 @@
   <v-autocomplete
     v-model:model-value="query"
     v-model:search="search"
-    class="mx-auto search-bar input input-bordered bg-base-300"
+    class="mx-auto search-bar input input-bordered bg-bgColor-500"
     :class="{ 'search-bar-small': isMobile }"
     multiple
     chips

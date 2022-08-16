@@ -20,7 +20,7 @@
       flat
       height="56"
       style="border-bottom: 1px solid rgba(255, 255, 255, 0.12)"
-      class="bg-base-100"
+      class="bg-bgColor"
     >
       <!--=============================== Top Bar (Regular View) =============================-->
 

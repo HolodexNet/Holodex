@@ -1,7 +1,7 @@
 <template>
   <v-col v-if="s" cols="12" md="12" lg="9" xl="8">
     <div
-      class="stats stats-vertical lg:stats-horizontal drop-shadow-lg bg-base-300"
+      class="stats stats-vertical lg:stats-horizontal drop-shadow-lg bg-bgColor-500"
     >
       <div class="stat">
         <div class="stat-figure text-primary">

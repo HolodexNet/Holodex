@@ -15,7 +15,7 @@
 *
 *
   -->
-  <div class="card bg-base-100" style="min-width: 200px">
+  <div class="card bg-bgColor" style="min-width: 200px">
     <div class="p-2 pt-4 card-body">
       <div v-if="user" class="flex flex-row">
         <div class="flex items-center justify-center p-2 pr-4">

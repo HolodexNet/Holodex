@@ -7,14 +7,14 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors: Object.keys(colors).reduce((prev, key) => {
-        const cssVar = colors[key];
+      backgroundColor: Object.keys(colors).reduce((prev, colorName) => {
+        const cssVar = colors[colorName];
         shades.forEach((shadeNum) => {
-          if (!prev[key]) prev[key] = {};
-          prev[key][shadeNum] = `hsl(var(${cssVar}-${shadeNum}) / <alpha-value>)`;
+          if (!prev[colorName]) prev[colorName] = {};
+          prev[colorName][shadeNum] = `hsl(var(${cssVar}-${shadeNum}) / <alpha-value>)`;
           // makes bg-primary same as bg-primary-400
           if (shadeNum === 400) {
-            prev[key]["DEFAULT"] = `hsl(var(${cssVar}) / <alpha-value>)`;
+            prev[colorName]["DEFAULT"] = `hsl(var(${cssVar}) / <alpha-value>)`;
           }
         });
         return prev;

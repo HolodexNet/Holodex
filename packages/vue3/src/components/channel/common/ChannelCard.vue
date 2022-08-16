@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-row items-center overflow-hidden rounded-md shadow-md channel-card justify-self-auto bg-base-200 hover:bg-base-100"
+    class="flex flex-row items-center overflow-hidden rounded-md shadow-md channel-card justify-self-auto bg-bgColor hover:bg-bgColor"
     :class="slim ? '' : 'h-50'"
   >
     <div class="flex-shrink-0 indicator">
@@ -160,6 +160,6 @@ export default defineComponent({
 }
 
 .live-indicator {
-  @apply bg-red-500 border-transparent badge badge-xs outline outline-4 outline-base-300;
+  @apply bg-red-500 border-transparent badge badge-xs outline outline-4 outline-bgColor;
 }
 </style>

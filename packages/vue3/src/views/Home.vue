@@ -13,7 +13,7 @@
           : 'primary--text text--darken-2'
       " -->
   <div
-    class="sticky z-10 px-4 mb-4 overflow-x-auto overflow-y-hidden tabs top-14 bg-base-300 flex-nowrap no-scrollbar"
+    class="sticky z-10 px-4 mb-4 overflow-x-auto overflow-y-hidden tabs top-14 bg-bgColor-500 flex-nowrap no-scrollbar"
   >
     <a
       class="gap-2 tab tab-lg tab-bordered whitespace-nowrap flex-nowrap"

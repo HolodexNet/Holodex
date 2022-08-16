@@ -9,7 +9,7 @@
     </v-tabs> -->
 
     <div
-      class="sticky z-10 flex flex-wrap justify-between px-4 mb-4 top-12 no-scrollbar bg-base-300"
+      class="sticky z-10 flex flex-wrap justify-between px-4 mb-4 top-12 no-scrollbar bg-bgColor-500"
     >
       <div
         class="flex mt-2 overflow-x-auto overflow-y-hidden tabs no-scrollbar"
@@ -51,7 +51,7 @@
           </label>
           <ul
             tabindex="0"
-            class="z-50 p-2 shadow dropdown-content menu bg-base-100 rounded-box w-52"
+            class="z-50 p-2 shadow dropdown-content menu bg-bgColor rounded-box w-52"
           >
             <li
               v-for="(item, index) in sortOptions"

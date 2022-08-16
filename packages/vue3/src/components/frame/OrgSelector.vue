@@ -37,7 +37,7 @@
         </slot>
       </template>
       <ul
-        class="overflow-y-auto border-2 rounded-md menu bg-base-300 text-base-content border-secondary"
+        class="overflow-y-auto border-2 rounded-md menu bg-bgColor-500 text-base-content border-secondary"
       >
         <li
           v-for="org in orgFavorites"
@@ -70,7 +70,7 @@
           class="px-1"
           color="accent"
         />
-        <ul class="overflow-y-auto menu bg-base-100">
+        <ul class="overflow-y-auto menu bg-bgColor">
           <li v-for="org in sortedOrgs" :key="org.name + '_list_item'">
             <!--             :class="orgFavoritesNameSet.has(org.name) ? 'bordered' : ''"
  -->

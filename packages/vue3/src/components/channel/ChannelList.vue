@@ -6,7 +6,7 @@
           (groupKey === 'org' || groupKey === 'group') &&
           Object.keys(list).length > 1
         "
-        class="p-2 font-semibold rounded-md shadow-md col-span-full bg-base-100"
+        class="p-2 font-semibold rounded-md shadow-md col-span-full bg-bgColor"
       >
         {{ arr[0] || "Unnamed Group" }}
       </div>

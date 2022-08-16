@@ -12,7 +12,7 @@
         >
       </template>
       <div
-        class="max-w-md p-1 -ml-6 border-2 rounded-lg shadow-xl w-60 bg-base shadow-base-100 border-secondary"
+        class="max-w-md p-1 -ml-6 border-2 rounded-lg shadow-xl w-60 bg-bgColor shadow-bgColor border-secondary"
       >
         <v-lazy><video-card :video="v"></video-card></v-lazy>
       </div>
