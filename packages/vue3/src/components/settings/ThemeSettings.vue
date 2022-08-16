@@ -56,7 +56,11 @@
     <theme-color-picker daisy-name="secondary" shorthand="--s" />
     <theme-color-picker daisy-name="accent" shorthand="--a" />
     <theme-color-picker daisy-name="neutral" shorthand="--su" />
-    <theme-color-picker daisy-name="base-100" shorthand="--b1" />
+    <theme-color-picker
+      daisy-name="base-100"
+      shorthand="--b1"
+      display-name="bg Color"
+    />
     <!-- <theme-color-picker daisy-name="base-200" shorthand="--b2" />
     <theme-color-picker daisy-name="base-300" shorthand="--b3" /> -->
     <!-- <theme-color-picker daisy-name="success" shorthand="--su" />

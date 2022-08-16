@@ -8,7 +8,7 @@
         :class="'btn-' + daisyName"
         :style="{ 'background-color': color, color: foreground }"
       >
-        {{ daisyName }}
+        {{ displayName || daisyName }}
         <span class="ml-auto mr-auto text-xs font-light">{{ color }}</span>
       </button>
     </template>
@@ -32,6 +32,10 @@ export default defineComponent({
   name: "ThemeColorPicker",
   props: {
     daisyName: { type: String as PropType<DaisyColorName>, required: true },
+    displayName: {
+      type: String,
+      default: "",
+    },
     shorthand: {
       type: String,
       required: true,
@@ -78,6 +82,6 @@ export default defineComponent({
 #picker {
   @apply border-4 border-white rounded-lg;
   border-style: solid;
-  outline: 4px solid black;
+  /* outline: 4px solid black; */
 }
 </style>
