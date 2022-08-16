@@ -16,7 +16,7 @@
           :channel="channel"
           :variant="variant"
         ></channel-card>
-        <v-lazy v-else>
+        <v-lazy v-else style="height: 116px">
           <channel-card :channel="channel" :variant="variant"></channel-card>
         </v-lazy>
       </template>

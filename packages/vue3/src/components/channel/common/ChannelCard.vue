@@ -36,7 +36,7 @@
       <span class="-mt-1 line-clamp-1" :class="{ 'text-lg': !slim }">
         {{ preferredName }}
       </span>
-      <span v-if="!slim" class="text-sm line-clamp-1 text-neutral opacity-60">
+      <span v-if="!slim" class="text-sm line-clamp-1 text-neutral">
         {{ subscribers }} •
         {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
         {{

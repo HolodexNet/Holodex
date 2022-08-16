@@ -19,7 +19,7 @@
       <div class="flex items-start justify-between">
         <!-- Topic Id display -->
         <div
-          class="rounded-sm video-overlay-tag"
+          class="rounded-sm video-overlay-tag text-white"
           :style="{ visibility: video.topic_id ? 'visible' : 'hidden' }"
         >
           {{ video.topic_id }}
@@ -38,7 +38,7 @@
         </v-icon>
       </div>
 
-      <div class="flex justify-end">
+      <div class="flex justify-end text-white">
         <!-- Show music icon if songs exist -->
         <div v-if="video.songcount" class="rounded-sm video-overlay-tag">
           <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
