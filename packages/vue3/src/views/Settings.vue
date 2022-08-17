@@ -16,7 +16,7 @@
           <a class="justify-center">Color Themes</a>
         </li>
         <li :class="{ 'bordered active': tab === 2 }" @click="tab = 2">
-          <a class="justify-center">Homepage Filters</a>
+          <a class="justify-center">Homepage & Filters</a>
         </li>
         <li :class="{ 'bordered active': tab === 3 }" @click="tab = 3">
           <a class="justify-center">Blocked Channels</a>
@@ -33,6 +33,7 @@
     >
       <language-settings v-if="tab === 0" />
       <theme-settings v-else-if="tab === 1" />
+      <homepage-filters v-else-if="tab === 2" />
     </div>
   </v-container>
 </template>
