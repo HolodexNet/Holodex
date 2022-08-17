@@ -30,20 +30,23 @@
   </v-select>
   <div class="divider" />
 
-  <div class="mb-2 text-lg font-semibold">Dark Color Theme</div>
+  <div class="divider" />
+  <div class="mb-2 text-lg font-semibold">Advanced Color Customization</div>
+
   <div class="max-w-sm form-control">
     <label class="cursor-pointer label">
-      <span class="label-text"> Indicate if the color theme is dark. </span>
+      <span class="label-text">
+        <b>Dark Color Theme</b>: Indicate if the color theme is dark. Dark
+        themes suit darker backgrounds.
+      </span>
       <input
-        v-model="theme.dark"
         type="checkbox"
         class="toggle toggle-primary"
+        :checked="theme.dark"
+        @input="flipDark"
       />
     </label>
   </div>
-
-  <div class="divider" />
-  <div class="mb-2 text-lg font-semibold">Advanced Color Customization</div>
 
   <div style="display: none">
     <div
@@ -175,7 +178,11 @@ export default defineComponent({
     // },
   },
   watch: {},
-  methods: {},
+  methods: {
+    flipDark(e: any) {
+      this.theme.setCustomThemeDark(e.target.checked);
+    },
+  },
 });
 </script>
 <style>

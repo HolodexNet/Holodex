@@ -47,7 +47,7 @@ export const useThemeStore = defineStore("site-theme", {
     // const outputCache = out;
 
     const ts = Date.now();
-    setTimeout(useThemeStore().init, 200); // initialize ?
+    setTimeout(useThemeStore().init, 100); // initialize ?
     return {
       outputCache: [{}, {}] as any,
       ...presets[0],
@@ -80,6 +80,8 @@ export const useThemeStore = defineStore("site-theme", {
     },
     setCustomThemeDark(bool: boolean) {
       this.dark = bool;
+      this.lastModified = Date.now();
+      this._saveAndCacheVuetify();
     },
     init() {
       console.time("Theme Init");
