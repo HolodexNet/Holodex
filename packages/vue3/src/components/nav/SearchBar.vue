@@ -1,6 +1,6 @@
 <template>
   <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
-  <span> {{ $t("component.search.searchLabel") }}</span>
+  <!-- <span> {{ $t("component.search.searchLabel") }}</span> -->
   <v-autocomplete
     v-model:model-value="query"
     v-model:search="search"
@@ -32,7 +32,7 @@
       </div>
     </template>
     <template #item="{ item, props }">
-      <div v-bind="props" class="px-2">
+      <div v-bind="props" class="px-2 py-1 hover:bg-bgColor-300 cursor-pointer">
         <span class="h-3 text-xs opacity-50">
           <v-icon v-if="item.raw.type === 'channel'" small>
             {{ icons.mdiYoutube }}
@@ -227,7 +227,7 @@ export default defineComponent({
         });
       }
     },
-    addItem(item) {
+    addItem(item: any) {
       // console.log(item);
       this.query.push({ ...item });
     },
@@ -248,7 +248,7 @@ export default defineComponent({
       }
       return true;
     },
-    i18nItem(item) {
+    i18nItem(item: any) {
       switch (item) {
         case "channel":
           return this.$t("component.search.type.channel");
@@ -282,7 +282,7 @@ export default defineComponent({
 <style lang="scss">
 .search-bar {
   // width management.
-  max-width: 670px !important;
+  max-width: min(670px, 100vw) !important;
   height: 50px;
 }
 

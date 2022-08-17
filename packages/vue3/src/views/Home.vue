@@ -16,23 +16,29 @@
     class="sticky z-10 px-4 mb-4 overflow-x-auto overflow-y-hidden tabs top-14 bg-bgColor-500 flex-nowrap no-scrollbar"
   >
     <a
-      class="gap-2 tab tab-lg tab-bordered whitespace-nowrap flex-nowrap"
+      class="gap-2 tab tab-xs min-h-8 sm:tab-lg tab-bordered whitespace-nowrap flex-nowrap"
       :class="
         currentTab === 0 ? 'tab-active text-secondary !border-secondary' : ''
       "
       @click="() => updateTab(0)"
     >
       {{ liveUpcomingHeaderSplit[1] }}
-      <span v-if="liveUpcomingCounts.liveCnt" class="badge badge-secondary">
+      <span
+        v-if="liveUpcomingCounts.liveCnt"
+        class="badge badge-secondary badge-sm rounded-sm sm:badge-md"
+      >
         {{ liveUpcomingCounts.liveCnt }}
       </span>
       {{ liveUpcomingHeaderSplit[2] }}
-      <span v-if="liveUpcomingCounts.upcomingCnt" class="badge badge-outline">
+      <span
+        v-if="liveUpcomingCounts.upcomingCnt"
+        class="badge badge-outline badge-sm rounded-sm sm:badge-md"
+      >
         {{ liveUpcomingCounts.upcomingCnt }}
       </span>
     </a>
     <a
-      class="tab tab-lg tab-bordered"
+      class="tab tab-xs min-h-8 sm:tab-lg tab-bordered"
       :class="
         currentTab === 1 ? 'tab-active text-secondary !border-secondary' : ''
       "
@@ -41,7 +47,7 @@
       {{ $t("views.home.recentVideoToggles.official") }}
     </a>
     <a
-      class="tab tab-lg tab-bordered"
+      class="tab tab-xs min-h-8 sm:tab-lg tab-bordered"
       :class="
         currentTab === 2 ? 'tab-active text-secondary !border-secondary' : ''
       "
