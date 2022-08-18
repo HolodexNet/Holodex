@@ -1,6 +1,8 @@
 import { useSiteStore } from "@/stores";
+import { musicdexURL } from "@/utils/consts";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
+// const channelVideos = () => import("@/views/channel/ChannelVideos.vue");
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
@@ -31,11 +33,11 @@ const routes: RouteRecordRaw[] = [
     path: "/channels",
     name: "Channels",
     redirect: (to) => {
-      const site = useSiteStore();
+      const orgInParam = to.params.org;
 
       return {
         name: "Channels_Org",
-        params: { org: site.currentOrg.name },
+        params: { org: orgInParam || useSiteStore().currentOrg.name },
         replace: true,
       };
     },
@@ -49,6 +51,42 @@ const routes: RouteRecordRaw[] = [
     path: "/org/:org/channels",
     name: "Channels_Org",
     component: () => import("@/views/Channels.vue"),
+  },
+  {
+    path: "/channel/:id",
+    component: () => import("@/views/Channel.vue"),
+    children: [
+      {
+        name: "channel_about",
+        path: "about",
+        component: () => import("@/views/channel/ChannelAbout.vue"),
+      },
+      {
+        path: "clips",
+        name: "channel_clips",
+        component: () => import("@/views/channel/ChannelVideos.vue"),
+      },
+      {
+        path: "collabs",
+        name: "channel_collabs",
+        component: () => import("@/views/channel/ChannelVideos.vue"),
+      },
+      {
+        path: "music",
+        name: "channel_music",
+        beforeEnter(to) {
+          window.location.replace(`${musicdexURL}/channel/${to.params.id}`);
+        },
+        redirect(to) {
+          return `${musicdexURL}/channel/${to.params.id}`;
+        },
+      },
+      {
+        path: "",
+        name: "channel",
+        component: () => import("@/views/channel/ChannelVideos.vue"),
+      },
+    ],
   },
   {
     path: "/profile",

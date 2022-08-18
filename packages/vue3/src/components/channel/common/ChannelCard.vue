@@ -96,7 +96,7 @@
   </div>
 </template>
 <script lang="ts">
-import { useChannel } from "@/hooks/common/useChannelService";
+import { useChannelPreferredName } from "@/hooks/common/useChannelService";
 import { useFavoritesListByID } from "@/services/favorites";
 import { useLangStore } from "@/stores";
 import { formatCount, formatTopic } from "@/utils/functions";
@@ -116,7 +116,7 @@ export default defineComponent({
     slim: Boolean,
   },
   setup(props) {
-    const { preferredName } = useChannel(props.channel);
+    const { preferredName } = useChannelPreferredName(props.channel);
     const lang = useLangStore();
     const fav = useFavoritesListByID();
 

@@ -1,6 +1,6 @@
 import { useLangStore } from "@/stores/lang";
 
-export function useChannel(channel: FullChannel) {
+export function useChannelPreferredName(channel: FullChannel) {
   const langPrefs = useLangStore();
 
   const preferredName = computed(() => {
