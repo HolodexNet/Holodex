@@ -19,8 +19,7 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      backgroundColor: colorOpts,
-      outlineColor: colorOpts,
+      colors: colorOpts
     }
   },
   plugins: [require("daisyui"), require("@tailwindcss/line-clamp")],
