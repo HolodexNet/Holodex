@@ -40,7 +40,7 @@ import { useChannels } from "@/services/useChannels";
 import { PropType } from "vue";
 import flatten from "lodash-es/flatten";
 import groupBy from "lodash-es/groupBy";
-import { useInfiniteScroll } from "@vueuse/core";
+// import { useInfiniteScroll } from "@vueuse/core";
 
 interface QueryType {
   type: string;

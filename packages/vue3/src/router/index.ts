@@ -6,10 +6,10 @@ const routes: RouteRecordRaw[] = [
     path: "/",
     name: "Home",
     redirect: (to) => {
-      const site = useSiteStore();
+      const orgInParam = to.params.org;
       return {
         name: "Home_Org",
-        params: { org: site.currentOrg.name },
+        params: { org: orgInParam || useSiteStore().currentOrg.name },
         replace: true,
       };
     },
