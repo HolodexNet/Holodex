@@ -14,7 +14,7 @@ export default {
 
             let keep = true;
             const channelId = v.channel_id || v.channel.id;
-            const isFavoritedOrInOrg = v.channel.org === forOrg || favoriteChannels.has(channelId);
+            const isFavoritedOrInOrg = v.channel.org === forOrg || favoriteChannels.has(channelId) || this.$store.state.currentOrg;
 
             if (!ignoreBlock) {
                 keep &&= !blockedChannels.has(channelId);
