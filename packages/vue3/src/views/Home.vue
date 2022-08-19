@@ -16,7 +16,7 @@
     class="sticky z-10 px-4 mb-4 overflow-x-auto overflow-y-hidden tabs top-14 bg-bgColor-500 flex-nowrap no-scrollbar"
   >
     <a
-      class="gap-2 tab tab-xs min-h-8 sm:tab-lg tab-bordered whitespace-nowrap flex-nowrap"
+      class="gap-2 tab min-h-[2.25rem] sm:tab-lg tab-bordered whitespace-nowrap flex-nowrap"
       :class="
         currentTab === 0 ? 'tab-active text-secondary !border-secondary' : ''
       "
@@ -38,7 +38,7 @@
       </span>
     </a>
     <a
-      class="tab tab-xs min-h-8 sm:tab-lg tab-bordered"
+      class="tab min-h-[2.25rem] sm:tab-lg tab-bordered"
       :class="
         currentTab === 1 ? 'tab-active text-secondary !border-secondary' : ''
       "
@@ -47,7 +47,7 @@
       {{ $t("views.home.recentVideoToggles.official") }}
     </a>
     <a
-      class="tab tab-xs min-h-8 sm:tab-lg tab-bordered"
+      class="tab min-h-[2.25rem] sm:tab-lg tab-bordered"
       :class="
         currentTab === 2 ? 'tab-active text-secondary !border-secondary' : ''
       "
