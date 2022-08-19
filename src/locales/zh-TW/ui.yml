@@ -57,6 +57,8 @@ component:
     uploadScript: 上傳翻譯文本
   videoDescription:
     description: 說明
+  video:
+    comment: { }
   description:
     showLess: 只顯示部分資訊
     showMore: 顯示完整資訊
@@ -428,10 +430,10 @@ views:
   tlClient:
     menu:
       title: 選單
-      setting: TLDex 房間設定
+      setting: TLDex 資料設定
       loadVideo: 顯示影片
       unloadVideo: 隱藏影片
-      loadChat: 將聊天室的訊息新增至翻譯室中
+      loadChat: 將聊天室的訊息新增至社群翻譯區
       unloadChat: 從YouTube聊天室中分離
     tlControl:
       enterBtn: 輸入
@@ -442,6 +444,8 @@ views:
       localPrefix: 聊天室中的語言標籤
       addProfile: 新增設定檔
       removeProfile: 移除設定檔
+      shiftUp: 上移設定檔
+      shiftDown: 下移設定檔
       showSetting: 設定
       hideSetting: 隱藏
     addProfilePanel:
@@ -462,6 +466,7 @@ views:
   scriptEditor:
     menu:
       save: 儲存
+      continuousEnd: 翻譯語句連續化（延長結束時間填補空白區域）
       clearAll: 刪除文本
       exportFile: 匯出檔案
       importFile: 匯入檔案

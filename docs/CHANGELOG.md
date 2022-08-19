@@ -3,6 +3,11 @@
 ##### Unreleased
 
 - Development of Vue3 Holodex (release 3.0 ?!?!) is underway... If you like to influence how it looks, now is the best time to let us know.
+- 
+### 2.28.1 Holodex [*August 18th, 2022*]
+
+- Hotfix for videos replaying after stream ends
+- Hotfix for some vtubers not showing up on "All Vtubers Tab"
 
 ### 2.28 Holodex [*August 13th, 2022*]
 

@@ -1,26 +1,27 @@
 <template>
   <v-container fill-height fluid style="max-height: 100vh; padding: 0px 12px">
-    <div class="d-flex flex-column" style="height: 100%; width:100%">
+    <div class="d-flex flex-column" style="height: 100%; width: 100%">
       <v-system-bar height="30" class="tl-topbar px-0" color="secondary">
-        <v-btn
-          small
-          outlined
-          to="/"
-        >
+        <v-btn small outlined to="/">
           <v-icon>{{ icons.mdiHome }}</v-icon>
-          {{ $t('component.mainNav.home') }}
+          {{ $t("component.mainNav.home") }}
         </v-btn>
         <v-btn
           small
           outlined
-          @click="modalMode = 3; modalNexus = true"
+          @click="
+            modalMode = 3;
+            modalNexus = true;
+          "
         >
           {{ $t("views.tlClient.menu.setting") }}
         </v-btn>
         <v-btn
           small
           outlined
-          :to="`/scripteditor?video=${video.id ? `YT_${video.id}` : mainStreamLink}`"
+          :to="`/scripteditor?video=${
+            video.id ? `YT_${video.id}` : mainStreamLink
+          }`"
         >
           {{ $t("component.videoCard.openScriptEditor") }}
         </v-btn>
@@ -46,21 +47,28 @@
         <v-btn
           small
           outlined
-          @click="modalMode = 4; modalNexus = true; activeURLStream = '';"
+          @click="
+            modalMode = 4;
+            modalNexus = true;
+            activeURLStream = '';
+          "
         >
           {{ $t("views.tlClient.menu.loadChat") }}
         </v-btn>
         <v-btn
           small
           outlined
-          @click="modalMode = 5; modalNexus = true"
+          @click="
+            modalMode = 5;
+            modalNexus = true;
+          "
         >
           {{ $t("views.tlClient.menu.unloadChat") }}
         </v-btn>
       </v-system-bar>
       <div
         class="d-flex align-stretch flex-row"
-        style="height:100%;"
+        style="height: 100%"
         @click="menuBool = false"
         @mousemove="resizeMouseMove($event)"
         @mouseleave="resizeMouseLeave(1)"
@@ -69,60 +77,136 @@
         <v-card
           class="d-flex flex-column flex-grow-1"
           height="100%;"
-          :width="activeChat.length < 2 ? videoPanelWidth1 + '%' : videoPanelWidth2 + '%'"
+          :width="
+            activeChat.length < 2
+              ? videoPanelWidth1 + '%'
+              : videoPanelWidth2 + '%'
+          "
           @mouseleave="resizeMouseLeave(0)"
         >
-          <div v-if="resizeActive" style="position: absolute; height: 100%; width: 100%; background-color: transparent; z-index: 1;" />
+          <div
+            v-if="resizeActive"
+            style="
+              position: absolute;
+              height: 100%;
+              width: 100%;
+              background-color: transparent;
+              z-index: 1;
+            "
+          />
           <v-card
             v-if="vidPlayer && getVideoIDFromUrl(mainStreamLink)"
-            style="height:100%"
+            style="height: 100%"
             class="d-flex flex-column"
             outlined
           >
-            <v-card
-              id="player"
-              height="100%"
-              width="100%"
-            >
-              <youtube-player v-if="getVideoIDFromUrl(mainStreamLink).type !== 'twitch'" :video-id="getVideoIDFromUrl(mainStreamLink).id" />
-              <twitch-player v-else :channel="getVideoIDFromUrl(mainStreamLink).id" style="width: 100%; height: 100%" />
+            <v-card id="player" height="100%" width="100%">
+              <youtube-player
+                v-if="getVideoIDFromUrl(mainStreamLink).type !== 'twitch'"
+                :video-id="getVideoIDFromUrl(mainStreamLink).id"
+              />
+              <twitch-player
+                v-else
+                :channel="getVideoIDFromUrl(mainStreamLink).id"
+                style="width: 100%; height: 100%"
+              />
             </v-card>
           </v-card>
           <div
             v-if="vidPlayer"
-            style="cursor:s-resize; height:8px; background:var(--v-background-base)"
+            style="
+              cursor: s-resize;
+              height: 8px;
+              background: var(--v-background-base);
+            "
             @mousedown="resizeMouseDown($event, 0)"
           >
-            <div style="width: 10%; min-width: 40px; margin-left: auto; margin-right:auto; background: #444; height: 3px; border-radius: 2px; margin-top: 1px;" />
+            <div
+              style="
+                width: 10%;
+                min-width: 40px;
+                margin-left: auto;
+                margin-right: auto;
+                background: #444;
+                height: 3px;
+                border-radius: 2px;
+                margin-top: 1px;
+              "
+            />
           </div>
           <LiveTranslations
             v-if="!isLoading"
             :tl-lang="TLLang.value"
             :tl-client="true"
-            :video="mainLinkIsCustom ? { id: 'custom', custom_video_id: mainStreamLink } : video"
+            :video="
+              mainLinkIsCustom
+                ? { id: 'custom', custom_video_id: mainStreamLink }
+                : video
+            "
             :class="{
               'stick-bottom': $store.state.settings.liveTlStickBottom,
               'tl-full-height': false,
             }"
-            :style="{'height': vidPlayer ? tlChatHeight + 'px' : '100%'}"
+            :style="{ height: vidPlayer ? tlChatHeight + 'px' : '100%' }"
             :use-local-subtitle-toggle="false"
           />
-          <v-card v-if="profileDisplay && (activeChat.length > 1)" class="ProfileListCard d-flex flex-column">
-            <span v-for="(prf, index) in profile" :key="index"><span v-if="index === profileIdx">> </span>{{ (index + 1) + '. ' + prf.Name }}</span>
+          <v-card
+            v-if="profileDisplay && activeChat.length > 1"
+            class="ProfileListCard d-flex flex-column"
+          >
+            <span
+              v-for="(prf, index) in profile"
+              :key="'profilecard' + index"
+              :class="{
+                'primary--text font-weight-medium': index === profileIdx,
+              }"
+            ><span v-if="index === profileIdx">> </span>
+              <kbd v-if="index > 0">Ctrl-{{ index }}</kbd>
+              <kbd v-if="index == 0">Ctrl-{{ index }} | Shift⇧-Tab↹</kbd>
+              {{ " " + prf.Name }}
+            </span>
           </v-card>
         </v-card>
-        <div v-if="activeChat.length > 0" style="cursor:e-resize; width:7px;" @mousedown="resizeMouseDown($event, 1)">
-          <div style="height: 10%; min-height: 40px; margin-top: 40vh; margin-bottom:auto; background: #444; width: 3px; border-radius: 2px; margin-left: 2px;" />
+        <div
+          v-if="activeChat.length > 0"
+          style="cursor: e-resize; width: 7px"
+          @mousedown="resizeMouseDown($event, 1)"
+        >
+          <div
+            style="
+              height: 10%;
+              min-height: 40px;
+              margin-top: 40vh;
+              margin-bottom: auto;
+              background: #444;
+              width: 3px;
+              border-radius: 2px;
+              margin-left: 2px;
+            "
+          />
         </div>
         <v-card
           v-if="activeChat.length > 0"
           class="ChatPanelContainer"
           height="100%"
-          :width="activeChat.length < 2 ? (100 - videoPanelWidth1) + '%' : (100 - videoPanelWidth2) + '%'"
+          :width="
+            activeChat.length < 2
+              ? 100 - videoPanelWidth1 + '%'
+              : 100 - videoPanelWidth2 + '%'
+          "
           :style="activeChatGridRow"
           outlined
         >
-          <div v-if="resizeActive" style="position: absolute; height: 100%; width: 100%; background-color: transparent; z-index: 1;" />
+          <div
+            v-if="resizeActive"
+            style="
+              position: absolute;
+              height: 100%;
+              width: 100%;
+              background-color: transparent;
+              z-index: 1;
+            "
+          />
           <v-card
             v-for="(ChatURL, index) in activeChat"
             :key="ChatURL.text"
@@ -142,26 +226,44 @@
               @load="IFrameLoaded($event, ChatURL.text)"
             />
           </v-card>
-          <v-card v-if="profileDisplay && (activeChat.length < 2)" class="ProfileListCard d-flex flex-column">
-            <span v-for="(prf, index) in profile" :key="index"><span v-if="index === profileIdx">> </span>{{ (index + 1) + '. ' + prf.Name }}</span>
+          <v-card
+            v-if="profileDisplay && activeChat.length < 2"
+            class="ProfileListCard d-flex flex-column"
+          >
+            <span
+              v-for="(prf, index) in profile"
+              :key="'profilecard' + index"
+              :class="{
+                'primary--text font-weight-medium': index === profileIdx,
+              }"
+            ><span v-if="index === profileIdx">> </span>
+              <kbd v-if="index > 0">Ctrl-{{ index }}</kbd>
+              <kbd v-if="index == 0">Ctrl-{{ index }} | Shift⇧-Tab↹</kbd>
+              <kbd
+                v-if="index === Math.max(1, (profileIdx + 1) % profile.length)"
+                class="ml-1"
+              >Tab↹</kbd>
+              {{ " " + prf.Name }}
+            </span>
           </v-card>
         </v-card>
       </div>
 
       <v-container
         @keydown.up.exact="profileUp()"
-        @keydown.down.exact="profileDown()"
-        @keydown.tab.exact.prevent="profileDown()"
+        @keydown.down.exact="profileDown(false)"
+        @keydown.tab.exact.prevent="profileDown(true)"
         @keydown.shift.tab.exact.prevent="profileJumpToDefault()"
-        @keydown.ctrl.49.exact.prevent="profileJump(0)"
-        @keydown.ctrl.50.exact.prevent="profileJump(1)"
-        @keydown.ctrl.51.exact.prevent="profileJump(2)"
-        @keydown.ctrl.52.exact.prevent="profileJump(3)"
-        @keydown.ctrl.53.exact.prevent="profileJump(4)"
-        @keydown.ctrl.54.exact.prevent="profileJump(5)"
-        @keydown.ctrl.55.exact.prevent="profileJump(6)"
-        @keydown.ctrl.56.exact.prevent="profileJump(7)"
-        @keydown.ctrl.57.exact.prevent="profileJump(8)"
+        @keydown.ctrl.48.exact.prevent="profileJump(0)"
+        @keydown.ctrl.49.exact.prevent="profileJump(1)"
+        @keydown.ctrl.50.exact.prevent="profileJump(2)"
+        @keydown.ctrl.51.exact.prevent="profileJump(3)"
+        @keydown.ctrl.52.exact.prevent="profileJump(4)"
+        @keydown.ctrl.53.exact.prevent="profileJump(5)"
+        @keydown.ctrl.54.exact.prevent="profileJump(6)"
+        @keydown.ctrl.55.exact.prevent="profileJump(7)"
+        @keydown.ctrl.56.exact.prevent="profileJump(8)"
+        @keydown.ctrl.59.exact.prevent="profileJump(9)"
       >
         <v-row>
           <v-text-field
@@ -172,22 +274,26 @@
             dense
             @keypress.enter="addEntry()"
           >
-            <template
-              #prepend
-            >
-              <span style="opacity: 0.8;" class="mt-1">{{ profile[profileIdx].Prefix }}</span>
+            <template #prepend>
+              <span style="opacity: 0.8" class="mt-1">{{
+                profile[profileIdx].Prefix
+              }}</span>
             </template>
-            <template
-              #append
-            >
-              <span style="opacity: 0.8;" class="mt-1">{{ profile[profileIdx].Suffix }}</span>
+            <template #append>
+              <span style="opacity: 0.8" class="mt-1">{{
+                profile[profileIdx].Suffix
+              }}</span>
             </template>
           </v-text-field>
           <v-btn large class="mx-2" @click="addEntry()">
             {{ $t("views.tlClient.tlControl.enterBtn") }}
           </v-btn>
           <v-btn large color="primary" @click="TLSetting = !TLSetting">
-            {{ TLSetting ? $t("views.tlClient.tlControl.hideSetting") : $t("views.tlClient.tlControl.showSetting") }}
+            {{
+              TLSetting
+                ? $t("views.tlClient.tlControl.hideSetting")
+                : $t("views.tlClient.tlControl.showSetting")
+            }}
             <v-icon>
               {{ TLSetting ? mdiCogOff : mdiCog }}
             </v-icon>
@@ -207,8 +313,16 @@
                   </v-icon>
                 </template>
                 <span>While typing in TL box</span><br>
-                <span><kbd>⇧</kbd><kbd>⇩</kbd> to change Profiles</span><br>
-                <span><kbd>Ctrl+[1~9]</kbd> to quick switch to Profile</span>
+                <span>
+                  <kbd>Up⇧</kbd> or <kbd>Down⇩</kbd> to change Profiles </span><br>
+                <span>
+                  <kbd>Ctrl+[0~9]</kbd> to quick switch to Profile 0-9 </span><br>
+                <span>
+                  <kbd>Tab↹</kbd> to quick switch between Profiles 1-9 (0 is
+                  special) </span><br>
+                <span>
+                  <kbd>Shift⇧-Tab↹</kbd> to quick switch to Profile 0
+                </span>
               </v-tooltip>
             </v-card-subtitle>
             <v-card-text class="d-flex align-stretch">
@@ -267,13 +381,28 @@
               />
             </v-card-text>
             <v-card-text>
-              <v-btn style="margin-right:5px" @click="modalMode = 1; modalNexus = true; addProfileNameString = 'Profile ' + profile.length;">
+              <v-btn
+                style="margin-right: 5px"
+                @click="
+                  modalMode = 1;
+                  modalNexus = true;
+                  addProfileNameString = 'Profile ' + profile.length;
+                "
+              >
                 {{ $t("views.tlClient.tlControl.addProfile") }}
               </v-btn>
-              <v-btn style="margin-right:5px" @click="modalMode = 2; modalNexus = true">
-                {{ $t("views.tlClient.tlControl.removeProfile") }}  ({{ profile[profileIdx].Name }})
+              <v-btn
+                style="margin-right: 5px"
+                @click="
+                  modalMode = 2;
+                  modalNexus = true;
+                "
+              >
+                {{ $t("views.tlClient.tlControl.removeProfile") }} ({{
+                  profile[profileIdx].Name
+                }})
               </v-btn>
-              <v-btn style="margin-right:5px" @click="shiftProfileUp()">
+              <v-btn style="margin-right: 5px" @click="shiftProfileUp()">
                 {{ $t("views.tlClient.tlControl.shiftUp") }}
               </v-btn>
               <v-btn @click="shiftProfileDown()">
@@ -289,20 +418,26 @@
     <v-dialog
       v-model="colourDialogue"
       max-width="300px"
-      @click:outside.prevent="colourPickerClose();"
+      @click:outside.prevent="colourPickerClose()"
     >
       <v-card>
-        <v-color-picker v-if="colourPick === 1" v-model="profile[profileIdx].CC" />
-        <v-color-picker v-else-if="colourPick === 2" v-model="profile[profileIdx].OC" />
-        <v-card-title :style="textStyle" style="font-weight:bold;">
+        <v-color-picker
+          v-if="colourPick === 1"
+          v-model="profile[profileIdx].CC"
+        />
+        <v-color-picker
+          v-else-if="colourPick === 2"
+          v-model="profile[profileIdx].OC"
+        />
+        <v-card-title :style="textStyle" style="font-weight: bold">
           {{ $t("views.tlClient.pangram") }}
         </v-card-title>
         <v-card-actions>
-          <v-btn @click="colourPickerClose();">
+          <v-btn @click="colourPickerClose()">
             {{ $t("views.tlClient.cancelBtn") }}
           </v-btn>
 
-          <v-btn style="margin-left:auto" @click="colourPickerOK()">
+          <v-btn style="margin-left: auto" @click="colourPickerOK()">
             {{ $t("views.tlClient.okBtn") }}
           </v-btn>
         </v-card-actions>
@@ -321,7 +456,7 @@
       v-model="modalNexus"
       max-width="600px"
       persistent
-      @click:outside="modalNexusOutsideClick();"
+      @click:outside="modalNexusOutsideClick()"
     >
       <!---------    ADD PROFILE     --------->
       <v-card v-if="modalMode === 1">
@@ -342,7 +477,7 @@
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
-            <v-btn style="margin-left:auto" @click="addProfile()">
+            <v-btn style="margin-left: auto" @click="addProfile()">
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
@@ -353,14 +488,18 @@
       <v-card v-if="modalMode === 2">
         <v-container>
           <v-card-title>
-            {{ $t("views.tlClient.removeProfileTitle") + ' ' + profile[profileIdx].Name }}.
+            {{
+              $t("views.tlClient.removeProfileTitle") +
+                " " +
+                profile[profileIdx].Name
+            }}.
           </v-card-title>
           <v-card-actions>
             <v-btn @click="modalNexus = false">
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
-            <v-btn style="margin-left:auto" @click="deleteProfile()">
+            <v-btn style="margin-left: auto" @click="deleteProfile()">
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
@@ -374,13 +513,21 @@
             {{ $t("views.tlClient.settingPanel.title") }}
           </v-card-title>
           <v-card-subtitle>
-            {{ $t("views.watch.uploadPanel.usernameText") + ' : ' + userdata.user.username + ' ' }}
-            <a style="text-decoration: underline; font-size: 0.7em" @click="changeUsernameClick()">{{ $t("views.watch.uploadPanel.usernameChange") }}</a>
+            {{
+              $t("views.watch.uploadPanel.usernameText") +
+                " : " +
+                userdata.user.username +
+                " "
+            }}
+            <a
+              style="text-decoration: underline; font-size: 0.7em"
+              @click="changeUsernameClick()"
+            >{{ $t("views.watch.uploadPanel.usernameChange") }}</a>
           </v-card-subtitle>
           <v-select
             v-model="TLLang"
             :items="TL_LANGS"
-            :item-text="item => item.text + ' (' + item.value + ')'"
+            :item-text="(item) => item.text + ' (' + item.value + ')'"
             item-value="value"
             :label="$t('views.watch.uploadPanel.tlLang')"
             return-object
@@ -405,12 +552,12 @@
                   Find Video
                 </v-btn>
               </template>
-              <video-selector
-                @videoClicked="handleVideoClicked"
-              />
+              <video-selector @videoClicked="handleVideoClicked" />
             </v-dialog>
           </div>
-          <v-card-title>{{ $t("views.tlClient.settingPanel.collabLink") }}</v-card-title>
+          <v-card-title>
+            {{ $t("views.tlClient.settingPanel.collabLink") }}
+          </v-card-title>
           <v-text-field
             v-for="(AuxLink, index) in collabLinks"
             :key="index"
@@ -419,7 +566,7 @@
             :prepend-icon="mdiMinusCircle"
             style="margin-left: 17px"
             @click:prepend="deleteAuxLink(index)"
-            @click:append-outer="collabLinks.push('');"
+            @click:append-outer="collabLinks.push('')"
           />
           <v-card-actions class="d-flex flex-row justify-center">
             <v-btn @click="settingOKClick()">
@@ -435,13 +582,22 @@
           <v-card-title>
             {{ $t("views.tlClient.loadChatPanel.title") }}
           </v-card-title>
-          <v-text-field v-model="activeURLStream" :label="$t('views.tlClient.loadChatPanel.inputLabel')" />
+          <v-text-field
+            v-model="activeURLStream"
+            :label="$t('views.tlClient.loadChatPanel.inputLabel')"
+          />
           <v-card-actions>
             <v-btn @click="modalNexus = false">
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
-            <v-btn style="margin-left:auto" @click="loadChat(activeURLStream); modalNexus = false;">
+            <v-btn
+              style="margin-left: auto"
+              @click="
+                loadChat(activeURLStream);
+                modalNexus = false;
+              "
+            >
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
@@ -459,7 +615,13 @@
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
-            <v-btn style="margin-left:auto" @click="unloadAll(); modalNexus = false;">
+            <v-btn
+              style="margin-left: auto"
+              @click="
+                unloadAll();
+                modalNexus = false;
+              "
+            >
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
@@ -485,12 +647,20 @@
 import LiveTranslations from "@/components/chat/LiveTranslations.vue";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
 import { TL_LANGS, VIDEO_URL_REGEX } from "@/utils/consts";
-import { mdiPlusCircle, mdiMinusCircle, mdiCloseCircle, mdiKeyboard, mdiCog, mdiCogOff } from "@mdi/js";
+import {
+    mdiPlusCircle,
+    mdiMinusCircle,
+    mdiCloseCircle,
+    mdiKeyboard,
+    mdiCog,
+    mdiCogOff,
+} from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { mapState } from "vuex";
 import YoutubePlayer from "@/components/player/YoutubePlayer.vue";
 import TwitchPlayer from "@/components/player/TwitchPlayer.vue";
+import { useStorage } from "@vueuse/core";
 
 export default {
     name: "Tlclient",
@@ -507,6 +677,21 @@ export default {
         YoutubePlayer,
         TwitchPlayer,
     },
+    setup() {
+        const profile = useStorage("tldex-profiles", [
+            {
+                Name: "Default",
+                Prefix: "",
+                Suffix: "",
+                useCC: false,
+                CC: "#000000",
+                useOC: false,
+                OC: "#000000",
+            },
+        ]);
+        const mainStreamLink = useStorage("tldex-lastlink", "");
+        return { profile, mainStreamLink };
+    },
     data() {
         return {
             TL_LANGS,
@@ -518,16 +703,7 @@ export default {
             mdiCogOff,
             TLSetting: true,
             firstLoad: true,
-            profile: [{
-                Name: "Default",
-                Prefix: "",
-                Suffix: "",
-                useCC: false,
-                CC: "#000000",
-                useOC: false,
-                OC: "#000000",
-            }],
-            profileContainer: {},
+            // ------ PROFILES -----
             profileIdx: 0,
             profileDisplay: false,
             profileDisplayTimer: undefined,
@@ -543,7 +719,6 @@ export default {
             addProfileNameString: "",
             // ------ SETTING ------
             TLLang: TL_LANGS[0],
-            mainStreamLink: "",
             collabLinks: [""],
             videoSelectDialog: false,
             // ---- ACTIVE CHAT ----
@@ -575,16 +750,23 @@ export default {
         },
         textStyle() {
             return {
-                "-webkit-text-fill-color": (this.profile[this.profileIdx].CC === "") ? "unset" : this.profile[this.profileIdx].CC,
-                "-webkit-text-stroke-color": (this.profile[this.profileIdx].OC === "") ? "unset" : this.profile[this.profileIdx].OC,
-                "-webkit-text-stroke-width": (this.profile[this.profileIdx].OC === "") ? "0px" : "1px",
+                "-webkit-text-fill-color":
+                    this.profile[this.profileIdx].CC === ""
+                        ? "unset"
+                        : this.profile[this.profileIdx].CC,
+                "-webkit-text-stroke-color":
+                    this.profile[this.profileIdx].OC === ""
+                        ? "unset"
+                        : this.profile[this.profileIdx].OC,
+                "-webkit-text-stroke-width":
+                    this.profile[this.profileIdx].OC === "" ? "0px" : "1px",
             };
         },
         activeChatGridRow() {
             if (this.activeChat.length < 4) {
-                return ({ "grid-template-rows": "1fr" });
+                return { "grid-template-rows": "1fr" };
             }
-            return ({ "grid-template-rows": "1fr 1fr" });
+            return { "grid-template-rows": "1fr 1fr" };
         },
         userdata() {
             return this.$store.state.userdata;
@@ -596,21 +778,34 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         "$route.query.video": function () {
-            if ((this.$route.name === "tlclient") && this.$route.query.video) {
+            if (this.$route.name === "tlclient" && this.$route.query.video) {
                 this.init();
             }
         },
         mainStreamLink() {
-            if (this.$route.query.video && this.mainStreamLink !== this.$route.query.video) { this.$router.replace({ path: "/tlclient", query: {} }); }
+            if (
+                this.$route.query.video
+                && this.mainStreamLink !== this.$route.query.video
+            ) {
+                this.$router.replace({ path: "/tlclient", query: {} });
+            }
         },
     },
     mounted() {
         this.init();
         if (localStorage.getItem("Holodex-TLClient")) {
-            const defaultSetting = JSON.parse(localStorage.getItem("Holodex-TLClient"));
-            if (defaultSetting.tlChatHeight) { this.tlChatHeight = defaultSetting.tlChatHeight; }
-            if (defaultSetting.videoPanelWidth1) { this.videoPanelWidth1 = defaultSetting.videoPanelWidth1; }
-            if (defaultSetting.videoPanelWidth2) { this.videoPanelWidth2 = defaultSetting.videoPanelWidth2; }
+            const defaultSetting = JSON.parse(
+                localStorage.getItem("Holodex-TLClient"),
+            );
+            if (defaultSetting.tlChatHeight) {
+                this.tlChatHeight = defaultSetting.tlChatHeight;
+            }
+            if (defaultSetting.videoPanelWidth1) {
+                this.videoPanelWidth1 = defaultSetting.videoPanelWidth1;
+            }
+            if (defaultSetting.videoPanelWidth2) {
+                this.videoPanelWidth2 = defaultSetting.videoPanelWidth2;
+            }
         }
     },
     methods: {
@@ -630,18 +825,24 @@ export default {
                     switch (target.slice(0, 3)) {
                         case "YT_": {
                             if (event.target.contentWindow) {
-                                event.target.contentWindow.postMessage({
-                                    n: "HolodexSync",
-                                    d: "Initiate",
-                                }, "https://www.youtube.com");
+                                event.target.contentWindow.postMessage(
+                                    {
+                                        n: "HolodexSync",
+                                        d: "Initiate",
+                                    },
+                                    "https://www.youtube.com",
+                                );
                             } else {
                                 let trial = 0;
                                 const id = setInterval(() => {
                                     if (event.target.contentWindow) {
-                                        event.target.contentWindow?.postMessage({
-                                            n: "HolodexSync",
-                                            d: "Initiate",
-                                        }, "https://www.youtube.com");
+                                        event.target.contentWindow?.postMessage(
+                                            {
+                                                n: "HolodexSync",
+                                                d: "Initiate",
+                                            },
+                                            "https://www.youtube.com",
+                                        );
                                         clearInterval(id);
                                         return;
                                     }
@@ -656,18 +857,24 @@ export default {
 
                         case "TW_": {
                             if (event.target.contentWindow) {
-                                event.target.contentWindow.postMessage({
-                                    n: "HolodexSync",
-                                    d: "Initiate",
-                                }, "https://www.twitch.tv");
+                                event.target.contentWindow.postMessage(
+                                    {
+                                        n: "HolodexSync",
+                                        d: "Initiate",
+                                    },
+                                    "https://www.twitch.tv",
+                                );
                             } else {
                                 let trial = 0;
                                 const id = setInterval(() => {
                                     if (event.target.contentWindow) {
-                                        event.target.contentWindow?.postMessage({
-                                            n: "HolodexSync",
-                                            d: "Initiate",
-                                        }, "https://www.twitch.tv");
+                                        event.target.contentWindow?.postMessage(
+                                            {
+                                                n: "HolodexSync",
+                                                d: "Initiate",
+                                            },
+                                            "https://www.twitch.tv",
+                                        );
                                         clearInterval(id);
                                         return;
                                     }
@@ -691,17 +898,31 @@ export default {
             this.activeChat.forEach((e) => {
                 switch (e.text.slice(0, 3)) {
                     case "YT_":
-                        e.IFrameEle?.contentWindow?.postMessage({
-                            n: "HolodexSync",
-                            d: this.localPrefix + this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
-                        }, "https://www.youtube.com");
+                        e.IFrameEle?.contentWindow?.postMessage(
+                            {
+                                n: "HolodexSync",
+                                d:
+                                    this.localPrefix
+                                    + this.profile[this.profileIdx].Prefix
+                                    + this.inputString
+                                    + this.profile[this.profileIdx].Suffix,
+                            },
+                            "https://www.youtube.com",
+                        );
                         break;
 
                     case "TW_":
-                        e.IFrameEle?.contentWindow?.postMessage({
-                            n: "HolodexSync",
-                            d: this.localPrefix + this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
-                        }, "https://www.twitch.tv");
+                        e.IFrameEle?.contentWindow?.postMessage(
+                            {
+                                n: "HolodexSync",
+                                d:
+                                    this.localPrefix
+                                    + this.profile[this.profileIdx].Prefix
+                                    + this.inputString
+                                    + this.profile[this.profileIdx].Suffix,
+                            },
+                            "https://www.twitch.tv",
+                        );
                         break;
 
                     default:
@@ -712,49 +933,62 @@ export default {
             const bodydt = {
                 name: this.userdata.user.username,
                 timestamp: Date.now(),
-                message: this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
-                cc: this.profile[this.profileIdx].useCC ? this.profile[this.profileIdx].CC : "",
-                oc: this.profile[this.profileIdx].useOC ? this.profile[this.profileIdx].OC : "",
+                message:
+                    this.profile[this.profileIdx].Prefix
+                    + this.inputString
+                    + this.profile[this.profileIdx].Suffix,
+                cc: this.profile[this.profileIdx].useCC
+                    ? this.profile[this.profileIdx].CC
+                    : "",
+                oc: this.profile[this.profileIdx].useOC
+                    ? this.profile[this.profileIdx].OC
+                    : "",
                 source: "user",
             };
 
             // SEND TO API
-            backendApi.postTL({
-                videoId: this.video?.id || "custom",
-                jwt: this.userdata.jwt,
-                lang: this.TLLang.value,
-                ...!this.video?.id && { custom_video_id: this.mainStreamLink },
-                body: bodydt,
-            }).then(({ status, data }) => {
-                if (status !== 200) {
-                    console.log(`ERR : ${data}`);
-                }
-            }).catch((err) => {
-                console.log(`ERR : ${err}`);
-            });
+            backendApi
+                .postTL({
+                    videoId: this.video?.id || "custom",
+                    jwt: this.userdata.jwt,
+                    lang: this.TLLang.value,
+                    ...(!this.video?.id && { custom_video_id: this.mainStreamLink }),
+                    body: bodydt,
+                })
+                .then(({ status, data }) => {
+                    if (status !== 200) {
+                        console.log(`ERR : ${data}`);
+                    }
+                })
+                .catch((err) => {
+                    console.log(`ERR : ${err}`);
+                });
 
             this.collabLinks.forEach((link) => {
                 if (!link) return;
                 // TODO: this doesn't make complete sense
                 // Not all YT videos are able to be submitted normally
                 const ytMatch = link.match(VIDEO_URL_REGEX)?.[5];
-                backendApi.postTL({
-                    videoId: ytMatch || "custom",
-                    jwt: this.userdata.jwt,
-                    lang: this.TLLang.value,
-                    ...!ytMatch && { custom_video_id: link },
-                    body: bodydt,
-                }).then(({ status, data }) => {
-                    if (status !== 200) {
-                        console.log(`ERR : ${data}`);
-                        this.errorMessage = data;
+                backendApi
+                    .postTL({
+                        videoId: ytMatch || "custom",
+                        jwt: this.userdata.jwt,
+                        lang: this.TLLang.value,
+                        ...(!ytMatch && { custom_video_id: link }),
+                        body: bodydt,
+                    })
+                    .then(({ status, data }) => {
+                        if (status !== 200) {
+                            console.log(`ERR : ${data}`);
+                            this.errorMessage = data;
+                            this.showError = true;
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(`ERR : ${err}`);
+                        this.errorMessage = err;
                         this.showError = true;
-                    }
-                }).catch((err) => {
-                    console.log(`ERR : ${err}`);
-                    this.errorMessage = err;
-                    this.showError = true;
-                });
+                    });
             });
 
             this.inputString = "";
@@ -794,21 +1028,23 @@ export default {
         // ------------------------ PROFILE CONTROLLER ------------------------
         shiftProfileUp() {
             if (this.profileIdx > 1) {
-                this.profileContainer = JSON.parse(JSON.stringify(this.profile[this.profileIdx - 1]));
+                const profileContainer = JSON.parse(
+                    JSON.stringify(this.profile[this.profileIdx - 1]),
+                );
                 this.profile[this.profileIdx - 1] = this.profile[this.profileIdx];
-                this.profile[this.profileIdx] = this.profileContainer;
+                this.profile[this.profileIdx] = profileContainer;
                 this.profileIdx -= 1;
-                this.profileContainer = {};
             }
             this.showProfileList();
         },
         shiftProfileDown() {
-            if ((this.profileIdx !== 0) && (this.profileIdx < this.profile.length - 1)) {
-                this.profileContainer = JSON.parse(JSON.stringify(this.profile[this.profileIdx + 1]));
+            if (this.profileIdx !== 0 && this.profileIdx < this.profile.length - 1) {
+                const profileContainer = JSON.parse(
+                    JSON.stringify(this.profile[this.profileIdx + 1]),
+                );
                 this.profile[this.profileIdx + 1] = this.profile[this.profileIdx];
-                this.profile[this.profileIdx] = this.profileContainer;
+                this.profile[this.profileIdx] = profileContainer;
                 this.profileIdx += 1;
-                this.profileContainer = {};
             }
             this.showProfileList();
         },
@@ -820,9 +1056,9 @@ export default {
             }
             this.showProfileList();
         },
-        profileDown() {
+        profileDown(isTab) {
             if (this.profileIdx === this.profile.length - 1) {
-                this.profileIdx = 0;
+                this.profileIdx = isTab ? 1 : 0;
             } else {
                 this.profileIdx += 1;
             }
@@ -889,10 +1125,14 @@ export default {
         URLExtender(s: string) {
             switch (s.slice(0, 3)) {
                 case "YT_":
-                    return `https://www.youtube.com/live_chat?v=${s.slice(3)}&embed_domain=${window.location.hostname}`;
+                    return `https://www.youtube.com/live_chat?v=${s.slice(
+                        3,
+                    )}&embed_domain=${window.location.hostname}`;
 
                 case "TW_":
-                    return `https://www.twitch.tv/embed/${s.slice(3)}/chat?parent=${window.location.hostname}`;
+                    return `https://www.twitch.tv/embed/${s.slice(3)}/chat?parent=${
+                        window.location.hostname
+                    }`;
 
                 default:
                     return "";
@@ -1059,11 +1299,14 @@ export default {
         resizeMouseLeave(mode: number) {
             if (mode === this.resizeMode) {
                 this.resizeActive = false;
-                localStorage.setItem("Holodex-TLClient", JSON.stringify({
-                    tlChatHeight: this.tlChatHeight,
-                    videoPanelWidth1: this.videoPanelWidth1,
-                    videoPanelWidth2: this.videoPanelWidth2,
-                }));
+                localStorage.setItem(
+                    "Holodex-TLClient",
+                    JSON.stringify({
+                        tlChatHeight: this.tlChatHeight,
+                        videoPanelWidth1: this.videoPanelWidth1,
+                        videoPanelWidth2: this.videoPanelWidth2,
+                    }),
+                );
             }
         },
         resizeMouseDown(event: any, resizeSwitch: number) {
@@ -1079,16 +1322,19 @@ export default {
         },
         resizeMouseUp() {
             this.resizeActive = false;
-            localStorage.setItem("Holodex-TLClient", JSON.stringify({
-                tlChatHeight: this.tlChatHeight,
-                videoPanelWidth1: this.videoPanelWidth1,
-                videoPanelWidth2: this.videoPanelWidth2,
-            }));
+            localStorage.setItem(
+                "Holodex-TLClient",
+                JSON.stringify({
+                    tlChatHeight: this.tlChatHeight,
+                    videoPanelWidth1: this.videoPanelWidth1,
+                    videoPanelWidth2: this.videoPanelWidth2,
+                }),
+            );
         },
         resizeMouseMove(event: any) {
             if (this.resizeActive) {
                 if (this.resizeMode === 0) {
-                    const yChange = (event.clientY - this.resizePos);
+                    const yChange = event.clientY - this.resizePos;
                     this.resizePos = event.clientY;
                     if (this.tlChatHeight - yChange < 100) {
                         return;
@@ -1098,12 +1344,18 @@ export default {
                     const xChange = ((event.clientX - this.resizePos) * 100) / window.innerWidth;
                     this.resizePos = event.clientX;
                     if (this.activeChat.length < 2) {
-                        if ((this.videoPanelWidth1 + xChange > 75) || (this.videoPanelWidth1 + xChange < 33)) {
+                        if (
+                            this.videoPanelWidth1 + xChange > 75
+                            || this.videoPanelWidth1 + xChange < 33
+                        ) {
                             return;
                         }
                         this.videoPanelWidth1 += xChange;
                     } else {
-                        if ((this.videoPanelWidth2 + xChange > 75) || (this.videoPanelWidth2 + xChange < 33)) {
+                        if (
+                            this.videoPanelWidth2 + xChange > 75
+                            || this.videoPanelWidth2 + xChange < 33
+                        ) {
                             return;
                         }
                         this.videoPanelWidth2 += xChange;
@@ -1130,7 +1382,10 @@ export default {
                 this.$store.dispatch("logout");
                 this.$router.push("/login");
             } else if (check.data && check.data.id) {
-                this.$store.commit("setUser", { user: check.data, jwt: this.userdata.jwt });
+                this.$store.commit("setUser", {
+                    user: check.data,
+                    jwt: this.userdata.jwt,
+                });
                 if (this.$route.query.video) {
                     this.mainStreamLink = videoCodeParser(this.$route.query.video);
                 }
@@ -1141,7 +1396,9 @@ export default {
         },
         handleVideoClicked(video) {
             this.videoSelectDialog = false;
-            this.mainStreamLink = video.type === "placeholder" ? video.link : `https://youtube.com/watch?v=${video.id}`;
+            this.mainStreamLink = video.type === "placeholder"
+                ? video.link
+                : `https://youtube.com/watch?v=${video.id}`;
         },
     },
 };
@@ -1149,10 +1406,10 @@ export default {
 
 <style>
 .TopMenu {
-  width:100%;
-  position:absolute;
-  top:0px;
-  left:0px;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
   z-index: 1;
 }
 .ColourButton {
@@ -1164,23 +1421,24 @@ export default {
   bottom: 5px;
   right: 5px;
 }
-.ChatPanelContainer{
+.ChatPanelContainer {
   display: grid;
   grid-auto-flow: column;
 }
-.activeChatIFrame{
+.activeChatIFrame {
   width: 100%;
   height: 100%;
 }
-.tl-topbar>*:not(:first-child):not(:last-child) {
+.tl-topbar > *:not(:first-child):not(:last-child) {
   margin: 0px 3px;
 }
-.tl-topbar>* {
+.tl-topbar > * {
   border-radius: 0px;
-    text-transform: unset !important;
+  text-transform: unset !important;
 }
 
-#player > div, #player > div > iframe {
+#player > div,
+#player > div > iframe {
   width: 100%;
   height: 100%;
 }
