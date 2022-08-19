@@ -15,6 +15,7 @@
           v-if="idx < 20 && group as number < 2"
           :channel="channel"
           :variant="variant"
+          class="bg-bgColor"
         ></channel-card>
         <v-lazy v-else style="height: 116px">
           <channel-card :channel="channel" :variant="variant"></channel-card>

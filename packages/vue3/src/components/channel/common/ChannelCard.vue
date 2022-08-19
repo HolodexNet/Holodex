@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-row items-center overflow-hidden rounded-md shadow-md channel-card justify-self-auto bg-bgColor hover:bg-bgColor"
+    class="flex flex-row items-center overflow-hidden rounded-md shadow-md channel-card justify-self-auto"
     :class="slim ? '' : 'h-50'"
   >
     <div class="flex-shrink-0 indicator">
@@ -59,7 +59,8 @@
         </div>
       </span>
     </div>
-    <div v-if="!slim" class="flex flex-col h-full gap-1">
+    <slot name="buttons"></slot>
+    <div v-if="!slim && !$slots.buttons" class="flex flex-col h-full gap-1">
       <a
         class="c-card-icon hover:text-red-500"
         :href="`https://youtube.com/channel/${channel.id}`"

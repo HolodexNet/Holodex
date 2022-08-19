@@ -7,7 +7,7 @@
           :channel="v.channel"
           slim
           :live="v.status === 'live'"
-          class="hover:text-secondary-content hover:border-r-4 border-secondary"
+          class="hover:text-secondary-content bg-bgColor hover:border-r-4 border-secondary"
           >{{ formatDurationUpcoming(v.available_at) }}</channel-card
         >
       </template>
