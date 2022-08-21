@@ -25,7 +25,7 @@
         <p
           v-linkify:options="{
             target: '_blank',
-            className: 'link link-primary',
+            className: 'link link-primary ext-link',
           }"
         >
           {{ channel?.description }}
@@ -52,4 +52,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.ext-link {
+  @apply after:content-['↗'] after:ml-[2px];
+  text-decoration: none;
+}
+</style>
