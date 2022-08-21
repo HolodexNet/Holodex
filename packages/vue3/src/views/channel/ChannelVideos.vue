@@ -33,9 +33,12 @@ import { useUrlSearchParams } from "@vueuse/core";
 import { Ref } from "vue";
 
 const params = useUrlSearchParams("history");
-const page = ref(+params.page || 1);
-
-const router = useRouter();
+const page = computed({
+  get: () => +params.page || 1,
+  set: (v) => {
+    params.page = `${v}`;
+  },
+});
 const route = useRoute();
 const dsConfig: Ref<VideoListLookup> = computed(
   () =>
@@ -51,19 +54,10 @@ const dsConfig: Ref<VideoListLookup> = computed(
     } as VideoListLookup)
 );
 
-const syncPageParam = () => {
-  router.replace({
-    query: {
-      ...route.query,
-      page: page.value,
-    },
-  });
-};
 watch(
   () => page.value,
   () => {
     window.scrollTo({ top: 0 });
-    syncPageParam();
   }
 );
 
@@ -71,7 +65,6 @@ watch(
   () => route.name,
   () => {
     page.value = 1;
-    syncPageParam();
   }
 );
 
