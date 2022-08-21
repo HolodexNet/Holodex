@@ -10,7 +10,7 @@
       :src="bannerImage"
       class="-mb-0 sm:-mb-6 md:-mb-12"
     /> -->
-    <div class="mx-full bg-bgColor sticky top-12 z-10">
+    <div class="mx-full sticky top-12 bg-bgColor/95 z-10 backdrop-blur">
       <div class="container mx-auto">
         <channel-card
           :channel="channel!"
