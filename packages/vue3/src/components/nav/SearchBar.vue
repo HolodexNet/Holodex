@@ -27,7 +27,7 @@
   >
     <template #chip="{ item, props }">
       <div
-        class="px-1 text-gray-100 bg-gray-600 rounded-sm mr-1"
+        class="px-1 text-gray-100 bg-gray-600 rounded-sm mr-1 tracking-tight"
         v-bind="props"
       >
         <span class="font-semibold"
@@ -315,6 +315,10 @@ export default defineComponent({
 
     scrollbar-width: thin;
     scrollbar-width: 4px;
+
+    & > input {
+      min-width: 150px !important;
+    }
 
     &::-webkit-scrollbar {
       width: 4px;
