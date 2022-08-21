@@ -2,13 +2,10 @@
   <div class="p-4">
     <video-card-grid>
       <template
-        v-for="(video, index) in videoResponse.data.value?.items"
+        v-for="video in videoResponse.data.value?.items"
         :key="video.id"
       >
-        <video-card v-if="index < 20" :video="video" />
-        <v-lazy v-else class="v-lazy-video"
-          ><video-card :video="video"
-        /></v-lazy>
+        <video-card :video="video" />
       </template>
     </video-card-grid>
     <div v-if="videoResponse.isLoading.value" class="flex h-20">
@@ -32,10 +29,13 @@
 </template>
 <script setup lang="ts">
 import { useVideoListDatasource } from "@/services/video";
+import { useUrlSearchParams } from "@vueuse/core";
 import { Ref } from "vue";
 
-const page = ref(1);
+const params = useUrlSearchParams("history");
+const page = ref(+params.page || 1);
 
+const router = useRouter();
 const route = useRoute();
 const dsConfig: Ref<VideoListLookup> = computed(
   () =>
@@ -49,6 +49,30 @@ const dsConfig: Ref<VideoListLookup> = computed(
       filter: undefined, // to, from
       pagination: { pageSize: 24, offset: (page.value - 1) * 24 },
     } as VideoListLookup)
+);
+
+const syncPageParam = () => {
+  router.replace({
+    query: {
+      ...route.query,
+      page: page.value,
+    },
+  });
+};
+watch(
+  () => page.value,
+  () => {
+    window.scrollTo({ top: 0 });
+    syncPageParam();
+  }
+);
+
+watch(
+  () => route.name,
+  () => {
+    page.value = 1;
+    syncPageParam();
+  }
 );
 
 const videoResponse = useVideoListDatasource(dsConfig, ref({ enabled: true }));
