@@ -39,6 +39,7 @@ declare module '@vue/runtime-core' {
     Page: typeof import('./src/stories/Page.vue')['default']
     PageContainer: typeof import('./src/components/frame/PageContainer.vue')['default']
     Profile: typeof import('./src/views/Profile.vue')['default']
+    ScrollParallax: typeof import('./src/components/channel/common/ScrollParallax.vue')['default']
     SearchBar: typeof import('./src/components/nav/SearchBar.vue')['default']
     Settings: typeof import('./src/views/Settings.vue')['default']
     SidebarFavorites: typeof import('./src/components/frame/SidebarFavorites.vue')['default']

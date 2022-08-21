@@ -2,11 +2,14 @@
   <!-- <v-container class="channel-container" fluid> -->
   <logo v-if="isLoading" :loading="true" class="max-h-32"></logo>
   <div v-else class="w-full">
-    <v-img
+    <scroll-parallax up :speed="0.5"
+      ><v-img v-if="bannerImage" :src="bannerImage"></v-img
+    ></scroll-parallax>
+    <!-- <v-img
       v-if="bannerImage"
       :src="bannerImage"
       class="-mb-0 sm:-mb-6 md:-mb-12"
-    />
+    /> -->
     <div class="mx-full bg-bgColor sticky top-12 z-10">
       <div class="container mx-auto">
         <channel-card
