@@ -3,72 +3,91 @@
   <logo v-if="isLoading" :loading="true" class="max-h-32"></logo>
   <div v-else class="w-full">
     <v-img v-if="bannerImage" :src="bannerImage" class="-mb-12" />
-    <div class="mx-full relative bg-bgColor">
-      <channel-card
-        :channel="channel!"
-        class="p-3 rounded-none container mx-auto"
-      >
-        <template #buttons>
-          <div class="grid grid-cols-2 mr-4">
-            <a
-              class="c-card-icon hover:text-red-500"
-              :href="`https://youtube.com/channel/${channel.id}`"
-              target="_blank"
-              title="Youtube"
-            >
-              <div class="i-carbon:logo-youtube"></div>
-            </a>
-            <a
-              class="c-card-icon hover:text-cyan-500"
-              :class="{
-                'btn-disabled bg-inherit opacity-20': !channel.twitter,
-              }"
-              :href="
-                channel.twitter ? `https://twitter.com/${channel.twitter}` : '#'
-              "
-              target="_blank"
-              title="Twitter"
-            >
-              <div class="i-carbon:logo-twitter"></div>
-            </a>
-            <button
-              class="c-card-icon"
-              :title="
-                isFav
-                  ? $t('component.channelSocials.removeFromFavorites')
-                  : $t('component.channelSocials.addToFavorites')
-              "
-            >
-              <div
-                :class="
-                  isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'
+    <div class="mx-full bg-bgColor sticky top-12 z-10">
+      <div class="container mx-auto">
+        <channel-card
+          :channel="channel!"
+          class="pb-0 p-2 rounded-none shadow-none"
+        >
+          <template #buttons>
+            <div class="grid grid-cols-2 mr-4">
+              <a
+                class="c-social-icon hover:text-red-500"
+                :href="`https://youtube.com/channel/${channel.id}`"
+                target="_blank"
+                title="Youtube"
+              >
+                <div class="i-carbon:logo-youtube"></div>
+              </a>
+              <a
+                class="c-social-icon hover:text-cyan-500"
+                :class="{
+                  'btn-disabled bg-inherit opacity-20': !channel.twitter,
+                }"
+                :href="
+                  channel.twitter
+                    ? `https://twitter.com/${channel.twitter}`
+                    : '#'
                 "
-              ></div>
-            </button>
-          </div>
-        </template>
-      </channel-card>
+                target="_blank"
+                title="Twitter"
+              >
+                <div class="i-carbon:logo-twitter"></div>
+              </a>
+              <button
+                class="c-social-icon"
+                :title="
+                  isFav
+                    ? $t('component.channelSocials.removeFromFavorites')
+                    : $t('component.channelSocials.addToFavorites')
+                "
+              >
+                <div
+                  :class="
+                    isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'
+                  "
+                ></div>
+              </button>
+              <button
+                class="c-social-icon"
+                :title="
+                  isFav
+                    ? $t('component.channelSocials.block')
+                    : $t('component.channelSocials.unblock')
+                "
+              >
+                <div
+                  :class="
+                    isFav
+                      ? 'i-material-symbols:block text-red-500'
+                      : 'i-material-symbols:block'
+                  "
+                ></div>
+              </button>
+            </div>
+          </template>
+        </channel-card>
+        <div class="tabs">
+          <router-link
+            v-for="tab in tabs"
+            :key="tab.path"
+            class="tab tab-sm sm:tab-md md:tab-lg tab-bordered"
+            :to="tab.path"
+            >{{ tab.name }}</router-link
+          >
+        </div>
+      </div>
+
       <!-- <v-list-item-avatar class="my-0" :size="avatarSize">
               <ChannelImg :size="avatarSize" :channel="channel" />
             </v-list-item-avatar>
             <ChannelInfo :channel="channel" />
             <ChannelSocials :channel="channel" show-delete /> -->
     </div>
-    <v-container class="">
-      <div class="tabs">
-        <router-link
-          v-for="tab in tabs"
-          :key="tab.path"
-          class="tab tab-sm sm:tab-md md:tab-lg tab-bordered"
-          :to="tab.path"
-          >{{ tab.name }}</router-link
-        >
-      </div>
-    </v-container>
+    <div class="container mx-auto" style="min-height: 85vh">
+      <router-view />
+    </div>
   </div>
-  <v-container class="" style="min-height: 85vh">
-    <router-view />
-  </v-container>
   <!-- </v-container> -->
   <!-- <LoadingOverlay v-else :is-loading="isLoading" :show-error="hasError" /> -->
 </template>
@@ -169,5 +188,22 @@ export default defineComponent({
 <style>
 .router-link-exact-active {
   @apply tab-active;
+}
+
+.c-social-icon {
+  @apply p-2 btn btn-ghost rounded flex-grow;
+
+  width: 3rem;
+  height: 3rem;
+  height: 1.5em;
+  padding: 0;
+  line-height: 1.4em;
+  font-weight: 600;
+  font-size: 1.4rem;
+  opacity: 0.5;
+  border: 0;
+}
+.c-social-icon:hover {
+  opacity: 1;
 }
 </style>

@@ -23,6 +23,33 @@
 
   <div class="divider" />
 
+  <div class="mb-2 text-lg font-semibold">Grid Size:</div>
+
+  <div class="btn-group">
+    <button
+      class="btn"
+      :class="{ 'btn-active': settings.gridDensity === 0 }"
+      @click="settings.gridDensity = 0"
+    >
+      Comfortable
+    </button>
+    <button
+      class="btn"
+      :class="{ 'btn-active': settings.gridDensity === 1 }"
+      @click="settings.gridDensity = 1"
+    >
+      Normal
+    </button>
+    <button
+      class="btn"
+      :class="{ 'btn-active': settings.gridDensity === 2 }"
+      @click="settings.gridDensity = 2"
+    >
+      Dense
+    </button>
+  </div>
+  <div class="divider" />
+
   <div class="mb-2 text-lg font-semibold">
     Ignored Topics
     <!-- {{ $t("views.settings.languageSettings") }} -->
@@ -64,13 +91,15 @@
 </template>
 <script lang="ts">
 import { useSiteStore } from "@/stores";
+import { useSettingsStore } from "@/stores/settings";
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "HomepageFilters",
   setup() {
     const siteStore = useSiteStore();
-    return { siteStore };
+    const settings = useSettingsStore();
+    return { siteStore, settings };
   },
   data() {
     return {};

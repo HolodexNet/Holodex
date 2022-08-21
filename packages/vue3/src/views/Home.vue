@@ -118,9 +118,7 @@ const pageOrg = useOrgRouteParamSync();
 // ...(this.toDate && {
 //   to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
 // }),
-const lookupState: Ref<
-  VideoListLookup<"stream_schedule" | "clip" | "archive">
-> = ref({
+const lookupState: Ref<VideoListLookup> = ref({
   flavor: props.favorites
     ? ({
         favorites: props.favorites,

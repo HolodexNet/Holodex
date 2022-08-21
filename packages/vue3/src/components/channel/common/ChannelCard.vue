@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-row items-center overflow-hidden rounded-md shadow-md channel-card justify-self-auto"
+    class="flex flex-row items-center overflow-hidden rounded-md channel-card justify-self-auto"
     :class="slim ? '' : 'h-50'"
   >
     <div class="flex-shrink-0 indicator">

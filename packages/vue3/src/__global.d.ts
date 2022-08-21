@@ -236,15 +236,13 @@ declare global {
     org: never;
   }
 
-  interface VideoListLookup<M extends TabType | VIDEO_TYPES[]> {
+  interface VideoListLookup {
     flavor: OrgLookup | FavLookup | ChaLookup;
     // type & status for tab selection.
     // Usually selection has a tab between live and archives. Use this to control that aspect.
-    type: M;
+    type: TabType | VIDEO_TYPES[];
     // optional if using a TabType, if custom type, then must provide custom statuses.
-    statuses: M extends TabType
-      ? VIDEO_STATUSES[] | undefined
-      : VIDEO_STATUSES[];
+    statuses: VIDEO_STATUSES[] | undefined;
 
     // Overrides default behavior on showing placeholder or not.
     showPlaceholderOverride?: boolean;

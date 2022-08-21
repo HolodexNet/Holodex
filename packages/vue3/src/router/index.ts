@@ -78,7 +78,12 @@ const routes: RouteRecordRaw[] = [
           window.location.replace(`${musicdexURL}/channel/${to.params.id}`);
         },
         redirect(to) {
-          return `${musicdexURL}/channel/${to.params.id}`;
+          window.location.replace(`${musicdexURL}/channel/${to.params.id}`);
+
+          return {
+            replace: true,
+            path: `${musicdexURL}/channel/${to.params.id}`,
+          };
         },
       },
       {

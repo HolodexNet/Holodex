@@ -169,8 +169,8 @@ function filterDeadStreams(video: Video) {
   );
 }
 
-export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
-  q: Ref<VideoListLookup<T>>,
+export function useVideoListDatasource(
+  q: Ref<VideoListLookup>,
   config: Ref<QueryConfig<{ items: Video[]; total?: number }>>
 ) {
   const langs = useLangStore();
@@ -246,8 +246,22 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
         fq.channel_id = q.value.flavor.channelId;
         fq.org = q.value.flavor.org;
         fq.status = overrideStatus;
-        fq.type = "clip,stream";
+        fq.type =
+          q.value.showPlaceholderOverride ?? !settings.hidePlaceholder
+            ? "clip,stream,placeholder"
+            : "clip,stream";
         fq.paginated = true;
+        break;
+
+      case "collabs":
+        fq.mentioned_channel_id = q.value.flavor.channelId;
+        fq.paginated = true;
+        fq.type =
+          q.value.showPlaceholderOverride ?? !settings.hidePlaceholder
+            ? "stream,placeholder"
+            : "stream";
+        fq.include = "clips,mentions";
+        if (overrideStatus) fq.status = overrideStatus;
         break;
 
       default: // all other cases:

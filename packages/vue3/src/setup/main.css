@@ -30,3 +30,7 @@ e.g. just doing .online will NOT work
 .btn:active:focus {
   transform: none;  
 }
+
+.tab.tab-bordered {
+  padding-top:0.5rem;
+}
