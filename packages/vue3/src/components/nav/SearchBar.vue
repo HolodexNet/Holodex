@@ -23,6 +23,7 @@
     return-object
     hide-details
     :menu-icon="null"
+    type="search"
     @keydown.enter="onEnterKeyDown"
   >
     <template #chip="{ item, props }">
