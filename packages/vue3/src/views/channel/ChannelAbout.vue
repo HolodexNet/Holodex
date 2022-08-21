@@ -13,12 +13,13 @@
           {{ $t("component.channelInfo.clipCount", [channel?.clip_count]) }}
           <v-divider class="m-2" />
           {{ channel?.view_count }}
-          {{ $t("component.channelInfo.totalViews") }} <v-divider class="m-2" />
+          {{ $t("component.channelInfo.totalViews") }}
         </div>
       </div>
       <div style="white-space: pre-wrap" class="col-span-2 order-2">
-        <strong>{{ $t("component.videoDescription.description") }}</strong>
-        <br />
+        <strong class="card-title mb-3">{{
+          $t("component.videoDescription.description")
+        }}</strong>
         <p
           v-linkify:options="{
             target: '_blank',
