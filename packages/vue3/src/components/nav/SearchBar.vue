@@ -4,6 +4,7 @@
   <v-autocomplete
     v-model:model-value="query"
     v-model:search="search"
+    v-model:menu="menuOpen"
     class="mx-auto search-bar input input-bordered bg-bgColor-500"
     :class="{ 'search-bar-small': isMobile }"
     multiple
@@ -14,6 +15,7 @@
     :loading="isLoading"
     :items="results"
     :custom-filter="customFilter"
+    :placeholder="$t('component.search.searchLabel')"
     item-value="value"
     no-filter
     density="compact"
@@ -24,8 +26,17 @@
     @keydown.enter="onEnterKeyDown"
   >
     <template #chip="{ item, props }">
-      <div class="px-2 text-gray-100 bg-gray-600 rounded-sm" v-bind="props">
-        <span class="font-semibold">{{ i18nItem(item.raw.type) }}: </span>
+      <div
+        class="px-1 text-gray-100 bg-gray-600 rounded-sm mr-1"
+        v-bind="props"
+      >
+        <span class="font-semibold"
+          ><div
+            class="i-mdi:close cursor-pointer inline-block align-middle"
+            @click="props['onClick:close']"
+          ></div>
+          {{ i18nItem(item.raw.type) }}:
+        </span>
         <span class="rounded-lg">
           {{ item.raw.text }}
         </span>
@@ -113,6 +124,7 @@ export default defineComponent({
       mdiCommentSearch,
       mdiFilter,
       isLoading: false,
+      menuOpen: false,
       search: "",
       fromApi: [] as Array<Query>,
     };
@@ -124,6 +136,9 @@ export default defineComponent({
     },
   },
   watch: {
+    query() {
+      if (this.menuOpen) this.menuOpen = false;
+    },
     "$route.query": {
       deep: true,
       async handler({ q }) {
@@ -172,6 +187,9 @@ export default defineComponent({
     }
   },
   methods: {
+    logProps(props: any) {
+      console.log(props);
+    },
     async getAutocomplete(query: string) {
       this.isLoading = true;
       const res = await api.searchAutocomplete(query);
@@ -284,6 +302,33 @@ export default defineComponent({
   // width management.
   max-width: min(670px, 100vw) !important;
   height: 50px;
+
+  .v-field__input {
+    padding-top: 10px;
+    display: block;
+    overflow-x: scroll;
+    overflow-wrap: unset;
+    overflow-y: clip;
+    height: 40px;
+    white-space: nowrap;
+    font-size: 13px;
+
+    scrollbar-width: thin;
+    scrollbar-width: 4px;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(116, 116, 116, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(182, 182, 182, 0.4);
+    }
+  }
 }
 
 /* .search-bar.theme--light > .v-input__append-outer > .v-input__icon > .v-icon {

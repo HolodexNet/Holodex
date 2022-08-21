@@ -102,12 +102,12 @@
 
       <template v-else>
         <v-app-bar-nav-icon
-          class="backButton"
+          style="margin-left: 0px"
           @click="searchBarExpanded = false"
         >
           <v-icon>{{ icons.mdiClose }}</v-icon>
         </v-app-bar-nav-icon>
-        <SearchBar key="main-search-bar" :autofocus="isMobile" />
+        <SearchBar key="main-search-bar" :autofocus="isMobile" class="mr-3" />
       </template>
 
       <!--=================== END OF Expanded Search (Mobile Only) =======================-->
