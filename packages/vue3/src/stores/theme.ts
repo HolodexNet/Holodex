@@ -90,9 +90,7 @@ export const useThemeStore = defineStore("site-theme", {
     },
     _saveAndCacheVuetify() {
       if (this.outputCacheTS === this.lastModified) return; // no changes needed.
-
-      console.log("compiling site-theme (expensive)");
-
+      // console.log("compiling site-theme (expensive)");
       const [convert, colormap] = convertToDaisyHSLAndColor(
         {
           ...this.colors,

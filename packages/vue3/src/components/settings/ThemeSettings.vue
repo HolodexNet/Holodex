@@ -75,42 +75,42 @@
   <div class="divider">
     <span>Test Color (for beta only):</span>
   </div>
-  <div class="grid grid-cols-5 gap-2">
+  <div class="grid grid-cols-4 gap-2">
     <div class="btn-group">
-      <div class="btn btn-xs bg-primary-700"></div>
+      <div class="btn btn-xs bg-primary-700">700</div>
       <div class="btn btn-xs bg-primary-600"></div>
       <div class="btn btn-xs bg-primary-500"></div>
       <div class="btn btn-xs bg-primary"></div>
       <div class="btn btn-xs bg-primary-300"></div>
       <div class="btn btn-xs bg-primary-200"></div>
-      <div class="btn btn-xs bg-primary-100"></div>
+      <div class="btn btn-xs bg-primary-100">100</div>
     </div>
     <div class="btn-group">
-      <div class="btn btn-xs bg-secondary-700"></div>
+      <div class="btn btn-xs bg-secondary-700">700</div>
       <div class="btn btn-xs bg-secondary-600"></div>
       <div class="btn btn-xs bg-secondary-500"></div>
       <div class="btn btn-xs bg-secondary"></div>
       <div class="btn btn-xs bg-secondary-300"></div>
       <div class="btn btn-xs bg-secondary-200"></div>
-      <div class="btn btn-xs bg-secondary-100"></div>
+      <div class="btn btn-xs bg-secondary-100">100</div>
     </div>
     <div class="btn-group">
-      <div class="btn btn-xs bg-accent-700"></div>
+      <div class="btn btn-xs bg-accent-700">700</div>
       <div class="btn btn-xs bg-accent-600"></div>
       <div class="btn btn-xs bg-accent-500"></div>
       <div class="btn btn-xs bg-accent"></div>
       <div class="btn btn-xs bg-accent-300"></div>
       <div class="btn btn-xs bg-accent-200"></div>
-      <div class="btn btn-xs bg-accent-100"></div>
+      <div class="btn btn-xs bg-accent-100">100</div>
     </div>
     <div class="btn-group">
-      <div class="btn btn-xs bg-bgColor-700"></div>
+      <div class="btn btn-xs bg-bgColor-700">700</div>
       <div class="btn btn-xs bg-bgColor-600"></div>
       <div class="btn btn-xs bg-bgColor-500"></div>
       <div class="btn btn-xs bg-bgColor-400"></div>
       <div class="btn btn-xs bg-bgColor-300"></div>
       <div class="btn btn-xs bg-bgColor-200"></div>
-      <div class="btn btn-xs bg-bgColor-100"></div>
+      <div class="btn btn-xs bg-bgColor-100">100</div>
     </div>
   </div>
 </template>
