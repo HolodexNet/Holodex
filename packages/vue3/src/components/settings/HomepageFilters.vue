@@ -80,12 +80,28 @@
   <div class="mb-2 text-lg font-semibold">Hide Features:</div>
   <div class="max-w-sm form-control">
     <label class="cursor-pointer label">
+      <span class="label-text"> Hide Video Thumbnails </span>
+      <input
+        v-model="settings.hideThumbnail"
+        type="checkbox"
+        class="toggle toggle-primary"
+      />
+    </label>
+    <label class="cursor-pointer label">
       <span class="label-text"> Hide Collab Streams </span>
-      <input type="checkbox" class="toggle toggle-primary" />
+      <input
+        v-model="settings.hideCollabStreams"
+        type="checkbox"
+        class="toggle toggle-primary"
+      />
     </label>
     <label class="cursor-pointer label">
       <span class="label-text"> Hide Placeholder Streams </span>
-      <input type="checkbox" class="toggle toggle-primary" />
+      <input
+        v-model="settings.hidePlaceholder"
+        type="checkbox"
+        class="toggle toggle-primary"
+      />
     </label>
   </div>
 </template>

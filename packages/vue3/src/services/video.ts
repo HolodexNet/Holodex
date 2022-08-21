@@ -6,6 +6,7 @@ import { MaybeRef } from "@vueuse/core";
 import dayjs, { isDayjs } from "dayjs";
 import { Ref } from "vue";
 import { useQuery, UseQueryOptions, useInfiniteQuery } from "vue-query";
+import { useFavoritesListByID } from "./favorites";
 
 type QueryConfig<TReturn> = Omit<
   UseQueryOptions<TReturn, unknown, TReturn, any>,
@@ -176,6 +177,7 @@ export function useVideoListDatasource(
   const langs = useLangStore();
   const settings = useSettingsStore();
   const site = useSiteStore();
+  const favesList = useFavoritesListByID();
 
   const urlTarget = computed(
     () =>
@@ -290,7 +292,7 @@ export function useVideoListDatasource(
     ...config,
   });
 
-  return useQuery<{ items: Video[]; total?: number }>({
+  const response = useQuery<{ items: Video[]; total?: number }>({
     queryKey: [urlTarget, query, computed(() => site.jwtToken)],
     queryFn: async (h) => {
       const path = h.queryKey[0] as string;
@@ -327,4 +329,44 @@ export function useVideoListDatasource(
     },
     ...toRefs(queryCfg),
   });
+
+  /* const newData: Ref<undefined> | Ref<{ items: Video[]; total?: number | undefined; }> =*/
+  computed(() => {
+    // this block is to satisfy various client side filters
+    if (response.data.value === undefined) return undefined;
+
+    const videoResp = response.data.value;
+
+    const shouldHideCollabStreams =
+      (q.value.type === "stream_schedule" || q.value.type === "archive") && // must be archive or stream schedule tab
+      settings.hideCollabStreams && // must be configured to hide collab streams.
+      ((q.value.flavor as FavLookup)?.favorites
+        ? true // favorites then yes.
+        : q.value.flavor?.org !== "All Vtubers"); // don't hide collabs on all vtubers since every vtuber is in the org yes?
+
+    const hasBlockedChannels = settings.blockedChannels.length > 0;
+    videoResp.items = videoResp.items.filter(
+      (x) =>
+        !(hasBlockedChannels && settings.blockedSet.has(x.channel.id)) && // uploading channel isn't blocked, and:
+        !settings.ignoredTopics.includes(x.topic_id ?? "") && // topic is not ignored, and:
+        !(
+          // also eject those where:
+          (
+            shouldHideCollabStreams && // if hiding collab streams, then must:
+            !(
+              // not...
+              (
+                x.channel.org !== q.value.flavor?.org || // be in another org than currently set org OR
+                favesList.value?.has(x.channel.id)
+              ) // be in the user's favorites list.
+            )
+          )
+        )
+    );
+
+    (response as any).data.value = videoResp;
+    return videoResp;
+  });
+
+  return response;
 }
