@@ -4,19 +4,21 @@
     <label class="cursor-pointer label">
       <span class="label-text"> Last Visited Org Home </span>
       <input
+        v-model="settings.defaultOpen"
         type="radio"
         name="radio-6"
         class="radio checked:bg-red-500"
-        checked
+        value="Home"
       />
     </label>
     <label class="cursor-pointer label">
       <span class="label-text"> Favorites (When Logged In) </span>
       <input
+        v-model="settings.defaultOpen"
         type="radio"
         name="radio-6"
         class="radio checked:bg-red-500"
-        checked
+        value="Favorites"
       />
     </label>
   </div>

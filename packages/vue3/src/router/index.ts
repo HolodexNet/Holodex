@@ -102,6 +102,33 @@ const routes: RouteRecordRaw[] = [
     path: "/settings",
     name: "Settings",
     component: () => import("@/views/Settings.vue"),
+    children: [
+      {
+        name: "Settings_Language",
+        path: ":id(lang)?",
+        component: () => import("@/components/settings/LanguageSettings.vue"),
+      },
+      {
+        name: "Settings_Themes",
+        path: "themes",
+        component: () => import("@/components/settings/ThemeSettings.vue"),
+      },
+      {
+        name: "Settings_Homepage",
+        path: "homepage",
+        component: () => import("@/components/settings/HomepageFilters.vue"),
+      },
+      {
+        name: "Settings_Blocked",
+        path: "blocked",
+        component: () => import("@/components/settings/LanguageSettings.vue"),
+      },
+      {
+        name: "Settings_Advanced",
+        path: "advanced",
+        component: () => import("@/components/settings/LanguageSettings.vue"),
+      },
+    ],
   },
   {
     path: "/about",

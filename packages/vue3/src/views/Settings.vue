@@ -9,20 +9,30 @@
       style="flex-basis: 160px; min-width: 160px"
     >
       <ul class="w-full menu">
-        <li :class="{ 'bordered active': tab === 0 }" @click="tab = 0">
-          <a class="justify-center">Language</a>
+        <li :class="{ 'bordered active': route.name === 'Settings_Language' }">
+          <router-link to="/settings/lang" class="justify-center"
+            >Language</router-link
+          >
         </li>
-        <li :class="{ 'bordered active': tab === 1 }" @click="tab = 1">
-          <a class="justify-center">Color Themes</a>
+        <li :class="{ 'bordered active': route.name === 'Settings_Themes' }">
+          <router-link to="/settings/themes" class="justify-center"
+            >Color Themes</router-link
+          >
         </li>
-        <li :class="{ 'bordered active': tab === 2 }" @click="tab = 2">
-          <a class="justify-center">Homepage & Filters</a>
+        <li :class="{ 'bordered active': route.name === 'Settings_Homepage' }">
+          <router-link to="/settings/homepage" class="justify-center"
+            >Homepage & Filters</router-link
+          >
         </li>
-        <li :class="{ 'bordered active': tab === 3 }" @click="tab = 3">
-          <a class="justify-center">Blocked Channels</a>
+        <li :class="{ 'bordered active': route.name === 'Settings_Blocked' }">
+          <router-link to="/settings/blocked" class="justify-center"
+            >Blocked Channels</router-link
+          >
         </li>
-        <li :class="{ 'bordered active': tab === 4 }" @click="tab = 4">
-          <a class="justify-center">Advanced</a>
+        <li :class="{ 'bordered active': route.name === 'Settings_Advanced' }">
+          <router-link to="/settings/advanced" class="justify-center"
+            >Advanced</router-link
+          >
         </li>
         <!-- Default Click behavior etc. -->
       </ul>
@@ -31,23 +41,13 @@
       class="flex-grow flex-shrink-0 p-3 rounded-md xs:max-w-full w-80 bg-bgColor"
       style="flex-basis: 60%; min-width: 300px"
     >
-      <language-settings v-if="tab === 0" />
-      <theme-settings v-else-if="tab === 1" />
-      <homepage-filters v-else-if="tab === 2" />
+      <router-view></router-view>
     </div>
   </v-container>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-  name: "About",
-  components: {},
-  data() {
-    return {
-      tab: 0,
-    };
-  },
-});
+<script lang="ts" setup>
+const route = useRoute();
 </script>
 
 <style>
