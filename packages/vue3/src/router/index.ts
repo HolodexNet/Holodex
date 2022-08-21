@@ -106,27 +106,33 @@ const routes: RouteRecordRaw[] = [
       {
         name: "Settings_Language",
         path: ":id(lang)?",
-        component: () => import("@/components/settings/LanguageSettings.vue"),
+        component: () =>
+          // structured a bit strangely to avoid chunking the files into tiny pieces.
+          import("@/components/settings/index").then((w) => w.langSettings),
       },
       {
         name: "Settings_Themes",
         path: "themes",
-        component: () => import("@/components/settings/ThemeSettings.vue"),
+        component: () =>
+          import("@/components/settings/index").then((w) => w.themeSettings),
       },
       {
         name: "Settings_Homepage",
         path: "homepage",
-        component: () => import("@/components/settings/HomepageFilters.vue"),
+        component: () =>
+          import("@/components/settings/index").then((w) => w.homeSettings),
       },
       {
         name: "Settings_Blocked",
         path: "blocked",
-        component: () => import("@/components/settings/LanguageSettings.vue"),
+        component: () =>
+          import("@/components/settings/index").then((w) => w.langSettings),
       },
       {
         name: "Settings_Advanced",
         path: "advanced",
-        component: () => import("@/components/settings/LanguageSettings.vue"),
+        component: () =>
+          import("@/components/settings/index").then((w) => w.langSettings),
       },
     ],
   },
