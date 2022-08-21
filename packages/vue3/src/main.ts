@@ -36,6 +36,9 @@ app.use(router);
 app.use(Vue3Linkify);
 
 export const vuetify = createVuetify({
+  display: {
+    mobileBreakpoint: "sm",
+  },
   locale: createVueI18nAdapter({ i18n, useI18n }),
   icons: {
     defaultSet: "svg",

@@ -5,7 +5,7 @@
 
     <!--* nav drawer is for the left --->
     <BottomNav
-      v-if="isMobile"
+      v-if="isSmOrDown"
       :pages="pages.filter((page) => !page.collapsible)"
       :active="!isWatchPage"
     />
@@ -32,7 +32,12 @@
         ></v-app-bar-nav-icon>
         <div class="flex flex-row items-center gap-2 ml-md-2">
           <router-link :to="{ name: settings.defaultOpen || 'Home' }">
-            <logo v-if="!isMobile" width="32" height="32" :loading="loading" />
+            <logo
+              v-if="!isSmOrDown"
+              width="32"
+              height="32"
+              :loading="loading"
+            />
           </router-link>
           <OrgSelector
             @changed="(org: Org, close?: Function) => {site.currentOrg = org; close && close();}"
@@ -134,7 +139,7 @@
     <NavDrawer
       v-model="navDrawer"
       :pages="pages"
-      :temporary="isMobile || isWatchPage"
+      :temporary="isMdOrDown || isWatchPage"
       :expand="navbarExpanded"
       @expand="navbarExpanded = !navbarExpanded"
     >
@@ -164,8 +169,18 @@ export default defineComponent({
     const loading = useIsFetching();
 
     const isMobile = display.mobile;
+    const isSmOrDown = display.smAndDown;
+    const isMdOrDown = display.mdAndDown;
 
-    return { site, display, isMobile, settings, loading };
+    return {
+      site,
+      display,
+      isMobile,
+      isSmOrDown,
+      isMdOrDown,
+      settings,
+      loading,
+    };
   },
   data() {
     return {
@@ -289,10 +304,6 @@ export default defineComponent({
     isWatchPage() {
       if (this.isMobile) return;
       this.navDrawer = !this.isWatchPage;
-    },
-    // if user is flipping between mobile/desktop breakpoints, keep navdrawer closed
-    isMobile() {
-      this.navDrawer = false;
     },
   },
   created() {
