@@ -2,7 +2,11 @@
   <!-- <v-container class="channel-container" fluid> -->
   <logo v-if="isLoading" :loading="true" class="max-h-32"></logo>
   <div v-else class="w-full">
-    <v-img v-if="bannerImage" :src="bannerImage" class="-mb-12" />
+    <v-img
+      v-if="bannerImage"
+      :src="bannerImage"
+      class="-mb-0 sm:-mb-6 md:-mb-12"
+    />
     <div class="mx-full bg-bgColor sticky top-12 z-10">
       <div class="container mx-auto">
         <channel-card
@@ -10,9 +14,9 @@
           class="pb-0 p-2 rounded-none shadow-none"
         >
           <template #buttons>
-            <div class="grid grid-cols-2 mr-4">
+            <div class="grid grid-cols-2 mr-2 md:mr-4 gap-1 md:gap-2">
               <a
-                class="c-social-icon hover:text-red-500"
+                class="c-social-icon w-8 h-8 md:w-12 md:h-12 hover:text-red-500"
                 :href="`https://youtube.com/channel/${channel.id}`"
                 target="_blank"
                 title="Youtube"
@@ -20,7 +24,7 @@
                 <div class="i-carbon:logo-youtube"></div>
               </a>
               <a
-                class="c-social-icon hover:text-cyan-500"
+                class="c-social-icon w-8 h-8 md:w-12 md:h-12 hover:text-cyan-500"
                 :class="{
                   'btn-disabled bg-inherit opacity-20': !channel.twitter,
                 }"
@@ -35,7 +39,7 @@
                 <div class="i-carbon:logo-twitter"></div>
               </a>
               <button
-                class="c-social-icon"
+                class="c-social-icon w-8 h-8 md:w-12 md:h-12"
                 :title="
                   isFav
                     ? $t('component.channelSocials.removeFromFavorites')
@@ -49,7 +53,7 @@
                 ></div>
               </button>
               <button
-                class="c-social-icon"
+                class="c-social-icon w-8 h-8 md:w-12 md:h-12"
                 :title="
                   isFav
                     ? $t('component.channelSocials.block')
@@ -71,7 +75,7 @@
           <router-link
             v-for="tab in tabs"
             :key="tab.path"
-            class="tab tab-sm sm:tab-md md:tab-lg tab-bordered"
+            class="tab tab-md md:tab-lg tab-bordered"
             :to="tab.path"
             >{{ tab.name }}</router-link
           >
@@ -191,11 +195,31 @@ export default defineComponent({
 }
 
 .c-social-icon {
-  @apply p-2 btn btn-ghost rounded flex-grow;
+  @apply p-2 btn-ghost rounded flex-grow;
 
-  width: 3rem;
-  height: 3rem;
-  height: 1.5em;
+  display: inline-flex;
+  flex-shrink: 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  transition-property: color, background-color, border-color, fill, stroke,
+    opacity, box-shadow, transform, filter, -webkit-text-decoration-color,
+    -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--rounded-btn, 0.5rem);
+
+  min-height: 20px;
   padding: 0;
   line-height: 1.4em;
   font-weight: 600;

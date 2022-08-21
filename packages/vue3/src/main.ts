@@ -9,6 +9,7 @@ import { setupPinia, setupI18N, getVueQueryPluginOptions } from "./setup";
 import { useThemeStore } from "./stores/theme";
 import LoadScript from "vue-plugin-load-script";
 import VueToast from "vue-toast-notification";
+import Vue3Linkify from "vue-3-linkify";
 
 import "@/setup/main.css"; // tailwind configuration
 
@@ -31,6 +32,8 @@ const i18n = setupI18N();
 app.use(i18n);
 
 app.use(router);
+
+app.use(Vue3Linkify);
 
 export const vuetify = createVuetify({
   locale: createVueI18nAdapter({ i18n, useI18n }),
