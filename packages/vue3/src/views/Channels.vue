@@ -83,6 +83,7 @@
         :query="query"
         :variant="cardView ? 'card' : 'list'"
         :grouping="currentSortValue.value"
+        :slim="category === Tabs.BLOCKED"
       ></channel-list>
       <!-- Static channel list with no loading for locally stored blocked/favorites list -->
       <!-- <ChannelList

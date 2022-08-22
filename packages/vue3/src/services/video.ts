@@ -299,7 +299,7 @@ export function useVideoListDatasource(
       const query = h.queryKey[1] as any;
       const jwt = h.queryKey[2] as string;
       const out = { items: [] as Video[], total: undefined };
-      console.log("Querying", path, "?>>>", query, "auth", jwt);
+      console.log("Querying", path, "?>>>", query, "auth", jwt.slice(0, 10));
       if (q.value.flavor?.favorites && !jwt) return out;
       const { data } = await axiosInstance.get(path, {
         params: query,
@@ -331,11 +331,10 @@ export function useVideoListDatasource(
   });
 
   /* const newData: Ref<undefined> | Ref<{ items: Video[]; total?: number | undefined; }> =*/
-  computed(() => {
+  const resp = computed(() => {
     // this block is to satisfy various client side filters
-    if (response.data.value === undefined) return undefined;
-
-    const videoResp = response.data.value;
+    console.log("recalc video response", response.isSuccess.value);
+    if (response.data.value === undefined) return response;
 
     const shouldHideCollabStreams =
       (q.value.type === "stream_schedule" || q.value.type === "archive") && // must be archive or stream schedule tab
@@ -345,28 +344,33 @@ export function useVideoListDatasource(
         : q.value.flavor?.org !== "All Vtubers"); // don't hide collabs on all vtubers since every vtuber is in the org yes?
 
     const hasBlockedChannels = settings.blockedChannels.length > 0;
-    videoResp.items = videoResp.items.filter(
-      (x) =>
-        !(hasBlockedChannels && settings.blockedSet.has(x.channel.id)) && // uploading channel isn't blocked, and:
-        !settings.ignoredTopics.includes(x.topic_id ?? "") && // topic is not ignored, and:
-        !(
-          // also eject those where:
-          (
-            shouldHideCollabStreams && // if hiding collab streams, then must:
-            !(
-              // not...
-              (
-                x.channel.org !== q.value.flavor?.org || // be in another org than currently set org OR
-                favesList.value?.has(x.channel.id)
-              ) // be in the user's favorites list.
-            )
-          )
-        )
-    );
+    const mnew = {
+      total: response.data.value.total,
+      items: response.data.value.items.filter((x) => {
+        let keep = true;
 
-    (response as any).data.value = videoResp;
-    return videoResp;
+        if (hasBlockedChannels) {
+          keep &&= !settings.blockedSet.has(x.channel.id);
+        }
+
+        if (shouldHideCollabStreams) {
+          keep &&= !!(
+            x.channel.org == q.value.flavor?.org ||
+            favesList.value?.has(x.channel.id)
+          );
+        }
+
+        // if (hideIgnoredTopics) {
+        keep &&= !settings.ignoredTopics.includes(x.topic_id ?? "");
+        // }
+
+        return keep;
+      }),
+    };
+
+    // (response as any).data.value = videoResp;
+    return { ...response, data: ref(mnew) };
   });
 
-  return response;
+  return shallowReactive(resp.value);
 }

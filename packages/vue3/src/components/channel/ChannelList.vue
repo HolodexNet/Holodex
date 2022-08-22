@@ -15,13 +15,15 @@
           v-if="idx < 20 && group as number < 2"
           :channel="channel"
           :variant="variant"
-          class="bg-bgColor shadow-xl"
+          :slim="slim"
+          class="shadow-xl bg-bgColor"
         ></channel-card>
         <v-lazy v-else style="height: 116px">
           <channel-card
             :channel="channel"
             :variant="variant"
-            class="bg-bgColor shadow-xl"
+            :slim="slim"
+            class="shadow-xl bg-bgColor"
           ></channel-card>
         </v-lazy>
       </template>
@@ -72,6 +74,7 @@ export default defineComponent({
       type: String as PropType<"org" | "group" | string>,
       default: "none",
     },
+    slim: Boolean,
   },
   setup(props) {
     const respChannels = useChannels(
