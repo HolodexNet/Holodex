@@ -10,16 +10,16 @@
       :src="bannerImage"
       class="-mb-0 sm:-mb-6 md:-mb-12"
     /> -->
-    <div class="mx-full sticky top-12 bg-bgColor/95 z-10 backdrop-blur">
+    <div class="sticky z-10 mx-full top-12 bg-bgColor/95 backdrop-blur">
       <div class="container mx-auto">
         <channel-card
           :channel="channel!"
-          class="pb-0 p-2 rounded-none shadow-none"
+          class="p-2 pb-0 rounded-none shadow-none"
         >
           <template #buttons>
-            <div class="grid grid-cols-2 mr-2 md:mr-4 gap-1 md:gap-2">
+            <div class="grid grid-cols-2 gap-1 mr-2 md:mr-4 md:gap-2">
               <a
-                class="c-social-icon w-8 h-8 md:w-12 md:h-12 hover:text-red-500"
+                class="w-8 h-8 c-social-icon md:w-12 md:h-12 hover:text-red-500"
                 :href="`https://youtube.com/channel/${channel.id}`"
                 target="_blank"
                 title="Youtube"
@@ -27,7 +27,7 @@
                 <div class="i-carbon:logo-youtube"></div>
               </a>
               <a
-                class="c-social-icon w-8 h-8 md:w-12 md:h-12 hover:text-cyan-500"
+                class="w-8 h-8 c-social-icon md:w-12 md:h-12 hover:text-cyan-500"
                 :class="{
                   'btn-disabled bg-inherit opacity-20': !channel.twitter,
                 }"
@@ -42,7 +42,7 @@
                 <div class="i-carbon:logo-twitter"></div>
               </a>
               <button
-                class="c-social-icon w-8 h-8 md:w-12 md:h-12"
+                class="w-8 h-8 c-social-icon md:w-12 md:h-12"
                 :title="
                   isFav
                     ? $t('component.channelSocials.removeFromFavorites')
@@ -56,16 +56,17 @@
                 ></div>
               </button>
               <button
-                class="c-social-icon w-8 h-8 md:w-12 md:h-12"
+                class="w-8 h-8 c-social-icon md:w-12 md:h-12"
                 :title="
-                  isFav
+                  !isBlocked
                     ? $t('component.channelSocials.block')
                     : $t('component.channelSocials.unblock')
                 "
+                @click="blockChannel"
               >
                 <div
                   :class="
-                    isFav
+                    isBlocked
                       ? 'i-material-symbols:block text-red-500'
                       : 'i-material-symbols:block'
                   "
@@ -102,7 +103,10 @@
 <script lang="ts">
 // import api from "@/utils/backend-api";
 import { useChannel } from "@/services/channel";
+import { useFavoritesListByID } from "@/services/favorites";
 import { useLangStore } from "@/stores/lang";
+import { useSettingsStore } from "@/stores/settings";
+import { useSiteStore } from "@/stores/site";
 import { getBannerImages, getChannelPhoto } from "@/utils/functions";
 
 export default defineComponent({
@@ -121,11 +125,21 @@ export default defineComponent({
       );
     });
 
+    const favList = useFavoritesListByID();
+    const isFav = computed(() => favList.value?.has(id.value));
+    const canFav = computed(() => !!useSiteStore().user);
+
+    const settings = useSettingsStore();
+    const isBlocked = computed(() => settings.blockedSet.has(id.value));
     return {
+      id,
       route,
       channel: channel.data,
       isLoading: channel.isLoading,
       preferredName,
+      canFav,
+      isFav,
+      isBlocked,
     };
   },
   computed: {
@@ -156,26 +170,26 @@ export default defineComponent({
     tabs(): { path: string; name: string }[] {
       return [
         {
-          path: `/channel/${this.route.params.id}`,
+          path: `/channel/${this.id}`,
           name: `${this.$t("views.channel.video")}`,
         },
         {
-          path: `/channel/${this.route.params.id}/clips`,
+          path: `/channel/${this.id}/clips`,
           name: `${this.$t("views.channel.clips")}`,
-          hide: this.channel.type === "subber",
+          hide: this.channel?.type === "subber",
         },
         {
-          path: `/channel/${this.route.params.id}/music`,
+          path: `/channel/${this.id}/music`,
           name: `${this.$t("views.channel.music")}`,
-          hide: this.channel.type === "subber",
+          hide: this.channel?.type === "subber",
         },
         {
-          path: `/channel/${this.route.params.id}/collabs`,
+          path: `/channel/${this.id}/collabs`,
           name: `${this.$t("views.channel.collabs")}`,
-          hide: this.channel.type === "subber",
+          hide: this.channel?.type === "subber",
         },
         {
-          path: `/channel/${this.route.params.id}/about`,
+          path: `/channel/${this.id}/about`,
           name: `${this.$t("views.channel.about")}`,
         },
         // { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
@@ -188,7 +202,25 @@ export default defineComponent({
     //   return getChannelPhoto(this.channel);
     // },
   },
-  methods: {},
+  methods: {
+    blockChannel() {
+      if (!this.channel) return; // typecheck channel not null.
+      const settings = useSettingsStore();
+      this.isBlocked
+        ? (settings.blockedChannels = settings.blockedChannels.filter(
+            (x) => x.id !== this.id
+          ))
+        : useSettingsStore().blockedChannels.push({
+            id: this.id,
+            name: this.channel.name,
+            type: this.channel.type,
+            english_name: this.channel.english_name,
+            org: this.channel.org,
+            lang: this.channel.lang,
+            group: this.channel.group,
+          });
+    },
+  },
 });
 </script>
 

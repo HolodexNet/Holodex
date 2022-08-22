@@ -28,7 +28,8 @@ export function useChannel(id: Ref<string>, enabled: MaybeRef<boolean>) {
   return useQuery(
     ["channel", id] as const,
     async (a) => {
-      const res = await backendApi.channel(id.value);
+      if (!a.queryKey[1]) return undefined;
+      const res = await backendApi.channel(a.queryKey[1]);
       return res.data as FullChannel;
     },
     {
