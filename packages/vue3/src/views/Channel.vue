@@ -48,6 +48,7 @@
                     ? $t('component.channelSocials.removeFromFavorites')
                     : $t('component.channelSocials.addToFavorites')
                 "
+                @click="favChannel"
               >
                 <div
                   :class="
@@ -103,7 +104,10 @@
 <script lang="ts">
 // import api from "@/utils/backend-api";
 import { useChannel } from "@/services/channel";
-import { useFavoritesListByID } from "@/services/favorites";
+import {
+  useFavoritesListByID,
+  useFavoritesPatcher,
+} from "@/services/favorites";
 import { useLangStore } from "@/stores/lang";
 import { useSettingsStore } from "@/stores/settings";
 import { useSiteStore } from "@/stores/site";
@@ -131,15 +135,18 @@ export default defineComponent({
 
     const settings = useSettingsStore();
     const isBlocked = computed(() => settings.blockedSet.has(id.value));
+    const favPatcher = useFavoritesPatcher();
     return {
       id,
       route,
       channel: channel.data,
       isLoading: channel.isLoading,
       preferredName,
+      favList,
       canFav,
       isFav,
       isBlocked,
+      favPatcher,
     };
   },
   computed: {
@@ -219,6 +226,15 @@ export default defineComponent({
             lang: this.channel.lang,
             group: this.channel.group,
           });
+    },
+    favChannel() {
+      this.favPatcher.mutateAsync([
+        {
+          op: this.isFav ? "remove" : "add",
+          channel_id: this.id,
+          channelTemp: this.channel,
+        },
+      ]);
     },
   },
 });

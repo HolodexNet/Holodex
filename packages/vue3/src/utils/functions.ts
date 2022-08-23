@@ -15,6 +15,7 @@ import {
     */
 } from "@/utils/consts";
 
+/*
 export function resizeArtwork(artworkUrl, size = 400) {
   // https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/9c/39/27/9c392780-3f34-d322-9dde-002618154f40/source/400x400bb.jpg
   const adjustedSize = Math.floor(window.devicePixelRatio * size);
@@ -27,19 +28,24 @@ export function resizeArtwork(artworkUrl, size = 400) {
   const thumb = match[2];
   return `https://${serv}.mzstatic.com/image/thumb/${thumb}/source/${adjustedSize}x${adjustedSize}bb.jpg`;
 }
+*/
 
-export function resizeChannelPhoto(photoUrl, size) {
-  const deviceSize = size; /* * window.devicePixelRatio */
-  const split = photoUrl.split("=s");
-  // try to hit cache by using a common size
-  let adjSize = 48;
-  if (deviceSize < 88 && deviceSize > 55) adjSize = 88;
-  else if (deviceSize <= 55) adjSize = 48;
-  else adjSize = 176;
-  return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
-}
+//  stopped being useful...
+// export function resizeChannelPhoto(photoUrl: string, size: number) {
+//   const deviceSize = size; /* * window.devicePixelRatio */
+//   const split = photoUrl.split("=s");
+//   // try to hit cache by using a common size
+//   let adjSize = 48;
+//   if (deviceSize < 88 && deviceSize > 55) adjSize = 88;
+//   else if (deviceSize <= 55) adjSize = 48;
+//   else adjSize = 176;
+//   return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
+// }
 
-export function getChannelPhoto(channelId, size: string | number = 100) {
+export function getChannelPhoto(
+  channelId: string,
+  size: string | number = 100
+) {
   const nearest = Math.min(Math.max(Math.ceil(+size / 50) * 50, 50), 150);
   return `/statics/channelImg/${channelId}/${nearest}.png`;
 }

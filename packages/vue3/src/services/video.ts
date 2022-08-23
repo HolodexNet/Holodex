@@ -334,7 +334,7 @@ export function useVideoListDatasource(
   const resp = computed(() => {
     // this block is to satisfy various client side filters
     console.log("recalc video response", response.isSuccess.value);
-    if (response.data.value === undefined) return response;
+    if (response.data.value === undefined) return undefined;
 
     const shouldHideCollabStreams =
       (q.value.type === "stream_schedule" || q.value.type === "archive") && // must be archive or stream schedule tab
@@ -369,8 +369,8 @@ export function useVideoListDatasource(
     };
 
     // (response as any).data.value = videoResp;
-    return { ...response, data: ref(mnew) };
+    return mnew;
   });
 
-  return shallowReactive(resp.value);
+  return { ...response, data: resp };
 }

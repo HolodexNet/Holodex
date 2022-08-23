@@ -126,7 +126,7 @@ const routes: RouteRecordRaw[] = [
         name: "Settings_Blocked",
         path: "blocked",
         component: () =>
-          import("@/components/settings/index").then((w) => w.langSettings),
+          import("@/components/settings/index").then((w) => w.blockedSettings),
       },
       {
         name: "Settings_Advanced",

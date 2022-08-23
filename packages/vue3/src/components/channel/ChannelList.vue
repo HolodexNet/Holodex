@@ -17,6 +17,7 @@
           :variant="variant"
           :slim="slim"
           class="shadow-xl bg-bgColor"
+          ><slot :channel="channel"></slot
         ></channel-card>
         <v-lazy v-else style="height: 116px">
           <channel-card
@@ -24,6 +25,7 @@
             :variant="variant"
             :slim="slim"
             class="shadow-xl bg-bgColor"
+            ><slot :channel="channel"></slot
           ></channel-card>
         </v-lazy>
       </template>
@@ -110,7 +112,15 @@ export default defineComponent({
 });
 </script>
 <style>
+/* 1fr = "fraction unit", which is ratio basis of remaining space.
+  https://developer.mozilla.org/en-US/docs/Web/CSS/repeat#auto-fill <- for autofill. 
+  autofill: (= largest possible positive integer that does not cause the grid to overflow its grid)
+
+  minmax is basically saying between the left and right, the left being minimum size, which is 30rem,
+   or when the screen is really small, 90%vw.
+*/
+
 .channel-grid {
-  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(30rem, 90vw), 1fr));
 }
 </style>

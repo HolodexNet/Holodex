@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    :value="value"
+    :model-value="modelValue"
     app
     width="220"
     clipped
@@ -10,10 +10,13 @@
       padding-top: env(safe-area-inset-top);
       padding-left: calc(env(safe-area-inset-left) / 1.3);
     "
-    @input="$emit('input', $event)"
+    @update:model-value="(bool) => $emit('update:modelValue', bool)"
   >
     <slot />
     <ul class="gap-1 p-2 menu">
+      <!-- {{
+        modelValue
+      }} -->
       <!-- <v-list> -->
       <template
         v-for="page in (pages.filter((e) => !e.extra) as any[])"
@@ -107,7 +110,7 @@
       <a
         title="Support holodex (Ko-fi)"
         href="https://ko-fi.com/holodex"
-        class="i-simple-icons:kofi text-sm"
+        class="text-sm i-simple-icons:kofi"
         style="color: #ff5e5b"
       >
       </a>
@@ -141,7 +144,7 @@ export default defineComponent({
       required: true,
       type: Array,
     },
-    value: {
+    modelValue: {
       type: Boolean,
       default: false,
     },
@@ -150,16 +153,22 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ["input"],
-  setup() {
+  emits: ["update:modelValue"],
+  setup(props, ctx) {
     const lang = useLangStore();
     const display = useDisplay();
 
     const isMobile = display.mobile;
 
+    watch(
+      () => props.temporary,
+      () => {
+        if (props.temporary) ctx.emit("update:modelValue", false);
+      }
+    );
+
     return { lang, display, isMobile };
   },
-
   data() {
     return {
       favoritesExpanded: false,

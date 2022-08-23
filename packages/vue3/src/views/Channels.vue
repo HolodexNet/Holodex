@@ -1,57 +1,48 @@
 <template>
-  <v-container style="min-height: 70vh">
-    <!-- <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive"> -->
-    <!-- <v-tabs v-model="category" class="channels-tabs secondary darken-1">
-      <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
-      <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
-      <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
-      <v-tab>{{ $t("views.channels.tabs.Blocked") }}</v-tab>
-    </v-tabs> -->
-
-    <div
-      class="sticky z-10 flex flex-wrap justify-between px-4 mb-4 top-12 no-scrollbar bg-bgColor-500"
-    >
+  <div class="sticky z-10 px-2 mb-4 top-12 no-scrollbar bg-bgColor-500">
+    <div class="container flex flex-wrap justify-between mx-auto">
       <div
         class="flex mt-2 overflow-x-auto overflow-y-hidden tabs no-scrollbar"
       >
         <a
-          class="tab tab-lg tab-bordered"
+          class="tab tab-md md:tab-lg tab-bordered"
           :class="category === 0 ? 'tab-active border-primary' : ''"
           @click="category = 0"
         >
           {{ $t("views.channels.tabs.Vtuber") }}
         </a>
         <a
-          class="tab tab-lg tab-bordered"
+          class="tab tab-md md:tab-lg tab-bordered"
           :class="category === 1 ? 'tab-active' : ''"
           @click="category = 1"
         >
           {{ $t("views.channels.tabs.Subber") }}
         </a>
         <a
-          class="tab tab-lg tab-bordered"
+          class="tab tab-md md:tab-lg tab-bordered"
           :class="category === 2 ? 'tab-active' : ''"
           @click="category = 2"
         >
           {{ $t("views.channels.tabs.Favorites") }}
         </a>
         <a
-          class="tab tab-lg tab-bordered"
+          class="tab tab-md md:tab-lg tab-bordered"
           :class="category === 3 ? 'tab-active' : ''"
           @click="category = 3"
         >
           {{ $t("views.channels.tabs.Blocked") }}
         </a>
       </div>
-      <div class="flex gap-2 mt-2">
+      <div class="self-end">
         <div class="z-40 dropdown dropdown-end">
-          <label tabindex="0" class="btn btn-outline">
+          <label tabindex="0" class="dropdownLabelBtn">
             {{ currentSortValue.text }}
             <v-icon size="20">{{ mdiArrowDown }}</v-icon>
           </label>
           <ul
             tabindex="0"
-            class="z-50 p-2 shadow dropdown-content menu bg-bgColor rounded-box w-52"
+            class="z-50 p-2 text-sm shadow dropdown-content menu bg-bgColor rounded-box"
+            style="min-width: 10rem"
           >
             <li
               v-for="(item, index) in sortOptions"
@@ -72,12 +63,22 @@
         </div> -->
       </div>
     </div>
+  </div>
+
+  <div class="container px-2 mx-auto" style="min-height: 70vh">
+    <!-- <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive"> -->
+    <!-- <v-tabs v-model="category" class="channels-tabs secondary darken-1">
+      <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
+      <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
+      <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
+      <v-tab>{{ $t("views.channels.tabs.Blocked") }}</v-tab>
+    </v-tabs> -->
 
     <!-- Dropdown to pick sort-by into 'sort' data attr -->
 
     <!-- </portal> -->
 
-    <v-container fluid class="pa-0">
+    <div class="container">
       <channel-list
         :channels="channelList"
         :query="query"
@@ -93,7 +94,7 @@
         :card-view="cardView"
         :show-delete="category === Tabs.BLOCKED"
       /> -->
-    </v-container>
+    </div>
     <!-- Favorites specific view items: -->
     <template v-if="category === Tabs.FAVORITES">
       <div v-if="!favorites.data.value || favorites.data.value?.length === 0">
@@ -110,7 +111,7 @@
         {{ $t("views.channels.blockedAreEmpty") }}
       </div>
     </template>
-  </v-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -255,12 +256,11 @@ export default defineComponent({
       );
     },
     sortedFavorites() {
-      if (this.favorites.data.value)
-        return localSortChannels(
-          this.favorites.data.value,
-          this.currentSortValue.query_value
-        );
-      else return [];
+      console.log("sort favorites", this.favorites.data.value);
+      return localSortChannels(
+        this.favorites.data.value || [],
+        this.currentSortValue.query_value
+      );
     },
     isLoggedIn() {
       return !!this.site.user;
@@ -301,5 +301,14 @@ export default defineComponent({
 
 .rotate-asc {
   transform: rotate(180deg);
+}
+
+.dropdownLabelBtn {
+  @apply tab tab-bordered tab-sm;
+
+  height: 2rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  line-height: 2;
 }
 </style>

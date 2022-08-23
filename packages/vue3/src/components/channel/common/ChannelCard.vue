@@ -85,6 +85,7 @@
             ? $t('component.channelSocials.removeFromFavorites')
             : $t('component.channelSocials.addToFavorites')
         "
+        @click="favChannel"
       >
         <div
           :class="isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'"
@@ -98,7 +99,10 @@
 </template>
 <script lang="ts">
 import { useChannelPreferredName } from "@/hooks/common/useChannelService";
-import { useFavoritesListByID } from "@/services/favorites";
+import {
+  useFavoritesListByID,
+  useFavoritesPatcher,
+} from "@/services/favorites";
 import { useLangStore } from "@/stores";
 import { formatCount, formatTopic } from "@/utils/functions";
 import { PropType } from "vue";
@@ -122,8 +126,8 @@ export default defineComponent({
     const fav = useFavoritesListByID();
 
     const isFav = computed(() => fav.value?.has(props.channel.id));
-
-    return { preferredName, lang, isFav };
+    const favPatcher = useFavoritesPatcher();
+    return { preferredName, lang, isFav, favPatcher };
   },
   computed: {
     subscribers() {
@@ -137,6 +141,15 @@ export default defineComponent({
   },
   methods: {
     formatTopic,
+    favChannel() {
+      this.favPatcher.mutateAsync([
+        {
+          op: this.isFav ? "remove" : "add",
+          channel_id: this.channel.id,
+          channelTemp: this.channel,
+        },
+      ]);
+    },
   },
 });
 </script>

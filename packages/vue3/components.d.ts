@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     About: typeof import('./src/views/About.vue')['default']
     App: typeof import('./src/App.vue')['default']
     ArchivedTranslations: typeof import('./src/components/tldex/client/ArchivedTranslations.vue')['default']
+    BlockedList: typeof import('./src/components/settings/BlockedList.vue')['default']
     Button: typeof import('./src/stories/Button.vue')['default']
     Channel: typeof import('./src/views/Channel.vue')['default']
     ChannelAbout: typeof import('./src/views/channel/ChannelAbout.vue')['default']

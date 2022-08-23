@@ -89,7 +89,7 @@ export default defineConfig({
         secure: false,
       },
       "/statics": {
-        target: API_BASE_URL,
+        target: 'https://holodex.net',
         changeOrigin: true,
         secure: false,
       },
