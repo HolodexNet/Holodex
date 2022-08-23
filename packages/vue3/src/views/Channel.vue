@@ -111,7 +111,8 @@ import {
 import { useLangStore } from "@/stores/lang";
 import { useSettingsStore } from "@/stores/settings";
 import { useSiteStore } from "@/stores/site";
-import { getBannerImages, getChannelPhoto } from "@/utils/functions";
+import { getBannerImages } from "@/utils/functions";
+import { useDisplay } from "vuetify";
 
 export default defineComponent({
   name: "Channel",
@@ -136,6 +137,7 @@ export default defineComponent({
     const settings = useSettingsStore();
     const isBlocked = computed(() => settings.blockedSet.has(id.value));
     const favPatcher = useFavoritesPatcher();
+
     return {
       id,
       route,

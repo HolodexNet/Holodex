@@ -50,7 +50,7 @@ export function getChannelPhoto(
   return `/statics/channelImg/${channelId}/${nearest}.png`;
 }
 
-export function getVideoThumbnails(ytVideoKey, useWebP) {
+export function getVideoThumbnails(ytVideoKey: string, useWebP?: boolean) {
   const base = useWebP
     ? "https://i.ytimg.com/vi_webp"
     : "https://i.ytimg.com/vi";
@@ -96,7 +96,7 @@ export function getTLLangRecommendation(
   return "en";
 }
 
-export function getBannerImages(url) {
+export function getBannerImages(url: string) {
   const base = `${url.split("=")[0]}=`;
   return {
     tablet: `${base}w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
@@ -132,7 +132,7 @@ const numberFormatAdjust = {
   "lol-PEKO": "en",
 };
 
-export function formatCount(n, lang = "en") {
+export function formatCount(n: number, lang = "en") {
   const converted = numberFormatAdjust[lang] ?? lang;
   if (!formatters[converted]) {
     formatters[converted] = new Intl.NumberFormat(converted, {

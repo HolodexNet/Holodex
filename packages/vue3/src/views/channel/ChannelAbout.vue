@@ -37,7 +37,6 @@
 
 <script lang="ts">
 import { useChannel } from "@/services/channel";
-import { PropType } from "vue";
 
 export default {
   name: "ChannelAbout",

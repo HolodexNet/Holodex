@@ -7,7 +7,7 @@
   >
     <template #default="{ channel }">
       <button
-        class="flex flex-col justify-center w-8 h-8 h-full c-social-icon"
+        class="flex flex-col justify-center w-8 h-full c-social-icon"
         :title="$t('component.channelSocials.unblock')"
         @click="unblock(channel)"
       >

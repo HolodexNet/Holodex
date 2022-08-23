@@ -290,7 +290,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="css">
 .channel-card-grid::after {
   content: "";
   flex: auto;
