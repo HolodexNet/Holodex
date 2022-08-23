@@ -27,7 +27,4 @@ const unblock = (channel: ShortChannel) => {
   );
 };
 </script>
-<style>
-.card {
-}
-</style>
+<style></style>
