@@ -33,7 +33,7 @@
           {{ $t("views.channels.tabs.Blocked") }}
         </a>
       </div>
-      <div class="self-end">
+      <div v-show="category !== Tabs.BLOCKED" class="self-end">
         <div class="z-40 dropdown dropdown-end">
           <label tabindex="0" class="dropdownLabelBtn">
             {{ currentSortValue.text }}
@@ -80,12 +80,13 @@
 
     <div class="container">
       <channel-list
+        v-if="category !== Tabs.BLOCKED"
         :channels="channelList"
         :query="query"
         :variant="cardView ? 'card' : 'list'"
         :grouping="currentSortValue.value"
-        :slim="category === Tabs.BLOCKED"
       ></channel-list>
+      <blocked-list v-else></blocked-list>
       <!-- Static channel list with no loading for locally stored blocked/favorites list -->
       <!-- <ChannelList
         :channels="channelList"
@@ -245,7 +246,7 @@ export default defineComponent({
       return undefined;
     },
     currentSortValue() {
-      const x = this.category;
+      // const x = this.category;
       return (
         this.findSortValue(this.sort) ||
         (this.findSortValue(this.defaultSort) as {

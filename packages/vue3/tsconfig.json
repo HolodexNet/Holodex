@@ -12,14 +12,15 @@
     "esModuleInterop": true,
     "noImplicitThis": true,
     "strict": true,
+    "outDir": "dist",
     "jsx": "preserve", // necessary for VOLAR to be happy about vue3 JSX.
     "paths": {
       "@/*": ["src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "types": [
-      "vite/client", // also added along with VOLAR support, but idk what this does.
-      "@modyfi/vite-plugin-yaml/modules" // yaml support
+      "vite/client" // also added along with VOLAR support, but idk what this does.
+      // "@modyfi/vite-plugin-yaml/modules" // yaml support
     ]
   },
   "include": [

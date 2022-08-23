@@ -8,5 +8,7 @@
   "i18n-ally.dirStructure": "dir",
   "i18n-ally.enabledParsers": ["yaml"],
   "i18n-ally.pathMatcher": "{locale}/ui.yml",
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "scss.lint.unknownAtRules": "ignore",
+  "css.lint.unknownAtRules": "ignore"
 }

@@ -1,7 +1,7 @@
 <template>
   <!-- <v-container class="channel-container" fluid> -->
   <logo v-if="isLoading" :loading="true" class="max-h-32"></logo>
-  <div v-else class="w-full">
+  <div v-else-if="channel" class="w-full">
     <scroll-parallax up :speed="0.5"
       ><v-img v-if="bannerImage" :src="bannerImage"></v-img
     ></scroll-parallax>
@@ -240,7 +240,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="css">
 .router-link-exact-active {
   @apply tab-active;
 }

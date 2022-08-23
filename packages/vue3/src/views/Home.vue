@@ -86,13 +86,8 @@
   <!-- </page-container> -->
 </template>
 <script setup lang="ts">
-import {
-  useLive,
-  usePaginatedVideos,
-  useVideoListDatasource,
-} from "@/services/video";
-import { useSiteStore } from "@/stores";
-import { useSettingsStore } from "@/stores/settings";
+import { useVideoListDatasource } from "@/services/video";
+// import { useSiteStore } from "@/stores";
 import { Ref } from "vue";
 import { useI18n } from "vue-i18n";
 import HPagination from "@/components/core/HPagination.vue";
@@ -110,7 +105,7 @@ const Tabs = {
 const currentTab: Ref<typeof Tabs[keyof typeof Tabs]> = ref(Tabs.LIVE);
 const router = useRouter();
 const route = useRoute();
-const site = useSiteStore();
+// const site = useSiteStore();
 
 const pageOrg = useOrgRouteParamSync();
 // TODO:

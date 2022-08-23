@@ -17,16 +17,22 @@
           :variant="variant"
           :slim="slim"
           class="shadow-xl bg-bgColor"
-          ><slot :channel="channel"></slot
-        ></channel-card>
+        >
+          <template v-if="$slots.default" #buttons>
+            <slot :channel="channel"></slot>
+          </template>
+        </channel-card>
         <v-lazy v-else style="height: 116px">
           <channel-card
             :channel="channel"
             :variant="variant"
             :slim="slim"
             class="shadow-xl bg-bgColor"
-            ><slot :channel="channel"></slot
-          ></channel-card>
+          >
+            <template v-if="$slots.default" #buttons>
+              <slot :channel="channel"></slot>
+            </template>
+          </channel-card>
         </v-lazy>
       </template>
     </template>

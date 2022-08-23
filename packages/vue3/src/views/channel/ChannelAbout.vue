@@ -1,8 +1,8 @@
 <template>
   <div v-if="channel" class="p-2 md:p-4">
-    <div class="grid grid-flow-row-dense grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="col-span-1 order-1 md:order-last card card-compact">
-        <div class="card-body bg-bgColor shadow-xl gap-0 md:gap-2">
+    <div class="grid grid-flow-row-dense grid-cols-1 gap-4 md:grid-cols-3">
+      <div class="order-1 col-span-1 md:order-last card card-compact">
+        <div class="gap-0 shadow-xl card-body bg-bgColor md:gap-2">
           <strong class="card-title">{{
             $t("component.channelInfo.stats")
           }}</strong>
@@ -18,8 +18,8 @@
           {{ $t("component.channelInfo.totalViews") }}
         </div>
       </div>
-      <div style="white-space: pre-wrap" class="col-span-2 order-2">
-        <!-- <strong class="card-title mb-3">{{
+      <div style="white-space: pre-wrap" class="order-2 col-span-2">
+        <!-- <strong class="mb-3 card-title">{{
           $t("component.videoDescription.description")
         }}</strong> -->
         <p
@@ -52,7 +52,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="css">
 .ext-link {
   @apply after:content-['↗'] after:ml-[2px];
   text-decoration: none;

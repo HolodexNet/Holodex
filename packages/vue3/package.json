@@ -40,6 +40,7 @@
   "devDependencies": {
     "@babel/core": "^7.18.10",
     "@iconify/json": "^2.1.95",
+    "@modyfi/vite-plugin-yaml": "^1.0.3",
     "@rollup/plugin-dynamic-import-vars": "^1.4.4",
     "@types/color": "^3.0.3",
     "@types/jest": "^28.1.6",

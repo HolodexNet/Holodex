@@ -55,7 +55,7 @@
                 :close-on-content-click="false"
               >
                 <template #activator="{ props }">
-                  <v-icon v-bind="props" @click.stop.prevent>
+                  <v-icon v-bind="props" @click.stop.prevent="() => {}">
                     {{ mdiTuneVariant }}
                   </v-icon>
                 </template>
