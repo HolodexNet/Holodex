@@ -87,7 +87,7 @@
             ? $t('component.channelSocials.removeFromFavorites')
             : $t('component.channelSocials.addToFavorites')
         "
-        @click="favChannel"
+        @click.prevent.stop="favChannel"
       >
         <div
           :class="isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'"
