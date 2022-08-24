@@ -251,7 +251,7 @@ declare global {
     // and regular pagination
     pagination?: {
       offset: number;
-      pageSize: number;
+      limit: number;
     };
 
     // filtering options:

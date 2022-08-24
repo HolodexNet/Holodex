@@ -50,7 +50,7 @@ const dsConfig: Ref<VideoListLookup> = computed(
         (route.name === "channel_collabs" && "collabs") ||
         "videos",
       filter: undefined, // to, from
-      pagination: { pageSize: 24, offset: (page.value - 1) * 24 },
+      pagination: { limit: 24, offset: (page.value - 1) * 24 },
     } as VideoListLookup)
 );
 

@@ -161,7 +161,7 @@ function updateTab(tab: number, preservePage = true) {
   };
 
   lookupState.value.pagination =
-    tab === 0 ? undefined : { offset: 0, pageSize: perPage };
+    tab === 0 ? undefined : { offset: 0, limit: perPage };
 
   switch (tab) {
     case 0:
