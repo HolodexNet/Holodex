@@ -1,22 +1,49 @@
 <template>
   <template v-for="v in videoList" :key="'sidebar' + v.available_at + v.id">
-    <v-tooltip>
-      <template #activator="{ props }">
+    <div>
+      <v-hover v-slot="{ isHovering, props }">
         <channel-card
           v-bind="props"
           :channel="v.channel"
           slim
           :live="v.status === 'live'"
-          class="hover:text-secondary-content bg-bgColor hover:border-r-4 border-secondary"
-          >{{ formatDurationUpcoming(v.available_at) }}</channel-card
+          class="relative bg-bgColor border-secondary"
+          >{{ formatDurationUpcoming(v.available_at) }}
+          <template #buttons>
+            <v-fade-transition>
+              <div
+                v-if="isHovering"
+                class="absolute right-0 flex h-12 w-36 bg-bgColor"
+              >
+                <a
+                  class="w-3/4 h-full rounded c-card-icon hover:text-primary"
+                  :href="`https://youtube.com/channel/${v.channel.id}`"
+                  target="_blank"
+                  title="Watch"
+                >
+                  <div class="i-material-symbols:play-arrow-rounded"></div>
+                  <!-- <logo class="my-1 h-5/6"></logo> -->
+                </a>
+                <a
+                  class="w-1/4 h-full rounded c-card-icon hover:text-primary"
+                  :href="`https://youtube.com/channel/${v.channel.id}`"
+                  target="_blank"
+                  title="Multiview"
+                >
+                  <div class="i-clarity:grid-chart-solid"></div>
+                </a></div
+            ></v-fade-transition>
+          </template>
+        </channel-card>
+      </v-hover>
+      <v-tooltip activator="parent">
+        <div
+          class="max-w-md p-1 -ml-6 border-2 rounded-lg shadow-xl w-60 bg-bgColor shadow-bgColor border-secondary"
         >
-      </template>
-      <div
-        class="max-w-md p-1 -ml-6 border-2 rounded-lg shadow-xl w-60 bg-bgColor shadow-bgColor border-secondary"
-      >
-        <v-lazy><video-card :video="v"></video-card></v-lazy>
-      </div>
-    </v-tooltip>
+          <v-lazy><video-card :video="v"></video-card></v-lazy>
+        </div>
+      </v-tooltip>
+    </div>
   </template>
   <div style="height: 40px"></div>
 </template>

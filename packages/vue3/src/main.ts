@@ -20,6 +20,12 @@ import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 // import { OhVueIcon } from "oh-vue-icons";
 import * as icons from "@/utils/icons";
 
+// a global logging hook for help with development.
+window.log = function (props: any) {
+  console.log(props);
+  return props;
+};
+
 const app = createApp(App);
 
 app.use(VueQueryPlugin, getVueQueryPluginOptions());

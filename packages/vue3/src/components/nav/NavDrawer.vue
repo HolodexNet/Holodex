@@ -228,4 +228,21 @@ export default defineComponent({
   font-size: small;
   line-height: 24px;
 }
+
+.nav-scroll > .v-navigation-drawer__content:hover {
+  padding-right: 0px;
+  overflow-y: auto !important; /* firefox fallback */
+  overflow-y: overlay !important;
+}
+
+/* overflow-y: overlay does not work on temporary drawer */
+.nav-scroll.v-navigation-drawer--temporary > .v-navigation-drawer__content {
+  overflow-y: auto !important;
+}
+
+.nav-scroll > .v-navigation-drawer__content {
+  overflow-y: hidden !important;
+  background-color: var(--v-background-lighten1);
+  padding-right: 8px;
+}
 </style>

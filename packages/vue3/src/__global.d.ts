@@ -16,6 +16,7 @@ declare global {
 
     currentTheme: string;
     google: any;
+    log: <T>(a: T) => T;
   }
 
   enum CHANNEL_TYPES {

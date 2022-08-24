@@ -132,7 +132,7 @@ const numberFormatAdjust = {
   "lol-PEKO": "en",
 };
 
-export function formatCount(n: number, lang = "en") {
+export function formatCount(n: number | string, lang = "en") {
   const converted = numberFormatAdjust[lang] ?? lang;
   if (!formatters[converted]) {
     formatters[converted] = new Intl.NumberFormat(converted, {

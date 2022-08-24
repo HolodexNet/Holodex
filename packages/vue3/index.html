@@ -5,6 +5,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .scroll-bar, * {
+          scrollbar-width: thin;
+      }
+
+      .scroll-bar::-webkit-scrollbar, ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+      }
+
+      .scroll-bar::-webkit-scrollbar-track, ::-webkit-scrollbar-track {
+          background: #181818;
+      }
+
+      .scroll-bar::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
+          background: #575757;
+      }
+
+      .theme--light ::-webkit-scrollbar-track {
+          background: #d6d6d6;
+      }
+
+      .theme--light ::-webkit-scrollbar-thumb {
+          background: #858585;
+      }
+  </style>
+
     <title>Vite App</title>
   </head>
   <body>

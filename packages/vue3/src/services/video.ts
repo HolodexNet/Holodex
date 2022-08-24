@@ -300,6 +300,7 @@ export function useVideoListDatasource(
       const jwt = h.queryKey[2] as string;
       const out = { items: [] as Video[], total: undefined };
       console.log("Querying", path, "?>>>", query, "auth", jwt.slice(0, 10));
+      console.time("Query Time:" + path);
       if (q.value.flavor?.favorites && !jwt) return out;
       const { data } = await axiosInstance.get(path, {
         params: query,
@@ -323,8 +324,10 @@ export function useVideoListDatasource(
           (a, b) =>
             dayjs(a.available_at).valueOf() - dayjs(b.available_at).valueOf()
         );
-        console.log(out.items);
+        // console.log(out.items);
       }
+      console.timeEnd("Query Time:" + path);
+
       return out;
     },
     ...toRefs(queryCfg),
@@ -333,7 +336,7 @@ export function useVideoListDatasource(
   /* const newData: Ref<undefined> | Ref<{ items: Video[]; total?: number | undefined; }> =*/
   const resp = computed(() => {
     // this block is to satisfy various client side filters
-    console.log("recalc video response", response.isSuccess.value);
+    // console.log("recalc video response", response.isSuccess.value);
     if (response.data.value === undefined) return undefined;
 
     const shouldHideCollabStreams =

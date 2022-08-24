@@ -1,7 +1,9 @@
 <template>
-  <div
+  <component
+    :is="noLink ? 'div' : 'router-link'"
     class="flex flex-row items-center overflow-hidden rounded-md channel-card justify-self-auto"
     :class="slim ? '' : 'h-50'"
+    :to="`/channel/${channel.id}`"
   >
     <div class="flex-shrink-0 indicator">
       <span
@@ -95,7 +97,7 @@
         <div class="i-mdi:cancel"></div>
       </div> -->
     </div>
-  </div>
+  </component>
 </template>
 <script lang="ts">
 import { useChannelPreferredName } from "@/hooks/common/useChannelService";
@@ -119,6 +121,10 @@ export default defineComponent({
     },
     live: Boolean,
     slim: Boolean,
+    noLink: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const { preferredName } = useChannelPreferredName(props.channel);
@@ -131,7 +137,9 @@ export default defineComponent({
   },
   computed: {
     subscribers() {
-      return formatCount(this.channel.subscriber_count, this.lang.lang);
+      return this.channel.subscriber_count
+        ? formatCount(this.channel.subscriber_count, this.lang.lang)
+        : "";
     },
     imgClass() {
       return {

@@ -15,6 +15,7 @@
         <channel-card
           :channel="channel!"
           class="p-2 pb-0 rounded-none shadow-none"
+          no-link
         >
           <template #buttons>
             <div class="grid grid-cols-2 gap-1 mr-2 md:mr-4 md:gap-2">

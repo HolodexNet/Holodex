@@ -7,11 +7,13 @@
   >
     <template #default="{ channel }">
       <button
-        class="flex flex-col justify-center w-8 h-full c-social-icon"
+        class="flex flex-col justify-center h-full hover:bg-opacity-50 w-9 hover:bg-red-500"
         :title="$t('component.channelSocials.unblock')"
-        @click="unblock(channel)"
+        @click.prevent.stop="unblock(channel)"
       >
-        <div class="text-3xl text-red-500 i-material-symbols:close"></div>
+        <div
+          class="mx-auto text-3xl text-red-500 i-material-symbols:close"
+        ></div>
       </button>
     </template>
   </channel-list>
