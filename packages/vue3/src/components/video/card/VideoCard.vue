@@ -60,7 +60,7 @@ export default defineComponent({
       type: [Number, String],
       default: null,
     },
-    size: string,
+    size: String,
   },
   emits: ["videoClicked"],
   setup() {
