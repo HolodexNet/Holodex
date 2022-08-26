@@ -2,15 +2,18 @@ export type Playlist = {
   id?: number;
   name: string;
   user_id: number | string;
-  videos?: Object[];
+  videos?: VideoRef[];
+  /** client side maintained set */
+  _videoIdSet: Set<string>;
 };
 export type PlaylistListItem = {
   id?: number;
   name: string;
   user_id: number | string;
   videos?: string[];
+  updated_at: string;
 };
-export type PlaylistList = [PlaylistListItem];
+export type PlaylistList = PlaylistListItem[];
 
 export type User = {
   id: string;

@@ -69,6 +69,9 @@
                         </div>
                     </edit-playlist>
                 </ResponsiveMenu> -->
+        <playlist-button
+          @click="playlistDrawer = !playlistDrawer"
+        ></playlist-button>
         <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
           <template #activator="{ props }">
             <v-btn icon v-bind="props" class="ml-auto">
@@ -150,6 +153,15 @@
         <v-divider />
       </template>
     </NavDrawer>
+
+    <v-navigation-drawer
+      v-model="playlistDrawer"
+      location="right"
+      temporary
+      :width="360"
+    >
+      <playlist-card :playlist="currentPlaylist.active"></playlist-card>
+    </v-navigation-drawer>
   </div>
 </template>
 
@@ -159,6 +171,7 @@ import { useSiteStore } from "@/stores/site";
 import { useDisplay } from "vuetify";
 import { useSettingsStore } from "@/stores/settings";
 import { useIsFetching } from "vue-query";
+import { useCurrentPlaylist } from "@/stores/playlist";
 
 export default defineComponent({
   components: {},
@@ -172,6 +185,8 @@ export default defineComponent({
     const isSmOrDown = display.smAndDown;
     const isMdOrDown = display.mdAndDown;
 
+    const currentPlaylist = useCurrentPlaylist();
+
     return {
       site,
       display,
@@ -180,6 +195,7 @@ export default defineComponent({
       isMdOrDown,
       settings,
       loading,
+      currentPlaylist,
     };
   },
   data() {
@@ -189,6 +205,7 @@ export default defineComponent({
       navbarExpanded: false,
 
       navDrawer: true,
+      playlistDrawer: false,
     };
   },
   computed: {

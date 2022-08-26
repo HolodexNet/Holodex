@@ -1,7 +1,7 @@
 <template>
   <!-- Video Image with Duration -->
   <div
-    class="relative flex flex-shrink-0 w-full shadow-md video-thumbnail hover:shadow-2xl"
+    class="relative flex flex-shrink-0 shadow-md aspect-video video-thumbnail hover:shadow-2xl"
     :class="{
       'placeholder-thumbnail': isPlaceholder && video.status !== 'live',
     }"
@@ -19,7 +19,7 @@
       <div class="flex items-start justify-between">
         <!-- Topic Id display -->
         <div
-          class="rounded-sm video-overlay-tag text-white"
+          class="text-white rounded-sm video-overlay-tag"
           :style="{ visibility: video.topic_id ? 'visible' : 'hidden' }"
         >
           {{ video.topic_id }}
@@ -76,7 +76,6 @@
 
 <script lang="ts">
 import { useLangStore } from "@/stores/lang";
-import { usePlaylistStore } from "@/stores/playlist";
 import { useSiteStore } from "@/stores/site";
 import { useTLStore } from "@/stores/tldex";
 import { getVideoThumbnails } from "@/utils/functions";
@@ -111,8 +110,10 @@ export default defineComponent({
     const display = useDisplay();
     const isMobile = display.mobile;
     const langStore = useLangStore();
-    const playlistStore = usePlaylistStore();
-    const hasSaved = computed(() => playlistStore.contains(props.video.id));
+
+    const hasSaved = false; // usePlaylistContains(props.video.id);
+
+    // const hasSaved = computed(() => playlistStore.contains(props.video.id));
     const tldexStore = useTLStore();
     const liveTlLang = computed(() => tldexStore.liveTlLang);
     const { t } = useI18n();
@@ -123,7 +124,6 @@ export default defineComponent({
       langStore,
       hasSaved,
       liveTlLang,
-      playlistStore,
       t,
     };
   },

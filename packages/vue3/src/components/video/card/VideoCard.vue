@@ -12,7 +12,8 @@
   >
     <video-thumbnail
       :video="video"
-      :style="{ width: horizontal ? '168px' : undefined }"
+      :size="size"
+      :class="{ 'h-14 my-auto': horizontal }"
     />
     <a
       :href="watchLink"
@@ -59,6 +60,7 @@ export default defineComponent({
       type: [Number, String],
       default: null,
     },
+    size: string,
   },
   emits: ["videoClicked"],
   setup() {

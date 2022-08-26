@@ -13,7 +13,8 @@
             <v-fade-transition>
               <div
                 v-if="isHovering"
-                class="absolute right-0 flex h-12 w-36 bg-bgColor"
+                class="absolute right-0 flex h-12 py-0.5 bg-bgColor"
+                style="width: 9.5rem"
               >
                 <a
                   class="w-3/4 h-full rounded c-card-icon hover:text-primary"
