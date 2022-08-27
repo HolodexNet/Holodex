@@ -1,91 +1,107 @@
 <template>
-  <div
-    style="font-size: 1rem !important; font-weight: 500"
-    class="mb-1 ml-0 d-flex"
-  >
-    <v-text-field
-      v-if="editNameMode"
-      v-model="playlistName"
-      autofocus
-      single-line
-      hide-details
-      style="flex-basis: 80"
-      class="flex-grow flex-shrink pt-0 mt-0"
-      :append-icon="icons.mdiPencil"
-      :rules="[(v) => v.length > 0 || 'Should not be empty']"
-      @keydown.enter="editNameMode = false"
-      @click:append="editNameMode = false"
-    />
-    <span v-else class="flex-grow flex-shrink text-h5" style="flex-basis: 100%">
-      <v-btn
-        v-show="isEditable"
-        icon
-        small
-        class="float-right"
-        @click="editNameMode = true"
-      >
-        <v-icon> {{ icons.mdiPencil }} </v-icon>
-      </v-btn>
-      {{ playlist.name }}
-    </span>
-    <v-menu bottom offset-y nudge-width="500">
-      <template #activator="{ props }">
-        <v-btn icon small class="float-right" v-bind="props">
-          <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
-        </v-btn>
-      </template>
-      <v-list nav>
-        <v-list-item v-if="isEditable" @click="$emit('new-playlist')">
-          <v-icon left color="success">
-            {{ icons.mdiPlusBox }}
-          </v-icon>
-          {{ $t("component.playlist.menu.new-playlist") }}
-        </v-list-item>
-        <!-- feed back a green ripple on click... theoretically -->
-        <v-list-item v-if="isEditable" @click="editNameMode = true">
-          <v-icon left>
-            {{ icons.mdiPencil }}
-          </v-icon>
-          {{ $t("component.playlist.menu.rename-playlist") }}
-        </v-list-item>
-        <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
-        <!-- <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
+  <div class="flex flex-col h-full">
+    <div>
+      <div v-if="editNameMode" class="flex flex-row w-full">
+        <input
+          v-model="playlistName"
+          type="text"
+          placeholder="Type here"
+          class="flex-auto w-full input"
+          required
+          aria-required
+          autofocus
+          @keydown.enter="editNameMode = false"
+        />
+        <div class="flex-initial btn" @click="editNameMode = false">OK</div>
+      </div>
+      <span v-else class="flex-grow flex-shrink" style="flex-basis: 100%">
+        <div class="inline-block py-1 text-lg font-bold">
+          {{ playlist.name }}
+        </div>
+        <div
+          v-show="isEditable"
+          icon
+          small
+          class="float-right btn-square btn-ghost btn btn-sm"
+          @click="editNameMode = true"
+        >
+          <v-icon> {{ icons.mdiPencil }} </v-icon>
+        </div>
+      </span>
+      <v-menu location="bottom" nudge-width="500">
+        <template #activator="{ props }">
+          <div
+            class="float-right btn btn-square btn-ghost btn-sm"
+            v-bind="props"
+          >
+            <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
+          </div>
+        </template>
+        <v-list nav>
+          <v-list-item v-if="isEditable" @click="$emit('new-playlist')">
+            <v-icon left color="success">
+              {{ icons.mdiPlusBox }}
+            </v-icon>
+            {{ $t("component.playlist.menu.new-playlist") }}
+          </v-list-item>
+          <!-- feed back a green ripple on click... theoretically -->
+          <v-list-item v-if="isEditable" @click="editNameMode = true">
+            <v-icon left>
+              {{ icons.mdiPencil }}
+            </v-icon>
+            {{ $t("component.playlist.menu.rename-playlist") }}
+          </v-list-item>
+          <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
+          <!-- <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
                         ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
                         {{ playlist.id ? "Copy sharable Playlist link" : "Save the playlist to enable link-sharing." }}
                     </v-list-item> -->
-        <v-divider />
-        <!-- Exporting options -->
-        <v-list-item disabled class="mt-1 mb-1" dense>
-          <v-icon left disabled> {{ icons.mdiOpenInNew }} </v-icon
-          ><span>{{ $t("component.playlist.menu.export-playlist") }}</span>
-        </v-list-item>
-        <v-list-item dense class="ml-5" @click.stop="instructionsDialog = true">
-          <v-icon left>
-            {{ icons.mdiYoutube }}
-          </v-icon>
-          {{ $t("views.library.exportYtPlaylist") }}
-        </v-list-item>
-        <v-list-item dense class="mb-2 ml-5" @click.stop="downloadAsCSV">
-          <v-icon left>
-            {{ mdiFileDelimited }}
-          </v-icon>
-          {{ $t("views.library.exportCsv") }}
-        </v-list-item>
-        <!-- End Exporting options -->
-        <v-divider class="mb-2" />
-        <v-list-item v-if="isEditable" @click="deletePlaylist">
-          <v-icon left color="error">
-            {{ icons.mdiDelete }}
-          </v-icon>
-          {{
-            playlist.id
-              ? $t("component.playlist.menu.delete-playlist")
-              : $t("component.playlist.menu.clear-playlist")
-          }}
-        </v-list-item>
-      </v-list>
-    </v-menu>
+          <v-divider />
+          <!-- Exporting options -->
+          <v-list-item class="mt-1 mb-1" dense>
+            <v-icon left> {{ icons.mdiOpenInNew }} </v-icon
+            ><span>{{ $t("component.playlist.menu.export-playlist") }}</span>
+          </v-list-item>
+          <v-list-item
+            dense
+            class="ml-5"
+            @click.stop="instructionsDialog = true"
+          >
+            <v-icon left>
+              {{ icons.mdiYoutube }}
+            </v-icon>
+            {{ $t("views.library.exportYtPlaylist") }}
+          </v-list-item>
+          <v-list-item dense class="mb-2 ml-5" @click.stop="downloadAsCSV">
+            <v-icon left>
+              {{ mdiFileDelimited }}
+            </v-icon>
+            {{ $t("views.library.exportCsv") }}
+          </v-list-item>
+          <!-- End Exporting options -->
+          <v-divider class="mb-2" />
+          <v-list-item v-if="isEditable" @click="deletePlaylist">
+            <v-icon left color="error">
+              {{ icons.mdiDelete }}
+            </v-icon>
+            {{
+              playlist.id
+                ? $t("component.playlist.menu.delete-playlist")
+                : $t("component.playlist.menu.clear-playlist")
+            }}
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </div>
+    <span class="block text-sm text-right text-opacity-50 text-secondary-300">
+      {{ playlist.videos?.length }} / {{ maxPlaylistCount }}
+    </span>
+
+    <div class="flex-auto flex-shrink overflow-auto">
+      <video-card-virtual-list :videos="playlist.videos || []" />
+    </div>
   </div>
+  <!-- Need login. -->
   <v-snackbar v-model="loginWarning" :timeout="5000" color="warning">
     {{ $t("component.playlist.save-error-not-logged-in") }}
 
@@ -103,15 +119,11 @@
       </v-btn>
     </template>
   </v-snackbar>
-  <span class="text-right text-caption grey--text mt-n2 pa-0 d-block">
-    {{ playlist.videos?.length }} / {{ maxPlaylistCount }}
-  </span>
-  <video-card-virtual-list :videos="playlist.videos || []" />
 
   <!--* INSTRUCTIONS DIALOG FOR YOUTUBE --->
   <v-dialog
     v-model="instructionsDialog"
-    :width="display.isMobile ? '90%' : '60vw'"
+    :width="display.mobile ? '90%' : '60vw'"
   >
     <v-card>
       <v-card-title>{{ $t("views.library.exportYTHeading") }}</v-card-title>
@@ -160,11 +172,6 @@ export default defineComponent({
       required: true,
     },
     isEditable: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    horizontal: {
       type: Boolean,
       required: false,
       default: false,
@@ -238,7 +245,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.playlist-video-list .video-card-item-actions {
+.vlist-wrapper {
+}
+/*.playlist-video-list .video-card-item-actions {
   padding: 0 !important;
   margin: 0px !important;
 }
@@ -260,5 +269,5 @@ export default defineComponent({
   &:hover {
     background-color: var(--v-primary-darken1);
   }
-}
+}*/
 </style>

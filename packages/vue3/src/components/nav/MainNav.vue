@@ -155,12 +155,17 @@
     </NavDrawer>
 
     <v-navigation-drawer
+      id="playlistDrawer"
       v-model="playlistDrawer"
       location="right"
       temporary
       :width="360"
+      class="py-2 pl-2"
     >
-      <playlist-card :playlist="currentPlaylist.active"></playlist-card>
+      <playlist-card
+        :playlist="currentPlaylist.active"
+        :is-editable="currentPlaylist.active.user_id == site.user?.id"
+      ></playlist-card>
     </v-navigation-drawer>
   </div>
 </template>
@@ -341,7 +346,11 @@ export default defineComponent({
   },
 });
 </script>
-
+<style>
+#playlistDrawer .v-navigation-drawer__content {
+  overflow: hidden;
+}
+</style>
 <style scoped lang="scss">
 @keyframes rotation {
   from {
