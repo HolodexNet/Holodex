@@ -47,7 +47,7 @@ export default {
                 })
                 .then(({ data }) => {
                     this.searchResults = data.map((d) => ({
-                        text: this.getChannelName(d),
+                        text: (d.name.includes(`${d.english_name || d.name}`) ? this.getChannelName(d) : `${this.getChannelName(d)} / ${this.getInverseName(d)}`) + ` (${d.id})`,
                         value: d,
                     }));
                 });
@@ -56,6 +56,10 @@ export default {
     methods: {
         getChannelName(channel) {
             const prop = this.$store.state.settings.nameProperty;
+            return channel[prop] || channel.name;
+        },
+        getInverseName(channel) {
+            const prop = this.$store.state.settings.nameProperty === "name" ? "english_name" : "name";
             return channel[prop] || channel.name;
         },
     },
