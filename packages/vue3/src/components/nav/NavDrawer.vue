@@ -6,6 +6,7 @@
     clipped
     class="nav-scroll"
     :temporary="temporary"
+    :scrim="false"
     style="
       padding-top: env(safe-area-inset-top);
       padding-left: calc(env(safe-area-inset-left) / 1.3);
