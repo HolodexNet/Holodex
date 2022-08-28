@@ -28,12 +28,12 @@
   >
     <template #chip="{ item, props }">
       <div
-        class="px-1 text-gray-100 bg-gray-600 rounded-sm mr-1 tracking-tight"
+        class="px-1 mr-1 tracking-tight text-gray-100 bg-gray-600 rounded-sm"
         v-bind="props"
       >
         <span class="font-semibold"
           ><div
-            class="i-mdi:close cursor-pointer inline-block align-middle"
+            class="inline-block align-middle cursor-pointer i-mdi:close"
             @click="props['onClick:close']"
           ></div>
           {{ i18nItem(item.raw.type) }}:
@@ -44,7 +44,7 @@
       </div>
     </template>
     <template #item="{ item, props }">
-      <div v-bind="props" class="px-2 py-1 hover:bg-bgColor-300 cursor-pointer">
+      <div v-bind="props" class="px-2 py-1 cursor-pointer hover:bg-bgColor-300">
         <span class="h-3 text-xs opacity-50">
           <v-icon v-if="item.raw.type === 'channel'" small>
             {{ icons.mdiYoutube }}
@@ -307,7 +307,7 @@ export default defineComponent({
   .v-field__input {
     padding-top: 10px;
     display: block;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-wrap: unset;
     overflow-y: clip;
     height: 40px;
