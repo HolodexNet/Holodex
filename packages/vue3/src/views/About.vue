@@ -102,7 +102,7 @@
       </v-col>
       <!-- TWITTER TIMELINE -->
       <v-col cols="12" md="4" lg="4" xl="4">
-        <v-card class="pa-0" style="height: 100%">
+        <v-card class="pa-0" style="height: 650px">
           <twitter-feed :key="'twtrTimeline' + timelinekey" />
         </v-card>
       </v-col>

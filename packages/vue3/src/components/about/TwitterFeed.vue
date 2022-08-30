@@ -2,7 +2,7 @@
   <a
     class="twitter-timeline"
     data-dnt="true"
-    :data-height="display.mobile.value ? '410' : '100%'"
+    :data-height="display.mobile.value ? '410' : '650'"
     :data-theme="theme.dark ? 'dark' : 'light'"
     href="https://twitter.com/holodex?ref_src=twsrc%5Etfw"
   >
