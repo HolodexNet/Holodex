@@ -31,7 +31,10 @@
           <div
             class="flex flex-col gap-1 p-3 rounded-lg shadow-md bg-bgColor-500"
           >
-            <template v-for="mention in video.mentions" :key="mention.id">
+            <template
+              v-for="mention in video.mentions.slice(0, 10)"
+              :key="mention.id"
+            >
               <div class="flex items-center">
                 <channel-img
                   :channel="mention"
@@ -47,6 +50,12 @@
                 }}
               </div>
             </template>
+            <div
+              v-if="video.mentions.length > 10"
+              class="text-center opacity-80"
+            >
+              {{ `+${video.mentions.length - 10} more` }}
+            </div>
           </div>
         </v-tooltip>
         <a
