@@ -47,7 +47,7 @@
             $t("component.channelInfo.clipCount", { n: channel.clip_count })
         }}
       </span>
-      <span
+      <div
         v-if="channel.top_topics && !slim"
         class="opacity-60 hover:opacity-100"
       >
@@ -55,11 +55,11 @@
         <div
           v-for="t in channel.top_topics"
           :key="channel.id + 't' + t"
-          class="inline-block ml-1 font-bold leading-3 align-middle rounded cursor-pointer text-bold badge badge-sm badge-outline border-slate-600 hover:badge-accent hover:badge-outline"
+          class="inline-block ml-1 font-bold h-[1.1rem] leading-4 align-middle rounded cursor-pointer text-bold badge badge-sm badge-outline border-slate-600 hover:badge-accent hover:badge-outline"
         >
           {{ formatTopic(t) }}
         </div>
-      </span>
+      </div>
     </div>
     <slot name="buttons"></slot>
     <div v-if="!slim && !$slots.buttons" class="flex flex-col h-full gap-1">
