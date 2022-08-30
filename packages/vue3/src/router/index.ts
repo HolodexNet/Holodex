@@ -1,4 +1,5 @@
 import { useSiteStore } from "@/stores";
+import { useSettingsStore } from "@/stores/settings";
 import { musicdexURL } from "@/utils/consts";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
@@ -8,12 +9,22 @@ const routes: RouteRecordRaw[] = [
     path: "/",
     name: "Home",
     redirect: (to) => {
+      const settings = useSettingsStore();
+      const site = useSiteStore();
       const orgInParam = to.params.org;
-      return {
-        name: "Home_Org",
-        params: { org: orgInParam || useSiteStore().currentOrg.name },
-        replace: true,
-      };
+      if (orgInParam || settings.defaultOpen === "Home" || !site.jwtToken)
+        return {
+          name: "Home_Org",
+          params: { org: orgInParam || site.currentOrg.name },
+          replace: true,
+        };
+      else {
+        return {
+          name: "Favorites",
+          params: to.params,
+          replace: true,
+        };
+      }
     },
   },
   {

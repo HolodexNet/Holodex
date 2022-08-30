@@ -246,7 +246,7 @@ export default defineComponent({
         {
           routeName: "Home_Org",
           name: this.$t("component.mainNav.home"),
-          path: "/",
+          path: "/org/" + this.site.currentOrg.name,
           icon: "i-material-symbols:home-storage-rounded",
         },
         {
