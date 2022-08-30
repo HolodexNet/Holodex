@@ -62,10 +62,17 @@
         v-for="(video, index) in videoQuery.data.value?.items"
         :key="video.id"
       >
-        <video-card v-if="index < 20" :video="video" />
-        <v-lazy v-else class="v-lazy-video"
-          ><video-card :video="video"
-        /></v-lazy>
+        <video-card
+          v-if="index < 20"
+          :video="video"
+          :hide-channel-image="currentTab !== Tabs.LIVE"
+        />
+        <v-lazy v-else class="v-lazy-video">
+          <video-card
+            :video="video"
+            :hide-channel-image="currentTab !== Tabs.LIVE"
+          />
+        </v-lazy>
       </template>
     </video-card-grid>
     <div v-if="isLoading" class="flex h-20">

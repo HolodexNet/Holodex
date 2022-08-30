@@ -5,7 +5,7 @@
         v-for="video in videoResponse.data.value?.items"
         :key="video.id"
       >
-        <video-card :video="video" />
+        <video-card :video="video" hide-channel-image hide-channel-name />
       </template>
     </video-card-grid>
     <div v-if="videoResponse.isLoading.value" class="flex h-20">

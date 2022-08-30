@@ -59,7 +59,7 @@
           </div>
         </v-tooltip>
         <a
-          v-else
+          v-else-if="!hideChannelName"
           class="text-sm leading-4 hover:opacity-80 line-clamp-1"
           :title="channelHoverTitle"
           :class="{
