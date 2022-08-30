@@ -9,6 +9,7 @@ const Channel = () => import("../views/Channel.vue");
 const Channels = () => import("../views/Channels.vue");
 const ChannelVideos = () => import("../views/channel_views/ChannelVideos.vue");
 const ChannelAbout = () => import("../views/channel_views/ChannelAbout.vue");
+const ChannelTweets = () => import("../views/channel_views/ChannelTweets.vue");
 const Watch = () => import("../views/Watch.vue");
 const About = () => import("../views/About.vue");
 const Search = () => import("../views/Search.vue");
@@ -84,6 +85,11 @@ const routes = [
                 path: "about",
                 name: "channel_about",
                 component: ChannelAbout,
+            },
+            {
+                path: "tweets",
+                name: "channel_tweets",
+                component: ChannelTweets,
             },
             {
                 path: "music",
