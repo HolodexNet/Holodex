@@ -13,7 +13,7 @@
             <v-fade-transition>
               <div
                 v-if="isHovering"
-                class="absolute right-0 flex h-12 py-0.5 bg-bgColor-300 gap-1"
+                class="absolute right-0 flex h-12 py-0.5 bg-bgColor-300 gap-1 pr-2"
                 style="width: 9.5rem"
               >
                 <router-link
