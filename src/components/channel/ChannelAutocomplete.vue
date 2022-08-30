@@ -47,7 +47,7 @@ export default {
                 })
                 .then(({ data }) => {
                     this.searchResults = data.map((d) => ({
-                        text: `${d.english_name || ""} ${d.name} (${d.id})`,
+                        text: `${d.english_name ? (d.english_name + ',') : ""} ${d.name} (${d.id})`,
                         value: d,
                     }));
                 });
