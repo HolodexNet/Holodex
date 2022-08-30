@@ -46,25 +46,6 @@
             ></div>
             <v-list-item-icon v-else :icon="page.icon"></v-list-item-icon>
             <v-list-item-title>{{ page.name }}</v-list-item-title>
-            <!-- Quick Settings Popup -->
-            <template v-if="page.path === '/settings' && display">
-              <v-menu
-                v-model="showSettings"
-                :right="false"
-                :nudge-right="-50"
-                max-height="80vh"
-                :close-on-content-click="false"
-              >
-                <template #activator="{ props }">
-                  <v-icon v-bind="props" @click.stop.prevent="() => {}">
-                    {{ mdiTuneVariant }}
-                  </v-icon>
-                </template>
-                <v-card rounded="lg" class="py-n2 scrollable">
-                  <settings slim @close="showSettings = false" />
-                </v-card>
-              </v-menu>
-            </template>
           </router-link>
         </li>
         <v-divider v-if="page.divider" :key="`${page.path}-divider`" />
@@ -127,12 +108,7 @@
 </template>
 
 <script lang="ts">
-import {
-  mdiTuneVariant,
-  mdiPatreon,
-  mdiChevronUp,
-  mdiChevronDown,
-} from "@mdi/js";
+import { mdiPatreon, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import { useLangStore } from "@/stores";
 import { useDisplay } from "vuetify";
 import { langs } from "@/hooks/i18n/i18nConsts";
@@ -175,8 +151,6 @@ export default defineComponent({
       favoritesExpanded: false,
       showSettings: false,
       expanded: false,
-
-      mdiTuneVariant,
       mdiPatreon,
       mdiChevronDown,
       mdiChevronUp,
