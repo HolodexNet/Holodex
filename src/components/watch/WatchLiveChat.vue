@@ -239,6 +239,7 @@ export default {
     position: relative;
     display: flex;
     flex-direction: column;
+    z-index: 0;
 }
 
 .watch-live-chat.fluid {
