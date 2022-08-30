@@ -217,21 +217,7 @@ export default defineComponent({
   border-top: 1px solid hsl(var(--b1));
 }
 
-.outlined {
-  position: relative;
-  box-shadow: 0 0 0 2px red, 0 0 4px 3px rgba(255, 0, 0, 0.56);
-}
-.ch-live {
-  /* font-size: large; */
-  color: red;
-}
-.ch-upcoming {
-  font-size: small;
-  line-height: 24px;
-}
-
 .nav-scroll > .v-navigation-drawer__content:hover {
-  padding-right: 0px;
   overflow-y: auto !important; /* firefox fallback */
   overflow-y: overlay !important;
 }
@@ -243,7 +229,6 @@ export default defineComponent({
 
 .nav-scroll > .v-navigation-drawer__content {
   overflow-y: hidden !important;
-  background-color: var(--v-background-lighten1);
-  padding-right: 8px;
+  padding-right: 0px;
 }
 </style>

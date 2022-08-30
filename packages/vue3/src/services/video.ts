@@ -299,7 +299,7 @@ export function useVideoListDatasource(
       const query = h.queryKey[1] as any;
       const jwt = h.queryKey[2] as string;
       const out = { items: [] as Video[], total: undefined };
-      console.log("Querying", path, "?>>>", query, "auth", jwt.slice(0, 10));
+      // console.log("Querying", path, "?>>>", query, "auth", jwt.slice(0, 10));
       console.time("Query Time:" + path);
       if (q.value.flavor?.favorites && !jwt) return out;
       const { data } = await axiosInstance.get(path, {
