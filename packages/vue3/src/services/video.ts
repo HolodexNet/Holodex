@@ -2,7 +2,7 @@ import { useLangStore } from "@/stores";
 import { useSettingsStore } from "@/stores/settings";
 import { useSiteStore } from "@/stores/site";
 import backendApi, { axiosInstance } from "@/utils/backend-api";
-import { MaybeRef } from "@vueuse/core";
+import { MaybeRef, toReactive } from "@vueuse/core";
 import dayjs, { isDayjs } from "dayjs";
 import { Ref } from "vue";
 import { useQuery, UseQueryOptions, useInfiniteQuery } from "vue-query";
@@ -289,7 +289,7 @@ export function useVideoListDatasource(
       () =>
         q.value.type === "stream_schedule" ? 2.5 * 60 * 1000 : 5 * 60 * 1000 // only Live needs 2.5 min invalidation.
     ),
-    ...config,
+    enabled: computed(() => unref(config.value.enabled)),
   });
 
   const response = useQuery<{ items: Video[]; total?: number }>({

@@ -7,32 +7,33 @@
           :channel="v.channel"
           slim
           :live="v.status === 'live'"
-          class="relative bg-bgColor border-secondary"
+          class="relative hover:bg-bgColor-300"
           >{{ formatDurationUpcoming(v.available_at) }}
           <template #buttons>
             <v-fade-transition>
               <div
                 v-if="isHovering"
-                class="absolute right-0 flex h-12 py-0.5 bg-bgColor"
+                class="absolute right-0 flex h-12 py-0.5 bg-bgColor-300 gap-1"
                 style="width: 9.5rem"
               >
-                <a
-                  class="w-3/4 h-full rounded c-card-icon hover:text-primary"
-                  :href="`https://youtube.com/channel/${v.channel.id}`"
+                <router-link
+                  class="flex-shrink h-full rounded basis-3/4 c-card-icon hover:text-primary"
                   target="_blank"
                   title="Watch"
+                  :to="`/watch/${v.id}`"
                 >
+                  <!-- :href="`https://youtube.com/channel/${v.id}`" -->
                   <div class="i-material-symbols:play-arrow-rounded"></div>
                   <!-- <logo class="my-1 h-5/6"></logo> -->
-                </a>
-                <a
-                  class="w-1/4 h-full rounded c-card-icon hover:text-primary"
-                  :href="`https://youtube.com/channel/${v.channel.id}`"
+                </router-link>
+                <router-link
+                  class="h-full mr-1 rounded basis-1/4 c-card-icon hover:text-primary"
+                  :to="`/multiview/...?${v.id}`"
                   target="_blank"
                   title="Multiview"
                 >
                   <div class="i-clarity:grid-chart-solid"></div>
-                </a></div
+                </router-link></div
             ></v-fade-transition>
           </template>
         </channel-card>
