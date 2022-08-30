@@ -1,9 +1,9 @@
 <template>
-  <v-col v-if="s" cols="12" md="12" lg="9" xl="8">
+  <v-col v-if="s" cols="12">
     <div
-      class="stats stats-vertical lg:stats-horizontal drop-shadow-lg bg-bgColor-500"
+      class="drop-shadow-lg grid grid-cols-[repeat(auto-fill,_minmax(250px,_min-content))] gap-4"
     >
-      <div class="stat">
+      <div class="stat bg-bgColor-500">
         <div class="stat-figure text-primary">
           <svg
             class="w-8 h-8"
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <div class="stat">
+      <div class="stat bg-bgColor-500">
         <div class="stat-figure text-secondary">
           <svg
             class="w-8 h-8"
@@ -60,7 +60,7 @@
           +{{ s.monthlyChannels.vtuber || 0 }} last month
         </div>
       </div>
-      <div class="stat">
+      <div class="stat bg-bgColor-500">
         <div class="stat-figure text-success">
           <svg
             class="w-8 h-8"
@@ -83,7 +83,7 @@
         </div>
         <div class="stat-desc">+{{ s.dailyVideos.count || 0 }} yesterday</div>
       </div>
-      <div class="stat">
+      <div class="stat bg-bgColor-500">
         <div class="stat-figure text-warning">
           <svg
             class="w-8 h-8"
