@@ -14,7 +14,7 @@
           <v-btn
             color="green"
             class="ma-2"
-            :href="`/add_placeholder?id=${video.id}`"
+            :to="`/add_placeholder?id=${video.id}`"
           >
             Edit
           </v-btn>
