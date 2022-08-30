@@ -107,6 +107,11 @@ export default {
                     path: `/channel/${this.id}/about`,
                     name: `${this.$t("views.channel.about")}`,
                 },
+                {
+                    path: `/channel/${this.id}/tweets`,
+                    name: "Tweets",
+                    hide: this.channel.type === "subber" || !this.channel.twitter,
+                },
                 // { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
             ];
         },
