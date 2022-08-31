@@ -52,7 +52,7 @@ component:
     typeScheduledYT: Stream Terjadwal
     typeExternalStream: Stream Eksternal
     typeEventPlaceholder: Acara Terjadwal
-    openClient: Buka TL Client
+    openClient: Buka Klien TL
     openScriptEditor: Buka Editor Naskah
     uploadScript: Unggah Naskah TL
   videoDescription:
@@ -212,6 +212,7 @@ views:
     sort:
       newest: Terbaru
       oldest: Terlama
+      longest: Terlama
     type:
       all: Semua
       official: Resmi
@@ -426,14 +427,21 @@ views:
   tlClient:
     menu:
       title: Menu
+      setting: Pengaturan ruang TLDex
+      loadVideo: Tampilkan video
+      unloadVideo: Sembunyikan video
+      unloadChat: Lepas dari obrolan Youtube
     tlControl:
       enterBtn: Masukkan
       prefix: Awalan
       suffix: Akhiran
       fontColour: Warna Font
       outlineColour: Warna Outline
+      localPrefix: Label Bahasa dalam Obrolan
       addProfile: Tambah Profil
       removeProfile: Hapus Profil
+      shiftUp: Geser Profil ke Atas
+      shiftDown: Geser Profil ke Bawah
       showSetting: Pengaturan
       hideSetting: Sembunyikan
     addProfilePanel:
