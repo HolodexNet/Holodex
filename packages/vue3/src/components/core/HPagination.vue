@@ -1,7 +1,7 @@
 <template>
-  <div class="btn-group">
+  <div class="btn-group drop-shadow-xl">
     <button
-      class="btn btn-md text-base-content"
+      class="btn btn-md text-base-content bg-bgColor"
       :class="{
         'btn-disabled': modelValue === 1,
       }"
@@ -11,10 +11,11 @@
     </button>
     <template v-for="pageNum in paginationPages" :key="pageNum">
       <button
-        class="btn btn-md text-base-content"
+        class="btn btn-md text-base-content bg-bgColor"
         :class="{
           'btn-active': modelValue === pageNum,
           'btn-disabled': pageNum === '...',
+          '!bg-bgColor-600': pageNum === '...',
         }"
         @click="() => changePage(pageNum)"
       >
@@ -22,7 +23,7 @@
       </button>
     </template>
     <button
-      class="btn btn-md text-base-content"
+      class="btn btn-md text-base-content bg-bgColor"
       :class="{
         'btn-disabled': modelValue === totalPages,
       }"
