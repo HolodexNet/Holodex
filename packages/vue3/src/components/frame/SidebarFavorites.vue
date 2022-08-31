@@ -74,9 +74,8 @@ const videoList = computed(() => {
   const firstUpcoming = videoQuery.data?.value?.items?.findIndex(
     (x) => x.status === "upcoming"
   );
-  return videoQuery.data?.value?.items?.slice(
-    0,
-    Math.max(50, (firstUpcoming ?? 0) + 3)
-  );
+  return videoQuery.data?.value?.items
+    ?.slice(0, Math.max(50, (firstUpcoming ?? 0) + 3))
+    .filter((x) => dayjs(x.available_at).diff(dayjs()) < 172800000); //48 hours cutoff?
 });
 </script>
