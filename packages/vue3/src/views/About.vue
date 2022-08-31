@@ -1,5 +1,5 @@
 <template>
-  <v-container key="aboutpg" class="flex flex-col align-middle pt-3">
+  <v-container key="aboutpg" class="flex flex-col pt-3 align-middle">
     <v-col cols="12">
       <div class="text-3xl">
         {{ $t("component.mainNav.about") }}
@@ -45,7 +45,7 @@
             <v-btn
               color="info white--text"
               block
-              class="text-left mb-4"
+              class="mb-4 text-left"
               to="/addChannel"
             >
               <v-icon left>
@@ -56,7 +56,7 @@
             <v-btn
               color="indigo white--text"
               block
-              class="text-left my-4"
+              class="my-4 text-left"
               target="_blank"
               href="https://discord.gg/jctkgHBt4b"
             >
@@ -66,7 +66,7 @@
               {{ $t("about.discordBtn") }}
             </v-btn>
             <v-btn
-              class="text-left my-4 white--text deep-purple"
+              class="my-4 text-left white--text deep-purple"
               block
               target="_blank"
               href="https://github.com/RiceCakess/Holodex"
@@ -77,7 +77,7 @@
               GitHub
             </v-btn>
             <v-btn
-              class="text-left mt-4 white--text orange"
+              class="mt-4 text-left white--text orange"
               block
               href="https://holodex.stoplight.io/"
               target="_blank"
@@ -88,7 +88,7 @@
               API documentation
             </v-btn>
             <v-btn
-              class="text-left mt-4 white--text green accent-4"
+              class="mt-4 text-left white--text green accent-4"
               block
               to="/extension"
             >
@@ -102,7 +102,15 @@
       </v-col>
       <!-- TWITTER TIMELINE -->
       <v-col cols="12" md="4" lg="4" xl="4">
-        <v-card class="pa-0" style="height: 650px">
+        <v-card
+          class="border-solid border-bgColor pa-0 bg-bgColor-600 inset-1"
+          style="
+            height: 650px;
+            border-radius: 13px;
+            border-width: 2px;
+            border-style: inset;
+          "
+        >
           <twitter-feed :key="'twtrTimeline' + timelinekey" />
         </v-card>
       </v-col>
@@ -244,7 +252,7 @@
               <v-expansion-panel-text>
                 <div v-html="$t('about.faq.support.contents.0')" />
                 <button
-                  class="btn btn-sm btn-primary btn-wide mt-2"
+                  class="mt-2 btn btn-sm btn-primary btn-wide"
                   href="https://ko-fi.com/holodex"
                 >
                   Ko-fi: Support Holodex
@@ -275,13 +283,13 @@
             <p>{{ $t("about.bookmarklet.description") }}</p>
             <div class="flex flex-col" style="margin-left: 0px">
               <v-btn
-                class="text-left mt-4 white--text grey"
+                class="mt-4 text-left white--text grey"
                 href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://holodex.net/watch/'+v)})()"
               >
                 Open in Holodex
               </v-btn>
               <v-btn
-                class="text-left mt-4 white--text grey"
+                class="mt-4 text-left white--text grey"
                 href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://staging.holodex.net/watch/'+v)})()"
               >
                 Open in Holodex Beta
