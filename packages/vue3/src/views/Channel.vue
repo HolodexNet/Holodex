@@ -2,8 +2,8 @@
   <!-- <v-container class="channel-container" fluid> -->
   <logo v-if="isLoading" :loading="true" class="max-h-32"></logo>
   <div v-else-if="channel" class="w-full">
-    <scroll-parallax up :speed="0.5"
-      ><v-img v-if="bannerImage" :src="bannerImage"></v-img
+    <scroll-parallax up :speed="0.4"
+      ><v-img v-if="bannerImage" :src="bannerImage" class="max-h-80"></v-img
     ></scroll-parallax>
     <!-- <v-img
       v-if="bannerImage"
