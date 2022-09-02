@@ -90,6 +90,8 @@ import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 import { PLACEHOLDER_TYPES, VIDEO_TYPES } from "@/utils/consts";
+import { usePlaylistVideoIDCache } from "@/stores/playlist";
+import { EditablePlaylist, usePlaylistPatcher } from "@/services/playlist";
 /* eslint-disable no-unused-vars */
 
 export default defineComponent({
@@ -110,10 +112,12 @@ export default defineComponent({
     const display = useDisplay();
     const isMobile = display.mobile;
     const langStore = useLangStore();
+    const playlistCache = usePlaylistVideoIDCache();
 
-    const hasSaved = false; // usePlaylistContains(props.video.id);
+    const playlist: any = inject("currentPlaylist");
+    const patcher = usePlaylistPatcher();
+    const hasSaved = computed(() => playlistCache.setOfIds.has(props.video.id));
 
-    // const hasSaved = computed(() => playlistStore.contains(props.video.id));
     const tldexStore = useTLStore();
     const liveTlLang = computed(() => tldexStore.liveTlLang);
     const { t } = useI18n();
@@ -124,6 +128,8 @@ export default defineComponent({
       langStore,
       hasSaved,
       liveTlLang,
+      playlist,
+      patcher,
       t,
     };
   },
@@ -195,12 +201,17 @@ export default defineComponent({
     },
   },
   methods: {
-    toggleSaved(event: { preventDefault: () => void }) {
+    toggleSaved(event: MouseEvent) {
       event.preventDefault();
+      event.stopPropagation();
       if (this.video.type === VIDEO_TYPES.PLACEHOLDER) return; // huh.
-      this.hasSaved
-        ? this.playlistStore.removeVideoByID(this.video.id)
-        : this.playlistStore.addVideo(this.video);
+      // UseQueryReturnType<Playlist | undefined, unknown, QueryObserverResult<Playlist | undefined, unknown>>
+      console.log("changing: ", this.playlist.data.value);
+      const changed = new EditablePlaylist(this.playlist.data.value as any);
+      if (this.hasSaved) changed.removeId(this.video.id);
+      else changed.addId(this.video);
+
+      this.patcher.mutate(changed.valueOf());
     },
   },
 });

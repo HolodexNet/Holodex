@@ -11,6 +11,9 @@
         hide-channel-image
         :size="'default'"
       >
+        <template v-if="$slots.default" #default="{ video }">
+          <slot :video="video"></slot>
+        </template>
       </video-card>
     </div>
   </div>

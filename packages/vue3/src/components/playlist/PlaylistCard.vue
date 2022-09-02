@@ -98,7 +98,38 @@
     </span>
 
     <div class="flex-auto flex-shrink overflow-auto">
-      <video-card-virtual-list :videos="playlist.videos || []" />
+      <video-card-virtual-list :videos="playlist.videos || []">
+        <template #default="{ video }">
+          <div
+            class="self-center w-5 mr-1 text-sm btn-group btn-group-vertical"
+          >
+            <!-- <button class="p-0 btn btn-ghost btn-xs">
+              <i class="i-bx:chevrons-up"></i>
+            </button> -->
+            <button
+              class="p-0 btn btn-ghost btn-xs"
+              @click.stop.prevent="move(video.id, 'up')"
+            >
+              <div class="i-bx:chevron-up"></div>
+            </button>
+            <button
+              class="p-0 btn btn-ghost btn-xs"
+              @click.stop.prevent="del(video.id)"
+            >
+              <div class="i-bx:trash"></div>
+            </button>
+            <button
+              class="p-0 btn btn-ghost btn-xs"
+              @click.stop.prevent="move(video.id, 'down')"
+            >
+              <div class="i-bx:chevron-down"></div>
+            </button>
+            <!-- <button class="p-0 btn btn-ghost btn-xs">
+              <div class="i-bx:chevrons-down"></div>
+            </button> -->
+          </div>
+        </template>
+      </video-card-virtual-list>
     </div>
   </div>
   <!-- Need login. -->
@@ -156,6 +187,7 @@
 </template>
 
 <script lang="ts">
+import { EditablePlaylist, usePlaylistPatcher } from "@/services/playlist";
 import { MAX_PLAYLIST_LENGTH } from "@/utils/consts";
 import type { Playlist } from "@/utils/types";
 import { mdiFileDelimited } from "@mdi/js";
@@ -179,7 +211,8 @@ export default defineComponent({
   },
   setup() {
     const display = useDisplay();
-    return { display };
+    const patcher = usePlaylistPatcher();
+    return { display, patcher };
   },
   data() {
     return {
@@ -205,8 +238,19 @@ export default defineComponent({
     },
   },
   methods: {
-    move(id, direction) {
+    move(id: string, direction: "up" | "down") {
       // @todo
+      console.log(this.playlist.videos?.map(({ id }) => id));
+      const edit = new EditablePlaylist(this.playlist)
+        .reorder(id, direction)
+        .valueOf();
+      console.log(edit.videos?.map(({ id }) => id));
+
+      this.patcher.mutate(edit);
+    },
+    del(id: string) {
+      const edit = new EditablePlaylist(this.playlist).removeId(id).valueOf();
+      this.patcher.mutate(edit);
     },
     newPlaylist() {
       // something

@@ -98,7 +98,12 @@
       </div>
     </div>
     <template #action>
-      <video-card-menu :video="video" btn-class="absolute right-0 hover-show" />
+      <slot name="action"></slot>
+      <video-card-menu
+        v-if="!$slots.action"
+        :video="video"
+        btn-class="absolute right-0 hover-show"
+      />
     </template>
   </h-list>
 </template>

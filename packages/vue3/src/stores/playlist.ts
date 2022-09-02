@@ -1,29 +1,18 @@
-import type { Playlist } from "@/utils/types";
+// import type { Playlist } from "@/utils/types";
 
 type CurrentPlaylistStore = {
-  active: Playlist;
+  setOfIds: Set<string>;
 };
-export const useCurrentPlaylist = defineStore("currentPlaylist", {
+export const usePlaylistVideoIDCache = defineStore("currentPlaylist", {
   // convert to a function
   state: (): CurrentPlaylistStore => {
     return {
-      active: {
-        id: undefined,
-        user_id: "-1",
-        name: "Unnamed Playlist",
-        videos: [],
-        _videoIdSet: new Set(),
-      },
+      setOfIds: new Set(),
     };
   },
   getters: {
-    // _videoIdSet(state): Set<string> | undefined {
-    //   return state.active.videos
-    //     ? new Set(state.active.videos.map((x) => x.id))
-    //     : undefined;
-    // },
     contains(state): (id: string) => boolean | undefined {
-      return (id: string) => state.active._videoIdSet?.has(id);
+      return (id: string) => state.setOfIds.has(id);
     },
   },
   // getters: {},

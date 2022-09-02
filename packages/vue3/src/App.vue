@@ -11,13 +11,14 @@
 </template>
 
 <script setup lang="ts">
-import route from "color-convert/route";
 import { langs } from "./hooks/i18n/i18nConsts";
 import { useI18nInitialization } from "./hooks/i18n/languageHooks";
 import { useThemeInitialization } from "./hooks/theme-changer/useThemeInitialization";
 import { useLangStore } from "./stores/lang";
 import { useSiteStore } from "./stores/site";
 import backendApi from "./utils/backend-api";
+import { usePlaylistState, usePlaylistVideoIDCache } from "@/stores/playlist";
+import { usePlaylist } from "@/services/playlist";
 
 // initializing setup for Holodex:
 // Steps:
@@ -56,6 +57,33 @@ const releaseOrgGuardListenerFn = router.beforeEach((to, from, next) => {
 
   next();
 });
+
+const cache = usePlaylistVideoIDCache();
+const current = storeToRefs(usePlaylistState());
+
+/* Configure global playlist video ID cache */
+const currentPlaylistQuery = usePlaylist(current.currentPlaylistId, {
+  onSettled(data, err) {
+    console.log("reset currently active playlist:", data);
+    if (data) cache.setOfIds = new Set(data.videos?.map((x) => x.id));
+    else cache.setOfIds = new Set();
+  },
+});
+
+if (currentPlaylistQuery.data.value)
+  cache.setOfIds = new Set(
+    currentPlaylistQuery.data.value?.videos?.map((x) => x.id)
+  );
+
+watchEffect(() => {
+  if (currentPlaylistQuery.data.value) {
+    cache.setOfIds = new Set(
+      currentPlaylistQuery.data.value?.videos?.map((x) => x.id)
+    );
+  } else cache.setOfIds = new Set();
+});
+
+provide("currentPlaylist", currentPlaylistQuery);
 
 // [ ] Login & validation
 // todo

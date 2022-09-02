@@ -32,7 +32,9 @@
           'ml-2': horizontal,
         }"
       >
-        <template #action></template>
+        <template v-if="$slots.default" #action
+          ><slot :video="video"></slot
+        ></template>
       </video-card-text>
     </a>
   </a>
@@ -60,7 +62,12 @@ export default defineComponent({
       type: [Number, String],
       default: null,
     },
-    size: String,
+    size: {
+      type: String as PropType<
+        "default" | "medium" | "standard" | "maxres" | "hq720"
+      >,
+      default: "standard",
+    },
   },
   emits: ["videoClicked"],
   setup() {

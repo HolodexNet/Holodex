@@ -6,6 +6,7 @@ import { queryClient } from "@/setup/setupQueryPlugin";
 import debounce from "lodash-es/debounce";
 import type { MaybeRef } from "@vueuse/core";
 import { usePlaylistState } from "@/stores/playlist";
+import cloneDeep from "lodash-es/cloneDeep";
 
 type QueryConfig<TReturn> = Omit<
   UseQueryOptions<TReturn, unknown, TReturn, any>,
@@ -44,7 +45,7 @@ export function usePlaylist(
     async (q) => {
       if (!q.queryKey[1]) return undefined;
       const playlist = (await backendApi.getPlaylist(q.queryKey[1])).data;
-      playlist._videoIdSet = new Set(playlist.videos?.map((x) => x.id));
+      // playlist._videoIdSet = new Set(playlist.videos?.map((x) => x.id));
       return playlist;
     },
     {
@@ -73,9 +74,11 @@ export function usePlaylistPatcher() {
     async (playlist: Playlist) => {
       if (!user.jwtToken)
         throw new Error("Can't save playlist when not logged in");
-      if (user.user?.id != playlist.user_id)
-        throw new Error("Can't save playlist when you don't own it!");
+      if (user.user?.id != playlist.user_id) {
+        console.log(user.user?.id, playlist);
 
+        throw new Error("Can't save playlist when you don't own it!");
+      }
       const returnedId: string = (
         await backendApi.savePlaylist(
           {
@@ -108,8 +111,10 @@ export function usePlaylistDeleter() {
   return useMutation(async (playlist: Playlist) => {
     if (!user.jwtToken)
       throw new Error("Can't delete playlist when not logged in");
-    if (user.user?.id != playlist.user_id)
+    if (user.user?.id != playlist.user_id) {
+      console.log(user.user?.id, playlist.user_id);
       throw new Error("Can't delete playlist when you don't own it!");
+    }
     if (!playlist.id)
       throw new Error("Can't delete playlist when ID doesn't exist!");
 
@@ -124,37 +129,48 @@ export function usePlaylistDeleter() {
  */
 export class EditablePlaylist {
   current: Playlist;
+  _videoIdSet: Set<string>;
+
   constructor(playlist: Playlist) {
-    this.current = playlist;
+    this.current = cloneDeep(playlist);
+    this._videoIdSet = new Set(playlist.videos?.map((x) => x.id));
   }
 
   addId(video: VideoRef) {
-    if (this.current._videoIdSet.has(video.id)) return; // early return coz already has it.
+    if (this._videoIdSet.has(video.id)) return; // early return coz already has it.
     const nl = this.current.videos || [];
     nl.push(video);
     this.current.videos = nl;
-    this.current._videoIdSet.add(video.id);
+    this._videoIdSet.add(video.id);
+
+    return this;
   }
 
   removeId(id: string) {
-    if (this.current._videoIdSet.has(id)) {
+    if (this._videoIdSet.has(id)) {
       this.current.videos = this.current.videos?.filter((x) => x.id !== id);
-      this.current._videoIdSet.delete(id);
+      this._videoIdSet.delete(id);
     }
+
+    return this;
   }
 
   reorder(videoId: string, dir: "up" | "down") {
-    if (!this.current._videoIdSet.has(videoId) || !this.current.videos) return; // early return coz no such video.
+    if (!this._videoIdSet.has(videoId) || !this.current.videos) return this; // early return coz no such video.
 
     const from = this.current.videos.findIndex(({ id }) => id === videoId);
     const a = this.current.videos[from];
     const to = dir === "down" ? from + 1 : from - 1;
     this.current.videos[from] = this.current.videos[to];
     this.current.videos[to] = a;
+
+    return this;
   }
 
   rename(newName: string) {
     this.current.name = newName;
+
+    return this;
   }
 
   valueOf() {

@@ -4,7 +4,7 @@ export type Playlist = {
   user_id: number | string;
   videos?: VideoRef[];
   /** client side maintained set */
-  _videoIdSet: Set<string>;
+  // _videoIdSet?: Set<string>;
 };
 export type PlaylistListItem = {
   id?: number;
