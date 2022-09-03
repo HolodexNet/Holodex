@@ -8,7 +8,7 @@
     <template #activator="{ props }">
       <label
         tabindex="0"
-        :class="`my-2 w-5 border-none btn-outline btn-ghost btn btn-circle btn-sm ${btnClass}`"
+        :class="`my-2 md:w-5 border-none btn-outline btn-ghost btn btn-circle hover:bg-opacity-50 btn-sm ${btnClass} `"
         v-bind="props"
         @click.stop.prevent
       >
