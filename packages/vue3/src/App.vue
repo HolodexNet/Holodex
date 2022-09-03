@@ -7,6 +7,8 @@
       <!-- If using vue-router -->
       <router-view />
     </v-main>
+
+    <report-video />
   </v-app>
 </template>
 

@@ -127,7 +127,14 @@
           </a>
         </li>
         <li>
-          <a>
+          <a
+            @click="
+              () => {
+                report.reportedVideo.value = video;
+                showMenu = false;
+              }
+            "
+          >
             <v-icon left>
               {{ icons.mdiFlag }}
             </v-icon>
@@ -139,6 +146,7 @@
   </v-menu>
 </template>
 <script lang="ts">
+import { useGlobalReportState } from "@/stores/report";
 import { formatDuration } from "@/utils/time";
 import { useClipboard, useNow } from "@vueuse/core";
 import dayjs from "dayjs";
@@ -159,7 +167,9 @@ export default defineComponent({
   setup(props) {
     const showMenu = ref(false);
     const clipboard = useClipboard();
-    return { showMenu, clipboard };
+    const report = useGlobalReportState();
+
+    return { showMenu, clipboard, report };
     // const now = useNow({ interval: 1000 })
     // const {t} = useI18n();
 
