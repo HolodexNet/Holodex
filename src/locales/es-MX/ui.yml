@@ -52,7 +52,9 @@ component:
     typeScheduledYT: Directo programado
     typeExternalStream: Directo externo
     typeEventPlaceholder: Evento programado
+    openClient: Abrir el cliente de traducción
     openScriptEditor: Abrir el editor de scripts
+    uploadScript: Subir el guión de traducción
   videoDescription:
     description: Descripción
   description:
@@ -303,7 +305,9 @@ views:
     likeOnYoutube: Dar me gusta al video en Youtube
     uploadPanel:
       title: Subir Script
+      usernameText: La traduccion se publicará bajo el nombre de usuario
       usernameChange: Cambiar
+      tlLang: Idioma de la traducción
       headerStart: Inicio
       headerEnd: Final
       headerText: Texto
@@ -430,6 +434,61 @@ views:
       prefix: Prefijo
       suffix: Sufijo
       fontColour: Color de Fuente
+      outlineColour: Color del borde
+      localPrefix: Etiqueta de idioma en el chat
+      addProfile: Añadir Perfil
+      removeProfile: Remover Perfil
+      showSetting: Ajuste
+      hideSetting: Ocultar
+    addProfilePanel:
+      title: Añadir Nuevo Perfil
+      inputLabel: Nombre del Perfil
+    settingPanel:
+      title: Ajuste
+      mainStreamLink: Enlace principal del directo
+      collabLink: Enlaces de Colaboración
+    removeProfileTitle: Confirmar remover perfil
+    loadChatPanel:
+      title: Cargar chat
+      inputLabel: Enlace del directo
+    unloadChatTitle: '¿Descargar TODO el chat activo?'
+    pangram: El rápido zorro marrón salta sobre el perro perezoso
+    cancelBtn: Cancelar
+    okBtn: Ok
+  scriptEditor:
+    menu:
+      save: Guardar
+      continuousEnd: Hacer el tiempo continuo (cambiar el final)
+      clearAll: Eliminar el Script
+      exportFile: Exportar Archivo
+      importFile: Importar Archivo
+      editorMode: Modo Editor
+    table:
+      headerStart: Inicio
+      headerEnd: Final
+      headerProfile: Perfil
+      headerText: Texto
+      setAsStart: Establecer como inicio
+      deleteEntry: Eliminar entrada
+    loadVideoPanel:
+      title: Cargar Vídeo
+      inputLabel: Enlace del directo
+    setStartTitle: Establecer la entrada seleccionada como inicio, todas las entradas anteriores serán eliminadas.
+    importFile:
+      overwriteBtn: Sobrescribir
+    editorModePanel:
+      activateMode: Activar el modo editor
+      deactivateMode: Desactivar el modo editor
+      roleWarning: No tienes suficientes privilegios
+      filterTranslator: Filtrar el traductor
+  tlManager:
+    title: Gestor de Scripts
+    headerID: ID del vídeo
+    headerEntries: Entradas
+    download: Descargar
+    delete: Eliminar
+    deleteTitle: Eliminar entradas
+    langPick: Idioma
 time:
   soon: Proximamente
   diff_future_date: Inicia {0} ({1})
