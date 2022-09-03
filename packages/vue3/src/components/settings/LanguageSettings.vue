@@ -134,7 +134,7 @@ export default defineComponent({
   methods: {},
 });
 </script>
-<style>
+<style scoped>
 .lang-settings .checkbox,
 .lang-settings .toggle {
   /*border-width: 2px !important;*/

@@ -143,7 +143,7 @@ export default defineComponent({
   methods: {},
 });
 </script>
-<style>
+<style scoped>
 .checkbox,
 .radio,
 .toggle {

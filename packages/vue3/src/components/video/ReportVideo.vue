@@ -184,7 +184,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .radio {
   border-style: solid;
 }

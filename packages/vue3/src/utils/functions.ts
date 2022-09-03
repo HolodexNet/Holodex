@@ -127,7 +127,7 @@ export function getBannerImages(url: string) {
 }
 
 const formatters = {};
-const numberFormatAdjust = {
+const numberFormatAdjust: Record<string, string> = {
   "lol-UWU": "en",
   "lol-PEKO": "en",
 };
