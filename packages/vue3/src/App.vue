@@ -27,11 +27,11 @@ import { usePlaylist } from "@/services/playlist";
 useI18nInitialization();
 
 // [done] theme setting (within theme-manager).
-const theme = useThemeInitialization();
+useThemeInitialization();
 
 const router = useRouter();
 /** Configure global ?org and ?lang listening. */
-const releaseOrgGuardListenerFn = router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   if (to.query.lang) {
     if (
       useLangStore().lang !== to.query.lang &&
@@ -69,11 +69,6 @@ const currentPlaylistQuery = usePlaylist(current.currentPlaylistId, {
     else cache.setOfIds = new Set();
   },
 });
-
-if (currentPlaylistQuery.data.value)
-  cache.setOfIds = new Set(
-    currentPlaylistQuery.data.value?.videos?.map((x) => x.id)
-  );
 
 watchEffect(() => {
   if (currentPlaylistQuery.data.value) {
