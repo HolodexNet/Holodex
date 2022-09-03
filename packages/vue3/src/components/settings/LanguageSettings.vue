@@ -33,7 +33,7 @@
   <div class="mb-2 text-lg font-semibold">
     {{ $t("views.settings.useEnglishNameLabel") }}
   </div>
-  <div class="max-w-sm form-control">
+  <div class="max-w-sm form-control lang-settings">
     <label class="cursor-pointer label">
       <span class="label-text">{{
         $t("views.settings.useEnglishNameMsg")
@@ -51,7 +51,7 @@
     {{ $t("views.settings.clipLanguageSelection") }}
   </div>
   <!-- <v-container fluid> -->
-  <div class="max-w-sm form-control">
+  <div class="max-w-sm form-control lang-settings">
     <label
       v-for="l in TL_LANGS"
       :key="l.value + 'settchkbx'"
@@ -135,17 +135,17 @@ export default defineComponent({
 });
 </script>
 <style>
-.checkbox,
-.toggle {
+.lang-settings .checkbox,
+.lang-settings .toggle {
   /*border-width: 2px !important;*/
   /*background-color: rgba(var(--v-theme-primary), 0.1);*/
   /*outline: 1px solid rgba(var(--v-theme-primary), 0.6);*/
   border-style: solid;
 }
-label.label {
+.lang-settings label.label {
   padding-left: 2em;
 }
-label.label:nth-child(even) {
+.lang-settings label.label:nth-child(even) {
   @apply bg-bgColor-500 rounded;
 }
 </style>
