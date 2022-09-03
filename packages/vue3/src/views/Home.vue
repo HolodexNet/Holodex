@@ -12,50 +12,30 @@
           ? 'primary--text text--lighten-3'
           : 'primary--text text--darken-2'
       " -->
-  <div
-    class="sticky z-10 px-4 mb-4 overflow-x-auto overflow-y-hidden tabs top-14 bg-bgColor-500 flex-nowrap no-scrollbar"
-  >
-    <a
-      class="gap-2 tab min-h-[2.25rem] sm:tab-lg tab-bordered whitespace-nowrap flex-nowrap"
-      :class="
-        currentTab === 0 ? 'tab-active text-secondary !border-secondary' : ''
-      "
-      @click="() => updateTab(0)"
-    >
+  <h-tabs class="mb-4">
+    <h-tab :active="currentTab === 0" @click="() => updateTab(0)">
       {{ liveUpcomingHeaderSplit[1] }}
       <span
         v-if="liveUpcomingCounts.liveCnt"
-        class="rounded-sm badge badge-secondary badge-sm sm:badge-md"
+        class="rounded-sm badge badge-secondary badge-sm sm:badge-md mx-1"
       >
         {{ liveUpcomingCounts.liveCnt }}
       </span>
       {{ liveUpcomingHeaderSplit[2] }}
       <span
         v-if="liveUpcomingCounts.upcomingCnt"
-        class="rounded-sm badge badge-outline badge-sm sm:badge-md"
+        class="rounded-sm badge badge-outline badge-sm sm:badge-md mx-1"
       >
         {{ liveUpcomingCounts.upcomingCnt }}
       </span>
-    </a>
-    <a
-      class="tab min-h-[2.25rem] sm:tab-lg tab-bordered"
-      :class="
-        currentTab === 1 ? 'tab-active text-secondary !border-secondary' : ''
-      "
-      @click="() => updateTab(1)"
-    >
+    </h-tab>
+    <h-tab :active="currentTab === 1" @click="() => updateTab(1)">
       {{ $t("views.home.recentVideoToggles.official") }}
-    </a>
-    <a
-      class="tab min-h-[2.25rem] sm:tab-lg tab-bordered"
-      :class="
-        currentTab === 2 ? 'tab-active text-secondary !border-secondary' : ''
-      "
-      @click="() => updateTab(2)"
-    >
+    </h-tab>
+    <h-tab :active="currentTab === 2" @click="() => updateTab(2)">
       {{ $t("views.home.recentVideoToggles.subber") }}
-    </a>
-  </div>
+    </h-tab>
+  </h-tabs>
   <div class="px-4">
     <video-card-grid>
       <template

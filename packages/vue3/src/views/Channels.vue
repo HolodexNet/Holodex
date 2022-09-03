@@ -1,69 +1,47 @@
 <template>
-  <div class="sticky z-10 px-2 mb-4 top-12 no-scrollbar bg-bgColor-500">
-    <div class="container flex flex-wrap justify-between mx-auto">
-      <div
-        class="flex mt-2 overflow-x-auto overflow-y-hidden tabs no-scrollbar"
-      >
-        <a
-          class="tab tab-md md:tab-lg tab-bordered"
-          :class="category === 0 ? 'tab-active border-primary' : ''"
-          @click="category = 0"
+  <h-tabs class="mb-4" with-container>
+    <h-tab :active="category === 0" @click="category = 0">
+      {{ $t("views.channels.tabs.Vtuber") }}
+    </h-tab>
+    <h-tab :active="category === 1" @click="category = 1">
+      {{ $t("views.channels.tabs.Subber") }}
+    </h-tab>
+    <h-tab :active="category === 2" @click="category = 2">
+      {{ $t("views.channels.tabs.Favorites") }}
+    </h-tab>
+    <h-tab :active="category === 3" @click="category = 3">
+      {{ $t("views.channels.tabs.Blocked") }}
+    </h-tab>
+    <template v-if="category !== Tabs.BLOCKED" #filters>
+      <div class="dropdown dropdown-end">
+        <label tabindex="0" class="dropdownLabelBtn">
+          {{ currentSortValue.text }}
+          <v-icon size="20">{{ mdiArrowDown }}</v-icon>
+        </label>
+        <ul
+          tabindex="0"
+          class="z-50 p-2 text-sm shadow dropdown-content menu bg-bgColor rounded-box"
+          style="min-width: 10rem"
         >
-          {{ $t("views.channels.tabs.Vtuber") }}
-        </a>
-        <a
-          class="tab tab-md md:tab-lg tab-bordered"
-          :class="category === 1 ? 'tab-active' : ''"
-          @click="category = 1"
-        >
-          {{ $t("views.channels.tabs.Subber") }}
-        </a>
-        <a
-          class="tab tab-md md:tab-lg tab-bordered"
-          :class="category === 2 ? 'tab-active' : ''"
-          @click="category = 2"
-        >
-          {{ $t("views.channels.tabs.Favorites") }}
-        </a>
-        <a
-          class="tab tab-md md:tab-lg tab-bordered"
-          :class="category === 3 ? 'tab-active' : ''"
-          @click="category = 3"
-        >
-          {{ $t("views.channels.tabs.Blocked") }}
-        </a>
-      </div>
-      <div v-show="category !== Tabs.BLOCKED" class="self-end">
-        <div class="z-40 dropdown dropdown-end">
-          <label tabindex="0" class="dropdownLabelBtn">
-            {{ currentSortValue.text }}
-            <v-icon size="20">{{ mdiArrowDown }}</v-icon>
-          </label>
-          <ul
-            tabindex="0"
-            class="z-50 p-2 text-sm shadow dropdown-content menu bg-bgColor rounded-box"
-            style="min-width: 10rem"
+          <li
+            v-for="(item, index) in sortOptions"
+            :key="index"
+            link
+            @click="sort = item.value"
           >
-            <li
-              v-for="(item, index) in sortOptions"
-              :key="index"
-              link
-              @click="sort = item.value"
-            >
-              <a>{{ item.text }}</a>
-            </li>
-          </ul>
-        </div>
+            <a>{{ item.text }}</a>
+          </li>
+        </ul>
+      </div>
+    </template>
+  </h-tabs>
 
-        <!-- Toggle of Card or Row view -->
-        <!-- <div class="btn btn-outline" @click="cardView = !cardView">
+  <!-- Toggle of Card or Row view -->
+  <!-- <div class="btn btn-outline" @click="cardView = !cardView">
           <v-icon>
             {{ cardView ? mdiViewModule : mdiViewList }}
           </v-icon>
         </div> -->
-      </div>
-    </div>
-  </div>
 
   <div class="container px-2 mx-auto" style="min-height: 70vh">
     <!-- <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive"> -->
