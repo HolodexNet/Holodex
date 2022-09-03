@@ -17,7 +17,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useDisplay } from "vuetify/lib/framework";
+import { useDisplay } from "vuetify";
 // with-container will add a container wrapper to the tab
 const props = defineProps<{ withContainer?: boolean }>();
 
