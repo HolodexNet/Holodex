@@ -13,11 +13,13 @@
       {{ $t("views.channels.tabs.Blocked") }}
     </h-tab>
     <template v-if="category !== Tabs.BLOCKED" #filters>
-      <div class="dropdown dropdown-end">
-        <label tabindex="0" class="dropdownLabelBtn">
-          {{ currentSortValue.text }}
-          <v-icon size="20">{{ mdiArrowDown }}</v-icon>
-        </label>
+      <v-menu>
+        <template #activator="{ props }">
+          <label tabindex="0" class="dropdownLabelBtn" v-bind="props">
+            {{ currentSortValue.text }}
+            <v-icon size="20">{{ mdiArrowDown }}</v-icon>
+          </label>
+        </template>
         <ul
           tabindex="0"
           class="z-50 p-2 text-sm shadow dropdown-content menu bg-bgColor rounded-box"
@@ -32,7 +34,8 @@
             <a>{{ item.text }}</a>
           </li>
         </ul>
-      </div>
+      </v-menu>
+      <div class="dropdown dropdown-end"></div>
     </template>
   </h-tabs>
 
