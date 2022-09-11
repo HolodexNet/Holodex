@@ -13,6 +13,10 @@
   ></twitch-player>
 </template>
 <script lang="ts" setup>
+/**
+  Top Level Player Abstraction for a Holodex Video object
+*/
+
 import { TWITCH_VIDEO_URL_REGEX } from "@/utils/consts";
 import { VideoPlayer } from "./usePlayer";
 const player = ref<VideoPlayer | null>(null);
@@ -38,9 +42,15 @@ const events = {
 };
 
 // Reactively binded with refresh
+
 const currentTime = ref(0);
 const muted = ref(false);
 const volume = ref(50);
+
+// TODO: maybe streamline later?
+// const playing = ref(false);
+// const paused = ref(true);
+// const ended = ref(false);
 
 async function refreshPlayerValues() {
   if (!player?.value) return;

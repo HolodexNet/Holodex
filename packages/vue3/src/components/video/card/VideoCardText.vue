@@ -4,7 +4,11 @@
       <channel-img :channel="video.channel" :size="40" rounded />
     </template>
     <div class="box-content flex flex-col justify-around flex-1 my-1">
-      <div class="pr-6 leading-5 line-clamp-2 video-card-title" :title="title">
+      <div
+        class="leading-5 line-clamp-2 video-card-title"
+        :title="title"
+        :class="{ 'pr-6': !$slots.action }"
+      >
         {{ title }}
       </div>
       <div class="flex flex-shrink-1">

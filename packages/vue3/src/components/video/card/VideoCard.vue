@@ -13,7 +13,7 @@
     <video-thumbnail
       :video="video"
       :size="size"
-      :class="{ 'h-14 my-auto': horizontal }"
+      :class="{ 'h-[80px] my-auto': horizontal }"
     />
     <a
       :href="watchLink"
@@ -29,7 +29,7 @@
         :hide-channel-name="hideChannelName"
         :disable-default-click="disableDefaultClick"
         :class="{
-          'ml-2': horizontal,
+          'ml-2 font-medium text-sm': horizontal,
         }"
       >
         <template v-if="$slots.default" #action
