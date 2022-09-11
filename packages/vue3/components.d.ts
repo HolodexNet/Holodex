@@ -67,8 +67,11 @@ declare module '@vue/runtime-core' {
     VideoCardStatus: typeof import('./src/components/video/card/VideoCardStatus.vue')['default']
     VideoCardText: typeof import('./src/components/video/card/VideoCardText.vue')['default']
     VideoCardVirtualList: typeof import('./src/components/video/aggregate/VideoCardVirtualList.vue')['default']
+    VideoPlayer: typeof import('./src/components/player/VideoPlayer.vue')['default']
     VideoThumbnail: typeof import('./src/components/video/card/VideoThumbnail.vue')['default']
     Watch: typeof import('./src/views/Watch.vue')['default']
+    Watch2: typeof import('./src/views/Watch2.vue')['default']
+    WatchLegacy: typeof import('./src/views/WatchLegacy.vue')['default']
     YoutubePlayer: typeof import('./src/components/player/YoutubePlayer.vue')['default']
   }
 }

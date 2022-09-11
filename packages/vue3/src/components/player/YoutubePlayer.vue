@@ -116,7 +116,7 @@ export default defineComponent({
     getVolume() {
       return this.player?.getVolume();
     },
-    isMuted() {
+    getMuted() {
       return this.player?.isMuted();
     },
     seekTo(t: number) {

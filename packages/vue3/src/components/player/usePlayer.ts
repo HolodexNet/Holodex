@@ -10,7 +10,7 @@ export interface VideoPlayer {
   seekTo: () => void;
 
   setMute: () => void;
-  isMuted: () => Promise<boolean>;
+  getMuted: () => Promise<boolean>;
   setPlaying: () => void;
 
   sendLikeEvent?: () => void;

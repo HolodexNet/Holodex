@@ -121,7 +121,7 @@ export default defineComponent({
       // Returns the volume level, a value between 0.0 and 1.0.
       return (this.player?.getVolume() || 0) * 100;
     },
-    isMuted() {
+    getMuted() {
       // Returns true if the player is muted; otherwise, false.
       return this.player?.getMuted();
     },
