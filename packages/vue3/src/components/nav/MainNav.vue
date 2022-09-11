@@ -243,6 +243,7 @@ export default defineComponent({
           icon: "i-material-symbols:home-storage-rounded",
         },
         {
+          routeName: "Favorites",
           name: this.$t("component.mainNav.favorites"),
           path: "/favorites",
           icon: "i-material-symbols:favorite-rounded",
