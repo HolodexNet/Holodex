@@ -22,7 +22,8 @@
     variant="plain"
     return-object
     hide-details
-    :menu-icon="null"
+    :menu-icon="undefined"
+    :menu-props="({ location: 'bottom' } as any)"
     type="search"
     @keydown.enter="onEnterKeyDown"
   >
@@ -304,13 +305,17 @@ export default defineComponent({
   max-width: min(670px, 100vw) !important;
   height: 50px;
 
+  .v-label.v-field-label {
+    display: none;
+  }
+
   .v-field__input {
-    padding-top: 10px;
-    display: block;
+    // padding-top: 10px;
+    // display: block;
     overflow-x: auto;
     overflow-wrap: unset;
     overflow-y: clip;
-    height: 40px;
+    // height: 40px;
     white-space: nowrap;
     font-size: 13px;
 

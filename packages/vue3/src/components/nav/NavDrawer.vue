@@ -1,9 +1,7 @@
 <template>
   <v-navigation-drawer
     :model-value="modelValue"
-    app
     width="220"
-    clipped
     class="nav-scroll"
     :temporary="temporary"
     :scrim="false"
