@@ -212,6 +212,11 @@ watch(
       lookupState.value.pagination.offset = (currentPage.value - 1) * perPage;
   }
 );
+// Reset to first tab when path changes
+watch(
+  () => route.path,
+  () => updateTab(0, false)
+);
 const isLoading = computed(
   () => videoQuery?.isLoading.value || videoQuery?.isFetching.value
 );
