@@ -53,9 +53,11 @@
               :key="index"
               two-line
             >
-              <v-list-item-avatar class="ma-0 mr-1">
-                <v-img :src="cellState.video.channel.id ? getChannelPhoto(cellState.video.channel.id) : ''" />
-              </v-list-item-avatar>
+              <router-link :to="cellState.video.channel.id.startsWith('UC') ? `/channel/${cellState.video.channel.id}` : ``">
+                <v-list-item-avatar class="ma-0 mr-1">
+                  <v-img :src="cellState.video.channel.id ? getChannelPhoto(cellState.video.channel.id) : ''" />
+                </v-list-item-avatar>
+              </router-link>
               <v-list-item-content>
                 <v-list-item-title class="primary--text">
                   {{ cellState.video.title || cellState.video.channel.name }}

@@ -214,6 +214,7 @@ views:
     sort:
       newest: Neuestes
       oldest: Ältestes
+      longest: Länge (fallend)
     type:
       all: Alle
       official: Offiziell

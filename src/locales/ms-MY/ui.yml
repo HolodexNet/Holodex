@@ -214,6 +214,7 @@ views:
     sort:
       newest: Terbaharu
       oldest: Terlama
+      longest: Terpanjang
     type:
       all: Semua
       official: Rasmi

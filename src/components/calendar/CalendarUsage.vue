@@ -1,9 +1,5 @@
 <template>
-  <v-sheet
-    class="pa-6"
-    rounded="none"
-    border-color="primary"
-  >
+  <v-sheet class="" rounded="none" border-color="primary">
     <v-text-field
       label="Live Calendar (iCal)"
       :value="liveCalendarURL"
@@ -13,22 +9,8 @@
       @click.stop="copyToClipboard(liveCalendarURL, $event)"
     />
 
-    <v-text-field
-      v-if="isLoggedIn && showFavoritesCalendar"
-      label="Favorites Calendar (iCal)"
-      :value="favoritesCalendarURL"
-      readonly
-      hide-details
-      regular
-      @click.stop="copyToClipboard(favoritesCalendarURL, $event)"
-    />
-
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="1000"
-      color="green"
-    >
-      Copied to Clickboard!
+    <v-snackbar v-model="snackbar" :timeout="1000" color="green">
+      {{ $t("component.videoCard.copiedToClipboard") }}
     </v-snackbar>
 
     <v-autocomplete
@@ -57,7 +39,9 @@
       hide-details="auto"
       :small-chips="false"
       :autofocus="false"
+      :prepend-inner-icon="mdiFilter"
       @input="onInput"
+      @change="constrainQuery"
     >
       <template #selection="selection">
         <v-card
@@ -67,7 +51,9 @@
           :dark="$vuetify.theme.dark"
         >
           <v-list-item class="ma-n1 py-0 pl-3 pr-1">
-            <div class="selected-card-type px-1 py-0 ma-0 rounded text--disabled caption">
+            <div
+              class="selected-card-type px-1 py-0 ma-0 rounded text--disabled caption"
+            >
               <v-icon v-if="selection.item.type === 'channel'" x-small>
                 {{ icons.mdiYoutube }}
               </v-icon>
@@ -90,11 +76,18 @@
             </div>
 
             <v-list-item-content class="py-1 pt-4">
-              <v-list-item-subtitle class="text--primary search-item" v-text="selection.item.text" />
+              <v-list-item-subtitle
+                class="text--primary search-item"
+                v-text="selection.item.text"
+              />
             </v-list-item-content>
 
             <v-list-item-action>
-              <v-icon small color="primary accent-2" @click="deleteChip(selection.item)">
+              <v-icon
+                small
+                color="primary accent-2"
+                @click="deleteChip(selection.item)"
+              >
                 {{ icons.mdiClose }}
               </v-icon>
             </v-list-item-action>
@@ -133,6 +126,18 @@
       </template>
     </v-autocomplete>
 
+    <v-divider class="my-3" />
+
+    <v-text-field
+      v-if="isLoggedIn && showFavoritesCalendar"
+      label="Favorites Calendar (iCal)"
+      :value="favoritesCalendarURL"
+      readonly
+      hide-details
+      regular
+      @click.stop="copyToClipboard(favoritesCalendarURL, $event)"
+    />
+
     <v-switch
       v-model="preferEnglishName"
       class="v-input--reverse v-input--expand"
@@ -149,20 +154,18 @@ import backendApi from "@/utils/backend-api";
 import debounce from "lodash-es/debounce";
 import {
     mdiLabel,
-    mdiMagnifyPlusOutline,
     mdiAccountMultiple,
     mdiTextSearch,
     mdiFilter,
     mdiCommentSearch,
     mdiClipboardPlusOutline,
 } from "@mdi/js";
-import { csv2jsonAsync } from "json-2-csv";
 
 export default {
     name: "CalendarUsage",
     props: {
         initialQuery: {
-            type: String,
+            type: Array,
         },
         showFavoritesCalendar: {
             type: Boolean,
@@ -179,7 +182,6 @@ export default {
 
             mdiLabel,
             mdiAccountMultiple,
-            mdiMagnifyPlusOutline,
             mdiTextSearch,
             mdiCommentSearch,
             mdiFilter,
@@ -210,20 +212,33 @@ export default {
                 b[type].push(value);
                 return b;
             }, {});
+
+            // if (bucket.channel) {
+            //   // correcting a typo on the server that expects channelId instead of channel?
+            //   bucket.channelId = bucket.channel;
+            //   delete bucket.channel;
+            // }
             const params = {
                 ...bucket,
                 ...(this.preferEnglishName ? { preferEnglishName: 1 } : null),
             };
-            return `https://holodex.net/live.ics?${new URLSearchParams(params).toString()}`;
+            return `https://holodex.net/live.ics?${new URLSearchParams(
+                params,
+            ).toString()}`;
         },
         favoritesCalendarURL() {
             const { user } = this.$store.state.userdata;
 
+            if (!user.api_key) {
+                return `You need an API Key. Click${this.$t("views.login.apikeyNew")}`;
+            }
             const params = {
                 key: user.api_key || "",
                 ...(this.preferEnglishName ? { preferEnglishName: 1 } : null),
             };
-            return `https://holodex.net/favorites.ics?${new URLSearchParams(params).toString()}`;
+            return `https://holodex.net/favorites.ics?${new URLSearchParams(
+                params,
+            ).toString()}`;
         },
     },
     watch: {
@@ -236,18 +251,28 @@ export default {
             const formatted = val.trim().replace("#", "");
             this.fetchAutocomplete(formatted)
                 .then((channels) => {
-                    this.fromApi = channels;
+                    this.fromApi = channels.filter(
+                        (x) => x.type === "topic" || x.type === "channel" || x.type === "org",
+                    );
                 })
                 .catch((e) => console.log(e));
         }, 500),
     },
     async mounted() {
         if (this.initialQuery) {
-            const parsedQuery = await csv2jsonAsync(this.initialQuery);
+            const parsedQuery = this.initialQuery;
             this.query = parsedQuery;
         }
     },
     methods: {
+        constrainQuery() {
+            if (this.query.filter((x) => x.type === "org").length > 1) {
+                this.query.splice(
+                    this.query.findIndex((x) => x.type === "org"),
+                    1,
+                );
+            }
+        },
         async copyToClipboard(url, ev) {
             ev.target.classList.add("green");
             await navigator.clipboard.writeText(url);
@@ -293,23 +318,22 @@ export default {
         },
     },
 };
-
 </script>
 
 <style lang="scss">
 .calendar-search-bar {
-    margin-top: 10px !important;
+  margin-top: 10px !important;
 
-    .v-input__slot {
+  .v-input__slot {
+    padding: 0 !important;
+
+    .v-list-item__content {
       padding: 0 !important;
-
-      .v-list-item__content {
-        padding: 0 !important;
-      }
-
-      .selected-card {
-        margin-right: 5px;
-      }
     }
+
+    .selected-card {
+      margin-right: 5px;
+    }
+  }
 }
 </style>

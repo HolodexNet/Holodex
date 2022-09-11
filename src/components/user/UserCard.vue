@@ -59,7 +59,7 @@
       </v-list-item>
 
       <v-divider v-if="user && !inNavDrawer" />
-      <v-list-item v-if="user && !inNavDrawer" to="/login" link>
+      <v-list-item v-if="user && !inNavDrawer && $route.name !== 'login'" to="/login" link>
         <v-list-item-icon>
           <v-icon>{{ icons.mdiAccountCircleOutline }}</v-icon>
         </v-list-item-icon>
@@ -80,6 +80,16 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item v-if="$route.name !== 'login'" to="/login#calendar" link>
+        <v-list-item-icon>
+          <v-icon>{{ mdiCalendar }}</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>
+            iCal Feed
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <v-list-item v-if="user && !inNavDrawer" link @click.prevent="logout">
         <v-list-item-icon>
           <v-icon>{{ icons.mdiLogoutVariant }}</v-icon>
@@ -97,6 +107,7 @@
 
 <script lang="ts">
 import backendApi from "@/utils/backend-api";
+import { mdiCalendar } from "@mdi/js";
 
 export default {
     name: "UserCard",
@@ -109,6 +120,11 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    data() {
+        return {
+            mdiCalendar,
+        };
     },
     computed: {
         userdata() {

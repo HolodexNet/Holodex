@@ -17,10 +17,7 @@
                 v-on="on"
                 @click.prevent="jump(b.time)"
               >
-                <div
-                  class="highlight-chip"
-                  :style="computeTipStyle(b)"
-                />
+                <div class="highlight-chip" :style="computeTipStyle(b)" />
               </div>
             </template>
             <div v-if="b.best" class="highlight-comments">
@@ -30,7 +27,7 @@
             <song-item
               v-else-if="b.song"
               :song="b.song"
-              style="max-width: 350px;"
+              style="max-width: 350px"
               color="white--text"
             />
           </v-tooltip>
@@ -70,7 +67,10 @@ function filterByWordCount(limit = 2) {
     return (input: string) => input.split(" ").length >= limit;
 }
 
-function parseTimestampComments(message: string, videoDuration: Number): ParsedComment[] {
+function parseTimestampComments(
+    message: string,
+    videoDuration: Number,
+): ParsedComment[] {
     const pairs = [];
     let match = COMMENT_TIMESTAMP_REGEX.exec(message);
     while (match != null) {
@@ -116,13 +116,16 @@ export default {
             const TIME_THRESHOLD = 40;
             const MIN_BUCKET_SIZE = 1;
             const MIN_TIMESTAMP_OCCURENCE = 1;
-            const VIDEO_START_TIMESTAMP = +new Date(this.video.start_actual);
+            const VIDEO_START_TIMESTAMP = +new Date(
+                this.video.start_actual || this.video.available_at,
+            );
 
             const parsed: ParsedComment[] = [];
             for (const comment of this.comments) {
-                const pairs = parseTimestampComments(comment.message, this.video.duration).filter(
-                    (pair) => pair.text,
-                );
+                const pairs = parseTimestampComments(
+                    comment.message,
+                    this.video.duration,
+                ).filter((pair) => pair.text);
 
                 if (pairs.length >= MIN_TIMESTAMP_OCCURENCE) {
                     parsed.push(...pairs);
@@ -148,14 +151,16 @@ export default {
                     subBucket.push(comment);
                 }
                 /**
-                * Process the bucket
-                */
+                 * Process the bucket
+                 */
                 if (subBucket.length >= MIN_BUCKET_SIZE) {
                     // select floor median has the display time
                     const th = Math.floor(subBucket.length / 3);
                     const median = subBucket[th].time;
                     // Find matching song around timestamp
-                    const matchingSong = this.video?.songs?.find((song) => Math.abs(song.start - median) <= TIME_THRESHOLD);
+                    const matchingSong = this.video?.songs?.find(
+                        (song) => Math.abs(song.start - median) <= TIME_THRESHOLD,
+                    );
                     if (!matchingSong) {
                         // pick best comment to show
                         const processed = subBucket
@@ -180,7 +185,9 @@ export default {
                             if (best.length > 60) best = `${best.slice(0, 60)}...`;
 
                             const medianMS = median * 1000;
-                            const absolute = new Date(VIDEO_START_TIMESTAMP + medianMS).toISOString();
+                            const absolute = new Date(
+                                VIDEO_START_TIMESTAMP + medianMS,
+                            ).toISOString();
                             // console.log(best, processed);
                             buckets.push({
                                 time: median,
@@ -199,15 +206,17 @@ export default {
             });
 
             // Render song item instead of text
-            buckets.push(...(this.video.songs?.map((song) => ({
-                time: song.start,
-                count: subBucket.length,
-                song: {
-                    ...song,
-                    channel: this.video.channel,
-                },
-                display: formatDuration(song.start * 1000),
-            })) || []));
+            buckets.push(
+                ...(this.video.songs?.map((song) => ({
+                    time: song.start,
+                    count: subBucket.length,
+                    song: {
+                        ...song,
+                        channel: this.video.channel,
+                    },
+                    display: formatDuration(song.start * 1000),
+                })) || []),
+            );
             return buckets;
         },
         bucketsFiltered() {

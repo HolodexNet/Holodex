@@ -15,7 +15,20 @@
         xl="4"
         float-right
       >
-        <!-- CREDITS -->
+        <v-card class="pa-0">
+          <!-- <div class="text-h5 mb-2">
+                        {{ $t("about.news.title") }}
+                    </div> -->
+          <TwitterFeed :key="'twtrTimeline' + timelinekey" />
+        </v-card>
+      </v-col>
+
+      <v-col
+        cols="12"
+        md="4"
+        lg="4"
+        xl="3"
+      >
         <v-card>
           <v-card-title>
             <div class="text-h6">
@@ -25,7 +38,8 @@
           <v-card-text>
             <p class="text-body-2">
               {{ $t("about.credits.contents[0]") }}
-              <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.credits.contents[1]") }}
+              <a href="https://hololive.jetri.co/">HoloTools</a>
+              {{ $t("about.credits.contents[1]") }}
               <a href="https://github.com/holofans/holoapi">holoapi</a>.
               <br>
               {{ $t("about.credits.contents[2]") }}
@@ -33,12 +47,14 @@
             <br>
             <p class="text-body-2">
               {{ $t("about.credits.contents[3]") }}
-              <a href="https://en.hololive.tv/terms"> {{ $t("about.credits.contents[4]") }} </a>
+              <a href="https://en.hololive.tv/terms">
+                {{ $t("about.credits.contents[4]") }}
+              </a>
             </p>
           </v-card-text>
         </v-card>
         <!-- LINKS -->
-        <v-card style="margin-top: 36.5px;">
+        <v-card style="margin-top: 36.5px">
           <v-card-title>
             <div class="text-h6">
               {{ $t("about.quicklinks") }}
@@ -98,30 +114,17 @@
               <v-icon left>
                 {{ mdiPuzzleOutline }}
               </v-icon>
-              {{ $t('views.extension.title') }}
+              {{ $t("views.extension.title") }}
             </v-btn>
           </v-card-text>
         </v-card>
       </v-col>
-      <!-- TWITTER TIMELINE -->
+
       <v-col
         cols="12"
         md="4"
         lg="4"
         xl="4"
-        float-right
-      >
-        <v-card class="pa-0" style="height: 100%;">
-          <TwitterFeed :key="'twtrTimeline' + timelinekey" />
-        </v-card>
-      </v-col>
-      <!-- CHANGELOG -->
-      <v-col
-        cols="12"
-        md="4"
-        lg="4"
-        xl="4"
-        float-right
       >
         <v-card>
           <v-card-title>
@@ -136,7 +139,12 @@
             width="100%"
             seamless
             src="https://holodexnet.github.io/Holodex/CHANGELOG.html"
-            style="height: 606px; margin-bottom: -16.5px; border: none; background: #eee;"
+            style="
+              height: 606px;
+              margin-bottom: -16.5px;
+              border: none;
+              background: #eee;
+            "
           />
         </v-card>
       </v-col>
@@ -155,10 +163,7 @@
               {{ $t("about.faq.title") }}
             </div>
           </v-card-title>
-          <v-expansion-panels
-            accordion
-            focusable
-          >
+          <v-expansion-panels accordion focusable>
             <v-expansion-panel>
               <v-expansion-panel-header>
                 {{ $t("about.faq.ytchatHeader") }}
@@ -166,7 +171,9 @@
               <v-expansion-panel-content>
                 {{ $t("about.faq.ytchatContent") }}
                 <br>
-                <a href="https://support.mozilla.org/en-US/kb/third-party-cookies-firefox-tracking-protection?redirectslug=disable-third-party-cookies">
+                <a
+                  href="https://support.mozilla.org/en-US/kb/third-party-cookies-firefox-tracking-protection?redirectslug=disable-third-party-cookies"
+                >
                   {{ $t("about.faq.ytchatFirefox") }}
                 </a>
               </v-expansion-panel-content>
@@ -191,7 +198,9 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
-              <v-expansion-panel-header> {{ $t("about.faq.mobile.title") }} </v-expansion-panel-header>
+              <v-expansion-panel-header>
+                {{ $t("about.faq.mobile.title") }}
+              </v-expansion-panel-header>
               <v-expansion-panel-content>
                 {{ $t("about.faq.mobile.content.summary") }}
                 <ul>
@@ -226,7 +235,9 @@
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 {{ $t("about.faq.subber.contents.0") }}
-                <a href="https://forms.gle/xkN4w8fyPr6YTGfx6"> {{ $t("about.faq.subber.contents.1") }} </a>
+                <a href="https://forms.gle/xkN4w8fyPr6YTGfx6">
+                  {{ $t("about.faq.subber.contents.1") }}
+                </a>
                 {{ $t("about.faq.subber.contents.2") }}
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -263,7 +274,9 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
-              <v-expansion-panel-header> {{ $t("about.gdpr") }} </v-expansion-panel-header>
+              <v-expansion-panel-header>
+                {{ $t("about.gdpr") }}
+              </v-expansion-panel-header>
               <v-expansion-panel-content>
                 {{ $t("about.gdprContent") }}
                 <b>{{ $t("about.gdprDeletion") }}</b>
@@ -286,8 +299,8 @@
             </div>
           </v-card-title>
           <v-card-text>
-            <p>{{ $t('about.bookmarklet.description') }}</p>
-            <div class="d-flex flex-column" style="margin-left: 0px;">
+            <p>{{ $t("about.bookmarklet.description") }}</p>
+            <div class="d-flex flex-column" style="margin-left: 0px">
               <v-btn
                 class="text-left mt-4 white--text grey"
                 href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://holodex.net/watch/'+v)})()"
@@ -310,7 +323,11 @@
 
 <script lang="ts">
 import {
-    mdiExportVariant, mdiGithub, mdiConsole, mdiAccountPlus, mdiPuzzleOutline,
+    mdiExportVariant,
+    mdiGithub,
+    mdiConsole,
+    mdiAccountPlus,
+    mdiPuzzleOutline,
 } from "@mdi/js";
 import TwitterFeed from "@/components/common/TwitterFeed.vue";
 import Stats from "@/components/common/Stats.vue";

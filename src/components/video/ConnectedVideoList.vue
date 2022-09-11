@@ -1,32 +1,23 @@
 <template>
-  <div v-show="!hasError && !(isFavPage && !(isLoggedIn && favoriteChannelIDs.size > 0))">
+  <div
+    v-show="
+      !hasError && !(isFavPage && !(isLoggedIn && favoriteChannelIDs.size > 0))
+    "
+  >
     <v-col
       v-show="!$vuetify.breakpoint.isXs"
       xs="4"
       sm="4"
       class="ma-0 pb-0 pt-0"
     >
-      <portal :to="portalName" :disabled="$vuetify.breakpoint.xs" class="justify-space-between d-flex flex-grow-1 mx-n2">
-        <v-menu
-          :key="'vlx-' + tab + identifier + isFavPage"
-          :close-on-content-click="false"
-          offset-y
-          left
-          :min-width="isMobile ? '100%' : '600px'"
-          max-width="600px"
-        >
-          <template #activator="{ on, attrs }">
-            <v-btn
-              text
-              icon
-              v-bind="attrs"
-              v-on="on"
-            >
-              <v-icon>{{ mdiCalendar }}</v-icon>
-            </v-btn>
-          </template>
-          <CalendarUsage :initial-query="initialQueryForCalendar" />
-        </v-menu>
+      <portal
+        :to="portalName"
+        :disabled="$vuetify.breakpoint.xs"
+        class="justify-space-between d-flex flex-grow-1 mx-n2"
+      >
+        <!-- <v-btn text icon to="/login#calendar">
+          <v-icon>{{ mdiCalendar }}</v-icon>
+        </v-btn> -->
 
         <v-menu
           :close-on-content-click="false"
@@ -45,11 +36,7 @@
               <v-icon>{{ mdiFilterVariant }}</v-icon>
             </v-btn>
           </template>
-          <v-sheet
-            class="pa-6"
-            rounded="none"
-            border-color="primary"
-          >
+          <v-sheet class="pa-6" rounded="none" border-color="primary">
             <v-select
               v-if="tab === Tabs.LIVE_UPCOMING"
               v-model="sortBy"
@@ -79,26 +66,23 @@
                   v-on="on"
                 />
               </template>
-              <v-date-picker
-                v-model="toDate"
-                @input="datePicker = false"
-              />
+              <v-date-picker v-model="toDate" @input="datePicker = false" />
             </v-menu>
             <video-list-filters />
           </v-sheet>
         </v-menu>
 
-        <v-btn
-          text
-          icon
-          @click="toggleDisplayMode"
-        >
+        <v-btn text icon @click="toggleDisplayMode">
           <v-icon>{{ displayIcon }}</v-icon>
         </v-btn>
       </portal>
     </v-col>
     <template v-if="tab === Tabs.LIVE_UPCOMING">
-      <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
+      <SkeletonCardList
+        v-if="isLoading"
+        :cols="colSizes"
+        :dense="currentGridSize > 0"
+      />
       <div v-if="lives.length || upcoming.length">
         <VideoCardList
           :videos="homeViewMode === 'grid' ? lives : live"
@@ -128,7 +112,10 @@
           />
         </template>
       </div>
-      <div v-show="!isLoading && lives.length == 0 && upcoming.length == 0" class="ma-auto pa-5 text-center">
+      <div
+        v-show="!isLoading && lives.length == 0 && upcoming.length == 0"
+        class="ma-auto pa-5 text-center"
+      >
         {{ $t("views.home.noStreams") }}
       </div>
     </template>
@@ -177,11 +164,14 @@ import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
-import CalendarUsage from "@/components/calendar/CalendarUsage.vue";
 import { dayjs } from "@/utils/time";
-import { mdiCalendarEnd, mdiFilterVariant, mdiFormatListBulleted, mdiViewList, mdiCalendar } from "@mdi/js";
+import {
+    mdiCalendarEnd,
+    mdiFilterVariant,
+    mdiFormatListBulleted,
+    mdiViewList,
+} from "@mdi/js";
 import { syncState } from "@/utils/functions";
-import { json2csvAsync } from "json-2-csv";
 import VideoListFilters from "../setting/VideoListFilters.vue";
 
 function nearestUTCDate(date) {
@@ -197,7 +187,6 @@ export default {
         GenericListLoader,
         SkeletonCardList,
         VideoListFilters,
-        CalendarUsage,
     },
     props: {
         liveContent: {
@@ -227,7 +216,6 @@ export default {
             mdiFilterVariant,
             mdiFormatListBulleted,
             mdiViewList,
-            mdiCalendar,
             identifier: Date.now(),
             pageLength: 24,
             Tabs: Object.freeze({
@@ -249,24 +237,31 @@ export default {
                     value: "viewers",
                 },
             ],
-            initialQueryForCalendar: "",
         };
     },
     computed: {
         ...syncState("settings", ["homeViewMode"]),
-        ...mapState("home", { h_live: "live", h_isLoading: "isLoading", h_hasError: "hasError" }),
-        ...mapState("favorites", { f_live: "live", f_isLoading: "isLoading", f_hasError: "hasError" }),
+        ...mapState("home", {
+            h_live: "live",
+            h_isLoading: "isLoading",
+            h_hasError: "hasError",
+        }),
+        ...mapState("favorites", {
+            f_live: "live",
+            f_isLoading: "isLoading",
+            f_hasError: "hasError",
+        }),
         ...mapGetters("favorites", ["favoriteChannelIDs"]),
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
         },
-        isMobile() {
-            return this.$store.state.isMobile;
-        },
         live() {
-            let live = (this.liveContent?.length && this.liveContent) || (this.isFavPage ? this.f_live : this.h_live);
+            let live = (this.liveContent?.length && this.liveContent)
+                || (this.isFavPage ? this.f_live : this.h_live);
             if (this.sortBy === "viewers") {
-                live = [...live].sort((a, b) => (b.live_viewers || 0) - (a.live_viewers || 0));
+                live = [...live].sort(
+                    (a, b) => (b.live_viewers || 0) - (a.live_viewers || 0),
+                );
             }
             return live;
         },
@@ -303,7 +298,13 @@ export default {
             return true;
         },
         shouldHideCollabs() {
-            return this.tab !== this.Tabs.CLIPS && this.$store.state.settings.hideCollabStreams && (this.isFavPage ? true : this.$store.state.currentOrg.name !== "All Vtubers");
+            return (
+                this.tab !== this.Tabs.CLIPS
+                && this.$store.state.settings.hideCollabStreams
+                && (this.isFavPage
+                    ? true
+                    : this.$store.state.currentOrg.name !== "All Vtubers")
+            );
         },
         lives() {
             return this.live.filter((v) => v.status === "live");
@@ -332,8 +333,10 @@ export default {
 
         displayIcon() {
             switch (true) {
-                case this.homeViewMode === "list": return mdiFormatListBulleted;
-                case this.homeViewMode === "denseList": return this.icons.mdiViewGrid;
+                case this.homeViewMode === "list":
+                    return mdiFormatListBulleted;
+                case this.homeViewMode === "denseList":
+                    return this.icons.mdiViewGrid;
                 case this.currentGridSize === 1:
                     return this.icons.mdiViewComfy;
                 case this.currentGridSize === 2:
@@ -365,7 +368,9 @@ export default {
     methods: {
         toggleDisplayMode() {
             const viewModes = ["grid", "list", "denseList"];
-            const nextViewMode = viewModes[(viewModes.indexOf(this.homeViewMode) + 1) % viewModes.length];
+            const nextViewMode = viewModes[
+                (viewModes.indexOf(this.homeViewMode) + 1) % viewModes.length
+            ];
 
             if (this.homeViewMode === "grid" && this.currentGridSize < 2) {
                 this.currentGridSize += 1;
@@ -374,39 +379,38 @@ export default {
                 this.currentGridSize = 0;
             }
         },
-        async init(updateFavorites) {
+        init(updateFavorites) {
             if (this.isFavPage) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
                 if (this.favoriteChannelIDs.size > 0 && this.isLoggedIn) {
-                    this.$store.dispatch("favorites/fetchLive", { force: true, minutes: 2 });
+                    this.$store.dispatch("favorites/fetchLive", {
+                        force: true,
+                        minutes: 2,
+                    });
                 }
             } else if (!this.liveContent?.length) {
                 this.$store.commit("home/resetState");
                 this.$store.dispatch("home/fetchLive", { force: true });
             }
             this.identifier = Date.now();
-
-            if (this.$store.state.currentOrg.name !== "All Vtubers") {
-                this.initialQueryForCalendar = await json2csvAsync([{
-                    type: "org",
-                    text: this.$store.state.currentOrg.name,
-                    value: this.$store.state.currentOrg.name,
-                }]);
-            } else {
-                this.initialQueryForCalendar = "";
-            }
         },
         reload() {
             this.init();
         },
         getLoadFn() {
+            let inclusion = "";
+            if (this.tab === this.Tabs.ARCHIVE) inclusion = "mentions,clips";
+            else if (this.tab === this.Tabs.LIVE_UPCOMING) inclusion = "mentions";
+
             const query = {
                 status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip",
-                include: this.tab === this.Tabs.ARCHIVE ? "clips" : "",
+                ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
+                include: inclusion,
                 lang: this.$store.state.settings.clipLangs.join(","),
                 paginated: !this.scrollMode,
-                ...(this.toDate && { to: nearestUTCDate(dayjs(this.toDate ?? undefined)) }),
+                ...(this.toDate && {
+                    to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
+                }),
                 max_upcoming_hours: 1,
             };
             if (this.isFavPage) {
@@ -440,6 +444,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

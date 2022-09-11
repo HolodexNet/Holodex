@@ -4,11 +4,18 @@
       <user-card v-if="userdata.user" />
       <v-divider />
       <v-card-subtitle class="justify-center">
-        {{ userdata.user ? $t("views.login.linkAcc") : $t("component.mainNav.login") }}
+        {{
+          userdata.user
+            ? $t("views.login.linkAcc")
+            : $t("component.mainNav.login")
+        }}
       </v-card-subtitle>
       <v-card-text class="d-flex flex-column align-center">
         <div class="d-flex flex-column" style="max-width: 400px; width: 100%">
-          <google-sign-in-button v-if="!userdata.user || !userdata.user.discord_id" @onCredentialResponse="loginGoogle" />
+          <google-sign-in-button
+            v-if="!userdata.user || !userdata.user.discord_id"
+            @onCredentialResponse="loginGoogle"
+          />
           <v-btn
             v-if="!userdata.user || !userdata.user.discord_id"
             class="my-3 pl-2"
@@ -39,7 +46,9 @@
 
       <template v-if="userdata.user">
         <v-card-text>
-          <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.username") }}</span>
+          <span class="text-subtitle-2 mb-1 d-inline-block">{{
+            $t("views.login.username")
+          }}</span>
           <div class="d-flex flex-row align-center">
             <v-text-field
               v-model="usernameInput"
@@ -50,15 +59,25 @@
               dense
               hide-details
             />
-            <v-btn :color="editingUsername ? 'success' : 'primary'" style="margin-left:10px" @click="editUsername">
-              {{ editingUsername ? $t("views.login.usernameBtn.2") : $t("views.login.usernameBtn.0") }}
+            <v-btn
+              :color="editingUsername ? 'success' : 'primary'"
+              style="margin-left: 10px"
+              @click="editUsername"
+            >
+              {{
+                editingUsername
+                  ? $t("views.login.usernameBtn.2")
+                  : $t("views.login.usernameBtn.0")
+              }}
             </v-btn>
           </div>
         </v-card-text>
         <v-divider />
 
-        <v-card-text>
-          <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.ownedYtChannel") }}</span>
+        <v-card-text v-if="userdata.user.yt_channel_key">
+          <span class="text-subtitle-2 mb-1 d-inline-block">{{
+            $t("views.login.ownedYtChannel")
+          }}</span>
           <v-text-field
             readonly
             rounded
@@ -70,8 +89,8 @@
           <span class="text-caption">
             {{ $t("views.login.futureYtcOwnerMessage") }}
           </span>
-          <br>
-          <br>
+        </v-card-text>
+        <v-card-text>
           <span class="text-subtitle-2 mb-1 d-inline-block">API Key</span>
           <v-text-field
             readonly
@@ -109,6 +128,14 @@
             </v-icon>
           </v-btn>
         </v-card-text>
+        <v-divider />
+        <v-card-text id="calendar">
+          iCal Feed for tracking streams on your Apple Calendar
+          <calendar-usage
+            :initial-query="initialQueryForCalendar"
+          />
+        </v-card-text>
+        <div class="py-3" />
       </template>
     </v-card>
   </v-container>
@@ -120,6 +147,7 @@ import api from "@/utils/backend-api";
 import UserCard from "@/components/user/UserCard.vue";
 import copyToClipboard from "@/mixins/copyToClipboard";
 import GoogleSignInButton from "@/components/common/GoogleSignInButton.vue";
+import CalendarUsage from "@/components/calendar/CalendarUsage.vue";
 
 const apiURI = "/api";
 // the fact this URI is invalid doesn't matter,
@@ -135,12 +163,13 @@ export default {
             },
         };
     },
-    components: { UserCard, GoogleSignInButton },
+    components: { UserCard, GoogleSignInButton, CalendarUsage },
     mixins: [copyToClipboard],
     data() {
         return {
             editingUsername: false,
             editUsernameInput: "",
+            initialQueryForCalendar: false,
         };
     },
     computed: {
@@ -149,12 +178,27 @@ export default {
         },
         usernameInput: {
             get() {
-                return this.editingUsername ? this.editUsernameInput : this.userdata?.user?.username;
+                return this.editingUsername
+                    ? this.editUsernameInput
+                    : this.userdata?.user?.username;
             },
             set(val) {
                 this.editUsernameInput = val;
             },
         },
+    },
+    async created() {
+        if (this.$store.state.currentOrg.name !== "All Vtubers") {
+            this.initialQueryForCalendar = [
+                {
+                    type: "org",
+                    text: this.$store.state.currentOrg.name,
+                    value: this.$store.state.currentOrg.name,
+                },
+            ];
+        } else {
+            this.initialQueryForCalendar = false;
+        }
     },
     async mounted() {
         const params = new URL(window.location.href).searchParams;
@@ -162,17 +206,29 @@ export default {
         const jwt = params.get("jwt");
         if (service === "twitter" && jwt) {
             const twitterTempJWT = jwt;
-            const resp = await api.login(this.$store.state.userdata.jwt, twitterTempJWT, "twitter");
+            const resp = await api.login(
+                this.$store.state.userdata.jwt,
+                twitterTempJWT,
+                "twitter",
+            );
             this.$store.commit("setUser", resp.data);
             this.$gtag.event("login", {
                 event_label: "twitter",
             });
             this.$store.dispatch("favorites/resetFavorites");
         }
+        if (this.$route.hash) setTimeout(() => this.scrollFix(this.$route.hash), 1);
     },
     methods: {
+        scrollFix(hashbang) {
+            window.location.hash = hashbang;
+        },
         async loginGoogle({ credential }) {
-            const resp = await api.login(this.$store.state.userdata.jwt, credential, "google");
+            const resp = await api.login(
+                this.$store.state.userdata.jwt,
+                credential,
+                "google",
+            );
             this.$store.commit("setUser", resp.data);
             this.$gtag.event("login", {
                 event_label: "google",
@@ -191,7 +247,11 @@ export default {
                     redirectUri,
                 )}&response_type=token&scope=identify`,
                 async (err, out) => {
-                    const resp = await api.login(this.$store.state.userdata.jwt, out.access_token, "discord");
+                    const resp = await api.login(
+                        this.$store.state.userdata.jwt,
+                        out.access_token,
+                        "discord",
+                    );
                     // console.log(resp);
                     this.$store.commit("setUser", resp.data);
                     this.$gtag.event("login", {
@@ -210,7 +270,10 @@ export default {
             if (check === false) {
                 this.$store.dispatch("logout");
             } else if (check.data && check.data.id) {
-                this.$store.commit("setUser", { user: check.data, jwt: this.userdata.jwt });
+                this.$store.commit("setUser", {
+                    user: check.data,
+                    jwt: this.userdata.jwt,
+                });
             }
         },
         async resetKey() {
@@ -235,8 +298,13 @@ export default {
             if (this.editingUsername) {
                 this.editingUsername = false;
                 try {
-                    const res = await api.changeUsername(this.userdata.jwt, this.editUsernameInput);
-                    if (res && res.status === 200) { this.forceUserUpdate(); }
+                    const res = await api.changeUsername(
+                        this.userdata.jwt,
+                        this.editUsernameInput,
+                    );
+                    if (res && res.status === 200) {
+                        this.forceUserUpdate();
+                    }
                 } catch (e) {
                     console.error(e);
                 }
@@ -249,3 +317,8 @@ export default {
     },
 };
 </script>
+<style>
+#calendar:target {
+  border: 1px solid #ff000088;
+}
+</style>
