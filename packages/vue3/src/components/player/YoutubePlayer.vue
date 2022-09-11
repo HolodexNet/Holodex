@@ -3,8 +3,9 @@
 </template>
 
 <script lang="ts">
+import { PropType } from "vue";
 import player from "youtube-player";
-import { YouTubePlayer } from "youtube-player/dist/types";
+import { YouTubePlayer, Options } from "youtube-player/dist/types";
 import PlayerMixin from "./PlayerMixin";
 
 const UNSTARTED = -1;
@@ -24,7 +25,7 @@ export default defineComponent({
       default: undefined,
     },
     playerVars: {
-      type: Object,
+      type: Object as PropType<Partial<Options["playerVars"]>>,
       default: () => ({}),
     },
   },
@@ -51,7 +52,6 @@ export default defineComponent({
   beforeUnmount() {
     if (this.player !== null && this.player.destroy) {
       this.player.destroy();
-      this.player = null;
     }
   },
   async mounted() {
@@ -75,6 +75,9 @@ export default defineComponent({
     this.player.on("error", this.playerError);
   },
   methods: {
+    updatePlayer(videoId: string) {
+      this.player.loadVideoById(videoId);
+    },
     playerStateChange(e: any) {
       if (e.data !== null && e.data !== UNSTARTED) {
         this.$emit(this.events[e.data], e.target);

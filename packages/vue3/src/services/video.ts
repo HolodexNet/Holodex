@@ -98,7 +98,7 @@ export function useVideoById(
     ["video", id, query],
     async (e) => {
       const { data } = await axiosInstance.get(
-        `/videos/${id}?${stringifyQuery(query.value)}`
+        `/videos/${unref(id)}?${stringifyQuery(query.value)}`
       );
       return data;
     },

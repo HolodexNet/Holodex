@@ -177,6 +177,11 @@ const routes: RouteRecordRaw[] = [
     name: "Translation Scripter",
     component: () => import("@/views/TranslationScripter.vue"),
   },
+  {
+    path: "/watch/:id",
+    name: "Watch",
+    component: () => import("@/views/Watch.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),

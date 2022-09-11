@@ -3,6 +3,7 @@
 </template>
 
 <script lang="ts">
+import { PropType } from "vue";
 import { loadScript } from "vue-plugin-load-script";
 import PlayerMixin from "./PlayerMixin";
 import { TwitchPlayer, TwitchPlayerOptions } from "./TwitchPlayer";
@@ -13,21 +14,17 @@ export default defineComponent({
   name: "TwitchPlayer",
   mixins: [PlayerMixin],
   props: {
-    mute: {
-      type: Boolean,
-      default: false,
-    },
-    playsInline: {
-      type: Boolean,
-      default: false,
-    },
-    channel: {
+    channelId: {
       type: String,
       default: "",
     },
-    video: {
+    videoId: {
       type: String,
       default: "",
+    },
+    playerVars: {
+      type: Object as PropType<Partial<TwitchPlayerOptions>>,
+      default: () => ({}),
     },
   },
   data() {
@@ -62,21 +59,22 @@ export default defineComponent({
           height: this.height,
           parent: [window.location.hostname],
           autoplay: false,
+          ...this.playerVars,
         };
         // if (this.playsInline) {
         //   options.playsinline = true;
         // }
-        if (this.channel) {
-          options.channel = this.channel;
-        } else if (this.video) {
-          options.video = this.video;
+        if (this.channelId) {
+          options.channel = this.channelId;
+        } else if (this.videoId) {
+          options.video = this.videoId;
         } else {
           this.$emit("error", "no source specified");
         }
         this.player = new window.Twitch.Player(this.elementId, options);
-        this.player.addEventListener("ended", () => this.$emit("ended"));
-        this.player.addEventListener("pause", () => this.$emit("paused"));
-        this.player.addEventListener("play", () => this.$emit("playing"));
+        // this.player.addEventListener("ended", () => this.$emit("ended"));
+        // this.player.addEventListener("pause", () => this.$emit("paused"));
+        // this.player.addEventListener("play", () => this.$emit("playing"));
         // this.player.addEventListener("offline", () => this.$emit("offline"));
         // this.player.addEventListener("online", () => this.$emit("online"));
         this.player.addEventListener("ready", () => {
