@@ -6,7 +6,6 @@
 import { PropType } from "vue";
 import player from "youtube-player";
 import { YouTubePlayer, Options } from "youtube-player/dist/types";
-import PlayerMixin from "./PlayerMixin";
 
 const UNSTARTED = -1;
 const ENDED = 0;
@@ -18,8 +17,19 @@ const CUED = 5;
 let pid = 1;
 export default defineComponent({
   name: "YoutubePlayer",
-  mixins: [PlayerMixin],
   props: {
+    height: {
+      type: [Number, String],
+      default: 720,
+    },
+    width: {
+      type: [Number, String],
+      default: 1280,
+    },
+    mute: {
+      type: Boolean,
+      default: false,
+    },
     videoId: {
       type: String,
       default: undefined,
@@ -29,6 +39,7 @@ export default defineComponent({
       default: () => ({}),
     },
   },
+  emits: ["ready", "error", "playing", "paused", "ended", "buffering", "cued"],
   data() {
     pid += 1;
     return {
@@ -44,7 +55,6 @@ export default defineComponent({
       player: null as YouTubePlayer | null,
     };
   },
-  computed: {},
   watch: {
     videoId: "updatePlayer",
     mute: "setMute",
@@ -75,12 +85,22 @@ export default defineComponent({
     this.player.on("error", this.playerError);
   },
   methods: {
+    playerReady(player: any) {
+      this.setMute(this.mute);
+      // this.initListeners();
+      this.$emit("ready", player);
+    },
+    playerError(e: any) {
+      console.log(`[PLAYER ERROR] - ${pid}`);
+      console.error(e);
+      this.$emit("error", e);
+    },
     updatePlayer(videoId: string) {
-      this.player.loadVideoById(videoId);
+      this.player?.loadVideoById(videoId);
     },
     playerStateChange(e: any) {
       if (e.data !== null && e.data !== UNSTARTED) {
-        this.$emit(this.events[e.data], e.target);
+        this.$emit(this.events[e.data] as any, e.target);
       }
     },
     setMute(value: boolean) {
@@ -91,23 +111,23 @@ export default defineComponent({
       return this.player?.getCurrentTime();
     },
     getPlaybackRate() {
-      return this.player.getPlaybackRate();
+      return this.player?.getPlaybackRate();
     },
     getVolume() {
-      return this.player.getVolume();
+      return this.player?.getVolume();
     },
     isMuted() {
-      return this.player.isMuted();
+      return this.player?.isMuted();
     },
     seekTo(t: number) {
-      this.player.seekTo(t, true);
+      this.player?.seekTo(t, true);
     },
     setPlaying(playing: boolean) {
       if (!this.player) return;
       !playing ? this.player.pauseVideo() : this.player.playVideo();
     },
     async sendLikeEvent() {
-      const iframe = await this.player.getIframe();
+      const iframe = await this.player?.getIframe();
       iframe?.contentWindow?.postMessage({ event: "likeVideo" }, "*");
     },
   },
