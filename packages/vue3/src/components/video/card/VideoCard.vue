@@ -29,7 +29,7 @@
         :hide-channel-name="hideChannelName"
         :disable-default-click="disableDefaultClick"
         :class="{
-          'ml-2 font-medium text-sm': horizontal,
+          'ml-2': horizontal,
         }"
       >
         <template v-if="$slots.default" #action

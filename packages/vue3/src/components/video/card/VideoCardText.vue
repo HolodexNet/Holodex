@@ -3,9 +3,9 @@
     <template v-if="!hideChannelImage" #avatar>
       <channel-img :channel="video.channel" :size="40" rounded />
     </template>
-    <div class="box-content flex flex-col justify-around flex-1 my-1">
+    <div class="box-content flex flex-col justify-around flex-1 my-1 text-sm">
       <div
-        class="leading-5 line-clamp-2 video-card-title"
+        class="leading-5 line-clamp-2 video-card-title font-medium"
         :title="title"
         :class="{ 'pr-6': !$slots.action }"
       >
@@ -21,7 +21,7 @@
             <a
               v-if="!hideChannelName"
               v-bind="props"
-              class="text-sm leading-4 hover:opacity-80 line-clamp-1"
+              class="leading-4 hover:opacity-80 line-clamp-1"
               :class="{
                 'text-secondary':
                   video.type === 'stream' || video.channel.type === 'vtuber',
@@ -64,7 +64,7 @@
         </v-tooltip>
         <a
           v-else-if="!hideChannelName"
-          class="text-sm leading-4 hover:opacity-80 line-clamp-1"
+          class="leading-4 hover:opacity-80 line-clamp-1"
           :title="channelHoverTitle"
           :class="{
             'text-secondary':
@@ -76,7 +76,7 @@
           {{ preferredChannelName }}
         </a>
       </div>
-      <div class="text-sm leading-4 opacity-80">
+      <div class="leading-4 opacity-80">
         <video-card-status :video="video" />
         <template v-if="video.clips && video.clips.length > 0">
           •
