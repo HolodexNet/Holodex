@@ -52,6 +52,9 @@ component:
     typeScheduledYT: Directo programado
     typeExternalStream: Directo externo
     typeEventPlaceholder: Evento programado
+    openClient: Abrir el cliente de traducción
+    openScriptEditor: Abrir el editor de scripts
+    uploadScript: Subir el guión de traducción
   videoDescription:
     description: Descripción
   description:
@@ -209,6 +212,7 @@ views:
     sort:
       newest: Mas nuevo
       oldest: Más antiguo
+      longest: Más largo
     type:
       all: Todos
       official: Oficial
@@ -295,9 +299,23 @@ views:
         disconnectedToChat: Sin conexión
       archiveNeedExtension: >-
         El archivo del chat no funciona sin la extensión {0} o otras extensiones de terceros.
+      hideSpoiler: Ocultar Spoiler
     removeFromPlaylist: Remover video de la lista de reproducción actual
     saveToPlaylist: Guardar video a la lista de reproducción actual
     likeOnYoutube: Dar me gusta al video en Youtube
+    uploadPanel:
+      title: Subir Script
+      usernameText: La traduccion se publicará bajo el nombre de usuario
+      usernameChange: Cambiar
+      tlLang: Idioma de la traducción
+      headerStart: Inicio
+      headerEnd: Final
+      headerText: Texto
+      cancelBtn: Cancelar
+      okBtn: Ok
+      notifTextErr: NO SE PUDO ANALIZAR EL ARCHIVO (¿ARCHIVO CORRUPTO?)
+      notifTextParsing: Analizando archivo...
+      notifTextErrExt: Extensión de archivo no reconocida.
   favorites:
     promptForAction: >-
       Crea una lista de tus vtubers favoritos y mira sus ultimos clips y directos en esta pagina.
@@ -330,6 +348,11 @@ views:
       - Iniciar sesión con Google
       - Iniciar sesión con Discord
       - Iniciar sesión con Twitter
+    username: Nombre de Usuario
+    usernameBtn:
+      - Cambiar
+      - Confirmar
+      - Guardar
   multiview:
     confirmOverwrite: '¿Sobreescribir el diseño existente?'
     confirmOverwriteYes: Confirmar
@@ -400,6 +423,72 @@ views:
       three: Arregla la pérdida de memoria en el chat en vivo de Youtube
       four: >-
         Arregla las banderas experimentales en el reproductor de Youtube (Como desactivar múltiples directos, la miniatura de la sala de espera no mostrándose) y más!
+  tlClient:
+    menu:
+      title: Menú
+      loadVideo: Mostrar Vídeo
+      unloadVideo: Ocultar Vídeo
+      unloadChat: Separar del chat de YT
+    tlControl:
+      enterBtn: Ingresar
+      prefix: Prefijo
+      suffix: Sufijo
+      fontColour: Color de Fuente
+      outlineColour: Color del borde
+      localPrefix: Etiqueta de idioma en el chat
+      addProfile: Añadir Perfil
+      removeProfile: Remover Perfil
+      showSetting: Ajuste
+      hideSetting: Ocultar
+    addProfilePanel:
+      title: Añadir Nuevo Perfil
+      inputLabel: Nombre del Perfil
+    settingPanel:
+      title: Ajuste
+      mainStreamLink: Enlace principal del directo
+      collabLink: Enlaces de Colaboración
+    removeProfileTitle: Confirmar remover perfil
+    loadChatPanel:
+      title: Cargar chat
+      inputLabel: Enlace del directo
+    unloadChatTitle: '¿Descargar TODO el chat activo?'
+    pangram: El rápido zorro marrón salta sobre el perro perezoso
+    cancelBtn: Cancelar
+    okBtn: Ok
+  scriptEditor:
+    menu:
+      save: Guardar
+      continuousEnd: Hacer el tiempo continuo (cambiar el final)
+      clearAll: Eliminar el Script
+      exportFile: Exportar Archivo
+      importFile: Importar Archivo
+      editorMode: Modo Editor
+    table:
+      headerStart: Inicio
+      headerEnd: Final
+      headerProfile: Perfil
+      headerText: Texto
+      setAsStart: Establecer como inicio
+      deleteEntry: Eliminar entrada
+    loadVideoPanel:
+      title: Cargar Vídeo
+      inputLabel: Enlace del directo
+    setStartTitle: Establecer la entrada seleccionada como inicio, todas las entradas anteriores serán eliminadas.
+    importFile:
+      overwriteBtn: Sobrescribir
+    editorModePanel:
+      activateMode: Activar el modo editor
+      deactivateMode: Desactivar el modo editor
+      roleWarning: No tienes suficientes privilegios
+      filterTranslator: Filtrar el traductor
+  tlManager:
+    title: Gestor de Scripts
+    headerID: ID del vídeo
+    headerEntries: Entradas
+    download: Descargar
+    delete: Eliminar
+    deleteTitle: Eliminar entradas
+    langPick: Idioma
 time:
   soon: Proximamente
   diff_future_date: Inicia {0} ({1})

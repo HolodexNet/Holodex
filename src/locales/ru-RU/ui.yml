@@ -299,6 +299,8 @@ views:
       usernameText: Перевод будет загружен под именем пользователя
       usernameChange: Изменить
       tlLang: Язык перевода
+      headerStart: Начало
+      headerEnd: Конец
       headerText: Текст
       cancelBtn: Отмена
       okBtn: OK
@@ -355,6 +357,7 @@ views:
     autoLayoutTip: Нажмите на канал, чтобы начать просмотр с помощью режима автораскладки
     createLayoutTip: Создайте свой собственный макет, добавив ячейку или используя пресет
     openToolbarTip: Откройте панель инструментов, чтобы начать использовать multiview
+    archiveSync: Синхронизация архивов
     preset:
       shareOnDiscord: >-
         У Вас есть классный макет, которым можно поделиться? Воспользуйтесь кнопкой "Поделиться" и дайте нам знать на нашем <a href="https://discord.gg/jctkgHBt4b">Discord сервере</a>!
@@ -385,6 +388,12 @@ views:
     reorderHint: Используйте меню "Редактирование раскладки" для изменения позиций видео/чата
     reorderLayout: Редактирование раскладки
     reorderLayoutDetail: Перетащите иконки в нужное положение
+    sync:
+      nothingToSync: >-
+        Нечего синхронизировать, откройте два одновременных архива (напр. стримы коллаба)
+      syncSettings: Настройки синхронизации
+      syncSettingsDetail: >-
+        Видео синхронизируются на основе времени начала стрима и могут десинхронизироваться из-за технических проблем стрима, или удаленных частей. Используйте смещение для выравнивания видео вручную
   mugen:
     welcome: >-
       Добро пожаловать в MugenClips! Все на этой странице видят один и тот же случайно отобранный клип Hololive на английском языке. Смотрите и общайтесь с фанатами Hololive со всего мира. Если вы пропустите видео, а затем захотите быть повторно синхронизированы со всеми, пожалуйста, обновите страницу.
@@ -396,7 +405,39 @@ views:
     page-heading: 'Ваши плейлисты:'
     page-instruction: Нажмите на плейлист, чтобы установить его как активный.
     change-loss-warning: Вы потеряете несохраненные изменения. Продолжить?
+  extension:
+    title: Расширение Holodex Plus
+    features: Функции
+    featureset:
+      one: Включает архивирование лайв-чата при просмотре и мультипросмотре
+      two: Позволяет ставить лайки видео со страницы Holodex
+      three: Исправляет утечка памяти в чате Youtube
+      four: >-
+        Исправляет экспериментальные флаги на плеере Youtube (такие, как отключение нескольких стримов, неотображающийся тамбнейл при ожидании стрима) и многое другое!
   tlClient:
+    menu:
+      title: Меню
+      setting: Настройки комнаты TLDex
+      loadVideo: Показать видео
+      unloadVideo: Скрыть видео
+      loadChat: Добавить YT-чат для трансляции перевода
+      unloadChat: Отключиться от YT-чата
+    tlControl:
+      enterBtn: Ввести
+      prefix: Префикс
+      suffix: Суффикс
+      addProfile: Добавить профиль
+      removeProfile: Удалить профиль
+      showSetting: Настройка
+    settingPanel:
+      mainStreamLink: Ссылка на основной стрим
+      collabLink: Ссылки на участников коллаба
+    removeProfileTitle: Подтвердить удаление профиля
+    loadChatPanel:
+      title: Загрузить чат
+      inputLabel: Ссылка на стрим
+    unloadChatTitle: Выгрузить ВСЕ активные чаты?
+    cancelBtn: Отмена
     okBtn: OK
   scriptEditor:
     menu:
@@ -404,6 +445,9 @@ views:
       exportFile: Экспортировать файл
       importFile: Импортировать файл
     table:
+      headerStart: Начало
+      headerEnd: Конец
+      headerProfile: Профиль
       headerText: Текст
     loadVideoPanel:
       title: Загрузить видео
@@ -531,3 +575,8 @@ about:
     title: Букмарклеты
     description: >-
       Перетащите эти букмарклеты в панель закладок, чтобы легко открывать страницу просмотра YouTube в Holodex:
+channelRequest:
+  RequestType: 'Тип запроса:'
+  Types:
+    DeleteChannel: Удалить мой канал
+  ChannelLanguageLabel: Основной язык канала
