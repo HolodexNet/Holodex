@@ -120,7 +120,11 @@ export default defineComponent({
   components: {},
   setup() {
     const route = useRoute();
-    const id = computed(() => route.params.id as string);
+    const id = computed(() => {
+      return route.name?.toString().match(/^Channel(_|$)/)
+        ? (route.params.id as string)
+        : "";
+    });
     const channel = useChannel(id, true);
     const langPrefs = useLangStore();
 

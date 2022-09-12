@@ -68,23 +68,23 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/Channel.vue"),
     children: [
       {
-        name: "channel_about",
+        name: "Channel_About",
         path: "about",
         component: () => import("@/views/channel/ChannelAbout.vue"),
       },
       {
+        name: "Channel_Clips",
         path: "clips",
-        name: "channel_clips",
         component: () => import("@/views/channel/ChannelVideos.vue"),
       },
       {
+        name: "Channel_Collabs",
         path: "collabs",
-        name: "channel_collabs",
         component: () => import("@/views/channel/ChannelVideos.vue"),
       },
       {
+        name: "Channel_Music",
         path: "music",
-        name: "channel_music",
         beforeEnter(to) {
           window.location.replace(`${musicdexURL}/channel/${to.params.id}`);
         },
@@ -99,7 +99,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "",
-        name: "channel",
+        name: "Channel",
         component: () => import("@/views/channel/ChannelVideos.vue"),
       },
     ],

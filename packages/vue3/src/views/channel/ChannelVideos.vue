@@ -45,9 +45,9 @@ const dsConfig: Ref<VideoListLookup> = computed(
     ({
       flavor: { channelId: route.params.id },
       type:
-        (route.name === "channel" && "videos") ||
-        (route.name === "channel_clips" && "clip") ||
-        (route.name === "channel_collabs" && "collabs") ||
+        (route.name === "Channel" && "videos") ||
+        (route.name === "Channel_Clips" && "clip") ||
+        (route.name === "Channel_Collabs" && "collabs") ||
         "videos",
       filter: undefined, // to, from
       pagination: { limit: 24, offset: (page.value - 1) * 24 },

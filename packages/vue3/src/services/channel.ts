@@ -24,7 +24,10 @@ export function useChannels(query: Ref<object>, enabled: MaybeRef<boolean>) {
   );
 }
 
-export function useChannel(id: Ref<string>, enabled: MaybeRef<boolean>) {
+export function useChannel(
+  id: Ref<undefined | string>,
+  enabled: MaybeRef<boolean>
+) {
   return useQuery(
     ["channel", id] as const,
     async (a) => {
