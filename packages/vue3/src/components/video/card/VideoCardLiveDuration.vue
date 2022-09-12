@@ -30,11 +30,12 @@ export default defineComponent({
     );
     const { t } = useI18n();
 
+    const startActual = computed(
+      () => dayjs(props.video.start_actual).unix() * 1000
+    );
     const formatted = computed(() => {
       if (props.video.start_actual && props.video.status === "live") {
-        return formatDuration(
-          dayjs(now.value).diff(dayjs(props.video.start_actual))
-        );
+        return formatDuration(now.value.valueOf() - startActual.value);
       }
       if (props.video.status === "upcoming" && props.video.duration) {
         return t("component.videoCard.premiere");

@@ -70,7 +70,6 @@ declare module '@vue/runtime-core' {
     VideoPlayer: typeof import('./src/components/player/VideoPlayer.vue')['default']
     VideoThumbnail: typeof import('./src/components/video/card/VideoThumbnail.vue')['default']
     Watch: typeof import('./src/views/Watch.vue')['default']
-    Watch2: typeof import('./src/views/Watch2.vue')['default']
     WatchLegacy: typeof import('./src/views/WatchLegacy.vue')['default']
     YoutubePlayer: typeof import('./src/components/player/YoutubePlayer.vue')['default']
   }
