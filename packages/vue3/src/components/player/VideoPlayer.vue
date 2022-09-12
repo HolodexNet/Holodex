@@ -1,16 +1,19 @@
 <template>
-  <youtube-player
-    v-if="props.video.type !== 'placeholder'"
-    ref="player"
-    :video-id="props.video.id"
-    v-on="events"
-  ></youtube-player>
-  <twitch-player
-    v-else-if="props.video.type === 'placeholder' && twitchChannel"
-    ref="player"
-    :channel-id="twitchChannel"
-    v-on="events"
-  ></twitch-player>
+  <!-- This wrapper div is very important else it causes an insertBefore error -->
+  <div>
+    <youtube-player
+      v-if="props.video?.type !== 'placeholder'"
+      ref="player"
+      :video-id="props.video.id"
+      v-on="events"
+    ></youtube-player>
+    <twitch-player
+      v-else-if="props.video?.type === 'placeholder' && twitchChannel"
+      ref="player"
+      :channel-id="twitchChannel"
+      v-on="events"
+    ></twitch-player>
+  </div>
 </template>
 <script lang="ts" setup>
 /**
@@ -53,10 +56,18 @@ const volume = ref(50);
 // const ended = ref(false);
 
 async function refreshPlayerValues() {
-  if (!player?.value) return;
-  currentTime.value = await player.value.getCurrentTime();
-  muted.value = await player.value.getMuted();
-  volume.value = await player.value.getVolume();
+  if (player.value) {
+    // Parallelize this async calls for speed,
+    // helps prevent player.value undefined when unmounting mid way through a call
+    const [t, m, v] = await Promise.all([
+      player.value.getCurrentTime(),
+      player.value.getMuted(),
+      player.value.getVolume(),
+    ]);
+    currentTime.value = t;
+    muted.value = m;
+    volume.value = v;
+  }
 }
 
 const timer = ref<number | null>(null);
@@ -71,6 +82,5 @@ watchEffect(async (onCleanup) => {
     if (timer.value) clearInterval(timer.value);
   });
 });
-
-defineExpose({ currentTime, player, muted, volume });
+defineExpose(readonly({ currentTime, player, muted, volume }));
 </script>
