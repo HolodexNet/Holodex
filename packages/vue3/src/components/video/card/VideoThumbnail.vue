@@ -32,7 +32,7 @@
           class="rounded-sm video-overlay-action"
           :class="{ 'hover-show': !hasSaved }"
           role="img"
-          @click.prevent.stop="toggleSaved($event)"
+          @click.prevent.stop="toggleSaved()"
         >
           {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
         </v-icon>
@@ -89,9 +89,8 @@ import {
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify/lib/framework.mjs";
-import { PLACEHOLDER_TYPES, VIDEO_TYPES } from "@/utils/consts";
-import { usePlaylistVideoIDCache } from "@/stores/playlist";
-import { EditablePlaylist, usePlaylistPatcher } from "@/services/playlist";
+import { PLACEHOLDER_TYPES } from "@/utils/consts";
+import { useTogglePlaylistVideo } from "@/stores/playlist";
 /* eslint-disable no-unused-vars */
 
 export default defineComponent({
@@ -112,11 +111,7 @@ export default defineComponent({
     const display = useDisplay();
     const isMobile = display.mobile;
     const langStore = useLangStore();
-    const playlistCache = usePlaylistVideoIDCache();
-
-    const playlist: any = inject("currentPlaylist");
-    const patcher = usePlaylistPatcher();
-    const hasSaved = computed(() => playlistCache.setOfIds.has(props.video.id));
+    const playlistVideo = useTogglePlaylistVideo(props.video);
 
     const tldexStore = useTLStore();
     const liveTlLang = computed(() => tldexStore.liveTlLang);
@@ -126,10 +121,9 @@ export default defineComponent({
       display,
       isMobile,
       langStore,
-      hasSaved,
       liveTlLang,
-      playlist,
-      patcher,
+      toggleSaved: playlistVideo.toggleSaved,
+      hasSaved: playlistVideo.hasSaved,
       t,
     };
   },
@@ -198,20 +192,6 @@ export default defineComponent({
       return this.video.status === "past"
         ? this.$t("component.videoCard.totalTLs")
         : this.$t("component.videoCard.tlPresence");
-    },
-  },
-  methods: {
-    toggleSaved(event: MouseEvent) {
-      event.preventDefault();
-      event.stopPropagation();
-      if (this.video.type === VIDEO_TYPES.PLACEHOLDER) return; // huh.
-      // UseQueryReturnType<Playlist | undefined, unknown, QueryObserverResult<Playlist | undefined, unknown>>
-      console.log("changing: ", this.playlist.data.value);
-      const changed = new EditablePlaylist(this.playlist.data.value as any);
-      if (this.hasSaved) changed.removeId(this.video.id);
-      else changed.addId(this.video);
-
-      this.patcher.mutate(changed.valueOf());
     },
   },
 });

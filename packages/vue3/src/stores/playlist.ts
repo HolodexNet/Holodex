@@ -1,5 +1,8 @@
 // import type { Playlist } from "@/utils/types";
 
+import { EditablePlaylist, usePlaylistPatcher } from "@/services/playlist";
+import { VIDEO_TYPES } from "@/utils/consts";
+
 type CurrentPlaylistStore = {
   setOfIds: Set<string>;
 };
@@ -42,3 +45,22 @@ export const usePlaylistState = defineStore("currentPlaylistStore", {
     persist: true,
   },
 });
+
+export const useTogglePlaylistVideo = (video: VideoRef) => {
+  const playlistCache = usePlaylistVideoIDCache();
+
+  const playlist = inject("currentPlaylist") as any;
+  const patcher = usePlaylistPatcher();
+  const hasSaved = computed(() => playlistCache.setOfIds.has(video.id));
+  function toggleSaved() {
+    if (video.type === VIDEO_TYPES.PLACEHOLDER) return; // huh.
+    // UseQueryReturnType<Playlist | undefined, unknown, QueryObserverResult<Playlist | undefined, unknown>>
+    console.log("changing: ", playlist.data.value);
+    const changed = new EditablePlaylist(playlist.data.value as any);
+    if (hasSaved.value) changed.removeId(video.id);
+    else changed.addId(video);
+
+    patcher.mutate(changed.valueOf());
+  }
+  return { hasSaved, toggleSaved };
+};
