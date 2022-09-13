@@ -20,17 +20,17 @@
       flat
       height="56"
       style="border-bottom: 1px solid rgba(255, 255, 255, 0.12)"
-      class="bg-bgColor"
+      class="pl-3 bg-bgColor"
     >
       <!--=============================== Top Bar (Regular View) =============================-->
 
       <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
         <!--================= Logo & Search Bar (Space permitting) ================-->
-        <v-app-bar-nav-icon
-          :icon="icons.mdiMenu"
-          @click.stop="navDrawer = !navDrawer"
-        ></v-app-bar-nav-icon>
-        <div class="flex flex-row items-center gap-2 ml-md-2">
+        <div class="mr-2 cursor-pointer" @click.stop="navDrawer = !navDrawer">
+          <logo v-if="isSmOrDown" width="32" height="32" :loading="loading" />
+          <div v-else class="w-8 h-8 i-ion:menu"></div>
+        </div>
+        <div class="flex flex-row items-center gap-2">
           <router-link :to="{ name: settings.defaultOpen || 'Home' }">
             <logo
               v-if="!isSmOrDown"
