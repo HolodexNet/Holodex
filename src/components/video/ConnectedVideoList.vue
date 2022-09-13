@@ -398,9 +398,11 @@ export default {
             this.init();
         },
         getLoadFn() {
-            let inclusion = "";
-            if (this.tab === this.Tabs.ARCHIVE) inclusion = "mentions,clips";
-            else if (this.tab === this.Tabs.LIVE_UPCOMING) inclusion = "mentions";
+            const inclusion = {
+                [this.Tabs.ARCHIVE]: "mentions,clips",
+                [this.Tabs.LIVE_UPCOMING]: "mentions",
+                [this.Tabs.CLIPS]: "mentions",
+            }[this.tab] ?? "";
 
             const query = {
                 status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
