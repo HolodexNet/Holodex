@@ -26,7 +26,7 @@
             <span ref="dexBtn" class="text-primary">dex</span>
             <v-icon
               size="30"
-              class="change-org-icon"
+              class="transition-transform change-org-icon"
               :class="{
                 'rotate-180': activator.props['aria-expanded'] === 'true',
               }"
@@ -249,10 +249,6 @@ export default defineComponent({
   text-decoration: none;
   font-size: 24px;
   line-height: 1.2px;
-}
-
-.rotate-180 {
-  transform: rotate(180deg);
 }
 
 .change-org-icon:focus::after {
