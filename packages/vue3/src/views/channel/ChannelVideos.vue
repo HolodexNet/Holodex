@@ -1,11 +1,15 @@
 <template>
-  <div class="p-4">
+  <div ref="grid" class="p-4" style="scroll-margin-top: 220px">
     <video-card-grid>
       <template
         v-for="video in videoResponse.data.value?.items"
         :key="video.id"
       >
-        <video-card :video="video" hide-channel-image hide-channel-name />
+        <video-card
+          :video="video"
+          hide-channel-image
+          :hide-channel-name="route.name === 'Channel'"
+        />
       </template>
     </video-card-grid>
     <div v-if="videoResponse.isLoading.value" class="flex h-20">
@@ -32,6 +36,8 @@ import { useVideoListDatasource } from "@/services/video";
 import { useUrlSearchParams } from "@vueuse/core";
 import { Ref } from "vue";
 
+const grid = ref<HTMLDivElement | null>(null);
+
 const params = useUrlSearchParams("history");
 const page = computed({
   get: () => +params.page || 1,
@@ -57,7 +63,7 @@ const dsConfig: Ref<VideoListLookup> = computed(
 watch(
   () => page.value,
   () => {
-    window.scrollTo({ top: 0 });
+    grid.value && grid.value.scrollIntoView({ behavior: "smooth" });
   }
 );
 

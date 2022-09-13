@@ -8,6 +8,12 @@ export const google = "i-carbon:logo-google";
 export const twitter = "i-carbon:logo-twitter";
 export const discord = "i-carbon:logo-discord";
 
+export const videos = "i-fluent:video-20-regular";
+export const collabs = "i-fluent:people-20-regular";
+export const clips = "i-fluent:movies-and-tv-20-regular";
+export const music = "i-fluent:music-note-2-play-20-filled";
+export const about = "i-fluent:book-information-20-regular";
+
 export {
   mdiAccountBoxMultiple,
   mdiAccountCircleOutline,

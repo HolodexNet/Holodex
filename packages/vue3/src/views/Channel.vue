@@ -77,14 +77,17 @@
             </div>
           </template>
         </channel-card>
-        <div class="tabs">
+        <div class="tabs justify-evenly md:justify-center">
           <router-link
             v-for="tab in tabs"
             :key="tab.path"
-            class="tab tab-md md:tab-lg tab-bordered"
+            class="p-1 md:p-3 tab grow tab-md md:tab-lg tab-bordered"
             :to="tab.path"
-            >{{ tab.name }}</router-link
+            style="max-width: 180px"
           >
+            <div :class="tab.class" class="mr-1 md:mr-2"></div>
+            {{ tab.name }}
+          </router-link>
         </div>
       </div>
 
@@ -181,30 +184,35 @@ export default defineComponent({
     //             return 80;
     //     }
     // },
-    tabs(): { path: string; name: string }[] {
+    tabs(): { path: string; name: string; class: string }[] {
       return [
         {
           path: `/channel/${this.id}`,
           name: `${this.$t("views.channel.video")}`,
+          class: this.icons.videos,
         },
         {
           path: `/channel/${this.id}/clips`,
           name: `${this.$t("views.channel.clips")}`,
           hide: this.channel?.type === "subber",
-        },
-        {
-          path: `/channel/${this.id}/music`,
-          name: `${this.$t("views.channel.music")}`,
-          hide: this.channel?.type === "subber",
+          class: this.icons.clips,
         },
         {
           path: `/channel/${this.id}/collabs`,
           name: `${this.$t("views.channel.collabs")}`,
           hide: this.channel?.type === "subber",
+          class: this.icons.collabs,
+        },
+        {
+          path: `/channel/${this.id}/music`,
+          name: `${this.$t("views.channel.music")}`,
+          hide: this.channel?.type === "subber",
+          class: this.icons.music,
         },
         {
           path: `/channel/${this.id}/about`,
           name: `${this.$t("views.channel.about")}`,
+          class: this.icons.about,
         },
         // { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
       ].filter((t) => !t.hide);
