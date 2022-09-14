@@ -140,7 +140,7 @@
             :tl-client="true"
             :video="
               mainLinkIsCustom
-                ? { id: 'custom', custom_video_id: mainStreamLink }
+                ? { id: mainStreamLink, isCustom: true }
                 : video
             "
             :class="{
