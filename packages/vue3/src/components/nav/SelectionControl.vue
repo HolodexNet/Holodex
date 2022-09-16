@@ -28,35 +28,81 @@
               </a>
             </div>
 
-            <div class="btn btn-xs btn-secondary btn-outline">
+            <div class="btn btn-xs btn-secondary btn-outline bg-bgColor-400">
               Open in Multiview
             </div>
-            <div class="btn btn-xs btn-secondary btn-outline">
+            <div class="btn btn-xs btn-secondary btn-outline bg-bgColor-400">
               Add to current Playlist
             </div>
-            <div class="btn btn-xs btn-secondary btn-outline">
+            <div class="btn btn-xs btn-secondary btn-outline bg-bgColor-400">
               Make into new Playlist
             </div>
           </div>
-          <div
-            class="btn-group btn-group-vertical sm:btn-group-horizontal self-start"
-          >
-            <div
-              class="btn btn-xs btn-ghost btn-secondary font-normal"
-              disabled
-              aria-disabled
-            >
-              <span class="text-primary-300">Group Edit:</span>
-            </div>
-            <div class="btn btn-xs btn-secondary btn-outline" @click="page = 1">
-              Mentions
-            </div>
-            <div class="btn btn-xs btn-secondary btn-outline" @click="page = 2">
-              Sources
-            </div>
-            <div class="btn btn-xs btn-secondary btn-outline" @click="page = 3">
-              Topic
-            </div>
+          <div class="btn btn-xs btn-secondary btn-outline">
+            <div class="text-lg i-fluent:group-20-regular"></div>
+            <span class="mx-1">Modify Attributes</span>
+            <div class="i-bx:chevron-up"></div>
+
+            <v-menu activator="parent">
+              <div
+                class="btn-group btn-group-vertical self-start menu-group min-w-full"
+              >
+                <div
+                  class="btn btn-xs btn-secondary btn-outline bg-bgColor-400"
+                  @click="page = 1"
+                >
+                  Mentions
+                </div>
+                <div
+                  class="btn btn-xs btn-secondary btn-outline bg-bgColor-400"
+                  @click="page = 2"
+                >
+                  Sources
+                </div>
+                <div
+                  class="btn btn-xs btn-secondary btn-outline bg-bgColor-400"
+                  @click="page = 3"
+                >
+                  Topic
+                </div>
+                <div
+                  class="btn btn-xs btn-secondary btn-outline bg-bgColor-400"
+                >
+                  Language (clips only)
+                </div>
+              </div>
+            </v-menu>
+          </div>
+
+          <div class="btn btn-xs btn-secondary btn-outline">
+            <div class="text-lg i-fluent:connected-20-filled"></div>
+            <span class="mx-1">Intelligent Multi-Edit</span>
+            <div class="i-bx:chevron-up"></div>
+
+            <v-menu activator="parent">
+              <div class="btn-group btn-group-vertical self-start menu-group">
+                <div
+                  class="btn btn-xs btn-secondary btn-outline bg-bgColor-400"
+                >
+                  Make Simulwatch/Collab
+                </div>
+                <div
+                  class="btn btn-xs btn-secondary btn-outline bg-bgColor-400"
+                >
+                  Disassociate w/ Current Video (Watch Page only)
+                </div>
+                <div
+                  class="btn btn-xs btn-secondary btn-outline bg-bgColor-400"
+                >
+                  Disassociate w/ Current Channel (Channel Page only)
+                </div>
+                <div
+                  class="btn btn-xs btn-secondary btn-outline bg-bgColor-400"
+                >
+                  Hide Selected Videos (Clips only)
+                </div>
+              </div>
+            </v-menu>
           </div>
         </div>
       </v-window-item>
@@ -130,9 +176,12 @@ export default defineComponent({
   padding-bottom: 0.2rem !important;
 }*/
 
+.menu-group {
+  --btn-text-case: "unset";
+}
 #selectionFooter {
   --btn-text-case: "unset";
-  background: hsl(var(--b1-50)) !important;
+  /*background: hsl(var(--b1-50)) !important;*/
   padding-left: 0.5rem;
 
   border-top: 2px solid hsl(var(--p));
