@@ -1,6 +1,6 @@
 <template>
-  <v-footer id="selectionFooter" app>
-    <div class="btn btn-square btn-xs btn-ghost self-start">
+  <v-footer v-if="selection.selectionMode" id="selectionFooter" app>
+    <div class="btn btn-square btn-xs btn-ghost self-start mr-2">
       <div class="i-mdi:close-circle" @click="exit"></div>
     </div>
 
@@ -132,5 +132,9 @@ export default defineComponent({
 
 #selectionFooter {
   --btn-text-case: "unset";
+  background: hsl(var(--b1-50)) !important;
+  padding-left: 0.5rem;
+
+  border-top: 2px solid hsl(var(--p));
 }
 </style>

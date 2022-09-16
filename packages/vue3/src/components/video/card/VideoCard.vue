@@ -1,6 +1,6 @@
 <template>
   <a
-    class="flex video-card no-decoration selectable"
+    class="flex video-card no-decoration"
     :class="{
       'flex-col': !horizontal,
       'video-card-live': video.status === 'live',
@@ -16,7 +16,7 @@
       :class="{
         'h-[80px] my-auto': horizontal,
         'saturate-50 opacity-60': !selected && selection.selectionMode,
-        'opacity-80 border-8 rounded-2xl border-primary -mb-[7px] transition-all':
+        'opacity-80 border-8 rounded-xl border-transparent ring-primary ring-2 border-opacity-0 -mb-[7px] transition-all':
           selected && selection.selectionMode,
       }"
       class=""
@@ -27,7 +27,8 @@
       type="checkbox"
       role="checkbox"
       tabindex="2"
-      class="checkbox z-[1] video-checkbox checkbox-lg checkbox-primary"
+      class="checkbox z-[1] video-checkbox checkbox-lg"
+      :class="{ 'checkbox-primary': selected, '': !selected }"
       @change.stop.prevent
     />
     <!-- <a
@@ -221,12 +222,11 @@ a:visited .video-card-title {
   //margin-bottom: 110px;
   //margin-left: 10px;
   transform: translate(2px, -34px); // eyeballed.
-  box-shadow: 5px;
   border-style: solid;
   border-width: 5px !important;
-  border-color: hsl(var(--p)) !important;
   transition: all 0.2s;
   margin-bottom: -24px;
+  --tw-border-opacity: 1 !important;
 }
 .video-checkbox[checked="true"] {
   transform: translate(11px, -36px); // eyeballed
