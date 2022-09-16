@@ -9,7 +9,8 @@
       (channel.org ? `\n> ${channel.org}` : '') +
       (channel.group ? `\n> ${channel.group}` : '')
     "
-    @click.exact.prevent="goToChannel"
+    data-ctx="channel"
+    :data-obj="channel.id"
   >
     <v-lazy
       tag="img"
@@ -74,13 +75,7 @@ export default defineComponent({
       return getChannelPhoto(this.channel.id, this.size);
     },
   },
-  methods: {
-    goToChannel(e: Event) {
-      if (this.noLink) return;
-      e.stopImmediatePropagation();
-      this.$router.push({ path: `/channel/${this.channel.id}` });
-    },
-  },
+  methods: {},
 });
 </script>
 

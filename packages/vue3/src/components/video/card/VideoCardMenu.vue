@@ -8,7 +8,7 @@
     <template #activator="{ props }">
       <label
         tabindex="0"
-        :class="`my-2 md:w-5 border-none btn-outline btn-ghost btn btn-circle hover:bg-opacity-50 btn-sm ${btnClass} `"
+        :class="`video-menu-default-activator my-2 btn hover:bg-opacity-50 active:bg-opacity-50 bg-opacity-0 ${btnClass}`"
         v-bind="props"
         @click.stop.prevent
       >
@@ -33,6 +33,19 @@
               {{ $t("views.settings.redirectModeLabel") }}
             </a>
           </li>
+          <li>
+            <a
+              @click.stop="
+                closeMenu();
+                selection.selectionMode = true;
+                selection.selectedVideos = [video];
+              "
+            >
+              <div class="i-material-symbols:fact-check"></div>
+              {{ "Select" }}
+            </a>
+          </li>
+
           <li v-if="video.status === 'upcoming'">
             <a
               @click.prevent.stop="
@@ -147,6 +160,7 @@
 </template>
 <script lang="ts">
 import { useGlobalReportState } from "@/stores/report";
+import { useVideoSelection } from "@/stores/selection";
 import { formatDuration } from "@/utils/time";
 import { useClipboard, useNow } from "@vueuse/core";
 import dayjs from "dayjs";
@@ -168,8 +182,8 @@ export default defineComponent({
     const showMenu = ref(false);
     const clipboard = useClipboard();
     const report = useGlobalReportState();
-
-    return { showMenu, clipboard, report };
+    const selection = useVideoSelection();
+    return { showMenu, clipboard, report, selection };
     // const now = useNow({ interval: 1000 })
     // const {t} = useI18n();
 
@@ -252,5 +266,26 @@ export default defineComponent({
   display: inline-block;
   top: 5px;
   z-index: 1;
+}
+.video-menu-default-activator.btn {
+  --tw-text-opacity: 1;
+  border-radius: 9999px;
+  border-style: none;
+  color: hsl(var(--bc) / var(--tw-text-opacity));
+  font-size: 0.875rem;
+  height: 2rem;
+  min-height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding: 0px;
+  width: 2rem;
+}
+.video-card:focus-within .video-menu-default-activator {
+  --tw-bg-opacity: 0.5;
+}
+@media (hover: hover) and (min-width: 768px) {
+  .video-menu-default-activator {
+    width: 1.25rem !important;
+  }
 }
 </style>

@@ -1,46 +1,62 @@
 <template>
   <a
-    class="flex video-card no-decoration"
+    class="flex video-card no-decoration selectable"
     :class="{
       'flex-col': !horizontal,
       'video-card-live': video.status === 'live',
     }"
-    :target="redirectMode || hasPlaceholderLink ? '_blank' : ''"
-    :href="href"
+    :target="openInNew ? '_blank' : ''"
+    :href="watchLink"
     rel="noopener"
-    @click.exact="onThumbnailClicked"
+    @click="intercept"
   >
     <video-thumbnail
       :video="video"
       :size="size"
-      :class="{ 'h-[80px] my-auto': horizontal }"
+      :class="{
+        'h-[80px] my-auto': horizontal,
+        'saturate-50 opacity-60': !selected && selection.selectionMode,
+        'opacity-80 border-8 rounded-2xl border-primary -mb-[7px] transition-all':
+          selected && selection.selectionMode,
+      }"
+      class=""
     />
-    <a
+    <div
+      v-if="selection.selectionMode"
+      :checked="selected ? 'true' : undefined"
+      type="checkbox"
+      role="checkbox"
+      tabindex="2"
+      class="checkbox z-[1] video-checkbox checkbox-lg checkbox-primary"
+      @change.stop.prevent
+    />
+    <!-- <a
       :href="watchLink"
       rel="noopener"
       :class="{
         'w-full': horizontal,
       }"
       @click.exact.stop.prevent="goToVideo()"
+    > -->
+    <video-card-text
+      :video="video"
+      :hide-channel-image="hideChannelImage"
+      :hide-channel-name="hideChannelName"
+      :class="{
+        'w-full': horizontal,
+        'ml-2': horizontal,
+      }"
     >
-      <video-card-text
-        :video="video"
-        :hide-channel-image="hideChannelImage"
-        :hide-channel-name="hideChannelName"
-        :disable-default-click="disableDefaultClick"
-        :class="{
-          'ml-2': horizontal,
-        }"
-      >
-        <template v-if="$slots.default" #action
-          ><slot :video="video"></slot
-        ></template>
-      </video-card-text>
-    </a>
+      <template v-if="$slots.default" #action
+        ><slot :video="video"></slot
+      ></template>
+    </video-card-text>
+    <!-- </a> -->
   </a>
 </template>
 
 <script lang="ts">
+import { useVideoSelection } from "@/stores/selection";
 import { useSettingsStore } from "@/stores/settings";
 import { PropType } from "vue";
 import { useDisplay } from "vuetify/lib/framework.mjs";
@@ -59,6 +75,7 @@ export default defineComponent({
     // disables all default click behavior. Channel Clicks are also disabled.
     disableDefaultClick: Boolean,
     parentPlaylistId: {
+      // if supplied, all subsequent clicks will navigate to watch page with this playlist as 'watching'.
       type: [Number, String],
       default: null,
     },
@@ -70,14 +87,31 @@ export default defineComponent({
     },
   },
   emits: ["videoClicked"],
-  setup() {
+  setup(props) {
     const settings = useSettingsStore();
     const display = useDisplay();
+    const selection = useVideoSelection();
+    const selected = computed({
+      get: () => selection.contains(props.video.id),
+      set: (s) => {
+        if (s) {
+          selection.selectedVideos.push(props.video);
+        } else {
+          const idx = selection.selectedVideos.findIndex(
+            ({ id }) => id === props.video.id
+          );
+          if (idx < 0) return;
+          selection.selectedVideos.splice(idx, 1);
+        }
+      },
+    });
 
     const isMobile = display.mobile;
     return {
       settings,
       isMobile,
+      selection,
+      selected,
     };
   },
   data() {
@@ -86,94 +120,115 @@ export default defineComponent({
     };
   },
   computed: {
-    data() {
-      return this.video;
-    },
     isPlaceholder() {
-      return this.data.type === "placeholder";
+      return this.video.type === "placeholder";
     },
-    redirectMode() {
-      return this.settings.redirectMode;
+    openInNew() {
+      return (
+        this.settings.redirectMode ||
+        (this.video.placeholderType === "external-stream" && this.video.link)
+      );
     },
     watchLink() {
-      if (this.isPlaceholder) return;
+      if (
+        this.isPlaceholder &&
+        this.video.placeholderType === "external-stream" &&
+        this.video.link
+      )
+        return this.video.link;
+      else if (this.settings.redirectMode)
+        return `https://youtu.be/${this.video.id}`;
       const q = this.parentPlaylistId
         ? `?playlist=${this.parentPlaylistId}`
         : "";
-      return `/watch/${this.data.id}${q}`;
-    },
-    hasPlaceholderLink() {
-      return (
-        this.isPlaceholder &&
-        this.data.placeholderType === "external-stream" &&
-        this.data.link
-      );
-    },
-    href() {
-      if (this.isPlaceholder) {
-        if (this.hasPlaceholderLink) {
-          return this.data.link;
-        }
-        return undefined;
-      }
-      return this.redirectMode
-        ? `https://youtu.be/${this.data.id}`
-        : this.watchLink;
+      return `/watch/${this.video.id}${q}`;
     },
   },
   methods: {
-    goToVideo() {
-      this.$emit("videoClicked", this.data);
-      if (this.disableDefaultClick || !this.watchLink) return;
-      if (this.isPlaceholder) {
-        this.openPlaceholder();
+    intercept(e: MouseEvent) {
+      console.log(e);
+      e.stopPropagation(); // always stop propagation.
+      if (e.shiftKey || e.ctrlKey) return;
+      // ^ ignore shift and control modified clicks.
+      e.preventDefault(); // prevent hrefs from firing on regular clicks.
+      if (this.selection.selectionMode) {
+        this.selected = !this.selected;
         return;
       }
-      // On mobile, clicking on watch links should not increment browser history
-      // Back button will always return to the originating video list in one click
-      if (this.$route.path.match("^/watch") && this.isMobile) {
-        this.$router.replace({ path: this.watchLink });
+      const tgt = e.target as HTMLElement;
+      const nearest = tgt.closest("[data-ctx]");
+      if (nearest) {
+        const ctx = nearest.getAttribute("data-ctx"); // context.
+        const obj = nearest.getAttribute("data-obj"); // channel ID in question
+        console.log(ctx, obj);
+        if (this.disableDefaultClick) {
+          return this.$emit("videoClicked", this.video, ctx, obj);
+        }
+        switch (ctx) {
+          case "channel":
+            this.$router.push({ path: `/channel/${this.video.channel.id}` });
+            return;
+          case "_":
+        }
       } else {
-        this.$router.push({ path: this.watchLink });
-      }
-    },
-    onThumbnailClicked(e: { preventDefault: () => void }) {
-      if (this.hasPlaceholderLink) return;
-      if (
-        this.isPlaceholder ||
-        !this.redirectMode ||
-        this.disableDefaultClick
-      ) {
-        e.preventDefault();
-        this.goToVideo();
+        // just a regular click:
+        if (this.disableDefaultClick) {
+          return this.$emit("videoClicked", this.video, "video", undefined);
+        }
+        // video click default behavior: go to video.
+        if (this.settings.redirectMode) {
+          const url = `https://www.youtube.com/watch?v=${this.video.id}`;
+          window.open(url, "_blank", "noopener");
+        } else if (this.openInNew) {
+          window.open(this.watchLink, "_blank", "noopener");
+        } else {
+          this.$router.push({ path: this.watchLink });
+        }
       }
     },
     openPlaceholder() {
       this.placeholderOpen = true;
     },
-    goToChannel() {
-      this.$emit("videoClicked", this.data);
-      if (this.disableDefaultClick) return;
-      this.$router.push({ path: `/channel/${this.data.channel.id}` });
-    },
-    goToYoutube() {
-      this.$emit("videoClicked", this.data);
-      if (this.disableDefaultClick) return;
-      const url = `https://www.youtube.com/watch?v=${this.data.id}`;
-      window.open(url, "_blank", "noopener");
-    },
   },
 });
 </script>
 <style lang="scss">
-.video-card .hover-show {
-  visibility: hidden;
+@media (hover: hover) {
+  .video-card .hover-show {
+    opacity: 0;
+  }
+  .video-card .hover-show:focus,
+  .video-card .hover-show:active,
+  .video-card:hover .hover-show {
+    opacity: 1;
+  }
 }
-.video-card:hover .hover-show {
-  visibility: visible;
+@media (hover: none) {
+  .video-card .hover-show {
+    opacity: 0.8;
+  }
+  .video-card .hover-show:focus {
+    opacity: 1;
+  }
 }
 a:visited .video-card-title {
   /* This is hardcoded cuz @apply doesn't work and variables don't have lighten/darken version */
   color: rgb(90, 138, 185);
+}
+
+.video-checkbox {
+  //transform-origin: top left;
+  //margin-bottom: 110px;
+  //margin-left: 10px;
+  transform: translate(2px, -34px); // eyeballed.
+  box-shadow: 5px;
+  border-style: solid;
+  border-width: 5px !important;
+  border-color: hsl(var(--p)) !important;
+  transition: all 0.2s;
+  margin-bottom: -24px;
+}
+.video-checkbox[checked="true"] {
+  transform: translate(11px, -36px); // eyeballed
 }
 </style>

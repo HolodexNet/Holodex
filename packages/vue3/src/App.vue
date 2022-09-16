@@ -9,6 +9,7 @@
     </v-main>
 
     <report-video />
+    <selection-control />
   </v-app>
 </template>
 
@@ -21,9 +22,11 @@ import { useSiteStore } from "./stores/site";
 import backendApi from "./utils/backend-api";
 import { usePlaylistState, usePlaylistVideoIDCache } from "@/stores/playlist";
 import { usePlaylist } from "@/services/playlist";
+import { useMigrateFromHolodexV2 } from "./stores/util/useMigrateFromHolodexV2";
 
 // initializing setup for Holodex:
 // Steps:
+useMigrateFromHolodexV2();
 
 // [done] Restore Language settings
 useI18nInitialization();
@@ -60,24 +63,29 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
-const cache = usePlaylistVideoIDCache();
-const current = storeToRefs(usePlaylistState());
+/* --- Maintain Playlist Cache Lifecycle ---  */
+const playlistVideoCache = usePlaylistVideoIDCache();
+const currentPlaylistState = storeToRefs(usePlaylistState());
 
 /* Configure global playlist video ID cache */
-const currentPlaylistQuery = usePlaylist(current.currentPlaylistId, {
-  onSettled(data, err) {
-    console.log("reset currently active playlist:", data);
-    if (data) cache.setOfIds = new Set(data.videos?.map((x) => x.id));
-    else cache.setOfIds = new Set();
-  },
-});
+const currentPlaylistQuery = usePlaylist(
+  currentPlaylistState.currentPlaylistId,
+  {
+    onSettled(data, err) {
+      console.log("reset currently active playlist:", data);
+      if (data)
+        playlistVideoCache.setOfIds = new Set(data.videos?.map((x) => x.id));
+      else playlistVideoCache.setOfIds = new Set();
+    },
+  }
+);
 
 watchEffect(() => {
   if (currentPlaylistQuery.data.value) {
-    cache.setOfIds = new Set(
+    playlistVideoCache.setOfIds = new Set(
       currentPlaylistQuery.data.value?.videos?.map((x) => x.id)
     );
-  } else cache.setOfIds = new Set();
+  } else playlistVideoCache.setOfIds = new Set();
 });
 
 provide("currentPlaylist", currentPlaylistQuery);

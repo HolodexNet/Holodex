@@ -27,7 +27,8 @@
                   video.type === 'stream' || video.channel.type === 'vtuber',
               }"
               :href="channelLink"
-              @click.stop.prevent="goToChannel"
+              data-ctx="channel"
+              :data-obj="video.channel.id"
             >
               {{ preferredChannelName }} {{ `(+${video.mentions?.length})` }}
             </a>
@@ -45,6 +46,8 @@
                   :size="32"
                   rounded
                   class="mr-2"
+                  data-ctx="channel"
+                  :data-obj="mention.id"
                 />
                 {{
                   langStore.preferredLocaleFn(
@@ -71,7 +74,8 @@
               video.type === 'stream' || video.channel.type === 'vtuber',
           }"
           :href="channelLink"
-          @click.stop.prevent="goToChannel"
+          data-ctx="channel"
+          :data-obj="video.channel.id"
         >
           {{ preferredChannelName }}
         </a>
@@ -102,12 +106,14 @@
       </div>
     </div>
     <template #action>
-      <slot name="action"></slot>
-      <video-card-menu
-        v-if="!$slots.action"
-        :video="video"
-        btn-class="absolute right-0 hover-show"
-      />
+      <div class="self-center" @click.stop>
+        <slot name="action"></slot>
+        <video-card-menu
+          v-if="!$slots.action"
+          :video="video"
+          btn-class="absolute right-0 top-0 hover-show"
+        />
+      </div>
     </template>
   </h-list>
 </template>
@@ -129,7 +135,6 @@ export default defineComponent({
     },
     hideChannelName: Boolean,
     hideChannelImage: Boolean,
-    disableDefaultClick: Boolean,
   },
   setup() {
     const site = useSiteStore();
@@ -171,9 +176,6 @@ export default defineComponent({
       if (!this.video.title) return "";
       return decodeHTMLEntities(this.video.title);
     },
-    videoTitle() {
-      return this.title;
-    },
     channelHoverTitle() {
       return (
         this.video.channel.name +
@@ -184,25 +186,12 @@ export default defineComponent({
         (this.video.channel.group ? `\n> ${this.video.channel.group}` : "")
       );
     },
-    channelName() {
-      return this.langStore.preferredLocaleFn(
-        this.video.channel.english_name,
-        this.video.channel.name
-      );
-    },
     channelLink() {
       return `/channel/${this.video.channel.id}`;
     },
   },
   methods: {
     formatCount,
-    goToChannel() {
-      if (this.disableDefaultClick) return;
-      //   TODO: is this behavior really needed? Only prevents users who misclick
-      //   this.$emit("videoClicked", this.data);
-      //   if (this.disableDefaultClick) return;
-      this.$router.push({ path: this.channelLink });
-    },
   },
 });
 </script>

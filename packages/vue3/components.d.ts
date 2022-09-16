@@ -49,6 +49,7 @@ declare module '@vue/runtime-core' {
     ReportVideo: typeof import('./src/components/video/ReportVideo.vue')['default']
     ScrollParallax: typeof import('./src/components/channel/common/ScrollParallax.vue')['default']
     SearchBar: typeof import('./src/components/nav/SearchBar.vue')['default']
+    SelectionControl: typeof import('./src/components/nav/SelectionControl.vue')['default']
     Settings: typeof import('./src/views/Settings.vue')['default']
     SidebarFavorites: typeof import('./src/components/frame/SidebarFavorites.vue')['default']
     ThemeColorPicker: typeof import('./src/components/settings/ThemeColorPicker.vue')['default']
