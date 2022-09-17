@@ -1,51 +1,86 @@
 <template>
   <v-footer v-if="selection.selectionMode" id="selectionFooter" app>
-    <div class="btn btn-square btn-xs btn-ghost self-start mr-2">
+    <div
+      class="self-start mr-2 transition-all btn btn-xs btn-secondary"
+      :class="{
+        'md:w-16': selection.selectedVideos.length === 0,
+        'btn-square': selection.selectedVideos.length,
+      }"
+    >
       <div class="i-mdi:close-circle" @click="exit"></div>
     </div>
 
     <v-window v-model="page" direction="vertical">
       <v-window-item :value="0">
-        <div class="flex flex-row gap-2 flex-wrap">
+        <div class="flex flex-row flex-wrap gap-2">
           <div
-            class="btn-group btn-group-vertical sm:btn-group-horizontal self-start"
+            class="self-start btn-group btn-group-vertical sm:btn-group-horizontal"
           >
             <div
-              class="btn btn-xs btn-ghost btn-secondary cursor-default btn-disabled pointer-events-auto pr-0"
+              class="cursor-default pointer-events-auto btn btn-xs btn-ghost btn-secondary btn-disabled"
             >
               <span class="text-xs font-normal text-primary-300">
                 Selected
                 <span class="text-primary">{{
                   selection.selectedVideos.length
                 }}</span>
-                videos</span
-              >
-              <a
-                class="btn btn-square btn-xs btn-link self-start"
-                @click="selection.selectedVideos = []"
-              >
-                <div class="i-material-symbols:deselect"></div>
-              </a>
+                videos
+              </span>
+            </div>
+            <div
+              v-show="selection.selectedVideos.length > 0"
+              class="btn btn-xs btn-outline btn-primary"
+              @click="selection.selectedVideos = []"
+            >
+              <div class="i-material-symbols:deselect"></div>
             </div>
 
-            <div class="btn btn-xs btn-secondary btn-outline bg-bgColor-400">
+            <div
+              class="btn btn-xs btn-outline"
+              :class="
+                !selection.selectedVideos.length
+                  ? 'btn-disabled'
+                  : 'bg-bgColor-400 btn-secondary'
+              "
+            >
               Open in Multiview
             </div>
-            <div class="btn btn-xs btn-secondary btn-outline bg-bgColor-400">
+            <div
+              class="btn btn-xs btn-outline"
+              :class="
+                !selection.selectedVideos.length
+                  ? 'btn-disabled'
+                  : 'bg-bgColor-400 btn-secondary'
+              "
+            >
               Add to current Playlist
             </div>
-            <div class="btn btn-xs btn-secondary btn-outline bg-bgColor-400">
+            <div
+              class="btn btn-xs btn-outline"
+              :class="
+                !selection.selectedVideos.length
+                  ? 'btn-disabled'
+                  : 'bg-bgColor-400 btn-secondary'
+              "
+            >
               Make into new Playlist
             </div>
           </div>
-          <div class="btn btn-xs btn-secondary btn-outline">
+          <div
+            class="btn btn-xs btn-outline"
+            :class="
+              !selection.selectedVideos.length
+                ? 'btn-disabled'
+                : 'bg-bgColor-400 btn-secondary'
+            "
+          >
             <div class="text-lg i-fluent:group-20-regular"></div>
             <span class="mx-1">Modify Attributes</span>
             <div class="i-bx:chevron-up"></div>
 
             <v-menu activator="parent">
               <div
-                class="btn-group btn-group-vertical self-start menu-group min-w-full"
+                class="self-start min-w-full btn-group btn-group-vertical menu-group"
               >
                 <div
                   class="btn btn-xs btn-secondary btn-outline bg-bgColor-400"
@@ -74,13 +109,20 @@
             </v-menu>
           </div>
 
-          <div class="btn btn-xs btn-secondary btn-outline">
+          <div
+            class="btn btn-xs btn-outline"
+            :class="
+              !selection.selectedVideos.length
+                ? 'btn-disabled'
+                : 'bg-bgColor-400 btn-secondary'
+            "
+          >
             <div class="text-lg i-fluent:connected-20-filled"></div>
             <span class="mx-1">Intelligent Multi-Edit</span>
             <div class="i-bx:chevron-up"></div>
 
             <v-menu activator="parent">
-              <div class="btn-group btn-group-vertical self-start menu-group">
+              <div class="self-start btn-group btn-group-vertical menu-group">
                 <div
                   class="btn btn-xs btn-secondary btn-outline bg-bgColor-400"
                 >
@@ -107,7 +149,7 @@
         </div>
       </v-window-item>
       <v-window-item :value="1">
-        <div class="text-xs breadcrumbs p-0">
+        <div class="p-0 text-xs breadcrumbs">
           <ul>
             <li @click="page = 0">
               <a>Selection ({{ selection.selectedVideos.length }})</a>
@@ -117,7 +159,7 @@
         </div>
       </v-window-item>
       <v-window-item :value="2">
-        <div class="text-xs breadcrumbs p-0">
+        <div class="p-0 text-xs breadcrumbs">
           <ul>
             <li @click="page = 0">
               <a>Selection ({{ selection.selectedVideos.length }})</a>
@@ -127,7 +169,7 @@
         </div>
       </v-window-item>
       <v-window-item :value="3">
-        <div class="text-xs breadcrumbs p-0">
+        <div class="p-0 text-xs breadcrumbs">
           <ul>
             <li @click="page = 0">
               <a>Selection ({{ selection.selectedVideos.length }})</a>
@@ -145,7 +187,6 @@ import { useVideoSelection } from "@/stores/selection";
 
 export default defineComponent({
   name: "SelectionControl",
-  props: {},
   setup() {
     const selection = useVideoSelection();
 
