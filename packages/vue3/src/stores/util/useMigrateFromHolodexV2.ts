@@ -3,6 +3,7 @@ import { useSettingsStore } from "../settings";
 import { useSiteStore } from "../site";
 
 const DELETE_MIGRATION_RESULT = false;
+// TODO productionization: turn this to true.
 
 function clearV2Settings() {
   if (DELETE_MIGRATION_RESULT) localStorage.removeItem("holodex-v2");
