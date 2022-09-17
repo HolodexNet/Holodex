@@ -33,7 +33,7 @@
           (channel.type === "subber" && $t("views.channels.tabs.Subber")) ||
           "???"
         }}</b>
-        {{ channel.group ? "/ " + channel.group : "" }}
+        {{ group ? "/ " + group : "" }}
       </span>
       <span class="-mt-1 line-clamp-1" :class="{ 'text-lg': !slim }">
         {{ preferredName }}
@@ -142,6 +142,9 @@ export default defineComponent({
       return {
         "opacity-40": this.channel.inactive,
       };
+    },
+    group() {
+      return this.channel.group || this.channel.suborg?.slice(2);
     },
   },
   methods: {
