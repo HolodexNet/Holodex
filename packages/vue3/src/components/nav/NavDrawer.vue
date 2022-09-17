@@ -11,8 +11,7 @@
     "
     @update:model-value="(bool) => $emit('update:modelValue', bool)"
   >
-    <slot />
-    <ul class="gap-1 p-2 menu">
+    <ul class="gap-0 sm:gap-1 menu" :class="!isMobile && 'p-2'">
       <!-- {{
         modelValue
       }} -->
@@ -73,6 +72,7 @@
         <v-icon>{{ expanded ? mdiChevronUp : mdiChevronDown }}</v-icon>
       </v-btn>
     </div>
+    <slot />
 
     <sidebar-favorites></sidebar-favorites>
 

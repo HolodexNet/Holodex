@@ -1,8 +1,8 @@
 <template>
   <!-- <v-container fluid style="height: 100%"> -->
-  <div class="card m-auto mt-6 bg-bgColor shadow-lg" style="max-width: 500px">
+  <div class="m-auto mt-6 shadow-lg card bg-bgColor" style="max-width: 500px">
     <user-card v-if="site.user" class="p-2" />
-    <div class="card-body pt-0">
+    <div class="pt-0 card-body">
       <div class="flex flex-col items-center">
         <div
           v-if="
@@ -10,7 +10,8 @@
             !site.user?.twitter_id ||
             !site.user?.twitter_id
           "
-          class="flex justify-center py-2"
+          class="flex justify-center py-2 text-subtitle-2"
+          :class="{ 'self-start': site.user }"
         >
           {{
             site.user
@@ -21,40 +22,38 @@
         <div class="flex flex-col" style="max-width: 400px; width: 100%">
           <google-sign-in-button
             v-if="!site.user || !site.user.google_id"
-            class="my-1"
+            class="h-8 my-1"
             @on-credential-response="onGoogleSuccess"
           />
-          <v-btn
+          <button
             v-if="!site.user || !site.user.discord_id"
-            class="my-1"
+            class="h-8 my-1 normal-case btn btn-sm"
             color="indigo"
             @click="loginDiscord"
           >
-            <v-icon>
-              {{ icons.mdiDiscord }}
-            </v-icon>
+            <div :class="icons.discord" class="mr-auto left-2"></div>
 
-            <span>{{ $t("views.login.with.1") }}</span>
-          </v-btn>
-          <v-btn
+            <span class="mr-auto">{{ $t("views.login.with.1") }}</span>
+          </button>
+          <button
             v-if="!site.user || !site.user.twitter_id"
-            class="my-1"
+            class="h-8 my-1 normal-case btn btn-sm"
             color="blue lighten-1"
             @click="loginTwitter"
           >
-            <v-icon>
-              {{ icons.mdiTwitter }}
-            </v-icon>
+            <div :class="icons.twitter" class="mr-auto left-2"></div>
 
-            <span>{{ $t("views.login.with.2") }}</span>
-          </v-btn>
+            <span class="mr-auto">{{ $t("views.login.with.2") }}</span>
+          </button>
         </div>
       </div>
       <!-- <v-divider /> -->
 
       <template v-if="site.user">
         <!-- <div class="card-body"> -->
-        <span class="text-subtitle-2 mb-1 inline-block">{{
+        <div class="divider"></div>
+
+        <span class="inline-block text-subtitle-2">{{
           $t("views.login.username")
         }}</span>
         <div class="flex items-center">
@@ -83,22 +82,26 @@
 
         <!-- <div class="card-body"> -->
         <!-- <v-divider /> -->
-        <span class="text-subtitle-2 mb-1 inline-block">{{
-          $t("views.login.ownedYtChannel")
-        }}</span>
-        <v-text-field
-          readonly
-          rounded
-          variant="outlined"
-          density="comfortable"
-          hide-details="auto"
-          :value="site.user.yt_channel_key"
-          placeholder="None on file"
-        />
-        <span class="text-caption">
-          {{ $t("views.login.futureYtcOwnerMessage") }}
-        </span>
-        <span class="text-subtitle-2 mb-1 inline-block">API Key</span>
+        <div class="mt-2 text-gray-500">
+          <span class="inline-block mb-1 text-subtitle-2">{{
+            $t("views.login.ownedYtChannel")
+          }}</span>
+          <v-text-field
+            readonly
+            rounded
+            variant="outlined"
+            density="comfortable"
+            hide-details="auto"
+            :value="site.user.yt_channel_key"
+            placeholder="None on file"
+          />
+          <span class="text-sm">
+            {{ $t("views.login.futureYtcOwnerMessage") }}
+          </span>
+        </div>
+        <div class="divider"></div>
+
+        <span class="inline-block mb-1 text-subtitle-2">API Key</span>
         <v-text-field
           v-model="site.user.api_key"
           readonly

@@ -20,7 +20,7 @@
       flat
       height="56"
       style="border-bottom: 1px solid rgba(255, 255, 255, 0.12)"
-      class="pl-3 bg-bgColor"
+      class="pl-2 md:pl-4 bg-bgColor"
     >
       <!--=============================== Top Bar (Regular View) =============================-->
 
@@ -28,16 +28,14 @@
         <!--================= Logo & Search Bar (Space permitting) ================-->
         <div class="mr-2 cursor-pointer" @click.stop="navDrawer = !navDrawer">
           <logo v-if="isSmOrDown" width="32" height="32" :loading="loading" />
-          <div v-else class="w-8 h-8 i-ion:menu"></div>
+          <div v-else class="w-6 h-6 i-ion:menu"></div>
         </div>
         <div class="flex flex-row items-center gap-2">
-          <router-link :to="{ name: settings.defaultOpen || 'Home' }">
-            <logo
-              v-if="!isSmOrDown"
-              width="32"
-              height="32"
-              :loading="loading"
-            />
+          <router-link
+            v-if="!isSmOrDown"
+            :to="{ name: settings.defaultOpen || 'Home' }"
+          >
+            <logo width="32" height="32" :loading="loading" />
           </router-link>
           <OrgSelector
             @changed="(org: Org, close?: Function) => {site.currentOrg = org; close && close();}"
@@ -150,7 +148,12 @@
       <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
       <template v-if="isMobile">
         <!-- <InstallPrompt /> -->
-        <user-card no-setting in-nav-drawer style="background-color: inherit" />
+        <user-card
+          no-setting
+          in-nav-drawer
+          style="background-color: inherit"
+          @click="navDrawer = false"
+        />
         <v-divider />
       </template>
     </NavDrawer>
