@@ -1,5 +1,5 @@
 <template>
-  <h-tabs class="mb-4" with-container>
+  <h-tabs xclass="mb-4 bg-bgColor-500" with-container>
     <h-tab :active="category === 0" @click="category = 0">
       {{ $t("views.channels.tabs.Vtuber") }}
     </h-tab>

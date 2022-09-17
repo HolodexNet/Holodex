@@ -77,7 +77,7 @@
             </div>
           </template>
         </channel-card>
-        <div class="tabs justify-evenly md:justify-center">
+        <!-- <div class="tabs justify-evenly md:justify-center">
           <router-link
             v-for="tab in tabs"
             :key="tab.path"
@@ -88,7 +88,21 @@
             <div :class="tab.class" class="mr-1 md:mr-2"></div>
             {{ tab.name }}
           </router-link>
-        </div>
+        </div> -->
+
+        <h-tabs with-container>
+          <h-tab
+            v-for="tab in tabs"
+            :key="tab.path"
+            :active="tab.name === $router.currentRoute.value.name"
+            :component="RouterLink"
+            :to="tab.path"
+            class="min-h-[4rem] sm:min-h-[2.5rem]"
+          >
+            <div :class="tab.class" class="mr-1 md:mr-2"></div>
+            {{ tab.name }}
+          </h-tab>
+        </h-tabs>
       </div>
 
       <!-- <v-list-item-avatar class="my-0" :size="avatarSize">
@@ -116,6 +130,7 @@ import { useLangStore } from "@/stores/lang";
 import { useSettingsStore } from "@/stores/settings";
 import { useSiteStore } from "@/stores/site";
 import { getBannerImages } from "@/utils/functions";
+import { RouterLink } from "vue-router";
 import { useDisplay } from "vuetify";
 
 export default defineComponent({
@@ -157,6 +172,7 @@ export default defineComponent({
       isFav,
       isBlocked,
       favPatcher,
+      RouterLink,
     };
   },
   computed: {

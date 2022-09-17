@@ -12,19 +12,19 @@
           ? 'primary--text text--lighten-3'
           : 'primary--text text--darken-2'
       " -->
-  <h-tabs class="mb-4">
+  <h-tabs xclass="mb-4 bg-bgColor-500">
     <h-tab :active="currentTab === 0" @click="() => updateTab(0)">
       {{ liveUpcomingHeaderSplit[1] }}
       <span
         v-if="liveUpcomingCounts.liveCnt"
-        class="rounded-sm badge badge-secondary badge-sm sm:badge-md mx-1"
+        class="mx-1 rounded-sm badge badge-secondary badge-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.liveCnt }}
       </span>
       {{ liveUpcomingHeaderSplit[2] }}
       <span
         v-if="liveUpcomingCounts.upcomingCnt"
-        class="rounded-sm badge badge-outline badge-sm sm:badge-md mx-1"
+        class="mx-1 rounded-sm badge badge-outline badge-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.upcomingCnt }}
       </span>
