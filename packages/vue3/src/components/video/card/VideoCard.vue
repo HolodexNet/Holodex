@@ -17,7 +17,9 @@
         'h-[80px] my-auto': horizontal,
         'saturate-50 opacity-60': !selected && selection.selectionMode,
         'opacity-80 border-8 rounded-xl border-transparent ring-primary ring-2 border-opacity-0 -mb-[7px] transition-all':
-          selected && selection.selectionMode,
+          selected && selection.selectionMode && !horizontal,
+        'opacity-80 border-8 rounded-xl border-transparent ring-primary ring-2 border-opacity-0 transition-all':
+          selected && selection.selectionMode && horizontal,
       }"
       class=""
     />
@@ -27,8 +29,12 @@
       type="checkbox"
       role="checkbox"
       tabindex="2"
-      class="checkbox z-[1] video-checkbox checkbox-lg"
-      :class="{ 'checkbox-primary': selected, '': !selected }"
+      class="z-[1] video-checkbox"
+      :class="{
+        'checkbox-primary': selected,
+        '': !selected,
+        'video-h': horizontal,
+      }"
       @change.stop.prevent
     />
     <!-- <a
@@ -218,6 +224,7 @@ a:visited .video-card-title {
 }
 
 .video-checkbox {
+  @apply checkbox checkbox-lg;
   //transform-origin: top left;
   //margin-bottom: 110px;
   //margin-left: 10px;
@@ -230,5 +237,15 @@ a:visited .video-card-title {
 }
 .video-checkbox[checked="true"] {
   transform: translate(11px, -36px); // eyeballed
+}
+
+.video-checkbox.video-h {
+  background-color: hsl(var(--bc));
+  margin-bottom: 0px;
+  margin-right: -24px;
+  transform: translate(-34px, 12px); // eyeballed.
+}
+.video-checkbox.video-h[checked="true"] {
+  transform: translate(-40px, 18px); // eyeballed
 }
 </style>
