@@ -1,8 +1,8 @@
 <template>
   <div class="text-2xl btn btn-square btn-ghost">
     <div
-      class="i-material-symbols:playlist-play-rounded"
       :class="{
+        [icons.playlist]: true,
         'opacity-50':
           currentPlaylistQuery.isError.value || !currentPlaylistQuery.data,
       }"

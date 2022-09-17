@@ -23,7 +23,7 @@
                   :to="`/watch/${v.id}`"
                 >
                   <!-- :href="`https://youtube.com/channel/${v.id}`" -->
-                  <div class="i-material-symbols:play-arrow-rounded"></div>
+                  <div :class="icons.playlist"></div>
                   <!-- <logo class="my-1 h-5/6"></logo> -->
                 </router-link>
                 <router-link

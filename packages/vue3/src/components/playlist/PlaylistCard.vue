@@ -110,19 +110,19 @@
               class="p-0 btn btn-ghost btn-xs"
               @click.stop.prevent="move(video.id, 'up')"
             >
-              <div class="i-bx:chevron-up"></div>
+              <div :class="icons.up"></div>
             </button>
             <button
               class="p-0 btn btn-ghost btn-xs"
               @click.stop.prevent="del(video.id)"
             >
-              <div class="i-bx:trash"></div>
+              <div :class="icons.trash"></div>
             </button>
             <button
               class="p-0 btn btn-ghost btn-xs"
               @click.stop.prevent="move(video.id, 'down')"
             >
-              <div class="i-bx:chevron-down"></div>
+              <div :class="icons.down"></div>
             </button>
             <!-- <button class="p-0 btn btn-ghost btn-xs">
               <div class="i-bx:chevrons-down"></div>

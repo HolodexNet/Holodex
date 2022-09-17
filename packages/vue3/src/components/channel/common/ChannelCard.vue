@@ -69,7 +69,7 @@
         target="_blank"
         title="Youtube"
       >
-        <div class="i-carbon:logo-youtube"></div>
+        <div :class="icons.youtube"></div>
       </a>
       <a
         class="c-card-icon hover:text-cyan-500"
@@ -78,7 +78,7 @@
         target="_blank"
         title="Twitter"
       >
-        <div class="i-carbon:logo-twitter"></div>
+        <div :class="icons.twitter"></div>
       </a>
       <button
         class="c-card-icon"
@@ -93,9 +93,6 @@
           :class="isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'"
         ></div>
       </button>
-      <!-- <div class="c-card-icon">
-        <div class="i-mdi:cancel"></div>
-      </div> -->
     </div>
   </component>
 </template>

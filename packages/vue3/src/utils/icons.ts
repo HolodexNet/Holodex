@@ -3,17 +3,31 @@
  *
  *   Importing the most commonly used mdi/js icons.
  *------------------------------------------------------------------------------------------------* */
+// branding
 export const youtube = "i-carbon:logo-youtube";
 export const google = "i-carbon:logo-google";
 export const twitter = "i-carbon:logo-twitter";
 export const discord = "i-carbon:logo-discord";
 
+// channels
 export const videos = "i-fluent:video-20-regular";
 export const collabs = "i-fluent:people-20-regular";
 export const clips = "i-fluent:movies-and-tv-20-regular";
 export const music = "i-fluent:music-note-2-play-20-filled";
 export const about = "i-fluent:book-information-20-regular";
 
+// features
+export const gcal = "i-fluent:calendar-add-20-regular";
+export const playlist = "i-material-symbols:playlist-play-rounded";
+
+// functional
+export const more = "i-ic:baseline-more-vert";
+export const edit = "i-fluent:edit-20-filled";
+export const listPlus = "i-tabler:playlist-add";
+export const trash = "i-bx:trash";
+// positional
+export const up = "i-bx:chevron-up";
+export const down = "i-bx:chevron-down";
 export {
   mdiAccountBoxMultiple,
   mdiAccountCircleOutline,

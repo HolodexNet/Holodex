@@ -12,13 +12,13 @@
         v-bind="props"
         @click.stop.prevent
       >
-        <v-icon size="large">
-          {{ icons.mdiDotsVertical }}
-        </v-icon>
+        <div :class="icons.more" class="text-lg"></div>
       </label>
     </template>
     <v-sheet>
-      <ul class="p-2 overflow-y-auto menu bg-bgColor-500 text-base-content">
+      <ul
+        class="p-2 overflow-y-auto menu video-menu bg-bgColor-500 text-base-content"
+      >
         <!-- Real Videos -->
         <template v-if="video.type !== 'placeholder'">
           <li>
@@ -27,9 +27,7 @@
               target="_blank"
               @click.stop="closeMenu()"
             >
-              <v-icon left>
-                {{ icons.mdiYoutube }}
-              </v-icon>
+              <div :class="icons.youtube"></div>
               {{ $t("views.settings.redirectModeLabel") }}
             </a>
           </li>
@@ -53,9 +51,7 @@
                 closeMenu();
               "
             >
-              <v-icon left>
-                {{ icons.mdiCalendar }}
-              </v-icon>
+              <div :class="icons.gcal"></div>
               {{ $t("component.videoCard.googleCalendar") }}
             </a>
           </li>
@@ -65,17 +61,13 @@
                 video.type !== 'stream' ? '/mentions' : '/'
               }`"
             >
-              <v-icon left>
-                {{ icons.mdiPencil }}
-              </v-icon>
+              <div :class="icons.edit"></div>
               {{ $t("component.videoCard.edit") }}
             </router-link>
           </li>
           <li v-if="video.type !== 'clip'">
             <router-link :to="`/multiview/AAUY${video.id}%2CUAEYchat`">
-              <v-icon left>
-                {{ icons.mdiViewDashboard }}
-              </v-icon>
+              <div class="i-clarity:grid-chart-solid"></div>
               {{ $t("component.mainNav.multiview") }}
             </router-link>
           </li>
@@ -83,9 +75,7 @@
             <v-menu right absolute min-width="240">
               <template #activator="{ props }">
                 <a v-bind="props">
-                  <v-icon left>
-                    {{ icons.mdiPlaylistPlus }}
-                  </v-icon>
+                  <div :class="icons.listPlus"></div>
                   {{ $t("component.mainNav.playlist") }}
                   <v-icon right class="ml-auto mr-0">
                     {{ icons.mdiChevronRight }}
@@ -95,14 +85,12 @@
               <!-- <video-quick-playlist :key="video.id+Date.now()" :video-id="video.id" :video="video" /> -->
             </v-menu>
           </li>
-          <!-- <li>
+          <li>
             <a>
-              <v-icon left>
-                {{ icons.mdiClipboardPlusOutline }}
-              </v-icon>
+              <div class="i-fluent:clipboard-link-20-filled"></div>
               {{ $t("component.videoCard.copyLink") }}
             </a>
-          </li> -->
+          </li>
         </template>
         <template v-else>
           <v-list-item
@@ -121,9 +109,7 @@
 
         <li>
           <a>
-            <v-icon left>
-              {{ icons.mdiTypewriter }}
-            </v-icon>
+            <div class="i-mdi:script-text"></div>
             {{
               ["live", "upcoming"].includes(video.status)
                 ? $t("component.videoCard.openClient")
@@ -133,9 +119,7 @@
         </li>
         <li v-if="video.status === 'past'">
           <a>
-            <v-icon left>
-              {{ icons.mdiClipboardArrowUpOutline }}
-            </v-icon>
+            <div class="i-majesticons:cloud-upload-line"></div>
             {{ $t("component.videoCard.uploadScript") }}
           </a>
         </li>
@@ -148,9 +132,7 @@
               }
             "
           >
-            <v-icon left>
-              {{ icons.mdiFlag }}
-            </v-icon>
+            <div class="i-material-symbols:flag-rounded"></div>
             {{ $t("component.reportDialog.title") }}
           </a>
         </li>
@@ -161,11 +143,11 @@
 <script lang="ts">
 import { useGlobalReportState } from "@/stores/report";
 import { useVideoSelection } from "@/stores/selection";
-import { formatDuration } from "@/utils/time";
-import { useClipboard, useNow } from "@vueuse/core";
+// import { formatDuration } from "@/utils/time";
+import { useClipboard } from "@vueuse/core";
 import dayjs from "dayjs";
 import { PropType } from "vue";
-import { useI18n } from "vue-i18n";
+// import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   props: {
@@ -287,5 +269,8 @@ export default defineComponent({
   .video-menu-default-activator {
     width: 1.25rem !important;
   }
+}
+.video-menu li a div {
+  font-size: 18px;
 }
 </style>
