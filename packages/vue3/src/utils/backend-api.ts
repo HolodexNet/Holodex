@@ -100,8 +100,10 @@ export default {
   searchComments(queryObject: any) {
     return axiosInstance.post("/search/commentSearch", queryObject);
   },
-  searchChannel(queryObject: any) {
-    return axiosInstance.post("/search/channelSearch", queryObject);
+  searchChannel(queryObject: any, jwt: string) {
+    return axiosInstance.post("/search/channelSearch", queryObject, {
+      headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+    });
   },
   channelVideos(channelId: any, { type = "videos", query }: any) {
     const q = querystring.stringify(query);
