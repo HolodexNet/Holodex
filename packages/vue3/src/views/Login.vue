@@ -1,8 +1,13 @@
 <template>
   <!-- <v-container fluid style="height: 100%"> -->
-  <div class="m-auto mt-6 shadow-lg card bg-bgColor" style="max-width: 500px">
-    <user-card v-if="site.user" class="p-2" />
-    <div class="pt-0 card-body">
+  <div
+    class="max-w-lg bg-bgColor"
+    :class="{
+      'm-auto mt-6 shadow-lg card max-w-md': $route.name !== 'Settings_User',
+    }"
+  >
+    <user-card v-if="site.user" class="p-0" />
+    <div class="p-0 card-body">
       <div class="flex flex-col items-center">
         <div
           v-if="
@@ -10,7 +15,7 @@
             !site.user?.twitter_id ||
             !site.user?.twitter_id
           "
-          class="flex justify-center py-2 text-subtitle-2"
+          class="flex justify-center py-2 text-lg font-bold"
           :class="{ 'self-start': site.user }"
         >
           {{

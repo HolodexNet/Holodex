@@ -19,6 +19,11 @@
             >Color Themes</router-link
           >
         </li>
+        <li :class="{ 'bordered active': route.name === 'Settings_User' }">
+          <router-link to="/settings/user" class="justify-center"
+            >Account Settings</router-link
+          >
+        </li>
         <li :class="{ 'bordered active': route.name === 'Settings_Homepage' }">
           <router-link to="/settings/homepage" class="justify-center"
             >Homepage & Filters</router-link

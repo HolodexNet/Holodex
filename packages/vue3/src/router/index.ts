@@ -134,6 +134,11 @@ const routes: RouteRecordRaw[] = [
           import("@/components/settings/index").then((w) => w.homeSettings),
       },
       {
+        name: "Settings_User",
+        path: "user",
+        component: () => import("@/views/Login.vue"),
+      },
+      {
         name: "Settings_Blocked",
         path: "blocked",
         component: () =>

@@ -145,17 +145,6 @@
       :expand="navbarExpanded"
       @expand="navbarExpanded = !navbarExpanded"
     >
-      <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
-      <template v-if="isMobile">
-        <!-- <InstallPrompt /> -->
-        <user-card
-          no-setting
-          in-nav-drawer
-          style="background-color: inherit"
-          @click="navDrawer = false"
-        />
-        <v-divider />
-      </template>
     </NavDrawer>
 
     <v-navigation-drawer
@@ -272,20 +261,20 @@ export default defineComponent({
         {
           name: "Musicdex",
           path: musicdexURL,
-          // icon: this.icons.mdiMusic,
+          icon: "i-mdi:music-clef-treble",
           collapsible: true,
           divider: true,
-        },
-        {
-          name: this.$t("component.mainNav.about"),
-          path: "/about",
-          icon: "i-ion:information-circle-outline",
-          collapsible: true,
         },
         {
           name: this.$t("component.mainNav.settings"),
           path: "/settings",
           icon: "i-material-symbols:settings-rounded",
+          collapsible: true,
+        },
+        {
+          name: this.$t("component.mainNav.about"),
+          path: "/about",
+          icon: "i-ion:information-circle-outline",
           collapsible: true,
         },
         {

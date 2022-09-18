@@ -20,7 +20,7 @@
       <div
         v-if="user"
         class="flex flex-row p-2 cursor-pointer hover:bg-bgColor-300"
-        @click="$router.push({ path: '/login' })"
+        @click="$router.push({ path: '/settings/user' })"
       >
         <div class="flex items-center justify-center p-2 pr-4">
           <img
@@ -73,16 +73,17 @@
         </li>
 
         <div v-if="user && !inNavDrawer" class="my-0 divider" />
-        <li v-if="user && !inNavDrawer">
-          <router-link to="/login">
+        <li
+          v-if="
+            user &&
+            !inNavDrawer &&
+            $route.name !== 'Settings_User' &&
+            $route.name !== 'Login'
+          "
+        >
+          <router-link to="/settings/user">
             <v-icon :icon="icons.mdiAccountCircleOutline"></v-icon>
             {{ $t("component.mainNav.accountSettings") }}
-          </router-link>
-        </li>
-        <li v-if="!noSetting">
-          <router-link to="/settings">
-            <v-icon :icon="icons.mdiCog"></v-icon>
-            {{ $t("component.mainNav.settings") }}
           </router-link>
         </li>
         <li v-if="user && !inNavDrawer">
@@ -101,7 +102,6 @@ import { useClient } from "@/hooks/auth/client";
 import { useSiteStore } from "@/stores";
 
 defineProps({
-  noSetting: Boolean,
   inNavDrawer: Boolean,
 });
 

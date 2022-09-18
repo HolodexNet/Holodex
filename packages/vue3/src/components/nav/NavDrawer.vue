@@ -30,14 +30,8 @@
             :to="page.path"
             @click="(e) => handlePageClick(page, e)"
           >
-            <v-list-item-icon
-              v-if="page.name === 'Musicdex'"
-              style="max-width: 24px"
-              :icon="icons.mdiStarFourPointsOutline"
-            >
-            </v-list-item-icon>
             <div
-              v-else-if="page.icon.startsWith('i')"
+              v-if="page.icon.startsWith('i')"
               :class="page.icon"
               class="v-icon notranslate v-theme--dark v-icon--size-default v-list-item-icon"
             ></div>
@@ -47,6 +41,7 @@
         </li>
         <v-divider v-if="page.divider" :key="`${page.path}-divider`" />
       </template>
+
       <!-- Expanded part -->
       <v-divider v-if="expanded" />
 
@@ -57,7 +52,6 @@
             :class="{ 'v-list-item--active': $route.fullPath === page.path }"
             @click="(e) => handlePageClick(page, e)"
           >
-            <v-list-item-icon :icon="page.icon"> </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>{{ page.name }}</v-list-item-title>
             </v-list-item-content>
@@ -65,14 +59,37 @@
         </li>
       </template>
       <!-- </v-list> -->
+      <v-divider />
+      <div class="h-6">
+        <v-btn class="!h-6" block elevation="0" @click="expanded = !expanded">
+          <v-icon>{{ expanded ? mdiChevronUp : mdiChevronDown }}</v-icon>
+        </v-btn>
+      </div>
+      <slot />
+      <li
+        v-if="display.mobile"
+        class="py-0 text-xs font-semibold text-gray-400"
+      >
+        <template v-if="!site.user">
+          <router-link :to="'/login'">
+            <div
+              class="v-icon notranslate v-theme--dark v-icon--size-default v-list-item-icon i-ion:md-log-in"
+            ></div>
+            Login</router-link
+          >
+        </template>
+        <template v-else-if="site.user">
+          <router-link
+            :to="'/settings/user'"
+            style="padding-top: 3px; padding-bottom: 3px"
+          >
+            <div class="-mr-1 i-tabler:user"></div>
+            {{ site.user.username }} :
+            {{ site.user.contribution_count }}pts</router-link
+          >
+        </template>
+      </li>
     </ul>
-    <v-divider />
-    <div class="justify-center d-flex">
-      <v-btn small block elevation="0" @click="expanded = !expanded">
-        <v-icon>{{ expanded ? mdiChevronUp : mdiChevronDown }}</v-icon>
-      </v-btn>
-    </div>
-    <slot />
 
     <sidebar-favorites></sidebar-favorites>
 
@@ -107,7 +124,7 @@
 
 <script lang="ts">
 import { mdiPatreon, mdiChevronUp, mdiChevronDown } from "@mdi/js";
-import { useLangStore } from "@/stores";
+import { useLangStore, useSiteStore } from "@/stores";
 import { useDisplay } from "vuetify";
 import { langs } from "@/hooks/i18n/i18nConsts";
 
@@ -134,6 +151,7 @@ export default defineComponent({
     const display = useDisplay();
 
     const isMobile = display.mobile;
+    const site = useSiteStore();
 
     watch(
       () => props.temporary,
@@ -142,7 +160,7 @@ export default defineComponent({
       }
     );
 
-    return { lang, display, isMobile };
+    return { lang, display, isMobile, site };
   },
   data() {
     return {
