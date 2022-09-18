@@ -76,7 +76,7 @@ import { getVideoThumbnails } from "@/utils/functions";
 import { usePlaylistList } from "@/services/playlist";
 import { useLangStore } from "@/stores/lang";
 import { useDisplay } from "vuetify";
-import type { PlaylistListItem } from "@/utils/types";
+import type { PlaylistListItem, Playlist } from "@/utils/types";
 import { usePlaylistState } from "@/stores/playlist";
 import { useSiteStore } from "@/stores/site";
 
@@ -131,12 +131,14 @@ export default defineComponent({
     //     this.isSaved || confirm(this.$t("views.playlist.change-loss-warning"))
     //   );
     // },
-    getPlaylistPreview(playlist: PlaylistListItem) {
+    getPlaylistPreview(playlist: PlaylistListItem | Playlist) {
       const limit = this.xs ? 1 : 4;
       if ((playlist as any).video_ids)
         return (playlist as any).video_ids.slice(0, limit);
       if (playlist.videos)
-        return playlist.videos.slice(0, limit).map(({ id }) => id);
+        return (playlist.videos as VideoRef[])
+          .slice(0, limit)
+          .map(({ id }) => id);
       return [];
     },
     createNewPlaylist() {

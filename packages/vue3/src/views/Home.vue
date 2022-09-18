@@ -1,17 +1,4 @@
 <template>
-  <!-- <page-container> -->
-
-  <!-- :centered="$vuetify.breakpoint.xs"
-      :class="
-        $store.state.settings.darkMode
-          ? 'secondary darken-1'
-          : 'primary lighten-1'
-      "
-      :active-class="
-        $store.state.settings.darkMode
-          ? 'primary--text text--lighten-3'
-          : 'primary--text text--darken-2'
-      " -->
   <h-tabs xclass="mb-4 bg-bgColor-500">
     <h-tab :active="currentTab === 0" @click="() => updateTab(0)">
       {{ liveUpcomingHeaderSplit[1] }}
@@ -70,7 +57,6 @@
       <h-pagination v-model="currentPage" :total-pages="totalPages" />
     </div>
   </div>
-  <!-- </page-container> -->
 </template>
 <script setup lang="ts">
 import { useVideoListDatasource } from "@/services/video";
