@@ -1,6 +1,6 @@
 import { Theme } from "./helpers";
 
-export const presets: [Theme] = [
+export const presets: Theme[] = [
   {
     name: "aqua",
     dark: true,
@@ -10,6 +10,21 @@ export const presets: [Theme] = [
       neutral: "#758799",
       secondary: "#3b88d5",
       accent: "#F03284",
+      error: "#B00020",
+      info: "#64B5F6",
+      success: "#4CAF50",
+      warning: "#FB8C00",
+    },
+  },
+  {
+    name: "gura",
+    dark: true,
+    colors: {
+      "base-100": "#222222",
+      primary: "#62B2F0",
+      neutral: "#758799",
+      secondary: "#3BD5C4",
+      accent: "#082DB6",
       error: "#B00020",
       info: "#64B5F6",
       success: "#4CAF50",
