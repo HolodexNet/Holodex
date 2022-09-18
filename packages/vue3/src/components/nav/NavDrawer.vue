@@ -66,10 +66,7 @@
         </v-btn>
       </div>
       <slot />
-      <li
-        v-if="display.mobile"
-        class="py-0 text-xs font-semibold text-gray-400"
-      >
+      <li v-if="isMobile" class="py-0 text-xs font-semibold text-gray-400">
         <template v-if="!site.user">
           <router-link :to="'/login'">
             <div
