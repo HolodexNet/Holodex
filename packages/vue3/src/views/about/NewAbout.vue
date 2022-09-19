@@ -1,55 +1,16 @@
 <template>
   <!-- <v-container class="channel-container" fluid> -->
   <div class="w-full">
-    <scroll-parallax up :speed="0.4"
-      ><img
+    <scroll-parallax up :speed="0.4">
+      <img
         src="https://holodex.net/img/intro-promo.jpg"
-        class="object-cover object-top w-full max-h-60"
+        class="object-cover object-top w-full max-h-40"
         style="object-position: 0px 10%"
-    /></scroll-parallax>
-    <!-- <v-img
-        v-if="bannerImage"
-        :src="bannerImage"
-        class="-mb-0 sm:-mb-6 md:-mb-12"
-      /> -->
-    <div class="sticky z-10 mx-full top-12 bg-bgColor/95 backdrop-blur">
-      <div class="container mx-auto">
-        <div
-          class="flex flex-row items-center p-4 pb-1 overflow-hidden rounded-none rounded-md shadow-none channel-card justify-self-auto"
-        >
-          <div class="flex-shrink-0 indicator">
-            <!--v-if--><!-- Render with opaque response for cache if size is lte 40 -->
-            <logo class="w-16 mr-4" />
-          </div>
-          <div class="flex-grow">
-            <span class="text-xs text-neutral opacity-60"><b>About</b> </span>
-            <span class="-mt-1 text-lg line-clamp-1">Holodex</span>
-          </div>
-          <div class="grid grid-cols-2 gap-1 mr-2 md:mr-4 md:gap-2">
-            <a
-              class="w-8 h-8 c-social-icon md:w-12 md:h-12 hover:text-red-500"
-              :href="`https://youtube.com/channel/${channel.id}`"
-              target="_blank"
-              title="Youtube"
-            >
-              <div class="i-carbon:logo-youtube"></div>
-            </a>
-            <a
-              class="w-8 h-8 c-social-icon md:w-12 md:h-12 hover:text-cyan-500"
-              :class="{
-                'btn-disabled bg-inherit opacity-20': !channel.twitter,
-              }"
-              :href="
-                channel.twitter ? `https://twitter.com/${channel.twitter}` : '#'
-              "
-              target="_blank"
-              title="Twitter"
-            >
-              <div class="i-carbon:logo-twitter"></div>
-            </a>
-          </div>
-        </div>
-        <h-tabs with-container class="pt-1">
+      />
+    </scroll-parallax>
+    <div class="sticky z-10 mx-full top-12 bg-bgColor">
+      <div class="container pt-4 mx-auto">
+        <h-tabs with-container>
           <h-tab
             v-for="tab in tabs"
             :key="tab.path"
@@ -169,7 +130,7 @@ export default defineComponent({
       return [
         {
           path: `/about`,
-          name: "Information",
+          name: "Holodex",
           class: this.icons.about,
         },
         {
