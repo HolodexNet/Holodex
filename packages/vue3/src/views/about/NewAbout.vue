@@ -1,13 +1,6 @@
 <template>
   <!-- <v-container class="channel-container" fluid> -->
   <div class="w-full">
-    <scroll-parallax up :speed="0.4">
-      <img
-        src="https://holodex.net/img/intro-promo.jpg"
-        class="object-cover object-top w-full max-h-40"
-        style="object-position: 0px 10%"
-      />
-    </scroll-parallax>
     <div class="sticky z-10 mx-full top-12 bg-bgColor">
       <div class="container pt-4 mx-auto">
         <h-tabs with-container>
