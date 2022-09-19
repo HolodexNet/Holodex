@@ -43,6 +43,9 @@ app.use(Vue3Linkify);
 
 export const vuetify = createVuetify({
   display: {
+    thresholds: {
+      sm: 601,
+    },
     mobileBreakpoint: "sm",
   },
   locale: createVueI18nAdapter({ i18n, useI18n }),

@@ -22,6 +22,7 @@
       >
         <li>
           <router-link
+            :active-class="'active'"
             :class="{
               active:
                 $route.fullPath === page.path ||

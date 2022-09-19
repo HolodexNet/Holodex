@@ -161,6 +161,56 @@ const routes: RouteRecordRaw[] = [
     path: "/about",
     name: "About",
     component: () => import("@/views/about/NewAbout.vue"),
+    children: [
+      {
+        path: ``,
+        name: "About",
+        component: () =>
+          import("@/views/about/index").then((w) => w.defaultPage),
+      },
+      {
+        path: `general`,
+        name: "About Holodex",
+        component: () =>
+          import("@/views/about/index").then((w) => w.defaultPage),
+      },
+      {
+        path: `faq`,
+        name: "Frequently Asked Questions",
+        component: () =>
+          import("@/views/about/index").then((w) => w.defaultPage),
+      },
+      {
+        path: `request`,
+        name: "Channel Request",
+        component: () =>
+          import("@/views/about/index").then((w) => w.defaultPage),
+      },
+      {
+        path: `placeholder`,
+        name: "Add a Placeholder",
+        component: () =>
+          import("@/views/about/index").then((w) => w.defaultPage),
+      },
+      {
+        path: `contact`,
+        name: "Extensions",
+        component: () =>
+          import("@/views/about/index").then((w) => w.defaultPage),
+      },
+      {
+        path: `contact`,
+        name: "Contact",
+        component: () =>
+          import("@/views/about/index").then((w) => w.defaultPage),
+      },
+      {
+        path: `privacy`,
+        name: "Privacy Policy",
+        component: () =>
+          import("@/views/about/index").then((w) => w.defaultPage),
+      },
+    ],
   },
   {
     path: "/kitchensink",
