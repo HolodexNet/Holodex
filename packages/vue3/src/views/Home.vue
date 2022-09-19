@@ -1,6 +1,11 @@
 <template>
   <h-tabs xclass="mb-4 bg-bgColor-500">
-    <h-tab :active="currentTab === 0" @click="() => updateTab(0)">
+    <h-tab
+      :active="currentTab === 0"
+      class="shrink"
+      style="text-overflow: ''; white-space: nowrap; overflow: hidden"
+      @click="() => updateTab(0)"
+    >
       {{ liveUpcomingHeaderSplit[1] }}
       <span
         v-if="liveUpcomingCounts.liveCnt"

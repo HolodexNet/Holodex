@@ -38,6 +38,7 @@ declare module '@vue/runtime-core' {
     MessageRenderer: typeof import('./src/components/tldex/client/MessageRenderer.vue')['default']
     MessageVRenderer: typeof import('./src/components/tldex/client/MessageVRenderer.vue')['default']
     NavDrawer: typeof import('./src/components/nav/NavDrawer.vue')['default']
+    NewAbout: typeof import('./src/views/about/NewAbout.vue')['default']
     OrgNotFound: typeof import('./src/views/errors/OrgNotFound.vue')['default']
     OrgSelector: typeof import('./src/components/frame/OrgSelector.vue')['default']
     Page: typeof import('./src/stories/Page.vue')['default']
