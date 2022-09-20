@@ -163,14 +163,14 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/about/NewAbout.vue"),
     children: [
       {
-        path: ``,
-        name: "About",
-        component: () => import("@/views/about/index").then((w) => w.general),
+        path: "",
+        name: "About - Holodex",
+        component: () => import("@/views/about/AboutGeneral.vue"),
       },
       {
         path: `general`,
-        name: "About Holodex",
-        component: () => import("@/views/about/index").then((w) => w.general),
+        name: "General Information",
+        component: () => import("@/views/about/AboutGeneral.vue"),
       },
       {
         path: `faq`,

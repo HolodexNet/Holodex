@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     Button: typeof import('./src/stories/Button.vue')['default']
     Channel: typeof import('./src/views/Channel.vue')['default']
     ChannelAbout: typeof import('./src/views/channel/ChannelAbout.vue')['default']
+    ChannelAutocomplete: typeof import('./src/components/channel/ChannelAutocomplete.vue')['default']
     ChannelCard: typeof import('./src/components/channel/common/ChannelCard.vue')['default']
     ChannelImg: typeof import('./src/components/channel/common/ChannelImg.vue')['default']
     ChannelList: typeof import('./src/components/channel/ChannelList.vue')['default']

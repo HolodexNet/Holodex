@@ -1,6 +1,6 @@
 <template>
   <div class="text-lg font-bold">Join Holodex Discord:</div>
-  <a href="">
+  <a href="" class="block mt-2">
     <img
       src="https://discordapp.com/api/guilds/796190073271353385/widget.png?style=banner2"
       width="280"
@@ -8,7 +8,7 @@
   /></a>
   <div class="mt-4 text-lg font-bold">DM us on Twitter</div>
   <a
-    class="inline-block m-2"
+    class="inline-block mt-2 mr-4"
     href="https://twitter.com/intent/follow?original_referer=https://holodex.net%2F&ref_src=twsrc%5Etfw%7Ctwcamp%5Ebuttonembed%7Ctwterm%5Efollow%7Ctwgr%5Eholodex&screen_name=holodex"
   >
     <img
@@ -17,7 +17,7 @@
     />
   </a>
   <a
-    class="inline-block m-2"
+    class="inline-block mt-2"
     href="https://twitter.com/messages/compose?recipient_id=1320894663084048384&text=Hello"
   >
     <img
@@ -65,12 +65,9 @@
         </div>
       </div>
     </div>
-    <!-- <button
-      type="submit"
-      class="px-10 py-2 mt-5 text-white bg-black rounded-md"
-    >
+    <button type="submit" class="px-10 py-2 mt-5 btn-primary btn">
       Send Message
-    </button> -->
+    </button>
   </form>
 </template>
 <script></script>

@@ -72,10 +72,10 @@
 </template>
 
 <script lang="ts">
-import { useDisplay } from "vuetify/lib/framework.mjs";
+import { useDisplay } from "vuetify";
 
 export default defineComponent({
-  name: "Channel",
+  name: "NewAbout",
   components: {},
   setup() {
     const display = useDisplay();
