@@ -198,8 +198,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: `contact`,
         name: "Contact",
-        component: () =>
-          import("@/views/about/index").then((w) => w.defaultPage),
+        component: () => import("@/views/about/index").then((w) => w.contact),
       },
       {
         path: `privacy`,
