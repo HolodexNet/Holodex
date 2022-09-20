@@ -165,14 +165,12 @@ const routes: RouteRecordRaw[] = [
       {
         path: ``,
         name: "About",
-        component: () =>
-          import("@/views/about/index").then((w) => w.defaultPage),
+        component: () => import("@/views/about/index").then((w) => w.general),
       },
       {
         path: `general`,
         name: "About Holodex",
-        component: () =>
-          import("@/views/about/index").then((w) => w.defaultPage),
+        component: () => import("@/views/about/index").then((w) => w.general),
       },
       {
         path: `faq`,
@@ -183,8 +181,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: `request`,
         name: "Channel Request",
-        component: () =>
-          import("@/views/about/index").then((w) => w.defaultPage),
+        component: () => import("@/views/about/index").then((w) => w.request),
       },
       {
         path: `placeholder`,
@@ -193,7 +190,7 @@ const routes: RouteRecordRaw[] = [
           import("@/views/about/index").then((w) => w.defaultPage),
       },
       {
-        path: `contact`,
+        path: `extensions`,
         name: "Extensions",
         component: () =>
           import("@/views/about/index").then((w) => w.defaultPage),

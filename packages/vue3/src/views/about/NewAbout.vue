@@ -2,7 +2,7 @@
   <!-- <v-container class="channel-container" fluid> -->
   <div
     key="aboutpg"
-    class="container flex flex-row flex-wrap items-stretch gap-2 pt-3 mx-auto"
+    class="container flex flex-row flex-wrap items-stretch gap-2 p-1 pt-2 mx-auto"
   >
     <div
       id="setting-menu"
@@ -19,15 +19,6 @@
           <div class="w-full p-2 pb-1 text-xs font-bold pointer-events-none">
             Quick Links:
           </div>
-          <!-- <a class="p-0 bg-transparent btn-square btn-disabled">
-            <logo class="w-6 h-6 m-auto"></logo>
-          </a> -->
-          <!-- <a class="p-0 btn-square" title="Make a Channel Request">
-            <div class="m-auto i-carbon:request-quote"></div>
-          </a> -->
-          <!-- <a class="p-0 btn-square" title="Email dev team">
-            <div class="m-auto i-mdi:email-fast"></div>
-          </a> -->
           <a
             class="p-0 btn-square"
             title="Follow us on twitter"
@@ -41,6 +32,9 @@
             href="https://ko-fi.com/holodex"
           >
             <div class="m-auto i-fa6-solid:hand-holding-dollar"></div>
+          </a>
+          <a class="p-0 btn-square" title="Issues / Source Code">
+            <div class="m-auto i-carbon:logo-github"></div>
           </a>
         </li>
         <li v-for="tab in tabs" :key="tab.path">
@@ -66,6 +60,9 @@
       class="flex-grow flex-shrink-0 p-3 rounded-md xs:max-w-full w-80 bg-bgColor"
       style="flex-basis: 60%; min-width: 300px"
     >
+      <h1 v-if="minimizeSidebar" class="mb-2 text-xl font-semibold">
+        {{ tabs.find((x) => x.active)?.name }}
+      </h1>
       <router-view></router-view>
     </div>
   </div>
@@ -118,7 +115,7 @@ export default defineComponent({
           class: "i-carbon:event-schedule",
         },
         {
-          path: `/about/contact`,
+          path: `/about/extensions`,
           name: "Extensions",
           class: "i-fluent:extension-24-regular",
         },

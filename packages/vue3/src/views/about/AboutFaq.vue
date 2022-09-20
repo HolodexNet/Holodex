@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panels accordion focusable>
+  <v-expansion-panels focusable elevation="0" variant="inset">
     <v-expansion-panel>
       <v-expansion-panel-title>
         {{ $t("about.faq.ytchatHeader") }}

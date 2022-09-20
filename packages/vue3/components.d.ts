@@ -8,7 +8,9 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     About: typeof import('./src/views/About.vue')['default']
+    AboutChannelRequest: typeof import('./src/views/about/AboutChannelRequest.vue')['default']
     AboutFaq: typeof import('./src/views/about/AboutFaq.vue')['default']
+    AboutGeneral: typeof import('./src/views/about/AboutGeneral.vue')['default']
     App: typeof import('./src/App.vue')['default']
     ArchivedTranslations: typeof import('./src/components/tldex/client/ArchivedTranslations.vue')['default']
     BlockedList: typeof import('./src/components/settings/BlockedList.vue')['default']
