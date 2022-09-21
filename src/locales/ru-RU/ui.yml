@@ -429,6 +429,10 @@ views:
       addProfile: Добавить профиль
       removeProfile: Удалить профиль
       showSetting: Настройка
+      hideSetting: Скрыть
+    addProfilePanel:
+      title: Добавить новый профиль
+      inputLabel: Имя профиля
     settingPanel:
       mainStreamLink: Ссылка на основной стрим
       collabLink: Ссылки на участников коллаба
@@ -578,5 +582,14 @@ about:
 channelRequest:
   RequestType: 'Тип запроса:'
   Types:
+    AddVtuber: Добавить витубера ▶️ в Holodex для отслеживания канала и клипов.
+    AddClipper: Добавить канал клиппера в Holodex
+    ModifyExistingInfo: Изменить информацию об уже добавленном канале
     DeleteChannel: Удалить мой канал
+  DirectContactDisclaimer: >-
+    Не стесняйтесь оставить свой id discord, email или twitter. В случае, если нам нужно будет связаться с вами (эта информация останется конфиденциальной), чтобы мы могли ответить вам на запрос. Только администраторы holodex будут видеть эту информацию.
+  DirectContactLabel: Контакты (необязательно)
+  TwitterHandle: Имя пользователя этого канала в Твиттере (необязательно)
   ChannelLanguageLabel: Основной язык канала
+  Comments: Комментарии
+  CommentsHint: Другие комментарии, которые Вы хотели бы нам сообщить.
