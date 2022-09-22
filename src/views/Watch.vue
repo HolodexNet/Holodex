@@ -15,11 +15,6 @@
       'show-highlights-bar': showHighlightsBar
     }"
   >
-    <!-- <KeyPress
-      key-event="keyup"
-      :multiple-keys="altTHotKey"
-      @success="toggleTheaterMode"
-    /> -->
     <KeyPress
       key-event="keyup"
       :key-code="84"
@@ -214,14 +209,6 @@ export default {
             playlistIndex: -1,
             currentTime: 0,
             player: null,
-            altTHotKey: [
-                {
-                    keyCode: 84, // T
-                    modifiers: ["alt"],
-                    preventDefault: false,
-                },
-            ],
-
         };
     },
     computed: {
