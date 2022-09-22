@@ -41,28 +41,41 @@
       (If you'd like to add your name to this list, drop us a poke on Discord!)
     </p>
     <h3 class="mt-4 text-lg">Quick Links</h3>
-    <div id="qlinks">
+    <div
+      id="qlinks"
+      class="grid gap-2 grid-flow-dense"
+      style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))"
+    >
       <a
-        class="p-0"
+        class="p-0 btn btn-sm btn-info btn-outline"
         title="Follow us on twitter"
         href="https://twitter.com/holodex"
       >
         <div class="i-carbon:logo-twitter"></div>
       </a>
       <a
-        class="p-0"
+        class="p-0 btn btn-sm btn-secondary btn-outline"
         title="Support us on Ko-Fi"
         href="https://ko-fi.com/holodex"
       >
         <div class="i-cib:ko-fi"></div>
       </a>
-      <a class="p-0" title="Issues / Source Code">
+      <a
+        class="p-0 btn btn-sm btn-primary btn-outline"
+        title="Issues / Source Code"
+      >
         <div class="i-carbon:logo-github"></div>
       </a>
-      <a class="p-0" title="API Documentation">
+      <a
+        class="p-0 btn btn-sm btn-warning btn-outline"
+        title="API Documentation"
+      >
         <div class="i-fluent:document-flowchart-20-regular"></div>
       </a>
-      <a class="p-0" title="Holodex Discord">
+      <a
+        class="p-0 text-purple-500 border-purple-500 hover:bg-purple-500 btn btn-sm btn-outline"
+        title="Holodex Discord"
+      >
         <div class="i-carbon:logo-discord"></div>
       </a>
     </div>
@@ -70,7 +83,7 @@
 </template>
 <style>
 #qlinks a {
-  @apply btn btn-link line-clamp-1 btn-wide;
+  @apply flex flex-row flex-nowrap max-w-xs;
   margin-left: 0px;
   margin-right: 0px;
   padding: 0.5rem;
@@ -81,11 +94,12 @@
 }
 #qlinks a::after {
   content: attr(title);
-  color: hsl(var(--p));
+  /*color: hsl(var(--p));*/
   font-size: 1rem;
   line-height: 1.25rem;
   display: block;
-  width: 240px;
+  margin-left: auto;
+  margin-right: auto;
   text-align: start;
   text-transform: none;
 }

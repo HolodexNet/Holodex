@@ -127,7 +127,6 @@
 <script lang="ts">
 import backendApi from "@/utils/backend-api";
 import { mdiMinusBox } from "@mdi/js";
-//   import ChannelAutocomplete from "@/components/channel/ChannelAutocomplete.vue";
 
 const ADD_VTUBER =
   "Add a Vtuber ▶️ for Holodex to track the channel and clips.";
