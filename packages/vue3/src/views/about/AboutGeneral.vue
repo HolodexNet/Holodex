@@ -54,17 +54,23 @@
         title="Support us on Ko-Fi"
         href="https://ko-fi.com/holodex"
       >
-        <div class="i-fa6-solid:hand-holding-dollar"></div>
+        <div class="i-cib:ko-fi"></div>
       </a>
       <a class="p-0" title="Issues / Source Code">
         <div class="i-carbon:logo-github"></div>
+      </a>
+      <a class="p-0" title="API Documentation">
+        <div class="i-fluent:document-flowchart-20-regular"></div>
+      </a>
+      <a class="p-0" title="Holodex Discord">
+        <div class="i-carbon:logo-discord"></div>
       </a>
     </div>
   </article>
 </template>
 <style>
 #qlinks a {
-  @apply btn btn-link;
+  @apply btn btn-link line-clamp-1 btn-wide;
   margin-left: 0px;
   margin-right: 0px;
   padding: 0.5rem;
@@ -74,9 +80,14 @@
   @apply text-xl mr-2;
 }
 #qlinks a::after {
-  display: inline;
   content: attr(title);
   color: hsl(var(--p));
+  font-size: 1rem;
+  line-height: 1.25rem;
+  display: block;
+  width: 240px;
+  text-align: start;
+  text-transform: none;
 }
 .prose p + p {
   margin-top: 0.5rem;

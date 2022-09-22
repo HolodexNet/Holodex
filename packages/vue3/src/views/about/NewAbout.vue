@@ -31,7 +31,7 @@
             title="Support us on Ko-Fi"
             href="https://ko-fi.com/holodex"
           >
-            <div class="m-auto i-fa6-solid:hand-holding-dollar"></div>
+            <div class="m-auto i-cib:ko-fi"></div>
           </a>
           <a class="p-0 btn-square" title="Issues / Source Code">
             <div class="m-auto i-carbon:logo-github"></div>
