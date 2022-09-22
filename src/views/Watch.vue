@@ -22,8 +22,8 @@
     /> -->
     <KeyPress
       key-event="keyup"
-      :key-code="27"
-      @success="theaterMode = false"
+      :key-code="84"
+      @success="toggleTheaterMode"
     />
     <div ref="watchLayout" class="d-flex flex-grow-1 left">
       <div class="d-flex flex-column flex-grow-1">
@@ -212,7 +212,6 @@ export default {
             playlistIndex: -1,
             currentTime: 0,
             player: null,
-            theaterMode: false,
             altTHotKey: [
                 {
                     keyCode: 84, // T
@@ -225,7 +224,7 @@ export default {
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
-        ...syncState("watch", ["showTL", "showLiveChat"]),
+        ...syncState("watch", ["showTL", "showLiveChat", "theaterMode"]),
         chatStatus: {
             get() {
                 return {
