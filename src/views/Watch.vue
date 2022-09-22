@@ -22,7 +22,9 @@
     /> -->
     <KeyPress
       key-event="keyup"
-      :multiple-keys="multiple"
+      :key-code="84"
+      :modifiers="['altKey']"
+      :prevent-default="true"
       @success="toggleTheaterMode"
     />
     <div ref="watchLayout" class="d-flex flex-grow-1 left">
@@ -206,13 +208,6 @@ export default {
     data() {
         return {
             startTime: 0,
-            multiple: [
-                {
-                    keyCode: 84, // t
-                    modifiers: ['altKey'],
-                    preventDefault: true,
-                },
-            ],
             mdiOpenInNew,
             mdiDockLeft,
             mdiThumbUp,
