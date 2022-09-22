@@ -15,6 +15,20 @@
           <v-btn
             icon
             lg
+            v-bind="attrs"
+            @click="reloadVideo()"
+            v-on="on"
+          >
+            <v-icon>{{ icons.mdiRefresh }}</v-icon>
+          </v-btn>
+        </template>
+        <span>{{ "Reload Video Frame" }}</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <template #activator="{ on, attrs }">
+          <v-btn
+            icon
+            lg
             :color="hasSaved ? 'primary' : ''"
             v-bind="attrs"
             @click="toggleSaved"
@@ -84,6 +98,10 @@ export default {
         },
         goBack() {
             this.$router.go(-1);
+        },
+        reloadVideo() {
+            const curr = document.querySelector(`[id^="youtube-player"]`);
+            curr.contentWindow.location.replace(curr.src);
         },
     },
 };
