@@ -1,63 +1,63 @@
 <template>
   <v-autocomplete
-    v-model:search-input="search"
-    :value="value"
+    v-model:search="search"
+    item-title="text"
+    item-value="value"
     :items="searchResults"
     hide-no-data
     clearable
     :label="label"
-    @input="$emit('input', $event)"
+    return-object
   />
 </template>
 
-<script>
+<script lang="ts">
 import backendApi from "@/utils/backend-api";
 import { CHANNEL_TYPES } from "@/utils/consts";
-import debounce from "lodash-es/debounce";
+import { watchDebounced } from "@vueuse/core";
 
-export default {
+export default defineComponent({
   name: "ChannelAutocomplete",
   props: {
-    value: {
-      type: Object,
-      default: undefined,
-    },
     label: {
       type: String,
       default: "Search Channels",
     },
   },
-  data() {
-    return {
-      // selectedChannel: null,
-      search: "",
-      searchResults: [],
-    };
+  setup() {
+    const search = ref("");
+    const searchResults = ref([]);
+    watchDebounced(
+      search,
+      () => {
+        console.log("huh");
+        if (!search.value) {
+          searchResults.value = [];
+          return;
+        }
+        backendApi
+          .searchChannel(
+            {
+              type: CHANNEL_TYPES.VTUBER,
+              queryText: search.value,
+            },
+            ""
+          )
+          .then(({ data }) => {
+            searchResults.value = data.map((d) => ({
+              text: `${d.english_name ? d.english_name + "," : ""} ${d.name} (${
+                d.id
+              })`,
+              value: d,
+            }));
+          });
+      },
+      { debounce: 500, maxWait: 10000 }
+    );
+
+    return { search, searchResults };
   },
-  watch: {
-    // eslint-disable-next-line func-names
-    search: debounce(function () {
-      if (!this.search) {
-        this.searchResults = [];
-        return;
-      }
-      backendApi
-        .searchChannel({
-          type: CHANNEL_TYPES.VTUBER,
-          queryText: this.search,
-        })
-        .then(({ data }) => {
-          this.searchResults = data.map((d) => ({
-            text: `${d.english_name ? d.english_name + "," : ""} ${d.name} (${
-              d.id
-            })`,
-            value: d,
-          }));
-        });
-    }, 500),
-  },
-  methods: {},
-};
+});
 </script>
 
 <style></style>

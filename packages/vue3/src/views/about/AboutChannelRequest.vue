@@ -37,7 +37,7 @@
       <template v-if="type">
         <channel-autocomplete
           v-if="type === MODIFY_EXISTING || type === DELETE"
-          v-model="channel"
+          v-model:model-value="channel"
           label="Channel"
         />
         <v-text-field
@@ -61,7 +61,7 @@
             type !== DELETE &&
             type === MODIFY_EXISTING &&
             channel &&
-            (channel as any)?.type === 'clipper'
+            (channel.value as any)?.type === 'clipper'
           "
           v-model="lang"
           :items="languages"
@@ -215,14 +215,28 @@ export default defineComponent({
       contact: "",
       comments: "",
       org: "",
-      channel: {},
+      channel: {
+        text: "...",
+        value: {
+          id: "",
+          name: "",
+          english_name: "",
+        },
+      },
     };
   },
   computed: {},
   watch: {
     type() {
       this.link = "";
-      this.channel = {};
+      this.channel = {
+        text: "...",
+        value: {
+          id: "",
+          name: "",
+          english_name: "",
+        },
+      };
       this.english_name = "";
       this.lang = "";
       this.twitter = "";
@@ -305,7 +319,7 @@ export default defineComponent({
                   name: "Channel Link",
                   value:
                     this.link ||
-                    `https://www.youtube.com/channel/${this.channel.id}`,
+                    `https://www.youtube.com/channel/${this.channel.value.id}`,
                   inline: false,
                 },
                 ...ifValid(this.english_name, {
@@ -345,7 +359,14 @@ export default defineComponent({
           .then(() => {
             this.success = true;
             this.link = "";
-            this.channel = {};
+            this.channel = {
+              text: "...",
+              value: {
+                id: "",
+                name: "",
+                english_name: "",
+              },
+            };
             this.english_name = "";
             this.lang = "";
             this.twitter = "";
