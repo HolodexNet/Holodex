@@ -216,7 +216,7 @@ export default defineComponent({
       comments: "",
       org: "",
       channel: {
-        text: "...",
+        text: "",
         value: {
           id: "",
           name: "",
@@ -230,7 +230,7 @@ export default defineComponent({
     type() {
       this.link = "";
       this.channel = {
-        text: "...",
+        text: "",
         value: {
           id: "",
           name: "",
@@ -271,11 +271,11 @@ export default defineComponent({
         case ADD_CLIPPER:
           return this.$t("channelRequest.ClipperRequirementText");
         case MODIFY_EXISTING:
-          return false;
+          return "";
         case DELETE:
           return this.$t("channelRequest.DeletionRequirementText");
         default:
-          return false;
+          return "";
       }
     },
 
@@ -304,7 +304,7 @@ export default defineComponent({
           return [];
         };
         const body = {
-          content: "‌Look what the cat dragged in...",
+          content: "Look what the cat dragged in...",
           embeds: [
             {
               title: "Holodex New Subber Request",
@@ -360,7 +360,7 @@ export default defineComponent({
             this.success = true;
             this.link = "";
             this.channel = {
-              text: "...",
+              text: "",
               value: {
                 id: "",
                 name: "",
