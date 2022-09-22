@@ -2,7 +2,7 @@
   <v-container>
     <a
       class="twitter-timeline"
-      :data-height="$store.state.isMobile ? '410' : '100%'"
+      :data-height="$store.state.isMobile ? '700%' : '800%'"
       :data-theme="$vuetify.theme.dark ? 'dark' : 'light'"
       :href="`https://twitter.com/${channelTwitter}`"
     >
