@@ -27,7 +27,6 @@
             <song-item
               v-else-if="b.song"
               :song="b.song"
-              style="max-width: 350px"
               color="white--text"
             />
           </v-tooltip>
