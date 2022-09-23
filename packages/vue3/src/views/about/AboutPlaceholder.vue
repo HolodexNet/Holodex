@@ -1,9 +1,5 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
-    <div class="block w-full max-w-xs form-control lg:hidden">
-      <label class="label"> <span class="label-text">Preview:</span></label>
-      <video-card :video="(videoObj as any)" include-channel class="max-w-xs" />
-    </div>
     <v-alert
       v-if="!isEditor && token && !expired"
       class="mb-2 pa-2"
@@ -19,171 +15,173 @@
       You are not an editor or token has expired, please login or generate a new
       token using our bot
     </v-alert>
-    <v-card>
-      <v-card-text class="flex flex-col gap-4">
+    <v-text-field
+      v-if="isEditor"
+      v-model="creditName"
+      label="Editor Credit Name"
+      :rules="[requiredRule]"
+      hint="Use a different name when being publicly credited"
+    />
+    <v-tabs v-model="tab" icons-and-text class="mb-4">
+      <v-tab
+        >New <v-icon>{{ icons.mdiPlusBox }}</v-icon></v-tab
+      >
+      <v-tab
+        >Existing <v-icon>{{ icons.mdiPencil }}</v-icon></v-tab
+      >
+    </v-tabs>
+    <div class="flex flex-col gap-4 px-4">
+      <v-slide-y-transition group>
         <v-text-field
-          v-if="isEditor"
-          v-model="creditName"
-          label="Editor Credit Name"
-          :rules="[requiredRule]"
-          hint="Use a different name when being publicly credited"
+          v-if="tab === 1"
+          key="x921a"
+          v-model="id"
+          label="Placeholder ID (11 characters)"
+          density="compact"
+          variant="outlined"
+          hide-details="auto"
+          :append-outer-icon="icons.mdiCheck"
+          clearable
+          @click:append-outer="loadExistingPlaceholder(id)"
         />
-        <v-tabs v-model="tab" icons-and-text class="mb-4">
-          <v-tab
-            >New <v-icon>{{ icons.mdiPlusBox }}</v-icon></v-tab
-          >
-          <v-tab
-            >Existing <v-icon>{{ icons.mdiPencil }}</v-icon></v-tab
-          >
-        </v-tabs>
 
-        <v-slide-y-transition group>
+        <video-selector
+          v-if="tab === 1 && !id"
+          key="x921b"
+          :hide-placeholders="false"
+          @video-clicked="
+            (video) => {
+              id = video.id;
+              loadExistingPlaceholder(id);
+            }
+          "
+        />
+      </v-slide-y-transition>
+      <channel-autocomplete
+        v-model="channel"
+        label="Channel"
+        density="compact"
+        variant="outlined"
+        hide-details="auto"
+      />
+      <v-text-field
+        v-model="videoTitle"
+        density="compact"
+        variant="outlined"
+        label="Video Title"
+        hide-details="auto"
+        :rules="[requiredRule]"
+        required
+      />
+      <v-text-field
+        v-model="videoTitleJP"
+        density="compact"
+        hide-details="auto"
+        variant="outlined"
+        label="Japanese Video Title"
+      />
+      <v-text-field
+        v-model="sourceUrl"
+        density="compact"
+        variant="outlined"
+        label="Source Link"
+        hide-details="auto"
+        hint="eg. URL to twitter schedule or twitch channel"
+        placeholder="https://twitter.com/..."
+        type="url"
+        required
+        :rules="[requiredRule, linkRule]"
+      />
+      <v-text-field
+        v-model="thumbnail"
+        density="compact"
+        variant="outlined"
+        hide-details="auto"
+        label="Thumbnail Image"
+        placeholder="https://imgur.com/..."
+        type="url"
+        :rules="[linkRule]"
+      />
+      <v-select
+        v-model="placeholderType"
+        density="compact"
+        variant="outlined"
+        :items="PLACEHOLDER_TYPES"
+        label="Event Type"
+        hide-details="auto"
+        required
+        :rules="[requiredRule]"
+      />
+      <v-select
+        v-model="certainty"
+        density="compact"
+        variant="outlined"
+        :items="CERTAINTY_CHOICE"
+        label="Certainty"
+        required
+        hide-details="auto"
+        :rules="[requiredRule]"
+      />
+      <div class="flex flex-row justify-between">
+        <div class="flex flex-col w-min">
+          <v-select
+            v-model="timezone"
+            density="compact"
+            variant="outlined"
+            :items="TIMEZONES"
+            label="Timezone"
+            hide-details="auto"
+            required
+            :rules="[requiredRule, timeRule]"
+          />
+          <!-- ignore this error, it works fine -->
+          <date-picker
+            v-model="liveDate"
+            mode="dateTime"
+            :timezone="timezone"
+            :is-dark="theme.dark"
+            color="gray"
+            class="mb-2"
+            is24hr
+            :min-date="minDate"
+            :minute-increment="5"
+            :model-config="{ type: 'string', mask: 'iso' }"
+          ></date-picker>
           <v-text-field
-            v-if="tab === 1"
-            key="x921a"
-            v-model="id"
-            label="Placeholder ID (11 characters)"
+            v-model="duration"
             density="compact"
             variant="outlined"
             hide-details="auto"
-            :append-outer-icon="icons.mdiCheck"
-            clearable
-            @click:append-outer="loadExistingPlaceholder(id)"
+            hint="Guess a duration in minutes"
+            label="Duration"
+            type="number"
+            suffix="minutes"
+            required
+            :rules="[requiredRule]"
           />
-
-          <video-selector
-            v-if="tab === 1 && !id"
-            key="x921b"
-            :hide-placeholders="false"
-            @video-clicked="
-              (video) => {
-                id = video.id;
-                loadExistingPlaceholder(id);
-              }
-            "
-          />
-        </v-slide-y-transition>
-        <channel-autocomplete
-          v-model="channel"
-          label="Channel"
-          density="compact"
-          variant="outlined"
-          hide-details="auto"
-        />
-        <v-text-field
-          v-model="videoTitle"
-          density="compact"
-          variant="outlined"
-          label="Video Title"
-          hide-details="auto"
-          :rules="[requiredRule]"
-          required
-        />
-        <v-text-field
-          v-model="videoTitleJP"
-          density="compact"
-          hide-details="auto"
-          variant="outlined"
-          label="Japanese Video Title"
-        />
-        <v-text-field
-          v-model="sourceUrl"
-          density="compact"
-          variant="outlined"
-          label="Source Link"
-          hide-details="auto"
-          hint="eg. URL to twitter schedule or twitch channel"
-          placeholder="https://twitter.com/..."
-          type="url"
-          required
-          :rules="[requiredRule, linkRule]"
-        />
-        <v-text-field
-          v-model="thumbnail"
-          density="compact"
-          variant="outlined"
-          hide-details="auto"
-          label="Thumbnail Image"
-          placeholder="https://imgur.com/..."
-          type="url"
-          :rules="[linkRule]"
-        />
-        <v-select
-          v-model="placeholderType"
-          density="compact"
-          variant="outlined"
-          :items="PLACEHOLDER_TYPES"
-          label="Event Type"
-          hide-details="auto"
-          required
-          :rules="[requiredRule]"
-        />
-        <v-select
-          v-model="certainty"
-          density="compact"
-          variant="outlined"
-          :items="CERTAINTY_CHOICE"
-          label="Certainty"
-          required
-          hide-details="auto"
-          :rules="[requiredRule]"
-        />
-        <div class="flex flex-row justify-between">
-          <div class="flex flex-col w-min">
-            <v-select
-              v-model="timezone"
-              density="compact"
-              variant="outlined"
-              :items="TIMEZONES"
-              label="Timezone"
-              hide-details="auto"
-              required
-              :rules="[requiredRule, timeRule]"
-            />
-            <!-- ignore this error, it works fine -->
-            <date-picker
-              v-model="liveDate"
-              mode="dateTime"
-              :timezone="timezone"
-              :is-dark="theme.dark"
-              color="gray"
-              class="mb-2"
-              is24hr
-              :min-date="minDate"
-              :minute-increment="5"
-              :model-config="{ type: 'string', mask: 'iso' }"
-            ></date-picker>
-            <v-text-field
-              v-model="duration"
-              density="compact"
-              variant="outlined"
-              hide-details="auto"
-              hint="Guess a duration in minutes"
-              label="Duration"
-              type="number"
-              suffix="minutes"
-              required
-              :rules="[requiredRule]"
-            />
-          </div>
-          <div class="hidden w-full max-w-xs form-control lg:block">
-            <label class="label">
-              <span class="label-text">Preview:</span></label
-            >
-            <video-card
-              :video="(videoObj as any)"
-              include-channel
-              class="max-w-xs"
-            />
-          </div>
         </div>
-        <v-btn color="primary" @click="onSubmit">
-          {{
-            id ? "Submit Placeholder Modification" : "Create new Placeholder"
-          }}
-        </v-btn>
-      </v-card-text>
-    </v-card>
+        <div class="hidden w-full max-w-xs mx-auto form-control lg:block">
+          <label class="label"> <span class="label-text">Preview:</span></label>
+          <video-card
+            :video="(videoObj as any)"
+            include-channel
+            class="max-w-xs"
+          />
+        </div>
+      </div>
+      <div class="block w-full max-w-xs my-2 form-control lg:hidden">
+        <div class="divider">Preview</div>
+        <video-card
+          :video="(videoObj as any)"
+          include-channel
+          class="max-w-xs"
+        />
+      </div>
+
+      <v-btn color="primary" @click="onSubmit">
+        {{ id ? "Submit Placeholder Modification" : "Create new Placeholder" }}
+      </v-btn>
+    </div>
     <v-snackbar v-model="error" color="error">
       {{ errorMessage }}
     </v-snackbar>
