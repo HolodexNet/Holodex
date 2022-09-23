@@ -73,7 +73,7 @@
         ></playlist-button>
         <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
           <template #activator="{ props }">
-            <div v-bind="props" class="text-2xl btn btn-square btn-ghost">
+            <div v-bind="props" class="mr-2 text-2xl btn btn-square btn-ghost">
               <v-icon v-if="!(site.user && site.user)">
                 {{ icons.mdiAccountCircleOutline }}
               </v-icon>

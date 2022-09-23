@@ -19,7 +19,9 @@ import { createVuetify } from "vuetify";
 import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 // import { OhVueIcon } from "oh-vue-icons";
 import * as icons from "@/utils/icons";
+// import { SetupCalendar } from "v-calendar/src/index";
 
+// Setup plugin for defaults or `$screens` (optional)
 // a global logging hook for help with development.
 window.log = function (props: any) {
   console.log(props);
@@ -40,6 +42,7 @@ app.use(i18n);
 app.use(router);
 
 app.use(Vue3Linkify);
+// app.use(SetupCalendar, {});
 
 export const vuetify = createVuetify({
   display: {

@@ -186,8 +186,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: `placeholder`,
         name: "Add a Placeholder",
-        component: () =>
-          import("@/views/about/index").then((w) => w.defaultPage),
+        component: () => import("@/views/about/AboutPlaceholder.vue"),
       },
       {
         path: `extensions`,

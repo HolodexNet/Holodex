@@ -178,7 +178,8 @@
             </v-btn>
           </v-col>
           <v-col cols="12" md="auto">
-            <img src="/img/playlist-instruction.jpg" />
+            <!-- TODO BROKEN LINK HERE -->
+            <!-- <img src="/img/playlist-instruction.jpg" /> -->
           </v-col>
         </v-row>
       </v-card-text>

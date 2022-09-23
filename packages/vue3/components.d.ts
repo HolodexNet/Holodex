@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     AboutContact: typeof import('./src/views/about/AboutContact.vue')['default']
     AboutFaq: typeof import('./src/views/about/AboutFaq.vue')['default']
     AboutGeneral: typeof import('./src/views/about/AboutGeneral.vue')['default']
+    AboutPlaceholder: typeof import('./src/views/about/AboutPlaceholder.vue')['default']
     App: typeof import('./src/App.vue')['default']
     ArchivedTranslations: typeof import('./src/components/tldex/client/ArchivedTranslations.vue')['default']
     BlockedList: typeof import('./src/components/settings/BlockedList.vue')['default']
