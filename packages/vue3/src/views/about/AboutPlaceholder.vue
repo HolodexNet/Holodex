@@ -1,158 +1,189 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
-    <v-container>
-      <v-row>
-        <v-col md="3" sm="8" cols="10">
-          <video-card :video="(videoObj as any)" include-channel />
-        </v-col>
-
-        <v-col md="9" cols="12">
-          <v-alert
-            v-if="!isEditor && token && !expired"
-            class="mb-2 pa-2"
-            type="info"
+    <div class="block w-full max-w-xs form-control lg:hidden">
+      <label class="label"> <span class="label-text">Preview:</span></label>
+      <video-card :video="(videoObj as any)" include-channel class="max-w-xs" />
+    </div>
+    <v-alert
+      v-if="!isEditor && token && !expired"
+      class="mb-2 pa-2"
+      type="info"
+    >
+      Editing as {{ token.user }} from
+      {{ discordCredits ? discordCredits.data.guild.name : "" }} Discord
+      <br />
+      Your session expires: {{ expiresIn }}. Please refresh if it is about to
+      expire
+    </v-alert>
+    <v-alert v-else-if="!isEditor" type="error">
+      You are not an editor or token has expired, please login or generate a new
+      token using our bot
+    </v-alert>
+    <v-card>
+      <v-card-text class="flex flex-col gap-4">
+        <v-text-field
+          v-if="isEditor"
+          v-model="creditName"
+          label="Editor Credit Name"
+          :rules="[requiredRule]"
+          hint="Use a different name when being publicly credited"
+        />
+        <v-tabs v-model="tab" icons-and-text class="mb-4">
+          <v-tab
+            >New <v-icon>{{ icons.mdiPlusBox }}</v-icon></v-tab
           >
-            Editing as {{ token.user }} from
-            {{ discordCredits ? discordCredits.data.guild.name : "" }} Discord
-            <br />
-            Your session expires: {{ expiresIn }}. Please refresh if it is about
-            to expire
-          </v-alert>
-          <v-alert v-else-if="!isEditor" type="error">
-            You are not an editor or token has expired, please login or generate
-            a new token using our bot
-          </v-alert>
-          <v-card>
-            <v-card-text>
-              <v-text-field
-                v-if="isEditor"
-                v-model="creditName"
-                label="Editor Credit Name"
-                :rules="[requiredRule]"
-                hint="Use a different name when being publicly credited"
-              />
-              <v-tabs v-model="tab" icons-and-text class="mb-4">
-                <v-tab
-                  >New <v-icon>{{ icons.mdiPlusBox }}</v-icon></v-tab
-                >
-                <v-tab
-                  >Existing <v-icon>{{ icons.mdiPencil }}</v-icon></v-tab
-                >
-              </v-tabs>
+          <v-tab
+            >Existing <v-icon>{{ icons.mdiPencil }}</v-icon></v-tab
+          >
+        </v-tabs>
 
-              <v-slide-y-transition group>
-                <v-text-field
-                  v-if="tab === 1"
-                  key="x921a"
-                  v-model="id"
-                  label="Placeholder ID (11 characters)"
-                  :append-outer-icon="icons.mdiCheck"
-                  clearable
-                  @click:append-outer="loadExistingPlaceholder(id)"
-                />
+        <v-slide-y-transition group>
+          <v-text-field
+            v-if="tab === 1"
+            key="x921a"
+            v-model="id"
+            label="Placeholder ID (11 characters)"
+            density="compact"
+            variant="outlined"
+            hide-details="auto"
+            :append-outer-icon="icons.mdiCheck"
+            clearable
+            @click:append-outer="loadExistingPlaceholder(id)"
+          />
 
-                <video-selector
-                  v-if="tab === 1 && !id"
-                  key="x921b"
-                  :hide-placeholders="false"
-                  @video-clicked="
-                    (video) => {
-                      id = video.id;
-                      loadExistingPlaceholder(id);
-                    }
-                  "
-                />
-              </v-slide-y-transition>
-              <channel-autocomplete v-model="channel" label="Channel" />
-              <v-text-field
-                v-model="videoTitle"
-                label="Video Title"
-                :rules="[requiredRule]"
-                required
-              />
-              <v-text-field
-                v-model="videoTitleJP"
-                label="Japanese Video Title"
-              />
-              <v-text-field
-                v-model="sourceUrl"
-                label="Source Link"
-                hint="eg. URL to twitter schedule or twitch channel"
-                placeholder="https://twitter.com/..."
-                type="url"
-                required
-                :rules="[requiredRule, linkRule]"
-              />
-              <v-text-field
-                v-model="thumbnail"
-                label="Thumbnail Image"
-                placeholder="https://imgur.com/..."
-                type="url"
-                :rules="[linkRule]"
-              />
-              <v-row class="py-0 my-n2">
-                <v-col>
-                  <v-select
-                    v-model="placeholderType"
-                    :items="PLACEHOLDER_TYPES"
-                    label="Event Type"
-                    required
-                    :rules="[requiredRule]"
-                  />
-                </v-col>
-                <v-col>
-                  <v-select
-                    v-model="certainty"
-                    :items="CERTAINTY_CHOICE"
-                    label="Certainty"
-                    required
-                    :rules="[requiredRule]"
-                  />
-                </v-col>
-              </v-row>
-              <div class="flex flex-col w-min">
-                <v-select
-                  v-model="timezone"
-                  :items="TIMEZONES"
-                  label="Timezone"
-                  required
-                  :rules="[requiredRule, timeRule]"
-                />
-                <!-- ignore this error, it works fine -->
-                <date-picker
-                  v-model="liveDate"
-                  mode="dateTime"
-                  :timezone="timezone"
-                  :is-dark="theme.dark"
-                  color="gray"
-                  class="mb-2"
-                  is24hr
-                  :min-date="minDate"
-                  :minute-increment="5"
-                  :model-config="{ type: 'string', mask: 'iso' }"
-                ></date-picker>
-                <v-text-field
-                  v-model="duration"
-                  hint="Guess a duration in minutes"
-                  label="Duration"
-                  type="number"
-                  suffix="minutes"
-                  required
-                  :rules="[requiredRule]"
-                />
-              </div>
-              <v-btn color="primary" @click="onSubmit">
-                {{
-                  id
-                    ? "Submit Placeholder Modification"
-                    : "Create new Placeholder"
-                }}
-              </v-btn>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+          <video-selector
+            v-if="tab === 1 && !id"
+            key="x921b"
+            :hide-placeholders="false"
+            @video-clicked="
+              (video) => {
+                id = video.id;
+                loadExistingPlaceholder(id);
+              }
+            "
+          />
+        </v-slide-y-transition>
+        <channel-autocomplete
+          v-model="channel"
+          label="Channel"
+          density="compact"
+          variant="outlined"
+          hide-details="auto"
+        />
+        <v-text-field
+          v-model="videoTitle"
+          density="compact"
+          variant="outlined"
+          label="Video Title"
+          hide-details="auto"
+          :rules="[requiredRule]"
+          required
+        />
+        <v-text-field
+          v-model="videoTitleJP"
+          density="compact"
+          hide-details="auto"
+          variant="outlined"
+          label="Japanese Video Title"
+        />
+        <v-text-field
+          v-model="sourceUrl"
+          density="compact"
+          variant="outlined"
+          label="Source Link"
+          hide-details="auto"
+          hint="eg. URL to twitter schedule or twitch channel"
+          placeholder="https://twitter.com/..."
+          type="url"
+          required
+          :rules="[requiredRule, linkRule]"
+        />
+        <v-text-field
+          v-model="thumbnail"
+          density="compact"
+          variant="outlined"
+          hide-details="auto"
+          label="Thumbnail Image"
+          placeholder="https://imgur.com/..."
+          type="url"
+          :rules="[linkRule]"
+        />
+        <v-select
+          v-model="placeholderType"
+          density="compact"
+          variant="outlined"
+          :items="PLACEHOLDER_TYPES"
+          label="Event Type"
+          hide-details="auto"
+          required
+          :rules="[requiredRule]"
+        />
+        <v-select
+          v-model="certainty"
+          density="compact"
+          variant="outlined"
+          :items="CERTAINTY_CHOICE"
+          label="Certainty"
+          required
+          hide-details="auto"
+          :rules="[requiredRule]"
+        />
+        <div class="flex flex-row justify-between">
+          <div class="flex flex-col w-min">
+            <v-select
+              v-model="timezone"
+              density="compact"
+              variant="outlined"
+              :items="TIMEZONES"
+              label="Timezone"
+              hide-details="auto"
+              required
+              :rules="[requiredRule, timeRule]"
+            />
+            <!-- ignore this error, it works fine -->
+            <date-picker
+              v-model="liveDate"
+              mode="dateTime"
+              :timezone="timezone"
+              :is-dark="theme.dark"
+              color="gray"
+              class="mb-2"
+              is24hr
+              :min-date="minDate"
+              :minute-increment="5"
+              :model-config="{ type: 'string', mask: 'iso' }"
+            ></date-picker>
+            <v-text-field
+              v-model="duration"
+              density="compact"
+              variant="outlined"
+              hide-details="auto"
+              hint="Guess a duration in minutes"
+              label="Duration"
+              type="number"
+              suffix="minutes"
+              required
+              :rules="[requiredRule]"
+            />
+          </div>
+          <div class="hidden w-full max-w-xs form-control lg:block">
+            <label class="label">
+              <span class="label-text">Preview:</span></label
+            >
+            <video-card
+              :video="(videoObj as any)"
+              include-channel
+              class="max-w-xs"
+            />
+          </div>
+        </div>
+        <v-btn color="primary" @click="onSubmit">
+          {{
+            id ? "Submit Placeholder Modification" : "Create new Placeholder"
+          }}
+        </v-btn>
+      </v-card-text>
+    </v-card>
     <v-snackbar v-model="error" color="error">
       {{ errorMessage }}
     </v-snackbar>
@@ -171,16 +202,18 @@ import { useSiteStore } from "@/stores/site";
 import "v-calendar/dist/style.css";
 import { DatePicker } from "v-calendar";
 import { useThemeStore } from "@/stores/theme";
+import { useDisplay } from "vuetify";
 
 export default defineComponent({
   components: {
     DatePicker,
   },
   setup() {
+    const display = useDisplay();
     const site = useSiteStore();
     const theme = useThemeStore();
     const creditName = ref(site.user?.username);
-    return { creditName, site, theme };
+    return { creditName, site, theme, display };
   },
   data() {
     return {
@@ -189,38 +222,38 @@ export default defineComponent({
       tab: 0,
       id: "",
       valid: false,
-      channel: undefined,
+      channel: undefined as undefined | { text: string; value: ShortChannel },
       videoTitle: "",
       videoTitleJP: "",
       sourceUrl: "",
       thumbnail: "",
       placeholderType: undefined,
-      certainty: "",
+      certainty: undefined,
       liveDate: dayjs().startOf("hour").toISOString(),
       minDate: dayjs().startOf("day").toDate(),
       timezone: "Asia/Tokyo",
       duration: 60,
       PLACEHOLDER_TYPES: [
         {
-          text: "Scheduled YT Stream",
+          title: "Scheduled YT Stream",
           value: "scheduled-yt-stream",
         },
         {
-          text: "External Stream (eg. Twitch/Twitcast)",
+          title: "External Stream (eg. Twitch/Twitcast)",
           value: "external-stream",
         },
         {
-          text: "Event",
+          title: "Event",
           value: "event",
         },
       ],
       CERTAINTY_CHOICE: [
         {
-          text: "Certain",
+          title: "Certain",
           value: "certain",
         },
         {
-          text: "Likely",
+          title: "Likely",
           value: "likely",
         },
       ],
@@ -301,7 +334,7 @@ export default defineComponent({
       return {
         title: this.videoTitle || "Example Title",
         placeholderType: this.placeholderType || "scheduled-yt-stream",
-        channel: this.channel || {
+        channel: this.channel?.value || {
           id: "ExampleIdThatDoesntExist",
           name: "<CHANNEL>",
           english_name: "<CHANNEL>",
@@ -324,6 +357,9 @@ export default defineComponent({
   watch: {
     tab(nv) {
       if (nv === 0) this.id = "";
+    },
+    channel() {
+      console.log(JSON.stringify(this.channel));
     },
   },
   async mounted() {
@@ -353,7 +389,7 @@ export default defineComponent({
           credits: this.credits,
         };
         const body = {
-          channel_id: this.channel?.id,
+          channel_id: this.channel?.value?.id,
           title: titlePayload,
           liveTime: this.availableAt,
           duration: +this.duration * 60, // convert min to sec
@@ -393,7 +429,7 @@ export default defineComponent({
       this.liveDate = vt.toISOString();
       this.duration = video.duration / 60;
       this.certainty = video.certainty;
-      this.channel = video.channel;
+      this.channel = { text: video.channel.name, value: video.channel };
     },
   },
 });
