@@ -109,7 +109,7 @@ export default {
         const vm = this;
         return {
             get title() {
-                return `${vm.$t("component.search.searchLabel")} - Holodex`;
+                return `${vm.translateQuery(vm.executedQuery)} - Holodex`;
             },
         };
     },
@@ -295,6 +295,18 @@ export default {
             this.filter_type = this.query.type
                 ? this.query.type.toLowerCase()
                 : this.options.defaults.type;
+        },
+        translateQuery(q) {
+            const results = q.split("\n");
+            results.splice(0, 1);
+            const ret = [];
+            // eslint-disable-next-line guard-for-in
+            for (const term in results) {
+                const tr = results[term].split(",");
+                tr.splice(0, 2);
+                ret.push(tr.join(","));
+            }
+            return ret.join(", ");
         },
     },
 };
