@@ -21,45 +21,46 @@
             />
           </template>
         </WatchFrame>
-        <div v-if="isLive" class="watch-live-chat">
-          <WatchToolbar :video="video">
-            <template #buttons>
-              <v-tooltip bottom>
-                <template #activator="{ on, attrs }">
-                  <v-btn
-                    icon
-                    lg
-                    :color="showTL ? 'primary' : ''"
-                    v-bind="attrs"
-                    @click="showTL = !showTL"
-                    v-on="on"
-                  >
-                    <v-icon>
-                      {{ icons.tlChat }}
-                    </v-icon>
-                  </v-btn>
-                </template>
-                <span>{{
-                  showTL
-                    ? $t("views.watch.chat.hideTLBtn")
-                    : $t("views.watch.chat.showTLBtn")
-                }}</span>
-              </v-tooltip>
-              <v-btn
-                icon
-                lg
-                :color="showLiveChat ? 'primary' : ''"
-                @click="showLiveChat = !showLiveChat"
-              >
-                <v-icon>
-                  {{ icons.ytChat }}
-                </v-icon>
-              </v-btn>
-            </template>
-          </WatchToolbar>
+        <WatchToolbar :video="video">
+          <template #buttons>
+            <v-tooltip bottom v-if="isLive">
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  lg
+                  :color="showTL ? 'primary' : ''"
+                  v-bind="attrs"
+                  @click="showTL = !showTL"
+                  v-on="on"
+                >
+                  <v-icon>
+                    {{ icons.tlChat }}
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>{{
+                showTL
+                  ? $t("views.watch.chat.hideTLBtn")
+                  : $t("views.watch.chat.showTLBtn")
+              }}</span>
+            </v-tooltip>
+            <v-btn
+              icon
+              lg
+              :color="showLiveChat ? 'primary' : ''"
+              @click="showLiveChat = !showLiveChat"
+              v-if="isLive"
+            >
+              <v-icon>
+                {{ icons.ytChat }}
+              </v-icon>
+            </v-btn>
+          </template>
+        </WatchToolbar>
+        <div v-if="isLive" ref="watchLayout" class="d-flex flex-row flex-grow-1">
           <WatchLiveChat
             v-model="chatStatus"
-            class="sidebar chat"
+            class="sidebar chat flex-grow-1"
             :video="video"
             :current-time="currentTime"
             @videoUpdate="handleVideoUpdate"
