@@ -232,14 +232,21 @@ export default new Vuex.Store({
             }
             // do nothing.
         },
-        async loginVerify({ state, dispatch }) {
+        async loginVerify({ state, dispatch, commit }, opts) {
+            const { bounceToLogin = false } = opts || {};
             dispatch("loginCheck");
             if (state.userdata && state.userdata.jwt) {
                 const valid = await backendApi.loginIsValid(state.userdata.jwt);
-                if (valid) {
+                if (valid && valid.status === 200) {
                     console.log("Login credentials validated, OK");
-                } else {
+                    commit("setUser", valid.data);
+                } else if (valid && valid.status === 401) {
                     await dispatch("logout");
+                    if (bounceToLogin) {
+                        window.location.href = "/login";
+                    }
+                } else {
+                    console.error("Login credentials did not respond with a good message? Maybe server is down.");
                 }
             }
         },

@@ -655,7 +655,7 @@ import {
     mdiCog,
     mdiCogOff,
 } from "@mdi/js";
-import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
+import { getVideoIDFromUrl } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { mapState } from "vuex";
 import YoutubePlayer from "@/components/player/YoutubePlayer.vue";
@@ -1377,19 +1377,7 @@ export default {
             this.colourDialogue = false;
         },
         async checkLoginValidity() {
-            const check = await backendApi.loginIsValid(this.userdata.jwt);
-            if (check === false) {
-                this.$store.dispatch("logout");
-                this.$router.push("/login");
-            } else if (check.data && check.data.id) {
-                this.$store.commit("setUser", {
-                    user: check.data,
-                    jwt: this.userdata.jwt,
-                });
-                if (this.$route.query.video) {
-                    this.mainStreamLink = videoCodeParser(this.$route.query.video);
-                }
-            }
+            this.$store.dispatch("loginVerify", { bounceToLogin: true });
         },
         changeUsernameClick() {
             this.$router.push({ path: "/login" });

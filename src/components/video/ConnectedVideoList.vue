@@ -425,7 +425,7 @@ export default {
                         })
                         .catch((err) => {
                             console.error(err);
-                            this.$store.dispatch("loginVerify"); // check if the user is actually logged in.
+                            this.$store.dispatch("loginVerify", { bounceToLogin: true }); // check if the user is actually logged in.
                             throw err;
                         });
                     return res.data;

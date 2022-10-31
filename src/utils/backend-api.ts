@@ -106,10 +106,19 @@ export default {
   },
   loginIsValid(jwt): Promise<false | AxiosResponse<any>> {
     return axiosInstance
-      .get("/user/check", {
+      .get("/user/refresh", {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
       })
-      .catch(() => false);
+      .then((resp) => {
+        // catching irregular responses, such as URL being offline or something wrong with the backend that causes index.html to be returned.
+        if (resp.status === 200 && resp.data.jwt && resp.data.user) return resp;
+        return false; // network error?
+      })
+      .catch((e) => {
+        if (e.response) return e.response;
+        return false;
+      });
+      // .catch(() => false);
     // 301 Cache bust
     // fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
   },
