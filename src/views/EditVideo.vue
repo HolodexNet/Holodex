@@ -23,7 +23,7 @@
         </WatchFrame>
         <WatchToolbar :video="video">
           <template #buttons>
-            <v-tooltip bottom v-if="isLive">
+            <v-tooltip v-if="isLive" bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
                   icon
@@ -45,11 +45,11 @@
               }}</span>
             </v-tooltip>
             <v-btn
+              v-if="isLive"
               icon
               lg
               :color="showLiveChat ? 'primary' : ''"
               @click="showLiveChat = !showLiveChat"
-              v-if="isLive"
             >
               <v-icon>
                 {{ icons.ytChat }}
@@ -166,13 +166,13 @@ import Youtube from "@/components/player/YoutubePlayer.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import WatchInfo from "@/components/watch/WatchInfo.vue";
 import WatchFrame from "@/components/watch/WatchFrame.vue";
-import WatchComments from "@/components/watch/WatchComments.vue";
-import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import WatchToolbar from "@/components/watch/WatchToolbar.vue";
+import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
+import WatchComments from "@/components/watch/WatchComments.vue";
 import VideoEditSongs from "@/components/edit/VideoEditSongs.vue";
 import VideoEditMentions from "@/components/edit/VideoEditMentions.vue";
 import CommentSongParser from "@/components/media/CommentSongParser.vue";
-import { decodeHTMLEntities, syncState } from "@/utils/functions";
+import { decodeHTMLEntities } from "@/utils/functions";
 // import { dayjs } from "@/utils/time";
 import api from "@/utils/backend-api";
 
@@ -187,10 +187,10 @@ export default {
         LoadingOverlay,
         WatchInfo,
         WatchFrame,
+        WatchToolbar,
+        WatchLiveChat,
         VideoEditSongs,
         WatchComments,
-        WatchLiveChat,
-        WatchToolbar,
         VideoEditMentions,
         Youtube,
         CommentSongParser,
@@ -221,22 +221,6 @@ export default {
         };
     },
     computed: {
-        ...syncState("watch", ["showTL", "showLiveChat"]),
-        chatStatus: {
-            get() {
-                return {
-                    showTlChat: this.showTL,
-                    showYtChat: this.showLiveChat,
-                };
-            },
-            set(val: any) {
-                this.showTL = val.showTlChat;
-                this.showLiveChat = val.showYtChat;
-            },
-        },
-        isLive() {
-            return this.video && this.video.status === "live";
-        },
         videoId() {
             return this.$route.params.id || this.$route.query.v;
         },
@@ -312,12 +296,6 @@ export default {
                     this.hasError = true;
                     console.error(e);
                 });
-        },
-        handleVideoUpdate(update) {
-            if (!update?.status || !update?.start_actual) return;
-            this.video.live_viewers = update.live_viewers;
-            this.video.status = update.status;
-            this.video.start_actual = update.start_actual;
         },
         async populateTopics() {
             this.topics = (await api.topics()).data.map((topic) => ({
