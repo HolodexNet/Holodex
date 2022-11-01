@@ -27,7 +27,7 @@
       <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
         <!--================= Logo & Search Bar (Space permitting) ================-->
         <div class="mr-2 cursor-pointer" @click.stop="navDrawer = !navDrawer">
-          <logo v-if="isSmOrDown" width="32" height="32" :loading="loading" />
+          <logo v-if="isSmOrDown" width="32" height="32" :loading="loading > 0" />
           <div v-else class="w-6 h-6 i-ion:menu"></div>
         </div>
         <div class="flex flex-row items-center gap-2">
@@ -35,7 +35,7 @@
             v-if="!isSmOrDown"
             :to="{ name: settings.defaultOpen || 'Home' }"
           >
-            <logo width="32" height="32" :loading="loading" />
+            <logo width="32" height="32" :loading="loading > 0" />
           </router-link>
           <OrgSelector
             @changed="(org: Org, close?: Function) => {site.currentOrg = org; close && close();}"
@@ -50,23 +50,6 @@
 
         <!--================= Account [👤] Button (Desktop Only) ================-->
 
-        <!-- Playlist Feature disabled for now -->
-        <!-- <ResponsiveMenu :close-on-content-click="false" offset-y
-                    :item-count="playlist.active.videos.length || 0" content-class="main-playlist-border">
-                    <template #activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" icon :class="{ 'ml-auto': isMobile }" v-on="on">
-                            <v-icon>{{ icons.mdiPlaylistPlay }}</v-icon>
-                        </v-btn>
-                    </template>
-                    <edit-playlist>
-                        <div class="pt-2 pl-2">
-                            <span class="text-overline secondary--text">Current Playlist</span>&emsp;
-                            <router-link to="/playlists" class="text-caption">
-                                (more)
-                            </router-link>
-                        </div>
-                    </edit-playlist>
-                </ResponsiveMenu> -->
         <playlist-button
           class="flex-shrink ml-auto mr-2"
           @click="playlistDrawer = !playlistDrawer"
