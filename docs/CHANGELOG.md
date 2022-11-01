@@ -3,7 +3,16 @@
 ##### Unreleased
 
 - Development of Vue3 Holodex (release 3.0 ?!?!) is underway... If you like to influence how it looks, now is the best time to let us know.
-- 
+
+### 2.29 Holodex [*October 10th, 2022*]
+
+This release puts out several community contributed changes.
+
+- UI Improvements to Watch Page, Search Title,  (Thanks Nelo)
+- Improvements to login
+- Localization improvements to Spanish, Indonesian, Russian
+
+ 
 ### 2.28.1 Holodex [*August 18th, 2022*]
 
 - Hotfix for videos replaying after stream ends
