@@ -266,15 +266,7 @@ export default {
             window.location.href = `${apiURI}/v2/user/login/twitter`;
         },
         async forceUserUpdate() {
-            const check = await api.loginIsValid(this.userdata.jwt);
-            if (check === false) {
-                this.$store.dispatch("logout");
-            } else if (check.data && check.data.id) {
-                this.$store.commit("setUser", {
-                    user: check.data,
-                    jwt: this.userdata.jwt,
-                });
-            }
+            this.$store.dispatch("loginVerify");
         },
         async resetKey() {
             /* eslint-disable no-restricted-globals, no-alert */

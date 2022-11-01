@@ -3,7 +3,7 @@
     <template v-if="video.songcount">
       <span class="lightup d-flex">
         <a class="d-block text-overline mx-2 my-1" @click="toggleExpansion('songs')">
-          {{ hidden.songs ? "＋" : "－" }} {{ relationI18N("songs") }}
+          {{ hidden.songs ? "＋" : "－" }} {{ video.songcount }} {{ relationI18N("songs") }}
         </a>
         <v-spacer />
         <v-btn
@@ -53,7 +53,7 @@
             class="d-block text-overline mx-2 my-1"
             @click="toggleExpansion(relation)"
           >
-            {{ hidden[relation] ? "＋" : "－" }} {{ relationI18N(relation) }}
+            {{ hidden[relation] ? "＋" : "－" }} {{ related[relation].length }} {{ relationI18N(relation) }}
           </a>
           <v-spacer />
           <v-btn

@@ -21,6 +21,52 @@
             />
           </template>
         </WatchFrame>
+        <WatchToolbar :video="video">
+          <template #buttons>
+            <v-tooltip v-if="isLive" bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  lg
+                  :color="showTL ? 'primary' : ''"
+                  v-bind="attrs"
+                  @click="showTL = !showTL"
+                  v-on="on"
+                >
+                  <v-icon>
+                    {{ icons.tlChat }}
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>{{
+                showTL
+                  ? $t("views.watch.chat.hideTLBtn")
+                  : $t("views.watch.chat.showTLBtn")
+              }}</span>
+            </v-tooltip>
+            <v-btn
+              v-if="isLive"
+              icon
+              lg
+              :color="showLiveChat ? 'primary' : ''"
+              @click="showLiveChat = !showLiveChat"
+            >
+              <v-icon>
+                {{ icons.ytChat }}
+              </v-icon>
+            </v-btn>
+          </template>
+        </WatchToolbar>
+        <div v-if="isLive" ref="watchLayout" class="d-flex flex-row flex-grow-1">
+          <WatchLiveChat
+            v-model="chatStatus"
+            class="sidebar chat flex-grow-1"
+            :video="video"
+            :current-time="currentTime"
+            @videoUpdate="handleVideoUpdate"
+            @timeJump="seekTo"
+          />
+        </div>
         <div v-if="video.comments.length" class="comment-scroller">
           <CommentSongParser
             v-if="currentTab === 1"
@@ -120,6 +166,8 @@ import Youtube from "@/components/player/YoutubePlayer.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import WatchInfo from "@/components/watch/WatchInfo.vue";
 import WatchFrame from "@/components/watch/WatchFrame.vue";
+import WatchToolbar from "@/components/watch/WatchToolbar.vue";
+import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import VideoEditSongs from "@/components/edit/VideoEditSongs.vue";
 import VideoEditMentions from "@/components/edit/VideoEditMentions.vue";
@@ -139,6 +187,8 @@ export default {
         LoadingOverlay,
         WatchInfo,
         WatchFrame,
+        WatchToolbar,
+        WatchLiveChat,
         VideoEditSongs,
         WatchComments,
         VideoEditMentions,

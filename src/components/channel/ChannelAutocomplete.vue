@@ -47,17 +47,13 @@ export default {
                 })
                 .then(({ data }) => {
                     this.searchResults = data.map((d) => ({
-                        text: this.getChannelName(d),
+                        text: `${d.english_name ? (d.english_name + ',') : ""} ${d.name} (${d.id})`,
                         value: d,
                     }));
                 });
         }, 500),
     },
     methods: {
-        getChannelName(channel) {
-            const prop = this.$store.state.settings.nameProperty;
-            return channel[prop] || channel.name;
-        },
     },
 };
 </script>

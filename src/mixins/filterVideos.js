@@ -10,6 +10,7 @@ export default {
             const blockedChannels = this.$store.getters["settings/blockedChannelIDs"];
             const ignoredTopics = this.$store.getters["settings/ignoredTopics"];
             const favoriteChannels = this.$store.getters["favorites/favoriteChannelIDs"];
+            // eslint-disable-next-line no-param-reassign
             forOrg ||= this.$store.state.currentOrg.name;
 
             let keep = true;
@@ -22,7 +23,7 @@ export default {
 
             if (!isFavoritedOrInOrg) {
                 keep &&= !hideCollabs && !v.mentions?.every(
-                    ({ id, org }) => blockedChannels.has(id) || (org !== forOrg && !favoriteChannels.has(id))
+                    ({ id, org }) => blockedChannels.has(id) || (org !== forOrg && !favoriteChannels.has(id)),
                 );
             }
 
