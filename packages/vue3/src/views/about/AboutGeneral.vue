@@ -40,7 +40,7 @@
     <p class="text-sm opacity-60">
       (If you'd like to add your name to this list, drop us a poke on Discord!)
     </p>
-    <h3 class="mt-4 text-lg">Quick Links</h3>
+    <h3 class="mt-4 text-lg mb-2">Quick Links</h3>
     <div
       id="qlinks"
       class="grid gap-2 grid-flow-dense"

@@ -31,10 +31,7 @@
           <div v-else class="w-6 h-6 i-ion:menu"></div>
         </div>
         <div class="flex flex-row items-center gap-2">
-          <router-link
-            v-if="!isSmOrDown"
-            :to="{ name: settings.defaultOpen || 'Home' }"
-          >
+          <router-link v-if="!isSmOrDown" :to="{ name: settings.defaultOpen || 'Home' }">
             <logo width="32" height="32" :loading="loading > 0" />
           </router-link>
           <OrgSelector
@@ -42,11 +39,7 @@
           />
         </div>
         <!-- </v-toolbar-title> -->
-        <SearchBar
-          v-if="!isMobile"
-          key="main-search-bar"
-          class="mx-auto height-40px"
-        />
+        <SearchBar v-if="!isMobile" key="main-search-bar" class="mx-auto height-40px" />
 
         <!--================= Account [👤] Button (Desktop Only) ================-->
 
@@ -86,10 +79,7 @@
       <!--===================== Expanded Search Bar (Mobile Only) =======================-->
 
       <template v-else>
-        <v-app-bar-nav-icon
-          style="margin-left: 0px"
-          @click="searchBarExpanded = false"
-        >
+        <v-app-bar-nav-icon style="margin-left: 0px" @click="searchBarExpanded = false">
           <v-icon>{{ icons.mdiClose }}</v-icon>
         </v-app-bar-nav-icon>
         <SearchBar key="main-search-bar" :autofocus="isMobile" class="mr-3" />
@@ -188,10 +178,7 @@ export default defineComponent({
       if (this.isMobile && this.isWatchPage) {
         return false;
       }
-      if (
-        this.$route.name === "tlclient" ||
-        this.$route.name === "scripteditor"
-      ) {
+      if (this.$route.name === "tlclient" || this.$route.name === "scripteditor") {
         return false;
       }
       return true;

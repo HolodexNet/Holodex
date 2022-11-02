@@ -152,4 +152,9 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style>
+
+.stat {
+  @apply border border-bgColor-100 border-2 rounded-md;
+}
+</style>
