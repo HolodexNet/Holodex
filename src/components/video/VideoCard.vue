@@ -518,7 +518,7 @@ export default {
             return this.data.link?.includes("twitch.tv");
         },
         twitterPlaceholder() {
-            return this.data.link?.includes("twitter.com");
+            return this.data.link?.includes("/i/spaces/");
         },
     },
     // created() {
