@@ -33,13 +33,26 @@
                 class="primary--text"
                 :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
               >dex</span>
-              <v-icon
-                size="30"
-                class="change-org-icon"
-                :class="{ 'rotate-180': activator.attrs['aria-expanded'] === 'true' }"
+              <v-tooltip
+                v-model="showOrgTip"
+                right
+                bottom
+                z-index="120"
+                content-class="first-visit-tooltip"
               >
-                {{ icons.mdiMenuDown }}
-              </v-icon>
+                <template #activator="{}">
+                  <v-icon
+                    size="30"
+                    class="change-org-icon"
+                    :class="{ 'rotate-180': activator.attrs['aria-expanded'] === 'true' }"
+                    v-on="activator.on"
+                  >
+                    {{ icons.mdiMenuDown }}
+                  </v-icon>
+                </template>
+                <div>{{ $t("views.app.nowSupportsMultiOrg") }}</div>
+                <div>{{ $t("views.app.loginCallToAction") }}</div>
+              </v-tooltip>
             </div>
           </slot>
         </template>
@@ -169,6 +182,14 @@ export default {
                 return this.$store.commit("setVisited");
             },
         },
+        showOrgTip: {
+            get() {
+                return this.$store.state.showOrgTip && navigator.userAgent && !navigator.userAgent.includes("Googlebot");
+            },
+            set() {
+                return this.$store.commit("setOrgTip");
+            },
+        },
         sortedOrgs() {
             let list = this.orgs.slice();
             if (this.search) {
@@ -243,9 +264,9 @@ export default {
 }
 
 .first-visit-tooltip {
-    width: 80%;
+    width: auto;
     max-width: 480px;
-    background: rgb(91, 157, 211);
+    background: rgb(40, 40, 40);
     font-weight: 500;
     box-shadow: 2px 2px 4px black;
 }
@@ -253,9 +274,9 @@ export default {
     content: "";
     position: absolute;
     top: -10px;
-    left: 105px;
+    left: 55px;
     width: 0;
-    border-bottom: 10px solid rgb(91, 157, 211);
+    border-bottom: 10px solid rgb(40, 40, 40);
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
 }

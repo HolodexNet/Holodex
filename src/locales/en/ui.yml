@@ -288,8 +288,9 @@ views:
     update_btn: Update
     close_btn: Close
     check_about_page: Visit the About page to see new changes
-    nowSupportsMultiOrg: Holodex now supports multiple organizations.
-    loginCallToAction: Login to gather your own favorites!
+    nowSupportsMultiOrg: >-
+      Tip: You can change the organization here!
+    loginCallToAction: Login to set your own favorites.
   about:
     add_my_channel: Channel Request
   watch:
