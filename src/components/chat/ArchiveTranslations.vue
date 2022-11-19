@@ -12,11 +12,22 @@
           icon
           x-small
           class="mr-1"
+          title="-60s"
+          @click="timeOffset -= 60000"
+        >
+          <v-icon>
+            {{ mdiChevronDoubleLeft }}
+          </v-icon>
+        </v-btn>
+        <v-btn
+          icon
+          x-small
+          class="mr-1"
           title="-2s"
           @click="timeOffset -= 2000"
         >
           <v-icon>
-            {{ mdiTransferLeft }}
+            {{ mdiChevronLeft }}
           </v-icon>
         </v-btn>
         <code class="mr-1">{{ `${timeOffset >= 0 ? "+" : ""}${timeOffset / 1000}s` }}</code>
@@ -28,7 +39,18 @@
           @click="timeOffset += 2000"
         >
           <v-icon>
-            {{ mdiTransferRight }}
+            {{ mdiChevronRight }}
+          </v-icon>
+        </v-btn>
+        <v-btn
+          icon
+          x-small
+          class="mr-1"
+          title="+60s"
+          @click="timeOffset += 60000"
+        >
+          <v-icon>
+            {{ mdiChevronDoubleRight }}
           </v-icon>
         </v-btn>
         <v-btn
@@ -93,7 +115,7 @@
 
 <script lang="ts">
 import VirtualList from "vue-virtual-scroll-list";
-import { mdiTransferRight, mdiTransferLeft } from "@mdi/js";
+import { mdiChevronLeft, mdiChevronDoubleLeft, mdiChevronRight, mdiChevronDoubleRight } from "@mdi/js";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import ChatMessage from "./ChatMessage.vue";
 import chatMixin from "./chatMixin";
@@ -112,8 +134,10 @@ export default {
             ChatMessage,
             curIndex: 0,
             timeOffset: 0, // for offsetting archive TL
-            mdiTransferRight,
-            mdiTransferLeft };
+            mdiChevronLeft,
+            mdiChevronDoubleLeft,
+            mdiChevronRight,
+            mdiChevronDoubleRight };
     },
     computed: {
         dividedTLs() {
