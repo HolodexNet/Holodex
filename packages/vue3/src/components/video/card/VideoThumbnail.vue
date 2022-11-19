@@ -222,6 +222,7 @@ export default defineComponent({
     span {
       font-size: 0.8125rem;
     }
+    @apply rounded-sm;
   }
 }
 
