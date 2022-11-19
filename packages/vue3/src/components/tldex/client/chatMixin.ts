@@ -1,9 +1,9 @@
 // Loads store settings, exposes loadHistory and parseMessage function
 import { useTLStore } from "@/stores/tldex";
 import api from "@/utils/backend-api";
-import { dayjs } from "@/utils/time";
+// import { dayjs } from "@/utils/time";
 import { Ref } from "vue";
-import { useQuery } from "vue-query";
+// import { useQuery } from "@tanstack/vue-query";
 
 export const MESSAGE_TYPES = Object.freeze({
   END: "end",

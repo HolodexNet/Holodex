@@ -1,9 +1,9 @@
 import type {
   QueryClientConfig,
   QueryObserverOptions,
-} from "react-query/types/core";
-import type { VueQueryPluginOptions } from "vue-query";
-import { QueryClient } from "vue-query";
+} from "@tanstack/query-core";
+import type { VueQueryPluginOptions } from "@tanstack/vue-query";
+import { QueryClient } from "@tanstack/vue-query";
 import { broadcastQueryClient } from "./vue-query/broadcastQueryClient";
 import { createWebStoragePersister } from "./vue-query/createWebStoragePersister";
 import { persistQueryClient } from "./vue-query/persistQueryClient";

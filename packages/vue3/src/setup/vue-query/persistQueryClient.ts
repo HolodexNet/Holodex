@@ -5,7 +5,7 @@ import {
   DehydrateOptions,
   HydrateOptions,
   hydrate,
-} from "react-query/core";
+} from "@tanstack/query-core";
 
 export type Promisable<T> = T | PromiseLike<T>;
 

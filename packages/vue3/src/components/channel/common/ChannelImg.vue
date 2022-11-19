@@ -75,6 +75,11 @@ export default defineComponent({
       return getChannelPhoto(this.channel.id, this.size);
     },
   },
+  watch: {
+    channel() {
+      this.err = false;
+    },
+  },
   methods: {},
 });
 </script>

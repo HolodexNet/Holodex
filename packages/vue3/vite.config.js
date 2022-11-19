@@ -11,10 +11,10 @@ import visualizer from "rollup-plugin-visualizer";
 import vuetify from "vite-plugin-vuetify";
 import Unocss from "unocss/vite";
 import presetIcons from "@unocss/preset-icons";
-import * as icons from './src/utils/icons.ts'
-import filesize from 'rollup-plugin-filesize';
+import * as icons from "./src/utils/icons.ts";
+import filesize from "rollup-plugin-filesize";
 
-const path = require('path')
+const path = require("path");
 
 const API_BASE_URL = process.env.API_BASE_URL || "https://staging.holodex.net";
 const REWRITE_API_ROUTES = false;
@@ -43,7 +43,7 @@ export default defineConfig({
     vue({}),
     Unocss({
       presets: [presetIcons()],
-      safelist: Object.values(icons)
+      safelist: Object.values(icons),
     }),
     vuetify({
       autoImport: true,
@@ -62,10 +62,11 @@ export default defineConfig({
       extensions: ["vue"],
       include: ["src/**"],
       types: [],
+      dts: "src/components.d.ts",
     }),
     ViteAliases(),
     filesize({
-      showBeforeSizes: 'build', 
+      showBeforeSizes: "build",
     }),
     visualizer({ gzipSize: true, brotliSize: true }),
   ],
@@ -89,7 +90,7 @@ export default defineConfig({
         secure: false,
       },
       "/statics": {
-        target: 'https://holodex.net',
+        target: "https://holodex.net",
         changeOrigin: true,
         secure: false,
       },

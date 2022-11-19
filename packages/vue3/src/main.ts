@@ -1,12 +1,11 @@
 import "uno.css";
 import { createApp } from "vue";
 import router from "./router/index";
-import { VueQueryPlugin } from "vue-query";
+import { VueQueryPlugin } from "@tanstack/vue-query";
 import { useI18n } from "vue-i18n";
 
 import App from "./App.vue";
 import { setupPinia, setupI18N, getVueQueryPluginOptions } from "./setup";
-import { useThemeStore } from "./stores/theme";
 import LoadScript from "vue-plugin-load-script";
 import VueToast from "vue-toast-notification";
 import Vue3Linkify from "vue-3-linkify";

@@ -1,7 +1,7 @@
 import backendApi from "@/utils/backend-api";
 import { Ref } from "vue";
-import { useInfiniteQuery, useQuery } from "vue-query";
-import { MaybeRef } from "vue-query/lib/vue/types";
+import { useQuery, useInfiniteQuery } from "@tanstack/vue-query";
+import { MaybeRef } from "@tanstack/vue-query/build/lib/types";
 
 export function useChannels(query: Ref<object>, enabled: MaybeRef<boolean>) {
   return useInfiniteQuery(

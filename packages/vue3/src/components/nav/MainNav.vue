@@ -138,7 +138,7 @@ import { musicdexURL } from "@/utils/consts";
 import { useSiteStore } from "@/stores/site";
 import { useDisplay } from "vuetify";
 import { useSettingsStore } from "@/stores/settings";
-import { useIsFetching } from "vue-query";
+import { useIsFetching } from "@tanstack/vue-query";
 
 export default defineComponent({
   components: {},

@@ -1,7 +1,7 @@
 import { useSiteStore } from "@/stores/site";
 import backendApi from "@/utils/backend-api";
 import { Playlist } from "@/utils/types";
-import { useMutation, useQuery, UseQueryOptions } from "vue-query";
+import { useMutation, useQuery, UseQueryOptions } from "@tanstack/vue-query";
 import { queryClient } from "@/setup/setupQueryPlugin";
 import debounce from "lodash-es/debounce";
 import type { MaybeRef } from "@vueuse/core";
@@ -34,16 +34,17 @@ export function usePlaylistList() {
 
 export function usePlaylist(
   id?: MaybeRef<string | number | undefined>,
-  confs?: QueryConfig<Playlist | undefined>
+  confs?: QueryConfig<Playlist>
 ) {
   if (!id) {
     id = storeToRefs(usePlaylistState()).currentPlaylistId;
   }
+  const user = useSiteStore();
 
   return useQuery(
     ["playlist", id] as const,
     async (q) => {
-      if (!q.queryKey[1]) return undefined;
+      if (!q.queryKey[1]) return {name: 'Undefined Playlist', user_id: -1, videos: []};
       const playlist = (await backendApi.getPlaylist(q.queryKey[1])).data;
       // playlist._videoIdSet = new Set(playlist.videos?.map((x) => x.id));
       return playlist;

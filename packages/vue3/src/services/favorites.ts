@@ -1,7 +1,7 @@
 import { queryClient } from "@/setup/setupQueryPlugin";
 import { useSiteStore } from "@/stores";
 import backendApi from "@/utils/backend-api";
-import { useMutation, useQuery } from "vue-query";
+import { useMutation, useQuery } from "@tanstack/vue-query";
 import debounce from "lodash-es/debounce";
 export function useFavoritesList() {
   const user = useSiteStore();

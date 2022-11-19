@@ -23,12 +23,12 @@
         <div class="stat-title">VTubers</div>
         <div
           class="stat-value text-primary"
-          :value="s.channelCount.vtuber || 0"
+          :value="s?.channelCount?.vtuber || 0"
         >
           0
         </div>
         <div class="stat-desc">
-          +{{ s.monthlyChannels.vtuber || 0 }} last month
+          +{{ s?.monthlyChannels?.vtuber || 0 }} last month
         </div>
       </div>
 
@@ -52,12 +52,12 @@
         <div class="stat-title">Subbers</div>
         <div
           class="stat-value text-secondary"
-          :value="s.channelCount.subber || 0"
+          :value="s?.channelCount?.subber || 0"
         >
           0
         </div>
         <div class="stat-desc">
-          +{{ s.monthlyChannels.vtuber || 0 }} last month
+          +{{ s?.monthlyChannels?.vtuber || 0 }} last month
         </div>
       </div>
       <div class="p-2 stat bg-bgColor-500 md:p-4">
@@ -78,10 +78,10 @@
           </svg>
         </div>
         <div class="stat-title">Videos</div>
-        <div class="stat-value text-success" :value="s.totalVideos.count || 0">
+        <div class="stat-value text-success" :value="s?.totalVideos?.count || 0">
           0
         </div>
-        <div class="stat-desc">+{{ s.dailyVideos.count || 0 }} yesterday</div>
+        <div class="stat-desc">+{{ s.dailyVideos?.count || 0 }} yesterday</div>
       </div>
       <div class="p-2 stat bg-bgColor-500 md:p-4">
         <div class="stat-figure text-warning">
@@ -101,7 +101,7 @@
           </svg>
         </div>
         <div class="stat-title">Songs</div>
-        <div class="stat-value text-warning" :value="s.totalSongs.count || 0">
+        <div class="stat-value text-warning" :value="s?.totalSongs?.count || 0">
           0
         </div>
         <div class="stat-desc"></div>

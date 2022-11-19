@@ -4,8 +4,8 @@
     item-title="text"
     item-value="value"
     :items="searchResults"
+    :loading="isLoading"
     hide-no-data
-    clearable
     :label="label"
     return-object
   />
@@ -27,6 +27,7 @@ export default defineComponent({
   setup() {
     const search = ref("");
     const searchResults = ref([]);
+    const isLoading = ref(false);
     watchDebounced(
       search,
       () => {
@@ -35,6 +36,7 @@ export default defineComponent({
           searchResults.value = [];
           return;
         }
+        isLoading.value = true;
         backendApi
           .searchChannel(
             {
@@ -50,12 +52,19 @@ export default defineComponent({
               })`,
               value: d,
             }));
+            isLoading.value = false;
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            isLoading.value = false;
           });
       },
       { debounce: 500, maxWait: 10000 }
     );
 
-    return { search, searchResults };
+    return { search, searchResults, isLoading };
   },
 });
 </script>

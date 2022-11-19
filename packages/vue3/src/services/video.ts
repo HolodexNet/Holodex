@@ -5,7 +5,7 @@ import backendApi, { axiosInstance } from "@/utils/backend-api";
 import { MaybeRef, toReactive } from "@vueuse/core";
 import dayjs, { isDayjs } from "dayjs";
 import { Ref } from "vue";
-import { useQuery, UseQueryOptions, useInfiniteQuery } from "vue-query";
+import { useQuery, UseQueryOptions, useInfiniteQuery } from "@tanstack/vue-query";
 import { useFavoritesListByID } from "./favorites";
 
 type QueryConfig<TReturn> = Omit<

@@ -1,5 +1,5 @@
 import { BroadcastChannel } from "broadcast-channel";
-import { QueryClient } from "vue-query";
+import { QueryClient } from "@tanstack/vue-query";
 
 interface BroadcastQueryClientOptions {
   queryClient: QueryClient;

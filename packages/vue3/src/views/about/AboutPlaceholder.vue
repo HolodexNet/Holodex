@@ -45,7 +45,7 @@
           @click:append-outer="loadExistingPlaceholder(id)"
         />
 
-        <video-selector
+        <!-- <video-selector
           v-if="tab === 1 && !id"
           key="x921b"
           :hide-placeholders="false"
@@ -55,11 +55,11 @@
               loadExistingPlaceholder(id);
             }
           "
-        />
+        /> -->
       </v-slide-y-transition>
       <channel-autocomplete
         v-model="channel"
-        label="Channel"
+        label="Channel (Type to Search)"
         density="compact"
         variant="outlined"
         hide-details="auto"
@@ -68,7 +68,7 @@
         v-model="videoTitle"
         density="compact"
         variant="outlined"
-        label="Video Title"
+        label="Video/Event Title"
         hide-details="auto"
         :rules="[requiredRule]"
         required
@@ -78,7 +78,7 @@
         density="compact"
         hide-details="auto"
         variant="outlined"
-        label="Japanese Video Title"
+        label="Japanese Video/Event Title"
       />
       <v-text-field
         v-model="sourceUrl"
@@ -86,7 +86,7 @@
         variant="outlined"
         label="Source Link"
         hide-details="auto"
-        hint="eg. URL to twitter schedule or twitch channel"
+        hint="Link to more detail about the event. eg. URL to twitter schedule post or twitch channel, or link to a concert page"
         placeholder="https://twitter.com/..."
         type="url"
         required
@@ -149,13 +149,14 @@
           ></date-picker>
           <v-text-field
             v-model="duration"
+            class="mt-2"
             density="compact"
             variant="outlined"
             hide-details="auto"
             hint="Guess a duration in minutes"
             label="Duration"
             type="number"
-            suffix="minutes"
+            suffix="&ensp;minutes"
             required
             :rules="[requiredRule]"
           />
@@ -265,7 +266,11 @@ export default defineComponent({
           value: "America/Los_Angeles",
         },
         {
-          title: "GMT",
+          title: "EST",
+          value: "America/New_York",
+        },
+        {
+          title: "GMT (UTC)",
           value: "Etc/GMT",
         },
       ],
@@ -332,10 +337,10 @@ export default defineComponent({
       return {
         title: this.videoTitle || "Example Title",
         placeholderType: this.placeholderType || "scheduled-yt-stream",
-        channel: this.channel?.value || {
-          id: "ExampleIdThatDoesntExist",
-          name: "<CHANNEL>",
-          english_name: "<CHANNEL>",
+        channel: {
+          id: this.channel?.value?.id || "ExampleIdThatDoesntExist",
+          name: this.channel?.value?.name || "<CHANNEL>",
+          english_name: this.channel?.value?.english_name || "<CHANNEL>",
         },
         thumbnail: this.thumbnail || "",
         type: "placeholder",
