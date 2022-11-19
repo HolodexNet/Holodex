@@ -1,5 +1,6 @@
 import { createI18n } from "vue-i18n";
 import enTL from "../locales/en/ui.yml";
+import { en } from "vuetify/locale";
 import dayjs from "dayjs";
 import {
   asyncLang,
@@ -11,11 +12,12 @@ export function setupI18N() {
   const i18n = createI18n({
     locale: "en", // Set locale
     fallbackLocale: "en",
+    legacy: false,
     allowComposition: true,
     globalInjection: true,
     // Set default locale messages,
     messages: {
-      en: { ...enTL },
+      en: { ...enTL, ...en },
     },
     pluralizationRules: {
       /**
@@ -64,13 +66,13 @@ const STATIC_DAYJS_LOCALE_MAP: Partial<Record<SupportedLangCodes, string>> = {
   "lol-PEKO": "en",
 };
 
-export function holodexLangToDayJSLang(holodexLang: string) {
+export function holodexLangToDayJSLang(holodexLang: SupportedLangCodes) {
   return STATIC_DAYJS_LOCALE_MAP[holodexLang] || holodexLang.toLowerCase();
 }
 
 // Lang switcher helpers
 
-export function setI18nLanguage(i18n, locale) {
+export function setI18nLanguage(i18n, locale: SupportedLangCodes) {
   if (i18n.mode === "legacy") {
     i18n.locale = locale;
   } else {
@@ -82,7 +84,7 @@ export function setI18nLanguage(i18n, locale) {
 }
 
 const loadedLanguageCache: Partial<Record<SupportedLangCodes, any>> = {
-  en: enTL,
+  en: {...enTL, ...en},
 };
 
 export async function loadLocaleMessages(i18n, locale: SupportedLangCodes) {

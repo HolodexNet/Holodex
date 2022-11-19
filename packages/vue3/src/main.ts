@@ -18,6 +18,8 @@ import { createVuetify } from "vuetify";
 import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 // import { OhVueIcon } from "oh-vue-icons";
 import * as icons from "@/utils/icons";
+
+import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 // import { SetupCalendar } from "v-calendar/src/index";
 
 // Setup plugin for defaults or `$screens` (optional)
@@ -50,9 +52,13 @@ export const vuetify = createVuetify({
     },
     mobileBreakpoint: "sm",
   },
-  locale: createVueI18nAdapter({ i18n, useI18n }),
+  locale: { adapter: createVueI18nAdapter({ i18n, useI18n }) },
   icons: {
     defaultSet: "svg",
+    aliases,
+    sets: {
+      mdi,
+    }
   } as any,
   theme: {
     defaultTheme: "dark",

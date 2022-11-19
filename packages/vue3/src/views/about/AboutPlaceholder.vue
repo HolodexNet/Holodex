@@ -31,32 +31,30 @@
       >
     </v-tabs>
     <div class="flex flex-col gap-4 px-4">
-      <v-slide-y-transition group>
-        <v-text-field
-          v-if="tab === 1"
-          key="x921a"
-          v-model="id"
-          label="Placeholder ID (11 characters)"
-          density="compact"
-          variant="outlined"
-          hide-details="auto"
-          :append-outer-icon="icons.mdiCheck"
-          clearable
-          @click:append-outer="loadExistingPlaceholder(id)"
-        />
+      <v-text-field
+        v-if="tab === 1"
+        key="x921a"
+        v-model="id"
+        label="Placeholder ID (11 characters)"
+        density="compact"
+        variant="outlined"
+        hide-details="auto"
+        :append-icon="icons.mdiCheck"
+        clearable
+        @click:append="loadExistingPlaceholder(id)"
+      />
 
-        <!-- <video-selector
-          v-if="tab === 1 && !id"
-          key="x921b"
-          :hide-placeholders="false"
-          @video-clicked="
-            (video) => {
-              id = video.id;
-              loadExistingPlaceholder(id);
-            }
-          "
-        /> -->
-      </v-slide-y-transition>
+      <video-selector
+        v-if="tab === 1 && !id"
+        key="x921b"
+        :hide-placeholders="false"
+        @video-clicked="
+          (video) => {
+            id = video.id;
+            loadExistingPlaceholder(id);
+          }
+        "
+      />
       <channel-autocomplete
         v-model="channel"
         label="Channel (Type to Search)"
