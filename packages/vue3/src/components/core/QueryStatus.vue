@@ -7,7 +7,7 @@
       <h4 class="text-2xl font-medium">
         {{ $t("component.apiError.title") }}
       </h4>
-      <code v-if="props.query.error.value" class="text-lg my-2">{{
+      <code v-if="props.query.error.value" class="text-md my-2">{{
         props.query.error.value.message
       }}</code>
       <div class="text-center my-4">
@@ -15,12 +15,12 @@
         (<a
           href="https://twitter.com/holodex"
           rel="noopener noreferrer"
-          class="link"
-        >
-          @holodex </a
+          class="link link-primary"
+          >@holodex</a
         >)
         {{ $t("component.apiError.textAfterTwitter") }}
-        <a href="https://discord.gg/jctkgHBt4b" class="link">Discord</a
+        <a href="https://discord.gg/jctkgHBt4b" class="link link-primary"
+          >Discord</a
         >{{ $t("component.apiError.afterAboutPageHyperlink") }}
         <br />
         Tip: Hard Refresh/Clear Cache: <code>CTRL + SHIFT + R</code>
