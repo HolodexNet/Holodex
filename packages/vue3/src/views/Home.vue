@@ -47,16 +47,9 @@
         </v-lazy>
       </template>
     </video-card-grid>
-    <div v-if="isLoading" class="flex h-20">
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        :size="64"
-        class="m-auto"
-      ></v-progress-circular>
-    </div>
+    <query-status :query="(videoQuery as any)" />
     <div
-      v-else-if="currentTab !== Tabs.LIVE"
+      v-if="videoQuery.isSuccess.value && currentTab !== Tabs.LIVE"
       class="flex items-center justify-center h-20"
     >
       <h-pagination v-model="currentPage" :total-pages="totalPages" />

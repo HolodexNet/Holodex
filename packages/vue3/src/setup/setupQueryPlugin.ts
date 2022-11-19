@@ -12,8 +12,10 @@ export const REGULAR_QUERY_OPTIONS: QueryObserverOptions = {
   refetchOnMount: true,
   staleTime: 3 * 60 * 1000, // 3 mins
   cacheTime: 10 * 60 * 1000, // 12 minutes
+  // FYI This refetchonWindowFocus: false is not working
   refetchOnWindowFocus: false,
   keepPreviousData: false,
+  retry: 0,
 };
 
 export const STATIC_QUERY_OPTIONS: QueryObserverOptions = {
@@ -21,6 +23,7 @@ export const STATIC_QUERY_OPTIONS: QueryObserverOptions = {
   staleTime: 5 * 60 * 1000, // 5 mins
   cacheTime: 60 * 60 * 1000, // 1 hr
   refetchOnWindowFocus: false,
+  retry: 0,
 };
 
 const queryClientConfig: QueryClientConfig = {
