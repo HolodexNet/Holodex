@@ -36,8 +36,8 @@
               :class="page.icon"
               class="v-icon notranslate v-theme--dark v-icon--size-default v-list-item-icon"
             ></div>
-            <v-list-item-icon v-else :icon="page.icon"></v-list-item-icon>
-            <v-list-item-title>{{ page.name }}</v-list-item-title>
+            <v-icon v-else :icon="page.icon"></v-icon>
+            <div>{{ page.name }}</div>
           </router-link>
         </li>
         <v-divider v-if="page.divider" :key="`${page.path}-divider`" />
@@ -53,9 +53,9 @@
             :class="{ 'v-list-item--active': $route.fullPath === page.path }"
             @click="(e) => handlePageClick(page, e)"
           >
-            <v-list-item-content>
-              <v-list-item-title>{{ page.name }}</v-list-item-title>
-            </v-list-item-content>
+            <div>
+              <span>{{ page.name }}</span>
+            </div>
           </router-link>
         </li>
       </template>
@@ -125,6 +125,15 @@ import { mdiPatreon, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import { useLangStore, useSiteStore } from "@/stores";
 import { useDisplay } from "vuetify";
 import { langs } from "@/hooks/i18n/i18nConsts";
+import { PropType } from "vue";
+
+type Page = {
+  name: string;
+  path: string;
+  icon?: any;
+  collapsible?: boolean;
+  extra?: boolean;
+};
 
 export default defineComponent({
   name: "NavDrawer",
@@ -132,7 +141,7 @@ export default defineComponent({
   props: {
     pages: {
       required: true,
-      type: Array,
+      type: Array as PropType<Page[]>,
     },
     modelValue: {
       type: Boolean,

@@ -50,8 +50,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="postcss">
-.video-overlay-tag.video-duration-live {
-  @apply bg-red-700;
-}
-</style>
+<style lang="postcss"></style>

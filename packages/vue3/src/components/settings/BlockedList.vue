@@ -17,6 +17,9 @@
       </button>
     </template>
   </channel-list>
+  <div v-if="(settings.blockedChannels?.length ?? 0) == 0">
+    Your blocked channels list is empty.
+  </div>
 </template>
 <script setup lang="ts">
 import { useSettingsStore } from "@/stores/settings";

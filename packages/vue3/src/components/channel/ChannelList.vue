@@ -38,7 +38,9 @@
     </template>
   </div>
   <div
-    v-show="resp.hasNextPage?.value || resp.isLoading.value"
+    v-show="
+      (resp.hasNextPage?.value || resp.isLoading.value) && channels == undefined
+    "
     v-intersect="intersect"
     class="flex items-center justify-center"
   >
@@ -87,7 +89,7 @@ export default defineComponent({
   setup(props) {
     const respChannels = useChannels(
       computed(() => props.query || {}),
-      computed(() => !props.channels)
+      computed(() => props.channels != undefined)
     );
 
     const groupKey = computed(() => {
@@ -110,8 +112,8 @@ export default defineComponent({
   methods: {
     async intersect() {
       console.log("intersecting", this.resp.hasNextPage?.value);
-      if (this.resp.hasNextPage?.value) {
-        await this.resp.fetchNextPage.value();
+      if (this.resp?.hasNextPage?.value) {
+        await this.resp.fetchNextPage();
       }
     },
   },
