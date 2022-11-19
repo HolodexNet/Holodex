@@ -5,7 +5,11 @@ import backendApi, { axiosInstance } from "@/utils/backend-api";
 import { MaybeRef, toReactive } from "@vueuse/core";
 import dayjs, { isDayjs } from "dayjs";
 import { Ref } from "vue";
-import { useQuery, UseQueryOptions, useInfiniteQuery } from "@tanstack/vue-query";
+import {
+  useQuery,
+  UseQueryOptions,
+  useInfiniteQuery,
+} from "@tanstack/vue-query";
 import { useFavoritesListByID } from "./favorites";
 
 type QueryConfig<TReturn> = Omit<
@@ -282,9 +286,10 @@ export function useVideoListDatasource(
     refetchInterval: computed(() =>
       q.value.type === "stream_schedule" ? 3 * 60 * 1000 : false
     ),
-    refetchOnWindowFocus: computed(() =>
-      q.value.type === "stream_schedule" ? true : false
-    ),
+    // This behavior is really bad, sends a lot of requests if it errors
+    // refetchOnWindowFocus: computed(() =>
+    //   q.value.type === "stream_schedule" ? true : false
+    // ),
     staleTime: computed(
       () =>
         q.value.type === "stream_schedule" ? 2.5 * 60 * 1000 : 5 * 60 * 1000 // only Live needs 2.5 min invalidation.
