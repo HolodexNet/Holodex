@@ -37,20 +37,7 @@
       </template>
     </template>
   </div>
-  <div
-    v-show="
-      (resp.hasNextPage?.value || resp.isLoading.value) && channels == undefined
-    "
-    v-intersect="intersect"
-    class="flex items-center justify-center"
-  >
-    <v-progress-circular
-      indeterminate
-      color="primary"
-      :size="64"
-      class="m-4"
-    ></v-progress-circular>
-  </div>
+  <query-status :query="(resp as any)" />
 </template>
 <script lang="ts">
 import { useChannels } from "@/services/channel";
@@ -89,7 +76,7 @@ export default defineComponent({
   setup(props) {
     const respChannels = useChannels(
       computed(() => props.query || {}),
-      computed(() => props.channels != undefined)
+      computed(() => props.channels === undefined)
     );
 
     const groupKey = computed(() => {
