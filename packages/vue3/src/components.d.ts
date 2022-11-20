@@ -53,6 +53,7 @@ declare module '@vue/runtime-core' {
     PlaylistButton: typeof import('./components/frame/PlaylistButton.vue')['default']
     PlaylistCard: typeof import('./components/playlist/PlaylistCard.vue')['default']
     Profile: typeof import('./views/Profile.vue')['default']
+    QueryStatus: typeof import('./components/core/QueryStatus.vue')['default']
     ReportVideo: typeof import('./components/video/ReportVideo.vue')['default']
     ScrollParallax: typeof import('./components/channel/common/ScrollParallax.vue')['default']
     SearchBar: typeof import('./components/nav/SearchBar.vue')['default']
