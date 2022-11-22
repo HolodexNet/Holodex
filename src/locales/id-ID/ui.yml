@@ -52,11 +52,13 @@ component:
     typeScheduledYT: Stream Terjadwal
     typeExternalStream: Stream Eksternal
     typeEventPlaceholder: Acara Terjadwal
-    openClient: Buka TL Client
+    openClient: Buka Klien TL
     openScriptEditor: Buka Editor Naskah
     uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -212,6 +214,7 @@ views:
     sort:
       newest: Terbaru
       oldest: Terlama
+      longest: Terlama
     type:
       all: Semua
       official: Resmi
@@ -256,7 +259,7 @@ views:
       - Kecil
     hideCollabStreamsLabel: Sembunyikan Siaran Kolaborasi
     hideCollabStreamsMsg: Menyembunyikan siaran kolaborasi dari halaman favorit kamu
-    hidePlaceholderStreams: Sembunyikan Jadwal Siaran
+    hidePlaceholderStreams: Sembunyikan Jadwal Siaran Sementara
     ignoredTopicsLabel: Topik yang Diabaikan
     ignoredTopicsMsg: Menyembunyikan video yang berkaitan dengan topik yang dipilih dari halaman Beranda dan Favorit
     theme: Tema
@@ -279,9 +282,9 @@ views:
       showTLBtn: Tampilkan Terjemahan
       TLSettingsTitle: Pengaturan Terjemahan
       showSubtitle: Menampilkan Takarir
-      expandTL: Menampilkan kolom TLdex
-      tlStart: Pesan Awal
-      StickBottomSettingLabel: Sematkan Dibawah
+      expandTL: Perluas TLdex
+      tlStart: Awal Pesan
+      StickBottomSettingLabel: Lekat Bawah
       StickBottomSettingsDesc: Kolom TL akan diletakkan di bawah Chat Youtube
       showVerifiedMessages: Menampilkan Pesan Pengguna yang Terverifikasi
       showModeratorMessages: Menampilkan Pesan Moderator
@@ -386,12 +389,12 @@ views:
     fullScreen: Layar Penuh
     mediaControls: Kontrol Media
     mediaControlsEmpty: Video yang diputar akan muncul disini
-    editAutoLayout: Mengubah Tataletak Otomatis
+    editAutoLayout: Atur Tataletak Otomatis
     changeLayout: Ubah Tataletak
     done: Selesai
     hints: Petunjuk
-    presetsHint: Buka menu preset untuk mengganti tataletak dan mengubah tataletak otomatis
-    mediaControlsHint1: Gunakan Kontrol Media untuk mensenyapkan dan menyinkronkan (
+    presetsHint: Buka menu preset untuk mengganti tataletak dan mengatur tataletak otomatis
+    mediaControlsHint1: Gunakan Kontrol Media untuk menyenyapkan dan menyinkronkan (
     mediaControlsHint2: ) siaran langsung
     dragDropHint: Seret dan lepas siaran dari bilah alat ke kolom skema untuk mengatur siaran
     reorderHint: Gunakan menu Tata Ulang untuk mengganti posisi video/chat
@@ -399,10 +402,10 @@ views:
     reorderLayoutDetail: Seret dan lepas ikon ke posisi yang diinginkan
     sync:
       nothingToSync: >-
-        Tidak ada apapun untuk di sinkronkan, mohon buka dua arsip (misalnya. stream kolaborasi)
+        Tidak ada apapun untuk disinkronkan, mohon buka dua arsip tumpang tindih (misalnya. stream kolaborasi)
       syncSettings: Pengaturan Sinkronisasi
       syncSettingsDetail: >-
-        Video di sinkronkan berdasarkan waktu mulai stream, dan dapat desinkron di tengah - tengah stream ketika ada masalah teknis atau porsi sebagian stream di hapus/di cut. Gunakan offset untuk penyelarasan video secara manual
+        Video disinkronkan berdasarkan waktu mulai siaran, dan dapat desinkron di tengah-tengah siaran ketika ada masalah teknis atau porsi sebagian siaran dihapus. Gunakan offset untuk menyelarasan video secara manual
   mugen:
     welcome: >-
       Selamat datang di MugenClips! Semua orang yang berada di halaman ini melihat klip hololive bahasa inggris yang sama yang dipilih secara acak. Menonton bareng dan mengobrol sesama fans Hololive dari seluruh penjuru dunia. jika kamu mempercepat klip dan ingin mensinkronkan kembali video dengan semua orang, tekan refresh pada halaman ini.
@@ -426,14 +429,22 @@ views:
   tlClient:
     menu:
       title: Menu
+      setting: Pengaturan ruang TLDex
+      loadVideo: Tampilkan video
+      unloadVideo: Sembunyikan video
+      loadChat: Tambah Obrolan Youtube ke Broadcast TL
+      unloadChat: Lepas dari obrolan Youtube
     tlControl:
       enterBtn: Masukkan
       prefix: Awalan
       suffix: Akhiran
       fontColour: Warna Font
       outlineColour: Warna Outline
+      localPrefix: Label Bahasa dalam Obrolan
       addProfile: Tambah Profil
       removeProfile: Hapus Profil
+      shiftUp: Geser Profil ke Atas
+      shiftDown: Geser Profil ke Bawah
       showSetting: Pengaturan
       hideSetting: Sembunyikan
     addProfilePanel:
@@ -620,8 +631,8 @@ channelRequest:
   VtuberGroupHint: Agensi / Grup mana vtuber ini berasal?
   ChannelLanguageLabel: Bahasa utama channel
   EnglishNameHint: >-
-    Berikan nama dalam b.inggris jika nama channel dalam bahasa lain. Gunakan konvensi nama Vtuber dari bahasa aslinya (cth. 夏色まつり = Natsuiro Matsuri), atau nama EN pilihan mereka (cth. Elu the Elf, Emma★August).
-  EnglishNameLabel: Nama Channel dalam B.Inggris
+    Berikan nama dalam Bahasa Inggris jika nama channel tidak dalam Bahasa Inggris. Gunakan konvensi nama Vtuber dari bahasa aslinya (cth. 夏色まつり = Natsuiro Matsuri), atau nama EN pilihan mereka (cth. Elu the Elf, Emma★August).
+  EnglishNameLabel: Nama Channel dalam Bahasa Inggris
   Comments: Komentar
   CommentsHint: Komentar lain yang ingin kamu sampaikan pada kami.
   VtuberRequirementText: >-

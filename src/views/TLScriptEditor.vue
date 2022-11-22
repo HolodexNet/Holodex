@@ -2634,16 +2634,7 @@ export default {
         //= ======================== TIMELINE CONTROLLER ========================
 
         async checkLoginValidity() {
-            const check = await backendApi.loginIsValid(this.userdata.jwt);
-            if (check === false) {
-                this.$store.dispatch("logout");
-                this.$router.push("/login");
-            } else if (check.data && check.data.id) {
-                this.$store.commit("setUser", {
-                    user: check.data,
-                    jwt: this.userdata.jwt,
-                });
-            }
+            this.$store.dispatch("loginVerify", { bounceToLogin: true });
         },
         modalNexusOutsideClick() {
             if (this.modalMode !== 5) {
@@ -2826,6 +2817,7 @@ export default {
         shiftTime() {
             const offset = Number.parseFloat(this.offsetInput);
             if (Number.isNaN(offset)) {
+                // eslint-disable-next-line no-alert
                 alert("Invalid offset");
                 return;
             }

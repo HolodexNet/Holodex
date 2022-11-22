@@ -11,14 +11,17 @@
         >
           <v-card>
             <v-card-title>
-              {{ $t('channelRequest.PageTitle') }}
+              {{ $t("channelRequest.PageTitle") }}
             </v-card-title>
             <v-card-text>
               <v-alert v-if="type && alertText(type)" type="info">
                 <p v-html="alertText(type)" />
               </v-alert>
 
-              <v-radio-group v-model="type" :label="$t('channelRequest.RequestType')">
+              <v-radio-group
+                v-model="type"
+                :label="$t('channelRequest.RequestType')"
+              >
                 <v-radio
                   v-for="ct in channelTypes"
                   :key="'ct' + ct.value"
@@ -82,10 +85,7 @@
                 :hint="$t('channelRequest.DirectContactDisclaimer')"
                 placeholder="@abc / discord#1234 / contact@hello.me"
                 :required="type === DELETE"
-                :rules="
-                  type === DELETE ? [requiredRule]
-                  : []
-                "
+                :rules="type === DELETE ? [requiredRule] : []"
               />
               <v-textarea
                 v-model="comments"
@@ -97,7 +97,7 @@
 
               <v-btn
                 class="mt-4"
-                :color="success?'success':'primary'"
+                :color="success ? 'success' : 'primary'"
                 large
                 elevation="8"
                 @click="onSubmit"
@@ -147,7 +147,8 @@ export default {
                 {
                     text: "中文",
                     value: "zh",
-                }, {
+                },
+                {
                     text: "한국어",
                     value: "ko",
                 },
@@ -172,7 +173,10 @@ export default {
                     text: "Русский язык",
                     value: "ru",
                 },
-
+                {
+                    text: "Tiếng Việt",
+                    value: "vi",
+                },
             ],
             channelTypes: [
                 {
@@ -214,20 +218,22 @@ export default {
         };
     },
     computed: {},
-    watch: { type() {
-        this.link = "";
-        this.channel = {};
-        this.english_name = "";
-        this.lang = "";
-        this.twitter = "";
-        this.contact = "";
-        this.comments = "";
-        this.org = "";
-    } },
+    watch: {
+        type() {
+            this.link = "";
+            this.channel = {};
+            this.english_name = "";
+            this.lang = "";
+            this.twitter = "";
+            this.contact = "";
+            this.comments = "";
+            this.org = "";
+        },
+    },
     methods: {
-        requiredRule: (v) => ((!!v) || "Required"),
+        requiredRule: (v) => !!v || "Required",
         linkRule: (v) => !!v.match(/^https?:\/\/[\w-]+(\.[\w-]+)+\.?(\/\S*)?/) || "Invalid url",
-        twitterRule: (v) => (!v || !!v.match(/^@.*$/)) || "@ABC",
+        twitterRule: (v) => !v || !!v.match(/^@.*$/) || "@ABC",
         channelURLRule(v) {
             const REGEX = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel)\/([\w-_]*)$/i;
 
@@ -247,8 +253,10 @@ export default {
                     return this.$t("channelRequest.VtuberRequirementText");
                 case ADD_CLIPPER:
                     return this.$t("channelRequest.ClipperRequirementText");
-                case MODIFY_EXISTING: return false;
-                case DELETE: return this.$t("channelRequest.DeletionRequirementText");
+                case MODIFY_EXISTING:
+                    return false;
+                case DELETE:
+                    return this.$t("channelRequest.DeletionRequirementText");
                 default:
                     return false;
             }
@@ -262,7 +270,7 @@ export default {
                 const id = matches?.[0]?.[1];
 
                 try {
-                    const exists = id && await backendApi.channel(id);
+                    const exists = id && (await backendApi.channel(id));
                     if (exists && exists.data && exists.data.id) {
                         this.$router.push({ path: `/channel/${id}` });
                         return;
@@ -279,48 +287,57 @@ export default {
                 };
                 const body = {
                     content: "‌Look what the cat dragged in...",
-                    embeds: [{
-                        title: "Holodex New Subber Request",
-                        color: 1955806, // This is optional, you can look for decimal colour codes at https://www.webtoolkitonline.com/hexadecimal-decimal-color-converter.html
-                        fields: [{
-                            name: "Request Type",
-                            value: this.type,
-                            inline: false,
-                        }, {
-                            name: "Channel Link",
-                            value: this.link || `https://www.youtube.com/channel/${this.channel.id}`,
-                            inline: false,
-                        }, ...ifValid(this.english_name, {
-                            name: "Alternate Channel Name (optional)",
-                            value: this.english_name,
-                            inline: false,
-                        }), ...ifValid(this.lang, {
-                            name: "What language is your channel?",
-                            value: this.lang,
-                            inline: false,
-
-                        }), ...ifValid(this.twitter, {
-                            name: "Twitter Handle (optional)",
-                            value: this.twitter,
-                            inline: false,
-                        }), ...ifValid(this.contact, {
-                            name: "Direct contact",
-                            value: this.contact,
-                            inline: false,
-                        }), ...ifValid(this.org || this.comments, {
-                            name: "Comments",
-                            value: `[${this.org}] ${this.comments}`,
-                            inline: false,
-                        })],
-                        footer: {
-                            text: "Holodex UI",
+                    embeds: [
+                        {
+                            title: "Holodex New Subber Request",
+                            color: 1955806, // This is optional, you can look for decimal colour codes at https://www.webtoolkitonline.com/hexadecimal-decimal-color-converter.html
+                            fields: [
+                                {
+                                    name: "Request Type",
+                                    value: this.type,
+                                    inline: false,
+                                },
+                                {
+                                    name: "Channel Link",
+                                    value:
+                                        this.link
+                                        || `https://www.youtube.com/channel/${this.channel.id}`,
+                                    inline: false,
+                                },
+                                ...ifValid(this.english_name, {
+                                    name: "Alternate Channel Name (optional)",
+                                    value: this.english_name,
+                                    inline: false,
+                                }),
+                                ...ifValid(this.lang, {
+                                    name: "What language is your channel?",
+                                    value: this.lang,
+                                    inline: false,
+                                }),
+                                ...ifValid(this.twitter, {
+                                    name: "Twitter Handle (optional)",
+                                    value: this.twitter,
+                                    inline: false,
+                                }),
+                                ...ifValid(this.contact, {
+                                    name: "Direct contact",
+                                    value: this.contact,
+                                    inline: false,
+                                }),
+                                ...ifValid(this.org || this.comments, {
+                                    name: "Comments",
+                                    value: `[${this.org}] ${this.comments}`,
+                                    inline: false,
+                                }),
+                            ],
+                            footer: {
+                                text: "Holodex UI",
+                            },
                         },
-                    }],
+                    ],
                 };
                 backendApi
-                    .requestChannel(
-                        body,
-                    )
+                    .requestChannel(body)
                     .then(() => {
                         this.success = true;
                         this.link = "";
@@ -345,5 +362,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

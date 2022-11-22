@@ -398,9 +398,11 @@ export default {
             this.init();
         },
         getLoadFn() {
-            let inclusion = "";
-            if (this.tab === this.Tabs.ARCHIVE) inclusion = "mentions,clips";
-            else if (this.tab === this.Tabs.LIVE_UPCOMING) inclusion = "mentions";
+            const inclusion = {
+                [this.Tabs.ARCHIVE]: "mentions,clips",
+                [this.Tabs.LIVE_UPCOMING]: "mentions",
+                [this.Tabs.CLIPS]: "mentions",
+            }[this.tab] ?? "";
 
             const query = {
                 status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
@@ -423,7 +425,7 @@ export default {
                         })
                         .catch((err) => {
                             console.error(err);
-                            this.$store.dispatch("loginVerify"); // check if the user is actually logged in.
+                            this.$store.dispatch("loginVerify", { bounceToLogin: true }); // check if the user is actually logged in.
                             throw err;
                         });
                     return res.data;

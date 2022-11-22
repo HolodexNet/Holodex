@@ -13,6 +13,7 @@
           :key="channel.id"
           cols="12"
           md="4"
+          :style="[channel.inactive ? {'opacity' : 0.5} : {'opacity' : 1}]"
         >
           <ChannelCard :channel="channel" />
         </v-col>
@@ -25,6 +26,7 @@
         :key="channel.id"
         cols="12"
         md="4"
+        :style="[channel.inactive ? {'opacity' : 0.5} : {'opacity' : 1}]"
       >
         <ChannelCard :channel="channel" />
       </v-col>

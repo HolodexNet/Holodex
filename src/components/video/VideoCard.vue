@@ -81,6 +81,10 @@
           <!-- (👻✅) -->
           <div class="video-duration">
             <span
+              v-if="hasDuration"
+              class="duration-placeholder"
+            >{{ formattedDuration }}</span>
+            <span
               v-if="data.placeholderType === 'scheduled-yt-stream'"
               class="hover-placeholder"
             >{{ $t("component.videoCard.typeScheduledYT") }}</span>
@@ -96,7 +100,9 @@
               {{
                 twitchPlaceholder
                   ? mdiTwitch
-                  : placeholderIconMap[data.placeholderType]
+                  : twitterPlaceholder 
+                    ? mdiTwitter 
+                    : placeholderIconMap[data.placeholderType]
               }}
             </v-icon>
           </div>
@@ -276,7 +282,7 @@ import {
     dayjs,
     localizedDayjs,
 } from "@/utils/time";
-import { mdiBroadcast, mdiTwitch } from "@mdi/js";
+import { mdiBroadcast, mdiTwitch, mdiTwitter } from "@mdi/js";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */
 
@@ -357,6 +363,7 @@ export default {
             updatecycle: null,
             hasWatched: false,
             mdiTwitch,
+            mdiTwitter,
             placeholderIconMap: {
                 event: (this as any).icons.mdiCalendar,
                 "scheduled-yt-stream": (this as any).icons.mdiYoutube,
@@ -409,6 +416,9 @@ export default {
                         this.$t.bind(this),
                     );
             }
+        },
+        hasDuration() {
+            return (this.data.duration > 0 && this.data.status === "live") || this.data.start_actual;
         },
         absoluteTimeString() {
             const ts = localizedDayjs(this.data.available_at, this.lang);
@@ -506,6 +516,9 @@ export default {
         },
         twitchPlaceholder() {
             return this.data.link?.includes("twitch.tv");
+        },
+        twitterPlaceholder() {
+            return this.data.link?.includes("/i/spaces/");
         },
     },
     // created() {
@@ -719,6 +732,22 @@ export default {
 .video-card:hover .hover-placeholder {
   visibility: visible;
   display: inline-block;
+  line-height: 13px;
+  position: relative;
+  top: 1px;
+}
+
+.video-card .duration-placeholder {
+  visibility: visible;
+  display: inline-block;
+  line-height: 13px;
+  position: relative;
+  top: 1px;
+}
+
+.video-card:hover .duration-placeholder {
+  visibility: hidden;
+  display: none;
   line-height: 13px;
   position: relative;
   top: 1px;
