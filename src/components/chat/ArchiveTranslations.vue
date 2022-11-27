@@ -12,17 +12,6 @@
           icon
           x-small
           class="mr-1"
-          title="-60s"
-          @click="timeOffsetSeconds -= 60"
-        >
-          <v-icon>
-            {{ mdiChevronDoubleLeft }}
-          </v-icon>
-        </v-btn>
-        <v-btn
-          icon
-          x-small
-          class="mr-1"
           title="-2s"
           @click="timeOffsetSeconds -= 2"
         >
@@ -55,17 +44,6 @@
         >
           <v-icon>
             {{ mdiChevronRight }}
-          </v-icon>
-        </v-btn>
-        <v-btn
-          icon
-          x-small
-          class="mr-1"
-          title="+60s"
-          @click="timeOffsetSeconds += 60"
-        >
-          <v-icon>
-            {{ mdiChevronDoubleRight }}
           </v-icon>
         </v-btn>
         <v-btn
