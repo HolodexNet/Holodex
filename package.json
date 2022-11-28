@@ -39,7 +39,7 @@
     "oauth-open": "^1.0.4",
     "portal-vue": "^2.1.7",
     "register-service-worker": "^1.7.2",
-    "socket.io-client": "^4.4.1",
+    "socket.io-client": "^4.5.4",
     "string-similarity": "^4.0.4",
     "v-google-translate": "^0.1.10",
     "vue": "^2.7.8",
