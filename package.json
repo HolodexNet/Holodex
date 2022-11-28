@@ -53,7 +53,7 @@
     "vue-router": "^3.5.3",
     "vue-socket.io-extended": "^4.2.0",
     "vue-virtual-scroll-list": "^2.3.3",
-    "vuetify": "^2.6.9",
+    "vuetify": "^2.6.10",
     "vuex": "^3.6.2",
     "vuex-persistedstate": "^3.2.1",
     "vuex-persistedstate-migrate": "^1.0.0",
