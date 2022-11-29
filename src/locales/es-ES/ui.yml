@@ -37,13 +37,17 @@ component:
     music: Música
     multiview: Vista múltiple
     points: ptos
+    playlist: Lista de reproducción
   videoCard:
+    clips: 'Clips de {n}'
     watching: '{0} espectadores'
     liveNow: En directo
     edit: Editar
     copiedToClipboard: Enlace copiado al portapapeles.
     copyLink: Copiar enlace de Holodex
     premiere: ESTRENO
+    googleCalendar: Añadir al Calendario de Google
+    totalTLs: Trad. totales del chat del stream
   videoDescription:
     description: Descripción
   description:
@@ -103,6 +107,9 @@ component:
     readMore: Leer más
   reportDialog:
     title: Reportar
+    collabing: >-
+      Este canal podría estar colaborando con un miembro de {org} o con alguno de tus favoritos. Puedes desactivar esta función en los ajustes
+    comments: '¿Qué medidas debería adoptar Holodex?'
     success: Reporte enviado. ¡Gracias!
     reasons:
       - Vídeo etiquetado incorrectamente
@@ -111,11 +118,22 @@ component:
       - Otros
   thirdpartycookie:
     neverShowAgain: No volver a mostrar la alerta
+  playlist:
+    menu:
+      export-playlist: Exportar lista de reproducción
+      new-playlist: Nueva lista de reproducción
+      rename-playlist: Renombrar lista de reproducción
+      reset-unsaved: Restablecer cambios sin guardar
+      delete-playlist: Borrar lista de reproducción
+      clear-playlist: Vaciar lista de reproducción
+    save-error-not-logged-in: Necesitas iniciar sesión para poder guardar listas de reproducción
 views:
   channel:
     video: Vídeos
     clips: Clips
+    music: Música
     collabs: Colaboraciones
+    about: Acerca de
   channels:
     sortOptions:
       subscribers: Suscriptores
@@ -127,11 +145,18 @@ views:
     tabs:
       Vtuber: Vtuber
       Subber: Traductor
+      Favorites: Favoritos
+      Blocked: Canales bloqueados
     favoritesAreEmpty: '¡Tu lista de favoritos está vacía!'
     blockedAreEmpty: No has bloqueado ningún canal.
   home:
     liveOrUpcomingHeading: En directo / Próximamente
     recentVideosHeading: Vídeos recientes
+    noStreams: No hay streams en directo o próximos por el momento
+    recentVideoToggles:
+      all: Todos
+      official: Archivo
+      subber: Clips
   library:
     savedVideosTitle: Vídeos guardados
     createYtPlaylistButton: Crear lista de reproducción de YT ({0})
@@ -204,8 +229,6 @@ views:
     update_available: Hay una actualización disponible
     update_btn: Actualizar
     check_about_page: Visita la pagina "Acerca de" para ver los nuevos cambios
-    nowSupportsMultiOrg: Holodex ahora soporta múltiples organizaciones.
-    loginCallToAction: '¡Inicia sesión para crear tu propia lista de favoritos!'
   watch:
     mentionIconLabel: MENCIONES
     chat:
