@@ -263,8 +263,6 @@ views:
     update_btn: Cập nhật
     close_btn: Đóng
     check_about_page: Truy cập trang Giới thiệu để đọc về các thay đổi mới
-    nowSupportsMultiOrg: Holodex giờ đã hỗ trợ nhiều tổ chức khác nhau.
-    loginCallToAction: Hãy đăng nhập để lưu các kênh bạn yêu thích!
   about:
     add_my_channel: Yêu cầu thêm kênh
   watch:
