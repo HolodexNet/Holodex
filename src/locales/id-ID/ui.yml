@@ -57,8 +57,6 @@ component:
     uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -269,8 +267,6 @@ views:
     update_btn: Perbarui
     close_btn: Tutup
     check_about_page: Kunjungi halaman Tentang untuk melihat pembaharuan
-    nowSupportsMultiOrg: Holodex kini mendukung berbagai organisasi
-    loginCallToAction: Masuk untuk mengumpulkan favorit kamu!
   about:
     add_my_channel: Mengajukan Channel
   watch:
