@@ -57,8 +57,6 @@ component:
     uploadScript: ライブラリスクリプトをアップロードする
   videoDescription:
     description: 概要
-  video:
-    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -269,8 +267,6 @@ views:
     update_btn: アップデート
     close_btn: 閉じる
     check_about_page: 案内ページで更新内容を確認できます
-    nowSupportsMultiOrg: Holodexで他箱のライバーを視聴可能になりました!
-    loginCallToAction: お気に入りを利用するにはログインしてください!
   about:
     add_my_channel: チャンネルのリクエスト
   watch:
@@ -411,7 +407,7 @@ views:
       MugenClipsへようこそ！このページでは全員がランダムに選択されたホロライブの英訳切り抜きを見ています。世界中のホロライブのファンと一緒に見て、チャットしましょう。 先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
   playlist:
     playlist-is-modified: 保存されていません
-    item-last-updated: '最終更新日時'
+    item-last-updated: '最終更新:'
     login-prompt: プレイリストを保存したり、複数のプレイリストを作成するにはログインが必要です。
     new-playlist-btn-label: 新しいプレイリストを作成
     page-heading: 'プレイリスト:'
