@@ -57,8 +57,6 @@ component:
     uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
-  video:
-    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -269,8 +267,6 @@ views:
     update_btn: 更新
     close_btn: 关闭
     check_about_page: 前往关于页面查看最新的更新日志
-    nowSupportsMultiOrg: Holodex现在可以显示更多的团体
-    loginCallToAction: 登入以读取你自己的收藏夹！
   about:
     add_my_channel: 将我的频道加入Holodex
   watch:
