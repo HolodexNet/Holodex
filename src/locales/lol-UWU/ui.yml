@@ -57,8 +57,6 @@ component:
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
-  video:
-    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -269,8 +267,6 @@ views:
     update_btn: Update
     close_btn: Cwose
     check_about_page: Visit da about page to see new changes
-    nowSupportsMultiOrg: Howodex now suppowts muwtipwe owganizations.
-    loginCallToAction: Login to gathew youw own favowites!
   about:
     add_my_channel: Channew request
   watch:
