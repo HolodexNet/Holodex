@@ -57,8 +57,6 @@ component:
     uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
-  video:
-    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -269,8 +267,6 @@ views:
     update_btn: 업데이트
     close_btn: 닫기
     check_about_page: 변경 사항에 대해 알아보려면 정보 페이지를 확인하세요
-    nowSupportsMultiOrg: 이제 Holodex가 다수의 소속을 지원합니다.
-    loginCallToAction: 자신만의 즐겨찾기를 만들려면 로그인해주세요!
   about:
     add_my_channel: 채널 요청
   watch:
