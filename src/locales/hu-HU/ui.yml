@@ -57,8 +57,6 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -269,8 +267,6 @@ views:
     update_btn: Frissítés
     close_btn: Bezárás
     check_about_page: Látogasd meg az Információ oldalt, hogy lásd a változásokat
-    nowSupportsMultiOrg: Holodex már több szervezetet is támogat.
-    loginCallToAction: Jelentkezz be, hogy kedvenceket válassz!
   about:
     add_my_channel: Csatorna igénylés
   watch:
