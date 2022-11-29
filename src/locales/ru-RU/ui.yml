@@ -160,7 +160,7 @@ views:
       recentUpload: Последняя загрузка
       videoCount: Количество видео
       clipCount: Количество клипов
-      org: агентствам
+      org: Агенства
     tabs:
       Vtuber: Витуберы
       Subber: Сабберы
@@ -207,6 +207,7 @@ views:
     sort:
       newest: Сначала новые
       oldest: Сначала старые
+      longest: Длиннейшие
     type:
       all: Все
       official: Официальные
@@ -261,8 +262,6 @@ views:
     update_btn: Обновить
     close_btn: Закрыть
     check_about_page: Перейдите на страницу "О сайте", чтобы узнать о нововведениях
-    nowSupportsMultiOrg: Holodex теперь поддерживает разные агентства.
-    loginCallToAction: Войдите для создания своего списка избранного!
   about:
     add_my_channel: Запрос на добавление канала
   watch:
@@ -595,5 +594,10 @@ channelRequest:
   VtuberGroupLabel: Витубер-группа (необязательно)
   VtuberGroupHint: К какой организации / группе относится этот витубер?
   ChannelLanguageLabel: Основной язык канала
+  EnglishNameHint: >-
+    Укажите английское название, если оригинальное название канала не на английском. Соблюдайте порядок имен оригинального языка витубера (Natsuiro Matsuri), или укажите предпочтительное английское название (Elu the Elf, Emma★August).
+  EnglishNameLabel: Английское название канала
   Comments: Комментарии
   CommentsHint: Другие комментарии, которые Вы хотели бы нам сообщить.
+  PageTitle: Запрос на добавление канала в Holodex
+  ChannelURLErrorFeedback: Должна быть https://www.youtube.com/channel/UC_____
