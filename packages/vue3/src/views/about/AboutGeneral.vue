@@ -79,8 +79,14 @@
         <div class="i-carbon:logo-discord"></div>
       </a>
     </div>
+    <p class="text-sm opacity-60 mt-4">
+      Musicdex UI Build {{ abbreviatedSha }}, released {{ committerDate }}
+    </p>
   </article>
 </template>
+<script setup>
+import { abbreviatedSha, committerDate } from "~build/info";
+</script>
 <style>
 #qlinks a {
   @apply flex flex-row flex-nowrap max-w-xs;
