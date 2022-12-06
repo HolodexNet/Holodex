@@ -1,5 +1,5 @@
 <template>
-  <div class="video-card-grid" :style="gridStyle">
+  <div class="video-card-grid" :style="gridStyle" role="list">
     <slot></slot>
   </div>
 </template>

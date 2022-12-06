@@ -8,5 +8,5 @@
   </component>
 </template>
 <script setup lang="ts">
-const props = defineProps<{ active: boolean; component?: string | any }>();
+const props = defineProps<{ active: boolean; component?: any }>();
 </script>

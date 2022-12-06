@@ -40,4 +40,4 @@ export type DaisyColorShorthand = DaisyColorMap[DaisyColorName];
 export type DaisyColorConfig = PartialExcept<
   Record<DaisyColorName, string>,
   "primary" | "secondary" | "accent" | "neutral" | "base-100"
->;
+> & { "color-scheme"?: "dark" | "light" };

@@ -46,4 +46,8 @@
 <script setup lang="ts">
 import { UseQueryReturnType } from "@tanstack/vue-query";
 const props = defineProps<{ query: UseQueryReturnType<any, any> }>();
+
+watch(props.query, () => {
+  console.log(props.query);
+});
 </script>

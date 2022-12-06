@@ -122,26 +122,29 @@
 <script lang="ts">
 // import api from "@/utils/backend-api";
 import { useChannel } from "@/services/channel";
-import {
-  useFavoritesListByID,
-  useFavoritesPatcher,
-} from "@/services/favorites";
+import { useFavoritesIDSet, useFavoritesPatcher } from "@/services/favorites";
 import { useLangStore } from "@/stores/lang";
 import { useSettingsStore } from "@/stores/settings";
 import { useSiteStore } from "@/stores/site";
 import { getBannerImages } from "@/utils/functions";
 import { RouterLink } from "vue-router";
-import { useDisplay } from "vuetify";
 
 export default defineComponent({
   name: "Channel",
   components: {},
   setup() {
     const route = useRoute();
+    const lastValidID = ref<string>(route.params.id as string);
     const id = computed(() => {
       return route.name?.toString().match(/^Channel(_|$)/)
         ? (route.params.id as string)
-        : "";
+        : lastValidID.value;
+    });
+    // this operates together with lastValidID to prevent unnecessary errors when you navigate away from page.
+    watch(id, (newId) => {
+      if (newId !== lastValidID.value) {
+        lastValidID.value = newId;
+      }
     });
     const channel = useChannel(id, true);
     const langPrefs = useLangStore();
@@ -153,7 +156,7 @@ export default defineComponent({
       );
     });
 
-    const favList = useFavoritesListByID();
+    const favList = useFavoritesIDSet();
     const isFav = computed(() => favList.value?.has(id.value));
     const canFav = computed(() => !!useSiteStore().user);
 

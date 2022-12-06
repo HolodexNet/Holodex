@@ -19,10 +19,8 @@ import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 // import { OhVueIcon } from "oh-vue-icons";
 import * as icons from "@/utils/icons";
 
-import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
-// import { SetupCalendar } from "v-calendar/src/index";
+import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
-// Setup plugin for defaults or `$screens` (optional)
 // a global logging hook for help with development.
 window.log = function (props: any) {
   console.log(props);
@@ -38,17 +36,11 @@ const pinia = setupPinia();
 app.use(pinia);
 
 const i18n = setupI18N();
-app.use(i18n);
-
-app.use(router);
-
-app.use(Vue3Linkify);
-// app.use(SetupCalendar, {});
 
 export const vuetify = createVuetify({
   display: {
     thresholds: {
-      sm: 601,
+      sm: 640,
     },
     mobileBreakpoint: "sm",
   },
@@ -58,12 +50,18 @@ export const vuetify = createVuetify({
     aliases,
     sets: {
       mdi,
-    }
+    },
   } as any,
   theme: {
     defaultTheme: "dark",
   },
 });
+
+app.use(router);
+
+app.use(Vue3Linkify);
+
+app.use(i18n);
 app.use(vuetify);
 
 // misc

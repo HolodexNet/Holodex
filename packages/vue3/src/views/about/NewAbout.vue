@@ -2,7 +2,7 @@
   <!-- <v-container class="channel-container" fluid> -->
   <div
     key="aboutpg"
-    class="container flex flex-row flex-wrap items-stretch gap-2 p-1 pt-2 mx-auto"
+    class="container flex flex-col sm:flex-row flex-wrap items-stretch gap-2 p-1 pt-2 mx-auto"
   >
     <div
       id="setting-menu"
@@ -10,12 +10,19 @@
       :class="{
         'flex-grow': !minimizeSidebar,
         shrink: minimizeSidebar,
-        'max-w-[200px] md:max-w-[300px]': $route.path !== '/about',
+        'max-w-full sm:max-w-[200px] md:max-w-[300px]': isDediAboutPage,
       }"
       style="flex-basis: auto"
     >
-      <ul class="w-full p-2 menu">
-        <li v-if="!minimizeSidebar" class="flex flex-row mb-2 text-lg">
+      <ul
+        class="w-full p-2 menu"
+        :class="{ 'menu-horizontal sm:menu-vertical': isDediAboutPage }"
+      >
+        <li
+          v-if="!minimizeSidebar"
+          class="flex mb-2 text-lg"
+          style="flex-direction: row"
+        >
           <div class="w-full p-2 pb-1 text-xs font-bold pointer-events-none">
             Quick Links:
           </div>
@@ -57,8 +64,12 @@
     </div>
     <div
       v-if="!($route.path === '/about' && display.xs.value)"
-      class="flex-grow flex-shrink-0 p-3 rounded-md xs:max-w-full w-80 bg-bgColor"
-      style="flex-basis: 60%; min-width: 300px"
+      class="flex-grow flex-shrink-0 p-3 rounded-md xs:max-w-full sm:w-80 bg-bgColor"
+      :style="
+        minimizeSidebar
+          ? 'flex-basis:100%'
+          : 'flex-basis: 60%; min-width: 300px'
+      "
     >
       <h1 v-if="minimizeSidebar" class="mb-2 text-xl font-semibold">
         {{ tabs.find((x) => x.active)?.name }}
@@ -136,6 +147,9 @@ export default defineComponent({
     },
     minimizeSidebar() {
       return this.display.xs.value && this.$route.path !== "/about";
+    },
+    isDediAboutPage() {
+      return this.$route.path !== "/about";
     },
   },
   methods: {},

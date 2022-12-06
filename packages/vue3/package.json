@@ -14,12 +14,12 @@
     "@kvs/indexeddb": "^2.1.1",
     "@mdi/js": "^7.0.96",
     "@tailwindcss/line-clamp": "^0.4.2",
-    "@tanstack/virtual-core": "^3.0.0-beta.18",
-    "@tanstack/vue-query": "^4.17.0",
+    "@tanstack/virtual-core": "^3.0.0-beta.28",
+    "@tanstack/vue-query": "^4.19.1",
     "@vueuse/core": "^9.2.0",
     "axios": "^0.27.2",
     "color": "^4.2.3",
-    "daisyui": "^2.37.0",
+    "daisyui": "^2.42.1",
     "dayjs": "^1.11.6",
     "i18next-browser-languagedetector": "^6.1.5",
     "js-cookie": "^3.0.1",
@@ -36,7 +36,7 @@
     "vue-plugin-load-script": "^2.1.1",
     "vue-router": "^4.1.6",
     "vue-toast-notification": "^3.0.4",
-    "vuetify": "^3.0.1"
+    "vuetify": "^3.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",

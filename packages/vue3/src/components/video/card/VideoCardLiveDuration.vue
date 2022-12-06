@@ -1,14 +1,14 @@
 <template>
   <div
     v-if="(video.duration || 0) > 0 || video.start_actual"
-    :class="{ '!bg-red-800': video.status === 'live' }"
+    :class="{ '!bg-red-800 !bg-opacity-70': video.status === 'live' }"
   >
     {{ formatted }}
   </div>
 </template>
 <script lang="ts">
+import { useSharedNow } from "@/hooks/temporal/useGlobalNow";
 import { dayjs, formatDuration } from "@/utils/time";
-import { useNow } from "@vueuse/core";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -20,14 +20,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { now, pause, resume } = useNow({ interval: 1000, controls: true });
-    if (props.video.status !== "live") pause();
-    watch(
-      () => props.video.status,
-      () => {
-        props.video.status !== "live" ? pause() : resume();
-      }
-    );
+    const now = useSharedNow({ interval: 1000 });
+    // if (props.video.status !== "live") pause();
+    // watch(
+    //   () => props.video.status,
+    //   () => {
+    //     props.video.status !== "live" ? pause() : resume();
+    //   }
+    // );
     const { t } = useI18n();
 
     const startActual = computed(

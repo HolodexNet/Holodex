@@ -80,7 +80,7 @@
       </a>
     </div>
     <p class="text-sm opacity-60 mt-4">
-      Musicdex UI Build {{ abbreviatedSha }}, released {{ committerDate }}
+      Holodex V3 UI Build {{ abbreviatedSha }}, released {{ committerDate }}
     </p>
   </article>
 </template>

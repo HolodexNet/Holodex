@@ -37,7 +37,7 @@
       </template>
     </template>
   </div>
-  <query-status :query="(resp as any)" />
+  <query-status v-if="!!query" :query="(resp as any)" />
 </template>
 <script lang="ts">
 import { useChannels } from "@/services/channel";

@@ -98,10 +98,7 @@
 </template>
 <script lang="ts">
 import { useChannelPreferredName } from "@/hooks/common/useChannelService";
-import {
-  useFavoritesListByID,
-  useFavoritesPatcher,
-} from "@/services/favorites";
+import { useFavoritesIDSet, useFavoritesPatcher } from "@/services/favorites";
 import { useLangStore } from "@/stores";
 import { formatCount, formatTopic } from "@/utils/functions";
 import { PropType } from "vue";
@@ -126,7 +123,7 @@ export default defineComponent({
   setup(props) {
     const { preferredName } = useChannelPreferredName(props.channel);
     const lang = useLangStore();
-    const fav = useFavoritesListByID();
+    const fav = useFavoritesIDSet();
 
     const isFav = computed(() => fav.value?.has(props.channel.id));
     const favPatcher = useFavoritesPatcher();
