@@ -160,3 +160,5 @@ export const MESSAGE_TYPES = Object.freeze({
 });
 
 export const MAX_PLAYLIST_LENGTH = 500;
+
+export const CURRENT_PLAYLIST_PROVIDE_KEY = "currentPlaylist";

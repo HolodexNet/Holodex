@@ -44,7 +44,8 @@ export function usePlaylist(
   return useQuery(
     ["playlist", id] as const,
     async (q) => {
-      if (!q.queryKey[1]) return {name: 'Undefined Playlist', user_id: -1, videos: []};
+      if (!q.queryKey[1])
+        return { name: "Undefined Playlist", user_id: -1, videos: [] };
       const playlist = (await backendApi.getPlaylist(q.queryKey[1])).data;
       // playlist._videoIdSet = new Set(playlist.videos?.map((x) => x.id));
       return playlist;
@@ -96,7 +97,7 @@ export function usePlaylistPatcher() {
     {
       onSettled(data, err, variables, ctx) {
         if (variables.id) {
-          queryClient.setQueriesData(["playlist", variables.id], variables);
+          queryClient.setQueryData(["playlist", variables.id], variables);
           _debounced_invalidatePlaylist(variables.id);
         } else {
           queryClient.invalidateQueries(["playlist", data]);

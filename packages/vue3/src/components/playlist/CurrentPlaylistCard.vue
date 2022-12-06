@@ -7,14 +7,14 @@
 </template>
 
 <script setup lang="ts">
-import { usePlaylist } from "@/services/playlist";
 import { useSiteStore } from "@/stores";
-import { usePlaylistState, usePlaylistVideoIDCache } from "@/stores/playlist";
+import { CURRENT_PLAYLIST_PROVIDE_KEY } from "@/utils/consts";
+import { Playlist } from "@/utils/types";
+import { UseQueryReturnType } from "@tanstack/vue-query";
 
 const site = useSiteStore();
 
-const current = storeToRefs(usePlaylistState());
-const cache = usePlaylistVideoIDCache();
-
-const currentPlaylist = usePlaylist(current.currentPlaylistId);
+const currentPlaylist = inject(
+  CURRENT_PLAYLIST_PROVIDE_KEY
+) as UseQueryReturnType<Playlist, unknown>;
 </script>
