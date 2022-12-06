@@ -27,7 +27,7 @@ export const usePlaylistState = defineStore("currentPlaylistStore", {
   },
 });
 
-export const useTogglePlaylistVideo = (video: VideoRef) => {
+export const useTogglePlaylistVideo = createGlobalState(() => {
   const idSet = usePlaylistVideoIDSet();
 
   const playlist = inject(CURRENT_PLAYLIST_PROVIDE_KEY) as UseQueryReturnType<
@@ -35,19 +35,18 @@ export const useTogglePlaylistVideo = (video: VideoRef) => {
     unknown
   >;
   const patcher = usePlaylistPatcher();
-  const hasSaved = computed(() => idSet.value?.has(video.id));
-  function toggleSaved() {
+  function toggleSaved(video: VideoRef) {
     if (video.type === VIDEO_TYPES.PLACEHOLDER) return; // huh.
     // UseQueryReturnType<Playlist | undefined, unknown, QueryObserverResult<Playlist | undefined, unknown>>
     console.log("changing: ", playlist.data.value);
     const changed = new EditablePlaylist(playlist.data.value as any);
-    if (hasSaved.value) changed.removeId(video.id);
+    if (idSet.value?.has(video.id)) changed.removeId(video.id);
     else changed.addId(video);
 
     patcher.mutate(changed.valueOf());
   }
-  return { hasSaved, toggleSaved };
-};
+  return { idSet, toggleSaved };
+});
 
 export const usePlaylistVideoIDSet = createGlobalState(() => {
   const list = usePlaylist();

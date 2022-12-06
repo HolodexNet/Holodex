@@ -32,7 +32,7 @@
           class="rounded-sm video-overlay-action"
           :class="{ 'hover-show': !hasSaved }"
           role="img"
-          @click.prevent.stop="toggleSaved()"
+          @click.prevent.stop="toggleSaved(video)"
         >
           {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
         </v-icon>
@@ -90,7 +90,10 @@ import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 import { PLACEHOLDER_TYPES } from "@/utils/consts";
-import { useTogglePlaylistVideo } from "@/stores/playlist";
+import {
+  usePlaylistVideoIDSet,
+  useTogglePlaylistVideo,
+} from "@/stores/playlist";
 /* eslint-disable no-unused-vars */
 
 export default defineComponent({
@@ -111,10 +114,13 @@ export default defineComponent({
     const display = useDisplay();
     const isMobile = display.mobile;
     const langStore = useLangStore();
-    const playlistVideo = useTogglePlaylistVideo(props.video);
+    const { toggleSaved, idSet } = useTogglePlaylistVideo();
+    // const set = usePlaylistVideoIDSet();
+    // const playlistHasVideo = computed(() => set.value?.has(props.video.id))
 
     const tldexStore = useTLStore();
     const liveTlLang = computed(() => tldexStore.liveTlLang);
+    const hasSaved = computed(() => idSet.value?.has(props.video.id));
     const { t } = useI18n();
     return {
       site,
@@ -122,8 +128,8 @@ export default defineComponent({
       isMobile,
       langStore,
       liveTlLang,
-      toggleSaved: playlistVideo.toggleSaved,
-      hasSaved: playlistVideo.hasSaved,
+      toggleSaved,
+      hasSaved,
       t,
     };
   },
