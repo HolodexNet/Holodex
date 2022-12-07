@@ -90,10 +90,8 @@ import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 import { PLACEHOLDER_TYPES } from "@/utils/consts";
-import {
-  usePlaylistVideoIDSet,
-  useTogglePlaylistVideo,
-} from "@/stores/playlist";
+import { useTogglePlaylistVideo } from "@/stores/playlist";
+import { reactivePick } from "@vueuse/core";
 /* eslint-disable no-unused-vars */
 
 export default defineComponent({
@@ -115,11 +113,9 @@ export default defineComponent({
     const isMobile = display.mobile;
     const langStore = useLangStore();
     const { toggleSaved, idSet } = useTogglePlaylistVideo();
-    // const set = usePlaylistVideoIDSet();
-    // const playlistHasVideo = computed(() => set.value?.has(props.video.id))
 
     const tldexStore = useTLStore();
-    const liveTlLang = computed(() => tldexStore.liveTlLang);
+    const liveTlLang = reactivePick(tldexStore, "liveTlLang");
     const hasSaved = computed(() => idSet.value?.has(props.video.id));
     const { t } = useI18n();
     return {
@@ -185,13 +181,13 @@ export default defineComponent({
     hasTLs() {
       return (
         (this.video?.status === "past" &&
-          this.video?.live_tl_count?.[this.liveTlLang]) ||
-        this.video?.recent_live_tls?.includes(this.liveTlLang)
+          this.video?.live_tl_count?.[this.liveTlLang.liveTlLang]) ||
+        this.video?.recent_live_tls?.includes(this.liveTlLang.liveTlLang)
       );
     },
     tlLangInChat() {
       return this.hasTLs && this.video.status === "past"
-        ? `${this.video.live_tl_count?.[this.liveTlLang]}`
+        ? `${this.video.live_tl_count?.[this.liveTlLang.liveTlLang]}`
         : "";
     },
     tlIconTitle() {
