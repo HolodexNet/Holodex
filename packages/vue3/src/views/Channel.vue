@@ -94,9 +94,11 @@
           <h-tab
             v-for="tab in tabs"
             :key="tab.path"
-            :active="tab.name === $router.currentRoute.value.name"
+            :active="tab.path === $router.currentRoute.value.path"
             :component="RouterLink"
             :to="tab.path"
+            aclass="tab-active text-secondary !border-secondary"
+            xclass="tab-bordered"
             class="min-h-[4rem] sm:min-h-[2.5rem]"
           >
             <div :class="tab.class" class="mr-1 md:mr-2"></div>

@@ -1,15 +1,35 @@
 <template>
   <h-tabs xclass="mb-4 bg-bgColor-500" with-container>
-    <h-tab :active="category === 0" @click="category = 0">
+    <h-tab
+      :active="category === 0"
+      aclass="tab-active text-secondary !border-secondary"
+      xclass="tab-bordered"
+      @click="category = 0"
+    >
       {{ $t("views.channels.tabs.Vtuber") }}
     </h-tab>
-    <h-tab :active="category === 1" @click="category = 1">
+    <h-tab
+      :active="category === 1"
+      aclass="tab-active text-secondary !border-secondary"
+      xclass="tab-bordered"
+      @click="category = 1"
+    >
       {{ $t("views.channels.tabs.Subber") }}
     </h-tab>
-    <h-tab :active="category === 2" @click="category = 2">
+    <h-tab
+      :active="category === 2"
+      aclass="tab-active text-secondary !border-secondary"
+      xclass="tab-bordered"
+      @click="category = 2"
+    >
       {{ $t("views.channels.tabs.Favorites") }}
     </h-tab>
-    <h-tab :active="category === 3" @click="category = 3">
+    <h-tab
+      :active="category === 3"
+      aclass="tab-active text-secondary !border-secondary"
+      xclass="tab-bordered"
+      @click="category = 3"
+    >
       {{ $t("views.channels.tabs.Blocked") }}
     </h-tab>
     <template v-if="category !== Tabs.BLOCKED" #filters>

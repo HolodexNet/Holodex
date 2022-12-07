@@ -1,19 +1,21 @@
 <template>
-  <h-tabs xclass="mb-4 bg-bgColor-500">
+  <h-tabs xclass="mb-4 bg-bgColor-500 tabs-boxed">
     <h-tab
       :active="currentTab === 0"
       class="shrink"
+      aclass="bg-primary-600 rounded-lg"
+      xclass="tab tab-lg"
       style="text-overflow: ''; white-space: nowrap; overflow: hidden"
       @click="() => updateTab(0)"
     >
-      {{ liveUpcomingHeaderSplit[1] }}
+      <span class="hidden sm:inline">{{ liveUpcomingHeaderSplit[1] }}</span>
       <span
         v-if="liveUpcomingCounts.liveCnt"
         class="mx-1 rounded-sm badge badge-secondary badge-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.liveCnt }}
       </span>
-      {{ liveUpcomingHeaderSplit[2] }}
+      <span class="hidden sm:inline">{{ liveUpcomingHeaderSplit[2] }}</span>
       <span
         v-if="liveUpcomingCounts.upcomingCnt"
         class="mx-1 rounded-sm badge badge-outline badge-sm sm:badge-md"
@@ -21,10 +23,20 @@
         {{ liveUpcomingCounts.upcomingCnt }}
       </span>
     </h-tab>
-    <h-tab :active="currentTab === 1" @click="() => updateTab(1)">
+    <h-tab
+      :active="currentTab === 1"
+      aclass="bg-primary-600 rounded-lg"
+      xclass="tab tab-lg"
+      @click="() => updateTab(1)"
+    >
       {{ $t("views.home.recentVideoToggles.official") }}
     </h-tab>
-    <h-tab :active="currentTab === 2" @click="() => updateTab(2)">
+    <h-tab
+      :active="currentTab === 2"
+      aclass="bg-primary-600 rounded-lg"
+      xclass="tab tab-lg"
+      @click="() => updateTab(2)"
+    >
       {{ $t("views.home.recentVideoToggles.subber") }}
     </h-tab>
   </h-tabs>
