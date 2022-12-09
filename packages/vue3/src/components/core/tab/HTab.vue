@@ -1,7 +1,7 @@
 <template>
   <component
     :is="component || 'a'"
-    class="tab sm:tab-lg tab-bordered"
+    class="tab sm:tab-lg tab-bordered border-transparent"
     :class="props.active ? 'tab-active text-secondary !border-secondary' : ''"
   >
     <slot></slot>

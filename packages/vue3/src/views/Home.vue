@@ -1,9 +1,33 @@
 <template>
-  <home-tabs
-    :counts="liveUpcomingCounts"
-    :tab="currentTab"
-    @update:tab="(t) => updateTab(t)"
-  />
+  <h-tabs xclass="mb-4 bg-bgColor-500">
+    <h-tab
+      :active="currentTab === 0"
+      class="shrink"
+      style="text-overflow: ''; white-space: nowrap; overflow: hidden"
+      @click="() => updateTab(0)"
+    >
+      {{ liveUpcomingHeaderSplit[1] }}
+      <span
+        v-if="liveUpcomingCounts.liveCnt"
+        class="mx-1 rounded-sm badge badge-secondary badge-sm sm:badge-md"
+      >
+        {{ liveUpcomingCounts.liveCnt }}
+      </span>
+      {{ liveUpcomingHeaderSplit[2] }}
+      <span
+        v-if="liveUpcomingCounts.upcomingCnt"
+        class="mx-1 rounded-sm badge badge-outline badge-sm sm:badge-md"
+      >
+        {{ liveUpcomingCounts.upcomingCnt }}
+      </span>
+    </h-tab>
+    <h-tab :active="currentTab === 1" @click="() => updateTab(1)">
+      {{ $t("views.home.recentVideoToggles.official") }}
+    </h-tab>
+    <h-tab :active="currentTab === 2" @click="() => updateTab(2)">
+      {{ $t("views.home.recentVideoToggles.subber") }}
+    </h-tab>
+  </h-tabs>
   <div class="px-4">
     <video-card-grid>
       <template
@@ -143,6 +167,12 @@ const videoQuery = useVideoListDatasource(lookupState, ref({ enabled: true }));
 
 const totalPages = computed(() => {
   return Math.ceil((videoQuery?.data.value?.total || 0) / perPage);
+});
+
+const liveUpcomingHeaderSplit = computed(() => {
+  return [
+    ...(t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/) || []),
+  ];
 });
 
 const liveUpcomingCounts = ref({ liveCnt: 0, upcomingCnt: 0 });

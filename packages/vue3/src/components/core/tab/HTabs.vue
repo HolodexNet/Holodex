@@ -2,6 +2,10 @@
   <div
     class="sticky z-10 px-4 overflow-x-auto overflow-y-hidden tabs top-14 flex-nowrap no-scrollbar sm:mb-4"
     :class="xclass"
+    style="
+      background-color: rgb(var(--v-theme-surface));
+      box-shadow: inset 0px -1px hsl(var(--bc) / 0.2);
+    "
   >
     <div
       class="flex w-full"
