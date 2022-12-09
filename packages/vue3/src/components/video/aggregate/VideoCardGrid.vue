@@ -7,8 +7,8 @@
 import { useSettingsStore } from "@/stores/settings";
 
 const settings = useSettingsStore();
-const maxWidth = ["310px", "270px", "230px"];
-const gridColumnGap = ["20px", "10px", "10px"];
+const maxWidth = ["300px", "260px", "220px"];
+const gridColumnGap = ["16px", "12px", "8px"];
 
 const gridStyle = computed(() => {
   return {
