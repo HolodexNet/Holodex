@@ -9,12 +9,12 @@
       :class="{ 'container mx-auto': props.withContainer }"
     >
       <slot></slot>
-      <div v-if="!display.mobile.value" class="mt-auto ml-auto">
+      <div v-if="!display.mobile.value" class="ml-auto mt-auto mb-auto">
         <slot name="filters"></slot>
       </div>
     </div>
   </div>
-  <div v-if="display.mobile.value" class="flex justify-end my-2">
+  <div v-if="display.mobile.value" class="flex justify-end my-2 -mt-4">
     <slot name="filters"></slot>
   </div>
 </template>

@@ -32,6 +32,7 @@ declare module '@vue/runtime-core' {
     HList: typeof import('./components/core/HList.vue')['default']
     HolodexStats: typeof import('./components/about/HolodexStats.vue')['default']
     Home: typeof import('./views/Home.vue')['default']
+    HomeFilterButton: typeof import('./components/frame/HomeFilterButton.vue')['default']
     HomepageFilters: typeof import('./components/settings/HomepageFilters.vue')['default']
     HomeTabs: typeof import('./components/nav/HomeTabs.vue')['default']
     HPagination: typeof import('./components/core/HPagination.vue')['default']

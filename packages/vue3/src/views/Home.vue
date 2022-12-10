@@ -27,6 +27,9 @@
     <h-tab :active="currentTab === 2" @click="() => updateTab(2)">
       {{ $t("views.home.recentVideoToggles.subber") }}
     </h-tab>
+    <template #filters>
+      <home-filter-button></home-filter-button>
+    </template>
   </h-tabs>
   <div class="px-4">
     <video-card-grid>
