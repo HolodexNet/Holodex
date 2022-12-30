@@ -57,8 +57,6 @@ component:
     uploadScript: TL-Skript hochladen
   videoDescription:
     description: Beschreibung
-  video:
-    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -269,8 +267,6 @@ views:
     update_btn: Update
     close_btn: Schließen
     check_about_page: Besuche die Info-Seite um neue Änderungen zu sehen
-    nowSupportsMultiOrg: Holodex unterstützt jetzt mehrere Organisationen.
-    loginCallToAction: Melde dich an, um deine eigenen Favoriten zu sammeln!
   about:
     add_my_channel: Kanalanfrage
   watch:

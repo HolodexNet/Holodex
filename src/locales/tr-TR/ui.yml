@@ -266,8 +266,6 @@ views:
     update_btn: Güncelle
     close_btn: Kapat
     check_about_page: Değişiklikleri görüntülemek için Hakkında sayfasını ziyaret edin
-    nowSupportsMultiOrg: Holodex artık birden fazla organizaysonu desteklememektedir.
-    loginCallToAction: Favorilerinizi toplamak için Giriş Yapın!
   about:
     add_my_channel: Kanal Talebi
   watch:

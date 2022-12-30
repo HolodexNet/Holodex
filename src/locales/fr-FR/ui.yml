@@ -240,8 +240,6 @@ views:
     update_btn: Mettre à jour
     close_btn: Fermer
     check_about_page: Visitez la page À Propos pour voir les changements
-    nowSupportsMultiOrg: Holodex supporte maintenant de nombreuses organisations.
-    loginCallToAction: Connectez-vous pour rassembler vos propres favoris !
   watch:
     mentionIconLabel: MENTIONS
     chat:

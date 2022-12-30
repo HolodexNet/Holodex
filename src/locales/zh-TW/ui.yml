@@ -57,8 +57,6 @@ component:
     uploadScript: 上傳翻譯文本
   videoDescription:
     description: 說明
-  video:
-    comment: { }
   description:
     showLess: 只顯示部分資訊
     showMore: 顯示完整資訊
@@ -270,8 +268,6 @@ views:
     update_btn: 更新
     close_btn: 關閉
     check_about_page: 查看關於頁面以詳細了解更新內容
-    nowSupportsMultiOrg: Holodex現在已支援更多Vtuber團體。
-    loginCallToAction: 登入以取得您的收藏資料
   about:
     add_my_channel: 將我的頻道加入Holodex
   watch:
