@@ -34,7 +34,6 @@ declare module '@vue/runtime-core' {
     Home: typeof import('./views/Home.vue')['default']
     HomeFilterButton: typeof import('./components/frame/HomeFilterButton.vue')['default']
     HomepageFilters: typeof import('./components/settings/HomepageFilters.vue')['default']
-    HomeTabs: typeof import('./components/nav/HomeTabs.vue')['default']
     HPagination: typeof import('./components/core/HPagination.vue')['default']
     HTab: typeof import('./components/core/tab/HTab.vue')['default']
     HTabs: typeof import('./components/core/tab/HTabs.vue')['default']
