@@ -10,7 +10,7 @@ import {
   UseQueryOptions,
   useInfiniteQuery,
 } from "@tanstack/vue-query";
-import { useFavoritesListByID } from "./favorites";
+import { useFavoritesIDSet } from "./favorites";
 
 type QueryConfig<TReturn> = Omit<
   UseQueryOptions<TReturn, unknown, TReturn, any>,
@@ -181,7 +181,7 @@ export function useVideoListDatasource(
   const langs = useLangStore();
   const settings = useSettingsStore();
   const site = useSiteStore();
-  const favesList = useFavoritesListByID();
+  const favesList = useFavoritesIDSet();
 
   const urlTarget = computed(
     () =>

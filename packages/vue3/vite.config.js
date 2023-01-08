@@ -1,6 +1,7 @@
 // FILE: vite.config.js
 
 import { defineConfig } from "vite";
+import BuildInfo from "vite-plugin-info";
 import vue from "@vitejs/plugin-vue";
 import { ViteAliases } from "vite-aliases";
 import AutoImport from "unplugin-auto-import/vite";
@@ -31,6 +32,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    BuildInfo(),
     // ViteYaml({
     //   // for converting yml into ES6 modules.
     //   include: ["src/locales/**/*.yml"]

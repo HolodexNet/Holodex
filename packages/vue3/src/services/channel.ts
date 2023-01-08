@@ -17,7 +17,7 @@ export function useChannels(query: Ref<object>, enabled: MaybeRef<boolean>) {
     {
       enabled,
       getNextPageParam(d, dh) {
-        if (d.length < 100) return undefined;
+        if (!d || d.length < 100) return undefined;
         return { offset: dh.length * 100, limit: 100 };
       },
     }

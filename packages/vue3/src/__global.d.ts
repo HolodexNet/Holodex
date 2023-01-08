@@ -2,6 +2,11 @@
 
 export {};
 
+declare module "~build/info" {
+  export const abbreviatedSha: string;
+  export const committerDate: string;
+}
+
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
     icons: typeof import("./utils/icons");

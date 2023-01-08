@@ -2,18 +2,19 @@
   <div
     class="sticky z-10 px-4 overflow-x-auto overflow-y-hidden tabs top-14 flex-nowrap no-scrollbar sm:mb-4"
     :class="xclass"
+    style="box-shadow: inset 0px -1px hsl(var(--bc) / 0.2)"
   >
     <div
       class="flex w-full"
       :class="{ 'container mx-auto': props.withContainer }"
     >
       <slot></slot>
-      <div v-if="!display.mobile.value" class="mt-auto ml-auto">
+      <div v-if="!display.mobile.value" class="ml-auto mt-auto mb-auto">
         <slot name="filters"></slot>
       </div>
     </div>
   </div>
-  <div v-if="display.mobile.value" class="flex justify-end my-2">
+  <div v-if="display.mobile.value" class="flex justify-end my-2 -mt-4">
     <slot name="filters"></slot>
   </div>
 </template>

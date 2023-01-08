@@ -1,33 +1,14 @@
 // import type { Playlist } from "@/utils/types";
 
-import { EditablePlaylist, usePlaylistPatcher } from "@/services/playlist";
-import { VIDEO_TYPES } from "@/utils/consts";
-
-type CurrentPlaylistStore = {
-  setOfIds: Set<string>;
-};
-export const usePlaylistVideoIDCache = defineStore("currentPlaylist", {
-  // convert to a function
-  state: (): CurrentPlaylistStore => {
-    return {
-      setOfIds: new Set(),
-    };
-  },
-  getters: {
-    contains(state): (id: string) => boolean | undefined {
-      return (id: string) => state.setOfIds.has(id);
-    },
-  },
-  // getters: {},
-  // actions: {},
-  share: {
-    enable: false,
-    initialize: false, // when initializing, fetch from another tab.
-  },
-  persistedState: {
-    persist: false,
-  },
-});
+import {
+  EditablePlaylist,
+  usePlaylist,
+  usePlaylistPatcher,
+} from "@/services/playlist";
+import { CURRENT_PLAYLIST_PROVIDE_KEY, VIDEO_TYPES } from "@/utils/consts";
+import { Playlist } from "@/utils/types";
+import { UseQueryReturnType } from "@tanstack/vue-query";
+import { createGlobalState } from "@vueuse/core";
 
 // persisted remembering which playlist we're counting as 'current'
 export const usePlaylistState = defineStore("currentPlaylistStore", {
@@ -46,21 +27,33 @@ export const usePlaylistState = defineStore("currentPlaylistStore", {
   },
 });
 
-export const useTogglePlaylistVideo = (video: VideoRef) => {
-  const playlistCache = usePlaylistVideoIDCache();
+export const useTogglePlaylistVideo = createGlobalState(() => {
+  const idSet = usePlaylistVideoIDSet();
 
-  const playlist = inject("currentPlaylist") as any;
+  const playlist = inject(CURRENT_PLAYLIST_PROVIDE_KEY) as UseQueryReturnType<
+    Playlist,
+    unknown
+  >;
   const patcher = usePlaylistPatcher();
-  const hasSaved = computed(() => playlistCache.setOfIds.has(video.id));
-  function toggleSaved() {
+  function toggleSaved(video: VideoRef) {
     if (video.type === VIDEO_TYPES.PLACEHOLDER) return; // huh.
     // UseQueryReturnType<Playlist | undefined, unknown, QueryObserverResult<Playlist | undefined, unknown>>
     console.log("changing: ", playlist.data.value);
     const changed = new EditablePlaylist(playlist.data.value as any);
-    if (hasSaved.value) changed.removeId(video.id);
+    if (idSet.value?.has(video.id)) changed.removeId(video.id);
     else changed.addId(video);
 
     patcher.mutate(changed.valueOf());
   }
-  return { hasSaved, toggleSaved };
-};
+  return { idSet, toggleSaved };
+});
+
+export const usePlaylistVideoIDSet = createGlobalState(() => {
+  const list = usePlaylist();
+  const set = computed(() => {
+    console.log("computed playlist video id set");
+    const ids = list.data?.value?.videos?.map((x) => x.id);
+    return ids !== undefined ? new Set(ids) : undefined;
+  });
+  return set;
+});

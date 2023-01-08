@@ -32,7 +32,7 @@
           class="rounded-sm video-overlay-action"
           :class="{ 'hover-show': !hasSaved }"
           role="img"
-          @click.prevent.stop="toggleSaved()"
+          @click.prevent.stop="toggleSaved(video)"
         >
           {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
         </v-icon>
@@ -91,6 +91,7 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 import { PLACEHOLDER_TYPES } from "@/utils/consts";
 import { useTogglePlaylistVideo } from "@/stores/playlist";
+import { reactivePick } from "@vueuse/core";
 /* eslint-disable no-unused-vars */
 
 export default defineComponent({
@@ -111,10 +112,11 @@ export default defineComponent({
     const display = useDisplay();
     const isMobile = display.mobile;
     const langStore = useLangStore();
-    const playlistVideo = useTogglePlaylistVideo(props.video);
+    const { toggleSaved, idSet } = useTogglePlaylistVideo();
 
     const tldexStore = useTLStore();
-    const liveTlLang = computed(() => tldexStore.liveTlLang);
+    const liveTlLang = reactivePick(tldexStore, "liveTlLang");
+    const hasSaved = computed(() => idSet.value?.has(props.video.id));
     const { t } = useI18n();
     return {
       site,
@@ -122,8 +124,8 @@ export default defineComponent({
       isMobile,
       langStore,
       liveTlLang,
-      toggleSaved: playlistVideo.toggleSaved,
-      hasSaved: playlistVideo.hasSaved,
+      toggleSaved,
+      hasSaved,
       t,
     };
   },
@@ -179,13 +181,13 @@ export default defineComponent({
     hasTLs() {
       return (
         (this.video?.status === "past" &&
-          this.video?.live_tl_count?.[this.liveTlLang]) ||
-        this.video?.recent_live_tls?.includes(this.liveTlLang)
+          this.video?.live_tl_count?.[this.liveTlLang.liveTlLang]) ||
+        this.video?.recent_live_tls?.includes(this.liveTlLang.liveTlLang)
       );
     },
     tlLangInChat() {
       return this.hasTLs && this.video.status === "past"
-        ? `${this.video.live_tl_count?.[this.liveTlLang]}`
+        ? `${this.video.live_tl_count?.[this.liveTlLang.liveTlLang]}`
         : "";
     },
     tlIconTitle() {

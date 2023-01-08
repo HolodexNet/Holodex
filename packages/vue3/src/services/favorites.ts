@@ -1,3 +1,4 @@
+import { createGlobalState } from "@vueuse/core";
 import { queryClient } from "@/setup/setupQueryPlugin";
 import { useSiteStore } from "@/stores";
 import backendApi from "@/utils/backend-api";
@@ -21,15 +22,15 @@ export function useFavoritesList() {
   );
 }
 
-export function useFavoritesListByID() {
+export const useFavoritesIDSet = createGlobalState(() => {
   const list = useFavoritesList();
-  const computedList = computed(() => {
+  const set = computed(() => {
     console.log("computed fav list as set");
     const ids = list.data?.value?.map((x) => x.id);
     return ids !== undefined ? new Set(ids) : undefined;
   });
-  return computedList;
-}
+  return set;
+});
 
 const _debounced_invalidateFavorites = debounce(() => {
   console.log("evicting queries");

@@ -33,10 +33,7 @@ export function broadcastQueryClient({
       query: { queryHash, queryKey, state },
     } = queryEvent;
 
-    if (
-      queryEvent.type === "queryUpdated" &&
-      queryEvent.action.type === "success"
-    ) {
+    if (queryEvent.type === "updated" && queryEvent.action.type === "success") {
       channel.postMessage({
         type: "updated",
         queryHash,
@@ -45,7 +42,7 @@ export function broadcastQueryClient({
       });
     }
 
-    if (queryEvent.type === "queryRemoved") {
+    if (queryEvent.type === "removed") {
       channel.postMessage({
         type: "removed",
         queryHash,

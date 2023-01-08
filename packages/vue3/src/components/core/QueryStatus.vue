@@ -1,7 +1,7 @@
 <template>
   <div class="flex m-auto h-full">
     <div
-      v-if="props.query.isError"
+      v-if="props.query.isError.value"
       class="justify-center flex flex-1 flex-col items-center"
     >
       <h4 class="text-2xl font-medium">
@@ -35,7 +35,7 @@
       </v-btn>
     </div>
     <v-progress-circular
-      v-else-if="props.query.isLoading || props.query.isFetching"
+      v-else-if="props.query.isLoading.value || props.query.isFetching.value"
       indeterminate
       color="primary"
       :size="64"
@@ -46,4 +46,10 @@
 <script setup lang="ts">
 import { UseQueryReturnType } from "@tanstack/vue-query";
 const props = defineProps<{ query: UseQueryReturnType<any, any> }>();
+
+watchEffect(() => {
+  console.log("hey it changed");
+  console.log(props.query.data.value);
+  console.log(props.query.status.value);
+});
 </script>

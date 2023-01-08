@@ -1,5 +1,5 @@
 import { useSiteStore } from "@/stores";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { useToast } from "vue-toast-notification";
 import { User } from "./user";
 
@@ -35,20 +35,52 @@ export function useClient() {
 
   const checkAndRefreshUser = async () => {
     if (!token) return;
-    try {
-      const resp = await AxiosInstance<User>("/user/check");
-      if (resp.status === 200 && resp.data?.id) site.user = resp.data as User;
-      else throw new Error("Strange bug occured with user checking...");
-    } catch (e) {
-      logout();
-      toast({
-        position: "top-right",
-        message: "Error while logging in",
-        type: "error",
-      });
-      return false;
-    }
-    return true;
+    return new Promise<void>((resolve, _) => {
+      AxiosInstance<{ user: User; jwt: string }>("/user/refresh")
+        .then((resp) => {
+          if (resp.data?.user?.id) {
+            site.user = resp.data.user;
+            site.jwtToken = resp.data.jwt;
+          } else {
+            throw new Error("Strange bug occured with user checking...");
+          }
+        })
+        .catch((error: Error | AxiosError) => {
+          if ((error as AxiosError)?.response) {
+            const { data, status, headers } = (error as AxiosError)
+              .response as AxiosResponse;
+            // Request made and server responded
+            console.log(data);
+            console.log(status);
+            console.log(headers);
+
+            if (status === 401) {
+              logout();
+              toast({
+                position: "top-right",
+                message: "You have been logged out.",
+                type: "error",
+              });
+            }
+          } else if ((error as AxiosError)?.request) {
+            // The request was made but no response was received
+            console.log("The request was made but no response was received");
+            toast({
+              position: "top-right",
+              message: "Server inaccessible, please try again later.",
+            });
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+            toast({
+              position: "top-right",
+              message: "Mysterious error occured.",
+              type: "error",
+            });
+          }
+        })
+        .finally(resolve);
+    });
   };
 
   return {

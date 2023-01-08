@@ -1,12 +1,12 @@
 <template>
   <component
     :is="component || 'a'"
-    class="tab sm:tab-lg tab-bordered"
+    class="tab sm:tab-lg tab-bordered border-transparent"
     :class="props.active ? 'tab-active text-secondary !border-secondary' : ''"
   >
     <slot></slot>
   </component>
 </template>
 <script setup lang="ts">
-const props = defineProps<{ active: boolean; component?: string | any }>();
+const props = defineProps<{ active: boolean; component?: any }>();
 </script>

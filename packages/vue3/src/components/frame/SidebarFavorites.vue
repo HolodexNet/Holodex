@@ -50,8 +50,10 @@
   <div style="height: 40px"></div>
 </template>
 <script setup lang="ts">
+import { useClient } from "@/hooks/auth/client";
 import { useVideoListDatasource } from "@/services/video";
 import { dayjs, formatDurationShort } from "@/utils/time";
+const { isLoggedIn } = useClient();
 
 const lookupState = ref({
   flavor: { favorites: true },
@@ -62,7 +64,7 @@ const lookupState = ref({
 
 const videoQuery = useVideoListDatasource(
   lookupState as any,
-  ref({ enabled: true })
+  ref({ enabled: isLoggedIn })
 );
 
 const formatDurationUpcoming = function (ts: any) {

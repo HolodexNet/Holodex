@@ -27,8 +27,13 @@
     <h-tab :active="currentTab === 2" @click="() => updateTab(2)">
       {{ $t("views.home.recentVideoToggles.subber") }}
     </h-tab>
+    <template #filters>
+      <home-filter-button></home-filter-button>
+    </template>
   </h-tabs>
   <div class="px-4">
+    <!-- TODO: make this better -->
+    <div v-if="props.favorites && !isLoggedIn">Please login</div>
     <video-card-grid>
       <template
         v-for="(video, index) in videoQuery.data.value?.items"
@@ -58,12 +63,13 @@
 </template>
 <script setup lang="ts">
 import { useVideoListDatasource } from "@/services/video";
-// import { useSiteStore } from "@/stores";
 import { Ref } from "vue";
 import { useI18n } from "vue-i18n";
 import HPagination from "@/components/core/HPagination.vue";
 import { useUrlSearchParams } from "@vueuse/core";
 import useOrgRouteParamSync from "@/hooks/common/useOrgRouteParamSync";
+import { useClient } from "@/hooks/auth/client";
+const { isLoggedIn } = useClient();
 
 const props = defineProps({ favorites: Boolean });
 const params = useUrlSearchParams("history");
@@ -76,7 +82,6 @@ const Tabs = {
 const currentTab: Ref<typeof Tabs[keyof typeof Tabs]> = ref(Tabs.LIVE);
 const router = useRouter();
 const route = useRoute();
-// const site = useSiteStore();
 
 const pageOrg = useOrgRouteParamSync();
 // TODO:
@@ -169,6 +174,12 @@ const totalPages = computed(() => {
   return Math.ceil((videoQuery?.data.value?.total || 0) / perPage);
 });
 
+const liveUpcomingHeaderSplit = computed(() => {
+  return [
+    ...(t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/) || []),
+  ];
+});
+
 const liveUpcomingCounts = ref({ liveCnt: 0, upcomingCnt: 0 });
 watchEffect(() => {
   if (lookupState.value.type === "stream_schedule") {
@@ -178,12 +189,6 @@ watchEffect(() => {
       live?.filter((v) => v.status === "upcoming").length || 0;
     liveUpcomingCounts.value = { liveCnt, upcomingCnt };
   }
-});
-
-const liveUpcomingHeaderSplit = computed(() => {
-  return [
-    ...(t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/) || []),
-  ];
 });
 
 // Scroll to top when page changes
