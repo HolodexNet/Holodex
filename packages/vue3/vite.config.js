@@ -3,19 +3,18 @@
 import { defineConfig } from "vite";
 import BuildInfo from "vite-plugin-info";
 import vue from "@vitejs/plugin-vue";
-import { ViteAliases } from "vite-aliases";
+// import { ViteAliases } from "vite-aliases";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import dynamicImportVars from "@rollup/plugin-dynamic-import-vars";
 import yaml from "@rollup/plugin-yaml";
-import visualizer from "rollup-plugin-visualizer";
+import { visualizer } from "rollup-plugin-visualizer";
 import vuetify from "vite-plugin-vuetify";
 import Unocss from "unocss/vite";
 import presetIcons from "@unocss/preset-icons";
 import * as icons from "./src/utils/icons.ts";
 import filesize from "rollup-plugin-filesize";
-
-const path = require("path");
+import path from "node:path";
 
 const API_BASE_URL = process.env.API_BASE_URL || "https://staging.holodex.net";
 const REWRITE_API_ROUTES = false;
@@ -42,6 +41,7 @@ export default defineConfig({
       // for importing yml dynamically.
       include: ["src/locales/**/*.yml", "node_modules/dayjs/**/*.js"],
     }),
+    // ViteAliases(),
     vue({}),
     Unocss({
       presets: [presetIcons()],
@@ -66,7 +66,6 @@ export default defineConfig({
       types: [],
       dts: "src/components.d.ts",
     }),
-    ViteAliases(),
     filesize({
       showBeforeSizes: "build",
     }),
