@@ -32,6 +32,8 @@
     </template>
   </h-tabs>
   <div class="px-4">
+    <!-- TODO: make this better -->
+    <div v-if="props.favorites && !isLoggedIn">Please login</div>
     <video-card-grid>
       <template
         v-for="(video, index) in videoQuery.data.value?.items"
@@ -61,12 +63,13 @@
 </template>
 <script setup lang="ts">
 import { useVideoListDatasource } from "@/services/video";
-// import { useSiteStore } from "@/stores";
 import { Ref } from "vue";
 import { useI18n } from "vue-i18n";
 import HPagination from "@/components/core/HPagination.vue";
 import { useUrlSearchParams } from "@vueuse/core";
 import useOrgRouteParamSync from "@/hooks/common/useOrgRouteParamSync";
+import { useClient } from "@/hooks/auth/client";
+const { isLoggedIn } = useClient();
 
 const props = defineProps({ favorites: Boolean });
 const params = useUrlSearchParams("history");
@@ -79,7 +82,6 @@ const Tabs = {
 const currentTab: Ref<typeof Tabs[keyof typeof Tabs]> = ref(Tabs.LIVE);
 const router = useRouter();
 const route = useRoute();
-// const site = useSiteStore();
 
 const pageOrg = useOrgRouteParamSync();
 // TODO:
