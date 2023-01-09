@@ -253,7 +253,7 @@ export default defineComponent({
   --tw-text-opacity: 1;
   border-radius: 9999px;
   border-style: none;
-  color: hsl(var(--bc) / var(--tw-text-opacity));
+  color: hsl(var(--bc) / var(--tw-text-opacity, 1));
   font-size: 0.875rem;
   height: 2rem;
   min-height: 2rem;
