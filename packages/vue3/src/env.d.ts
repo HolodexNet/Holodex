@@ -8,3 +8,15 @@ declare module "*.vue" {
 }
 
 declare module "oauth-open";
+
+declare module "html-linkify" {
+  /**
+   *
+   * @param text HTML to linkify
+   * @param options options object. attributes: a mapping of attrs to be added to generated anchors; escape: whether surrounding HTML tags should be escaped or not (default true)
+   */
+  export default function linkify(
+    text: string,
+    options: { attributes: Record<string, string>; escape?: boolean }
+  ): string;
+}

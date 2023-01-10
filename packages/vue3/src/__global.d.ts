@@ -198,6 +198,7 @@ declare global {
     suborg?: string; // suborg usually doesn't exist
     group?: string; // usually group exists.
     lang?: string;
+    description?: string; //description usually doesn't exist
     twitter?: string;
     photo?: string;
     thumbnail?: string;

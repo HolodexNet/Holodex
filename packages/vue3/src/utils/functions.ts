@@ -389,3 +389,23 @@ export function waitForElement(selector: any) {
     });
   });
 }
+
+export function debounce<T extends (...args: any) => any>(
+  func: T,
+  wait?: number,
+  immediate?: boolean
+) {
+  let timeout: number | undefined;
+  return function () {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const context = this;
+    // eslint-disable-next-line prefer-rest-params
+    const args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      timeout = undefined;
+      if (!immediate) func.apply(context, args as any);
+    }, wait);
+    if (immediate && !timeout) func.apply(context, args as any);
+  };
+}

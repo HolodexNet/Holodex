@@ -42,8 +42,8 @@
 <script lang="ts">
 import { useChannels } from "@/services/channel";
 import { PropType } from "vue";
-import flatten from "lodash-es/flatten";
-import groupBy from "lodash-es/groupBy";
+// import flatten from "lodash-es/flatten";
+// import groupBy from "lodash-es/groupBy";
 // import { useInfiniteScroll } from "@vueuse/core";
 
 interface QueryType {
@@ -87,10 +87,34 @@ export default defineComponent({
 
     const list = computed(() => {
       if (props.channels)
-        return Object.entries(groupBy(props.channels, groupKey.value));
+        return Object.entries(
+          props.channels.reduce(
+            // groupBy on `groupKey.value`
+            (
+              r,
+              v,
+              i,
+              a,
+              k = groupKey.value === "none" ? "*" : v[groupKey.value] || ""
+            ) => ((r[k] || (r[k] = [])).push(v), r),
+            {} as Record<string, FullChannel[]>
+          )
+        );
       if (respChannels.data.value)
         return Object.entries(
-          groupBy(flatten(respChannels.data.value.pages), groupKey.value)
+          ([] as FullChannel[])
+            .concat(...respChannels.data.value.pages) // flatten
+            .reduce(
+              // groupBy on `groupKey.value`
+              (
+                r,
+                v,
+                i,
+                a,
+                k = groupKey.value === "none" ? "*" : v[groupKey.value] || ""
+              ) => ((r[k] || (r[k] = [])).push(v), r),
+              {} as Record<string, FullChannel[]>
+            )
         );
       return [["", []]];
     });

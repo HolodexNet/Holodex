@@ -24,8 +24,10 @@
         }}</strong> -->
         <p
           v-linkify:options="{
-            target: '_blank',
-            className: 'link link-primary ext-link',
+            attributes: {
+              target: '_blank',
+              class: 'link link-primary ext-link',
+            },
           }"
         >
           {{ channel?.description }}
@@ -37,9 +39,13 @@
 
 <script lang="ts">
 import { useChannel } from "@/services/channel";
+import { directive } from "@/setup/vue-3-linkify/linkify";
 
 export default {
   name: "ChannelAbout",
+  directives: {
+    linkify: directive,
+  },
   props: {},
   setup() {
     const route = useRoute();
