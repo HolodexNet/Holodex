@@ -156,6 +156,16 @@
             'font-size': `${1 - $store.state.currentGridSize / 16}rem`,
           }"
         >
+        <v-tooltip bottom v-if="!isCertain">
+          <template v-slot:activator="{ on, attrs }">
+            <span v-bind="attrs" v-on="on">
+            ❗
+            </span>
+          </template>
+          <span>
+          {{ $tc("component.videoCard.uncertainPlaceholder") }}
+          </span>
+        </v-tooltip>
           {{ title }}
         </div>
         <!-- Channel -->
@@ -379,6 +389,9 @@ export default {
         },
         isPlaceholder() {
             return this.data.type === "placeholder";
+        },
+        isCertain() {
+          return !this.isPlaceholder || this.data.certainty === "certain";
         },
         title() {
             if (this.isPlaceholder) {

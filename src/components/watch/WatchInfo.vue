@@ -45,6 +45,12 @@
           {{ video.topic_id }}
         </router-link>
       </span>
+      <span 
+        v-if="!(video.certainty === 'certain')"
+        style="font-size:95%"
+      > <br>
+        {{ $t("component.videoCard.uncertainPlaceholder") }}.
+      </span>
       <slot name="rightTitleAction">
         <v-btn
           id="video-edit-btn"
