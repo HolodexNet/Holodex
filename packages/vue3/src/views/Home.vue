@@ -35,10 +35,7 @@
     <!-- TODO: make this better -->
     <div v-if="props.favorites && !isLoggedIn">Please login</div>
     <video-card-grid>
-      <template
-        v-for="(video, index) in videoQuery.data.value?.items"
-        :key="video.id"
-      >
+      <template v-for="(video, index) in videosToShow" :key="video.id">
         <video-card
           v-if="index < 20"
           :video="video"
@@ -69,6 +66,7 @@ import HPagination from "@/components/core/HPagination.vue";
 import { useUrlSearchParams } from "@vueuse/core";
 import useOrgRouteParamSync from "@/hooks/common/useOrgRouteParamSync";
 import { useClient } from "@/hooks/auth/client";
+import { useVideoFilter } from "@/services/video-filter";
 const { isLoggedIn } = useClient();
 
 const props = defineProps({ favorites: Boolean });
@@ -170,6 +168,8 @@ function updateTab(tab: number, preservePage = true) {
 
 const videoQuery = useVideoListDatasource(lookupState, ref({ enabled: true }));
 
+const videosToShow = useVideoFilter(videoQuery.data, lookupState);
+
 const totalPages = computed(() => {
   return Math.ceil((videoQuery?.data.value?.total || 0) / perPage);
 });
@@ -183,7 +183,7 @@ const liveUpcomingHeaderSplit = computed(() => {
 const liveUpcomingCounts = ref({ liveCnt: 0, upcomingCnt: 0 });
 watchEffect(() => {
   if (lookupState.value.type === "stream_schedule") {
-    const live = videoQuery.data.value?.items;
+    const live = videosToShow.value;
     const liveCnt = live?.filter((v) => v.status === "live").length || 0;
     const upcomingCnt =
       live?.filter((v) => v.status === "upcoming").length || 0;

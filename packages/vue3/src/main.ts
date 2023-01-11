@@ -35,7 +35,7 @@ app.use(VueQueryPlugin, getVueQueryPluginOptions());
 const pinia = setupPinia();
 app.use(pinia);
 
-const i18n = setupI18N();
+const i18n: any = setupI18N();
 
 export const vuetify = createVuetify({
   display: {

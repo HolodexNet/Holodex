@@ -2,7 +2,10 @@ import { useSettingsStore } from "@/stores/settings";
 import { Ref } from "vue";
 import { useFavoritesIDSet } from "./favorites";
 
-export function useVideoFilter(videoList: Video[], q: Ref<VideoListLookup>) {
+export function useVideoFilter(
+  videoList: Ref<{ items: Video[] } | undefined>,
+  q: Ref<VideoListLookup>
+) {
   const settings = useSettingsStore();
   const favesList = useFavoritesIDSet();
 
@@ -16,25 +19,27 @@ export function useVideoFilter(videoList: Video[], q: Ref<VideoListLookup>) {
 
     const hasBlockedChannels = settings.blockedChannels.length > 0;
 
-    videoList.filter((x) => {
-      let keep = true;
+    return (
+      videoList.value?.items.filter((x) => {
+        let keep = true;
 
-      if (hasBlockedChannels) {
-        keep &&= !settings.blockedSet.has(x.channel.id);
-      }
+        if (hasBlockedChannels) {
+          keep &&= !settings.blockedSet.has(x.channel.id);
+        }
 
-      if (shouldHideCollabStreams) {
-        keep &&= !!(
-          x.channel.org == q.value.flavor?.org ||
-          favesList.value?.has(x.channel.id)
-        );
-      }
+        if (shouldHideCollabStreams) {
+          keep &&= !!(
+            x.channel.org == q.value.flavor?.org ||
+            favesList.value?.has(x.channel.id)
+          );
+        }
 
-      // if (hideIgnoredTopics) {
-      keep &&= !settings.ignoredTopics.includes(x.topic_id ?? "");
-      // }
+        // if (hideIgnoredTopics) {
+        keep &&= !settings.ignoredTopics.includes(x.topic_id ?? "");
+        // }
 
-      return keep;
-    });
+        return keep;
+      }) || []
+    );
   });
 }
