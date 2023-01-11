@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-sm text-xl"
+    class="rounded-sm"
     :class="{
       'hover-show': !hasSaved,
     }"

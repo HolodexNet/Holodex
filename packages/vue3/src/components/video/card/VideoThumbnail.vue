@@ -26,7 +26,7 @@
         </div>
         <save-to-playlist-btn
           v-if="!isPlaceholder"
-          class="video-overlay-action"
+          class="video-overlay-action text-xl"
           :video="video"
         />
       </div>
