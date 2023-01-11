@@ -144,6 +144,7 @@ declare global {
    * Various extensions that can be loaded into the video object.
    */
   interface ExtendedVideo extends VideoDetailed {
+    channel: FullChannel;
     // if request LIVE_INFO
     start_scheduled?: Date;
     // if request LIVE_INFO
