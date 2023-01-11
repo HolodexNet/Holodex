@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="(video.duration || 0) > 0 || video.start_actual"
-    :class="{ '!bg-red-800 !bg-opacity-70': video.status === 'live' }"
-  >
+  <div v-if="(video.duration || 0) > 0 || video.start_actual">
     {{ formatted }}
   </div>
 </template>
