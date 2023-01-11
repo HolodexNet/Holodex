@@ -2,6 +2,16 @@
   <v-list-item-content>
     <v-list-item-title style="align-self: flex-start">
       <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
+      <v-tooltip top v-if="channel.inactive">
+        <template v-slot:activator="{ on, attrs }">
+          <span v-bind="attrs" v-on="on">
+          🎓
+          </span>
+        </template>
+        <span>
+        {{ $t("component.channelInfo.inactiveChannel") }}
+        </span>
+      </v-tooltip>
         {{ channelName }}
       </router-link> <br>
       <template v-if="channel.yt_handle">

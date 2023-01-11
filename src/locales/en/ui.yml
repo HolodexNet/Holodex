@@ -16,6 +16,7 @@ component:
     subscriberCount: '{n} Subscribers'
     subscriberNA: Subscriber count unavailable
     totalViews: Total Views
+    inactiveChannel: This channel is no longer active.
   channelSocials:
     addToFavorites: Add to Favorites
     removeFromFavorites: Remove from Favorites
