@@ -4,6 +4,11 @@
       <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
         {{ channelName }}
       </router-link> <br>
+      <template v-if="channel.yt_handle">
+        <a :href="`https://youtube.com/${channel.yt_handle[0]}`" target="__blank" class="no-decoration text--org">
+          {{ channel.yt_handle[0] }} •
+        </a>
+      </template> 
       <span v-show="channel.org">
         <router-link :to="`/channel?org=${channel.org}`" class="no-decoration text--org">
           {{ channel.org + ((!noGroup && group) ? " / " + group : '') }}

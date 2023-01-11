@@ -25,6 +25,18 @@
         {{ icons.mdiTwitter }}
       </v-icon>
     </v-btn>
+    <v-btn
+      v-if="channel.twitch && !hideTwitch"
+      icon
+      sm
+      :href="`https://twitch.tv/${channel.twitch}`"
+      rel="noreferrer"
+      target="_blank"
+    >
+      <v-icon color="#8D44F7">
+        {{ mdiTwitch }}
+      </v-icon>
+    </v-btn>
     <v-tooltip v-if="channel.type === 'vtuber' && !hideFav" bottom>
       <template #activator="{ on, attrs }">
         <v-btn
@@ -68,7 +80,7 @@
 </template>
 
 <script lang="ts">
-import { mdiAccountCancel, mdiHeartOutline } from "@mdi/js";
+import { mdiAccountCancel, mdiHeartOutline, mdiTwitch } from "@mdi/js";
 
 export default {
     props: {
@@ -90,6 +102,11 @@ export default {
             default: false,
             required: false,
         },
+        hideTwitch: {
+            type: Boolean,
+            default: false,
+            required: false,
+        },
         hideFav: {
             type: Boolean,
             default: false,
@@ -105,6 +122,7 @@ export default {
         return {
             mdiAccountCancel,
             mdiHeartOutline,
+            mdiTwitch
         };
     },
     computed: {
