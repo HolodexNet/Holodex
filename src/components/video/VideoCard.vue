@@ -158,9 +158,18 @@
         >
         <v-tooltip bottom v-if="!isCertain">
           <template v-slot:activator="{ on, attrs }">
-            <span v-bind="attrs" v-on="on">
-            ❗
-            </span>
+            <v-btn
+              icon
+              v-on="on"
+              x-small
+              class="plain-button"
+              width="17"
+              :ripple="false"
+            >
+              <v-icon right size="21" color="amber">
+                {{ icons.mdiClockAlertOutline }}
+              </v-icon>
+            </v-btn>
           </template>
           <span>
           {{ $tc("component.videoCard.uncertainPlaceholder") }}
@@ -887,5 +896,11 @@ export default {
   display: inline-block;
   top: 5px;
   z-index: 1;
+}
+.plain-button:before {
+  display: none
+}
+.plain-button:hover:before {
+  backgroundColor: transparent
 }
 </style>
