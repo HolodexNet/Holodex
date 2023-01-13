@@ -19,7 +19,7 @@
       clipped-right
       flat
       height="56"
-      class="pl-2 md:pl-4 bg-bgColor"
+      class="pl-2 md:pl-4 bg-bgColor !border-b !border-bgColor-100"
     >
       <!--=============================== Top Bar (Regular View) =============================-->
 

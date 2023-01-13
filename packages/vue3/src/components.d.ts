@@ -37,9 +37,11 @@ declare module '@vue/runtime-core' {
     HPagination: typeof import('./components/core/HPagination.vue')['default']
     HTab: typeof import('./components/core/tab/HTab.vue')['default']
     HTabs: typeof import('./components/core/tab/HTabs.vue')['default']
+    HTruncatedText: typeof import('./components/core/HTruncatedText.vue')['default']
     KitchenSink: typeof import('./views/KitchenSink.vue')['default']
     LanguageSettings: typeof import('./components/settings/LanguageSettings.vue')['default']
     LiveChat: typeof import('./components/chat/LiveChat.vue')['default']
+    LiveChatLegacy: typeof import('./components/chat/LiveChatLegacy.vue')['default']
     LiveTranslations: typeof import('./components/tldex/client/LiveTranslations.vue')['default']
     Login: typeof import('./views/Login.vue')['default']
     Logo: typeof import('./components/frame/Logo.vue')['default']
@@ -98,6 +100,7 @@ declare module '@vue/runtime-core' {
     WatchSideBar: typeof import('./components/watch/WatchSideBar.vue')['default']
     WatchSubtitleOverlay: typeof import('./components/watch/WatchSubtitleOverlay.vue')['default']
     WatchToolbar: typeof import('./components/watch/WatchToolbar.vue')['default']
+    YoutubeLiveChat: typeof import('./components/chat/YoutubeLiveChat.vue')['default']
     YoutubePlayer: typeof import('./components/player/YoutubePlayer.vue')['default']
   }
 }

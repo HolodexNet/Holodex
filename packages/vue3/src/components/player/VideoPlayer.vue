@@ -87,5 +87,6 @@ defineExpose(readonly({ currentTime, player, muted, volume }));
 <style>
 .h-player > iframe {
   width: 100%;
+  height: 100%;
 }
 </style>
