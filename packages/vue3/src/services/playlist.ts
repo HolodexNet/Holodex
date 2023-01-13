@@ -3,10 +3,11 @@ import backendApi from "@/utils/backend-api";
 import { Playlist } from "@/utils/types";
 import { useMutation, useQuery, UseQueryOptions } from "@tanstack/vue-query";
 import { queryClient } from "@/setup/setupQueryPlugin";
-import debounce from "lodash-es/debounce";
+// import debounce from "lodash-es/debounce";
 import type { MaybeRef } from "@vueuse/core";
 import { usePlaylistState } from "@/stores/playlist";
-import cloneDeep from "lodash-es/cloneDeep";
+import { debounce } from "@/utils/functions";
+import clone from "clone";
 
 type QueryConfig<TReturn> = Omit<
   UseQueryOptions<TReturn, unknown, TReturn, any>,
@@ -134,7 +135,7 @@ export class EditablePlaylist {
   _videoIdSet: Set<string>;
 
   constructor(playlist: Playlist) {
-    this.current = cloneDeep(playlist);
+    this.current = clone(playlist);
     this._videoIdSet = new Set(playlist.videos?.map((x) => x.id));
   }
 

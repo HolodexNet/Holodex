@@ -79,12 +79,12 @@ export function setI18nLanguage(i18n, locale: SupportedLangCodes) {
     i18n.locale.value = locale;
   }
 
-  document.querySelector("html").setAttribute("lang", locale);
+  document.querySelector("html")?.setAttribute("lang", locale);
   dayjs.locale(holodexLangToDayJSLang(locale));
 }
 
 const loadedLanguageCache: Partial<Record<SupportedLangCodes, any>> = {
-  en: {...enTL, ...en},
+  en: { ...enTL, ...en },
 };
 
 export async function loadLocaleMessages(i18n, locale: SupportedLangCodes) {

@@ -1,10 +1,7 @@
 <template>
   <div ref="grid" class="p-4" style="scroll-margin-top: 220px">
     <video-card-grid>
-      <template
-        v-for="video in videoResponse.data.value?.items"
-        :key="video.id"
-      >
+      <template v-for="video in videosToShow" :key="video.id">
         <video-card
           :video="video"
           hide-channel-image
@@ -12,7 +9,7 @@
         />
       </template>
     </video-card-grid>
-    <div v-if="videoResponse.isLoading.value" class="flex h-20">
+    <div v-if="videoQuery.isLoading.value" class="flex h-20">
       <v-progress-circular
         indeterminate
         color="primary"
@@ -21,18 +18,19 @@
       ></v-progress-circular>
     </div>
     <div
-      v-else-if="videoResponse.data.value?.total"
+      v-else-if="videoQuery.data.value?.total"
       class="flex items-center justify-center h-20"
     >
       <h-pagination
         v-model="page"
-        :total-pages="Math.ceil((videoResponse.data.value?.total ?? 0) / 24)"
+        :total-pages="Math.ceil((videoQuery.data.value?.total ?? 0) / 24)"
       />
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { useVideoListDatasource } from "@/services/video";
+import { useVideoFilter } from "@/services/video-filter";
 import { useUrlSearchParams } from "@vueuse/core";
 import { Ref } from "vue";
 
@@ -74,5 +72,6 @@ watch(
   }
 );
 
-const videoResponse = useVideoListDatasource(dsConfig, ref({ enabled: true }));
+const videoQuery = useVideoListDatasource(dsConfig, ref({ enabled: true }));
+const videosToShow = useVideoFilter(videoQuery.data, dsConfig);
 </script>

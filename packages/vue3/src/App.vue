@@ -20,7 +20,7 @@ import { useThemeInitialization } from "./hooks/theme-changer/useThemeInitializa
 import { useLangStore } from "./stores/lang";
 import { useSiteStore } from "./stores/site";
 import backendApi from "./utils/backend-api";
-import { usePlaylistState, usePlaylistVideoIDCache } from "@/stores/playlist";
+import { usePlaylistState } from "@/stores/playlist";
 import { usePlaylist } from "@/services/playlist";
 import { useMigrateFromHolodexV2 } from "./stores/util/useMigrateFromHolodexV2";
 import { CURRENT_PLAYLIST_PROVIDE_KEY } from "./utils/consts";

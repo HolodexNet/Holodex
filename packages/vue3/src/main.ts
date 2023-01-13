@@ -8,7 +8,7 @@ import App from "./App.vue";
 import { setupPinia, setupI18N, getVueQueryPluginOptions } from "./setup";
 import LoadScript from "vue-plugin-load-script";
 import VueToast from "vue-toast-notification";
-import Vue3Linkify from "vue-3-linkify";
+// import Vue3Linkify from "vue-3-linkify";
 
 import "@/setup/main.css"; // tailwind configuration
 
@@ -35,7 +35,7 @@ app.use(VueQueryPlugin, getVueQueryPluginOptions());
 const pinia = setupPinia();
 app.use(pinia);
 
-const i18n = setupI18N();
+const i18n: any = setupI18N();
 
 export const vuetify = createVuetify({
   display: {
@@ -59,7 +59,7 @@ export const vuetify = createVuetify({
 
 app.use(router);
 
-app.use(Vue3Linkify);
+// app.use(Vue3Linkify);
 
 app.use(i18n);
 app.use(vuetify);

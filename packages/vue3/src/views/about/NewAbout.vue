@@ -5,7 +5,7 @@
     class="container flex flex-col sm:flex-row flex-wrap items-stretch gap-2 p-1 pt-2 mx-auto"
   >
     <div
-      id="setting-menu"
+      id="about-menu"
       class="rounded-md bg-bgColor"
       :class="{
         'flex-grow': !minimizeSidebar,
@@ -49,9 +49,7 @@
             :to="tab.path"
             class="justify-start min-h-12"
             :title="tab.name"
-            :class="{
-              ' bg-primary': tab.active,
-            }"
+            :class="{ active: tab.active }"
           >
             <div
               :class="tab.class"

@@ -21,7 +21,6 @@ declare module '@vue/runtime-core' {
     ChannelAbout: typeof import('./views/channel/ChannelAbout.vue')['default']
     ChannelAutocomplete: typeof import('./components/channel/ChannelAutocomplete.vue')['default']
     ChannelCard: typeof import('./components/channel/common/ChannelCard.vue')['default']
-    ChannelChip: typeof import('./components/channel/common/ChannelChip.vue')['default']
     ChannelImg: typeof import('./components/channel/common/ChannelImg.vue')['default']
     ChannelList: typeof import('./components/channel/ChannelList.vue')['default']
     Channels: typeof import('./views/Channels.vue')['default']
@@ -101,6 +100,7 @@ declare module '@vue/runtime-core' {
     WatchSubtitleOverlay: typeof import('./components/watch/WatchSubtitleOverlay.vue')['default']
     WatchToolbar: typeof import('./components/watch/WatchToolbar.vue')['default']
     YoutubeLiveChat: typeof import('./components/chat/YoutubeLiveChat.vue')['default']
+    WatchLegacy: typeof import('./views/WatchLegacy.vue')['default']
     YoutubePlayer: typeof import('./components/player/YoutubePlayer.vue')['default']
   }
 }
