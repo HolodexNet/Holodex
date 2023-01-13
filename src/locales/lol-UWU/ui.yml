@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomenasowwy!
@@ -49,12 +48,6 @@ component:
     googleCalendar: Add to googwe cawendaw
     totalTLs: Totaw wive chat tls
     tlPresence: Active twanswatow in wast 30 mins
-    typeScheduledYT: Scheduwed stweam
-    typeExternalStream: Extewnaw stweam
-    typeEventPlaceholder: Scheduwed event
-    openClient: Open tl cwient
-    openScriptEditor: Open scwipt editow
-    uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
   description:
@@ -82,17 +75,14 @@ component:
     sourcesLabel: souwces
     songsLabel: songs
     recommendationsLabel: wecommended
-    sameSourceClips: Fwom da same stweams
   paginateLoad:
     newer: Newew
     older: Owdew
   music:
     clearPlaylist: Cweaw
-    trendingForOrg: Trends für {0}
   channelMusic:
     recentSongsHeader: Recent songs
     weeklyTopPlaysHeader: Weekwy top pways
-    trending: Trends
   songList:
     songTitle: Titwe
     songCoveredBy: Covewed by
@@ -142,15 +132,6 @@ component:
       delete-playlist: Dewete pwaywist
       clear-playlist: Cweaw pwaywist
     save-error-not-logged-in: U need to be wogged in to save pwaywists
-  placeholderVideo:
-    discordCredit: 'Event data pwovided by {0} fwom: {1}'
-    datasourceCredit: Event data fetched fwom {0} datasouwce.
-    botCredit: Event data pwovided via {0} datasouwce, cweated by {1}.
-    streamPageBtn: Stweam page
-    eventPageBtn: Event page
-    scheduledEvent: Scheduwed
-    editorCredit: Event setup by howodex editow {0}.
-    creditTitleText: 'Cwedits:'
 views:
   channel:
     video: Bideos
@@ -212,7 +193,6 @@ views:
     sort:
       newest: Newest
       oldest: Owdest
-      longest: Wongest
     type:
       all: Aww
       official: Officiaw
@@ -257,11 +237,9 @@ views:
       - Smaww
     hideCollabStreamsLabel: Hide cowwab stweams
     hideCollabStreamsMsg: Hide cowwab stweams fwom youw favowites feed
-    hidePlaceholderStreams: Hide pwacehowdew stweams
     ignoredTopicsLabel: Ignowed topics
     ignoredTopicsMsg: Hide bideos with these topics fwom da home and favowites pages
     theme: Theme
-    moreSettings: Mowe settings
   app:
     update_available: An update ish avaiwabwe
     update_btn: Update
@@ -270,22 +248,14 @@ views:
   about:
     add_my_channel: Channew request
   watch:
-    theaterMode: Theatew mode (alt + t)
     mentionIconLabel: MENTIONS
     chat:
       loading: Loading chat...
       hideTLBtn: Hide tls
       showTLBtn: Show tls
       TLSettingsTitle: Tl settings
-      showSubtitle: Show subtitwe
-      expandTL: Expand tldex
-      tlStart: Stawt of messages
-      StickBottomSettingLabel: Stick bottom
-      StickBottomSettingsDesc: Tl box pwaced bewow youtube chat
       showVerifiedMessages: Show vewified messages
       showModeratorMessages: Show modewatow messages
-      showVtuberMessages: Show vtubew messages
-      showLocalTime: Show locaw times
       tlFontSize: Font size
       tlWindowSize: Tl box size (%), weave as 0% fow automatic
       retryBtn: Retwy
@@ -296,25 +266,8 @@ views:
           Stweam ish not wive yet, pwease twy again when da stweam ish within 15 minutes of being wive
         connectedToChat: Connected
         disconnectedToChat: Disconnected
-      archiveNeedExtension: >-
-        Awchive chat does not wowk without da {0} extension ow othew thiwd pawty extensions.
-      hideSpoiler: Hide spoiwew
     removeFromPlaylist: Remove bideo fwom cuwwent pwaywist
     saveToPlaylist: Save bideo to cuwwent pwaywist
-    likeOnYoutube: Like bideo on youtube
-    uploadPanel:
-      title: Upwoad scwipt
-      usernameText: Tl wiww be upwoaded undew usewname
-      usernameChange: Change
-      tlLang: Tl wanguage
-      headerStart: Stawt
-      headerEnd: End
-      headerText: Text
-      cancelBtn: Cancew
-      okBtn: Ok
-      notifTextErr: UNABWE TO PAWSE THE FIWE (FIWE COWWUPTED?)
-      notifTextParsing: Pawsing fiwe...
-      notifTextErrExt: Unwecognized fiwe extension.
   favorites:
     promptForAction: >-
       Cweate a wist of favowite vtubews and see theiw watest cwips and wives on dis page.
@@ -347,11 +300,6 @@ views:
       - Login with googwe
       - Login with discowd
       - Login with twittew
-    username: Usewname
-    usernameBtn:
-      - Change
-      - Confiwm
-      - Save
   multiview:
     confirmOverwrite: Ovewwwite cuwwent wayout?
     confirmOverwriteYes: Confiwm
@@ -360,12 +308,9 @@ views:
     addframe: Add ceww
     muteAll: Mute aww
     unmuteAll: Unmute aww
-    muteOthers: Mute othews
-    muteOthersDetail: Mute aww but one stweam
     autoLayoutTip: Cwick on a channew to stawt watching using auto wayout mode
     createLayoutTip: Cweate youw own wayout by adding a ceww, ow using a pweset
     openToolbarTip: Open da toowbaw to stawt using muwtiview
-    archiveSync: Awchive sync
     preset:
       shareOnDiscord: >-
         Have a coow wayout to shawe? use da shawe button and wet us know on ouw <a href="https://discord.gg/jctkgHBt4b">discowd sewvew</a>!
@@ -385,23 +330,6 @@ views:
     fullScreen: Fuwwscween
     mediaControls: Media contwows
     mediaControlsEmpty: Bideos being pwayed wiww appeaw hewe
-    editAutoLayout: Edit auto layout
-    changeLayout: Change layout
-    done: Done
-    hints: Hints
-    presetsHint: Open pwesets menu to switch wayouts and configuwe auto wayout
-    mediaControlsHint1: Use media contwows to mute and sync (
-    mediaControlsHint2: ) wive stweams
-    dragDropHint: Dwag and dwop stweams fwom toowbaw to cewws to owganize stweams
-    reorderHint: Use reowdew layout menu to change bideo/chat positions
-    reorderLayout: Reowdew layout
-    reorderLayoutDetail: Dwag and dwop icons to da desiwed position
-    sync:
-      nothingToSync: >-
-        Nothing to sync, pwease open two ovewwapping awchives (eg. cowwab stweams)
-      syncSettings: Sync settings
-      syncSettingsDetail: >-
-        Bideos awe synced based on da stweam stawt time, and can desync due to mid stweam technicaw issues ow deweted powtions. Use offsets to manuawwy awign bideos
   mugen:
     welcome: >-
       Wewcome to mugencwips! evewyone on dis page ish seeing da same wandomwy sewected engwish howowive cwip. Watch awong and chat with howowive fans fwom acwoss da wowwd. If u skip ahead and wanna be we-sync'd with evewyone, pwease wefwesh da page.
@@ -413,86 +341,6 @@ views:
     page-heading: 'Youw pwaywists:'
     page-instruction: Cwick a pwaywist to set it as active.
     change-loss-warning: U wiww wose unsaved changes. Continue?
-  extension:
-    title: Howodex pwus extension
-    features: Featuwes
-    featureset:
-      one: Enabwes awchive live chat on watch and muwtiview
-      two: Awwows wiking bideos fwom howodex watch page
-      three: Fixes memowy weak in youtube's wive chat
-      four: >-
-        Fixes expewimentaw fwags on youtube pwayew (like disabwing muwtipwe stweams, waiting woom thumbnaiw not showing) and mowe!
-  tlClient:
-    menu:
-      title: Menu
-      setting: Tldex room settings
-      loadVideo: Show bideo
-      unloadVideo: Hide bideo
-      loadChat: Add yt chat to bwoadcast tl
-      unloadChat: Detach fwom yt chat
-    tlControl:
-      enterBtn: Entew
-      prefix: Pwefix
-      suffix: Suffix
-      fontColour: Font cowow
-      outlineColour: Outwine cowor
-      localPrefix: Wanguage tag in chat
-      addProfile: Add pwofiwe
-      removeProfile: Wemove pwofiwe
-      shiftUp: Shift pwofiwe up
-      shiftDown: Shift pwofiwe down
-      showSetting: Setting
-      hideSetting: Hide
-    addProfilePanel:
-      title: Add new pwofiwe
-      inputLabel: Pwofiwe name
-    settingPanel:
-      title: Setting
-      mainStreamLink: Main stweam wink
-      collabLink: Cowwab winks
-    removeProfileTitle: Confiwm wemove pwofiwe
-    loadChatPanel:
-      title: Woad chat
-      inputLabel: Stweam wink
-    unloadChatTitle: Unwoad ALL active chat?
-    pangram: Da quick bwown fox jumps ovew da wazy dog
-    cancelBtn: Cancew
-    okBtn: Ok
-  scriptEditor:
-    menu:
-      save: Save
-      continuousEnd: Make time continuous (change end)
-      clearAll: Dewete scwipt
-      exportFile: Expowt fiwe
-      importFile: Impowt fiwe
-      editorMode: Editow mode
-    table:
-      headerStart: Stawt
-      headerEnd: End
-      headerProfile: Pwofiwe
-      headerText: Text
-      setAsStart: Set as stawt
-      shiftCurrentTime: Shift to cuwwent time
-      deleteEntry: Dewete entwy
-    loadVideoPanel:
-      title: Load bideo
-      inputLabel: Stweam link
-    setStartTitle: Set sewected entwy as stawt, aww da pwevious entwies wiww be deweted.
-    importFile:
-      overwriteBtn: Ovewwwite
-    editorModePanel:
-      activateMode: Activate editow mode
-      deactivateMode: Deactivate editow mode
-      roleWarning: U dun have enough pwiviwege
-      filterTranslator: Fiwtew twanswatow
-  tlManager:
-    title: Scwipt managew
-    headerID: Bideo id
-    headerEntries: Entwies
-    download: Downwoad
-    delete: Dewete
-    deleteTitle: Dewete entwies
-    langPick: Wanguage
 time:
   soon: soon
   diff_future_date: Stawts {0} ({1})
@@ -517,7 +365,6 @@ editor:
     testStart: Test da stawt
     startInput: Stawt
     endInput: 'Duwation in seconds: (end @ {0})'
-    inheritItunesMusic: 'Set duwation via itunes: {0}'
   exitMode: Exit edit mode
   enterMode: Edit bideo
 about:
@@ -537,7 +384,7 @@ about:
     videoLinkage: How do me make suwe that bideos awe winked pwopewwy to vtubews?
     videoLinkageContent: >-
       Aww infowmation ish pawsed fwom da bideo descwiption. If u awe cwipping a stweam, pwease make suwe to wink da officiaw stweam. If u awe cwipping fan made content (eg. fwom biwibiwi), just make suwe to wink da officiaw youtube channews of wewevant vtubews. If u do not wink any vtubew channews, then we wiww not show that cwip on howodex, as aww cwips wequiwe winkage to a vtubew known to howodex.
-    quitHolodex: "Am a subbew and me wouwd wike to have my channew wemoved fwom howodex\\r\n"
+    quitHolodex: "Am a subbew and me wouwd wike to have my channew wemoved fwom howodex\r\n"
     quitHolodexContent: >-
       Sad to see u go :(, pwease wet me know if thewe's any issue me can hewp u with. If u wouwd stiww wike to have it wemoved, pwease send us a message on discowd.
     favorite:
@@ -582,11 +429,6 @@ about:
       contents:
         - >-
           Aww hewp and ideas awe wewcome! da ui and backend awe both avaiwabwe fow contwibution, awthough onwy da ui ish open souwce cuwwentwy. Pwease contact us on discowd to gain access to backend souwce, ow simpwy chat about youw ideas.
-    support:
-      title: How do me suppowt howodex?
-      contents:
-        '0': >-
-          Ouw sewf-hosted sewvew ish a 28-cowe 60gb ram machine that take about $60 usd / mo to wun, and we'we wooking to expanding mowe and mowe in ouw featuwe set, so we've stawted a <a href="https://ko-fi.com/holodex">ko-fi</a> to covew sewvew costs. (we awso have a <a href="https://www.patreon.com/holodex">patweon</a>, but we wike da ko-fi bettew.)<br /><br />you can awso suppowt howodex by giving us feedback and suppowtive messages on twittew, hewping us twanswate via <a href="https://crwd.in/holodex">cwowdin</a>, as weww as contwibuting to ouw data stowe of songs. Even timing a stweam fow funny pawts, and commenting that on da owiginaw stweam ish gweat hewp!
   gdpr: Gdpr and my data
   gdprContent: >-
     A googwe anawytics cookie ish used to twack pageviews fow ouw anawyticaw puwposes. Aftew wogin, we associate youw sociaw media account usewname and id with youw favowites. Dis data may incwude youw emaiw (fow googwe), discowd id, ow twittew handwe wespectivewy.
@@ -608,34 +450,3 @@ about:
     title: Changewog
   news:
     title: News
-  bookmarklet:
-    title: Bookmawkwets
-    description: >-
-      Dwag these bookmawkwets to youw bookmawk baw to open youtube watch page in howodex easiwy:
-channelRequest:
-  RequestType: 'Request type:'
-  Types:
-    AddVtuber: Add a vtubew ▶️ fow howodex to twack da channew and cwips.
-    AddClipper: Add a cwipping/subbing channew to howodex
-    ModifyExistingInfo: Modify existing channew infowmation
-    DeleteChannel: Dewete my channew
-  DirectContactDisclaimer: >-
-    Feew fwee to weave youw discowd id, emaiw ow twittew. In case u need to be contacted (this info wiww stay pwivate) so we can pwovide feedback. Onwy howodex administwatows wiww see dis infowmation.
-  DirectContactLabel: Contact method (optionaw)
-  TwitterHandle: Dis channew's twittew handwe (optionaw)
-  VtuberGroupLabel: Vtubew gwoup (optionaw)
-  VtuberGroupHint: Which owg / gwoup does dis vtubew bewong to?
-  ChannelLanguageLabel: Channew's main wanguage
-  EnglishNameHint: >-
-    Pwovide an engwish name if da channew name ish not in engwish. Fowwow name-owdew conventions fwom da native wocawe of dis vtubew (natsuiwo matsuwi), ow a pwefewwed en bwand name (ewu da ewf, emma★august).
-  EnglishNameLabel: Engwish channew name
-  Comments: Comments
-  CommentsHint: Othew comments u'd wike to teww us.
-  VtuberRequirementText: >-
-    A minimum of 20k subscwibews ish wequiwed fow independents. Vtubews as pawt of existing owgs wiww be accepted. <br /><br />new owgs wiww be cweated depending on da avewage subscwibew count.
-  ClipperRequirementText: >-
-    Fow cwippews, it must be at weast 2 months owd and post weguwawwy, ow post mowe than 20 cwips in one month. Spamming of showt cwips evewy day, posting onwy showt &lt;1min cwips, ow using unfwattewing thumbnaiws wiww aww count against da channew. Content quawity might be judged as weww. <br /><br />it's impowtant to note that cwippews shouwd cite theiw souwces via channew winks, @youtube channew mentions, and bideo winks. Ovewciting (e.g. Linking to evewyone at nijisanji) cweates wowk fow howodex editows, and undewciting (no winks) wiww make cwips hidden. <br /><br /> howodex contains awgowithms to detect ovewciting and cowwect them automaticawwy, but it may not awways wowk pewfectwy. Cwippews who ovewcite may be wemoved fwom pwatfowm to weduce noise.
-  DeletionRequirementText: >-
-    Dewetion shouwd onwy be wequested if u awe da channew ownew(s), pwease pwovide contact infowmation so we can vewify dis.
-  PageTitle: Howodex channew request
-  ChannelURLErrorFeedback: Must be https://www.youtube.com/channel/UC_____
