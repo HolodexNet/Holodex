@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Maafkeun
@@ -49,12 +48,6 @@ component:
     googleCalendar: Tambahkan ke Kalender Google
     totalTLs: Jumlah Terjemahan Obrolan
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
-    typeScheduledYT: Stream Terjadwal
-    typeExternalStream: Stream Eksternal
-    typeEventPlaceholder: Acara Terjadwal
-    openClient: Buka Klien TL
-    openScriptEditor: Buka Editor Naskah
-    uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
   description:
@@ -82,17 +75,14 @@ component:
     sourcesLabel: Sumber
     songsLabel: lagu
     recommendationsLabel: rekomendasi
-    sameSourceClips: Dari siaran yang sama
   paginateLoad:
     newer: Terbaru
     older: Terlama
   music:
     clearPlaylist: Bersihkan
-    trendingForOrg: Sedang Tren di {0}
   channelMusic:
     recentSongsHeader: Lagu Terkini
     weeklyTopPlaysHeader: Lagu Populer Mingguan
-    trending: Sedang Tren
   songList:
     songTitle: Judul
     songCoveredBy: Dinyanyikan oleh
@@ -142,15 +132,6 @@ component:
       delete-playlist: Hapus Playlist
       clear-playlist: Bersihkan Playlist
     save-error-not-logged-in: Kamu harus masuk untuk menyimpan playlist
-  placeholderVideo:
-    discordCredit: 'Data acara disediakan oleh {0} dari: {1}'
-    datasourceCredit: Data acara diambil dari sumber data {0}.
-    botCredit: Data acara disediakan melalui sumber data {0}, dibuat oleh {1}.
-    streamPageBtn: Halaman Siaran
-    eventPageBtn: Halaman Acara
-    scheduledEvent: Terjadwal
-    editorCredit: Persiapan Acara dibuat oleh Holodex editor {0}.
-    creditTitleText: 'Kredit:'
 views:
   channel:
     video: Video
@@ -212,7 +193,6 @@ views:
     sort:
       newest: Terbaru
       oldest: Terlama
-      longest: Terlama
     type:
       all: Semua
       official: Resmi
@@ -257,11 +237,9 @@ views:
       - Kecil
     hideCollabStreamsLabel: Sembunyikan Siaran Kolaborasi
     hideCollabStreamsMsg: Menyembunyikan siaran kolaborasi dari halaman favorit kamu
-    hidePlaceholderStreams: Sembunyikan Jadwal Siaran Sementara
     ignoredTopicsLabel: Topik yang Diabaikan
     ignoredTopicsMsg: Menyembunyikan video yang berkaitan dengan topik yang dipilih dari halaman Beranda dan Favorit
     theme: Tema
-    moreSettings: Pengaturan Lainnya
   app:
     update_available: Pembaharuan tersedia
     update_btn: Perbarui
@@ -270,22 +248,14 @@ views:
   about:
     add_my_channel: Mengajukan Channel
   watch:
-    theaterMode: Mode Teater (alt + t)
     mentionIconLabel: MENTION
     chat:
       loading: Memuat Chat...
       hideTLBtn: Sembunyikan Terjemahan
       showTLBtn: Tampilkan Terjemahan
       TLSettingsTitle: Pengaturan Terjemahan
-      showSubtitle: Menampilkan Takarir
-      expandTL: Perluas TLdex
-      tlStart: Awal Pesan
-      StickBottomSettingLabel: Lekat Bawah
-      StickBottomSettingsDesc: Kolom TL akan diletakkan di bawah Chat Youtube
       showVerifiedMessages: Menampilkan Pesan Pengguna yang Terverifikasi
       showModeratorMessages: Menampilkan Pesan Moderator
-      showVtuberMessages: Menampilkan Pesan Vtuber
-      showLocalTime: Menampilkan Waktu Lokal
       tlFontSize: Ukuran Teks
       tlWindowSize: Ukuran Kotak Terjemahan (%), biarkan 0% untuk otomatis menyesuaikan
       retryBtn: Coba lagi
@@ -296,25 +266,8 @@ views:
           Saat ini Streaming belum dimulai, coba lagi nanti setelah stream 15 menit dimulai
         connectedToChat: Terhubung
         disconnectedToChat: Terputus
-      archiveNeedExtension: >-
-        Arsip obrolan tidak dapat bekerja tanpa ekstensi {0} atau ekstensi pihak ketiga lainnya.
-      hideSpoiler: Sembunyikan Spoiler
     removeFromPlaylist: Hapus video dari playlist ini
     saveToPlaylist: Simpan video ke playlist ini
-    likeOnYoutube: Suka video ini di Youtube
-    uploadPanel:
-      title: Unggah Naskah
-      usernameText: TL akan diunggah di bawah nama pengguna
-      usernameChange: Ubah
-      tlLang: Bahasa TL
-      headerStart: Mulai
-      headerEnd: Akhir
-      headerText: Teks
-      cancelBtn: Batal
-      okBtn: Oke
-      notifTextErr: GAGAL MEMUAT BERKAS (BERKAS RUSAK?)
-      notifTextParsing: Memuat berkas...
-      notifTextErrExt: Ekstensi berkas tidak dikenali.
   favorites:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada halaman ini.
@@ -347,11 +300,6 @@ views:
       - Masuk dengan Google
       - Masuk dengan Discord
       - Masuk dengan Twitter
-    username: Nama Pengguna
-    usernameBtn:
-      - Ubah
-      - Konfirmasi
-      - Simpan
   multiview:
     confirmOverwrite: Ubah tataletak yang sekarang?
     confirmOverwriteYes: Konfirmasi
@@ -360,12 +308,9 @@ views:
     addframe: Tambah Skema
     muteAll: Matikan Suara Semua Video
     unmuteAll: Nyalakan Suara Semua Video
-    muteOthers: Senyapkan yang lain
-    muteOthersDetail: Senyapkan semua kecuali satu siaran
     autoLayoutTip: Tekan channel untuk mulai menonton menggunakan mode tataletak otomatis
     createLayoutTip: Membuat tataletak kreasimu sendiri dengan menambahkan kolom, atau menggunakan preset
     openToolbarTip: Buka bilah alat untuk mulai menggunakan multiview
-    archiveSync: Sinkronisasi Arsip
     preset:
       shareOnDiscord: >-
         Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!
@@ -385,23 +330,6 @@ views:
     fullScreen: Layar Penuh
     mediaControls: Kontrol Media
     mediaControlsEmpty: Video yang diputar akan muncul disini
-    editAutoLayout: Atur Tataletak Otomatis
-    changeLayout: Ubah Tataletak
-    done: Selesai
-    hints: Petunjuk
-    presetsHint: Buka menu preset untuk mengganti tataletak dan mengatur tataletak otomatis
-    mediaControlsHint1: Gunakan Kontrol Media untuk menyenyapkan dan menyinkronkan (
-    mediaControlsHint2: ) siaran langsung
-    dragDropHint: Seret dan lepas siaran dari bilah alat ke kolom skema untuk mengatur siaran
-    reorderHint: Gunakan menu Tata Ulang untuk mengganti posisi video/chat
-    reorderLayout: Tata Ulang
-    reorderLayoutDetail: Seret dan lepas ikon ke posisi yang diinginkan
-    sync:
-      nothingToSync: >-
-        Tidak ada apapun untuk disinkronkan, mohon buka dua arsip tumpang tindih (misalnya. stream kolaborasi)
-      syncSettings: Pengaturan Sinkronisasi
-      syncSettingsDetail: >-
-        Video disinkronkan berdasarkan waktu mulai siaran, dan dapat desinkron di tengah-tengah siaran ketika ada masalah teknis atau porsi sebagian siaran dihapus. Gunakan offset untuk menyelarasan video secara manual
   mugen:
     welcome: >-
       Selamat datang di MugenClips! Semua orang yang berada di halaman ini melihat klip hololive bahasa inggris yang sama yang dipilih secara acak. Menonton bareng dan mengobrol sesama fans Hololive dari seluruh penjuru dunia. jika kamu mempercepat klip dan ingin mensinkronkan kembali video dengan semua orang, tekan refresh pada halaman ini.
@@ -413,86 +341,6 @@ views:
     page-heading: 'Playlist Kamu:'
     page-instruction: Klik playlist untuk menetapkannya sebagai aktif.
     change-loss-warning: Perubahan yang belum disimpan akan hilang. Lanjutkan?
-  extension:
-    title: Ekstensi Holodex Plus
-    features: Fitur
-    featureset:
-      one: Mengaktifkan Arsip Obrolan di halaman Tontonan dan Multiview
-      two: Memberikan fungsi suka video di halaman tontonan Holodex
-      three: Memperbaiki pembekakan memori dari kolom obrolan Youtube
-      four: >-
-        Memperbaiki flags eksperimental pada pemutar Youtube (Seperti menonaktifkan siaran multi, thumbnail ruang tunggu tidak tampil) dan masih banyak lagi!
-  tlClient:
-    menu:
-      title: Menu
-      setting: Pengaturan ruang TLDex
-      loadVideo: Tampilkan video
-      unloadVideo: Sembunyikan video
-      loadChat: Tambah Obrolan Youtube ke Broadcast TL
-      unloadChat: Lepas dari obrolan Youtube
-    tlControl:
-      enterBtn: Masukkan
-      prefix: Awalan
-      suffix: Akhiran
-      fontColour: Warna Font
-      outlineColour: Warna Outline
-      localPrefix: Label Bahasa dalam Obrolan
-      addProfile: Tambah Profil
-      removeProfile: Hapus Profil
-      shiftUp: Geser Profil ke Atas
-      shiftDown: Geser Profil ke Bawah
-      showSetting: Pengaturan
-      hideSetting: Sembunyikan
-    addProfilePanel:
-      title: Tambah Profil Baru
-      inputLabel: Nama Profil
-    settingPanel:
-      title: Pengaturan
-      mainStreamLink: Tautan Utama Siaran
-      collabLink: Tautan Kolaborasi
-    removeProfileTitle: Konfirmasi hapus profil
-    loadChatPanel:
-      title: Muat Chat
-      inputLabel: Tautan Siaran
-    unloadChatTitle: Sembunyikan SEMUA chat aktif?
-    pangram: The quick brown fox jumps over the lazy dog
-    cancelBtn: Batal
-    okBtn: Oke
-  scriptEditor:
-    menu:
-      save: Simpan
-      continuousEnd: Jadikan Waktu Berkelanjutan (ubah akhir)
-      clearAll: Hapus Naskah
-      exportFile: Ekspor Berkas
-      importFile: Impor Berkas
-      editorMode: Mode Edit
-    table:
-      headerStart: Awal
-      headerEnd: Akhir
-      headerProfile: Profil
-      headerText: Teks
-      setAsStart: Atur sebagai awal
-      shiftCurrentTime: Pindah ke waktu sekarang
-      deleteEntry: Hapus entri
-    loadVideoPanel:
-      title: Muat Video
-      inputLabel: Tautan Siaran
-    setStartTitle: Gunakan entri terpilih sebagai awal, semua entri sebelumnya akan dihapus.
-    importFile:
-      overwriteBtn: Timpa
-    editorModePanel:
-      activateMode: Aktifkan Mode Edit
-      deactivateMode: Matikan Mode Edit
-      roleWarning: Anda tidak memiliki hak
-      filterTranslator: Saring penerjemah
-  tlManager:
-    title: Pengelola Naskah TL
-    headerID: ID Video
-    headerEntries: Entri
-    download: Unduh
-    delete: Hapus
-    deleteTitle: Hapus Entri
-    langPick: Bahasa
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
@@ -517,7 +365,6 @@ editor:
     testStart: Uji awal mulai
     startInput: Mulai
     endInput: 'Durasi dalam detik: (berakhir pd {0})'
-    inheritItunesMusic: 'Setel Durasi via iTunes: {0}'
   exitMode: Keluar dari Mode Edit
   enterMode: Edit Video
 about:
@@ -582,11 +429,6 @@ about:
       contents:
         - >-
           Semua bantuan dan ide dipersilahkan! UI dan Backend tersedia untuk kontribusi, meskipun untuk saat ini hanya UI yang open source. Hubungi kami di discord untuk mendapatkan akses ke sumber backend, atau simpel dengan utarakan idemu di chat.
-    support:
-      title: Bagaimana cara saya membantu Holodex?
-      contents:
-        '0': >-
-          Perangkat Server Hostingan kami sendiri memiliki 28-core disertai dengan 60GB RAM yang membutuhkan kisaran $60 USD (sekitar ±Rp 855.000) / bulan untuk tetap berjalan, dan kami ingin memperluas lebih banyak fitur-fitur yang akan kami sajikan nantinya, oleh karena itu kami membuka <a href="https://ko-fi.com/holodex">Ko-fi</a> untuk membantu biaya jalannya server. (Kami juga memiliki <a href="https://www.patreon.com/holodex">Patreon</a>, tapi kami lebih menyarankan Ko-fi.)<br /><br />Kamu juga dapat membantu Holodex dengan memberi kami pesan penyemangat dan saran pada twitter kami, membantu menerjemahkan via <a href="https://crwd.in/holodex">Crowdin</a>, atau dengan berkontribusi ke penyimpanan data lagu kami. bahkan dengan memberi timestamp pada stream aslinya untuk bagian yang menarik juga sangat membantu!
   gdpr: GDPR dan data saya
   gdprContent: >-
     Cookie Google Analytics digunakan untuk melacak tampilan halaman untuk tujuan analitis kami. Setelah login, kami mengaitkan nama pengguna dan ID akun media sosial dengan favorit kamu. Data ini mungkin termasuk alamat Email (untuk Google), ID Discord, atau Twitter kamu.
@@ -608,34 +450,3 @@ about:
     title: Log Perubahan
   news:
     title: Berita
-  bookmarklet:
-    title: Bookmarklet
-    description: >-
-      Seret bookmarklet ini ke bilah penanda pada browser kamu untuk dapat menonton YouTube di Holodex secara mudah:
-channelRequest:
-  RequestType: 'Jenis Ajuan:'
-  Types:
-    AddVtuber: Tambah Vtuber ▶️ ke Holodex untuk memantau channel dan klip.
-    AddClipper: Tambah channel clipping/subbing ke Holodex
-    ModifyExistingInfo: Ubah informasi channel yang sudah ada
-    DeleteChannel: Hapus channel saya
-  DirectContactDisclaimer: >-
-    Silahkan isi id discord, email atau twitter kamu. Jika kamu perlu dihubungi (info ini akan tetap terjaga kerahasiaannya) agar kami dapat memberikan masukan. Hanya admin holodex yang dapat melihat informasi ini.
-  DirectContactLabel: Metode Kontak (opsional)
-  TwitterHandle: Nama Pengguna Twitter Channel Ini (opsional)
-  VtuberGroupLabel: Agensi / Grup Vtuber (opsional)
-  VtuberGroupHint: Agensi / Grup mana vtuber ini berasal?
-  ChannelLanguageLabel: Bahasa utama channel
-  EnglishNameHint: >-
-    Berikan nama dalam Bahasa Inggris jika nama channel tidak dalam Bahasa Inggris. Gunakan konvensi nama Vtuber dari bahasa aslinya (cth. 夏色まつり = Natsuiro Matsuri), atau nama EN pilihan mereka (cth. Elu the Elf, Emma★August).
-  EnglishNameLabel: Nama Channel dalam Bahasa Inggris
-  Comments: Komentar
-  CommentsHint: Komentar lain yang ingin kamu sampaikan pada kami.
-  VtuberRequirementText: >-
-    Diperlukan minimal 20 ribu subscriber untuk independen. Vtuber sebagai bagian dari agensi yang sudah ada akan diterima. <br /><br />Agensi baru akan dibuat tergantung dari jumlah rata-rata subscriber.
-  ClipperRequirementText: >-
-    Untuk clipper, usia channel minimal 2 bulan dan mengunggah secara konsisten, atau mengunggah lebih dari 20 klip dalam satu bulan. Spam klip pendek setiap hari, hanya mengunggah klip pendek &lt;1 menit, atau menggunakan thumbnail yang tidak menarik semuanya akan diperhitungkan. Kualitas konten mungkin juga akan dinilai. <br /><br />Penting untuk diperhatikan bahwa clipper harus mengutip sumbernya dalam deskripsi video dengan tautan channel, mention channel @Youtube, dan tautan video. overciting (cth. Menautkan semua orang di Nijisanji) membuat pekerjaan lebih untuk editor Holodex, dan underciting (tidak ada tautan / tidak mengutip sama sekali) akan membuat klip disembunyikan. <br /><br /> Holodex berisi algoritme untuk mendeteksi overciting dan mengoreksinya secara otomatis, tetapi mungkin tidak selalu bekerja dengan sempurna. Clipper yang sering overcite akan dihapus dari platform untuk mengurangi noise.
-  DeletionRequirementText: >-
-    Penghapusan channel hanya dapat diajukan jika kamu adalah (salah satu) pemilik channel tersebut, mohon isi informasi kontak sehingga kami dapat memverifikasi ini.
-  PageTitle: Holodex Pengajuan Channel
-  ChannelURLErrorFeedback: Harus format https://www.youtube.com/channel/UC_____
