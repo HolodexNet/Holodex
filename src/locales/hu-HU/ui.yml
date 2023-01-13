@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomenasorry!
@@ -49,12 +48,6 @@ component:
     googleCalendar: Hozzáadás a Google naptárhoz
     totalTLs: Összes élő chat fordítás
     tlPresence: Aktív fordító az utolsó 30 percben
-    typeScheduledYT: Beütemezett stream
-    typeExternalStream: Külső Stream
-    typeEventPlaceholder: Beütemezett esemény
-    openClient: Fordító kliens megnyitása
-    openScriptEditor: Script szerkesztő megnyitása
-    uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
   description:
@@ -82,17 +75,14 @@ component:
     sourcesLabel: források
     songsLabel: dalok
     recommendationsLabel: ajánlott
-    sameSourceClips: Ugyan abból a streamből
   paginateLoad:
     newer: Újabbak
     older: Régebbiek
   music:
     clearPlaylist: Törlés
-    trendingForOrg: Népszerű {0}-tól/től
   channelMusic:
     recentSongsHeader: Legújabb dalok
     weeklyTopPlaysHeader: Heti legjátszottabbak
-    trending: Legnépszerűbb
   songList:
     songTitle: Cím
     songCoveredBy: Előadó
@@ -142,15 +132,6 @@ component:
       delete-playlist: Lejátszási lista törlése
       clear-playlist: Lejátszási lista kiürítése
     save-error-not-logged-in: A lejátszási lista mentéséhez be kell lépned a fiókodba
-  placeholderVideo:
-    discordCredit: 'Esemény adat {0} által: {1}'
-    datasourceCredit: Esemény adat elhozva {0} adatforrásból.
-    botCredit: Esemény adat {0} adatforrásból biztosítva, {1} által készítve.
-    streamPageBtn: Stream oldal
-    eventPageBtn: Esemény oldal
-    scheduledEvent: Beütemezve
-    editorCredit: Holodex szerkesztő által állított esemény {0}.
-    creditTitleText: 'Közreműködők:'
 views:
   channel:
     video: Videók
@@ -212,7 +193,6 @@ views:
     sort:
       newest: Legújabb
       oldest: Legrégibb
-      longest: Leghosszabb
     type:
       all: Összes
       official: Hivatalos
@@ -257,11 +237,9 @@ views:
       - Kicsi
     hideCollabStreamsLabel: Vendégkénti streamek elrejtése
     hideCollabStreamsMsg: Vendégkénti streamek elrejtése a kedvencek közül
-    hidePlaceholderStreams: Tervezett streamek elrejtése
     ignoredTopicsLabel: Figyelmen kívül hagyott témák
     ignoredTopicsMsg: Elrejti a Kezdőlapból és a Kedvencekből a videókat ebben a témában
     theme: Téma
-    moreSettings: További beállítások
   app:
     update_available: Frissítés elérhető
     update_btn: Frissítés
@@ -270,22 +248,14 @@ views:
   about:
     add_my_channel: Csatorna igénylés
   watch:
-    theaterMode: Mozi mód (alt + t)
     mentionIconLabel: EMLÍTÉSEK
     chat:
       loading: Chat betöltése...
       hideTLBtn: Fordítások elrejtése
       showTLBtn: Fordítások megjelenítése
       TLSettingsTitle: Fordítás beállítások
-      showSubtitle: Feliratok megjelenítése
-      expandTL: TLdex kiterjesztése
-      tlStart: Üzenetek kezdete
-      StickBottomSettingLabel: Alulra rögzítés
-      StickBottomSettingsDesc: A fordító doboz Youtube chat alá helyezése
       showVerifiedMessages: Igazolt felhasználók üzeneteinek megjelenítése
       showModeratorMessages: Moderátor üzenetek megjelenítése
-      showVtuberMessages: Vtuber üzenetek megjelenítése
-      showLocalTime: Helyi idők mutatása
       tlFontSize: Betű méret
       tlWindowSize: Fordító mérete (%), 0%-on automatikus
       retryBtn: Újra
@@ -296,25 +266,8 @@ views:
           Még nem indult el az adás, kérlek próbáld újra amikor a stream 15 percre van indulástól
         connectedToChat: Csatlakozva
         disconnectedToChat: Lecsatlakozva
-      archiveNeedExtension: >-
-        Az archive chat nem működik a {0} bővítménnyel vagy más harmadik féltől származó bővítményekkel.
-      hideSpoiler: Spoiler elrejtése
     removeFromPlaylist: Videó eltávolítása a lejátszási listából
     saveToPlaylist: Videó mentése a lejátszási listába
-    likeOnYoutube: Hüvelykujj Youtubeon
-    uploadPanel:
-      title: Script feltöltése
-      usernameText: A fordítás felhasználónév alatt lesz feltöltve
-      usernameChange: Megváltoztatás
-      tlLang: Fordítás nyelve
-      headerStart: Kezdet
-      headerEnd: Vége
-      headerText: Szöveg
-      cancelBtn: Mégsem
-      okBtn: OK
-      notifTextErr: NEM SIKERÜLT ELEMEZNI A FÁJLT (A FÁJL KORRUPT?)
-      notifTextParsing: Fájl elemzése...
-      notifTextErrExt: A fájlkiterjesztés nem felismerhető
   favorites:
     promptForAction: >-
       Készíts egy listát a kedvenc vtuberjeidről és láthatod az legújabb klipjeiket és adásaikat ezen az oldalon.
@@ -347,11 +300,6 @@ views:
       - Bejelentkezés Google fiókkal
       - Bejelentkezés Discorddal
       - Bejelentkezés Twitter fiókkal
-    username: Felhasználónév
-    usernameBtn:
-      - Megváltoztatás
-      - Megerősítés
-      - Mentés
   multiview:
     confirmOverwrite: Felülírod a meglévő elrendezést?
     confirmOverwriteYes: Megerősítés
@@ -360,12 +308,9 @@ views:
     addframe: Cella hozzáadása
     muteAll: Minden némítása
     unmuteAll: Minden némítás visszavonása
-    muteOthers: Többi némítása
-    muteOthersDetail: Minden streamet -kivéve egyet- némít
     autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
     createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
     openToolbarTip: Nyisd meg az eszköztárat a MultiView használatához
-    archiveSync: Archív szinkronizáció
     preset:
       shareOnDiscord: >-
         Van egy jópofa elrendezésed? Használd a megosztás gombot és mutasd meg a <a href="https://discord.gg/jctkgHBt4b"> Discord szerverünkön</a>!
@@ -385,23 +330,6 @@ views:
     fullScreen: Teljes képernyő
     mediaControls: Média vezérlők
     mediaControlsEmpty: A lejátszott videók itt fognak megjelenni
-    editAutoLayout: Auto-elrendezés szerkesztése
-    changeLayout: Elrendezés megváltoztatása
-    done: Kész
-    hints: Súgó
-    presetsHint: Nyisd meg az előrendezések menüt az elrendezések váltásához és auto-elrendezés beállításához
-    mediaControlsHint1: Használd a Média irányításokat, hogy némíts és összehangolj (
-    mediaControlsHint2: ) élő közvetítéseket
-    dragDropHint: Húzz streameket az eszköztárból a cellákhoz, hogy elrendezd a streameket
-    reorderHint: Használd a Kiosztás átrendezése gombot, hogy megcserélje a chat és videó pozícióját
-    reorderLayout: Kiosztás átrendezése
-    reorderLayoutDetail: Húzz ikonokat a kívánt pozícióba
-    sync:
-      nothingToSync: >-
-        Nincs mit szinkronba tenni, nyiss meg legalább 2 streamet (pl. vendég streameket)
-      syncSettings: Szinkronizálási beállítások
-      syncSettingsDetail: >-
-        A videók a stream indulása ideje szerint vannak szinkronizálva, viszont a közbeni technikai gondok és/vagy törölt részletek miatt elcsúszhatnak. Használj offset-eket, hogy manuálisan állítsd a videókat
   mugen:
     welcome: >-
       Üdvözöllek a MugenClips-nél! Ezen az oldalon mindenki ugyan azt a véletlenszerűen kiválasztott angol Hololive klipet nézi. Együtt nézheted és chatelhetsz más Hololive rajongókkal az egész világon. Ha előretekersz és szeretnél újra egyidejűleg lenni a többiekkel, kérlek frissítsd az oldalt.
@@ -413,86 +341,6 @@ views:
     page-heading: 'A lejátszási listád:'
     page-instruction: Kattints egy lejátszási listára, hogy aktuálissá tedd! Mielőtt másikra váltanál, elmenteni a jobb felső sarokban levő lejátszási lista ikonban tudod.
     change-loss-warning: A mentetlen változtatások el fognak veszni. Folytatod?
-  extension:
-    title: Holodex Plus Bővítmény
-    features: Funkciók
-    featureset:
-      one: Engedélyezi a múltbéli streamek chatjét egyszerű és Többképernyős nézetben.
-      two: Engedélyezi a videók Kedvelt videók közé tételét. (Likeolás)
-      three: Megjavítja a memória folyást a Youtube élő csevegésében
-      four: >-
-        Megjavítja a kísérleti zászlókat Youtube lejátszóban (Például több stream kikapcsolása, várószoba indexképe nem látszódik) és még több!
-  tlClient:
-    menu:
-      title: Menü
-      setting: TLDex szoba beállítások
-      loadVideo: Videók mutatása
-      unloadVideo: Videó elrejtése
-      loadChat: YT chat és élő fordítás összevonása
-      unloadChat: Lecsatolása YT chatről
-    tlControl:
-      enterBtn: Enter
-      prefix: Prefix
-      suffix: Utótag
-      fontColour: Betűszín
-      outlineColour: Körvonal színe
-      localPrefix: Nyelv tag a chaten
-      addProfile: Profil hozzáadása
-      removeProfile: Profil eltávolítása
-      shiftUp: Profil felhúzása
-      shiftDown: Profil lehúzása
-      showSetting: Beállítások
-      hideSetting: Elrejtés
-    addProfilePanel:
-      title: Profil hozzáadása
-      inputLabel: Profil név
-    settingPanel:
-      title: Beállítások
-      mainStreamLink: Fő stream linkje
-      collabLink: Vendég stream linkek
-    removeProfileTitle: Fiók eltávolításának megerősítése
-    loadChatPanel:
-      title: Chat betöltése
-      inputLabel: Stream link
-    unloadChatTitle: MINDEN aktív chatet lekapcsolsz?
-    pangram: A gyors, barna róka átugrik a lusta kutya fölött
-    cancelBtn: Mégsem
-    okBtn: OK
-  scriptEditor:
-    menu:
-      save: Mentés
-      continuousEnd: Folytonossá tétel (vége megváltoztatása)
-      clearAll: Script törlése
-      exportFile: Fájl exportálása
-      importFile: Fájl importálása
-      editorMode: Szerkesztő mód
-    table:
-      headerStart: Kezdet
-      headerEnd: Vége
-      headerProfile: Profil
-      headerText: Szöveg
-      setAsStart: Beállítása kezdetnek
-      shiftCurrentTime: Beállítás jelenlegi időre
-      deleteEntry: Beviteli adatok törlése
-    loadVideoPanel:
-      title: Videó betöltése
-      inputLabel: Stream link
-    setStartTitle: Kezdet a kiválaszott egységtől, az összes korábbi egység törölve lesz.
-    importFile:
-      overwriteBtn: Felülírás
-    editorModePanel:
-      activateMode: Szerkesztő mód aktiválása
-      deactivateMode: Kilépés szerkesztő módból
-      roleWarning: Nincs elegendő felhatalmazásod
-      filterTranslator: Fordító szűrése
-  tlManager:
-    title: Script-kezelő
-    headerID: Videó ID
-    headerEntries: Bevitelek
-    download: Letöltés
-    delete: Törlés
-    deleteTitle: Beviteli adatok törlése
-    langPick: Nyelv
 time:
   soon: hamarosan
   diff_future_date: Indul {0} ({1})
@@ -517,7 +365,6 @@ editor:
     testStart: Indítás tesztelése
     startInput: Indítás
     endInput: 'Hossz másodpercekben: (vége @ {0})'
-    inheritItunesMusic: 'Időtartam beállítása iTunes-al: {0}'
   exitMode: Kilépés a szerkesztő módból
   enterMode: Videó szerkesztése
 about:
@@ -537,7 +384,7 @@ about:
     videoLinkage: Hogyan bizonyosodom meg róla, hogy a videók és klipek biztosan hozzá vannak kapcsolva a vtuberekhez?
     videoLinkageContent: >-
       Minden információt a leírásból szedünk. Ha klipelsz egy streamet, kérlek ne felejtsd el linkelni az eredeti streamet a leírásban. Ha egy rajongói tartalmat klipelsz, (pl. bilibili-ről), csak linkeld be az eredeti hivatalos youtube csatornát a hozzátartozó vtuberhez. Ha nem linkeled a vtuber csatornáját, akkor nem fog megjelenni a videód Holodexen, mivel minden kliphez szükséges egy link a vtuberhez aki ismert Holodexen is.
-    quitHolodex: "Fordító vagyok és szeretném a tartalmaim eltávolítani Holodexről.\\r\n"
+    quitHolodex: "Fordító vagyok és szeretném a tartalmaim eltávolítani Holodexről.\r\n"
     quitHolodexContent: >-
       Sajnáljuk, hogy elmész :(, kérlek jelezd ha van bármi probléma amivel segíthetnénk. Ha mindenképp szeretnéd eltávolíttatni, kérlek üzenj nekünk Discordon.
     favorite:
@@ -582,11 +429,6 @@ about:
       contents:
         - >-
           Minden segítséget és ötletet szívesen fogadunk! Az UI és a Backend egyaránt elérhető, hozzájárulhatsz, viszont jelenleg csak a UI nyílt forráskódú. Kérlek vedd fel a kapcsolatot velünk Discord-on, hogy hozzáférést kapj a backend forráshoz, vagy csak chatelj az ötleteidről.
-    support:
-      title: Hogyan tudom támogatni a Holodex-et?
-      contents:
-        '0': >-
-          Az általunk hosztolt szerver egy 28 magos, 60 GB RAM-os gépezet, ami havonta kb. $60 USD (19000 HUF) költséggel jár, valamint szeretnénk további funkciókkal bővíteni az oldalt, ezért indítottunk egy <a href="https://ko-fi.com/holodex">Ko-fi-t</a> a szerver költségeinek fedezése érdekében. (<a href="https://www.patreon.com/holodex">Patreonunk</a> is van, de a Ko-fi-t jobban szeretjük.)<br /><br />A támogatásod kifejezheted visszajelzésekkel és biztató üzenetekkel Twitteren, hozzájárulással a fordítócsapat munkáihoz <a href="https://crwd.in/holodex">Crowdin-on</a>, valamint hozzátéve a dal adatbázisunk bővítésével. (Streamekből kiszerkesztve egy-egy időintervallumot) Akár csak egy stream alá kommentelve megjelölni a vicces jeleneteket is egy nagy segítség!
   gdpr: GDPR és az adataim
   gdprContent: >-
     Egy Google Analytics cookiet használunk, hogy nyomon tartsuk az oldal látogatóit, kizárólag elemzési célokkal. Bejelentkezés után társítjuk a közösségi fiókod felhasználónevét és ID-jét a kedvenceiddel. Ez az adat lehet az e-mail címed (Google), Discord ID vagy a Twittered illően kezelve.
@@ -608,34 +450,3 @@ about:
     title: Változtatások
   news:
     title: Újdonságok
-  bookmarklet:
-    title: Könyvjelzők
-    description: >-
-      Húzd ezeket a könyvjelzőket a könyvjelző sávodba, hogy megnyiss egy YouTube oldalt Holodexen könnyedén:
-channelRequest:
-  RequestType: 'Kérvény típusa:'
-  Types:
-    AddVtuber: Vtubert hozzáadása ▶️ a Holodexhez, hogy kövesse a csatornáját és klipjeit.
-    AddClipper: Klipper/fordító csatorna hozzáadása Holodexhez
-    ModifyExistingInfo: Létező csatorna információ frissítése
-    DeleteChannel: Saját csatorna törlése
-  DirectContactDisclaimer: >-
-    Nyugodtan hagyj nekünk discord ID-t vagy e-mail címet vagy Twitter ID-t, amennyiben szükséged van visszajelzésre. Kizárólag Holodex adminisztrátorok fogják látni az elérhetőséged.
-  DirectContactLabel: Elérési adat (opcionális)
-  TwitterHandle: Ennek a csatornának a Twitter kezelője (opcionális)
-  VtuberGroupLabel: VTuber csoport (nem kötelező)
-  VtuberGroupHint: Melyik szervezethez vagy csoporthoz tartozik ez a vtuber?
-  ChannelLanguageLabel: A csatorna fő nyelve
-  EnglishNameHint: >-
-    Amennyiben a csatorna neve nem angol, add meg angolul is. Írd át angol formába (pl. Natsuiro Matsuri) vagy pedig a csatorna által preferált angol megfelelőbe (pl. Elu the Elf, Emma★August)
-  EnglishNameLabel: Angol csatornanév
-  Comments: Hozzászólások
-  CommentsHint: Egyéb megjegyzések, melyeket szeretnél nekünk elmondani.
-  VtuberRequirementText: >-
-    Legalább 20k feliratkozó szükséges önállóként. Azok a Vtuberek, akik egy létező szervezethez tartoznak, ez alól felmentésben részesülnek. <br /><br />Új szervezetek az átlag feliratkozószám alapján kerülnek hozzáadásra.
-  ClipperRequirementText: >-
-    Klip készítőktől legalább egy két hónapja feltöltött vtuber klip és rendszeres feltöltést vagy 20 klip egy hónap alatt, amit igényelünk. Rövid klippek spammelése naponta, csupán rövid &lt;1 perces klippek vagy félrevezető indexképek (click-bait) használata a csatorna ellen szólnak. A tartalom minősége szintén bírálásra kerülhet. <br /><br />Fontos megjegyezni, hogy a klippereknek meg kell jelölniük az eredeti forrásuk linkekkel, @Youtube csatorna említésekkel és videó linkekkel. Túljelölgetés (pl. MINDENKIT megjelölni a Nijisanjiból) rengeteg munkát csinál a Holodex szerkesztőknek, a megjelölések kihagyása (nincsenek linkek) pedig láthatatlanná teszi a klippeket. <br /><br /> A Holodex alkalmaz olyan algoritmust, ami észleli a túljelölgetést és automatikusan kijavítja, viszont nem működhet mindig tökéletesen. Klipperek akik rendszeresen túl linkelik a klipjeiket, törlésre kerülhetnek a platformról zajcsökkentés végett.
-  DeletionRequirementText: >-
-    Csatorna törlést akkor kérhetsz ha te(vagy ti) vagy(tok) a csatorna tulajdonosa(i), kérlek készülj(etek) kilétet igazoló információkkal.
-  PageTitle: Holodex Csatorna Kérés
-  ChannelURLErrorFeedback: 'Muszáj az alábbi formában lennie: https://www.youtube.com/channel/UC_____'
