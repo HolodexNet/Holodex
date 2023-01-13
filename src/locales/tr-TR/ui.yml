@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomennüzgünüz!
@@ -49,12 +48,6 @@ component:
     googleCalendar: Google Takvim'e Ekle
     totalTLs: Toplam canlı sohbet çevirileri
     tlPresence: Son 30 dakikada aktif çevirmen
-    typeScheduledYT: Planlı Yayın
-    typeExternalStream: Harici Yayın
-    typeEventPlaceholder: Planlı Etkinlik
-    openClient: Çeviri İstrmcisini Aç
-    openScriptEditor: Senaryo Editörünü Aç
-    uploadScript: Çeviri Senaryosu Yükle
   videoDescription:
     description: Açıklama
   description:
@@ -82,17 +75,14 @@ component:
     sourcesLabel: kaynaklar
     songsLabel: şarkılar
     recommendationsLabel: önerilenler
-    sameSourceClips: Aynı yayınlardan
   paginateLoad:
     newer: Daha yeni
     older: Daha eski
   music:
     clearPlaylist: Temizle
-    trendingForOrg: '{0} için trendler'
   channelMusic:
     recentSongsHeader: Son şarkılar
     weeklyTopPlaysHeader: Haftanın en çok dinlenenleri
-    trending: Trendler
   songList:
     songTitle: Başlık
     songCoveredBy: Söyleyen
@@ -142,15 +132,6 @@ component:
       delete-playlist: Oynatma Listesini Sil
       clear-playlist: Oynatma Listesini Temizle
     save-error-not-logged-in: Oynatma listelerini kaydetmek için oturum açmanız gerekir
-  placeholderVideo:
-    discordCredit: 'Etkinlik bilgisi {1}''den {0} tarafından temin edilmiştir'
-    datasourceCredit: Etkinlik bilgisi {0} kaynağından alındı.
-    botCredit: Etkinlik bilgisi {0} kaynağından alındı, {1} tarafından oluşturuldu.
-    streamPageBtn: Yayın Sayfası
-    eventPageBtn: Etkinlik Sayfası
-    scheduledEvent: Programlı
-    editorCredit: Etkinlik {0} Holodex editörü tarafından kuruldu.
-    creditTitleText: 'Teşekkürler:'
 views:
   channel:
     video: Videolar
@@ -228,7 +209,7 @@ views:
     redirectModeMsg: >-
       Video küçük resimlerine tıklamak videoyu Youtube'da açar, video başlıklarına tıklamak videoyu Holodex'te açar
     useEnglishNameLabel: İngilizce isimleri kullan
-    useEnglishNameMsg: VTuber kanalları için İngilizce yerelleştirilmiş isimleri kullanır
+    useEnglishNameMsg: VTuber kanalları için yerelleştirilmiş isimleri kullan
     hideVideoThumbnailsLabel: Video Küçük Resimlerini Sakla
     hideVideoThumbnailsMsg: >-
       Video küçük resimlerini saklar, yüklenme hızını arttırır ve mobil cihazlarda daha az kaydırma
@@ -256,11 +237,9 @@ views:
       - Küçük
     hideCollabStreamsLabel: Collab yayınları sakla
     hideCollabStreamsMsg: Collab yayınları favoriler sayfanızdan saklar
-    hidePlaceholderStreams: Yer Tutucu Yayınları Gizle
     ignoredTopicsLabel: Yok Sayılan Konular
     ignoredTopicsMsg: Ana Sayfadan ve Favorilerden seçili konulara sahip videolar kaldırılır
     theme: Tema
-    moreSettings: Daha Fazla Ayar
   app:
     update_available: Bir güncelleme mevcut
     update_btn: Güncelle
@@ -269,22 +248,14 @@ views:
   about:
     add_my_channel: Kanal Talebi
   watch:
-    theaterMode: Tiyatro Modu (alt + t)
     mentionIconLabel: Söz edilenler
     chat:
       loading: Sohbet yükleniyor...
       hideTLBtn: Çevirileri gizle
       showTLBtn: Çevirileri göster
       TLSettingsTitle: Çeviri Ayarları
-      showSubtitle: Altyazıyı göster
-      expandTL: TLdex'i genişlet
-      tlStart: Mesajların başı
-      StickBottomSettingLabel: Alta Yapıştır
-      StickBottomSettingsDesc: Altyazı kutusunu Youtube Sohbetinin altına yerleştir
       showVerifiedMessages: Doğrulanmış Mesajları Göster
       showModeratorMessages: Moderatör Mesajlarını Göster
-      showVtuberMessages: Vtuber Mesajlarını Görüntüle
-      showLocalTime: Yerel saatleri göster
       tlFontSize: Yazı Tipi Büyüklüğü
       tlWindowSize: Çeviri kutusu büyüklüğü (%), otomatik için %0 olarak bırakın
       retryBtn: Yeniden Dene
@@ -295,25 +266,8 @@ views:
           Yayın daha canlı değil, lütfen yayın başladıktan 15 dakika sonra tekrar deneyin.
         connectedToChat: Bağlandı
         disconnectedToChat: Bağlantı kesildi
-      archiveNeedExtension: >-
-        Arşiv sohbeti {0} eklentisi veya diğer üçüncü taraf eklentileri olmadan çalışmaz.
-      hideSpoiler: Spoiler'ı Gizle
     removeFromPlaylist: Videoyu mevcut oynatma listesinden çıkar
     saveToPlaylist: Videoyu mevcut oynatma listesine ekle
-    likeOnYoutube: Videoyu Youtube'da beğen
-    uploadPanel:
-      title: Senaryo Yükle
-      usernameText: Çeviri şu kullanıcı adı altında yüklencek
-      usernameChange: Değiştir
-      tlLang: Çeviri Dili
-      headerStart: Başlangıç
-      headerEnd: Bitiş
-      headerText: Metin
-      cancelBtn: İptal
-      okBtn: Tamam
-      notifTextErr: DOSYA AYRIŞTIRILAMADI (BOZUK DOSYA?)
-      notifTextParsing: Dosya ayrıştırılıyor...
-      notifTextErrExt: Tanınamayan dosya uzantısı.
   favorites:
     promptForAction: >-
       Favori VTuberlarının bir listesini oluştur ve en son kliplerini ve yayınlarını bu sayfada görüntüle
@@ -346,11 +300,6 @@ views:
       - Google ile giriş yap
       - Discord ile giriş yap
       - Twitter ile giriş yap
-    username: Kullanıcı Adı
-    usernameBtn:
-      - Değiştir
-      - Onayla
-      - Kaydet
   multiview:
     confirmOverwrite: Geçerli düzen sıfırlansın mı?
     confirmOverwriteYes: Onayla
@@ -359,12 +308,9 @@ views:
     addframe: Hücre Ekle
     muteAll: Tümünün Sesini Kapat
     unmuteAll: Tümünün Sesini Aç
-    muteOthers: Diğerlerini Sustur
-    muteOthersDetail: Bir yayın dışındaki yayınları sustur
     autoLayoutTip: Oto düzen modunu kullanmak için bir kanala tıklayın
     createLayoutTip: Hücre ekleyerek veya önceden ayarlanmış düzen kullanarak kendi düzeninizi oluşturun
     openToolbarTip: Çoklu izlemeye başlamak için araç çubuğunu açın
-    archiveSync: Arşiv senkronizasyonu
     preset:
       shareOnDiscord: >-
         Paylaşmak istediğin harika bir düzenin mi var? Paylaş butonunu kullanıp <a href="https://discord.gg/jctkgHBt4b">Discord sunucumuzda</a> bizimle paylaş!
@@ -384,23 +330,6 @@ views:
     fullScreen: Tam Ekran
     mediaControls: Medya Kontrolleri
     mediaControlsEmpty: Oynatılan videolar burada gözükür
-    editAutoLayout: Oto-düzeni değiştir
-    changeLayout: Düzeni değiştir
-    done: Bitti
-    hints: İpuçları
-    presetsHint: Ön ayarlar menüsünü açarak seçili düzeni değiştirin veya otomatik kullanılacak düzenleri seçin
-    mediaControlsHint1: Medya kontrollerini kullanarak yayınların seslerini kapatın veya yayınları senkronize (
-    mediaControlsHint2: ) edin
-    dragDropHint: Hücreleri organize etmek için yayınları araç çubuğundan sürükleyip bırakın
-    reorderHint: Video/sohbet pozisyonlarını değiştirmek için Düzeni Sırala menüsünü kullanabilirsiniz
-    reorderLayout: Düzeni Sırala
-    reorderLayoutDetail: Simgeleri istenilen pozisyonlara sürükleyip bırakın
-    sync:
-      nothingToSync: >-
-        Senkronize edilecek bir şey yok. Lütfen örtüşen iki tane arşiv açın (ör. collab yayınları)
-      syncSettings: Senkronizasyon Ayarları
-      syncSettingsDetail: >-
-        Videolar yayının başlama zamanına göre senkronize edilir ve yayın sırası teknik aksaklıklar veya silinmiş kısımlar nedeniyle desenkronize olabilir. Videoları el ile hizalamak için offsetleri kullanın
   mugen:
     welcome: >-
       MugenClips'e Hoşgeldiniz! Bu sayfadaki herkes sizinle aynı rastgele seçilmiş klipleri görür. Dünya çapındaki Hololive hayranlarıyla birlikte izleyin ve sohbet edin. İleriye atlar ve herkesle tekrardan eşitlenmek isterseniz, lütfen sayfayı yenileyin.
@@ -412,30 +341,6 @@ views:
     page-heading: 'Oynatma Listeleriniz:'
     page-instruction: Etkin olarak seçmek istediğiniz oynatma listesine tıklayın.
     change-loss-warning: Kaydedilmemiş değişiklikleri kaybedeceksiniz. Devam edilsin mi?
-  extension:
-    title: Holodex Plus Eklentisi
-    features: Özellikler
-    featureset:
-      one: İzleme ve Çoklu İzleme sayfalarında Arşivlenmiş Yayın Sohbetini etkinleştirir
-      two: Holodex izleme sayfasından videoların beğenilmesini mümkün kılar
-      three: Youtube'un yayın sohbetindeki bellek sızıntısını düzeltir
-      four: >-
-        Youtube oynatıcısının deneysel özelliklerini düzeltir (Çoklu yayınları devre dışı kalması, bekleme odası küçük resminin görünmemesi) ve daha fazlası!
-  tlClient:
-    menu:
-      title: Menü
-      setting: TLDex Odası Ayarları
-      loadVideo: Videoyu Göster
-      unloadVideo: Videoyu gizle
-      loadChat: Yayın Çevirisine YT Chat'ini Ekle
-  tlManager:
-    title: Senaryo yöneticisi
-    headerID: Video ID'si
-    headerEntries: Girdiler
-    download: İndir
-    delete: Sil
-    deleteTitle: Girdileri sil
-    langPick: Dil
 time:
   soon: yakında
   diff_future_date: ' {0} ({1}) başlıyor'
@@ -460,7 +365,6 @@ editor:
     testStart: Başı test et
     startInput: Başlangıc
     endInput: 'Saniye olarak süre: (bitiş {0})'
-    inheritItunesMusic: 'Süreyi iTunes ile Ayarla: {0}'
   exitMode: Düzenleme modundan çık
   enterMode: Düzenle
 about:
@@ -525,11 +429,6 @@ about:
       contents:
         - >-
           Tüm yardım ve fikirlere açığız! Hem Arayüzümüz hem de Backend'imiz katkıda bulunmaya açık olmasına rağmen şu anda sadece Arayüzümüz açık kaynaklıdır. Backend'imize erişim sağlamak için lütfen Discord üzerinden bizimle iletişime geçin veya fikirlerimiz hakkında sohbet edin.
-    support:
-      title: Holodex'e nasıl destek olabilirim?
-      contents:
-        '0': >-
-          Kendi kendine barındırılan sunucumuz, çalıştırması aylık yaklaşık 60$ USD tutan, 28 çekirdeğe ve 60GB ram'e sahip bir makine. Özelliklerimizi daha da genişletmeyi iple çekiyoruz ve bu yüzden sunucu ücretlerini kaplamak için bir <a href="https://ko-fi.com/holodex">Ko-Fi</a> başlattık. (<a href="https://www.patreon.com/holodex">Patreon</a>'umuz da var ama Ko-Fi tercihimiz.) <br /><br />Holodex'i desteklemek için ayrıca Twitter'dan bize geri bildirim ve destekleyici mesajlar gönderebilir, <a href="https://crwd.in/holodex">Crowdin</a> üzerinden çevirilerimize yardımcı olabilir veya şarkı veri depomuza katkıda bulunabilirsiniz. Bir yayının komik kısımlarını bulup asıl yayının yorumlarına eklemek bile büyük bir yardım!
   gdpr: GVKY ve verilerim
   gdprContent: >-
     Analitik amaçlarımız için sayfa görüntülemelerini takip etmek için bir Google Analitics çerezi kullanıyoruz. Girişten sonra, sosyal medya hesabı kullanıcı adınızı ve ID'nizi favorilerinizle ilişkilendiriyoruz. Bu verilere her biri ayrı olarak Email adresiniz (Google için), Discord ID'niz veya Twitter kullanıcı adınız dahil olabilir.
@@ -551,32 +450,3 @@ about:
     title: Değişiklikler
   news:
     title: Haberler
-  bookmarklet:
-    title: Yer imcikleri
-    description: >-
-      Bir YouTube izleme sayfasını Holodex'te kolayca açabilmek için bu yer imciklerini yer imi çubuğunuza sürükleyin:
-channelRequest:
-  RequestType: 'Talep Türü:'
-  Types:
-    AddVtuber: Holodex'in kanalını ve kliplerini takip etmesi için bir Vtuber ▶️ ekle.
-    AddClipper: Holodex'e bir klip/altyazı kanalı ekle
-    ModifyExistingInfo: Var olan kanal bilgilerini düzenle
-    DeleteChannel: Kanalımı sil
-  DirectContactDisclaimer: >-
-    Geri bildirim sağlamak için letişime geçmemiz gerekirse size ulaşabilmemiz için e-postanızı, discord idnizi veya twitter hesabınızı (bu bilgiler gizli kalacak) bırakmaktan çekinmeyin. Sadece holodex yöneticileri bu bilgileri görebilecek.
-  DirectContactLabel: İletişim Bilgileri (isteğe bağlı)
-  TwitterHandle: Kanalın Twitter Tanıtıcısı (isteğe bağlı)
-  VtuberGroupLabel: VTuber Grubu (isteğe bağlı)
-  VtuberGroupHint: Bu vtuber hangi organizasyona / gruba bağlı?
-  ChannelLanguageLabel: Kanalın ana dili
-  EnglishNameHint: >-
-    Kanal ismi İngilizce değilse İngilizce bir kanal ismi ekleyin. Sözü geçen VTuber'ın yerel isim sırası kurallarını takip edin (Natsuiro Matsuri) veya tercih edilen İngilizce marka ismini kullanın (Elu the Elf, Emma★August).
-  EnglishNameLabel: İngilizce Kanal İsmi
-  Comments: Yorumlar
-  CommentsHint: Bize iletmek istediğin diğer yorumlar.
-  VtuberRequirementText: >-
-    Bağımsızlar için en az 20K abone gereklidir. Var olan orgların parçası olan VTuberlar kabul edilecektir. <br /><br />Yeni Orglar ortalama abone sayısına göre oluşturulacaktır.
-  DeletionRequirementText: >-
-    Silme sadece kanal sahibi/sahipleri tarafından talep edilmeli, lütfen bunu doğrulamamız için iletişim bilgisi sağlayın.
-  PageTitle: Holodex Kanal Talebi
-  ChannelURLErrorFeedback: https://www.youtube.com/channel/UC_____ şeklinde olmalı
