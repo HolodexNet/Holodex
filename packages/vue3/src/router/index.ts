@@ -230,7 +230,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/watch/:id",
     name: "Watch",
-    component: () => import("@/views/Watch.vue"),
+    component: () => import("@/views/WatchNew.vue"),
   },
 ];
 const router = createRouter({
