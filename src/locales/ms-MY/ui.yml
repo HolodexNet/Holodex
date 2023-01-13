@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Sumimaaf!
@@ -49,12 +48,6 @@ component:
     googleCalendar: Tambahkan ke Kalendar Google
     totalTLs: Jumlah terjemahan sembang langsung
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
-    typeScheduledYT: Siaran Terancang
-    typeExternalStream: Siaran Luar
-    typeEventPlaceholder: Acara Terancang
-    openClient: Buka Pelanggan Terjemahan
-    openScriptEditor: Buka Penyunting Skrip
-    uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
   description:
@@ -82,17 +75,14 @@ component:
     sourcesLabel: daripada
     songsLabel: lagu
     recommendationsLabel: disyorkan
-    sameSourceClips: Daripada siaran yang sama
   paginateLoad:
     newer: Lebih baharu
     older: Lebih lama
   music:
     clearPlaylist: Kosongkan
-    trendingForOrg: Lagu hangat daripada {0}
   channelMusic:
     recentSongsHeader: Lagu Terkini
     weeklyTopPlaysHeader: Lagu Teratas Mingguan
-    trending: Lagu hangat
   songList:
     songTitle: Judul
     songCoveredBy: Dinyanyikan oleh
@@ -142,15 +132,6 @@ component:
       delete-playlist: Hapuskan Senarai Main
       clear-playlist: Kosongkan senarai main
     save-error-not-logged-in: Log masuk agar senarai main boleh disimpan
-  placeholderVideo:
-    discordCredit: 'Maklumat acara ihsan {0} dari: {1}'
-    datasourceCredit: Maklumat acara berpunca daripada {0}.
-    botCredit: Maklumat acara disediakan melalui {0} hasil ciptaan {1}.
-    streamPageBtn: Laman Siaran Langsung
-    eventPageBtn: Laman Acara
-    scheduledEvent: Perancangan
-    editorCredit: Laman acara disediakan oleh penyunting Holodex {0}.
-    creditTitleText: 'Penghargaan:'
 views:
   channel:
     video: Video
@@ -212,7 +193,6 @@ views:
     sort:
       newest: Terbaharu
       oldest: Terlama
-      longest: Terpanjang
     type:
       all: Semua
       official: Rasmi
@@ -257,11 +237,9 @@ views:
       - Kecil
     hideCollabStreamsLabel: Sembunyikan Siarsama
     hideCollabStreamsMsg: Sembunyikan siarsama di laman Kegemaran
-    hidePlaceholderStreams: Sembunyikan Siaran Sementara
     ignoredTopicsLabel: Topik Diketepikan
     ignoredTopicsMsg: Video yang bertopik berikut disembunyikan di laman Utama dan Kegemaran
     theme: Warna tema
-    moreSettings: Tetapan Lanjutan
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
@@ -270,22 +248,14 @@ views:
   about:
     add_my_channel: Memohon Penambahan Saluran
   watch:
-    theaterMode: Mod Teater (alt + t)
     mentionIconLabel: MENYEBUT
     chat:
       loading: Sedang Memuat Sembang...
       hideTLBtn: Sembunyikan Terjemahan
       showTLBtn: Paparkan Terjemahan
       TLSettingsTitle: Tetapan Terjemahan
-      showSubtitle: Paparkan Sari Kata
-      expandTL: Kembangkan Ruangan Terjemahan
-      tlStart: Permulaan Pesanan
-      StickBottomSettingLabel: Letakkan di Bawah
-      StickBottomSettingsDesc: Letakkan terjemahan di bawah ruangan sembang YouTube
       showVerifiedMessages: Paparkan Sembang Oleh Pengguna Yang Disahkan
       showModeratorMessages: Paparkan Sembang Oleh Penyederhana
-      showVtuberMessages: Paparkan Sembang oleh Penggiyut Maya
-      showLocalTime: Paparkan Waktu Tempatan
       tlFontSize: Ukuran Pasuan
       tlWindowSize: Peratusan (%) saiz ruangan terjemahan. 0% bagi perubahan saiz secara kendiri
       retryBtn: Cuba Lagi
@@ -296,25 +266,8 @@ views:
           Siaran langsung masih belum berlangsung. Cuba lagi apabila siaran berlangsung dalam masa 15 minit
         connectedToChat: Bersambung
         disconnectedToChat: Terputus
-      archiveNeedExtension: >-
-        Ruangan sembang terarkib hanya berfungsi apabila pelanjutan/sambungan {0} atau mana-mana pelanjutan/sambungan pihak ketiga lain.
-      hideSpoiler: Sembunyikan Terjemahan Akan Datang
     removeFromPlaylist: Alih keluar video daripada senarai main semasa
     saveToPlaylist: Simpan video pada senarai main semasa
-    likeOnYoutube: Berikan tanda suka di YouTube
-    uploadPanel:
-      title: Muat Naik Skrip
-      usernameText: Terjemahan dimuat naik dengan nama pengguna ini
-      usernameChange: Ubah
-      tlLang: Bahasa Terjemahan
-      headerStart: Mula
-      headerEnd: Tamat
-      headerText: Teks
-      cancelBtn: Batal
-      okBtn: Baik
-      notifTextErr: GAGAL MENGHURAIKAN FAIL (FAIL ROSAK?)
-      notifTextParsing: Sedang menghuraikan fail...
-      notifTextErrExt: Sambungan fail tidak dikenali.
   favorites:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
@@ -347,11 +300,6 @@ views:
       - Log masuk dengan Google
       - Log masuk dengan Discord
       - Log masuk dengan Twitter
-    username: Nama Pengguna
-    usernameBtn:
-      - Ubah
-      - Sahkan
-      - Simpan
   multiview:
     confirmOverwrite: Ubah tataletak semasa?
     confirmOverwriteYes: Sahkan
@@ -360,12 +308,9 @@ views:
     addframe: Tambah Petak
     muteAll: Senyapkan Semua
     unmuteAll: Nyahsenyap Semua
-    muteOthers: Senyapkan siaran lain
-    muteOthersDetail: Cuma satu siaran yang tidak disenyapkan
     autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak suai kendiri
     createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
     openToolbarTip: Mulakan berbilang tontonan dengan membuka ruangan alat
-    archiveSync: Penyegerakan Arkib
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
@@ -385,23 +330,6 @@ views:
     fullScreen: Skrin penuh
     mediaControls: Kawalan Bahantara
     mediaControlsEmpty: Ruangan ini menyenaraikan video yang dibuka
-    editAutoLayout: Sunting Tataletak Kendiri
-    changeLayout: Ubah Tataletak
-    done: Selesaikan
-    hints: Petunjuk
-    presetsHint: Ubah tataletak dan sesuaikan susunan tataletak kendiri di tetingkap tataletak
-    mediaControlsHint1: Senyap atau segerakkan (
-    mediaControlsHint2: ) video dengan Kawalan Bahantara
-    dragDropHint: Urus siaran langsung dengan menarik dan melepaskan siaran berkenaan dari ruangan alat ke petak masing-masing
-    reorderHint: Ubah kedudukan video atau sembang langsung dengan menggunakan pilihan Susun Semula Tataletak
-    reorderLayout: Susun Semula Tataletak
-    reorderLayoutDetail: Tarik dan lepaskan arca ke kedudukan yang diingini
-    sync:
-      nothingToSync: >-
-        Tiada apa-apa yang boleh disegerakkan. Pastikan terdapat dua buah siaran (cth: siaran karyasama) yang bertindan masa langsungnya
-      syncSettings: Tetapan Penyegerakan
-      syncSettingsDetail: >-
-        Penyegerakan video adalah berdasarkan masa mula siaran. Sekiranya terdapat bahagian video yang terpotong akibat dialih keluar atau masalah teknik, penyegerakannya lari. Sejajarkan video secara sendiri dengan menggunakan penyelaras
   mugen:
     welcome: >-
       Selamat datang ke MugenClips! Laman ini mempertontonkan kepada semua orang sedutan Hololive berbahasa Inggeris yang sama secara rambang. Mari tonton bersama-sama sambil bersembang dengan peminat Hololive dari serata dunia. Sekiranya anda mahu kembali menonton bahagian yang sama dengan semua orang setelah melangkau sedutan terlebih dahulu, sila muatkan semula laman ini.
@@ -413,86 +341,6 @@ views:
     page-heading: 'Senarai Main:'
     page-instruction: Hidupkan senarai main dengan menekannya.
     change-loss-warning: Perubahan yang tidak disimpan akan hilang. Teruskan juga?
-  extension:
-    title: Pelanjutan Tambahan Holodex
-    features: Ciri
-    featureset:
-      one: Menghidupkan arkib sembang di laman Tontonan dan Berbilang Tontonan
-      two: Memberikan fungsi suka video di laman tontonan Holodex
-      three: Memperbaiki bocoran ingatan ruangan sembang YouTube
-      four: >-
-        Memperbaiki bendera percubaan di pemain YouTube (Contoh: mematikan berbilang siaran, gambar kenit tidak dipaparkan ketika menunggu siaran) dan lain-lain lagi!
-  tlClient:
-    menu:
-      title: Menu
-      setting: Tetapan Bilik TLDex
-      loadVideo: Paparkan Video
-      unloadVideo: Sembunyikan Video
-      loadChat: Gabungkan sembang YouTube dengan terjemahan siaran
-      unloadChat: Pisahkan dengan sembang YouTube
-    tlControl:
-      enterBtn: Masukkan
-      prefix: Awalan
-      suffix: Akhiran
-      fontColour: Warna Pasuan
-      outlineColour: Warna Garis Bentuk
-      localPrefix: Tanda Bahasa di Ruangan Sembang
-      addProfile: Tambah Profil
-      removeProfile: Hapus Profil
-      shiftUp: Alih Profil ke Atas
-      shiftDown: Alih Profil ke Bawah
-      showSetting: Tetapan
-      hideSetting: Sembunyikan
-    addProfilePanel:
-      title: Tambah Profil Baru
-      inputLabel: Nama Profil
-    settingPanel:
-      title: Tetapan
-      mainStreamLink: Pautan Siaran Utama
-      collabLink: Pautan Siarsama
-    removeProfileTitle: Sahkan hapus profil
-    loadChatPanel:
-      title: Muat Sembang
-      inputLabel: Pautan Siaran
-    unloadChatTitle: Punggah SEMUA sembang yang masih berlangsung?
-    pangram: Melur seorang penghidap xenofobia universal yang takut pada warga jazirah, contohnya Qatar
-    cancelBtn: Batal
-    okBtn: Baik
-  scriptEditor:
-    menu:
-      save: Simpan
-      continuousEnd: Selanjarkan Masa (ubah tamat)
-      clearAll: Hapus Skrip
-      exportFile: Eksport Fail
-      importFile: Import Fail
-      editorMode: Ragam Suntingan
-    table:
-      headerStart: Mula
-      headerEnd: Tamat
-      headerProfile: Profil
-      headerText: Teks
-      setAsStart: Titik permulaan
-      shiftCurrentTime: Alihkan ke masa sekarang
-      deleteEntry: Hapus masukan
-    loadVideoPanel:
-      title: Muat Video
-      inputLabel: Pautan Siaran
-    setStartTitle: Masukan yang terpilih dijadikan pemula manakala semua masukan terdahulu terhapus.
-    importFile:
-      overwriteBtn: Tulis Ganti
-    editorModePanel:
-      activateMode: Hidupkan Ragam Suntingan
-      deactivateMode: Matikan Ragam Suntingan
-      roleWarning: Hak anda tidak memadai
-      filterTranslator: Saring penterjemah
-  tlManager:
-    title: Pengurus Skrip
-    headerID: ID Video
-    headerEntries: Masukan
-    download: Muat Turun
-    delete: Hapus
-    deleteTitle: Hapus Masukan
-    langPick: Bahasa
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
@@ -517,7 +365,6 @@ editor:
     testStart: Semak masa mula
     startInput: Masa Mula
     endInput: 'Tempoh (saat): (tamat pada {0})'
-    inheritItunesMusic: 'Gunakan tempoh berdasarkan iTunes: {0}'
   exitMode: Selesaikan Suntingan
   enterMode: Sunting Video
 about:
@@ -582,11 +429,6 @@ about:
       contents:
         - >-
           Kami amat mengalu-alukan sebarang bantuan dan saranan! Sumbangan bagi antara muka pengguna serta bahagian belakang laman adalah diterima namun buat masa ini hanya antara muka pengguna yang bersumber terbuka. Sila hubungi kami di Discord sekiranya anda mahu mencapai kod sumber bahagian belakang laman atau sekadar mahu memberi cadangan.
-    support:
-      title: Bagaimana cara saya membantu Holodex?
-      contents:
-        '0': >-
-          Perkakas yang merumahkan laman kami secara sendiri ini mempunyai RAM sebanyak 60GB dengan 28 teras serta memakan belanja sebanyak 60 dolar AS (kira-kira RM250 / B$80 / S$80 / Rp 850.000) per bulan. Tambahan lagi, kami merancang mahu mengembangkan ciri-ciri yang disediakan. Oleh itu, kami sedang menerima sumbangan daripada para pengunjung melalui <a href="https://ko-fi.com/holodex">Ko-fi</a> demi menampung pembiayaan pelayan kami. (Sumbangan juga boleh diberikan melalui <a href="https://www.patreon.com/holodex">Patreon</a>, namun kami lebih menggemari Ko-fi.)<br /><br />Sumbangan lain yang diterima termasuklah maklum balas dan kata-kata semangat di Twitter, penerjemahan laman melalui <a href="https://crwd.in/holodex">Crowdin</a> dan juga sumbangan simpanan data lagu. Sekecil-kecil sumbangan pun amatlah dihargai! Contohnya, menghitung detik-detik yang menarik dan menghiburkan lalu meletakkan ulasan bercap masa di siaran asal.
   gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
     Sebuah cecikut Google Analitis digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
@@ -608,34 +450,3 @@ about:
     title: Catatan perubahan
   news:
     title: Berita
-  bookmarklet:
-    title: Penanda laman kecil
-    description: >-
-      Cipta penanda laman kecil dengan menarik mana-mana penanda di bawah ke bar penanda laman. Anda boleh membuka laman tontonan video di Holodex dengan menekannya ketika di laman YouTube:
-channelRequest:
-  RequestType: 'Jenis Permintaan:'
-  Types:
-    AddVtuber: Hendak menambah penggiyut maya ▶️ supaya Holodex boleh memantau saluran dan sedutan siarannya.
-    AddClipper: Hendak menambah saluran sedutan/terjemahan di Holodex
-    ModifyExistingInfo: Hendak mengubah suai maklumat saluran yang sedia ada
-    DeleteChannel: Hendak mengalih keluar saluran saya
-  DirectContactDisclaimer: >-
-    ID Discord, alamat e-mel mahupun Twitter anda boleh diberikan sekiranya anda mahu dihubungi (maklumat ini kekal rahsia) agar kami dapat memberikan maklum balas. Maklumat ini hanya boleh dilihat oleh pentadbir Holodex.
-  DirectContactLabel: Kaedah Perhubungan (pilihan)
-  TwitterHandle: Akaun Twitter Saluran Ini (pilihan)
-  VtuberGroupLabel: Kumpulan Penggiat YouTube Maya (pilihan)
-  VtuberGroupHint: Penggiyut maya ini berasal daripada pertubuhan/kumpulan mana?
-  ChannelLanguageLabel: Bahasa utama saluran
-  EnglishNameHint: >-
-    Sekiranya nama saluran tidak berbahasa Inggeris, tolong sediakan nama Inggerisnya. Patuhi urutan nama bahasa asalnya (cth. Natsuiro Matsuri) atau nama Inggeris pilihannya (cth. Elu the Elf, Emma★August).
-  EnglishNameLabel: Nama Inggeris Saluran
-  Comments: Ulasan
-  CommentsHint: Ulasan tambahan yang mahu disampaikan.
-  VtuberRequirementText: >-
-    Saluran bebas/persendirian memerlukan sekurang-kurangnya 20 ribu langganan. Penggiyut maya yang sebahagian kumpulan sedia ada boleh diterima. <br /><br />Kumpulan baharu dibuat mengikut bilangan langganan purata anggotanya.
-  ClipperRequirementText: >-
-    Syarat pembuat sedutan adalah sama ada membuka akaunnya melebihi dua bulan yang lalu ataupun memuat naik sekurang-kurangnya 20 buah sedutan dalam tempoh sebulan. Saluran ini berkemungkinan ditolak sekiranya kegiatannya merangkumi memuat naik sedutan pendek secara bertubi-tubi setiap hari, membuat sedutan bertempoh &lt;1minit sahaja atau menggunakan gambar kenit yang tidak senonoh. Mutu bahan kandungannya juga boleh diambil kira. <br /><br />Saluran sedutan juga seharusnya meletakkan sumber video melalui pautan saluran, sebutan @saluran YouTube dan pautan video. Pautan yang berlebihan (cth. memautkan keseluruhan anggota Nijisanji) hanya menambah beban para penyunting Holodex manakala pautan yang kurang (atau tiada langsung) hanya menyukarkan sedutan dipaparkan. <br /><br /> Holodex mempunyai sebuah algoritma yang secara sendiri mampu mengesan lalu membetulkan pemautan berlebihan, namun keberhasilannya masih terbatas. Saluran video sedutan yang membuat pautan secara berlebihan berkemungkinan dialih keluar daripada laman ini bagi mengurangkan masalah.
-  DeletionRequirementText: >-
-    Permintaan pengalihkeluaran saluran hanya boleh dilakukan oleh empunya saluran. Harap disediakan maklumat perhubungan agar kami dapat mengesahkan permintaan ini.
-  PageTitle: Permintaan Saluran Holodex
-  ChannelURLErrorFeedback: Berikan dalam bentuk https://www.youtube.com/channel/UC_____
