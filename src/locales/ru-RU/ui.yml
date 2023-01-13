@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Извините!
@@ -48,9 +47,6 @@ component:
     premiere: ПРЕМЬЕРА
     googleCalendar: Добавить в календарь Google
     tlPresence: Активный переводчик за последние полчаса
-    typeScheduledYT: Запланированный стрим
-    typeEventPlaceholder: Запланированный ивент
-    openClient: Открыть TL клиент
   videoDescription:
     description: Описание
   description:
@@ -78,17 +74,14 @@ component:
     sourcesLabel: источники
     songsLabel: Треки
     recommendationsLabel: рекомендации
-    sameSourceClips: Из того же стрима
   paginateLoad:
     newer: Новее
     older: Старее
   music:
     clearPlaylist: Очистить
-    trendingForOrg: Популярное от {0}
   channelMusic:
     recentSongsHeader: Новые песни
     weeklyTopPlaysHeader: Самые прослушиваемые за неделю
-    trending: Популярное
   songList:
     songTitle: Название
     songCoveredBy: Автор кавера
@@ -138,14 +131,6 @@ component:
       delete-playlist: Удалить плейлист
       clear-playlist: Очистить плейлист
     save-error-not-logged-in: Вам нужно войти в систему, чтобы сохранять плейлисты
-  placeholderVideo:
-    discordCredit: 'Данные о событии предоставлены {0} из: {1}'
-    datasourceCredit: Данные о событии получены из {0} источников данных.
-    botCredit: Данные о событии предоставлены из {0} источников данных, создано {1}.
-    streamPageBtn: Страница стрима
-    eventPageBtn: Страница события
-    scheduledEvent: Запланировано
-    editorCredit: Мероприятие создано редактором Holodex {0}.
 views:
   channel:
     video: Видео
@@ -207,7 +192,6 @@ views:
     sort:
       newest: Сначала новые
       oldest: Сначала старые
-      longest: Длиннейшие
     type:
       all: Все
       official: Официальные
@@ -252,11 +236,9 @@ views:
       - Маленький
     hideCollabStreamsLabel: Скрыть коллабы
     hideCollabStreamsMsg: Скрыть стримы-коллабы из вашего избранного
-    hidePlaceholderStreams: Скрыть стримы без комнат ожидания
     ignoredTopicsLabel: Игнорируемые темы
     ignoredTopicsMsg: Скрыть видео по этим темам на главной странице и в Избранном
     theme: Тема
-    moreSettings: Дополнительные параметры
   app:
     update_available: Доступно обновление
     update_btn: Обновить
@@ -265,20 +247,14 @@ views:
   about:
     add_my_channel: Запрос на добавление канала
   watch:
-    theaterMode: Театральный режим (alt + t)
     mentionIconLabel: УПОМИНАНИЯ
     chat:
       loading: Загрузка чата...
       hideTLBtn: Скрыть переводы
       showTLBtn: Показывать перевод
       TLSettingsTitle: Настройки перевода
-      showSubtitle: Показать субтитры
-      StickBottomSettingLabel: Расположить снизу
-      StickBottomSettingsDesc: Расположить переводы под чатом Youtube
       showVerifiedMessages: Показать сообщ. от вериф. пользователей
       showModeratorMessages: Показывать сообщения от модераторов
-      showVtuberMessages: Показать сообщения от витуберов
-      showLocalTime: Показывать местное время
       tlFontSize: Размер шрифта
       tlWindowSize: Размер окна с переводами (%), оставьте 0% для автонастройки
       retryBtn: Повторить
@@ -289,23 +265,8 @@ views:
           Стрим еще не начался, пожалуйста, попробуйте еще раз, когда с начала стрима пройдет 15 минут
         connectedToChat: Подключен
         disconnectedToChat: Нет подключения
-      archiveNeedExtension: >-
-        Архивный чат не работает без расширения {0} или других сторонних расширений.
     removeFromPlaylist: Удалить видео из текущего плейлиста
     saveToPlaylist: Сохранить видео в текущий плейлист
-    likeOnYoutube: Лайкнуть видео на Youtube
-    uploadPanel:
-      usernameText: Перевод будет загружен под именем пользователя
-      usernameChange: Изменить
-      tlLang: Язык перевода
-      headerStart: Начало
-      headerEnd: Конец
-      headerText: Текст
-      cancelBtn: Отмена
-      okBtn: OK
-      notifTextErr: НЕ УДАЛОСЬ ПРОЧИТАТЬ ФАЙЛ (ФАЙЛ ПОВРЕЖДЕН?)
-      notifTextParsing: Чтение файла...
-      notifTextErrExt: Неизвестный тип файла.
   favorites:
     promptForAction: >-
       Создайте список любимых витуберов и вы увидите их новые стримы и клипы с ними на этой странице.
@@ -338,11 +299,6 @@ views:
       - Войти через Google
       - Войти через Discord
       - Войти через Twitter
-    username: Имя пользователя
-    usernameBtn:
-      - Изменить
-      - Подтвердить
-      - Сохранить
   multiview:
     confirmOverwrite: Перезаписать текущий макет?
     confirmOverwriteYes: Подтвердить
@@ -351,12 +307,9 @@ views:
     addframe: Добавить ячейку
     muteAll: Заглушить все
     unmuteAll: Включить звук всех
-    muteOthers: Заглушить другие
-    muteOthersDetail: Заглушить все, кроме одного стрима
     autoLayoutTip: Нажмите на канал, чтобы начать просмотр с помощью режима автораскладки
     createLayoutTip: Создайте свой собственный макет, добавив ячейку или используя пресет
     openToolbarTip: Откройте панель инструментов, чтобы начать использовать multiview
-    archiveSync: Синхронизация архивов
     preset:
       shareOnDiscord: >-
         У Вас есть классный макет, которым можно поделиться? Воспользуйтесь кнопкой "Поделиться" и дайте нам знать на нашем <a href="https://discord.gg/jctkgHBt4b">Discord сервере</a>!
@@ -376,23 +329,6 @@ views:
     fullScreen: Во весь экран
     mediaControls: Управление медиа
     mediaControlsEmpty: Проигрываемые видео появятся здесь
-    editAutoLayout: Изменить автораскладку
-    changeLayout: Изменить макет
-    done: Готово
-    hints: Советы
-    presetsHint: Откройте меню пресетов для переключения макетов и настройки автоматической раскладки
-    mediaControlsHint1: Используйте меню "Управление медиа" для приглушения и синхронизации (
-    mediaControlsHint2: ) стримов
-    dragDropHint: Перетаскивайте стримы из панели инструментов в ячейки для организации стримов
-    reorderHint: Используйте меню "Редактирование раскладки" для изменения позиций видео/чата
-    reorderLayout: Редактирование раскладки
-    reorderLayoutDetail: Перетащите иконки в нужное положение
-    sync:
-      nothingToSync: >-
-        Нечего синхронизировать, откройте два одновременных архива (напр. стримы коллаба)
-      syncSettings: Настройки синхронизации
-      syncSettingsDetail: >-
-        Видео синхронизируются на основе времени начала стрима и могут десинхронизироваться из-за технических проблем стрима, или удаленных частей. Используйте смещение для выравнивания видео вручную
   mugen:
     welcome: >-
       Добро пожаловать в MugenClips! Все на этой странице видят один и тот же случайно отобранный клип Hololive на английском языке. Смотрите и общайтесь с фанатами Hololive со всего мира. Если вы пропустите видео, а затем захотите быть повторно синхронизированы со всеми, пожалуйста, обновите страницу.
@@ -404,66 +340,6 @@ views:
     page-heading: 'Ваши плейлисты:'
     page-instruction: Нажмите на плейлист, чтобы установить его как активный.
     change-loss-warning: Вы потеряете несохраненные изменения. Продолжить?
-  extension:
-    title: Расширение Holodex Plus
-    features: Функции
-    featureset:
-      one: Включает архивирование лайв-чата при просмотре и мультипросмотре
-      two: Позволяет ставить лайки видео со страницы Holodex
-      three: Исправляет утечка памяти в чате Youtube
-      four: >-
-        Исправляет экспериментальные флаги на плеере Youtube (такие, как отключение нескольких стримов, неотображающийся тамбнейл при ожидании стрима) и многое другое!
-  tlClient:
-    menu:
-      title: Меню
-      setting: Настройки комнаты TLDex
-      loadVideo: Показать видео
-      unloadVideo: Скрыть видео
-      loadChat: Добавить YT-чат для трансляции перевода
-      unloadChat: Отключиться от YT-чата
-    tlControl:
-      enterBtn: Ввести
-      prefix: Префикс
-      suffix: Суффикс
-      fontColour: Цвет шрифта
-      outlineColour: Цвет контура
-      addProfile: Добавить профиль
-      removeProfile: Удалить профиль
-      showSetting: Настройка
-      hideSetting: Скрыть
-    addProfilePanel:
-      title: Добавить новый профиль
-      inputLabel: Имя профиля
-    settingPanel:
-      mainStreamLink: Ссылка на основной стрим
-      collabLink: Ссылки на участников коллаба
-    removeProfileTitle: Подтвердить удаление профиля
-    loadChatPanel:
-      title: Загрузить чат
-      inputLabel: Ссылка на стрим
-    unloadChatTitle: Выгрузить ВСЕ активные чаты?
-    cancelBtn: Отмена
-    okBtn: OK
-  scriptEditor:
-    menu:
-      save: Сохранить
-      exportFile: Экспортировать файл
-      importFile: Импортировать файл
-    table:
-      headerStart: Начало
-      headerEnd: Конец
-      headerProfile: Профиль
-      headerText: Текст
-    loadVideoPanel:
-      title: Загрузить видео
-      inputLabel: Ссылка на стрим
-    editorModePanel:
-      roleWarning: У вас недостаточно прав
-  tlManager:
-    headerID: ID видео
-    download: Скачать
-    delete: Удалить
-    langPick: Язык
 time:
   soon: Скоро
   diff_future_date: Начнется {0} ({1})
@@ -488,7 +364,6 @@ editor:
     testStart: Протестировать начало
     startInput: Начало
     endInput: 'Длительность в секундах: (конец @ {0})'
-    inheritItunesMusic: 'Установить длительность через iTunes: {0}'
   exitMode: Выйти из режима редактирования
   enterMode: Редактировать видео
 about:
@@ -553,8 +428,6 @@ about:
       contents:
         - >-
           Любая помощь и идеи приветствуются! Пользовательский интерфейс и бэкэнд доступны для улучшения, однако на данный момент лишь интерфейс является open source. Пожалуйста, свяжитесь с нами по discord, чтобы получить доступ к исходному коду бэкенда или просто поболтать о ваших идеях.
-    support:
-      title: Как я могу поддержать Holodex?
   gdpr: GDPR и мои данные
   gdprContent: >-
     Куки Google Analytics используются для отслеживания просмотров страниц в наших аналитических целях. После входа мы свяжем имя пользователя и ID с избранным. Эти данные могут включать ваш адрес электронной почты (для Google), Discord ID или имя пользователя в Twitter соответственно.
@@ -576,28 +449,3 @@ about:
     title: Изменения
   news:
     title: Новости
-  bookmarklet:
-    title: Букмарклеты
-    description: >-
-      Перетащите эти букмарклеты в панель закладок, чтобы легко открывать страницу просмотра YouTube в Holodex:
-channelRequest:
-  RequestType: 'Тип запроса:'
-  Types:
-    AddVtuber: Добавить витубера ▶️ в Holodex для отслеживания канала и клипов.
-    AddClipper: Добавить канал клиппера в Holodex
-    ModifyExistingInfo: Изменить информацию об уже добавленном канале
-    DeleteChannel: Удалить мой канал
-  DirectContactDisclaimer: >-
-    Не стесняйтесь оставить свой id discord, email или twitter. В случае, если нам нужно будет связаться с вами (эта информация останется конфиденциальной), чтобы мы могли ответить вам на запрос. Только администраторы holodex будут видеть эту информацию.
-  DirectContactLabel: Контакты (необязательно)
-  TwitterHandle: Имя пользователя этого канала в Твиттере (необязательно)
-  VtuberGroupLabel: Витубер-группа (необязательно)
-  VtuberGroupHint: К какой организации / группе относится этот витубер?
-  ChannelLanguageLabel: Основной язык канала
-  EnglishNameHint: >-
-    Укажите английское название, если оригинальное название канала не на английском. Соблюдайте порядок имен оригинального языка витубера (Natsuiro Matsuri), или укажите предпочтительное английское название (Elu the Elf, Emma★August).
-  EnglishNameLabel: Английское название канала
-  Comments: Комментарии
-  CommentsHint: Другие комментарии, которые Вы хотели бы нам сообщить.
-  PageTitle: Запрос на добавление канала в Holodex
-  ChannelURLErrorFeedback: Должна быть https://www.youtube.com/channel/UC_____
