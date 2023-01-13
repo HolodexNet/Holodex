@@ -29,6 +29,7 @@ declare module '@vue/runtime-core' {
     CurrentPlaylistCard: typeof import('./components/playlist/CurrentPlaylistCard.vue')['default']
     GoogleSignInButton: typeof import('./components/login/GoogleSignInButton.vue')['default']
     HList: typeof import('./components/core/HList.vue')['default']
+    HolodexAutocomplete: typeof import('./components/core/HolodexAutocomplete.vue')['default']
     HolodexStats: typeof import('./components/about/HolodexStats.vue')['default']
     Home: typeof import('./views/Home.vue')['default']
     HomeFilterButton: typeof import('./components/frame/HomeFilterButton.vue')['default']
