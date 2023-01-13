@@ -98,7 +98,7 @@ export function useVideoById(
   query: Ref<Partial<VideoByIdApiQuery>>,
   config: QueryConfig<Video>
 ) {
-  return useQuery<Video>(
+  return useQuery<ExtendedVideo>(
     ["video", id, query],
     async (e) => {
       const { data } = await axiosInstance.get(

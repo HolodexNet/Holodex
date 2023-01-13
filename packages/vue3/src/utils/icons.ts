@@ -28,6 +28,8 @@ export const trash = "i-bx:trash";
 // positional
 export const up = "i-bx:chevron-up";
 export const down = "i-bx:chevron-down";
+export const check = "i-mdi:check";
+export const plusBox = "i-mdi:plus-box";
 export {
   mdiAccountBoxMultiple,
   mdiAccountCircleOutline,

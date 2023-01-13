@@ -1,6 +1,6 @@
 <template>
   <!-- This wrapper div is very important else it causes an insertBefore error -->
-  <div>
+  <div class="h-player">
     <youtube-player
       v-if="props.video?.type !== 'placeholder'"
       ref="player"
@@ -84,3 +84,9 @@ watchEffect(async (onCleanup) => {
 });
 defineExpose(readonly({ currentTime, player, muted, volume }));
 </script>
+<style>
+.h-player > iframe {
+  width: 100%;
+  height: 100%;
+}
+</style>

@@ -24,18 +24,11 @@
         >
           {{ video.topic_id }}
         </div>
-
-        <!-- Check box for saved video (👻❌) -->
-        <v-icon
+        <save-to-playlist-btn
           v-if="!isPlaceholder"
-          :color="hasSaved ? 'primary' : 'white'"
-          class="rounded-sm video-overlay-action"
-          :class="{ 'hover-show': !hasSaved }"
-          role="img"
-          @click.prevent.stop="toggleSaved(video)"
-        >
-          {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
-        </v-icon>
+          class="video-overlay-action text-xl"
+          :video="video"
+        />
       </div>
 
       <div class="flex justify-end text-white">
@@ -57,6 +50,7 @@
           v-if="!isPlaceholder"
           :video="video"
           class="rounded-sm video-overlay-tag"
+          :class="{ '!bg-red-800 !bg-opacity-70': video.status === 'live' }"
         />
         <div
           v-else-if="placeholderTag"
