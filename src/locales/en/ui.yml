@@ -48,6 +48,7 @@ component:
     googleCalendar: Add to Google Calendar
     totalTLs: Total live chat TLs
     tlPresence: Active translator in last 30 mins
+    uncertainPlaceholder: Start time is not officially confirmed, actual start time may vary.
     typeScheduledYT: Scheduled Stream
     typeExternalStream: External Stream
     typeEventPlaceholder: Scheduled Event

@@ -156,6 +156,25 @@
             'font-size': `${1 - $store.state.currentGridSize / 16}rem`,
           }"
         >
+        <v-tooltip bottom v-if="!isCertain">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              v-on="on"
+              x-small
+              class="plain-button"
+              width="17"
+              :ripple="false"
+            >
+              <v-icon right size="21" color="amber">
+                {{ icons.mdiClockAlertOutline }}
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>
+          {{ $tc("component.videoCard.uncertainPlaceholder") }}
+          </span>
+        </v-tooltip>
           {{ title }}
         </div>
         <!-- Channel -->
@@ -379,6 +398,9 @@ export default {
         },
         isPlaceholder() {
             return this.data.type === "placeholder";
+        },
+        isCertain() {
+          return !this.isPlaceholder || this.data.certainty === "certain";
         },
         title() {
             if (this.isPlaceholder) {
@@ -874,5 +896,11 @@ export default {
   display: inline-block;
   top: 5px;
   z-index: 1;
+}
+.plain-button:before {
+  display: none
+}
+.plain-button:hover:before {
+  backgroundColor: transparent
 }
 </style>
