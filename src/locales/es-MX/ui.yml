@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: '¡Gomenasorry!'
@@ -49,12 +48,6 @@ component:
     googleCalendar: Agregar al Calendario de Google
     totalTLs: Total de traductores en el chat en vivo
     tlPresence: Traductor activo en los últimos 30 min
-    typeScheduledYT: Directo programado
-    typeExternalStream: Directo externo
-    typeEventPlaceholder: Evento programado
-    openClient: Abrir el cliente de traducción
-    openScriptEditor: Abrir el editor de scripts
-    uploadScript: Subir el guión de traducción
   videoDescription:
     description: Descripción
   description:
@@ -82,17 +75,14 @@ component:
     sourcesLabel: fuentes
     songsLabel: canciones
     recommendationsLabel: recomendado
-    sameSourceClips: De los mismos directos
   paginateLoad:
     newer: Más recientes
     older: Más antiguas
   music:
     clearPlaylist: Limpiar
-    trendingForOrg: Tendencias para {0}
   channelMusic:
     recentSongsHeader: Canciones Recientes
     weeklyTopPlaysHeader: Mas Reproducciones Semanales
-    trending: Tendencias
   songList:
     songTitle: Titulo
     songCoveredBy: Interpretado por
@@ -142,15 +132,6 @@ component:
       delete-playlist: Borrar lista de reproducción
       clear-playlist: Limpiar lista de reproducción
     save-error-not-logged-in: Necesitas iniciar sesión para guardar listas de reproduccion
-  placeholderVideo:
-    discordCredit: 'Datos del evento proporiconados por {0} desde: {1}'
-    datasourceCredit: Datos del evento obtenidos de la fuente de datos de {0}.
-    botCredit: Datos del evento proporcionados a través de la fuente de datos de {0}, creado por {1}.
-    streamPageBtn: Página de Directos
-    eventPageBtn: Página de eventos
-    scheduledEvent: Programado
-    editorCredit: Configuración de eventos por el editor de Holodex {0}.
-    creditTitleText: 'Créditos:'
 views:
   channel:
     video: Videos
@@ -212,7 +193,6 @@ views:
     sort:
       newest: Mas nuevo
       oldest: Más antiguo
-      longest: Más largo
     type:
       all: Todos
       official: Oficial
@@ -257,11 +237,9 @@ views:
       - Chico
     hideCollabStreamsLabel: Ocultar directos de colaboración
     hideCollabStreamsMsg: Ocultar los directos de colaboracion de tu página de favoritos
-    hidePlaceholderStreams: Ocultar directos de marcador de posición
     ignoredTopicsLabel: Temas Ignorados
     ignoredTopicsMsg: Ocultar los videos con estos temas de las páginas Inicio y Favoritos
     theme: Tema
-    moreSettings: Más ajustes
   app:
     update_available: Una actualización está disponible
     update_btn: Actualizar
@@ -270,22 +248,14 @@ views:
   about:
     add_my_channel: Solicitud de canal
   watch:
-    theaterMode: Modo teatro (alt + t)
     mentionIconLabel: MENCIONES
     chat:
       loading: Cargando el chat...
       hideTLBtn: Esconder TLs
       showTLBtn: Mostrar TLs
       TLSettingsTitle: Opciones de TL
-      showSubtitle: Mostrar subtítulo
-      expandTL: Expandir TLdex
-      tlStart: Inicio de Mensajes
-      StickBottomSettingLabel: Mantenerse en el fondo
-      StickBottomSettingsDesc: TL box colocada debajo del chat de Youtube
       showVerifiedMessages: Mostrar mensajes verificados
       showModeratorMessages: Mostrar mensajes de moderador
-      showVtuberMessages: Mostrar mensajes de Vtuber
-      showLocalTime: Mostrar hora local
       tlFontSize: Tamaño de la fuente
       retryBtn: Reintentar
       status:
@@ -295,25 +265,8 @@ views:
           La transmisión aún no está activa, por favor inténtalo de nuevo cuando falter 15 minutos para comenzar
         connectedToChat: Conectado
         disconnectedToChat: Sin conexión
-      archiveNeedExtension: >-
-        El archivo del chat no funciona sin la extensión {0} o otras extensiones de terceros.
-      hideSpoiler: Ocultar Spoiler
     removeFromPlaylist: Remover video de la lista de reproducción actual
     saveToPlaylist: Guardar video a la lista de reproducción actual
-    likeOnYoutube: Dar me gusta al video en Youtube
-    uploadPanel:
-      title: Subir Script
-      usernameText: La traduccion se publicará bajo el nombre de usuario
-      usernameChange: Cambiar
-      tlLang: Idioma de la traducción
-      headerStart: Inicio
-      headerEnd: Final
-      headerText: Texto
-      cancelBtn: Cancelar
-      okBtn: Ok
-      notifTextErr: NO SE PUDO ANALIZAR EL ARCHIVO (¿ARCHIVO CORRUPTO?)
-      notifTextParsing: Analizando archivo...
-      notifTextErrExt: Extensión de archivo no reconocida.
   favorites:
     promptForAction: >-
       Crea una lista de tus vtubers favoritos y mira sus ultimos clips y directos en esta pagina.
@@ -346,11 +299,6 @@ views:
       - Iniciar sesión con Google
       - Iniciar sesión con Discord
       - Iniciar sesión con Twitter
-    username: Nombre de Usuario
-    usernameBtn:
-      - Cambiar
-      - Confirmar
-      - Guardar
   multiview:
     confirmOverwrite: '¿Sobreescribir el diseño existente?'
     confirmOverwriteYes: Confirmar
@@ -359,12 +307,9 @@ views:
     addframe: Añadir Celda
     muteAll: Silenciar todo
     unmuteAll: Desilenciar todo
-    muteOthers: Silenciar a otros
-    muteOthersDetail: Silenciar a todos menos un directo
     autoLayoutTip: Presiona en un canal para empezar a ver usando el modo de diseño automático
     createLayoutTip: Crea tu propio diseño añadiendo una celda, o usando una plantilla
     openToolbarTip: Abre la barra de herramientas para empezar a usar la multivista
-    archiveSync: Sincronización de Archivo
     preset:
       shareOnDiscord: >-
         ¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y háznoslo saber en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!
@@ -384,23 +329,6 @@ views:
     fullScreen: Pantalla completa
     mediaControls: Controles multimedia
     mediaControlsEmpty: Los videos que estén siendo reproducidos aparecerán aquí
-    editAutoLayout: Ediitar diseño automático
-    changeLayout: Cambiar diseño
-    done: Hecho
-    hints: Sugerencias
-    presetsHint: Abre el menú de plantillas para cambiar diseños y configurar el diseño automático
-    mediaControlsHint1: Usa los controles multimedia para silenciar y sincronizar (
-    mediaControlsHint2: ) directos
-    dragDropHint: Arrastra y suelta directos de la barra de herramientas hacia las celdad para organizar los directos
-    reorderHint: Usa el menú de reorganizar diseño para cambiar las posiciones del video/chat
-    reorderLayout: Reorganizar diseño
-    reorderLayoutDetail: Arrastra y suelta iconos a la posicion deseada
-    sync:
-      nothingToSync: >-
-        Nada para sincronizar, por favor abre dos archivos superpuestos (ej. directos de colaboración)
-      syncSettings: Sincronizar ajustes
-      syncSettingsDetail: >-
-        Los videos estan sincronizados basándose en la hora de inicio del directo, y pueden desincronizarse debido a dificultades técnincas en medio del directo o porciones eliminadas. Usa el offset para alinear los videos manualmente
   mugen:
     welcome: >-
       ¡Bienvenido a Mugenclips! Todos en esta página estan viendo el mismo clip de Hololive en Inglés elegido aleatoriamente. Mira y habla con los fans de Hololive alrededor del mundo. Si adelantas y quieres volver a sincronizarte con todos, por favor reinicia la página.
@@ -412,81 +340,6 @@ views:
     page-heading: 'Tus listas de reproducción:'
     page-instruction: Presiona una lista de reproducción para marcarla como activa.
     change-loss-warning: Perderás los cambios no guardados. ¿Continuar?
-  extension:
-    title: Extension Holodex Plus
-    features: Características
-    featureset:
-      one: Activa el Archivo del chat en vivo en Ver y Multivista
-      two: Permite dar me gusta a videos de la página de ver de Holodex
-      three: Arregla la pérdida de memoria en el chat en vivo de Youtube
-      four: >-
-        Arregla las banderas experimentales en el reproductor de Youtube (Como desactivar múltiples directos, la miniatura de la sala de espera no mostrándose) y más!
-  tlClient:
-    menu:
-      title: Menú
-      loadVideo: Mostrar Vídeo
-      unloadVideo: Ocultar Vídeo
-      unloadChat: Separar del chat de YT
-    tlControl:
-      enterBtn: Ingresar
-      prefix: Prefijo
-      suffix: Sufijo
-      fontColour: Color de Fuente
-      outlineColour: Color del borde
-      localPrefix: Etiqueta de idioma en el chat
-      addProfile: Añadir Perfil
-      removeProfile: Remover Perfil
-      showSetting: Ajuste
-      hideSetting: Ocultar
-    addProfilePanel:
-      title: Añadir Nuevo Perfil
-      inputLabel: Nombre del Perfil
-    settingPanel:
-      title: Ajuste
-      mainStreamLink: Enlace principal del directo
-      collabLink: Enlaces de Colaboración
-    removeProfileTitle: Confirmar remover perfil
-    loadChatPanel:
-      title: Cargar chat
-      inputLabel: Enlace del directo
-    unloadChatTitle: '¿Descargar TODO el chat activo?'
-    pangram: El rápido zorro marrón salta sobre el perro perezoso
-    cancelBtn: Cancelar
-    okBtn: Ok
-  scriptEditor:
-    menu:
-      save: Guardar
-      continuousEnd: Hacer el tiempo continuo (cambiar el final)
-      clearAll: Eliminar el Script
-      exportFile: Exportar Archivo
-      importFile: Importar Archivo
-      editorMode: Modo Editor
-    table:
-      headerStart: Inicio
-      headerEnd: Final
-      headerProfile: Perfil
-      headerText: Texto
-      setAsStart: Establecer como inicio
-      deleteEntry: Eliminar entrada
-    loadVideoPanel:
-      title: Cargar Vídeo
-      inputLabel: Enlace del directo
-    setStartTitle: Establecer la entrada seleccionada como inicio, todas las entradas anteriores serán eliminadas.
-    importFile:
-      overwriteBtn: Sobrescribir
-    editorModePanel:
-      activateMode: Activar el modo editor
-      deactivateMode: Desactivar el modo editor
-      roleWarning: No tienes suficientes privilegios
-      filterTranslator: Filtrar el traductor
-  tlManager:
-    title: Gestor de Scripts
-    headerID: ID del vídeo
-    headerEntries: Entradas
-    download: Descargar
-    delete: Eliminar
-    deleteTitle: Eliminar entradas
-    langPick: Idioma
 time:
   soon: Proximamente
   diff_future_date: Inicia {0} ({1})
@@ -511,7 +364,6 @@ editor:
     testStart: Probar el inicio
     startInput: Iniciar
     endInput: 'Duración en segundos: (termina en {0})'
-    inheritItunesMusic: 'Establecer duracion vía iTunes: {0}'
   exitMode: Salir del modo de edición
   enterMode: Editar video
 about:
@@ -576,11 +428,6 @@ about:
       contents:
         - >-
           ¡Todas las ideas y ayuda son bienvenidas! La UI y el Backend estan disponibles para contribuir, aunque solo la UI es de código abierto actualmente. Por favor contáctanos en discord para tener acceso a la fuente del backend, o simplemente habla sobre tus ideas.
-    support:
-      title: '¿Como apoyo a Holodex?'
-      contents:
-        '0': >-
-          Nuestro servidor auto-alojado es una máquina de 28 núcleos con 60GB de RAM que toma aproximadamente 60 dólares al mes para funcionar, y estamos buscando expandir más y más en nuestro set de características, así que empezamos un <a href="https://ko-fi.com/holodex">Ko-fi</a> para cubrir los gastos del servidor. (También tenemos un <a href="https://www.patreon.com/holodex">Patreon</a>, pero preferimos Ko-fi.)<br /><br />También puedes apoyar a Holodex por medio de tu opinión y mensajes de apoyo en twitter, ayudándonos a traducir via <a href="https://crwd.in/holodex">Crowdin</a>, y también contribuyendo a nuestro almacén de datos de canciones. ¡Incluso haciendo timing en un directo para momentos divertidos, y comentando eso en el directo original es de gran ayuda!
   gdpr: GDPR y mis datos
   gdprContent: >-
     Una cookie de Google Analytics se utiliza para rastrear visitas a la pagina para propósitos analíticos. Después de iniciar sesión asociamos su nombre de usuario y ID de la cuenta de redes sociales con sus favoritos. Estos datos pueden incluir tu correo electrónico (para Google), Discord ID o Twitter respectivamente.
@@ -602,34 +449,3 @@ about:
     title: Lista de cambios
   news:
     title: Noticias
-  bookmarklet:
-    title: Marcadores
-    description: >-
-      Arrastra estos marcadores a tu barra de marcadores para abrir la página de ver de YouTube en Holodex fácilmente:
-channelRequest:
-  RequestType: 'Tipo de petición:'
-  Types:
-    AddVtuber: Añade a una Vtuber ▶️ para que Holodex rastree el canal y clips.
-    AddClipper: Añadir un canal de clipping/subbing a Holodex
-    ModifyExistingInfo: Modificar la información existente del canal
-    DeleteChannel: Borrar mi canal
-  DirectContactDisclaimer: >-
-    Siéntete libre de dejar tu id de discord, email o twitter. En caso de que necesites ser contactado (esta información se mantendrá privada) para que podamos proveer retroalimentación. Solo los administradores de Holodex verán esta información.
-  DirectContactLabel: Método de contacto (opcional)
-  TwitterHandle: Manejo de Twitter de este canal (opcional)
-  VtuberGroupLabel: Grupo VTuber (opcional)
-  VtuberGroupHint: A qué organización / grupo pertenece esta vtuber?
-  ChannelLanguageLabel: Idioma principal del canal
-  EnglishNameHint: >-
-    Provee un nombre en Inglés si el nombre del canal no está en inglés. Sigue las convenciones del orden del nombre de la localidad nativa de esta vtuber (Natsuiro Matsuri), o un nombre de marca preferiblemente en Inglés (Elu the Elf, Emma★August).
-  EnglishNameLabel: Nombre del canal en Inglés
-  Comments: Comentarios
-  CommentsHint: Otros comentarios que te gustaría decirnos.
-  VtuberRequirementText: >-
-    Se requiere un mínimo de 20K de suscriptores para independientes. Vtubers que son parte de organizaciones existentes serán aceptadas. <br /><br />Organizaciones nuevas serán creadas dependiendo de el conteo promedio de suscriptores.
-  ClipperRequirementText: >-
-    Para los clippers, debe ser de al menos 2 meses de antigüedad y publicar regularmente, o publicar más de 20 clips en un mes. El spam de clips cortos diariamente, publicar solamente clips cortos de &lt;1min, o usar miniaturas poco favorecedoras contarán contra el canal. La calidad del contenido podría ser juzgada también. <br /><br />Es importante saber que los clippers deberían citar las fuentes vía enlaces de youtube, menciones de canales de @Youtube, y enlaces de videos. Citar de más (por ejemplo enlazar a todos en Nijisanji) crea trabajo para los editores de Holodex, y citar menos (sin enlaces) hará los clips ocultos. <br /><br /> Holodex contiene algoritmos para detectar las citas de más y corregirlas automáticamente, pero puede no funcionar perfectamente. Los clippers que citen podrían ser removidos de la plataforma para reducir el ruido.
-  DeletionRequirementText: >-
-    La eliminación solo debería ser solicitada si eres el dueño(s) del canal, por favor provee información de contacto para que podamos verificar esto.
-  PageTitle: Petición de canal de Holodex
-  ChannelURLErrorFeedback: "Debe ser\nhttps://www.youtube.com/channel/UC_____"
