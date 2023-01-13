@@ -8,7 +8,8 @@
     "coverage": "vitest run --coverage",
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@kvs/indexeddb": "^2.1.1",
