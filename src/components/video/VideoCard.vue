@@ -166,7 +166,7 @@
               width="17"
               :ripple="false"
             >
-              <v-icon right size="21" color="amber">
+              <v-icon size="21" color="amber">
                 {{ icons.mdiClockAlertOutline }}
               </v-icon>
             </v-btn>

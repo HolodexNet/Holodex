@@ -49,7 +49,7 @@
         v-if="!(video.certainty === 'certain')"
         style="font-size:95%"
       > <br>
-        {{ $t("component.videoCard.uncertainPlaceholder") }}.
+        {{ $t("component.videoCard.uncertainPlaceholder") }}
       </span>
       <slot name="rightTitleAction">
         <v-btn
