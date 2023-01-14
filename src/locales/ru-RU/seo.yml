@@ -1,5 +1,3 @@
----
-hello: world
 music:
   title: '{{english_name}} Оригинальные песни и каверы - Holodex'
   description: >-
