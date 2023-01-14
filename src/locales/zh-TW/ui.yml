@@ -48,8 +48,6 @@ component:
     googleCalendar: 新增至 Google 日曆
     totalTLs: 聊天室即時翻譯數
     tlPresence: 過去半小時內有即時翻譯
-    uncertainPlaceholder: 尚未有正式的開始時間，實際的開始時間可能會有誤差。
-    typeScheduledYT: 已排定實況
   videoDescription:
     description: 說明
   description:
