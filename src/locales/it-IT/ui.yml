@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomennascusa!
@@ -67,6 +66,7 @@ component:
       topic: argomento
       org: org
       titledesc: titolo/descrizione
+      title: titolo
       comments: commenti
       videourl: url del video
   relatedVideo:
@@ -133,6 +133,8 @@ component:
       delete-playlist: Elimina Playlist
       clear-playlist: Svuota playlist
     save-error-not-logged-in: Devi aver effettuato l'accesso per salvare playlist
+  placeholderVideo:
+    creditTitleText: 'Riconoscimenti:'
 views:
   channel:
     video: Video
@@ -269,6 +271,9 @@ views:
         disconnectedToChat: Disconnesso
     removeFromPlaylist: Rimuovi video dalla playlist corrente
     saveToPlaylist: Salva video nella playlist corrente
+    uploadPanel:
+      headerStart: Avvia
+      cancelBtn: Annulla
   favorites:
     promptForAction: >-
       Crea una lista dei tuoi vtuber preferiti e vedi le loro ultime dirette e clip su questa pagina.
@@ -301,6 +306,10 @@ views:
       - Accedi con Google
       - Accedi con Discord
       - Accedi con Twitter
+    usernameBtn:
+      - Change
+      - Conferma
+      - Save
   multiview:
     confirmOverwrite: Sovrascrivere il layout attuale?
     confirmOverwriteYes: Conferma
@@ -342,6 +351,14 @@ views:
     page-heading: 'Le tue Playlist:'
     page-instruction: Clicca su una playlist per attivarla.
     change-loss-warning: Perderai le modifiche non salvate. Continuare?
+  tlClient:
+    cancelBtn: Annulla
+  scriptEditor:
+    table:
+      headerStart: Avvia
+  tlManager:
+    delete: Elimina
+    langPick: Lingua
 time:
   soon: presto
   diff_future_date: Inizia {0} ({1})
@@ -451,3 +468,5 @@ about:
     title: Novità
   news:
     title: Notizie
+channelRequest:
+  Comments: Commenti
