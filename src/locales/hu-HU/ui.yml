@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomenasorry!
@@ -73,6 +72,7 @@ component:
       topic: téma
       org: org
       titledesc: cím/leírás
+      title: cím
       comments: hozzászólások
       videourl: videó URL-címe
   relatedVideo:
@@ -537,7 +537,7 @@ about:
     videoLinkage: Hogyan bizonyosodom meg róla, hogy a videók és klipek biztosan hozzá vannak kapcsolva a vtuberekhez?
     videoLinkageContent: >-
       Minden információt a leírásból szedünk. Ha klipelsz egy streamet, kérlek ne felejtsd el linkelni az eredeti streamet a leírásban. Ha egy rajongói tartalmat klipelsz, (pl. bilibili-ről), csak linkeld be az eredeti hivatalos youtube csatornát a hozzátartozó vtuberhez. Ha nem linkeled a vtuber csatornáját, akkor nem fog megjelenni a videód Holodexen, mivel minden kliphez szükséges egy link a vtuberhez aki ismert Holodexen is.
-    quitHolodex: "Fordító vagyok és szeretném a tartalmaim eltávolítani Holodexről.\\r\n"
+    quitHolodex: "Fordító vagyok és szeretném a tartalmaim eltávolítani Holodexről.\r\n"
     quitHolodexContent: >-
       Sajnáljuk, hogy elmész :(, kérlek jelezd ha van bármi probléma amivel segíthetnénk. Ha mindenképp szeretnéd eltávolíttatni, kérlek üzenj nekünk Discordon.
     favorite:
