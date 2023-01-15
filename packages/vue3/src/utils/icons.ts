@@ -30,6 +30,29 @@ export const up = "i-bx:chevron-up";
 export const down = "i-bx:chevron-down";
 export const check = "i-mdi:check";
 export const plusBox = "i-mdi:plus-box";
+
+/**
+ * Search specific dropdown icons
+ *
+ * note that exporting like this requires special treatment in `vite.config.js`
+ */
+export const search: Record<string, string> = {
+  org: "i-fluent:box-16-regular", // AND'd
+  from: "i-ion:calendar-outline", //ms epoch or SerializedDate
+  to: "i-ion:calendar-outline", //ms epoch or SerializedDate
+  // uploader_id: 'i-fluent:id-button',
+  search: "i-fluent:text-case-title-20-filled",
+  title: "i-fluent:text-case-title-20-filled",
+  description: "i-fluent:text-description-20-filled",
+  type: "i-fluent:filter-20-filled",
+  topic: "i-fluent:tag-multiple-16-regular", // OR'd.
+  vtuber: "i-ion:people-outline", //id of vtubers.
+  channel: "i-ion:people-outline",
+  lang: "i-ion:language-outline",
+  has_song: "i-fluent:music-note-2-20-regular",
+  advanced: "i-fluent:database-search-20-regular",
+};
+
 export {
   mdiAccountBoxMultiple,
   mdiAccountCircleOutline,

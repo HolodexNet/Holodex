@@ -5,7 +5,7 @@
     v-model:model-value="query"
     v-model:search="search"
     v-model:menu="menuOpen"
-    class="mx-auto search-bar input input-bordered bg-bgColor-500"
+    class="mx-auto search-bar"
     :class="{ 'search-bar-small': isMobile }"
     multiple
     chips
@@ -20,23 +20,37 @@
     no-filter
     density="compact"
     variant="plain"
+    label="Search"
     return-object
     hide-details
-    :menu-icon="undefined"
+    menu-icon=""
     :menu-props="({ location: 'bottom' } as any)"
     type="search"
+    @keydown.backspace="
+      (e) => {
+        if (!search) {
+          query.pop();
+        }
+      }
+    "
     @keydown.enter="onEnterKeyDown"
   >
+    <template #append-item> <a>How to search on Holodex?</a> </template>
+    <template #append-inner>
+      <div class="opacity-40 i-ion:search" style="margin-top: 2px"></div>
+    </template>
+
     <template #chip="{ item, props }">
       <div
-        class="px-1 mr-1 tracking-tight text-gray-100 bg-gray-600 rounded-sm"
+        class="px-1 mr-1 tracking-tight badge badge-ghost bg-bgColor border-0 text-xs rounded-sm font-semibold hover:badge-error cursor-default"
         v-bind="props"
+        @click="props['onClick:close']"
       >
-        <span class="font-semibold"
-          ><div
+        <span class="">
+          <!-- <div
             class="inline-block align-middle cursor-pointer i-mdi:close"
             @click="props['onClick:close']"
-          ></div>
+          ></div> -->
           {{ i18nItem(item.raw.type) }}:
         </span>
         <span class="rounded-lg">
@@ -44,33 +58,46 @@
         </span>
       </div>
     </template>
-    <template #item="{ item, props }">
-      <div v-bind="props" class="px-2 py-1 cursor-pointer hover:bg-bgColor-300">
-        <span class="h-3 text-xs opacity-50">
-          <v-icon v-if="item.raw.type === 'channel'" small>
-            {{ icons.mdiYoutube }}
-          </v-icon>
-          <v-icon v-if="item.raw.type === 'video url'" small>
-            {{ icons.mdiYoutube }}
-          </v-icon>
-          <v-icon v-if="item.raw.type === 'topic'" small>
-            {{ icons.mdiAnimationPlay }}
-          </v-icon>
-          <v-icon v-if="item.raw.type === 'org'" small>
-            {{ mdiAccountMultiple }}
-          </v-icon>
-          <v-icon v-if="item.raw.type === 'title & desc'" small>
-            {{ mdiTextSearch }}
-          </v-icon>
-          <v-icon v-if="item.raw.type === 'comments'" small>
-            {{ mdiCommentSearch }}
-          </v-icon></span
+    <template #item="{ item, index, props }">
+      <template v-if="item.raw.first_search">
+        <div
+          v-bind="props"
+          class="px-2 py-1 cursor-pointer flex hover:bg-bgColor-300"
         >
-        <span class="ml-2 font-semibold"> {{ i18nItem(item.raw.type) }}: </span>
-        <span class="rounded-lg">
-          {{ item.raw.text }}
-        </span>
-      </div>
+          <span
+            class="inline-block opacity-50 h-6"
+            :class="
+              icons.search[item.raw.type] || 'i-fluent:grid-dots-20-regular'
+            "
+          ></span>
+          <span class="ml-2 font-light">
+            {{ i18nItem(item.raw.type) || item.raw.type }}:
+          </span>
+        </div>
+      </template>
+      <template v-else>
+        <div
+          v-if="results[index].type !== results[index - 1]?.type"
+          class="pt-2 pb-2 pl-8 cursor-default flex text-xs font-extrabold uppercase border-t-2 border-bgColor-50"
+        >
+          {{ i18nItem(item.raw.type) }}
+        </div>
+        <div
+          v-bind="props"
+          class="px-2 py-1 cursor-pointer flex hover:bg-bgColor-300"
+        >
+          <span
+            class="inline-block opacity-50 h-6"
+            :class="
+              icons.search[item.raw.type] || 'i-fluent:grid-dots-20-regular'
+            "
+          ></span>
+          <span class="ml-2 font-light"> {{ i18nItem(item.raw.type) }}: </span>
+          <span>
+            {{ item.raw.text }}
+          </span>
+        </div>
+      </template>
     </template>
   </v-autocomplete>
 </template>
@@ -89,11 +116,13 @@ import api from "@/utils/backend-api";
 import { json2csvAsync, csv2jsonAsync } from "json-2-csv";
 // import { useLangStore } from "@/stores/lang";
 import { useDisplay } from "vuetify";
+import { FIRST_SEARCH } from "./search_consts";
 
 type Query = {
   type: string;
   value: string;
   text: string;
+  first_search?: boolean;
 };
 
 export default defineComponent({
@@ -134,7 +163,7 @@ export default defineComponent({
 
   computed: {
     results() {
-      return this.fromApi;
+      return this.search ? this.fromApi : FIRST_SEARCH;
     },
   },
   watch: {
@@ -152,7 +181,7 @@ export default defineComponent({
     // eslint-disable-next-line func-names
     search: {
       handler: function (val: string) {
-        if (!val) return;
+        if (!val) return FIRST_SEARCH;
         this.fromApi = [];
         const entropy = encodeURIComponent(val.trim()).length;
         if (entropy <= 1) return;
@@ -163,19 +192,19 @@ export default defineComponent({
             if (encodeURIComponent(val).length > 1) {
               textQueries = [
                 {
-                  type: "title & desc",
-                  value: `${val}title & desc`,
+                  type: "title",
+                  value: `${val}`,
                   text: val.trim(),
                 },
-                { type: "comments", value: `${val}comments`, text: val.trim() },
+                // { type: "comments", value: `${val}comments`, text: val.trim() },
               ];
             }
             this.fromApi = [
+              ...textQueries,
               ...res.data.map((x: Query) => {
                 if (!x.text) x.text = x.value;
                 return x;
               }),
-              ...textQueries,
             ];
             console.log(JSON.stringify(this.fromApi, undefined, 2));
           })
@@ -278,8 +307,8 @@ export default defineComponent({
           return this.$t("component.search.type.topic");
         case "org":
           return this.$t("component.search.type.org");
-        case "title & desc":
-          return this.$t("component.search.type.titledesc");
+        case "title":
+          return this.$t("component.search.type.title");
         case "comments":
           return this.$t("component.search.type.comments");
         default:
@@ -303,7 +332,22 @@ export default defineComponent({
 .search-bar {
   // width management.
   max-width: min(670px, 100vw) !important;
-  height: 50px;
+  padding: 2px 6px;
+  @apply bg-bgColor-600 rounded-md;
+
+  // height: 50px;
+  * {
+    --v-field-padding-top: 0px !important;
+    --v-field-padding-bottom: 0px !important;
+    --v-input-padding-top: 2px !important;
+    --autocomplete-chips-margin-bottom: 0px !important;
+    --v-input-control-height: 24px;
+  }
+
+  .v-autocomplete__selection {
+    height: 20px;
+    margin-top: 0px !important;
+  }
 
   .v-label.v-field-label {
     display: none;
@@ -318,6 +362,7 @@ export default defineComponent({
     // height: 40px;
     white-space: nowrap;
     font-size: 13px;
+    line-height: 20px;
 
     scrollbar-width: thin;
     scrollbar-width: 4px;

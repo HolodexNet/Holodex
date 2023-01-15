@@ -45,7 +45,10 @@ export default defineConfig({
     vue({}),
     Unocss({
       presets: [presetIcons()],
-      safelist: Object.values(icons),
+      safelist: [
+        ...Object.values(icons).filter((x) => typeof x === "string"),
+        ...Object.values(icons.search),
+      ],
     }),
     vuetify({
       autoImport: true,

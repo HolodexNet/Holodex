@@ -76,6 +76,7 @@ component:
       titledesc: title/desc
       comments: comments
       videourl: video url
+      title: title
   relatedVideo:
     clipsLabel: clips
     simulcastsLabel: simulcasts

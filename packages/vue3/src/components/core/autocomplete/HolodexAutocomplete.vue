@@ -3,7 +3,7 @@
 </template>
 <script setup lang="ts">
 import Tagify from "@yaireo/tagify";
-import tag from "./autocomplete_templates/tag";
+import tag from "./templates/tag";
 import { Ref } from "vue";
 // import "@yaireo/tagify/dist/tagify.css";
 
@@ -14,16 +14,18 @@ onMounted(() => {
   if (input.value) {
     tagify.value = new Tagify(input.value, {
       //   whitelist: this.mcuHeros,
-      whitelist: ["ironman", "antman", "captain america", "thor", "spiderman"],
+      whitelist: ["channel:", "org:"],
       enforceWhitelist: false,
+      dropdown: {
+        enabled: 0, // always show dropdown on focus.
+      },
       autoComplete: {
         enabled: true,
       },
       editTags: {
         clicks: 1,
       },
-      mode: "mix",
-      pattern: "channel:",
+      mode: "select",
       templates: {
         dropdownItemNoMatch() {
           return `<div class='empty'>Nothing Found</div>`;
