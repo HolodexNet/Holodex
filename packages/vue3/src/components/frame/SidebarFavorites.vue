@@ -6,6 +6,7 @@
           v-bind="props"
           :channel="v.channel"
           slim
+          no-link
           :live="v.status === 'live'"
           class="relative hover:bg-bgColor-300"
           >{{ formatDurationUpcoming(v.available_at) }}

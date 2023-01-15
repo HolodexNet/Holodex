@@ -27,7 +27,7 @@
       class="flex-grow"
       :class="{ 'opacity-40': channel.inactive, 'ml-2': !slim }"
     >
-      <span class="text-xs text-neutral opacity-60"
+      <span class="text-xs text-neutral opacity-60 line-clamp-1"
         ><b>{{
           channel.org ||
           (channel.type === "subber" && $t("views.channels.tabs.Subber")) ||
