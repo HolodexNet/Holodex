@@ -46,7 +46,7 @@
         </router-link>
       </span>
       <span 
-        v-if="!(video.certainty === 'certain')"
+        v-if="video.type === 'placeholder' && !(video.certainty === 'certain')"
         style="font-size:95%"
       > <br>
         {{ $t("component.videoCard.uncertainPlaceholder") }}
