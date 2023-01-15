@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomenasorry!
@@ -73,6 +72,7 @@ component:
       topic: Thema
       org: Organisation
       titledesc: Titel/Beschreibung
+      title: titel
       comments: Kommentare
       videourl: Video-URL
   relatedVideo:
@@ -537,7 +537,7 @@ about:
     videoLinkage: Wie stelle ich sicher, dass Videos richtig mit VTubern verlinkt werden?
     videoLinkageContent: >-
       Alle Informationen werden automatisch aus der Videobeschreibung ausgelesen. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden VTuber. Wenn du keine VTuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem VTuber benötigen, welcher Holodex bekannt ist.
-    quitHolodex: "Ich bin ein Clipper und möchte, dass mein Kanal von Holodex entfernt wird\\r\n"
+    quitHolodex: "Ich bin ein Clipper und möchte, dass mein Kanal von Holodex entfernt wird\r\n"
     quitHolodexContent: >-
       Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir helfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
     favorite:

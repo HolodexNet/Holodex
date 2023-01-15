@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: 灰常拍謝！
@@ -17,6 +16,7 @@ component:
     subscriberCount: '{n} 位訂閱者'
     subscriberNA: 無法取得訂閱者數據
     totalViews: 總觀看次數
+    inactiveChannel: 本頻道已不再進行活動
   channelSocials:
     addToFavorites: 加入收藏
     removeFromFavorites: 取消收藏
@@ -49,11 +49,13 @@ component:
     googleCalendar: 新增至 Google 日曆
     totalTLs: 聊天室即時翻譯數
     tlPresence: 過去半小時內有即時翻譯
+    uncertainPlaceholder: 尚未有正式的開始時間，實際的開始時間可能會有誤差。
     typeScheduledYT: 已排定實況
     typeExternalStream: 外部實況
     typeEventPlaceholder: 已排定活動
     openClient: 開啟翻譯客戶端
     openScriptEditor: 開啟文本編輯器
+    popoutChat: 彈出YouTube聊天室視窗
     uploadScript: 上傳翻譯文本
   videoDescription:
     description: 說明
@@ -73,6 +75,7 @@ component:
       topic: 內容標籤
       org: 團體
       titledesc: 標題/描述
+      title: 曲名
       comments: 留言
       videourl: 影片網址
   relatedVideo:
@@ -268,6 +271,9 @@ views:
     update_btn: 更新
     close_btn: 關閉
     check_about_page: 查看關於頁面以詳細了解更新內容
+    nowSupportsMultiOrg: >-
+      提示：你可以在這裡切換團體！
+    loginCallToAction: 登入以自訂您的收藏
   about:
     add_my_channel: 將我的頻道加入Holodex
   watch:
