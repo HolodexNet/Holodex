@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomenasorry!
@@ -65,6 +64,7 @@ component:
       topic: sujet
       org: org
       titledesc: titre/description
+      title: titre
       comments: commentaires
       videourl: url de la vidéo
   relatedVideo:
@@ -128,6 +128,8 @@ component:
       delete-playlist: Supprimer la Playlist
       clear-playlist: Vider la Playlist
     save-error-not-logged-in: Vous devez être connecté pour enregistrer les playlists
+  placeholderVideo:
+    creditTitleText: 'Crédits:'
 views:
   channel:
     video: Vidéos
@@ -261,6 +263,9 @@ views:
         disconnectedToChat: Déconnecté
     removeFromPlaylist: Retirer la vidéo de la playlist actuelle
     saveToPlaylist: Enregistrer la vidéo dans la playlist actuelle
+    uploadPanel:
+      headerStart: Début
+      cancelBtn: Voulez-vous vraiment supprimer {0} vidéos ?
   favorites:
     promptForAction: >-
       Créez une liste de vtubers favoris et retrouvez leurs derniers clips et leurs dernières diffusions sur cette page
@@ -293,6 +298,10 @@ views:
       - Se connecter avec Google
       - Se connecter avec Discord
       - Se connecter avec Twitter
+    usernameBtn:
+      - Change
+      - Confirmer
+      - Save
   multiview:
     confirmOverwrite: Remplacer la disposition actuelle ?
     confirmOverwriteYes: Confirmer
@@ -333,6 +342,14 @@ views:
     page-heading: 'Vos Playlists:'
     page-instruction: Cliquez sur une playlist pour la définir comme active.
     change-loss-warning: Vous perdrez les modifications non enregistrées. Continuer ?
+  tlClient:
+    cancelBtn: Voulez-vous vraiment supprimer {0} vidéos ?
+  scriptEditor:
+    table:
+      headerStart: Début
+  tlManager:
+    delete: Supprimer
+    langPick: Langue
 time:
   soon: Bientôt
   diff_future_date: Commence {0} ({1})
@@ -395,6 +412,12 @@ about:
       title: Qu'est-ce que MugenClips ?
     subber:
       title: Je fais des clips et je ne trouve pas ma chaine ou mes clips sur Holodex
+      contents:
+        - >-
+          Please check on the Channels page to see if you are listed as a subber, if not please fill out
+        - ', and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.'
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
     feedback:
       title: J'ai des retours/idées à donner pour le projet ou je veux aider
   gdpr: RGPD et mes données
@@ -410,3 +433,5 @@ about:
     title: Notes de mise à jour
   news:
     title: Nouveautés
+channelRequest:
+  Comments: Commentaires
