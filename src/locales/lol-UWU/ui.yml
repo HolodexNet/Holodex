@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomenasowwy!
@@ -73,6 +72,7 @@ component:
       topic: topic
       org: owg
       titledesc: titwe/desc
+      title: titwe
       comments: comments
       videourl: bideo uww
   relatedVideo:
@@ -537,7 +537,7 @@ about:
     videoLinkage: How do me make suwe that bideos awe winked pwopewwy to vtubews?
     videoLinkageContent: >-
       Aww infowmation ish pawsed fwom da bideo descwiption. If u awe cwipping a stweam, pwease make suwe to wink da officiaw stweam. If u awe cwipping fan made content (eg. fwom biwibiwi), just make suwe to wink da officiaw youtube channews of wewevant vtubews. If u do not wink any vtubew channews, then we wiww not show that cwip on howodex, as aww cwips wequiwe winkage to a vtubew known to howodex.
-    quitHolodex: "Am a subbew and me wouwd wike to have my channew wemoved fwom howodex\\r\n"
+    quitHolodex: "Am a subbew and me wouwd wike to have my channew wemoved fwom howodex\r\n"
     quitHolodexContent: >-
       Sad to see u go :(, pwease wet me know if thewe's any issue me can hewp u with. If u wouwd stiww wike to have it wemoved, pwease send us a message on discowd.
     favorite:
