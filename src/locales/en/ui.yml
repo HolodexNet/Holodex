@@ -78,6 +78,7 @@ component:
       org: org
       titledesc: title/desc
       title: title
+      description: description
       comments: comments
       videourl: video url
   relatedVideo:
