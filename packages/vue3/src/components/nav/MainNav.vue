@@ -51,7 +51,6 @@
           key="main-search-bar"
           class="mx-auto height-40px"
         />
-        <HolodexAutocomplete />
 
         <!--================= Account [👤] Button (Desktop Only) ================-->
 

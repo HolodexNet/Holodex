@@ -35,7 +35,6 @@
     "
     @keydown.enter="onEnterKeyDown"
   >
-    <template #append-item> <a>How to search on Holodex?</a> </template>
     <template #append-inner>
       <div class="opacity-40 i-ion:search" style="margin-top: 2px"></div>
     </template>
@@ -59,13 +58,35 @@
       </div>
     </template>
     <template #item="{ item, index, props }">
+      <!-- MENU MAIN HEADER [Search Options.... Learn More <help>]-->
+      <template v-if="index === 0">
+        <div
+          class="py-2 pl-8 pr-4 justify-between flex flex-row text-xs font-extrabold"
+        >
+          <span class="cursor-default">Search Options</span>
+          <a class="group h-4 flex opacity-50" href="#">
+            <span class="invisible h-4 mr-1 group-hover:visible">
+              Learn More
+            </span>
+            <div
+              class="inline-block h-4 text-[16px] i-ion:help-circle-outline"
+            ></div>
+          </a>
+        </div>
+      </template>
+      <!-- FIRST SEARCH ITEMS -->
       <template v-if="item.raw.first_search">
         <div
-          v-bind="props"
-          class="px-2 py-1 cursor-pointer flex hover:bg-bgColor-300"
+          class="px-2 py-1 cursor-pointer text-sm flex hover:bg-bgColor-300"
+          @click.stop="
+            (e) => {
+              search = item.raw.type + ':';
+              e.stopImmediatePropagation();
+            }
+          "
         >
           <span
-            class="inline-block opacity-50 h-6"
+            class="inline-block opacity-50 h-5"
             :class="
               icons.search[item.raw.type] || 'i-fluent:grid-dots-20-regular'
             "
@@ -73,21 +94,25 @@
           <span class="ml-2 font-light">
             {{ i18nItem(item.raw.type) || item.raw.type }}:
           </span>
+          <span v-if="item.raw.text != '?'" class="ml-1 opacity-40">
+            {{ item.raw.text }}
+          </span>
         </div>
       </template>
+      <!-- Autocomplete Provided Items -->
       <template v-else>
         <div
           v-if="results[index].type !== results[index - 1]?.type"
-          class="pt-2 pb-2 pl-8 cursor-default flex text-xs font-extrabold uppercase border-t-2 border-bgColor-50"
+          class="py-2 pl-8 cursor-default flex text-xs font-extrabold uppercase border-t-2 border-bgColor-50"
         >
           {{ i18nItem(item.raw.type) }}
         </div>
         <div
           v-bind="props"
-          class="px-2 py-1 cursor-pointer flex hover:bg-bgColor-300"
+          class="px-2 py-1 cursor-pointer text-sm flex hover:bg-bgColor-300"
         >
           <span
-            class="inline-block opacity-50 h-6"
+            class="inline-block opacity-50 h-5"
             :class="
               icons.search[item.raw.type] || 'i-fluent:grid-dots-20-regular'
             "
@@ -116,7 +141,7 @@ import api from "@/utils/backend-api";
 import { json2csvAsync, csv2jsonAsync } from "json-2-csv";
 // import { useLangStore } from "@/stores/lang";
 import { useDisplay } from "vuetify";
-import { FIRST_SEARCH } from "./search_consts";
+import { FIRST_SEARCH } from "./search/search_consts";
 
 type Query = {
   type: string;

@@ -7,7 +7,7 @@ export const JSON_SCHEMA: Record<
   org: { type: "array" },
   from: { type: "date" }, //ms epoch or SerializedDate
   to: { type: "date" }, //ms epoch or SerializedDate
-  uploader_id: { type: "string" },
+  // uploader_id: { type: "string" },
   search: { type: "string", required: true },
   description: { type: "string" },
   type: { type: "array" },
