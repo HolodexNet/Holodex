@@ -28,9 +28,7 @@
     type="search"
     @keydown.backspace="
       (e) => {
-        if (!search) {
-          query.pop();
-        }
+        if (!search) query.pop(); // backspace to remove last filter
       }
     "
     @keydown.enter="onEnterKeyDown"
@@ -60,17 +58,11 @@
     <template #item="{ item, index, props }">
       <!-- MENU MAIN HEADER [Search Options.... Learn More <help>]-->
       <template v-if="index === 0">
-        <div
-          class="py-2 pl-8 pr-4 justify-between flex flex-row text-xs font-extrabold"
-        >
+        <div class="py-2 pl-8 pr-4 text-xs flex font-extrabold">
           <span class="cursor-default">Search Options</span>
-          <a class="group h-4 flex opacity-50" href="#">
-            <span class="invisible h-4 mr-1 group-hover:visible">
-              Learn More
-            </span>
-            <div
-              class="inline-block h-4 text-[16px] i-ion:help-circle-outline"
-            ></div>
+          <a class="group opacity-50 inline-flex ml-auto" href="#">
+            <span class="invisible mr-1 group-hover:visible"> Learn More </span>
+            <div class="text-[16px] i-ion:help-circle-outline"></div>
           </a>
         </div>
       </template>
