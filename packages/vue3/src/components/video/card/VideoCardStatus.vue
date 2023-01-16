@@ -7,6 +7,7 @@
 <script lang="ts">
 import { useLangStore } from "@/stores";
 import { dayjs, formatDistance, localizedDayjs } from "@/utils/time";
+import { useInterval } from "@vueuse/core";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -18,13 +19,15 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const now = ref(new Date());
+    const interval = useInterval(40000); // very slow tick-source
     const { t } = useI18n();
     const langStore = useLangStore();
 
     const formattedTime = computed(() => {
       switch (props.video.status) {
         case "upcoming":
+          // attach to tick source.
+          interval.value;
           // print relative time in hours if less than 24 hours,
           // print full date if greater than 24 hours
           return formatDistance(
@@ -32,15 +35,19 @@ export default defineComponent({
             langStore.lang,
             t.bind(this),
             false, // allowNegative = false
-            dayjs(now.value)
+            dayjs()
           ); // upcoming videos don't get to be ("5 minutes ago")
         case "live":
           return t("component.videoCard.liveNow");
         default:
+          // attach to tick source.
+          interval.value;
           return formatDistance(
             props.video.available_at,
             langStore.lang,
-            t.bind(this)
+            t.bind(this),
+            true,
+            dayjs()
           );
       }
     });

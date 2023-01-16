@@ -47,7 +47,9 @@
         </div>
         <!-- Duration/Current live stream time -->
         <video-card-live-duration
-          v-if="!isPlaceholder"
+          v-if="
+            !isPlaceholder && ((video.duration || 0) > 0 || video.start_actual)
+          "
           :video="video"
           class="rounded-sm video-overlay-tag"
           :class="{ '!bg-red-800 !bg-opacity-70': video.status === 'live' }"
