@@ -80,10 +80,9 @@
         <div v-else class="d-flex flex-column align-end">
           <!-- (👻✅) -->
           <div class="video-duration">
-            <span
-              v-if="hasDuration"
-              class="duration-placeholder"
-            >{{ formattedDuration }}</span>
+            <span v-if="hasDuration" class="duration-placeholder">{{
+              formattedDuration
+            }}</span>
             <span
               v-if="data.placeholderType === 'scheduled-yt-stream'"
               class="hover-placeholder"
@@ -100,8 +99,8 @@
               {{
                 twitchPlaceholder
                   ? mdiTwitch
-                  : twitterPlaceholder 
-                    ? mdiTwitter 
+                  : twitterPlaceholder
+                    ? mdiTwitter
                     : placeholderIconMap[data.placeholderType]
               }}
             </v-icon>
@@ -156,25 +155,26 @@
             'font-size': `${1 - $store.state.currentGridSize / 16}rem`,
           }"
         >
-        <v-tooltip bottom v-if="!isCertain">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              icon
-              v-on="on"
-              x-small
-              class="plain-button"
-              width="17"
-              :ripple="false"
-            >
-              <v-icon size="21" color="amber">
-                {{ icons.mdiClockAlertOutline }}
-              </v-icon>
-            </v-btn>
-          </template>
-          <span>
-          {{ $tc("component.videoCard.uncertainPlaceholder") }}
-          </span>
-        </v-tooltip>
+          <v-tooltip v-if="!isCertain" bottom>
+            <template #activator="{ on, attrs }">
+              <v-btn
+                icon
+                :ripple="false"
+                width="17"
+                class="plain-button"
+                x-small
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon size="18" color="amber">
+                  {{ icons.mdiClockAlertOutline }}
+                </v-icon>
+              </v-btn>
+            </template>
+            <span>
+              {{ $tc("component.videoCard.uncertainPlaceholder") }}
+            </span>
+          </v-tooltip>
           {{ title }}
         </div>
         <!-- Channel -->
@@ -400,7 +400,7 @@ export default {
             return this.data.type === "placeholder";
         },
         isCertain() {
-          return !this.isPlaceholder || this.data.certainty === "certain";
+            return !this.isPlaceholder || this.data.certainty === "certain";
         },
         title() {
             if (this.isPlaceholder) {
@@ -440,7 +440,10 @@ export default {
             }
         },
         hasDuration() {
-            return (this.data.duration > 0 && this.data.status === "live") || this.data.start_actual;
+            return (
+                (this.data.duration > 0 && this.data.status === "live")
+                || this.data.start_actual
+            );
         },
         absoluteTimeString() {
             const ts = localizedDayjs(this.data.available_at, this.lang);
@@ -898,9 +901,9 @@ export default {
   z-index: 1;
 }
 .plain-button:before {
-  display: none
+  display: none;
 }
 .plain-button:hover:before {
-  backgroundColor: transparent
+  background-color: transparent;
 }
 </style>
