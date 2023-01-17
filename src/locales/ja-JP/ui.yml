@@ -49,6 +49,7 @@ component:
     googleCalendar: Googleカレンダーに追加
     totalTLs: ライブチャット翻訳の合計
     tlPresence: 30分以内にアクティブだった翻訳者
+    uncertainPlaceholder: 開始時刻は確定していません。実際の開始時刻は異なる可能性があります。
     typeScheduledYT: 予定された配信
     typeExternalStream: 外部配信
     typeEventPlaceholder: 予定されたイベント
@@ -58,6 +59,8 @@ component:
     uploadScript: 翻訳スクリプトをアップロード
   videoDescription:
     description: 概要
+  video:
+    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -75,6 +78,7 @@ component:
       org: 所属
       titledesc: タイトル/動画概要
       title: 曲名
+      description: 説明
       comments: コメント
       videourl: 動画のURL
   relatedVideo:
@@ -269,6 +273,8 @@ views:
     update_btn: アップデート
     close_btn: 閉じる
     check_about_page: 案内ページで更新内容を確認できます
+    nowSupportsMultiOrg: >-
+      ヒント：ここでグループや事務所を変えることができます
     loginCallToAction: 自分のお気に入りを設定するにはログインしてください。
   about:
     add_my_channel: チャンネルのリクエスト
