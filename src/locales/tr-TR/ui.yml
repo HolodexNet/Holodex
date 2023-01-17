@@ -49,6 +49,7 @@ component:
     googleCalendar: Google Takvim'e Ekle
     totalTLs: Toplam canlı sohbet çevirileri
     tlPresence: Son 30 dakikada aktif çevirmen
+    uncertainPlaceholder: Başlangıç zamanı resmi değildir, asıl başlangıç zamanı değişebilir.
     typeScheduledYT: Planlı Yayın
     typeExternalStream: Harici Yayın
     typeEventPlaceholder: Planlı Etkinlik
@@ -433,6 +434,12 @@ views:
       loadVideo: Videoyu Göster
       unloadVideo: Videoyu gizle
       loadChat: Yayın Çevirisine YT Chat'ini Ekle
+    tlControl:
+      prefix: Önek
+      suffix: Sonek
+      fontColour: Yazı Rengi
+      outlineColour: Anahat Rengi
+    pangram: Pijamalı hasta yağız şoföre çabucak güvendi.
     cancelBtn: İptal
     okBtn: Tamam
   scriptEditor:
@@ -445,6 +452,10 @@ views:
       headerStart: Başlangıç
       headerEnd: Bitiş
       headerText: Metin
+    editorModePanel:
+      activateMode: Editör Modunu Etkinleştir
+      deactivateMode: Editör Modunu Devre Dışı Bırak
+      filterTranslator: Çevirmen filtrele
   tlManager:
     title: Senaryo yöneticisi
     headerID: Video ID'si
