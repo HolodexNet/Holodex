@@ -59,6 +59,8 @@ component:
     uploadScript: 上傳翻譯文本
   videoDescription:
     description: 說明
+  video:
+    comment: { }
   description:
     showLess: 只顯示部分資訊
     showMore: 顯示完整資訊
@@ -76,6 +78,7 @@ component:
       org: 團體
       titledesc: 標題/描述
       title: 曲名
+      description: 敘述
       comments: 留言
       videourl: 影片網址
   relatedVideo:

@@ -48,7 +48,7 @@ component:
     premiere: プレミア公開
     googleCalendar: Googleカレンダーに追加
     totalTLs: ライブチャット翻訳の合計
-    tlPresence: 30分以内にアクティブな翻訳者
+    tlPresence: 30分以内にアクティブだった翻訳者
     typeScheduledYT: 予定された配信
     typeExternalStream: 外部配信
     typeEventPlaceholder: 予定されたイベント
