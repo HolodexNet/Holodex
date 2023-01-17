@@ -1,3 +1,6 @@
+import type { SearchableCategory } from "./types";
+import { JSON_SCHEMA } from "./types";
+
 type Query = {
   type: string;
   value: string;
@@ -34,3 +37,15 @@ export const AUTOCOMPLETE_OPTIONS = {
     choices: [],
   },
 };
+
+export function splitSearchClassTerms(
+  term: string
+): [SearchableCategory | undefined, string] {
+  const [q_class, ...q_value] = term.split(":");
+  if (JSON_SCHEMA[<SearchableCategory>q_class]) {
+    // q_class is a valid class, ergo:
+    return [<SearchableCategory>q_class, q_value.join(":")];
+  } else {
+    return [undefined, term];
+  }
+}

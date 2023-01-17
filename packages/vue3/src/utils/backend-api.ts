@@ -1,3 +1,4 @@
+import type { AC_Response } from "@/components/nav/search/types";
 import { dayjs } from "@/utils/time";
 import axios, { AxiosResponse } from "axios";
 import querystring from "querystring";
@@ -10,6 +11,11 @@ export const SITE_BASE_URL = `${window.location.origin}`;
 
 export const axiosInstance = (() => {
   const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
+  return instance;
+})();
+
+export const axiosInstance_v3 = (() => {
+  const instance = axios.create({ baseURL: `${API_BASE_URL}/v3` });
   return instance;
 })();
 
@@ -94,6 +100,16 @@ export default {
     const q = querystring.stringify({ q: query });
     return axiosInstance.get(`/search/autocomplete?${q}`);
   },
+  /**
+   *
+   * @param partial partial string to autocomplete
+   * @param type if defined, will only provide one category.
+   */
+  searchV3Autocomplete(partial: string, type?: "vtuber" | "topic") {
+    const q = querystring.stringify({ q: partial, ...(type && { t: type }) });
+    return axiosInstance_v3.get<AC_Response>(`/search/autocomplete?${q}`);
+  },
+
   searchVideo(queryObject: any) {
     return axiosInstance.post("/search/videoSearch", queryObject);
   },

@@ -32,11 +32,19 @@
       }
     "
     @keydown.enter="onEnterKeyDown"
+    @focus="orgsEnabled = true"
   >
     <template #append-inner>
       <div class="opacity-40 i-ion:search" style="margin-top: 2px"></div>
     </template>
-
+    <template #append-item>
+      <v-progress-linear
+        indeterminate
+        :class="autocomplete_loading && '-mb-2'"
+        color="accent"
+        :active="autocomplete_loading"
+      ></v-progress-linear>
+    </template>
     <template #chip="{ item, props }">
       <div
         class="px-1 mr-1 tracking-tight badge badge-ghost bg-bgColor border-0 text-xs rounded-sm font-semibold hover:badge-error cursor-default"
@@ -48,16 +56,16 @@
             class="inline-block align-middle cursor-pointer i-mdi:close"
             @click="props['onClick:close']"
           ></div> -->
-          {{ i18nItem(item.raw.type) }}:
+          {{ i18nItem(item.raw.type) || item.raw.type }}:
         </span>
-        <span class="rounded-lg">
-          {{ item.raw.text }}
+        <span class="rounded-lg ml-1">
+          {{ item.raw.text === "?" ? item.raw.value : item.raw.text }}
         </span>
       </div>
     </template>
     <template #item="{ item, index, props }">
       <!-- MENU MAIN HEADER [Search Options.... Learn More <help>]-->
-      <template v-if="index === 0">
+      <template v-if="index === 0 && item.raw.first_search">
         <div class="py-2 pl-8 pr-4 text-xs flex font-extrabold">
           <span class="cursor-default">Search Options</span>
           <a class="group opacity-50 inline-flex ml-auto" href="#">
@@ -93,12 +101,14 @@
       </template>
       <!-- Autocomplete Provided Items -->
       <template v-else>
+        <!-- Category Heading: -->
         <div
           v-if="results[index].type !== results[index - 1]?.type"
-          class="py-2 pl-8 cursor-default flex text-xs font-extrabold uppercase border-t-2 border-bgColor-50"
+          class="pb-1 pt-2 pl-8 cursor-default flex text-xs font-extrabold uppercase border-t-2 border-bgColor-50 first-of-type:-mt-2 mt-1"
         >
-          {{ i18nItem(item.raw.type) }}
+          {{ i18nItem(item.raw.type) || item.raw.type }}:
         </div>
+        <!-- Actual Item -->
         <div
           v-bind="props"
           class="px-2 py-1 cursor-pointer text-sm flex hover:bg-bgColor-300"
@@ -109,9 +119,11 @@
               icons.search[item.raw.type] || 'i-fluent:grid-dots-20-regular'
             "
           ></span>
-          <span class="ml-2 font-light"> {{ i18nItem(item.raw.type) }}: </span>
-          <span>
-            {{ item.raw.text }}
+          <span class="ml-2 font-light">
+            {{ i18nItem(item.raw.type) || item.raw.type }}:
+          </span>
+          <span class="ml-1">
+            {{ item.raw.text === "?" ? item.raw.value : item.raw.text }}
           </span>
         </div>
       </template>
@@ -120,26 +132,24 @@
 </template>
 
 <script lang="ts">
-import {
-  mdiLabel,
-  mdiMagnifyPlusOutline,
-  mdiAccountMultiple,
-  mdiTextSearch,
-  mdiFilter,
-  mdiCommentSearch,
-} from "@mdi/js";
 import api from "@/utils/backend-api";
 // import debounce from "lodash-es/debounce";
 import { json2csvAsync, csv2jsonAsync } from "json-2-csv";
 // import { useLangStore } from "@/stores/lang";
 import { useDisplay } from "vuetify";
-import { FIRST_SEARCH } from "./search/search_consts";
+import { FIRST_SEARCH, splitSearchClassTerms } from "./search/helper";
+import { useOrgList } from "@/services/static";
+import { useLangStore, useSiteStore } from "@/stores";
+import { watchDebounced, watchThrottled } from "@vueuse/core";
+import { JSON_SCHEMA, SearchableCategory } from "./search/types";
+import { CLIPPER_LANGS } from "@/utils/consts";
 
 type Query = {
   type: string;
   value: string;
   text: string;
   first_search?: boolean;
+  _raw?: any;
 };
 
 export default defineComponent({
@@ -157,77 +167,224 @@ export default defineComponent({
   setup() {
     // const lang = useLangStore();
     const display = useDisplay();
+    const currentOrgs = useSiteStore();
+    const langPrefs = useLangStore();
+
+    const orgsEnabled = ref(false); // we're just saving some extra startup time by not having this immediately fire. OnFocus, it'll fire.
+    const orgs = useOrgList({
+      enabled: orgsEnabled,
+      initialData: currentOrgs.starredOrgs,
+    });
+    const search = ref("");
+    const query = ref([] as Array<Query>);
+
+    const autocomplete_loading = ref(false);
+
+    const ac_opts = reactive<
+      Record<
+        "org" | "vtuber" | "topic" | "has_song" | "lang" | "type" | "other",
+        Query[]
+      >
+    >({
+      vtuber: [],
+      topic: [],
+      org: [],
+      has_song: [],
+      type: [],
+      lang: [],
+      other: [],
+    });
+    // handle autocomplete for SERVER SIDE QUERIES
+    watchDebounced(
+      search,
+      async (newValue) => {
+        for (const _key of ["has_song", "type", "lang", "other"] as const)
+          ac_opts[_key] = [];
+        // clear ^
+        const [search_class, search_term] = splitSearchClassTerms(newValue);
+        if (
+          search_class === "vtuber" ||
+          search_class === "topic" ||
+          search_class === undefined
+        ) {
+          autocomplete_loading.value = true;
+          const x = await api.searchV3Autocomplete(search_term, search_class);
+          ac_opts.vtuber =
+            x.data.vtuber?.map((x) => ({
+              type: "vtuber",
+              value: x.id,
+              text:
+                langPrefs.preferredLocaleFn(x.english_name, x.name) || x.name,
+              _raw: x,
+            })) || [];
+          ac_opts.topic =
+            x.data.topic?.map((x) => ({
+              type: "topic",
+              value: x.id,
+              text: x.id,
+            })) || [];
+          autocomplete_loading.value = false;
+        } else {
+          ac_opts.vtuber = []; // clear
+          ac_opts.topic = []; // clear
+        }
+
+        // org:
+        if (search_class === "org" || search_class === undefined) {
+          ac_opts.org =
+            orgs.data.value
+              ?.filter(
+                (x) =>
+                  x.name.includes(newValue) || x.name_jp?.includes(newValue)
+              )
+              .slice(0, 5)
+              .map((x) => ({
+                type: "org",
+                value: x.name,
+                text: langPrefs.preferredLocaleFn(x.name, x.name_jp) || x.name,
+              })) || [];
+        } else {
+          ac_opts.org = []; // clear
+        }
+
+        if (search_class === undefined) {
+          ac_opts.other = JSON_SCHEMA.search.validateCanAutocomplete?.(
+            query.value
+          )
+            ? [
+                {
+                  type: "search",
+                  value: search_term,
+                  text: "?",
+                },
+              ]
+            : [];
+          return;
+        }
+
+        // everything else only gets autocompleted when needed:
+        switch (search_class) {
+          case "has_song":
+            if (JSON_SCHEMA.has_song.validateCanAutocomplete?.(query.value)) {
+              ac_opts.has_song = [
+                { type: "has_song", value: "none", text: "?" },
+                { type: "has_song", value: "non-zero", text: "?" },
+                { type: "has_song", value: "one", text: "?" },
+                { type: "has_song", value: "many", text: "?" },
+              ];
+            }
+            return;
+          case "lang":
+            ac_opts.lang = CLIPPER_LANGS.map((x) => ({ ...x, type: "lang" }));
+            return;
+          case "type":
+            ac_opts.type = [
+              { type: "type", value: "clip", text: "?" },
+              { type: "type", value: "stream", text: "?" },
+              { type: "type", value: "placeholder", text: "?" },
+            ];
+            return;
+          default:
+            if (
+              JSON_SCHEMA[search_class].validateCanAutocomplete?.(
+                query.value
+              ) ??
+              true
+            ) {
+              ac_opts.other = [
+                {
+                  type: search_class,
+                  value: search_term,
+                  text: "?",
+                },
+              ];
+            }
+        }
+        // alternate provision:
+      },
+      { debounce: 200 }
+    );
+
+    const dropdown = computed(() => {
+      return (
+        ["other", "org", "vtuber", "topic", "has_song", "lang", "type"] as const
+      ).reduce((p, k) => {
+        p.push(...ac_opts[k]);
+        return p;
+      }, [] as Query[]);
+    });
 
     const isMobile = display.mobile;
 
-    return { display, isMobile };
+    return {
+      display,
+      isMobile,
+      orgs,
+      orgsEnabled,
+      search,
+      ac_opts,
+      query,
+      dropdown,
+      autocomplete_loading,
+    };
   },
   data() {
     return {
-      query: [] as Array<Query>,
-      mdiLabel,
-      mdiAccountMultiple,
-      mdiMagnifyPlusOutline,
-      mdiTextSearch,
-      mdiCommentSearch,
-      mdiFilter,
       isLoading: false,
       menuOpen: false,
-      search: "",
-      fromApi: [] as Array<Query>,
+      // fromApi: [] as Array<Query>,
     };
   },
-
   computed: {
     results() {
-      return this.search ? this.fromApi : FIRST_SEARCH;
+      return this.search ? this.dropdown : FIRST_SEARCH;
     },
   },
   watch: {
     query() {
       if (this.menuOpen) this.menuOpen = false;
     },
-    "$route.query": {
-      deep: true,
-      async handler({ q }) {
-        if (q) {
-          this.query = await csv2jsonAsync(q);
-        }
-      },
-    },
+    // "$route.query": {
+    //   deep: true,
+    //   async handler({ q }) {
+    //     if (q) {
+    //       this.query = await csv2jsonAsync(q);
+    //     }
+    //   },
+    // },
     // eslint-disable-next-line func-names
-    search: {
-      handler: function (val: string) {
-        if (!val) return FIRST_SEARCH;
-        this.fromApi = [];
-        const entropy = encodeURIComponent(val.trim()).length;
-        if (entropy <= 1) return;
-        const formatted = val.trim().replace("#", "");
-        this.getAutocomplete(formatted)
-          .then((res) => {
-            let textQueries: Query[] = [];
-            if (encodeURIComponent(val).length > 1) {
-              textQueries = [
-                {
-                  type: "title",
-                  value: `${val}`,
-                  text: val.trim(),
-                },
-                // { type: "comments", value: `${val}comments`, text: val.trim() },
-              ];
-            }
-            this.fromApi = [
-              ...textQueries,
-              ...res.data.map((x: Query) => {
-                if (!x.text) x.text = x.value;
-                return x;
-              }),
-            ];
-            console.log(JSON.stringify(this.fromApi, undefined, 2));
-          })
-          .catch((e) => console.log(e));
-      },
-    },
+    // search: {
+    //   handler: function (val: string) {
+    //     if (!val) return FIRST_SEARCH;
+    //     this.fromApi = [];
+    //     const entropy = encodeURIComponent(val.trim()).length;
+    //     if (entropy <= 1) return;
+    //     const formatted = val.trim().replace("#", "");
+    //     this.getAutocomplete(formatted)
+    //       .then((res) => {
+    //         let textQueries: Query[] = [];
+    //         if (encodeURIComponent(val).length > 1) {
+    //           textQueries = [
+    //             {
+    //               type: "title",
+    //               value: `${val}`,
+    //               text: val.trim(),
+    //             },
+    //             // { type: "comments", value: `${val}comments`, text: val.trim() },
+    //           ];
+    //         }
+    //         this.fromApi = [
+    //           ...textQueries,
+    //           ...res.data.map((x: Query) => {
+    //             if (!x.text) x.text = x.value;
+    //             return x;
+    //           }),
+    //         ];
+    //         console.log(JSON.stringify(this.fromApi, undefined, 2));
+    //       })
+    //       .catch((e) => console.log(e));
+    //   },
+    // },
   },
   async mounted() {
     if (this.$route.query && this.$route.query.q) {
@@ -238,15 +395,15 @@ export default defineComponent({
     logProps(props: any) {
       console.log(props);
     },
-    async getAutocomplete(query: string) {
-      this.isLoading = true;
-      const res = await api.searchAutocomplete(query);
-      this.isLoading = false;
-      return res;
-    },
-    deleteChip(item: Query) {
-      this.query.splice(this.query.map((q) => q.value).indexOf(item.value), 1);
-    },
+    // async getAutocomplete(query: string) {
+    //   this.isLoading = true;
+    //   const res = await api.searchAutocomplete(query);
+    //   this.isLoading = false;
+    //   return res;
+    // },
+    // deleteChip(item: Query) {
+    //   this.query.splice(this.query.map((q) => q.value).indexOf(item.value), 1);
+    // },
     async commitSearch() {
       if (!this.query || this.query.length === 0) return;
 
@@ -269,34 +426,10 @@ export default defineComponent({
         },
       });
     },
-    async goToOrToggleAdvanced() {
-      if (this.$route.name === "search") {
-        // toggle
-        this.$router.push({
-          path: "/search",
-          query: {
-            ...this.$route.query,
-            q: await json2csvAsync(this.query),
-            advanced: String(!(this.$route.query.advanced === "true")),
-            page: undefined,
-          },
-        });
-      } else {
-        // go to
-        this.$router.push({
-          path: "/search",
-          query: {
-            q: await json2csvAsync(this.query),
-            advanced: "true",
-            page: undefined,
-          },
-        });
-      }
-    },
-    addItem(item: any) {
-      // console.log(item);
-      this.query.push({ ...item });
-    },
+    // addItem(item: any) {
+    //   // console.log(item);
+    //   this.query.push({ ...item });
+    // },
     validate(currentQuery: Query[]) {
       // current limitations:
       // if more than 1 comment search, fail
