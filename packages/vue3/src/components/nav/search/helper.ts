@@ -42,10 +42,11 @@ export function splitSearchClassTerms(
   term: string
 ): [SearchableCategory | undefined, string] {
   const [q_class, ...q_value] = term.split(":");
-  if (JSON_SCHEMA[<SearchableCategory>q_class]) {
+  const trimmed_class = q_class.trim();
+  if (JSON_SCHEMA[<SearchableCategory>trimmed_class]) {
     // q_class is a valid class, ergo:
-    return [<SearchableCategory>q_class, q_value.join(":")];
+    return [<SearchableCategory>trimmed_class, q_value.join(":").trim()];
   } else {
-    return [undefined, term];
+    return [undefined, term.trim()];
   }
 }
