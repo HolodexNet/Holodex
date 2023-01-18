@@ -13,22 +13,37 @@
           x-small
           class="mr-1"
           title="-2s"
-          @click="timeOffset -= 2000"
+          @click="timeOffsetSeconds -= 2"
         >
           <v-icon>
-            {{ mdiTransferLeft }}
+            {{ mdiChevronLeft }}
           </v-icon>
         </v-btn>
-        <code class="mr-1">{{ `${timeOffset >= 0 ? "+" : ""}${timeOffset / 1000}s` }}</code>
+        <v-dialog v-model="dialog" width="250px">
+          <template #activator="{ on, attr }">
+            <code class="mr-1" v-bind="attr" v-on="on">{{ `${timeOffsetSeconds >= 0 ? "+" : ""}${timeOffsetSeconds}s` }}</code>
+          </template>
+          <v-card>
+            <v-card-text>
+              <v-container>
+                <v-text-field
+                  v-model.number="timeOffsetSeconds"
+                  type="number"
+                  suffix="s"
+                />
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
         <v-btn
           icon
           x-small
           class="mr-1"
           title="+2s"
-          @click="timeOffset += 2000"
+          @click="timeOffsetSeconds += 2"
         >
           <v-icon>
-            {{ mdiTransferRight }}
+            {{ mdiChevronRight }}
           </v-icon>
         </v-btn>
         <v-btn
@@ -93,7 +108,7 @@
 
 <script lang="ts">
 import VirtualList from "vue-virtual-scroll-list";
-import { mdiTransferRight, mdiTransferLeft } from "@mdi/js";
+import { mdiChevronLeft, mdiChevronDoubleLeft, mdiChevronRight, mdiChevronDoubleRight } from "@mdi/js";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import ChatMessage from "./ChatMessage.vue";
 import chatMixin from "./chatMixin";
@@ -111,9 +126,11 @@ export default {
         return {
             ChatMessage,
             curIndex: 0,
-            timeOffset: 0, // for offsetting archive TL
-            mdiTransferRight,
-            mdiTransferLeft };
+            timeOffsetSeconds: 0, // for offsetting archive TL
+            mdiChevronLeft,
+            mdiChevronDoubleLeft,
+            mdiChevronRight,
+            mdiChevronDoubleRight };
     },
     computed: {
         dividedTLs() {
@@ -125,8 +142,8 @@ export default {
                     || item.name !== arr[index - 1].name
                     || !!item.breakpoint));
                 // timestamp is in milliseconds.
-                const newtime = item.timestamp + self.timeOffset;
-                const relativeMs = item.relativeMs + self.timeOffset;
+                const newtime = item.timestamp + self.timeOffsetSeconds * 1000;
+                const relativeMs = item.relativeMs + self.timeOffsetSeconds * 1000;
                 return { ...item, shouldHideAuthor, relativeMs, timestamp: newtime };
             });
         },

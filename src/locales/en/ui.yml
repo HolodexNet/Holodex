@@ -16,6 +16,7 @@ component:
     subscriberCount: '{n} Subscribers'
     subscriberNA: Subscriber count unavailable
     totalViews: Total Views
+    inactiveChannel: This channel is no longer active.
   channelSocials:
     addToFavorites: Add to Favorites
     removeFromFavorites: Remove from Favorites
@@ -48,11 +49,13 @@ component:
     googleCalendar: Add to Google Calendar
     totalTLs: Total live chat TLs
     tlPresence: Active translator in last 30 mins
+    uncertainPlaceholder: Start time is not officially confirmed, actual start time may vary.
     typeScheduledYT: Scheduled Stream
     typeExternalStream: External Stream
     typeEventPlaceholder: Scheduled Event
     openClient: Open TL Client
     openScriptEditor: Open Script Editor
+    popoutChat: Popout YouTube Chat
     uploadScript: Upload TL Script
   videoDescription:
     description: Description
@@ -74,6 +77,8 @@ component:
       topic: topic
       org: org
       titledesc: title/desc
+      title: title
+      description: description
       comments: comments
       videourl: video url
   relatedVideo:
@@ -287,8 +292,9 @@ views:
     update_btn: Update
     close_btn: Close
     check_about_page: Visit the About page to see new changes
-    nowSupportsMultiOrg: Holodex now supports multiple organizations.
-    loginCallToAction: Login to gather your own favorites!
+    nowSupportsMultiOrg: >-
+      Tip: You can change the organization here!
+    loginCallToAction: Login to set your own favorites.
   about:
     add_my_channel: Channel Request
   watch:

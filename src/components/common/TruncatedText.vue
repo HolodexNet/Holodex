@@ -2,7 +2,7 @@
   <div>
     <div
       style="white-space: pre-wrap; word-break: break-word"
-      :class="{ 'truncated-text': !expanded }"
+      :class="{ 'truncated-text': (!expanded && newLineCount > lines) }"
       :style="`-webkit-line-clamp: ${lines}`"
     >
       <span v-if="html" v-linkified v-html="html" />

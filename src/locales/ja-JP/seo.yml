@@ -1,5 +1,3 @@
----
-hello: 世界
 music:
   title: '{{english_name}} オリジナル楽曲とカバー楽曲 - Holodex'
   description: >-

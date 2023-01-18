@@ -2,8 +2,32 @@
   <v-list-item-content>
     <v-list-item-title style="align-self: flex-start">
       <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
+      <v-tooltip top v-if="channel.inactive">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            icon
+            v-on="on"
+            x-small
+            width="18"
+            class="plain-button"
+            :ripple="false"
+          >
+            <v-icon size="20">
+              {{ icons.mdiSchool }}
+            </v-icon>
+          </v-btn>
+        </template>
+        <span>
+          {{ $t("component.channelInfo.inactiveChannel") }}
+        </span>
+      </v-tooltip>
         {{ channelName }}
       </router-link> <br>
+      <template v-if="channel.yt_handle">
+        <a :href="`https://youtube.com/${channel.yt_handle[0]}`" target="__blank" class="no-decoration text--org">
+          {{ channel.yt_handle[0] }} •
+        </a>
+      </template> 
       <span v-show="channel.org">
         <router-link :to="`/channel?org=${channel.org}`" class="no-decoration text--org">
           {{ channel.org + ((!noGroup && group) ? " / " + group : '') }}
@@ -148,5 +172,11 @@ export default {
 }
 .text--org:hover {
   opacity: 1.0;
+}
+.plain-button:before {
+  display: none
+}
+.plain-button:hover:before {
+  backgroundColor: transparent
 }
 </style>

@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Sumimaaf!
@@ -57,8 +56,6 @@ component:
     uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -75,6 +72,7 @@ component:
       topic: topik
       org: kumpulan
       titledesc: tajuk/perihalan
+      title: judul
       comments: ulasan
       videourl: url video
   relatedVideo:
@@ -269,8 +267,6 @@ views:
     update_btn: Kemas Kini
     close_btn: Tutup
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
-    nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong
-    loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
   about:
     add_my_channel: Memohon Penambahan Saluran
   watch:

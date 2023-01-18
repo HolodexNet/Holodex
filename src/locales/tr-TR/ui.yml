@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomennüzgünüz!
@@ -17,6 +16,7 @@ component:
     subscriberCount: '{n} Abone'
     subscriberNA: Abone sayısı mevcut değil
     totalViews: Toplam izlenme
+    inactiveChannel: Bu kanal artık aktif değil.
   channelSocials:
     addToFavorites: Favorilere ekle
     removeFromFavorites: Favorilerden çıkar
@@ -49,6 +49,7 @@ component:
     googleCalendar: Google Takvim'e Ekle
     totalTLs: Toplam canlı sohbet çevirileri
     tlPresence: Son 30 dakikada aktif çevirmen
+    uncertainPlaceholder: Başlangıç zamanı resmi değildir, asıl başlangıç zamanı değişebilir.
     typeScheduledYT: Planlı Yayın
     typeExternalStream: Harici Yayın
     typeEventPlaceholder: Planlı Etkinlik
@@ -73,6 +74,7 @@ component:
       topic: konu
       org: organizasyon
       titledesc: başlık/açıklama
+      title: başlık
       comments: yorumlar
       videourl: video bağlantısı
   relatedVideo:
@@ -212,6 +214,7 @@ views:
     sort:
       newest: En yeni
       oldest: En eski
+      longest: En uzun
     type:
       all: Tümü
       official: Resmi
@@ -228,7 +231,7 @@ views:
     redirectModeMsg: >-
       Video küçük resimlerine tıklamak videoyu Youtube'da açar, video başlıklarına tıklamak videoyu Holodex'te açar
     useEnglishNameLabel: İngilizce isimleri kullan
-    useEnglishNameMsg: VTuber kanalları için İngilizce yerelleştirilmiş isimleri kullanır
+    useEnglishNameMsg: VTuber kanalları için yerelleştirilmiş isimleri kullan
     hideVideoThumbnailsLabel: Video Küçük Resimlerini Sakla
     hideVideoThumbnailsMsg: >-
       Video küçük resimlerini saklar, yüklenme hızını arttırır ve mobil cihazlarda daha az kaydırma
@@ -266,8 +269,9 @@ views:
     update_btn: Güncelle
     close_btn: Kapat
     check_about_page: Değişiklikleri görüntülemek için Hakkında sayfasını ziyaret edin
-    nowSupportsMultiOrg: Holodex artık birden fazla organizaysonu desteklememektedir.
-    loginCallToAction: Favorilerinizi toplamak için Giriş Yapın!
+    nowSupportsMultiOrg: >-
+      İpucu: Organizasyonu buradan değiştirebilirsiniz!
+    loginCallToAction: Favorilerinizi seçmek için Giriş Yapın.
   about:
     add_my_channel: Kanal Talebi
   watch:
@@ -430,6 +434,28 @@ views:
       loadVideo: Videoyu Göster
       unloadVideo: Videoyu gizle
       loadChat: Yayın Çevirisine YT Chat'ini Ekle
+    tlControl:
+      prefix: Önek
+      suffix: Sonek
+      fontColour: Yazı Rengi
+      outlineColour: Anahat Rengi
+    pangram: Pijamalı hasta yağız şoföre çabucak güvendi.
+    cancelBtn: İptal
+    okBtn: Tamam
+  scriptEditor:
+    menu:
+      save: Kaydet
+      exportFile: Dosyayı Dışa Aktar
+      importFile: Dosyayı İçe Aktar
+      editorMode: Düzenleyici Kipi
+    table:
+      headerStart: Başlangıç
+      headerEnd: Bitiş
+      headerText: Metin
+    editorModePanel:
+      activateMode: Editör Modunu Etkinleştir
+      deactivateMode: Editör Modunu Devre Dışı Bırak
+      filterTranslator: Çevirmen filtrele
   tlManager:
     title: Senaryo yöneticisi
     headerID: Video ID'si

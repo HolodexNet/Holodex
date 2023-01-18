@@ -4,6 +4,23 @@
 
 - Development of Vue3 Holodex (release 3.0 ?!?!) is underway... If you like to influence how it looks, now is the best time to let us know.
 
+### 2.30 Holodex [*January 19th, 2022*]
+
+This release puts out several community contributed changes.
+
+- Add graduated/inactive indicator to channels on the Channels page #657 (Thanks Nelo)
+- Adds Uncertainty indicator for Uncertain fan-contributed schedule events #658 (Thanks Nelo)
+- Add Twitch link to socials to Channel Page (Thanks Nelo)
+- Archived TLDex time offset more configurable #646 (Thanks FlippFuzz)
+- Add a tip for showing you can change the org. #642 (Thanks Nelo)
+- Allow opening a youtube chat popout from the video dropdown menu.
+- Placeholders can have durations (for Twitch External Stream & events) (Thanks Nelo)
+
+
+Bugfixes:
+
+- issues with text truncation on some rare comments.
+
 ### 2.29 Holodex [*October 10th, 2022*]
 
 This release puts out several community contributed changes.

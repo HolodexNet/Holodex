@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: 灰常抱歉！
@@ -17,6 +16,7 @@ component:
     subscriberCount: '{n}位订阅者'
     subscriberNA: 订阅者人数不可用
     totalViews: 次观看
+    inactiveChannel: 此频道已不再活动。
   channelSocials:
     addToFavorites: 加入收藏夹
     removeFromFavorites: 从收藏夹中移除
@@ -49,6 +49,7 @@ component:
     googleCalendar: 添加到Google日历
     totalTLs: 聊天窗口中实时翻译数量
     tlPresence: 过去30分钟内有实时翻译
+    uncertainPlaceholder: 开始时间未正式说明，实际开始时间可能有所不同。
     typeScheduledYT: 直播预约
     typeExternalStream: 外部直播
     typeEventPlaceholder: 预定活动
@@ -57,8 +58,6 @@ component:
     uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
-  video:
-    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -75,6 +74,7 @@ component:
       topic: 标签
       org: 团体
       titledesc: 标题/描述
+      title: 标题
       comments: 留言
       videourl: 视频链接
   relatedVideo:
@@ -269,7 +269,8 @@ views:
     update_btn: 更新
     close_btn: 关闭
     check_about_page: 前往关于页面查看最新的更新日志
-    nowSupportsMultiOrg: Holodex现在可以显示更多的团体
+    nowSupportsMultiOrg: >-
+      提示：您可以在此更改V团体 ！
     loginCallToAction: 登入以读取你自己的收藏夹！
   about:
     add_my_channel: 将我的频道加入Holodex
@@ -543,7 +544,7 @@ about:
     videoLinkage: 我该如何确保视频关联到相应的Vtuber？
     videoLinkageContent: >-
       Holodex上的视频信息都由系统读取自视频说明。如果你正在制作剪辑，请务必记得在视频说明内附上直播的官方链接。如果剪辑是粉丝制作的二创内容（例如B站），请确保视频说明里附带相关Vtuber的官方YouTube频道。如果视频说明里没有附带任何Vtuber的频道，那么这个剪辑将不会出现在Holodex上，因为所有剪辑都必须关联到Holodex上已知的Vtuber。
-    quitHolodex: "我是翻译/剪辑者且我想要将自己的频道从Holodex资料库中移除\\r\n"
+    quitHolodex: "我是翻译/剪辑者且我想要将自己的频道从Holodex资料库中移除\r\n"
     quitHolodexContent: >-
       祝您一路顺风 :( 如果有任何需要协助的，请让我们知道。如果您依然想移除自己频道的相关资料，请至 Holodex 的 Discord服务器 发送消息给我们。
     favorite:

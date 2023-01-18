@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Maafkeun
@@ -57,8 +56,6 @@ component:
     uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -75,6 +72,7 @@ component:
       topic: topik
       org: org
       titledesc: judul/desk
+      title: judul
       comments: Komen
       videourl: url video
   relatedVideo:
@@ -269,8 +267,6 @@ views:
     update_btn: Perbarui
     close_btn: Tutup
     check_about_page: Kunjungi halaman Tentang untuk melihat pembaharuan
-    nowSupportsMultiOrg: Holodex kini mendukung berbagai organisasi
-    loginCallToAction: Masuk untuk mengumpulkan favorit kamu!
   about:
     add_my_channel: Mengajukan Channel
   watch:

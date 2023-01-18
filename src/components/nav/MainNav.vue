@@ -305,7 +305,7 @@ export default {
                 },
             ];
         },
-        ...mapState(["firstVisit"]),
+        ...mapState(["firstVisit", "showOrgTip"]),
     },
     watch: {
         // toggle navdrawer when navigating between watch pages on desktop
@@ -319,8 +319,13 @@ export default {
         },
     },
     created() {
+        const vm = this;
+        if (this.$store.state.showOrgTip) {
+            setTimeout(() => {
+                vm.$store.commit("setOrgTip");
+            }, 20000);
+        }
         if (this.$store.state.firstVisit) {
-            const vm = this;
             setTimeout(() => {
                 vm.$store.commit("setVisited");
             }, 30000);
