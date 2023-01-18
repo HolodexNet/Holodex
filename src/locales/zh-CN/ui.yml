@@ -55,9 +55,12 @@ component:
     typeEventPlaceholder: 预定活动
     openClient: 开启翻译客户端
     openScriptEditor: 开启脚本编辑器
+    popoutChat: 弹出 YouTube 聊天
     uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
+  video:
+    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -75,6 +78,7 @@ component:
       org: 团体
       titledesc: 标题/描述
       title: 标题
+      description: 说明
       comments: 留言
       videourl: 视频链接
   relatedVideo:
