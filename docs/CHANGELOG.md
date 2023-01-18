@@ -4,7 +4,7 @@
 
 - Development of Vue3 Holodex (release 3.0 ?!?!) is underway... If you like to influence how it looks, now is the best time to let us know.
 
-### 2.30 Holodex [*January 19th, 2022*]
+### 2.30 Holodex [*January 19th, 2023*]
 
 This release puts out several community contributed changes.
 
