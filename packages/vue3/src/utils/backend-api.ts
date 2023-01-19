@@ -103,11 +103,16 @@ export default {
   /**
    *
    * @param partial partial string to autocomplete
-   * @param type if defined, will only provide one category.
+   * @param t if defined, will only provide one category. Vtuber or Topic.
+   * @param n number of items to return back. 5 by default.
    */
-  searchV3Autocomplete(partial: string, type?: "vtuber" | "topic") {
+  searchV3Autocomplete(partial: string, t?: "vtuber" | "topic", n?: number) {
     if (partial.length == 0) return { data: { vtuber: [], topic: [] } };
-    const q = querystring.stringify({ q: partial, ...(type && { t: type }) });
+    const q = querystring.stringify({
+      q: partial,
+      ...(t && { t }),
+      ...(n && { n }),
+    });
     return axiosInstance_v3.get<AC_Response>(`/search/autocomplete?${q}`);
   },
 

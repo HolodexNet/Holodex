@@ -118,16 +118,25 @@
           class="pb-1 pt-2 pl-8 cursor-default flex text-xs font-extrabold uppercase border-t-2 border-bgColor-50 first-of-type:-mt-2 mt-1"
         >
           {{ categoryName(item.raw) }}:
+          <span class="opacity-40 normal-case ml-1">
+            {{ categoryExplanation(item.raw) }}
+          </span>
         </div>
         <!-- Actual Item -->
         <div
           v-bind="props"
           :tabindex="index + 2"
           class="px-2 py-1 cursor-pointer text-sm flex hover:bg-bgColor-300 focus:bg-bgColor-300"
+          :class="{ 'text-red-300': !validateItem(item.raw) }"
           @keydown.enter="
             (e) => {
-              props['onClick']?.(e);
+              if(validateItem(item.raw)) props['onClick']?.(e);
               (autocomplete as unknown as HTMLElement)?.getElementsByTagName('input')[0].focus()
+            }
+          "
+          @click="
+            (e) => {
+              if (validateItem(item.raw)) props['onClick']?.(e);
             }
           "
         >
@@ -160,13 +169,13 @@ import { useDisplay } from "vuetify";
 import { FIRST_SEARCH, splitSearchClassTerms } from "./search/helper";
 import { useOrgList } from "@/services/static";
 import { useLangStore, useSiteStore } from "@/stores";
-import { watchDebounced, watchThrottled } from "@vueuse/core";
+import { watchDebounced } from "@vueuse/core";
 import { JSON_SCHEMA, SearchableCategory } from "./search/types";
 import { CLIPPER_LANGS } from "@/utils/consts";
 import { useI18n } from "vue-i18n";
 
-type Query = {
-  type: string;
+type QueryItem = {
+  type: SearchableCategory;
   value: string;
   text: string;
   incomplete?: boolean;
@@ -198,7 +207,7 @@ export default defineComponent({
       initialData: currentOrgs.starredOrgs,
     });
     const search = ref("");
-    const query = ref([] as Array<Query>);
+    const query = ref([] as Array<QueryItem>);
 
     const autocomplete_loading = ref(false);
     const autocomplete = ref(null);
@@ -206,7 +215,7 @@ export default defineComponent({
     const ac_opts = reactive<
       Record<
         "org" | "vtuber" | "topic" | "has_song" | "lang" | "type" | "other",
-        Query[]
+        QueryItem[]
       >
     >({
       vtuber: [],
@@ -263,9 +272,7 @@ export default defineComponent({
           t(`search.class.${x.type}`, x.type).startsWith(search_term)
         );
 
-        ac_opts.other = JSON_SCHEMA.search.validateCanAutocomplete?.(
-          query.value
-        )
+        ac_opts.other = JSON_SCHEMA.search.suggestionOK?.(query.value)
           ? [
               {
                 type: "search",
@@ -281,7 +288,7 @@ export default defineComponent({
       // everything else only gets autocompleted when needed:
       switch (search_class) {
         case "has_song":
-          if (JSON_SCHEMA.has_song.validateCanAutocomplete?.(query.value)) {
+          if (JSON_SCHEMA.has_song.suggestionOK?.(query.value)) {
             ac_opts.has_song = [
               { type: "has_song", value: "none", text: "$t" },
               { type: "has_song", value: "non-zero", text: "$t" },
@@ -305,10 +312,7 @@ export default defineComponent({
         case "vtuber":
           return;
         default:
-          if (
-            JSON_SCHEMA[search_class].validateCanAutocomplete?.(query.value) ??
-            true
-          ) {
+          if (JSON_SCHEMA[search_class].suggestionOK?.(query.value) ?? true) {
             ac_opts.other = [
               {
                 type: search_class,
@@ -328,13 +332,17 @@ export default defineComponent({
           langCategoryReversemapClass.value
         );
         if (
-          search_term.length >= 2 &&
+          search_term.length >= 1 &&
           (search_class === "vtuber" ||
             search_class === "topic" ||
             search_class === undefined)
         ) {
           autocomplete_loading.value = true;
-          const x = await api.searchV3Autocomplete(search_term, search_class);
+          const x = await api.searchV3Autocomplete(
+            search_term,
+            search_class,
+            search_class ? 15 : undefined
+          );
           ac_opts.vtuber =
             x.data.vtuber?.map((x) => ({
               type: "vtuber",
@@ -365,7 +373,7 @@ export default defineComponent({
       ).reduce((p, k) => {
         p.push(...ac_opts[k]);
         return p;
-      }, [] as Query[]);
+      }, [] as QueryItem[]);
     });
 
     const isMobile = display.mobile;
@@ -462,15 +470,15 @@ export default defineComponent({
     async commitSearch() {
       if (!this.query || this.query.length === 0) return;
 
-      if (this.query.length === 1 && this.query[0].type === "channel") {
-        this.$router.push(`/channel/${this.query[0].value}`);
-        return;
-      }
+      // if (this.query.length === 1 && this.query[0].type === "channel") {
+      //   this.$router.push(`/channel/${this.query[0].value}`);
+      //   return;
+      // }
 
-      if (this.query.length === 1 && this.query[0].type === "video url") {
-        this.$router.push(`/watch/${this.query[0].value}`);
-        return;
-      }
+      // if (this.query.length === 1 && this.query[0].type === "video url") {
+      //   this.$router.push(`/watch/${this.query[0].value}`);
+      //   return;
+      // }
 
       this.$router.push({
         path: "/search",
@@ -485,53 +493,25 @@ export default defineComponent({
     //   // console.log(item);
     //   this.query.push({ ...item });
     // },
-    validate(currentQuery: Query[]) {
-      // current limitations:
-      // if more than 1 comment search, fail
-      // if text search AND comment search, fail
-      const countcomments = currentQuery.filter(
-        (x) => x.type === "comments"
-      ).length;
-      if (countcomments > 1)
-        return "Cannot search using multiple comment conditions.";
-      if (
-        countcomments === 1 &&
-        currentQuery.filter((x) => x.type === "title & desc").length > 0
-      ) {
-        return "Cannot search using comment + title & desc filters at the same time.";
-      }
+    validate(currentQuery: QueryItem[]) {
       return true;
     },
-    categoryName(query: Query) {
+    categoryName(query: QueryItem) {
       return this.$t(`search.class.${query.type}`, query.type);
     },
-    categoryExplanation(query: Query) {
+    categoryExplanation(query: QueryItem) {
       return this.$t(`search.class_explanation.${query.type}`, " ");
     },
-    categoryValue(query: Query) {
+    categoryValue(query: QueryItem) {
       return query.text === "$t"
         ? this.$t(`search.class_values.${query.type}.${query.value}`, " ")
         : query.text === "?"
         ? query.value
         : query.text;
     },
-    i18nItem(item: any) {
-      switch (item) {
-        case "channel":
-          return this.$t("component.search.type.channel");
-        case "video url":
-          return this.$t("component.search.type.videourl");
-        case "topic":
-          return this.$t("component.search.type.topic");
-        case "org":
-          return this.$t("component.search.type.org");
-        case "title":
-          return this.$t("component.search.type.title");
-        case "comments":
-          return this.$t("component.search.type.comments");
-        default:
-          return "";
-      }
+    validateItem(item: QueryItem) {
+      const v = JSON_SCHEMA[item.type]?.validation?.(item);
+      return v ?? true;
     },
     onEnterKeyDown() {
       if (this.search === null || this.search.length === 0) {

@@ -1,6 +1,8 @@
+import { dayjs } from "@/utils/time";
+
 export type SearchableCategory = keyof VideoQueryModel;
 
-type Query = {
+type QueryItem = {
   type: string;
   value: string;
   text: string;
@@ -11,47 +13,67 @@ type Query = {
 interface SearchableCategoryClassificationInterface {
   type: "array" | "string" | "boolean" | "date";
   required?: boolean;
-  validateCanAutocomplete?: (query: Query[]) => boolean;
-  suggestions_only?: boolean;
+  suggestionOK?: (current_query: QueryItem[]) => boolean;
+  validation?: (item: QueryItem) => boolean;
+  suggested_only?: boolean; //only autocompleted items can be autofilled.
 }
 
-function uniqValidation(uniq: string) {
-  return (query: Query[]) => {
-    return !query.find((x) => x.type === uniq);
+// suggest is OK if the query doesn't have the class
+function suggest_if_query_doesnt_have(uniq_class: string) {
+  return (current_query: QueryItem[]) => {
+    return !current_query.find((x) => x.type === uniq_class);
   };
 }
-function falseyValidation() {
-  return false;
+
+function validation_nonzero(item: QueryItem) {
+  return (item.value || "").trim().length > 0;
 }
 
 export const JSON_SCHEMA: Record<
   SearchableCategory,
   SearchableCategoryClassificationInterface
 > = {
-  org: { type: "array" },
-  from: { type: "date", validateCanAutocomplete: falseyValidation }, //ms epoch or SerializedDate
-  to: { type: "date", validateCanAutocomplete: falseyValidation }, //ms epoch or SerializedDate
+  org: { type: "array", suggested_only: true },
+  from: {
+    type: "date",
+    suggestionOK: suggest_if_query_doesnt_have("from"),
+    suggested_only: true,
+    validation: (item) => {
+      return item.value.length > 3 && dayjs(item.value).isValid();
+    },
+  }, //ms epoch or SerializedDate
+  to: {
+    type: "date",
+    suggestionOK: suggest_if_query_doesnt_have("to"),
+    validation: (item) => {
+      return item.value.length > 3 && dayjs(item.value).isValid();
+    },
+  }, //ms epoch or SerializedDate
   // uploader_id: { type: "string" },
   search: {
     type: "string",
     required: true,
-    validateCanAutocomplete: uniqValidation("search"),
+    suggestionOK: suggest_if_query_doesnt_have("search"),
+    validation: validation_nonzero,
   },
   description: {
     type: "string",
-    validateCanAutocomplete: uniqValidation("description"),
+    suggestionOK: suggest_if_query_doesnt_have("description"),
+    validation: validation_nonzero,
   },
-  type: { type: "array" },
-  topic: { type: "array" }, // OR'd.
-  vtuber: { type: "array" }, //id of vtubers.
-  lang: { type: "array" },
+  type: { type: "array", suggested_only: true },
+  topic: { type: "array", suggested_only: true }, // OR'd.
+  vtuber: { type: "array", suggested_only: true }, //id of vtubers.
+  lang: { type: "array", suggested_only: true },
   has_song: {
     type: "string",
-    validateCanAutocomplete: uniqValidation("has_song"),
+    suggestionOK: suggest_if_query_doesnt_have("has_song"),
+    suggested_only: true,
   },
   advanced: {
     type: "string",
-    validateCanAutocomplete: uniqValidation("advanced"),
+    suggestionOK: suggest_if_query_doesnt_have("advanced"),
+    validation: validation_nonzero,
   },
 };
 export interface VideoQueryModel {

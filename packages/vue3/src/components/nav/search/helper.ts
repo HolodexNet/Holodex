@@ -1,14 +1,14 @@
 import type { SearchableCategory } from "./types";
 import { JSON_SCHEMA } from "./types";
 
-type Query = {
-  type: string;
+type QueryItem = {
+  type: SearchableCategory;
   value: string;
   text: string;
   incomplete?: boolean;
 };
 
-export const FIRST_SEARCH: Query[] = [
+export const FIRST_SEARCH: QueryItem[] = [
   { type: "search", incomplete: true, value: "", text: "?" },
   { type: "org", incomplete: true, value: "", text: "?" },
   { type: "vtuber", incomplete: true, value: "", text: "?" },
