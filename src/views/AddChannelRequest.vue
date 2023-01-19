@@ -27,6 +27,7 @@
                   :key="'ct' + ct.value"
                   :label="ct.text"
                   :value="ct.value"
+                  :required="true"
                 />
               </v-radio-group>
 
