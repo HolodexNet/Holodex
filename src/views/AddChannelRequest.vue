@@ -21,13 +21,13 @@
               <v-radio-group
                 v-model="type"
                 :label="$t('channelRequest.RequestType')"
+                mandatory
               >
                 <v-radio
                   v-for="ct in channelTypes"
                   :key="'ct' + ct.value"
                   :label="ct.text"
                   :value="ct.value"
-                  :required="true"
                 />
               </v-radio-group>
 
