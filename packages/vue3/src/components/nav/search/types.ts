@@ -4,9 +4,16 @@ type Query = {
   type: string;
   value: string;
   text: string;
-  first_search?: boolean;
+  incomplete?: boolean;
   _raw?: any;
 };
+
+interface SearchableCategoryClassificationInterface {
+  type: "array" | "string" | "boolean" | "date";
+  required?: boolean;
+  validateCanAutocomplete?: (query: Query[]) => boolean;
+  suggestions_only?: boolean;
+}
 
 function uniqValidation(uniq: string) {
   return (query: Query[]) => {
@@ -19,11 +26,7 @@ function falseyValidation() {
 
 export const JSON_SCHEMA: Record<
   SearchableCategory,
-  {
-    type: "array" | "string" | "boolean" | "date";
-    required?: boolean;
-    validateCanAutocomplete?: (query: Query[]) => boolean;
-  }
+  SearchableCategoryClassificationInterface
 > = {
   org: { type: "array" },
   from: { type: "date", validateCanAutocomplete: falseyValidation }, //ms epoch or SerializedDate

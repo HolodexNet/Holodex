@@ -759,3 +759,40 @@ channelRequest:
     through private modmail on Discord or other contact methods.
   PageTitle: Holodex Channel Request
   ChannelURLErrorFeedback: Must be https://www.youtube.com/channel/UC_____
+search:
+  class:
+    search: search
+    org: org
+    vtuber: vtuber
+    type: type
+    topic: topic
+    lang: lang
+    has_song: has_song
+    description: description
+    advanced: advanced
+    from: from
+    to: to
+  class_explanation:
+    vtuber: Find clips/streams involving ...
+    org: Involving vtubers from organization...
+    search: Text search in title and common fields...
+    type: Find by clip or stream
+    topic: Find by stream topic
+    lang: Language of clipper
+    has_song: Musicdex song presence
+    description: Video description search
+    advanced: Advanced Search (see guide for usage)
+    from: YYYY-MM-DD hh:mm ±00
+    to: YYYY-MM-DD hh:mm ±00
+  class_values:
+    type:
+      clip: Clip
+      stream: Stream
+      placeholder: Placeholder
+    has_song:
+      none: No songs tagged
+      non-zero: Has songs tagged
+      one: Exactly one song
+      many: More than one song
+  guide_btn: Guide
+  menu_header_text: Search Options

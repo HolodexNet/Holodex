@@ -106,6 +106,7 @@ export default {
    * @param type if defined, will only provide one category.
    */
   searchV3Autocomplete(partial: string, type?: "vtuber" | "topic") {
+    if (partial.length == 0) return { data: { vtuber: [], topic: [] } };
     const q = querystring.stringify({ q: partial, ...(type && { t: type }) });
     return axiosInstance_v3.get<AC_Response>(`/search/autocomplete?${q}`);
   },

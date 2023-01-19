@@ -632,3 +632,26 @@ channelRequest:
     刪除頻道的申請僅限頻道擁有者提出，請您提供聯絡資料以供我們與您聯絡。
   PageTitle: Holodex 頻道追蹤申請表
   ChannelURLErrorFeedback: 連結格式須為 https://www.youtube.com/channel/UC_____
+search:
+  class:
+    search: 簡索
+    org: 組織
+    vtuber: up主
+    type: 影片類型
+    topic: 標籤
+    lang: 剪輯語言
+    has_song: 歌曲
+    description: 描述
+    advanced: 高級搜索
+    from: 從
+    to: 到
+  class_values:
+    type:
+      clip: 剪輯
+      stream: 影片/直播
+      placeholder: 排定
+    has_song:
+      none: 沒有標記歌曲
+      non-zero: 有歌曲
+      one: 一首歌
+      many: 多于一首歌

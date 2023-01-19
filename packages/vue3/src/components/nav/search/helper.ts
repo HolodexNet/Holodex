@@ -5,31 +5,31 @@ type Query = {
   type: string;
   value: string;
   text: string;
-  first_search?: boolean;
+  incomplete?: boolean;
 };
 
 export const FIRST_SEARCH: Query[] = [
-  { type: "search", first_search: true, value: "?", text: "?" },
-  { type: "org", first_search: true, value: "?", text: "?" },
-  { type: "vtuber", first_search: true, value: "?", text: "?" },
-  { type: "topic", first_search: true, value: "?", text: "?" },
-  { type: "type", first_search: true, value: "?", text: "?" },
+  { type: "search", incomplete: true, value: "", text: "?" },
+  { type: "org", incomplete: true, value: "", text: "?" },
+  { type: "vtuber", incomplete: true, value: "", text: "?" },
+  { type: "topic", incomplete: true, value: "", text: "?" },
+  { type: "type", incomplete: true, value: "", text: "?" },
   {
     type: "from",
-    first_search: true,
-    value: "?",
-    text: "YYYY-MM-DD HH:MM:SS +00",
+    incomplete: true,
+    value: "",
+    text: "?",
   },
   {
     type: "to",
-    first_search: true,
-    value: "?",
-    text: "YYYY-MM-DD HH:MM:SS +00",
+    incomplete: true,
+    value: "",
+    text: "?",
   },
-  { type: "lang", first_search: true, value: "?", text: "?" },
-  { type: "has_song", first_search: true, value: "?", text: "?" },
-  { type: "description", first_search: true, value: "?", text: "?" },
-  { type: "advanced", first_search: true, value: "?", text: "?" },
+  { type: "lang", incomplete: true, value: "", text: "?" },
+  { type: "has_song", incomplete: true, value: "", text: "?" },
+  { type: "description", incomplete: true, value: "", text: "?" },
+  { type: "advanced", incomplete: true, value: "", text: "?" },
 ];
 
 export const AUTOCOMPLETE_OPTIONS = {
@@ -39,13 +39,19 @@ export const AUTOCOMPLETE_OPTIONS = {
 };
 
 export function splitSearchClassTerms(
-  term: string
+  term: string,
+  langCategoryReversemapClass: Record<string, keyof typeof JSON_SCHEMA>
 ): [SearchableCategory | undefined, string] {
   const [q_class, ...q_value] = term.split(":");
   const trimmed_class = q_class.trim();
-  if (JSON_SCHEMA[<SearchableCategory>trimmed_class]) {
+  const system_class =
+    langCategoryReversemapClass[trimmed_class] || trimmed_class;
+  if (JSON_SCHEMA[<SearchableCategory>system_class]) {
     // q_class is a valid class, ergo:
-    return [<SearchableCategory>trimmed_class, q_value.join(":").trim()];
+    return [
+      <SearchableCategory>langCategoryReversemapClass[trimmed_class],
+      q_value.join(":").trim(),
+    ];
   } else {
     return [undefined, term.trim()];
   }

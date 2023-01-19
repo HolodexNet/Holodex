@@ -2,6 +2,7 @@
   <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
   <!-- <span> {{ $t("component.search.searchLabel") }}</span> -->
   <v-autocomplete
+    ref="autocomplete"
     v-model:model-value="query"
     v-model:search="search"
     v-model:menu="menuOpen"
@@ -32,10 +33,23 @@
       }
     "
     @keydown.enter="onEnterKeyDown"
-    @focus="orgsEnabled = true"
+    @focus="
+      () => {
+        if (!orgsEnabled) orgsEnabled = true;
+      }
+    "
   >
     <template #append-inner>
-      <div class="opacity-40 i-ion:search" style="margin-top: 2px"></div>
+      <div
+        v-if="query.length == 0 || search.length > 0"
+        class="opacity-40 i-ion:search"
+        style="margin-top: 2px"
+      ></div>
+      <div
+        v-else
+        class="opacity-25 i-icon-park-solid:enter-key-one"
+        style="margin-top: 2px"
+      ></div>
     </template>
     <template #append-item>
       <v-progress-linear
@@ -51,36 +65,34 @@
         v-bind="props"
         @click="props['onClick:close']"
       >
-        <span class="">
-          <!-- <div
-            class="inline-block align-middle cursor-pointer i-mdi:close"
-            @click="props['onClick:close']"
-          ></div> -->
-          {{ i18nItem(item.raw.type) || item.raw.type }}:
-        </span>
-        <span class="rounded-lg ml-1">
-          {{ item.raw.text === "?" ? item.raw.value : item.raw.text }}
-        </span>
+        <span class=""> {{ categoryName(item.raw) }}: </span>
+        <span class="rounded-lg ml-1"> {{ categoryValue(item.raw) }} </span>
       </div>
     </template>
     <template #item="{ item, index, props }">
       <!-- MENU MAIN HEADER [Search Options.... Learn More <help>]-->
-      <template v-if="index === 0 && item.raw.first_search">
+      <template v-if="index === 0 && item.raw.incomplete">
         <div class="py-2 pl-8 pr-4 text-xs flex font-extrabold">
-          <span class="cursor-default">Search Options</span>
-          <a class="group opacity-50 inline-flex ml-auto" href="#">
-            <span class="invisible mr-1 group-hover:visible"> Learn More </span>
-            <div class="text-[16px] i-ion:help-circle-outline"></div>
+          <span class="cursor-default">{{
+            $t("search.menu_header_text")
+          }}</span>
+          <a
+            class="group opacity-50 inline-flex ml-auto"
+            href="#"
+            :tabindex="40"
+          >
+            <span>{{ $t("search.guide_btn") }}</span>
+            <div class="ml-1 text-[16px] i-ion:help-circle-outline"></div>
           </a>
         </div>
       </template>
-      <!-- FIRST SEARCH ITEMS -->
-      <template v-if="item.raw.first_search">
+      <!-- INCOMPLETE SEARCH ITEMS -->
+      <template v-if="item.raw.incomplete">
         <div
           class="px-2 py-1 cursor-pointer text-sm flex hover:bg-bgColor-300"
           @click.stop="
             (e) => {
-              search = item.raw.type + ':';
+              search = categoryName(item.raw) + ':';
               e.stopImmediatePropagation();
             }
           "
@@ -91,11 +103,10 @@
               icons.search[item.raw.type] || 'i-fluent:grid-dots-20-regular'
             "
           ></span>
-          <span class="ml-2 font-light">
-            {{ i18nItem(item.raw.type) || item.raw.type }}:
-          </span>
-          <span v-if="item.raw.text != '?'" class="ml-1 opacity-40">
-            {{ item.raw.text }}
+          <span class="ml-2 font-light"> {{ categoryName(item.raw) }}: </span>
+          <span class="ml-1 opacity-40">
+            {{ categoryExplanation(item.raw) }}
+            {{ item.raw.text !== "?" ? item.raw.text : "" }}
           </span>
         </div>
       </template>
@@ -106,12 +117,19 @@
           v-if="results[index].type !== results[index - 1]?.type"
           class="pb-1 pt-2 pl-8 cursor-default flex text-xs font-extrabold uppercase border-t-2 border-bgColor-50 first-of-type:-mt-2 mt-1"
         >
-          {{ i18nItem(item.raw.type) || item.raw.type }}:
+          {{ categoryName(item.raw) }}:
         </div>
         <!-- Actual Item -->
         <div
           v-bind="props"
-          class="px-2 py-1 cursor-pointer text-sm flex hover:bg-bgColor-300"
+          :tabindex="index + 2"
+          class="px-2 py-1 cursor-pointer text-sm flex hover:bg-bgColor-300 focus:bg-bgColor-300"
+          @keydown.enter="
+            (e) => {
+              props['onClick']?.(e);
+              (autocomplete as unknown as HTMLElement)?.getElementsByTagName('input')[0].focus()
+            }
+          "
         >
           <span
             class="inline-block opacity-50 h-5"
@@ -119,12 +137,14 @@
               icons.search[item.raw.type] || 'i-fluent:grid-dots-20-regular'
             "
           ></span>
-          <span class="ml-2 font-light">
-            {{ i18nItem(item.raw.type) || item.raw.type }}:
-          </span>
+          <span class="ml-2 font-light"> {{ categoryName(item.raw) }}: </span>
           <span class="ml-1">
-            {{ item.raw.text === "?" ? item.raw.value : item.raw.text }}
+            {{ categoryValue(item.raw) }}
           </span>
+          <div
+            v-if="index === 0"
+            class="ml-auto opacity-25 i-icon-park-solid:enter-key-one mt-1"
+          ></div>
         </div>
       </template>
     </template>
@@ -143,12 +163,13 @@ import { useLangStore, useSiteStore } from "@/stores";
 import { watchDebounced, watchThrottled } from "@vueuse/core";
 import { JSON_SCHEMA, SearchableCategory } from "./search/types";
 import { CLIPPER_LANGS } from "@/utils/consts";
+import { useI18n } from "vue-i18n";
 
 type Query = {
   type: string;
   value: string;
   text: string;
-  first_search?: boolean;
+  incomplete?: boolean;
   _raw?: any;
 };
 
@@ -169,6 +190,7 @@ export default defineComponent({
     const display = useDisplay();
     const currentOrgs = useSiteStore();
     const langPrefs = useLangStore();
+    const { t } = useI18n();
 
     const orgsEnabled = ref(false); // we're just saving some extra startup time by not having this immediately fire. OnFocus, it'll fire.
     const orgs = useOrgList({
@@ -179,6 +201,7 @@ export default defineComponent({
     const query = ref([] as Array<Query>);
 
     const autocomplete_loading = ref(false);
+    const autocomplete = ref(null);
 
     const ac_opts = reactive<
       Record<
@@ -194,18 +217,121 @@ export default defineComponent({
       lang: [],
       other: [],
     });
+
+    const langCategoryReversemapClass = computed<
+      Record<string, keyof typeof JSON_SCHEMA>
+    >(() => {
+      const out: Record<string, keyof typeof JSON_SCHEMA> = {};
+      Object.keys(JSON_SCHEMA).forEach((x) => {
+        out[t(`search.class.${x}`)] = x as keyof typeof JSON_SCHEMA;
+      });
+      return out;
+    });
+
+    // instantly updating autocomplete!
+    watch(search, (newValue) => {
+      for (const _key of ["has_song", "type", "lang", "other"] as const)
+        ac_opts[_key] = [];
+      // clear ^
+      const [search_class, search_term] = splitSearchClassTerms(
+        newValue,
+        langCategoryReversemapClass.value
+      );
+      console.log(search_class, search_term);
+
+      if (search_class === "org" || search_class === undefined) {
+        const lower_search_term = search_term.toLowerCase();
+        ac_opts.org =
+          orgs.data.value
+            ?.filter(
+              (x) =>
+                x.name.toLowerCase().includes(lower_search_term) ||
+                x.name_jp?.toLowerCase().includes(lower_search_term)
+            )
+            ?.slice(0, search_class === "org" ? 20 : 5) // only give 5 suggestions when searching broadly.
+            ?.map((x) => ({
+              type: "org",
+              value: x.name,
+              text: langPrefs.preferredLocaleFn(x.name, x.name_jp) || x.name,
+            })) || [];
+      } else {
+        ac_opts.org = []; // clear
+      }
+
+      if (search_class === undefined) {
+        const categoryAutofill = FIRST_SEARCH.filter((x) =>
+          t(`search.class.${x.type}`, x.type).startsWith(search_term)
+        );
+
+        ac_opts.other = JSON_SCHEMA.search.validateCanAutocomplete?.(
+          query.value
+        )
+          ? [
+              {
+                type: "search",
+                value: search_term,
+                text: "?",
+              },
+              ...categoryAutofill,
+            ]
+          : categoryAutofill;
+        return;
+      }
+
+      // everything else only gets autocompleted when needed:
+      switch (search_class) {
+        case "has_song":
+          if (JSON_SCHEMA.has_song.validateCanAutocomplete?.(query.value)) {
+            ac_opts.has_song = [
+              { type: "has_song", value: "none", text: "$t" },
+              { type: "has_song", value: "non-zero", text: "$t" },
+              { type: "has_song", value: "one", text: "$t" },
+              { type: "has_song", value: "many", text: "$t" },
+            ];
+          }
+          return;
+        case "lang":
+          ac_opts.lang = CLIPPER_LANGS.map((x) => ({ ...x, type: "lang" }));
+          return;
+        case "type":
+          ac_opts.type = [
+            { type: "type", value: "clip", text: "$t" },
+            { type: "type", value: "stream", text: "$t" },
+            { type: "type", value: "placeholder", text: "$t" },
+          ];
+          return;
+        case "org":
+        case "topic":
+        case "vtuber":
+          return;
+        default:
+          if (
+            JSON_SCHEMA[search_class].validateCanAutocomplete?.(query.value) ??
+            true
+          ) {
+            ac_opts.other = [
+              {
+                type: search_class,
+                value: search_term,
+                text: "?",
+              },
+            ];
+          }
+      }
+    });
     // handle autocomplete for SERVER SIDE QUERIES
     watchDebounced(
       search,
       async (newValue) => {
-        for (const _key of ["has_song", "type", "lang", "other"] as const)
-          ac_opts[_key] = [];
-        // clear ^
-        const [search_class, search_term] = splitSearchClassTerms(newValue);
+        const [search_class, search_term] = splitSearchClassTerms(
+          newValue,
+          langCategoryReversemapClass.value
+        );
         if (
-          search_class === "vtuber" ||
-          search_class === "topic" ||
-          search_class === undefined
+          search_term.length >= 2 &&
+          (search_class === "vtuber" ||
+            search_class === "topic" ||
+            search_class === undefined)
         ) {
           autocomplete_loading.value = true;
           const x = await api.searchV3Autocomplete(search_term, search_class);
@@ -227,78 +353,6 @@ export default defineComponent({
         } else {
           ac_opts.vtuber = []; // clear
           ac_opts.topic = []; // clear
-        }
-
-        // org:
-        if (search_class === "org" || search_class === undefined) {
-          ac_opts.org =
-            orgs.data.value
-              ?.filter(
-                (x) =>
-                  x.name.includes(newValue) || x.name_jp?.includes(newValue)
-              )
-              .slice(0, 5)
-              .map((x) => ({
-                type: "org",
-                value: x.name,
-                text: langPrefs.preferredLocaleFn(x.name, x.name_jp) || x.name,
-              })) || [];
-        } else {
-          ac_opts.org = []; // clear
-        }
-
-        if (search_class === undefined) {
-          ac_opts.other = JSON_SCHEMA.search.validateCanAutocomplete?.(
-            query.value
-          )
-            ? [
-                {
-                  type: "search",
-                  value: search_term,
-                  text: "?",
-                },
-              ]
-            : [];
-          return;
-        }
-
-        // everything else only gets autocompleted when needed:
-        switch (search_class) {
-          case "has_song":
-            if (JSON_SCHEMA.has_song.validateCanAutocomplete?.(query.value)) {
-              ac_opts.has_song = [
-                { type: "has_song", value: "none", text: "?" },
-                { type: "has_song", value: "non-zero", text: "?" },
-                { type: "has_song", value: "one", text: "?" },
-                { type: "has_song", value: "many", text: "?" },
-              ];
-            }
-            return;
-          case "lang":
-            ac_opts.lang = CLIPPER_LANGS.map((x) => ({ ...x, type: "lang" }));
-            return;
-          case "type":
-            ac_opts.type = [
-              { type: "type", value: "clip", text: "?" },
-              { type: "type", value: "stream", text: "?" },
-              { type: "type", value: "placeholder", text: "?" },
-            ];
-            return;
-          default:
-            if (
-              JSON_SCHEMA[search_class].validateCanAutocomplete?.(
-                query.value
-              ) ??
-              true
-            ) {
-              ac_opts.other = [
-                {
-                  type: search_class,
-                  value: search_term,
-                  text: "?",
-                },
-              ];
-            }
         }
         // alternate provision:
       },
@@ -326,6 +380,7 @@ export default defineComponent({
       query,
       dropdown,
       autocomplete_loading,
+      autocomplete,
     };
   },
   data() {
@@ -447,6 +502,19 @@ export default defineComponent({
       }
       return true;
     },
+    categoryName(query: Query) {
+      return this.$t(`search.class.${query.type}`, query.type);
+    },
+    categoryExplanation(query: Query) {
+      return this.$t(`search.class_explanation.${query.type}`, " ");
+    },
+    categoryValue(query: Query) {
+      return query.text === "$t"
+        ? this.$t(`search.class_values.${query.type}.${query.value}`, " ")
+        : query.text === "?"
+        ? query.value
+        : query.text;
+    },
     i18nItem(item: any) {
       switch (item) {
         case "channel":
@@ -468,6 +536,13 @@ export default defineComponent({
     onEnterKeyDown() {
       if (this.search === null || this.search.length === 0) {
         this.commitSearch();
+      } else {
+        if (this.results?.[0]?.incomplete) {
+          this.search = this.results[0].type + ":";
+        } else if (this.results?.[0]) {
+          this.query.push(this.results?.[0]);
+          this.search = "";
+        }
       }
     },
     customFilter(a: any, b: any, c: any) {
