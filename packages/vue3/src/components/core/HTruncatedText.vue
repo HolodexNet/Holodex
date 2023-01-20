@@ -4,6 +4,7 @@
       class="whitespace-pre-wrap"
       :class="{ 'line-clamp-4': !expanded }"
       :style="`-webkit-line-clamp: ${lines}`"
+      style="word-break: break-word"
     >
       <span v-if="html" v-html="html" />
       <span

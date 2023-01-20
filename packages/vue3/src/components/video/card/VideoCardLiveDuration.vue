@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { dayjs, formatDuration } from "@/utils/time";
-import { useInterval } from "@vueuse/shared";
+import { useNow } from "@vueuse/core";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -17,20 +17,21 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const ms = computed(() =>
-      props.video.status == "live" || props.video.start_actual ? 1000 : 10000
-    );
-    const interval = useInterval(ms);
-
     const { t } = useI18n();
+    const { now, pause, resume } = useNow({ interval: 1000, controls: true });
+    const shouldTick = computed(
+      () => props.video.start_actual && props.video.status === "live"
+    );
+    watchEffect(() => {
+      shouldTick.value ? resume() : pause();
+    });
 
     const startActual = computed(
       () => dayjs(props.video.start_actual).unix() * 1000
     );
     const formatted = computed(() => {
       if (props.video.start_actual && props.video.status === "live") {
-        interval.value; // make it dependent on interval in this event..
-        return formatDuration(Date.now() - startActual.value);
+        return formatDuration(+now.value - startActual.value);
       }
       if (props.video.status === "upcoming" && props.video.duration) {
         return t("component.videoCard.premiere");

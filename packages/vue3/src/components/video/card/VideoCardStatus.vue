@@ -7,7 +7,7 @@
 <script lang="ts">
 import { useLangStore } from "@/stores";
 import { dayjs, formatDistance, localizedDayjs } from "@/utils/time";
-import { useInterval } from "@vueuse/core";
+import { useIntervalFn } from "@vueuse/core";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -19,38 +19,39 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const interval = useInterval(40000); // very slow tick-source
     const { t } = useI18n();
     const langStore = useLangStore();
-
-    const formattedTime = computed(() => {
-      switch (props.video.status) {
-        case "upcoming":
-          // attach to tick source.
-          interval.value;
-          // print relative time in hours if less than 24 hours,
-          // print full date if greater than 24 hours
-          return formatDistance(
-            props.video.start_scheduled || props.video.available_at,
-            langStore.lang,
-            t.bind(this),
-            false, // allowNegative = false
-            dayjs()
-          ); // upcoming videos don't get to be ("5 minutes ago")
-        case "live":
-          return t("component.videoCard.liveNow");
-        default:
-          // attach to tick source.
-          interval.value;
-          return formatDistance(
-            props.video.available_at,
-            langStore.lang,
-            t.bind(this),
-            true,
-            dayjs()
-          );
-      }
-    });
+    const formattedTime = ref("");
+    useIntervalFn(
+      () => {
+        switch (props.video.status) {
+          case "upcoming":
+            // print relative time in hours if less than 24 hours,
+            // print full date if greater than 24 hours
+            formattedTime.value = formatDistance(
+              props.video.start_scheduled || props.video.available_at,
+              langStore.lang,
+              t.bind(this),
+              false, // allowNegative = false
+              dayjs()
+            ); // upcoming videos don't get to be ("5 minutes ago")
+            return;
+          case "live":
+            formattedTime.value = t("component.videoCard.liveNow");
+            return;
+          default:
+            formattedTime.value = formatDistance(
+              props.video.available_at,
+              langStore.lang,
+              t.bind(this),
+              true,
+              dayjs()
+            );
+        }
+      },
+      60 * 1000,
+      { immediateCallback: true }
+    );
 
     const absoluteTimeString = computed(() => {
       const ts = localizedDayjs(props.video.available_at, langStore.lang);
