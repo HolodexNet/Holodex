@@ -13,6 +13,7 @@ export default function useOrgRouteParamSync(): Ref<Org> {
   watch(
     () => site.currentOrg,
     () => {
+      if (route.name === "Search") return; // ignore
       if (site.currentOrg.name !== route.params.org)
         router.push({ params: { org: site.currentOrg.name } });
     }
@@ -25,11 +26,13 @@ export default function useOrgRouteParamSync(): Ref<Org> {
   });
 
   return computed(() => {
+    if (route.name === "Search") return site.currentOrg; // ignore
+
     if (route.params.org && route.params.org !== site.currentOrg.name) {
       if (orgs.data.value && orgs.isSuccess) {
         // Special handle case for fake org
-        if(route.params.org === "All Vtubers") {
-          return { short: "Vtuber", name: "All Vtubers" }; 
+        if (route.params.org === "All Vtubers") {
+          return { short: "Vtuber", name: "All Vtubers" };
         }
         const found = orgs.data.value?.find((o) => o.name === route.params.org);
         if (!found) {

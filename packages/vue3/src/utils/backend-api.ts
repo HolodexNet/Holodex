@@ -24,6 +24,11 @@ export default {
     // Use fetch api to take advantage of pre-fetch
     return fetch(`${SITE_BASE_URL}/statics/orgs.json`).then((r) => r.json());
   },
+  channelStub(id: string) {
+    return fetch(
+      `${SITE_BASE_URL}/statics/channel/${id}.json`
+    ).then<ShortChannel>((r) => r.json());
+  },
   stats() {
     return axiosInstance({
       url: "/statics/stats.json",

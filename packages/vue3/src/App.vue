@@ -38,6 +38,9 @@ useThemeInitialization();
 const router = useRouter();
 /** Configure global ?org and ?lang listening. */
 router.beforeEach((to, from, next) => {
+  if (to.name === "Search") return next();
+  // ignore Org and Lang stuff.
+
   if (to.query.lang) {
     if (
       useLangStore().lang !== to.query.lang &&

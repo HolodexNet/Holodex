@@ -163,14 +163,22 @@
 <script lang="ts">
 import api from "@/utils/backend-api";
 // import debounce from "lodash-es/debounce";
-import { json2csvAsync, csv2jsonAsync } from "json-2-csv";
 // import { useLangStore } from "@/stores/lang";
 import { useDisplay } from "vuetify";
-import { FIRST_SEARCH, splitSearchClassTerms } from "./search/helper";
+import {
+  FIRST_SEARCH,
+  getQueryModelFromQuery,
+  splitSearchClassTerms,
+  getQueryFromQueryModel,
+} from "./search/helper";
 import { useOrgList } from "@/services/static";
 import { useLangStore, useSiteStore } from "@/stores";
 import { watchDebounced } from "@vueuse/core";
-import { JSON_SCHEMA, SearchableCategory } from "./search/types";
+import {
+  JSON_SCHEMA,
+  SearchableCategory,
+  VideoQueryModel,
+} from "./search/types";
 import { CLIPPER_LANGS } from "@/utils/consts";
 import { useI18n } from "vue-i18n";
 
@@ -378,6 +386,20 @@ export default defineComponent({
 
     const isMobile = display.mobile;
 
+    const router = useRouter();
+    const route = useRoute();
+
+    watch(
+      () => route.query,
+      async () => {
+        if (route.query.search) {
+          query.value = await getQueryFromQueryModel(
+            route.query as unknown as VideoQueryModel
+          );
+        }
+      }
+    );
+
     return {
       display,
       isMobile,
@@ -389,6 +411,7 @@ export default defineComponent({
       dropdown,
       autocomplete_loading,
       autocomplete,
+      langPrefs,
     };
   },
   data() {
@@ -470,21 +493,16 @@ export default defineComponent({
     async commitSearch() {
       if (!this.query || this.query.length === 0) return;
 
-      // if (this.query.length === 1 && this.query[0].type === "channel") {
-      //   this.$router.push(`/channel/${this.query[0].value}`);
-      //   return;
-      // }
-
-      // if (this.query.length === 1 && this.query[0].type === "video url") {
-      //   this.$router.push(`/watch/${this.query[0].value}`);
-      //   return;
-      // }
+      if (this.query.length === 1 && this.query[0].type === "vtuber") {
+        this.$router.push(`/channel/${this.query[0].value}`);
+        return;
+      }
 
       this.$router.push({
         path: "/search",
         query: {
           ...this.$route.query,
-          q: await json2csvAsync(this.query),
+          ...(getQueryModelFromQuery(this.query) as any),
           page: undefined,
         },
       });
@@ -503,6 +521,12 @@ export default defineComponent({
       return this.$t(`search.class_explanation.${query.type}`, " ");
     },
     categoryValue(query: QueryItem) {
+      if (query.type === "vtuber" && query._raw && query._raw.name) {
+        return this.langPrefs.preferredLocaleFn(
+          query._raw.english_name,
+          query._raw.name
+        );
+      }
       return query.text === "$t"
         ? this.$t(`search.class_values.${query.type}.${query.value}`, " ")
         : query.text === "?"

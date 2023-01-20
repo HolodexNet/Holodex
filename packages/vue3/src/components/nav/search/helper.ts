@@ -1,4 +1,6 @@
-import type { SearchableCategory } from "./types";
+import backendApi from "@/utils/backend-api";
+import { dayjs } from "@/utils/time";
+import type { SearchableCategory, VideoQueryModel } from "./types";
 import { JSON_SCHEMA } from "./types";
 
 type QueryItem = {
@@ -6,6 +8,7 @@ type QueryItem = {
   value: string;
   text: string;
   incomplete?: boolean;
+  _raw?: any;
 };
 
 export const FIRST_SEARCH: QueryItem[] = [
@@ -55,4 +58,101 @@ export function splitSearchClassTerms(
   } else {
     return [undefined, term.trim()];
   }
+}
+
+export function getQueryModelFromQuery(
+  query: QueryItem[]
+): VideoQueryModel | null {
+  if (!query) return null;
+  const vqm: VideoQueryModel = { search: "" };
+
+  query.forEach((tag) => {
+    const cat = tag.type,
+      content = tag.value;
+
+    if (JSON_SCHEMA[cat]) {
+      switch (JSON_SCHEMA[cat].type) {
+        case "array":
+          (vqm as any)[cat] = vqm[cat]
+            ? [...(vqm[cat] as string[]), content]
+            : [content];
+          break;
+        case "string":
+          (vqm as any)[cat] = content;
+          break;
+        case "date":
+          (vqm as any)[cat] = dayjs(content).toISOString();
+          break;
+      }
+    } else return; //ignore.
+  });
+  return vqm;
+}
+
+async function gen2array<T>(gen: AsyncIterable<T>): Promise<T[]> {
+  const out: T[] = [];
+  for await (const x of gen) {
+    out.push(x);
+  }
+  return out;
+}
+
+export async function getQueryFromQueryModel(
+  queryModel: VideoQueryModel
+): Promise<QueryItem[]> {
+  console.log(queryModel);
+  async function* generator() {
+    for (const key of Object.keys(queryModel) as (keyof VideoQueryModel)[]) {
+      // if its a vtuber (needs special handling)
+      if (key === "vtuber") {
+        for (const v in queryModel[key] as string[]) {
+          yield new Promise<QueryItem>((resolve, reject) => {
+            backendApi
+              .channelStub(v)
+              .then((ch) => {
+                resolve({
+                  type: "vtuber",
+                  value: ch.id,
+                  text: ch.name,
+                  _raw: ch,
+                });
+              })
+              .catch(() => {
+                resolve({
+                  type: "vtuber",
+                  value: v,
+                  text: v,
+                });
+              });
+          });
+        }
+      } else if (
+        JSON_SCHEMA[key].type === "array" &&
+        typeof queryModel[key] === "object"
+      ) {
+        for (const v of queryModel[key] as string[]) {
+          yield Promise.resolve<QueryItem>({
+            type: key,
+            value: v,
+            text: v,
+          });
+        }
+      } else if (key === "to" || key === "from") {
+        yield Promise.resolve<QueryItem>({
+          type: key,
+          value: queryModel[key] as any,
+          text: dayjs(queryModel[key]).format("YYYY-MM-DD HH:mm:ss Z"),
+        });
+      } else if (JSON_SCHEMA[key]) {
+        // key is a single value'd string instance
+        yield Promise.resolve<QueryItem>({
+          type: key,
+          value: queryModel[key] as any,
+          text: queryModel[key] as any,
+        });
+      }
+    }
+  }
+
+  return await gen2array(generator());
 }

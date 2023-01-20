@@ -81,8 +81,8 @@ export interface VideoQueryModel {
    * Queries generally
    */
   org?: string[]; // AND'd
-  from?: Date; //ms epoch or SerializedDate
-  to?: Date; //ms epoch or SerializedDate
+  from?: Date | string; //ms epoch or SerializedDate
+  to?: Date | string; //ms epoch or SerializedDate
   // uploader_id?: string;
   search: string;
   description?: string;
