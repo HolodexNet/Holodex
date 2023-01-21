@@ -46,12 +46,12 @@
           />
         </div>
         <!-- </v-toolbar-title> -->
-        <SearchBar
+        <!-- <SearchBar
           v-if="!isMobile"
           key="main-search-bar"
           class="mx-auto height-40px"
-        />
-        <SearchBar2
+        /> -->
+        <SearchBar3
           v-if="!isMobile"
           key="main-search-bar2"
           class="mx-auto height-40px"
@@ -350,6 +350,7 @@ export default defineComponent({
   /* height: calc(env(safe-area-inset-top,0px) + 30px); */
   padding-top: 0px;
   margin-top: env(safe-area-inset-top, 0px) !important;
+  overflow: visible;
 }
 
 #top-bar.v-toolbar--extended {

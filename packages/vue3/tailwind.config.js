@@ -27,6 +27,11 @@ module.exports = {
   theme: {
     extend: {
       colors: colorOpts,
+      backgroundImage: (theme) => ({
+        "multiselect-caret": `url()`,
+        "multiselect-spinner": `url()`,
+        "multiselect-remove": `url()`,
+      }),
     },
   },
   plugins: [
@@ -50,7 +55,7 @@ module.exports = {
           },
           "@screen 2xl": {
             maxWidth: "85vw",
-          }
+          },
         },
       });
     },
