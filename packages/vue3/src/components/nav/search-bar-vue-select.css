@@ -203,6 +203,7 @@
 }
 
 .vs__dropdown-option--highlight {
+  outline: 2px solid green;
 }
 
 .vs__dropdown-option--deselect {
