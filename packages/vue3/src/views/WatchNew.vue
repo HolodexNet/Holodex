@@ -18,7 +18,7 @@
           <div class="flex items-center">
             <div class="flex items-center">
               <div v-if="video.topic_id" class="flex items-center text-sm">
-                <div class="i-mdi:tag mr-0.5"></div>
+                <div class="i-fluent:tag-multiple-16-regular mr-0.5"></div>
                 {{ video.topic_id }}
               </div>
               &nbsp;

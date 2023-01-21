@@ -13,7 +13,7 @@ type QueryItem = {
 interface SearchableCategoryClassificationInterface {
   type: "array" | "string" | "boolean" | "date";
   required?: boolean;
-  suggestionOK?: (current_query: QueryItem[]) => boolean;
+  suggestionOK?: (current_query: QueryItem[]) => "replace" | "ok" | false;
   validation?: (item: QueryItem) => boolean;
   suggested_only?: boolean; //only autocompleted items can be autofilled.
 }
@@ -21,7 +21,7 @@ interface SearchableCategoryClassificationInterface {
 // suggest is OK if the query doesn't have the class
 function suggest_if_query_doesnt_have(uniq_class: string) {
   return (current_query: QueryItem[]) => {
-    return !current_query.find((x) => x.type === uniq_class);
+    return current_query.find((x) => x.type === uniq_class) ? "replace" : "ok";
   };
 }
 

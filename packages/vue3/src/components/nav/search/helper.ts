@@ -105,7 +105,9 @@ export async function getQueryFromQueryModel(
     for (const key of Object.keys(queryModel) as (keyof VideoQueryModel)[]) {
       // if its a vtuber (needs special handling)
       if (key === "vtuber") {
-        for (const v in queryModel[key] as string[]) {
+        if (typeof queryModel[key] === "string")
+          queryModel[key] = [queryModel[key]] as any; //force upcast string to array.
+        for (const v of queryModel[key] as string[]) {
           yield new Promise<QueryItem>((resolve, reject) => {
             backendApi
               .channelStub(v)

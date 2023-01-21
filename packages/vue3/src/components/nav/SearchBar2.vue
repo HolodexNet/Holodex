@@ -2,13 +2,13 @@
   <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
   <!-- <span> {{ $t("component.search.searchLabel") }}</span> -->
   <!--     :custom-filter="customFilter"  -->
-  <v-autocomplete
-    ref="autocomplete"
-    v-model:model-value="query"
-    v-model:search="search"
+  <!-- Vue 3 V-Select Notes:
+    :value is now model-value
+    input is now @update:model-Value -->
+  <!-- 
+            v-model:search="search"
     v-model:menu="menuOpen"
     class="mx-auto search-bar group"
-    :class="{ 'search-bar-small': isMobile }"
     multiple
     chips
     hide-no-data
@@ -17,19 +17,24 @@
     :loading="isLoading"
     :items="results"
     :placeholder="$t('component.search.searchLabel')"
-    item-value="value"
-    no-filter
-    density="compact"
-    variant="plain"
-    label="Search"
     return-object
     hide-details
     menu-icon=""
     :menu-props="({ location: 'bottom' } as any)"
     type="search"
+
+     -->
+  <vue-select
+    ref="autocomplete"
+    v-model:model-value="query"
+    multiple
+    class="mx-auto search-bar group"
+    :filterable="false"
+    :options="results"
+    append-to-body
     @keydown.backspace="
       (e) => {
-        if (!search) query.pop(); // backspace to remove last filter
+        if (!search_query) query.pop(); // backspace to remove last filter
       }
     "
     @keydown.enter="onEnterKeyDown"
@@ -38,10 +43,15 @@
         if (!orgsEnabled) orgsEnabled = true;
       }
     "
+    @search="
+      (q: any, loading: any) => {
+        logProps({ src: '@search-event', q, loading });
+      }
+    "
   >
-    <template #append-inner>
+    <template #open-indicator>
       <div
-        v-if="query.length == 0 || search.length > 0"
+        v-if="query.length == 0 || search_query.length > 0"
         class="opacity-40 i-ion:search"
         style="margin-top: 2px"
       ></div>
@@ -64,19 +74,21 @@
         :active="autocomplete_loading"
       ></v-progress-linear>
     </template>
-    <template #chip="{ item, props }">
+    <template
+      #selected-option-container="{ option, deselect /*, multiple, disabled*/ }"
+    >
       <div
         class="px-1 mr-1 tracking-tight badge badge-ghost bg-bgColor border-0 text-xs rounded-sm font-semibold hover:badge-error cursor-default"
-        v-bind="props"
-        @click="props['onClick:close']"
+        @click="deselect"
       >
-        <span class=""> {{ categoryName(item.raw) }}: </span>
-        <span class="rounded-lg ml-1"> {{ categoryValue(item.raw) }} </span>
+        <span class=""> {{ categoryName(option) }}: </span>
+        <span class="rounded-lg ml-1"> {{ categoryValue(option) }} </span>
       </div>
     </template>
-    <template #item="{ item, index, props }">
+    <template #list-header>
       <!-- MENU MAIN HEADER [Search Options.... Learn More <help>]-->
-      <template v-if="index === 0 && item.raw.incomplete">
+
+      <template v-if="results?.[0]?.incomplete">
         <div class="py-2 pl-8 pr-4 text-xs flex font-extrabold">
           <span class="cursor-default">{{
             $t("search.menu_header_text")
@@ -87,28 +99,41 @@
           </a>
         </div>
       </template>
+    </template>
+    <template #search="{ attributes, events }">
+      <input
+        v-bind="attributes"
+        :value="search_query"
+        class="vs__search"
+        v-on="events"
+        @input.stop="
+          (e) => {
+            search_query = e?.target?.value;
+          }
+        "
+    /></template>
+    <template #option="item">
       <!-- INCOMPLETE SEARCH ITEMS -->
-      <template v-if="item.raw.incomplete">
+      <template v-if="item.incomplete">
         <div
           class="px-2 py-1 cursor-pointer text-sm flex hover:bg-bgColor-300"
-          :tabindex="index + 2"
+          :tabindex="item._idx + 2"
           @click.stop="
             (e) => {
-              search = categoryName(item.raw) + ':';
+              logProps({ state: ' clickedincomplete', item });
+              search_query = categoryName(item) + ':';
               e.stopImmediatePropagation();
             }
           "
         >
           <span
             class="inline-block opacity-50 h-5"
-            :class="
-              icons.search[item.raw.type] || 'i-fluent:grid-dots-20-regular'
-            "
+            :class="icons.search[item.type] || 'i-fluent:grid-dots-20-regular'"
           ></span>
-          <span class="ml-2 font-light"> {{ categoryName(item.raw) }}: </span>
+          <span class="ml-2 font-light"> {{ categoryName(item) }}: </span>
           <span class="ml-1 opacity-40">
-            {{ categoryExplanation(item.raw) }}
-            {{ item.raw.text !== "?" ? item.raw.text : "" }}
+            {{ categoryExplanation(item) }}
+            {{ item.text !== "?" ? item.text : "" }}
           </span>
         </div>
       </template>
@@ -116,52 +141,50 @@
       <template v-else>
         <!-- Category Heading: -->
         <div
-          v-if="results[index].type !== results[index - 1]?.type"
-          class="pb-1 pt-2 pl-8 cursor-default flex text-xs font-extrabold uppercase border-t-2 border-bgColor-50 first-of-type:-mt-2 mt-1"
+          v-if="item.type !== results?.[item._idx - 1]?.type"
+          class="pb-1 pt-2 pl-8 cursor-default flex text-xs font-extrabold uppercase border-t-2 border-bgColor-50"
+          @click.stop
         >
-          {{ categoryName(item.raw) }}:
+          {{ categoryName(item) }}:
           <span class="opacity-40 normal-case ml-1">
-            {{ categoryExplanation(item.raw) }}
+            {{ categoryExplanation(item) }}
           </span>
         </div>
         <!-- Actual Item -->
         <div
-          :tabindex="index + 2"
+          :tabindex="item._idx + 2"
           class="px-2 py-1 cursor-pointer text-sm flex hover:bg-bgColor-300 focus:bg-bgColor-300"
           @keydown.enter="
-            (e) => eventTriggerSelectItem(e, item.raw, props['onClick'])
+            (e) => eventTriggerSelectItem(e, item, () => query.push(item))
           "
-          @click="(e) => eventTriggerSelectItem(e, item.raw, props['onClick'])"
+          @click.stop="
+            (e) => eventTriggerSelectItem(e, item, () => query.push(item))
+          "
         >
           <span
-            v-if="item.raw.replace"
+            v-if="item.replace"
             class="inline-block text-warning mr-1 text-base i-ic:baseline-change-circle h-5"
           >
             <!-- replace warning icon -->
           </span>
           <span
             class="inline-block opacity-50 h-5"
-            :class="
-              icons.search[item.raw.type] || 'i-fluent:grid-dots-20-regular'
-            "
+            :class="icons.search[item.type] || 'i-fluent:grid-dots-20-regular'"
           >
             <!-- search icon  -->
           </span>
-          <span class="ml-2 font-light"> {{ categoryName(item.raw) }}: </span>
-          <span
-            class="ml-1"
-            :class="{ 'text-red-300': !validateItem(item.raw) }"
-          >
-            {{ categoryValue(item.raw) }}
+          <span class="ml-2 font-light"> {{ categoryName(item) }}: </span>
+          <span class="ml-1" :class="{ 'text-red-300': !validateItem(item) }">
+            {{ categoryValue(item) }}
           </span>
           <div
-            v-if="index === 0"
+            v-if="item._idx === 0"
             class="ml-auto opacity-25 i-icon-park-solid:enter-key-one mt-1"
           ></div>
         </div>
       </template>
     </template>
-  </v-autocomplete>
+  </vue-select>
 </template>
 
 <script lang="ts">
@@ -185,6 +208,7 @@ import {
 } from "./search/types";
 import { CLIPPER_LANGS } from "@/utils/consts";
 import { useI18n } from "vue-i18n";
+import VueSelect from "vue-select";
 
 type QueryItem = {
   type: SearchableCategory;
@@ -193,10 +217,14 @@ type QueryItem = {
   incomplete?: boolean;
   replace?: boolean; // if true, clicking it will replace the prior.
   _raw?: any;
+  _idx?: number;
 };
 
 export default defineComponent({
   name: "SearchBar",
+  components: {
+    "vue-select": VueSelect,
+  },
   props: {
     dense: {
       type: Boolean,
@@ -223,7 +251,7 @@ export default defineComponent({
       enabled: orgsEnabled,
       initialData: currentOrgs.starredOrgs,
     });
-    const search = ref("");
+    const search_query = ref("");
     const query = ref([] as Array<QueryItem>);
 
     const autocomplete_loading = ref(false);
@@ -255,10 +283,11 @@ export default defineComponent({
     });
 
     // instantly updating autocomplete!
-    watch(search, (newValue) => {
+    watch(search_query, (newValue) => {
       for (const _key of ["has_song", "type", "lang", "other"] as const)
         ac_opts[_key] = [];
       // clear ^
+      console.warn("new value", newValue);
       const [search_class, search_term] = splitSearchClassTerms(
         newValue,
         langCategoryReversemapClass.value
@@ -367,7 +396,7 @@ export default defineComponent({
     });
     // handle autocomplete for SERVER SIDE QUERIES
     watchDebounced(
-      search,
+      search_query,
       async (newValue) => {
         const [search_class, search_term] = splitSearchClassTerms(
           newValue,
@@ -442,7 +471,7 @@ export default defineComponent({
       isMobile,
       orgs,
       orgsEnabled,
-      search,
+      search_query,
       ac_opts,
       query,
       dropdown,
@@ -460,7 +489,10 @@ export default defineComponent({
   },
   computed: {
     results() {
-      return this.search ? this.dropdown : FIRST_SEARCH;
+      return (this.search_query ? this.dropdown : FIRST_SEARCH).map((x, i) => ({
+        ...x,
+        _idx: i,
+      }));
     },
   },
   watch: {
@@ -468,6 +500,7 @@ export default defineComponent({
       if (this.menuOpen) this.menuOpen = false;
     },
   },
+  //   async mounted() {},
   methods: {
     logProps(props: any) {
       console.log(props);
@@ -511,23 +544,21 @@ export default defineComponent({
         : query.text;
     },
     validateItem(item: QueryItem) {
-      this.logProps(item);
       const v = JSON_SCHEMA[item.type]?.validation?.(item);
-      this.logProps(v);
       return v ?? true;
     },
     onEnterKeyDown(e: Event) {
-      console.log(this.search);
-      if (this.search === null || this.search.length === 0) {
+      console.log(this.search_query);
+      if (this.search_query === null || this.search_query.length === 0) {
         this.commitSearch();
       } else {
         if (this.results?.[0]?.incomplete) {
-          this.search = this.results[0].type + ":";
+          this.search_query = this.results[0].type + ":";
         } else if (this.results?.[0]) {
           this.eventTriggerSelectItem(e, this.results?.[0], () => {
             this.query.push(this.results?.[0]);
           });
-          this.search = "";
+          this.search_query = "";
           // e.target?.focus?.();
         }
       }
@@ -559,9 +590,22 @@ export default defineComponent({
         }, 200);
       }
     },
+    keyHandlers(map: any, vm: any) {
+      return {
+        ...map,
+        13: (e: KeyboardEvent) => {
+          // enter key
+          e.preventDefault();
+          return this.onEnterKeyDown(e);
+        },
+      };
+    },
   },
 });
 </script>
+<style>
+@import "./search-bar-vue-select.css";
+</style>
 <style scoped>
 .search-bar {
   max-width: min(v-bind('maxWidth+"px"'), 100%) !important;
@@ -591,7 +635,7 @@ export default defineComponent({
     display: none;
   }
 
-  .v-field__input {
+  .vs__selected-options {
     // padding-top: 10px;
     // display: block;
     overflow-x: auto;
@@ -603,6 +647,10 @@ export default defineComponent({
     line-height: 20px;
 
     flex-wrap: nowrap;
+    align-items: center;
+
+    height: 30px;
+    margin-top: 2px;
 
     scrollbar-width: thin;
     scrollbar-width: 2px;
@@ -627,6 +675,6 @@ export default defineComponent({
 }
 
 /* .search-bar.theme--light > .v-input__append-outer > .v-input__icon > .v-icon {
-    color: black !important;
-} */
+      color: black !important;
+  } */
 </style>

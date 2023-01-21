@@ -34,7 +34,7 @@
           />
           <div v-else class="w-6 h-6 i-ion:menu"></div>
         </div>
-        <div class="flex flex-row items-center gap-2">
+        <div class="flex shrink-0 mr-2 flex-row items-center gap-2">
           <router-link
             v-if="!isSmOrDown"
             :to="{ name: settings.defaultOpen || 'Home' }"
@@ -51,11 +51,16 @@
           key="main-search-bar"
           class="mx-auto height-40px"
         />
+        <SearchBar2
+          v-if="!isMobile"
+          key="main-search-bar2"
+          class="mx-auto height-40px"
+        />
 
         <!--================= Account [👤] Button (Desktop Only) ================-->
 
         <playlist-button
-          class="flex-shrink ml-auto mr-2"
+          class="flex-shrink mr-2"
           @click="playlistDrawer = !playlistDrawer"
         ></playlist-button>
         <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
