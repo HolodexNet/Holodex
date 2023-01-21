@@ -27,12 +27,26 @@
     @search-change="(q: string) => {
       search = q;
     }"
+    @keydown="(evt: KeyboardEvent) => {
+      if(evt.key === 'Enter') {
+        logWithContext('enter-down')(evt.key)
+        onEnterKeyDown(evt);
+        evt.stopImmediatePropagation();
+        autocomplete.pointer = null;
+      }
+    }"
+    @keyup="(evt: KeyboardEvent) => {
+      if(evt.key === 'Enter') {
+        logWithContext('enter-up')(evt.key)
+        evt.stopImmediatePropagation();
+      }
+    }"
     @focus="
       () => {
         if (!orgsEnabled) orgsEnabled = true;
       }
     "
-    @select="undoIfIncomplete"
+    @select="() => query.pop()"
     @option="(v: any) => logWithContext('option')({v, query}) /* i dont think this gets triggered. */"
   >
     <template #caret>
@@ -163,7 +177,7 @@
             {{ categoryValue(item) }}
           </span>
           <div
-            v-if="item._idx === 0"
+            v-if="isPointed(item)"
             class="ml-auto opacity-25 i-icon-park-solid:enter-key-one mt-1"
           ></div>
         </div>
@@ -554,10 +568,14 @@ export default defineComponent({
       return v ?? true;
     },
     onEnterKeyDown(e: Event) {
-      console.log(this.search);
+      this.logWithContext("enter")(this.search);
+      this.logWithContext("current-pointer")(
+        (this.autocomplete as any).pointer
+      );
       if (this.search === null || this.search.length === 0) {
         this.commitSearch();
       } else {
+        this.logWithContext("enter->autocomplete")(this.autocomplete);
         if (this.results?.[0]?.incomplete) {
           this.search = this.categoryName(this.results[0]) + ":";
         } else if (this.results?.[0]) {
@@ -565,9 +583,9 @@ export default defineComponent({
             this.query.push(this.results?.[0]);
           });
           this.search = "";
-          // e.target?.focus?.();
         }
       }
+      this.tryFocusInput();
     },
     eventTriggerSelectItem(e: Event, item: QueryItem, onClick?: AnyFn) {
       if (this.validateItem(item)) {
@@ -588,7 +606,7 @@ export default defineComponent({
     tryFocusInput() {
       if ((this.autocomplete as any)?.$el)
         setTimeout(() => {
-          this.logWithContext("reset")((this.autocomplete as any).$el);
+          this.logWithContext("focus-input")((this.autocomplete as any).$el);
           ((this.autocomplete as any).$el as unknown as HTMLElement)
             ?.getElementsByTagName("input")[0]
             .focus();
@@ -602,12 +620,21 @@ export default defineComponent({
         }, 200);
     },
     undoIfIncomplete(item: QueryItem) {
-      if (item.incomplete) {
+      this.logWithContext("selected:")(item);
+      if (item.incomplete || item.value === undefined || item.value === "") {
         this.query.pop(); // undo the insertion
         this.search = this.categoryName(item) + ": ";
-      } else {
-        this.search = ""; // successful
+        this.tryFocusInput();
+        return;
       }
+      if (item.replace)
+        this.query.splice(
+          this.query.findIndex(({ type }) => type === item.type),
+          1
+        );
+
+      this.search = ""; // successful
+
       this.tryFocusInput();
     },
   },
