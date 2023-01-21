@@ -30,9 +30,11 @@
     @keydown="(evt: KeyboardEvent) => {
       if(evt.key === 'Enter') {
         logWithContext('enter-down')(evt.key)
-        onEnterKeyDown(evt);
+        // onEnterKeyDown(evt);
         evt.stopImmediatePropagation();
-        autocomplete.pointer = null;
+      }
+      else if(evt.key !== 'ArrowDown' && evt.key !== 'ArrowUp') {
+        (autocomplete as any).clearPointer();
       }
     }"
     @keyup="(evt: KeyboardEvent) => {
@@ -46,7 +48,7 @@
         if (!orgsEnabled) orgsEnabled = true;
       }
     "
-    @select="() => query.pop()"
+    @select="undoIfIncomplete"
     @option="(v: any) => logWithContext('option')({v, query}) /* i dont think this gets triggered. */"
   >
     <template #caret>
