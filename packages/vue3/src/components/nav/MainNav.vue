@@ -51,7 +51,7 @@
           key="main-search-bar"
           class="mx-auto height-40px"
         /> -->
-        <SearchBar3
+        <SearchBar4
           v-if="!isMobile"
           key="main-search-bar2"
           class="mx-auto height-40px"
