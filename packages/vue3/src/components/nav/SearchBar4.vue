@@ -5,13 +5,17 @@
   <!-- <Multiselect mode="tags"></Multiselect> -->
   <Autocomplete
     ref="autocomplete"
-    v-model:selection="query"
     v-model:search="search"
+    :selection="query"
     :options="results"
     class="search-bar group mx-auto"
     :placeholder="$t('component.search.searchLabel')"
     @pop-chip="query.pop()"
-    @submit="() => {}"
+    @submit="
+      () => {
+        commitSearch();
+      }
+    "
     @select="
       ({ n }) => {
         /* selected nth item */
@@ -24,21 +28,25 @@
         if (!orgsEnabled) orgsEnabled = true;
       }
     "
+    @pointed="({ n }) => scrollIntoView(n)"
   >
     <template #caret>
       <div
         v-if="query.length == 0 || search.length > 0"
         class="i-ion:search opacity-40"
-        style="margin-top: 2px"
+        style="margin: auto 0px"
+        @click="tryFocusInput"
       ></div>
       <template v-else>
         <div
           class="i-icon-park-outline:enter-key hidden w-7 opacity-50 group-focus-within:block"
           style="margin: auto 0px"
+          @click="commitSearch"
         ></div>
         <div
           class="i-lucide:text-cursor-input block w-7 opacity-25 hover:text-accent-400 hover:opacity-100 group-focus-within:hidden"
           style="margin: auto 0px"
+          @click="tryFocusInput"
         ></div
       ></template>
     </template>
@@ -60,15 +68,13 @@
         <template v-if="item.incomplete">
           <!-- Incomplete Search Options -->
           <div
-            class="flex cursor-pointer px-2 py-1 text-sm hover:bg-bgColor-300"
+            class="option flex cursor-pointer px-2 py-1 text-sm hover:bg-bgColor-300"
             :class="{
               'bg-bgColor-200': idx === active,
             }"
-            @click.stop="
+            @click="
               (e) => {
-                eventTriggerSelectItem(item, () => {
-                  search = categoryName(item) + ': ';
-                });
+                eventTriggerSelectItem(item);
                 e.stopImmediatePropagation();
               }
             "
@@ -100,24 +106,12 @@
           </div>
           <!-- Actual Item -->
           <div
-            class="flex cursor-pointer px-2 py-1 text-sm hover:bg-bgColor-300 focus:bg-bgColor-300"
+            class="option flex cursor-pointer px-2 py-1 text-sm hover:bg-bgColor-300 focus:bg-bgColor-300"
             :class="{
               'bg-bgColor-200': idx === active,
             }"
-            @keydown.enter.stop="
-              (e) =>
-                eventTriggerSelectItem(item, () => {
-                  query.push(item);
-                  search = '';
-                })
-            "
-            @click.stop="
-              (e) =>
-                eventTriggerSelectItem(item, () => {
-                  query.push(item);
-                  search = '';
-                })
-            "
+            @keydown.enter.stop="(e) => eventTriggerSelectItem(item)"
+            @click="(e) => eventTriggerSelectItem(item)"
           >
             <span
               v-if="item.replace"
@@ -167,8 +161,6 @@
 
 <script lang="ts">
 import api from "@/utils/backend-api";
-// import debounce from "lodash-es/debounce";
-// import { useLangStore } from "@/stores/lang";
 import { useDisplay } from "vuetify";
 import {
   FIRST_SEARCH,
@@ -178,7 +170,7 @@ import {
 } from "./search/helper";
 import { useOrgList } from "@/services/static";
 import { useLangStore, useSiteStore } from "@/stores";
-import { AnyFn, watchDebounced } from "@vueuse/core";
+import { watchDebounced } from "@vueuse/core";
 import {
   JSON_SCHEMA,
   SearchableCategory,
@@ -194,8 +186,6 @@ type QueryItem = {
   incomplete?: boolean;
   replace?: boolean; // if true, clicking it will replace the prior.
   _raw?: any;
-  _idx?: number;
-  _key?: string;
 };
 
 export default defineComponent({
@@ -434,15 +424,10 @@ export default defineComponent({
       () => route.query,
       async () => {
         if (route.query) {
-          query.value = (
-            await getQueryFromQueryModel(
-              route.query as unknown as VideoQueryModel
-            )
-          ).map((x) => ({
-            ...x,
-            _key: x.type + x.value,
-          }));
-          console.log("creating_query", query.value);
+          query.value = await getQueryFromQueryModel(
+            route.query as unknown as VideoQueryModel
+          );
+          console.log(JSON.stringify(route.query));
         }
       },
       { immediate: true }
@@ -471,7 +456,14 @@ export default defineComponent({
   },
   computed: {
     results() {
-      return this.search ? this.dropdown : FIRST_SEARCH;
+      return this.search
+        ? this.dropdown.filter(
+            (dd) =>
+              !this.query.find(
+                (qq) => qq.type == dd.type && qq.value == dd.value
+              )
+          )
+        : FIRST_SEARCH;
     },
   },
   watch: {
@@ -495,6 +487,8 @@ export default defineComponent({
         this.$router.push(`/channel/${this.query[0].value}`);
         return;
       }
+
+      this.logWithContext("commitSearch")("ok");
 
       this.$router.push({
         path: "/search",
@@ -543,32 +537,32 @@ export default defineComponent({
         if (this.results?.[0]?.incomplete) {
           this.search = this.categoryName(this.results[0]) + ":";
         } else if (this.results?.[0]) {
-          this.eventTriggerSelectItem(this.results?.[0], () => {
-            this.query.push(this.results?.[0]);
-          });
+          this.eventTriggerSelectItem(this.results?.[0]);
           this.search = "";
         }
       }
       this.tryFocusInput();
     },
-    eventTriggerSelectItem(item: QueryItem, accept?: AnyFn) {
+    eventTriggerSelectItem(item: QueryItem) {
+      if (item.incomplete) {
+        this.logWithContext("incomplete-item")(item);
+        this.search = this.categoryName(item) + ":";
+        this.tryFocusInput();
+        return;
+      }
       if (this.validateItem(item)) {
         this.logWithContext("trigger-event")(item);
         // console.log('huh');
-        if (item.incomplete) {
-          this.search = this.categoryName(this.results[0]) + ":";
-        } else {
-          if (item.replace)
-            this.query.splice(
-              this.query.findIndex(({ type }) => type === item.type),
-              1
-            );
+        if (item.replace)
+          this.query.splice(
+            this.query.findIndex(({ type }) => type === item.type),
+            1
+          );
 
-          this.query.push(item);
-          this.search = "";
-        } // onClick?.(e);
-        this.logWithContext("reset-search-trigger")(item);
-      }
+        this.query.push(item);
+        this.search = "";
+      } // onClick?.(e);
+      this.logWithContext("reset-search-trigger")(item);
 
       this.tryFocusInput();
     },
@@ -586,7 +580,14 @@ export default defineComponent({
               inline: "end",
               behavior: "smooth",
             });
-        }, 200);
+        }, 100);
+    },
+    scrollIntoView(n: number) {
+      if (n < 0) n = 0;
+      const el = ((this.autocomplete as any).$el as unknown as HTMLElement)
+        ?.getElementsByClassName("option")
+        .item(n);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
     },
     // undoIfIncomplete(item: QueryItem) {
     //   this.logWithContext("selected:")(item);

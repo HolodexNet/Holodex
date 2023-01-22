@@ -14,19 +14,20 @@
           <slot name="chips" :selection="selection"></slot>
         </div>
         <input
+          ref="inputField"
           v-model="searchContent"
           class="dropdown-input"
           :placeholder="placeholder"
           @focus="showOptions()"
-          @blur="exit()"
-          @keyup="keyMonitor"
+          @blur="exit"
+          @keydown="keyMonitor"
         />
       </div>
-      <slot name="caret" :open="optionsShown"></slot>
+      <slot name="caret" :open="showDropdown" :input="inputField"></slot>
     </div>
     <!-- Dropdown Menu -->
     <div
-      v-show="optionsShown && showMenu"
+      v-show="showDropdown && showMenu"
       class="multiselect-dropdown"
       :class="{ 'is-top': dropUp, 'flex-col-reverse': dropUp }"
     >
@@ -36,19 +37,19 @@
 </template>
 
 <script lang="ts">
-import { useVModel } from "@vueuse/core";
+import { refDebounced, useVModel } from "@vueuse/core";
 import type { Ref, WritableComputedRef } from "vue";
 
 function useRange(length: Ref<number>) {
-  const state = ref(0);
+  const state = ref(-1);
 
   watch(length, (c) => {
-    if (state.value >= c && state.value > 0) state.value = c - 1;
+    if (state.value >= c && state.value > -1) state.value = c - 1;
   });
   return {
     state,
     reset: () => {
-      state.value = 0;
+      state.value = -1;
     },
     incr: () => {
       state.value = (state.value + 1) % Math.max(1, length.value);
@@ -106,7 +107,7 @@ export default defineComponent({
       note: "Bottom to Top instead of Top to bottom.",
     },
   },
-  emits: ["update:search", "update:selection", "popChip", "select", "submit"],
+  emits: ["update:search", "popChip", "pointed", "select", "submit"],
   setup(props, { emit }) {
     const searchContent: WritableComputedRef<string> | Ref<string> = useVModel(
       props,
@@ -114,14 +115,20 @@ export default defineComponent({
       emit
     );
     const currentValue = useRange(computed(() => props.options.length));
+
     function keyMonitor(event: KeyboardEvent) {
       switch (event.key) {
         case "Backspace":
+          currentValue.reset();
           if (searchContent.value === "") emit("popChip");
           return;
         case "Enter":
-          if (searchContent.value === "") emit("submit");
-          else emit("select", { n: currentValue.state.value });
+          if (searchContent.value === "" && currentValue.state.value == -1)
+            emit("submit");
+          else {
+            emit("select", { n: currentValue.state.value });
+            currentValue.reset();
+          }
           event.preventDefault();
           return;
         case "ArrowUp":
@@ -130,23 +137,44 @@ export default defineComponent({
           event.stopImmediatePropagation();
           return;
         case "Tab":
+          if (event.shiftKey) {
+            currentValue.decr();
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return;
+          }
         case "ArrowDown":
           currentValue.incr();
           event.preventDefault();
           event.stopImmediatePropagation();
           return;
+        case "Escape":
+          currentValue.reset();
+          event.preventDefault();
+          event.stopImmediatePropagation();
         default:
+          currentValue.reset();
           return; //business as usual
       }
     }
 
-    watch(currentValue.state, (n) => console.log("new number", n));
+    watch(currentValue.state, (n) => {
+      emit("pointed", { n });
+    });
 
-    return { searchContent, keyMonitor, activeIndex: currentValue.state };
-  },
-  data() {
+    // menu open /close
+    const optionsShown = ref(false);
+    const showDropdown = refDebounced(optionsShown, 300);
+
+    const inputField = ref<HTMLInputElement>();
+
     return {
-      optionsShown: false,
+      optionsShown,
+      showDropdown,
+      searchContent,
+      keyMonitor,
+      inputField,
+      activeIndex: currentValue.state,
     };
   },
   computed: {},
@@ -211,7 +239,8 @@ export default defineComponent({
 .multiselect-dropdown {
   left: -1px;
   right: -1px;
-  @apply absolute bottom-0 z-50 -mt-[1px] flex max-h-80 translate-y-full transform flex-col overflow-y-scroll rounded-b border border-bgColor-100 bg-bgColor;
+  z-index: 5000;
+  @apply absolute bottom-0 -mt-[1px] flex max-h-80 translate-y-full transform flex-col overflow-y-scroll rounded-b border border-bgColor-100 bg-bgColor;
 }
 
 .multiselect-dropdown.is-top {

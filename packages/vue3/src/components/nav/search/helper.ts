@@ -8,6 +8,7 @@ type QueryItem = {
   value: string;
   text: string;
   incomplete?: boolean;
+  replace?: boolean;
   _raw?: any;
 };
 
