@@ -17,9 +17,7 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tanstack/virtual-core": "^3.0.0-beta.34",
     "@tanstack/vue-query": "^4.22.0",
-    "@types/yaireo__tagify": "^4.16.1",
     "@vueuse/core": "^9.9.0",
-    "@yaireo/tagify": "^4.17.6",
     "axios": "^0.27.2",
     "clone": "^2.1.2",
     "color": "^4.2.3",
@@ -31,8 +29,8 @@
     "jwt-decode": "^3.1.2",
     "oauth-open": "^1.0.4",
     "pinia": "^2.0.28",
-    "pinia-plugin-persistedstate-2": "^2.0.8",
-    "pinia-shared-state": "^0.2.10",
+    "pinia-plugin-persistedstate-2": "^2.0.9",
+    "pinia-shared-state": "^0.2.13",
     "socket.io-client": "^4.5.2",
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "3.2.45",
@@ -41,7 +39,7 @@
     "vue-plugin-load-script": "^2.1.1",
     "vue-router": "^4.1.6",
     "vue-toast-notification": "^3.0.4",
-    "vuetify": "^3.1.0"
+    "vuetify": "^3.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",

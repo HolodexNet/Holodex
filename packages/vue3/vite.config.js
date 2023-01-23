@@ -42,7 +42,7 @@ export default defineConfig({
       include: ["src/locales/**/*.yml", "node_modules/dayjs/**/*.js"],
     }),
     // ViteAliases(),
-    vue({}),
+    vue(),
     Unocss({
       presets: [presetIcons()],
       safelist: [
@@ -69,14 +69,11 @@ export default defineConfig({
       types: [],
       dts: "src/components.d.ts",
     }),
-    filesize({
-      showBeforeSizes: "build",
-    }),
-    visualizer({ gzipSize: true, brotliSize: true }),
+    // filesize({
+    //   showBeforeSizes: "build",
+    // }),
+    visualizer({ template: "treemap", gzipSize: true, brotliSize: true }),
   ],
-  optimizeDeps: {
-    exclude: ["oh-vue-icons/icons"],
-  },
   server: {
     port: 8080,
     proxy: {

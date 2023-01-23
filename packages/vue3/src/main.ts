@@ -16,7 +16,6 @@ import "@/setup/vuetify/main.sass"; // vuetify configuration
 import "vue-toast-notification/dist/theme-default.css";
 import { createVuetify } from "vuetify";
 import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
-// import { OhVueIcon } from "oh-vue-icons";
 import * as icons from "@/utils/icons";
 
 import { aliases, mdi } from "vuetify/iconsets/mdi-svg";

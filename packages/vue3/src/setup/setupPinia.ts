@@ -13,6 +13,10 @@ export function setupPinia() {
   });
   pinia.use((context) => pspinstall(context));
 
+  // @Todo shared state is getting a bit too big. Maybe suck the file in it's just 1 file.
+  // https://github.com/wobsoriano/pinia-shared-state/blob/master/src/index.ts
+  // the reason its big is due to realistic-structured-clone + broadcast-channel polyfill.
+
   // shared state:
   pinia.use(
     PiniaSharedState({
