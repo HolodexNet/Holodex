@@ -1,6 +1,6 @@
 <template>
   <!-- Render with opaque response for cache if size is lte 40 -->
-  <a
+  <router-link
     v-if="!err"
     :href="(!noLink && `/channel/${channel.id}`) || undefined"
     :title="
@@ -11,6 +11,7 @@
     "
     data-ctx="channel"
     :data-obj="channel.id"
+    :to="!noLink ? `/channel/${channel.id}` : ''"
   >
     <v-lazy
       tag="img"
@@ -23,7 +24,7 @@
       :class="{ 'rounded-full': rounded, 'rounded-md': !rounded }"
       @error="err = true"
     />
-  </a>
+  </router-link>
   <v-avatar
     v-else
     color="secondary"

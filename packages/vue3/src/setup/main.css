@@ -63,3 +63,7 @@ e.g. just doing .online will NOT work
 .btn-text-ghost:focus-visible {
   outline: 2px solid currentColor;
 }
+
+.btn-text { 
+  @apply btn btn-sm bg-transparent hover:bg-transparent text-primary p-0;
+}
