@@ -1,8 +1,4 @@
 <template>
-  <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
-  <!-- <span> {{ $t("component.search.searchLabel") }}</span> -->
-  <!--     :custom-filter="customFilter"  -->
-  <!-- <Multiselect mode="tags"></Multiselect> -->
   <Autocomplete
     ref="autocomplete"
     v-model:search="search"
@@ -11,24 +7,14 @@
     class="search-bar group mx-auto"
     :placeholder="$t('component.search.searchLabel')"
     @pop-chip="query.pop()"
-    @submit="
-      () => {
-        commitSearch();
-      }
-    "
+    @pointed="({ n }) => scrollIntoView(n)"
     @select="
       ({ n }) => {
-        /* selected nth item */
-        logWithContext('select:')(n);
         eventTriggerSelectItem(results[n]);
       }
     "
-    @focus="
-      () => {
-        if (!orgsEnabled) orgsEnabled = true;
-      }
-    "
-    @pointed="({ n }) => scrollIntoView(n)"
+    @focus="if (!orgsEnabled) orgsEnabled = true;"
+    @submit="commitSearch()"
   >
     <template #caret>
       <div
@@ -68,16 +54,11 @@
         <template v-if="item.incomplete">
           <!-- Incomplete Search Options -->
           <div
-            class="option flex cursor-pointer px-2 py-1 text-sm hover:bg-bgColor-300"
+            class="option"
             :class="{
               'bg-bgColor-200': idx === active,
             }"
-            @click="
-              (e) => {
-                eventTriggerSelectItem(item);
-                e.stopImmediatePropagation();
-              }
-            "
+            @click="eventTriggerSelectItem(item)"
           >
             <span
               class="inline-block h-5 opacity-50"
@@ -106,16 +87,15 @@
           </div>
           <!-- Actual Item -->
           <div
-            class="option flex cursor-pointer px-2 py-1 text-sm hover:bg-bgColor-300 focus:bg-bgColor-300"
+            class="option"
             :class="{
               'bg-bgColor-200': idx === active,
             }"
-            @keydown.enter.stop="(e) => eventTriggerSelectItem(item)"
-            @click="(e) => eventTriggerSelectItem(item)"
+            @click="eventTriggerSelectItem(item)"
           >
             <span
               v-if="item.replace"
-              class="i-ic:baseline-change-circle mr-1 inline-block h-5 text-base text-warning"
+              class="i-ic:baseline-change-circle inline-block h-5 text-base text-warning"
             >
               <!-- replace warning icon -->
             </span>
@@ -127,8 +107,8 @@
             >
               <!-- search icon  -->
             </span>
-            <span class="ml-2 font-light"> {{ categoryName(item) }}: </span>
-            <span class="ml-1" :class="{ 'text-red-300': !validateItem(item) }">
+            <span class="font-light"> {{ categoryName(item) }}: </span>
+            <span class="" :class="{ 'text-red-300': !validateItem(item) }">
               {{ categoryValue(item) }}
             </span>
             <div
@@ -525,24 +505,6 @@ export default defineComponent({
       // this.logWithContext("validateItem")({ item, v });
       return v ?? true;
     },
-    onEnterKeyDown(e: Event) {
-      this.logWithContext("enter")(this.search);
-      this.logWithContext("current-pointer")(
-        (this.autocomplete as any).pointer
-      );
-      if (this.search === null || this.search.length === 0) {
-        this.commitSearch();
-      } else {
-        this.logWithContext("enter->autocomplete")(this.autocomplete);
-        if (this.results?.[0]?.incomplete) {
-          this.search = this.categoryName(this.results[0]) + ":";
-        } else if (this.results?.[0]) {
-          this.eventTriggerSelectItem(this.results?.[0]);
-          this.search = "";
-        }
-      }
-      this.tryFocusInput();
-    },
     eventTriggerSelectItem(item: QueryItem) {
       if (item.incomplete) {
         this.logWithContext("incomplete-item")(item);
@@ -589,24 +551,6 @@ export default defineComponent({
         .item(n);
       if (el) el.scrollIntoView({ behavior: "smooth" });
     },
-    // undoIfIncomplete(item: QueryItem) {
-    //   this.logWithContext("selected:")(item);
-    //   if (item.incomplete || item.value === undefined || item.value === "") {
-    //     this.query.pop(); // undo the insertion
-    //     this.search = this.categoryName(item) + ": ";
-    //     this.tryFocusInput();
-    //     return;
-    //   }
-    //   if (item.replace)
-    //     this.query.splice(
-    //       this.query.findIndex(({ type }) => type === item.type),
-    //       1
-    //     );
-
-    //   this.search = ""; // successful
-
-    //   this.tryFocusInput();
-    // },
   },
 });
 </script>
@@ -615,69 +559,14 @@ export default defineComponent({
   max-width: min(v-bind('maxWidth+"px"'), 100%) !important;
 }
 </style>
-<style>
-/* @import "multiselect-tw.css"; */
-</style>
 <style lang="scss">
 .search-bar {
   // width management.
   padding: 2px 6px;
   @apply rounded-md bg-bgColor-600;
 
-  // height: 50px;
-  * {
-    --v-field-padding-top: 0px !important;
-    --v-field-padding-bottom: 0px !important;
-    --v-input-padding-top: 2px !important;
-    --autocomplete-chips-margin-bottom: 0px !important;
-    --v-input-control-height: 24px;
-  }
-
-  .v-autocomplete__selection {
-    height: 20px;
-    margin-top: 0px !important;
-  }
-
-  .v-label.v-field-label {
-    display: none;
-  }
-
-  .v-field__input {
-    // padding-top: 10px;
-    // display: block;
-    overflow-x: auto;
-    overflow-wrap: unset;
-    overflow-y: clip;
-    // height: 40px;
-    white-space: nowrap;
-    font-size: 13px;
-    line-height: 20px;
-
-    flex-wrap: nowrap;
-
-    scrollbar-width: thin;
-    scrollbar-width: 2px;
-
-    & > input {
-      min-width: 150px !important;
-    }
-
-    &::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: rgba(116, 116, 116, 0.1);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: rgba(182, 182, 182, 0.4);
-    }
+  .option {
+    @apply flex cursor-pointer gap-1 px-2 py-1 text-sm hover:bg-bgColor-300;
   }
 }
-
-/* .search-bar.theme--light > .v-input__append-outer > .v-input__icon > .v-icon {
-    color: black !important;
-} */
 </style>
