@@ -3,7 +3,7 @@
     <template #activator="{ props }">
       <button
         id="picker"
-        class="h-20 btn"
+        class="btn h-20"
         v-bind="props"
         :class="'btn-' + daisyName"
         :style="{ 'background-color': color, color: foreground }"
@@ -22,8 +22,11 @@
   </v-menu>
 </template>
 <script lang="ts">
-import { generateForegorundColorFrom } from "@/hooks/theme-changer/daisy-utils/daisy-color-fns";
-import { DaisyColorName } from "@/hooks/theme-changer/daisy-utils/daisy-types";
+import { generateForegroundColorFrom } from "@/hooks/theme-changer/daisy-utils/daisy-color-fns";
+import {
+  DaisyColorName,
+  DaisyColorShorthand,
+} from "@/hooks/theme-changer/daisy-utils/daisy-types";
 import { useThemeStore } from "@/stores";
 import { PropType } from "vue";
 
@@ -37,16 +40,13 @@ export default defineComponent({
       default: "",
     },
     shorthand: {
-      type: String,
+      type: String as PropType<DaisyColorShorthand>,
       required: true,
     },
   },
   setup() {
     const theme = useThemeStore();
     return { theme };
-  },
-  data() {
-    return { c2: this.theme.colors?.[this.daisyName] };
   },
   computed: {
     color() {
@@ -56,7 +56,7 @@ export default defineComponent({
       );
     },
     foreground() {
-      return "hsl(" + generateForegorundColorFrom(this.color) + ")";
+      return "hsl(" + generateForegroundColorFrom(this.color) + ")";
     },
     // overrideLanguage: {
     //   get() {
@@ -80,7 +80,7 @@ export default defineComponent({
 </script>
 <style>
 #picker {
-  @apply border-4 border-white rounded-lg;
+  @apply rounded-lg border-4 border-white;
   border-style: solid;
   /* outline: 4px solid black; */
 }
