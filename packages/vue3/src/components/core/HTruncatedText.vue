@@ -13,15 +13,17 @@
           target: '_blank',
           attributes: {
             onclick: 'event.stopPropagation()',
+            class: 'link link-primary',
           },
         }"
         class="text-sm"
-        >{{ text }}</span
       >
+        {{ text }}
+      </span>
     </div>
     <button
       v-if="newLineCount > lines"
-      class="btn btn-sm bg-transparent hover:bg-transparent text-primary p-0"
+      class="btn-text"
       @click="expanded = !expanded"
     >
       <slot name="button" :expanded="expanded">
@@ -36,7 +38,12 @@
 </template>
 
 <script lang="ts">
+import { directive } from "@/setup/vue-3-linkify/linkify";
+
 export default {
+  directives: {
+    linkify: directive,
+  },
   props: {
     html: {
       type: String,
@@ -66,7 +73,7 @@ export default {
 };
 </script>
 <style>
-.h-truncated-text a {
+/* .h-truncated-text a {
   @apply text-primary;
-}
+} */
 </style>
