@@ -14,12 +14,11 @@
             <v-fade-transition>
               <div
                 v-if="isHovering"
-                class="absolute right-0 left-14 px-2 flex h-12 py-0.5 bg-bgColor-300 gap-1"
+                class="absolute right-0 left-14 flex h-12 gap-1 bg-bgColor-300 px-2 py-0.5"
                 style="width: 9.5rem"
               >
                 <router-link
-                  class="flex-shrink h-full rounded basis-3/4 c-card-icon hover:text-primary"
-                  target="_blank"
+                  class="c-card-icon h-full flex-shrink basis-3/4 rounded hover:text-primary"
                   title="Watch"
                   :to="`/watch/${v.id}`"
                 >
@@ -28,9 +27,8 @@
                   <!-- <logo class="my-1 h-5/6"></logo> -->
                 </router-link>
                 <router-link
-                  class="h-full mr-1 rounded basis-1/4 c-card-icon hover:text-primary"
+                  class="c-card-icon mr-1 h-full basis-1/4 rounded hover:text-primary"
                   :to="`/multiview/...?${v.id}`"
-                  target="_blank"
                   title="Multiview"
                 >
                   <div class="i-clarity:grid-chart-solid"></div>
@@ -41,7 +39,7 @@
       </v-hover>
       <v-tooltip activator="parent">
         <div
-          class="max-w-md p-1 -ml-6 border-2 rounded-lg shadow-xl w-60 bg-bgColor shadow-bgColor border-secondary"
+          class="-ml-6 w-60 max-w-md rounded-lg border-2 border-secondary bg-bgColor p-1 shadow-xl shadow-bgColor"
         >
           <v-lazy><video-card :video="v"></video-card></v-lazy>
         </div>

@@ -1,18 +1,18 @@
 <template>
   <div v-if="id && video" class="flex">
     <div class="flex flex-1">
-      <div class="flex flex-col flex-1 watch-left">
+      <div class="watch-left flex flex-1 flex-col">
         <!-- <watch-channel-bar :video="video" class="border-b border-bgColor-100" /> -->
 
         <div class="p-2">
           <video-player
             ref="playerInstance"
             :video="video"
-            class="watch-video rounded-xl overflow-hidden"
+            class="watch-video overflow-hidden rounded-xl"
           ></video-player>
         </div>
 
-        <div class="pb-1 px-2">
+        <div class="px-2 pb-1">
           <!-- <div class="flex items-center"> -->
           <!-- <div class="font-bold line-clamp-2">{{ video.title }}</div> -->
           <div class="flex items-center">
@@ -23,24 +23,24 @@
               </div>
               &nbsp;
               <div v-if="video.live_viewers" class="flex items-center text-sm">
-                <div class="i-mdi:account text-lg mr-0.5" />
+                <div class="i-mdi:account mr-0.5 text-lg" />
                 {{ video.live_viewers }}
               </div>
               &nbsp;
-              <div class="i-mdi:clock text-lg mr-0.5" />
+              <div class="i-mdi:clock mr-0.5 text-lg" />
               <video-card-live-duration
                 :video="video"
                 class="bg-transparent text-sm"
               />
             </div>
             <div class="ml-auto flex">
-              <button class="btn btn-circle btn-sm btn-outline">
+              <button class="btn-outline btn-sm btn-circle btn">
                 <div class="i-tabler:layout-sidebar text-2xl" />
               </button>
-              <button class="btn btn-circle btn-sm btn-outline">
+              <button class="btn-outline btn-sm btn-circle btn">
                 <save-to-playlist-btn :video="video" class="text-2xl" />
               </button>
-              <button class="btn btn-circle btn-sm btn-outline">
+              <button class="btn-outline btn-sm btn-circle btn">
                 <div class="i-mdi:dots-vertical text-2xl" />
               </button>
             </div>
@@ -56,18 +56,18 @@
               <div class="font-bold line-clamp-2">{{ video.title }}</div>
               <span class="opacity-80">{{ channelName }}</span>
             </div>
-            <button class="btn btn-sm btn-outline btn-primary ml-auto">
+            <button class="btn-outline btn-primary btn-sm btn ml-auto">
               <div class="i-mdi:heart text-xl" />
             </button>
-            <button class="btn btn-sm btn-outline btn-primary">
+            <button class="btn-outline btn-primary btn-sm btn">
               <div class="i-mdi:share text-xl" />
             </button>
           </div>
           <div
             v-if="video.mentions"
-            class="flex items-center flex-wrap mt-2 gap-y-2"
+            class="mt-2 flex flex-wrap items-center gap-y-2"
           >
-            <div class="i-mdi:account-group text-2xl mr-1"></div>
+            <div class="i-mdi:account-group mr-1 text-2xl"></div>
             <template
               v-for="mention in mentionsShowMore
                 ? video.mentions
@@ -77,7 +77,7 @@
             </template>
             <a
               v-if="video.mentions.length > 3"
-              class="text-primary cursor-pointer text-sm"
+              class="cursor-pointer text-sm text-primary"
               @click="mentionsShowMore = !mentionsShowMore"
               >[{{ mentionsShowMore ? "-" : "+"
               }}{{ video.mentions.length - 3 }}]</a
@@ -85,7 +85,11 @@
           </div>
           <!-- </div> -->
           <div class="divider m-0.5"></div>
-          <h-truncated-text :text="video.description" class="px-2 opacity-90" />
+          <h-truncated-text
+            :text="video.description"
+            class="px-2 opacity-90"
+            :lines="2"
+          />
         </div>
       </div>
       <div class="watch-chat">
@@ -121,7 +125,7 @@ const channelName = computed(
 );
 
 const mentionsShowMore = ref(false);
-watchEffect(() => console.log(playerInstance.value?.currentTime));
+// watchEffect(() => console.log(playerInstance.value?.currentTime));
 </script>
 <style lang="scss">
 $nav-bar-height: 56px;

@@ -1,14 +1,16 @@
 <template>
   <div v-if="'id' in video" class="live-chat">
-    <YoutubeLiveChat
+    <youtube-live-chat
       :video-id="video.id"
       :archive="video.status === 'past'"
       :channel-id="video.channel?.id"
     />
+    <TldexChat :video-id="video.id" :lang="'en'" style="height: 50%" />
   </div>
 </template>
 <script lang="ts">
 import { PropType } from "vue";
+import TldexChat from "../tldex/client/TldexChat.vue";
 
 interface YoutubeVideo {
   id: string;
@@ -24,6 +26,7 @@ interface PlaceholderVideo {
 type VideoObj = YoutubeVideo | PlaceholderVideo;
 
 export default defineComponent({
+  components: { TldexChat },
   props: {
     video: {
       type: Object as PropType<VideoObj>,
@@ -46,7 +49,7 @@ export default defineComponent({
   @apply border-l border-bgColor-200;
 }
 .live-chat iframe {
-  height: 100%;
+  height: 50%;
   width: 100%;
 }
 </style>
