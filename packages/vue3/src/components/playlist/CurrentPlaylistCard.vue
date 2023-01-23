@@ -17,4 +17,8 @@ const site = useSiteStore();
 const currentPlaylist = inject(
   CURRENT_PLAYLIST_PROVIDE_KEY
 ) as UseQueryReturnType<Playlist, unknown>;
+
+const PlaylistCard = defineAsyncComponent(
+  () => import("@/components/playlist/PlaylistCard.vue")
+);
 </script>
