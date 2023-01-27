@@ -191,7 +191,7 @@ export default {
         },
     },
     created() {
-        this.loadMessages(true, true);
+        this.loadMessagesRepeating();
     },
     methods: {
         addClass(index) {

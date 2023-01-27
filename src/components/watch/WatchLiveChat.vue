@@ -15,7 +15,7 @@
     <template v-if="canShowTLChat && showTlChat">
       <ArchiveTranslations
         v-show="showTlChat"
-        v-if="isArchived && showTlChat"
+        v-if="true"
         :video="video"
         :class="{
           'stick-bottom': $store.state.settings.liveTlStickBottom,
@@ -29,7 +29,7 @@
       <!-- Live translations for upcoming/live videos -->
       <!-- 'chat-overlay': fixedBottom || fixedRight, -->
       <LiveTranslations
-        v-else-if="firstTlConnect"
+        v-else-if="false"
         v-show="showTlChat"
         :video="video"
         :class="{
