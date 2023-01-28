@@ -21,6 +21,7 @@ export interface Message {
   timestamp: number | string;
   message: string;
   name: string; // name of creator
+  channel_id?: string;
   // breakpoint?: boolean; // breakpoints are used to add styling separation
   receivedAt?: number;
   duration?: number;
@@ -45,11 +46,9 @@ type TldexPayload = VideoUpdatePayload | Message;
 const EACH_LOAD_LIMIT = 20;
 
 export function useTldex(options: Ref<TldexOptions>) {
-  const state = reactive({});
-
   //   const roomKey = computed(() => );
   const tlHistoryLoading = ref(false);
-  const tlHistory: Ref<Message[]> = ref([]);
+  const tlHistory: Ref<ParsedMessage[]> = ref([]);
   const tlHistoryCompleted = ref(false);
 
   watch(
@@ -77,11 +76,11 @@ export function useTldex(options: Ref<TldexOptions>) {
 
     api
       .chatHistory(videoId, query)
-      .then(({ data }) => {
+      .then(({ data }: { data: Message[] }) => {
         tlHistoryCompleted.value = data.length !== EACH_LOAD_LIMIT || loadAll;
         if (tlHistory.value.length === 0)
-          tlHistory.value = data.map(parseMessage);
-        else tlHistory.value.unshift(...data.map(parseMessage));
+          tlHistory.value = data.map((x) => parseMessage(x));
+        else tlHistory.value.unshift(...data.map((x) => parseMessage(x)));
 
         // Set last message as breakpoint, used for maintaing scrolling and styling
         // if (tlHistory.value.length) tlHistory.value[0].breakpoint = true;
@@ -114,28 +113,21 @@ export function useTldex(options: Ref<TldexOptions>) {
       if (oldVal) {
         console.log("calling unsub");
         const [oldVideoId, oldLang, oldLive] = oldVal;
-        if (oldLive) {
-          socketStore.socket.off(`${oldVideoId}/${oldLang}`, handleMessage);
-          socketStore.leaveRoom(oldVideoId, oldLang);
-        }
+        if (oldLive) socketStore.leaveRoom(oldVideoId, oldLang, handleMessage);
       }
       console.log("calling sub", live);
-      if (live) {
-        socketStore.joinRoom(videoId, lang);
-        socketStore.socket.on(`${videoId}/${lang}`, handleMessage);
-      }
+      if (live) socketStore.joinRoom(videoId, lang, handleMessage);
     },
     {
       immediate: true,
     }
   );
 
-  onBeforeUnmount(() => {
+  onUnmounted(() => {
     const { videoId, lang, live } = unref(options);
     if (live) {
       console.log("unmounted, offing");
-      socketStore.socket.off(`${videoId}/${lang}`, handleMessage);
-      socketStore.leaveRoom(videoId, lang);
+      socketStore.leaveRoom(videoId, lang, handleMessage);
     }
   });
 
@@ -156,6 +148,7 @@ export function parseMessage(
   relativeTsAnchor?: number
 ): ParsedMessage {
   msg.timestamp = +msg.timestamp;
+  console.log("timing", msg.timestamp, relativeTsAnchor);
   const parsed: ParsedMessage = {
     ...msg,
     ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),

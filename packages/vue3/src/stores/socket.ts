@@ -2,7 +2,10 @@ import { defineStore } from "pinia";
 import { io, Socket } from "socket.io-client";
 import { Ref } from "vue";
 import debounce from "lodash-es/debounce";
-import { VideoUpdatePayload } from "@/components/tldex/client/useTldex";
+import {
+  Message,
+  VideoUpdatePayload,
+} from "@/components/tldex/client/useTldex";
 
 interface State {
   socket: Socket;
@@ -35,21 +38,32 @@ interface SubscribeErrorPayload {
   id: string;
   message: string;
 }
+
+interface SubscribePayload {
+  id: string;
+  lang: string;
+}
 interface ServerToClientEvents {
   subscribeError: (obj: SubscribeErrorPayload) => void;
-  subscribeSuccess: (obj: VideoUpdatePayload) => void;
-  unsubscribeSuccess: (obj: { id: string }) => void;
+  subscribeSuccess: (
+    obj: SubscribePayload & Partial<VideoUpdatePayload>
+  ) => void;
+  unsubscribeSuccess: (obj: SubscribePayload) => void;
 }
 
 interface ClientToServerEvents {
-  subscribe: (payload: { video_id: string; lang: string }) => void;
+  subscribe: (payload: SubscribePayload) => void;
 }
 
 const IDLE_DISCONNECT_TIME = 5000;
 
+function log(...args: any[]) {
+  console.log("[Socket]", ...args);
+}
+
 export const useSocket = defineStore("socket-dexTL", {
   state: (): State => {
-    console.log("Constructing Socket: ", API_BASE_URL + "/api/socket.io/");
+    log("Constructing Socket: ", API_BASE_URL + "/api/socket.io/");
     const subscribedRooms = new Set<string>();
     const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
       API_BASE_URL,
@@ -71,14 +85,11 @@ export const useSocket = defineStore("socket-dexTL", {
     const cleanup = debounce(() => {
       if (subscribedRooms.size == 0) {
         socket.disconnect();
-        console.log("Disconnecting from socket");
+        log("Disconnecting from socket");
       } else {
-        console.log(
-          "Found",
-          subscribedRooms.size,
-          "rooms active",
-          subscribedRooms.entries()
-        );
+        log("Found", subscribedRooms.size, "rooms active", [
+          ...subscribedRooms.values(),
+        ]);
       }
     }, IDLE_DISCONNECT_TIME);
 
@@ -86,14 +97,14 @@ export const useSocket = defineStore("socket-dexTL", {
     socket.on("disconnect", () => (connected.value = false));
     // socket.on("reconnect_attempt", (attempt: number) => {});
     socket.on("subscribeSuccess", (payload) => {
-      console.log("sub to", payload);
-      subscribedRooms.add(payload.id);
+      log("Subscribed to", payload);
+      subscribedRooms.add(`${payload.id}/${payload.lang ?? ""}`);
       cleanup();
     });
     // socket.on("subscribeError", (payload) => {});
     socket.on("unsubscribeSuccess", (payload) => {
-      console.log("unsub to", payload);
-      subscribedRooms.delete(payload.id);
+      log("Unsubscribed to", payload);
+      subscribedRooms.delete(`${payload.id}/${payload.lang ?? ""}`);
       cleanup();
     });
     return {
@@ -104,32 +115,49 @@ export const useSocket = defineStore("socket-dexTL", {
     };
   },
   actions: {
-    joinRoom(videoId: string, lang: string) {
+    joinRoom(
+      videoId: string,
+      lang: string,
+      handler: (messages: Message) => void
+    ) {
       const roomKey = `${videoId}/${lang}`;
 
       // Already subscribed
-      if (this.subscribedRooms.has(videoId)) {
+      // TODO: remove the second case after api update goes live
+      if (
+        this.subscribedRooms.has(roomKey) ||
+        this.subscribedRooms.has(`${videoId}/`)
+      ) {
+        this.socket.on(roomKey, handler);
         return;
       }
       if (!this.socket.connected) {
-        console.log("Connecting to socket");
+        log("Connecting to socket");
         this.socket.connect();
       }
       this.socket.emit("subscribe", {
         video_id: videoId,
         lang,
       });
+      this.socket.on(roomKey, handler);
     },
-    leaveRoom(videoId: string, lang: string) {
+    leaveRoom(
+      videoId: string,
+      lang: string,
+      handler: (messages: Message) => void
+    ) {
       const roomKey = `${videoId}/${lang}`;
       // More than one listener active, abort
       if (this.socket.listeners(roomKey).length > 1) {
+        log("Found more than one listener active, aborting full unsubscribe");
+        this.socket.off(roomKey, handler);
         return;
       }
       this.socket.emit("unsubscribe", {
         video_id: videoId,
         lang,
       });
+      this.socket.off(roomKey, handler);
     },
   },
   share: {
