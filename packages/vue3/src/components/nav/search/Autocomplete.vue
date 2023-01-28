@@ -94,6 +94,12 @@ export default defineComponent({
       default: "Please select an option",
       note: "Placeholder of dropdown",
     },
+    linear: {
+      type: Boolean,
+      required: false,
+      default: true,
+      note: "Linear makes the search bar fully inline",
+    },
     maxItem: {
       type: Number,
       required: false,
@@ -190,7 +196,11 @@ export default defineComponent({
   },
 });
 </script>
-
+<style scoped>
+.multiselect-wrapper {
+  flex-wrap: v-bind("linear ? 'nowrap' : 'wrap'");
+}
+</style>
 <style lang="scss" scoped>
 .multiselect {
   @apply relative mx-auto box-border flex w-full cursor-pointer items-center justify-end rounded border border-bgColor-400 leading-snug outline-none;
@@ -209,7 +219,7 @@ export default defineComponent({
 }
 
 .multiselect-wrapper {
-  @apply relative mx-auto flex w-full cursor-pointer flex-nowrap items-center outline-none;
+  @apply relative mx-auto flex w-full cursor-pointer items-center outline-none;
 
   overflow-x: auto;
   overflow-wrap: unset;
