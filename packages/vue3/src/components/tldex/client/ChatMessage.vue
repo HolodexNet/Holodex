@@ -54,45 +54,38 @@
         <span v-else class="text-primary">{{ source.message }}</span>
       </a>
     </div>
-    <v-dialog
-      v-if="!hideAuthor && !source.shouldHideAuthor"
-      v-model="showBlockChannelDialog"
-      width="500"
-    >
-      <v-card>
-        <v-card-title>{{ source.name }}</v-card-title>
-        <v-card-text>
-          <v-btn
-            v-if="source.channel_id"
-            :href="`https://youtube.com/channel/${source.channel_id}`"
-            target="_blank"
-            class="mr-1"
-            color="red"
-          >
-            <v-icon>
-              {{ icons.mdiYoutube }}
-            </v-icon>
-            Youtube
-          </v-btn>
-          <v-btn
-            v-if="source.channel_id && source.is_vtuber"
-            :href="`https://holodex.net/channel/${source.channel_id}`"
-            target="_blank"
-            class="mr-1"
-            color="secondary"
-          >
-            Holodex
-          </v-btn>
-          <v-btn @click="toggleBlockName(source.name)">
-            {{
-              !tldexStore.blockset.has(source.name)
-                ? "Block Channel"
-                : "Unblock"
-            }}
-          </v-btn>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <h-dialog v-model="showBlockChannelDialog">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">{{ source.name }}</h2>
+          <div class="card-actions">
+            <button
+              v-if="source.channel_id"
+              class="btn-md btn mr-1 bg-red-500 text-white"
+              :href="`https://youtube.com/channel/${source.channel_id}`"
+              target="_blank"
+            >
+              <div class="i-mdi:youtube text-xl" />
+              Youtube
+            </button>
+            <button
+              v-if="source.channel_id && source.is_vtuber"
+              :href="`https://holodex.net/channel/${source.channel_id}`"
+              target="_blank"
+              class="btn mr-1 bg-secondary-400 text-white"
+            >
+              Holodex
+            </button>
+            <button
+              class="btn-warning btn mr-1"
+              @click="toggleBlockName(source.name)"
+            >
+              {{ !tldexStore.blockset.has(source.name) ? "Block" : "Unblock" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </h-dialog>
   </div>
 </template>
 
@@ -132,7 +125,7 @@ export default defineComponent({
   },
   computed: {
     time() {
-      return this.tldexStore.liveTlShowLocalTime
+      return this.tldexStore.liveTlShowLocalTime || !this.source.relativeMs
         ? realTimestamp(this.source.timestamp)
         : (Math.sign(this.source.relativeMs) < 0 ? "-" : "") +
             formatDuration(Math.abs(this.source.relativeMs));
@@ -140,7 +133,7 @@ export default defineComponent({
   },
   methods: {
     toggleBlockName(name: string) {
-      this.tldexStore.liveTlBlocked.push(name);
+      this.tldexStore.toggleBlocked(name);
     },
   },
 });
