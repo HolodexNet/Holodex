@@ -14,7 +14,7 @@
       >
         Load more
       </button>
-      <div class="text-xs opacity-75">
+      <div v-if="!tlHistoryLoading" class="text-xs opacity-75">
         {{ tlHistory.length - filteredMessages.length }} messages blocked
       </div>
     </message-renderer>

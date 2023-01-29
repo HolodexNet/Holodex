@@ -9,7 +9,7 @@ interface State {
   // language of dexTL
   liveTlLang: TLLanguageCode;
   // font size
-  liveTlFontSize: 14;
+  liveTlFontSize: number;
   // whether to show verified.
   liveTlShowVerified: boolean; // show verified messages
   // whether to show moderators
@@ -19,7 +19,7 @@ interface State {
   // whether to show local time
   liveTlShowLocalTime: boolean; // show client local time
   // window size
-  liveTlWindowSize: 0; // Default size, otherwise percentage height
+  liveTlWindowSize: number; // Default size, otherwise percentage height
   // subtitle on/off
   liveTlShowSubtitle: boolean; // Show subtitles on videos
   // hide spoilers or not?
@@ -36,12 +36,12 @@ export const useTLStore = defineStore("pref-dexTL", {
     return {
       liveTlStickBottom: false,
       liveTlLang: lang,
-      liveTlFontSize: 14,
+      liveTlFontSize: 13,
       liveTlShowVerified: true, // show verified messages
       liveTlShowModerator: true, // show moderator messages
       liveTlShowVtuber: true, // show vtuber messages
       liveTlShowLocalTime: false, // show client local time
-      liveTlWindowSize: 0, // Default size, otherwise percentage height
+      liveTlWindowSize: 0.3, // Default size, otherwise percentage height
       liveTlShowSubtitle: true, // Show subtitles on videos
       liveTlHideSpoiler: false, // Hide message past current video time
       liveTlBlocked: [],

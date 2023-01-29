@@ -1,18 +1,18 @@
 <template>
   <component
     :is="noLink ? 'div' : 'router-link'"
-    class="flex flex-row items-center overflow-hidden rounded-md channel-card justify-self-auto"
+    class="channel-card flex flex-row items-center justify-self-auto overflow-hidden rounded-md"
     :class="slim ? '' : 'h-50'"
     :to="`/channel/${channel.id}`"
   >
-    <div class="flex-shrink-0 indicator">
+    <div class="indicator flex-shrink-0">
       <span
         v-if="live"
-        class="mb-4 mr-4 indicator-item indicator-bottom live-indicator"
+        class="live-indicator indicator-bottom indicator-item mb-4 mr-4"
       ></span>
       <span
         v-else-if="$slots.default"
-        class="mb-3 text-white right-5 indicator-item live-indicator indicator-bottom bg-slate-500 text-2xs"
+        class="live-indicator text-2xs indicator-bottom indicator-item right-5 mb-3 bg-slate-500 text-white"
         ><slot></slot
       ></span>
 
@@ -27,7 +27,7 @@
       class="flex-grow"
       :class="{ 'opacity-40': channel.inactive, 'ml-2': !slim }"
     >
-      <span class="text-xs text-neutral opacity-60 line-clamp-1"
+      <span class="text-xs text-base-content opacity-75 line-clamp-1"
         ><b>{{
           channel.org ||
           (channel.type === "subber" && $t("views.channels.tabs.Subber")) ||
@@ -38,7 +38,10 @@
       <span class="-mt-1 line-clamp-1" :class="{ 'text-lg': !slim }">
         {{ preferredName }}
       </span>
-      <span v-if="!slim" class="text-sm line-clamp-1 text-neutral">
+      <span
+        v-if="!slim"
+        class="text-sm text-base-content opacity-75 line-clamp-1"
+      >
         {{ subscribers }} •
         {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
         {{
@@ -51,18 +54,18 @@
         v-if="channel.top_topics && !slim"
         class="opacity-60 hover:opacity-100"
       >
-        <div class="inline-block text-lg align-middle i-uil:award"></div>
+        <div class="i-uil:award inline-block align-middle text-lg"></div>
         <div
           v-for="t in channel.top_topics"
           :key="channel.id + 't' + t"
-          class="inline-block ml-1 font-bold h-[1.1rem] leading-4 align-middle rounded cursor-pointer text-bold badge badge-sm badge-outline border-slate-600 hover:badge-accent hover:badge-outline"
+          class="text-bold badge-outline badge badge-sm ml-1 inline-block h-[1.1rem] cursor-pointer rounded border-slate-600 align-middle font-bold leading-4 hover:badge-accent hover:badge-outline"
         >
           {{ formatTopic(t) }}
         </div>
       </div>
     </div>
     <slot name="buttons"></slot>
-    <div v-if="!slim && !$slots.buttons" class="flex flex-col h-full gap-1">
+    <div v-if="!slim && !$slots.buttons" class="flex h-full flex-col gap-1">
       <a
         class="c-card-icon hover:text-red-500"
         :href="`https://youtube.com/channel/${channel.id}`"
@@ -160,7 +163,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .c-card-icon {
-  @apply pr-2 btn btn-ghost rounded-sm flex-grow;
+  @apply btn-ghost btn flex-grow rounded-sm pr-2;
 
   width: 2.5rem;
   min-height: 20px;
@@ -179,6 +182,6 @@ export default defineComponent({
 }
 
 .live-indicator {
-  @apply bg-red-500 border-transparent badge badge-xs outline outline-4 outline-bgColor;
+  @apply badge badge-xs border-transparent bg-red-500 outline outline-4 outline-bgColor;
 }
 </style>
