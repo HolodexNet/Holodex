@@ -80,9 +80,6 @@ export function useTldex(options: Ref<TldexOptions>) {
         if (tlHistory.value.length === 0)
           tlHistory.value = data.map((x) => parseMessage(x));
         else tlHistory.value.unshift(...data.map((x) => parseMessage(x)));
-
-        // Set last message as breakpoint, used for maintaing scrolling and styling
-        // if (tlHistory.value.length) tlHistory.value[0].breakpoint = true;
       })
       .catch((e) => {
         console.error(e);
@@ -96,7 +93,7 @@ export function useTldex(options: Ref<TldexOptions>) {
 
   function handleMessage(payload: TldexPayload) {
     if ("message" in payload) {
-      tlHistory.value.unshift(parseMessage(payload));
+      tlHistory.value.push(parseMessage(payload));
     }
   }
   watch(

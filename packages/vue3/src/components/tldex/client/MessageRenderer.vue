@@ -5,7 +5,10 @@
     :style="{
       'font-size': fontSize + 'px',
     }"
-    :class="{ 'ios-safari-reverse-fix': isIOS }"
+    :class="{
+      'ios-safari-reverse-fix': isIOS,
+      '!flex-col-reverse': reverse,
+    }"
   >
     <transition-group name="fade" :class="{ 'ios-safari-reverse-fix': isIOS }">
       <chat-message
@@ -36,6 +39,7 @@ export default {
       type: Number,
       default: 14,
     },
+    reverse: Boolean,
   },
   data() {
     return { isIOS: checkIOS() };
@@ -79,8 +83,8 @@ export default {
   overflow-y: auto;
   overscroll-behavior: contain;
   /* height: calc(100% - 32px); */
+  flex-direction: column;
   display: flex;
-  flex-direction: column-reverse;
   line-height: 1.35;
   letter-spacing: 0.0178571429em !important;
 }
