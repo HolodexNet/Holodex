@@ -3,71 +3,67 @@
     <template v-if="!hideChannelImage" #avatar>
       <channel-img :channel="video.channel" :size="40" rounded />
     </template>
-    <div class="box-content flex flex-col justify-around flex-1 my-1 text-sm">
+    <div class="my-1 box-content flex flex-1 flex-col justify-around text-sm">
       <div
-        class="leading-5 line-clamp-2 video-card-title font-medium"
+        class="video-card-title font-medium leading-5 line-clamp-2"
         :title="title"
         :class="{ 'pr-6': !$slots.action }"
       >
         {{ title }}
       </div>
-      <div class="flex flex-shrink-1">
-        <v-tooltip
-          v-if="video.mentions?.length"
-          location="bottom"
-          :transition="'slide-y-transition'"
-        >
-          <template #activator="{ props }">
-            <a
-              v-if="!hideChannelName"
-              v-bind="props"
-              class="leading-4 hover:opacity-80 line-clamp-1"
-              :class="{
-                'text-secondary':
-                  video.type === 'stream' || video.channel.type === 'vtuber',
-              }"
-              :href="channelLink"
-              data-ctx="channel"
-              :data-obj="video.channel.id"
-            >
-              {{ preferredChannelName }} {{ `(+${video.mentions?.length})` }}
-            </a>
-          </template>
-          <div
-            class="flex flex-col gap-1 p-3 rounded-lg shadow-md bg-bgColor-500"
+      <div class="flex-shrink-1 flex">
+        <h-tooltip v-if="video.mentions?.length">
+          <a
+            v-if="!hideChannelName"
+            class="leading-4 line-clamp-1 hover:opacity-80"
+            :class="{
+              'text-secondary':
+                video.type === 'stream' || video.channel.type === 'vtuber',
+            }"
+            :href="channelLink"
+            data-ctx="channel"
+            :data-obj="video.channel.id"
           >
-            <template
-              v-for="mention in video.mentions.slice(0, 10)"
-              :key="mention.id"
-            >
-              <div class="flex items-center">
-                <channel-img
-                  :channel="mention"
-                  :size="32"
-                  rounded
-                  class="mr-2"
-                  data-ctx="channel"
-                  :data-obj="mention.id"
-                />
-                {{
-                  langStore.preferredLocaleFn(
-                    mention.english_name,
-                    mention.name
-                  )
-                }}
-              </div>
-            </template>
+            {{ preferredChannelName }} {{ `(+${video.mentions?.length})` }}
+          </a>
+          <template #content="props">
             <div
-              v-if="video.mentions.length > 10"
-              class="text-center opacity-80"
+              class="flex flex-col gap-1 rounded-lg bg-bgColor-500 p-3 shadow-md"
+              v-bind="props"
             >
-              {{ `+${video.mentions.length - 10} more` }}
+              <template
+                v-for="mention in video.mentions.slice(0, 10)"
+                :key="mention.id"
+              >
+                <div class="flex items-center">
+                  <channel-img
+                    :channel="mention"
+                    :size="32"
+                    rounded
+                    class="mr-2"
+                    data-ctx="channel"
+                    :data-obj="mention.id"
+                  />
+                  {{
+                    langStore.preferredLocaleFn(
+                      mention.english_name,
+                      mention.name
+                    )
+                  }}
+                </div>
+              </template>
+              <div
+                v-if="video.mentions.length > 10"
+                class="text-center opacity-80"
+              >
+                {{ `+${video.mentions.length - 10} more` }}
+              </div>
             </div>
-          </div>
-        </v-tooltip>
+          </template>
+        </h-tooltip>
         <a
           v-else-if="!hideChannelName"
-          class="leading-4 hover:opacity-80 line-clamp-1"
+          class="leading-4 line-clamp-1 hover:opacity-80"
           :title="channelHoverTitle"
           :class="{
             'text-secondary':

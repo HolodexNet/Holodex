@@ -1,7 +1,6 @@
 <template>
   <!-- Render with opaque response for cache if size is lte 40 -->
   <router-link
-    v-if="!err"
     :href="(!noLink && `/channel/${channel.id}`) || undefined"
     :title="
       channel.name +
@@ -13,30 +12,24 @@
     :data-obj="channel.id"
     :to="!noLink ? `/channel/${channel.id}` : ''"
   >
-    <v-lazy
-      tag="img"
+    <img
+      v-if="!err"
       :src="photo"
       crossorigin="anonymous"
       loading="lazy"
-      :width="size"
-      :height="size"
-      class="d-block"
       :class="{ 'rounded-full': rounded, 'rounded-md': !rounded }"
+      :style="{ width: `${size}px` }"
       @error="err = true"
     />
+    <div
+      v-else
+      :style="{ width: `${size}px` }"
+      class="bg-secondary-300"
+      :class="{ 'rounded-full': rounded, 'rounded-md': !rounded }"
+    >
+      <div class="i-mdi:person" :style="{ 'font-size': `${size}px` }"></div>
+    </div>
   </router-link>
-  <v-avatar
-    v-else
-    color="secondary"
-    :width="size"
-    :height="size"
-    :title="channel.name"
-    style="min-width: 0px"
-  >
-    <v-icon>
-      {{ icons.mdiAccountCircleOutline }}
-    </v-icon>
-  </v-avatar>
 </template>
 
 <script lang="ts">

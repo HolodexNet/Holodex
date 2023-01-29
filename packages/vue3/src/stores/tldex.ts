@@ -56,8 +56,14 @@ export const useTLStore = defineStore("pref-dexTL", {
     saveNewDefaults(newState: State) {
       this.$state = newState;
     },
-    blockUser(user: string) {
-      this.liveTlBlocked.push(user);
+    toggleBlocked(name: string) {
+      const index = this.liveTlBlocked.indexOf(name);
+      console.log(this.liveTlBlocked);
+      if (index === -1) {
+        this.liveTlBlocked.push(name);
+      } else {
+        this.liveTlBlocked.splice(index);
+      }
     },
   },
   share: {
