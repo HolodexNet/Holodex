@@ -1,7 +1,7 @@
 <template>
-  <v-card-text
+  <div
     ref="tlBody"
-    class="tl-body pa-1 pa-lg-3"
+    class="tl-body p-lg-3 w-full p-1"
     :style="{
       'font-size': fontSize + 'px',
     }"
@@ -19,7 +19,7 @@
     <div class="text-center" :class="{ 'ios-safari-reverse-fix': isIOS }">
       <slot />
     </div>
-  </v-card-text>
+  </div>
 </template>
 
 <script>
@@ -45,8 +45,7 @@ export default {
       return !(
         index === 0 ||
         index === this.tlHistory.length - 1 ||
-        this.tlHistory[index].name !== this.tlHistory[index - 1].name ||
-        !!this.tlHistory[index].breakpoint
+        this.tlHistory[index].name !== this.tlHistory[index + 1].name
       );
     },
     scrollToBottom() {
@@ -74,5 +73,15 @@ export default {
 .ios-safari-reverse-fix {
   transform: scale(1, -1);
   flex-direction: column !important;
+}
+
+.tl-body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* height: calc(100% - 32px); */
+  display: flex;
+  flex-direction: column-reverse;
+  line-height: 1.35;
+  letter-spacing: 0.0178571429em !important;
 }
 </style>

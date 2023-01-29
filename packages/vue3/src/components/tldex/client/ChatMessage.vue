@@ -19,14 +19,11 @@
           <span v-if="source.is_vtuber">[Vt]</span>
           <div
             v-if="source.is_moderator"
-            class="i-mdi:wrench font-sm inline-block"
+            class="i-mdi:wrench font-sm mb-[-2px] inline-block"
           ></div>
           {{ source.name }}
           <span v-if="source.is_verified" style="font-weight: 800"> ✓</span>:
-          <div
-            style="margin-top: 3px; position: absolute"
-            class="i-mdi:cog font-sm tl-cog inline-block"
-          ></div>
+          <div class="i-mdi:cog font-sm tl-cog mb-[-2px] inline-block"></div>
         </span>
       </div>
       <a class="tl-message" :data-time="source.relativeMs / 1000">
@@ -142,6 +139,7 @@ export default defineComponent({
 
 .tl-name {
   cursor: pointer;
+  vertical-align: middle;
 }
 .tl-name .tl-cog {
   opacity: 0;

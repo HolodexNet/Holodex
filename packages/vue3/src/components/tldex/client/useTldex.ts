@@ -6,7 +6,6 @@ interface TldexOptions {
   videoId: string;
   lang: string;
   live?: boolean;
-
   verified?: boolean;
   moderator?: boolean;
   vtuber?: boolean;
@@ -38,7 +37,7 @@ export interface Message {
 export interface ParsedMessage extends Message {
   parsed: string; // parsed output after parseMessage
   key: string;
-  relativeMs?: number;
+  // relativeMs?: number;
 }
 
 type TldexPayload = VideoUpdatePayload | Message;
@@ -96,7 +95,6 @@ export function useTldex(options: Ref<TldexOptions>) {
   const socketStore = useSocket();
 
   function handleMessage(payload: TldexPayload) {
-    console.log("got message", payload);
     if ("message" in payload) {
       tlHistory.value.unshift(parseMessage(payload));
     }
@@ -134,6 +132,8 @@ export function useTldex(options: Ref<TldexOptions>) {
   return {
     tlHistory,
     loadMessages,
+    tlHistoryCompleted,
+    tlHistoryLoading,
   };
 }
 
@@ -143,15 +143,11 @@ export function useTldex(options: Ref<TldexOptions>) {
  * @param relativeTsAnchor
  * @returns
  */
-export function parseMessage(
-  msg: Message,
-  relativeTsAnchor?: number
-): ParsedMessage {
+export function parseMessage(msg: Message): ParsedMessage {
   msg.timestamp = +msg.timestamp;
-  console.log("timing", msg.timestamp, relativeTsAnchor);
   const parsed: ParsedMessage = {
     ...msg,
-    ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),
+    // ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),
     key: msg.name + msg.timestamp + msg.message,
     parsed: "",
   };

@@ -1,11 +1,18 @@
 <template>
   <div v-if="'id' in video" class="live-chat">
+    <TldexChat
+      :video-id="video.id"
+      :lang="'en'"
+      style="height: 50%"
+      :start-time="
+        video.available_at ? new Date(video.available_at) : undefined
+      "
+    />
     <youtube-live-chat
       :video-id="video.id"
       :archive="video.status === 'past'"
       :channel-id="video.channel?.id"
     />
-    <TldexChat :video-id="video.id" :lang="'en'" style="height: 50%" />
   </div>
 </template>
 <script lang="ts">
@@ -15,6 +22,7 @@ import TldexChat from "../tldex/client/TldexChat.vue";
 interface YoutubeVideo {
   id: string;
   //   channel_id?: string;
+  available_at?: string;
   channel?: Pick<ShortChannel, "id">;
   status?: string;
 }
