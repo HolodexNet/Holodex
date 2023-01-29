@@ -15,7 +15,10 @@
     </div>
     <div style="flex-basis: 100%">
       <div v-if="!hideAuthor" :class="nameClass">
-        <span class="tl-name tl-caption" @click="showBlockChannelDialog = true">
+        <span
+          class="tl-name tl-caption mr-[-16px]"
+          @click="showBlockChannelDialog = true"
+        >
           <span v-if="source.is_vtuber">[Vt]</span>
           <div
             v-if="source.is_moderator"

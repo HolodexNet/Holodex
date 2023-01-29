@@ -7,6 +7,7 @@
       :start-time="
         video.available_at ? new Date(video.available_at) : undefined
       "
+      :archive="!video.status || !['live', 'upcoming'].includes(video.status)"
     />
     <youtube-live-chat
       :video-id="video.id"

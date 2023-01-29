@@ -1,14 +1,14 @@
 <template>
   <div style="overflow: auto; height: 50%" class="flex">
-    <message-renderer :tl-history="filteredMessages">
+    <message-renderer :tl-history="filteredMessages" :reverse="!archive">
       <div
-        v-if="tlHistoryCompleted"
+        v-if="tlHistoryCompleted && !props.archive"
         class="text-md py-2 font-bold uppercase opacity-75"
       >
         Start of chat
       </div>
       <button
-        v-if="!tlHistoryCompleted"
+        v-show="!tlHistoryCompleted && !tlHistoryLoading && !props.archive"
         class="btn-text-ghost btn-sm btn text-primary"
         @click="loadMessages()"
       >
@@ -28,6 +28,7 @@ const props = defineProps<{
   videoId: string;
   lang: string;
   startTime?: Date;
+  archive?: boolean;
 }>();
 
 const options = computed(() => ({
@@ -38,10 +39,13 @@ const options = computed(() => ({
   moderator: true,
   vtuber: true,
 }));
-const { loadMessages, tlHistory, tlHistoryCompleted } = useTldex(options);
+const { loadMessages, tlHistory, tlHistoryCompleted, tlHistoryLoading } =
+  useTldex(options);
 const tldexStore = useTLStore();
 const filteredMessages = computed(() => {
-  const messages = [...tlHistory.value].reverse();
+  const messages = props.archive
+    ? tlHistory.value
+    : [...tlHistory.value].reverse();
   return messages
     .filter((m) => {
       const channelIdBlocked =
@@ -58,10 +62,10 @@ const filteredMessages = computed(() => {
 });
 
 watch(
-  () => options.value,
+  () => [options.value, props.archive],
   () => {
     console.log("Loading messages...", props);
-    loadMessages();
+    loadMessages(props.archive);
   },
   {
     immediate: true,
