@@ -18,7 +18,7 @@
       crossorigin="anonymous"
       loading="lazy"
       :class="{ 'rounded-full': rounded, 'rounded-md': !rounded }"
-      :style="{ width: `${size}px` }"
+      :style="{ width: `${size}px`, height: 'auto' }"
       @error="err = true"
     />
     <div

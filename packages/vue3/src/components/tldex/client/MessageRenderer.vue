@@ -1,7 +1,7 @@
 <template>
   <div
     ref="tlBody"
-    class="tl-body p-lg-3 w-full p-1"
+    class="tl-body p-lg-3 w-full p-2"
     :style="{
       'font-size': fontSize + 'px',
     }"
@@ -16,6 +16,7 @@
         :key="item.key"
         :source="item"
         :hide-author="hideAuthor(index)"
+        class="chat-message"
       />
     </transition-group>
     <!-- Slot for adding a Load More button on top of Messages -->
@@ -37,7 +38,7 @@ export default {
     },
     fontSize: {
       type: Number,
-      default: 14,
+      default: 13,
     },
     reverse: Boolean,
   },
@@ -87,5 +88,9 @@ export default {
   display: flex;
   line-height: 1.35;
   letter-spacing: 0.0178571429em !important;
+}
+
+.tl-body .chat-message {
+  padding: 2px 0px;
 }
 </style>

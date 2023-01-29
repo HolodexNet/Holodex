@@ -13,10 +13,10 @@
         no-link
       />
     </div>
-    <div style="flex-basis: 100%">
+    <div class="basis-full">
       <div v-if="!hideAuthor" :class="nameClass">
         <span
-          class="tl-name tl-caption mr-[-16px]"
+          class="chat-name chat-caption mr-[-16px]"
           @click="showBlockChannelDialog = true"
         >
           <span v-if="source.is_vtuber">[Vt]</span>
@@ -26,11 +26,14 @@
           ></div>
           {{ source.name }}
           <span v-if="source.is_verified" style="font-weight: 800"> ✓</span>:
-          <div class="i-mdi:cog font-sm tl-cog mb-[-2px] inline-block"></div>
+          <div class="i-mdi:cog font-sm chat-cog mb-[-2px] inline-block"></div>
         </span>
       </div>
-      <a class="tl-message" :data-time="source.relativeMs / 1000">
-        <span v-if="source.timestamp" class="tl-caption mr-1 opacity-75">
+      <a class="chat-message" :data-time="source.relativeMs / 1000">
+        <span
+          v-if="source.timestamp"
+          class="chat-caption chat-time mr-1 opacity-75"
+        >
           {{ time }}
         </span>
         <!-- eslint-disable-next-line vue/no-v-html !-->
@@ -135,20 +138,20 @@ export default defineComponent({
 </script>
 
 <style>
-.tl-name,
-.tl-message {
+.chat-name,
+.chat-message {
   word-break: break-word;
 }
 
-.tl-name {
+.chat-name {
   cursor: pointer;
   vertical-align: middle;
 }
-.tl-name .tl-cog {
+.chat-name .chat-cog {
   opacity: 0;
 }
 
-.tl-name:hover .tl-cog {
+.chat-name:hover .chat-cog {
   opacity: 1;
 }
 
@@ -159,14 +162,20 @@ export default defineComponent({
 }
 
 /* Emojis */
-.tl-message img {
+.chat-message img {
   width: auto;
   height: 1.3em;
   vertical-align: middle;
 }
 
-.tl-caption {
+.chat-caption {
   letter-spacing: 0.0333333333em !important;
   font-size: 0.85em;
 }
+
+/* .chat-time {
+  display: inline-block;
+  width: 45px;
+  text-align: end;
+} */
 </style>
