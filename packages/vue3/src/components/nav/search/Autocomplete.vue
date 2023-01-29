@@ -23,7 +23,13 @@
           @keydown="keyMonitor"
         />
       </div>
-      <slot name="caret" :open="showDropdown" :input="inputField"></slot>
+      <slot name="caret" :open="showDropdown" :input="inputField">
+        <div
+          class="i-ion:search opacity-40"
+          style="margin: auto 0px"
+          @click="$nextTick(inputField?.focus)"
+        ></div>
+      </slot>
     </div>
     <!-- Dropdown Menu -->
     <div
@@ -132,7 +138,10 @@ export default defineComponent({
           if (searchContent.value === "" && currentValue.state.value == -1)
             emit("submit");
           else {
-            emit("select", { n: currentValue.state.value });
+            emit("select", {
+              n: currentValue.state.value,
+              item: props.options[currentValue.state.value],
+            });
             currentValue.reset();
           }
           event.preventDefault();

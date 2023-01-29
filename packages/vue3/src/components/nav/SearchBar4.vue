@@ -15,6 +15,17 @@
     @focus="if (!orgsEnabled) orgsEnabled = true;"
     @submit="commitSearch()"
   >
+    <template #chips="{ selection }">
+      <div
+        v-for="(item, midx) in selection"
+        :key="'chip' + item.type + item.value + midx"
+        class="badge-ghost badge mr-1 cursor-default rounded-sm border-0 bg-bgColor px-1 text-xs font-semibold tracking-tight hover:badge-error"
+        @click="query.splice(midx, 1)"
+      >
+        <span class=""> {{ categoryName(item) }}: </span>
+        <span class="ml-1 rounded-lg"> {{ categoryValue(item) }} </span>
+      </div>
+    </template>
     <template #caret>
       <div
         v-if="query.length == 0 || search.length > 0"
@@ -123,17 +134,6 @@
         color="accent"
         :active="autocomplete_loading"
       ></v-progress-linear>
-    </template>
-    <template #chips="{ selection }">
-      <div
-        v-for="(item, midx) in selection"
-        :key="'chip' + item.type + item.value + midx"
-        class="badge-ghost badge mr-1 cursor-default rounded-sm border-0 bg-bgColor px-1 text-xs font-semibold tracking-tight hover:badge-error"
-        @click="query.splice(midx, 1)"
-      >
-        <span class=""> {{ categoryName(item) }}: </span>
-        <span class="ml-1 rounded-lg"> {{ categoryValue(item) }} </span>
-      </div>
     </template>
   </Autocomplete>
 </template>
