@@ -1,6 +1,6 @@
 <template>
   <a
-    class="flex video-card no-decoration"
+    class="video-card no-decoration flex"
     :class="{
       'flex-col': !horizontal,
       'video-card-live': video.status === 'live',
@@ -14,11 +14,11 @@
       :video="video"
       :size="size"
       :class="{
-        'h-[80px] my-auto': horizontal,
-        'saturate-50 opacity-60': !selected && selection.selectionMode,
-        'opacity-80 border-8 rounded-xl border-transparent ring-primary ring-2 border-opacity-0 -mb-[7px] transition-all':
+        'my-auto h-[80px]': horizontal,
+        'opacity-60 saturate-50': !selected && selection.selectionMode,
+        '-mb-[7px] rounded-xl border-8 border-transparent border-opacity-0 opacity-80 ring-2 ring-primary transition-all':
           selected && selection.selectionMode && !horizontal,
-        'opacity-80 border-8 rounded-xl border-transparent ring-primary ring-2 border-opacity-0 transition-all':
+        'rounded-xl border-8 border-transparent border-opacity-0 opacity-80 ring-2 ring-primary transition-all':
           selected && selection.selectionMode && horizontal,
       }"
       class=""
@@ -29,7 +29,7 @@
       type="checkbox"
       role="checkbox"
       tabindex="2"
-      class="z-[1] video-checkbox"
+      class="video-checkbox z-[1]"
       :class="{
         'checkbox-primary': selected,
         '': !selected,
@@ -153,7 +153,6 @@ export default defineComponent({
   },
   methods: {
     intercept(e: MouseEvent) {
-      console.log(e);
       e.stopPropagation(); // always stop propagation.
       if (e.shiftKey || e.ctrlKey) return;
       // ^ ignore shift and control modified clicks.
@@ -167,7 +166,6 @@ export default defineComponent({
       if (nearest) {
         const ctx = nearest.getAttribute("data-ctx"); // context.
         const obj = nearest.getAttribute("data-obj"); // channel ID in question
-        console.log(ctx, obj);
         if (this.disableDefaultClick) {
           return this.$emit("videoClicked", this.video, ctx, obj);
         }
