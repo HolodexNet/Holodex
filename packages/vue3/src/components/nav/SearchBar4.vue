@@ -1,5 +1,6 @@
 <template>
   <Autocomplete
+    ref="autocomplete"
     v-model:search="search"
     :selection="query"
     :options="results"
@@ -200,7 +201,7 @@ export default defineComponent({
     const query = ref([] as Array<QueryItem>);
 
     const autocomplete_loading = ref(false);
-
+    const autocomplete = ref();
     const ac_opts = reactive<
       Record<
         "org" | "vtuber" | "topic" | "has_song" | "lang" | "type" | "other",
@@ -420,6 +421,7 @@ export default defineComponent({
       ac_opts,
       query,
       dropdown,
+      autocomplete,
       autocomplete_loading,
       langPrefs,
     };

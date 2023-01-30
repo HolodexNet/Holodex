@@ -1,7 +1,0 @@
-<template>
-  <Autocomplete> </Autocomplete>
-</template>
-
-<script setup lang="ts"></script>
-
-<style scoped></style>

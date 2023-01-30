@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-alert
       v-if="!isEditor && token && !expired"
-      class="mb-2 pa-2"
+      class="pa-2 mb-2"
       type="info"
     >
       Editing as {{ token.user }} from
@@ -55,29 +55,53 @@
           }
         "
       />
-      <channel-autocomplete
-        v-model="channel"
-        label="Channel (Type to Search)"
-        density="compact"
-        variant="outlined"
-        hide-details="auto"
-      />
-      <v-text-field
-        v-model="videoTitle"
-        density="compact"
-        variant="outlined"
-        label="Video/Event Title"
-        hide-details="auto"
-        :rules="[requiredRule]"
-        required
-      />
-      <v-text-field
-        v-model="videoTitleJP"
-        density="compact"
-        hide-details="auto"
-        variant="outlined"
-        label="Japanese Video/Event Title"
-      />
+      <vtuber-autocomplete v-model="channel" />
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">Video/Event Title</span>
+        </label>
+        <input
+          v-model="videoTitle"
+          type="text"
+          class="input-bordered input w-full border-solid"
+        />
+        <label class="label">
+          <span class="label-text-alt">Error text</span>
+        </label>
+      </div>
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">Japanese Event Title</span>
+          <span class="label-text-alt text-opacity-60"> </span>
+        </label>
+        <input
+          v-model="videoTitleJP"
+          type="text"
+          class="input-bordered input w-full border-solid"
+        />
+        <label class="label">
+          <span class="label-text-alt">
+            (shown to users with <kbd>Use EN name</kbd> turned off)
+          </span>
+        </label>
+      </div>
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">Source URL</span>
+        </label>
+        <input
+          v-model="sourceUrl"
+          type="url"
+          class="input-bordered input w-full border-solid"
+        />
+        <label class="label">
+          <span class="label-text-alt">
+            Link to more detail about the event. eg. URL to twitter schedule
+            post or twitch channel, or link to a concert page
+          </span>
+        </label>
+      </div>
+
       <v-text-field
         v-model="sourceUrl"
         density="compact"
@@ -121,17 +145,22 @@
         :rules="[requiredRule]"
       />
       <div class="flex flex-row justify-between">
-        <div class="flex flex-col w-min">
-          <v-select
-            v-model="timezone"
-            density="compact"
-            variant="outlined"
-            :items="TIMEZONES"
-            label="Timezone"
-            hide-details="auto"
-            required
-            :rules="[requiredRule, timeRule]"
-          />
+        <div class="flex w-min flex-col gap-2">
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">Timezone</span>
+            </label>
+
+            <select class="select-bordered select w-full max-w-xs border-solid">
+              <option value="Etc/GMT" selected>UTC (+0)</option>
+              <option value="Asia/Tokyo">JST (+8)</option>
+              <option value="America/Los_Angeles">Pacific Time (-?)</option>
+              <option value="America/New_York">
+                Eastern Time (EST/EDT) (-?)
+              </option>
+            </select>
+          </div>
+
           <!-- ignore this error, it works fine -->
           <date-picker
             v-model="liveDate"
@@ -139,27 +168,25 @@
             :timezone="timezone"
             :is-dark="theme.dark"
             color="gray"
-            class="mb-2"
+            class=""
             is24hr
             :min-date="minDate"
             :minute-increment="5"
             :model-config="{ type: 'string', mask: 'iso' }"
           ></date-picker>
-          <v-text-field
-            v-model="duration"
-            class="mt-2"
-            density="compact"
-            variant="outlined"
-            hide-details="auto"
-            hint="Guess a duration in minutes"
-            label="Duration"
-            type="number"
-            suffix="&ensp;minutes"
-            required
-            :rules="[requiredRule]"
-          />
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">Duration</span>
+              <span class="label-text-alt text-opacity-60"> </span>
+            </label>
+            <input
+              v-model="duration"
+              type="number"
+              class="input-bordered input w-full border-solid"
+            />
+          </div>
         </div>
-        <div class="hidden w-full max-w-xs mx-auto form-control lg:block">
+        <div class="form-control mx-auto hidden w-full max-w-xs lg:block">
           <label class="label"> <span class="label-text">Preview:</span></label>
           <video-card
             :video="(videoObj as any)"
@@ -168,7 +195,7 @@
           />
         </div>
       </div>
-      <div class="block w-full max-w-xs my-2 form-control lg:hidden">
+      <div class="form-control my-2 block w-full max-w-xs lg:hidden">
         <div class="divider">Preview</div>
         <video-card
           :video="(videoObj as any)"
@@ -200,10 +227,12 @@ import "v-calendar/dist/style.css";
 import { DatePicker } from "v-calendar";
 import { useThemeStore } from "@/stores/theme";
 import { useDisplay } from "vuetify";
+import VtuberAutocomplete from "@/components/channel/VtuberAutocomplete.vue";
 
 export default defineComponent({
   components: {
     DatePicker,
+    VtuberAutocomplete,
   },
   setup() {
     const display = useDisplay();
@@ -252,24 +281,6 @@ export default defineComponent({
         {
           title: "Likely",
           value: "likely",
-        },
-      ],
-      TIMEZONES: [
-        {
-          title: "JST",
-          value: "Asia/Tokyo",
-        },
-        {
-          title: "PST",
-          value: "America/Los_Angeles",
-        },
-        {
-          title: "EST",
-          value: "America/New_York",
-        },
-        {
-          title: "GMT (UTC)",
-          value: "Etc/GMT",
         },
       ],
       showDatePicker: false,
