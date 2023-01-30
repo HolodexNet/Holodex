@@ -14,7 +14,7 @@
     />
     <label v-if="error || explanation" class="label">
       <span class="label-text-alt text-opacity-60">
-        {{ error ? explanation : error }}
+        {{ error ? error : explanation }}
       </span>
     </label>
   </div>

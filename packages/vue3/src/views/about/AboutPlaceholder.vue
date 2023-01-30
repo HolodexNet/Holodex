@@ -1,130 +1,158 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
-    <v-alert
-      v-if="!isEditor && token && !expired"
-      class="pa-2 mb-2"
-      type="info"
+  <!-- <v-form ref="form" v-model="valid" lazy-validation> -->
+  <v-alert v-if="!isEditor && token && !expired" class="pa-2 mb-2" type="info">
+    Editing as {{ token.user }} from
+    {{ discordCredits ? discordCredits.data.guild.name : "" }} Discord
+    <br />
+    Your session expires: {{ expiresIn }}. Please refresh if it is about to
+    expire
+  </v-alert>
+  <v-alert v-else-if="!isEditor" type="error">
+    You are not an editor or token has expired, please login or generate a new
+    token using our bot
+  </v-alert>
+  <h-text-field
+    v-if="isEditor"
+    v-model="creditName"
+    title="Editor Credit Name"
+    explanation="Use a different name when being credited on the placeholder"
+  ></h-text-field>
+
+  <v-tabs v-model="tab" icons-and-text class="mb-4">
+    <v-tab
+      >New <v-icon>{{ icons.mdiPlusBox }}</v-icon></v-tab
     >
-      Editing as {{ token.user }} from
-      {{ discordCredits ? discordCredits.data.guild.name : "" }} Discord
-      <br />
-      Your session expires: {{ expiresIn }}. Please refresh if it is about to
-      expire
-    </v-alert>
-    <v-alert v-else-if="!isEditor" type="error">
-      You are not an editor or token has expired, please login or generate a new
-      token using our bot
-    </v-alert>
-    <v-text-field
-      v-if="isEditor"
-      v-model="creditName"
-      label="Editor Credit Name"
-      :rules="[requiredRule]"
-      hint="Use a different name when being publicly credited"
-    />
-    <v-tabs v-model="tab" icons-and-text class="mb-4">
-      <v-tab
-        >New <v-icon>{{ icons.mdiPlusBox }}</v-icon></v-tab
-      >
-      <v-tab
-        >Existing <v-icon>{{ icons.mdiPencil }}</v-icon></v-tab
-      >
-    </v-tabs>
-    <div class="flex flex-col gap-4 px-4">
-      <v-text-field
-        v-if="tab === 1"
-        key="x921a"
-        v-model="id"
-        label="Placeholder ID (11 characters)"
-        density="compact"
-        variant="outlined"
-        hide-details="auto"
-        :append-icon="icons.mdiCheck"
-        clearable
-        @click:append="loadExistingPlaceholder(id)"
-      />
-
-      <video-selector
-        v-if="tab === 1 && !id"
-        key="x921b"
-        :hide-placeholders="false"
-        @video-clicked="
-          (video) => {
-            id = video.id;
-            loadExistingPlaceholder(id);
-          }
-        "
-      />
-      <vtuber-autocomplete v-model="channel" />
-      <div class="form-control w-full">
-        <label class="label">
-          <span class="label-text">Video/Event Title</span>
-        </label>
+    <v-tab
+      >Existing <v-icon>{{ icons.mdiPencil }}</v-icon></v-tab
+    >
+  </v-tabs>
+  <div class="flex flex-col gap-4 px-4">
+    <div v-if="tab === 1" class="form-control">
+      <label class="label">
+        <span class="label-text">Existing Placeholder ID (11 characters)</span>
+      </label>
+      <label class="input-group">
+        <span>ID</span>
         <input
-          v-model="videoTitle"
+          v-model="id"
           type="text"
+          placeholder="4a7f32A_4a2"
           class="input-bordered input w-full border-solid"
         />
-        <label class="label">
-          <span class="label-text-alt">Error text</span>
-        </label>
-      </div>
-      <div class="form-control w-full">
-        <label class="label">
-          <span class="label-text">Japanese Event Title</span>
-          <span class="label-text-alt text-opacity-60"> </span>
-        </label>
-        <input
-          v-model="videoTitleJP"
-          type="text"
-          class="input-bordered input w-full border-solid"
-        />
-        <label class="label">
-          <span class="label-text-alt">
-            (shown to users with <kbd>Use EN name</kbd> turned off)
-          </span>
-        </label>
-      </div>
-      <div class="form-control w-full">
-        <label class="label">
-          <span class="label-text">Source URL</span>
-        </label>
-        <input
-          v-model="sourceUrl"
-          type="url"
-          class="input-bordered input w-full border-solid"
-        />
-        <label class="label">
-          <span class="label-text-alt">
-            Link to more detail about the event. eg. URL to twitter schedule
-            post or twitch channel, or link to a concert page
-          </span>
-        </label>
-      </div>
+        <button class="btn-square btn" @click="loadExistingPlaceholder(id)">
+          <div class="i-ion:checkmark"></div>
+        </button>
+      </label>
+    </div>
 
-      <v-text-field
-        v-model="sourceUrl"
-        density="compact"
-        variant="outlined"
-        label="Source Link"
-        hide-details="auto"
-        hint="Link to more detail about the event. eg. URL to twitter schedule post or twitch channel, or link to a concert page"
-        placeholder="https://twitter.com/..."
-        type="url"
-        required
-        :rules="[requiredRule, linkRule]"
-      />
-      <v-text-field
-        v-model="thumbnail"
-        density="compact"
-        variant="outlined"
-        hide-details="auto"
-        label="Thumbnail Image"
-        placeholder="https://imgur.com/..."
-        type="url"
-        :rules="[linkRule]"
-      />
-      <v-select
+    <!-- <video-selector
+      v-if="tab === 1 && !id"
+      key="x921b"
+      :hide-placeholders="false"
+      @video-clicked="
+        (video) => {
+          id = video.id;
+          loadExistingPlaceholder(id);
+        }
+      "
+    /> -->
+    <vtuber-autocomplete v-model="channel" />
+    <h-text-field
+      v-model="videoTitle"
+      title="Video/Event Title"
+      explanation="The title of placeholder"
+    ></h-text-field>
+    <h-text-field
+      v-model="videoTitleJP"
+      title="Japanese Event Title"
+      explanation="(shown to users with 'Use EN Name' turned off)"
+    ></h-text-field>
+    <h-text-field
+      v-model="sourceUrl"
+      placeholder="https://twitter.com/..."
+      title="Source URL"
+      explanation="Link to more detail about the event. eg. URL to twitter schedule
+            post or twitch channel, or link to a concert page"
+    ></h-text-field>
+    <h-text-field
+      v-model="thumbnail"
+      placeholder="https://imgur.com/..."
+      title="Thumbnail Image"
+    ></h-text-field>
+    <div class="flex flex-row flex-wrap gap-4">
+      <span class="inline-block flex-grow basis-60">
+        <div class="form-control">
+          <label class="label">
+            <label class="label-text">Event Type</label></label
+          >
+
+          <label class="radio-label">
+            <input
+              v-model="placeholderType"
+              type="radio"
+              name="radio-10"
+              value="scheduled-yt-stream"
+              class="peer radio outline outline-2 checked:bg-red-500"
+            />
+            <span class="label-text peer-checked:text-secondary">
+              Scheduled YT Stream
+            </span>
+          </label>
+          <label class="radio-label">
+            <input
+              v-model="placeholderType"
+              type="radio"
+              name="radio-10"
+              value="external-stream"
+              class="peer radio outline outline-2 checked:bg-blue-500"
+            />
+            <span class="label-text peer-checked:text-secondary">
+              External Stream (eg. Twitch/Twitcast)
+            </span>
+          </label>
+          <label class="radio-label">
+            <input
+              v-model="placeholderType"
+              type="radio"
+              name="radio-10"
+              value="event"
+              class="peer radio outline outline-2 checked:bg-orange-500"
+            />
+            <span class="label-text peer-checked:text-secondary"> Event </span>
+          </label>
+        </div>
+      </span>
+      <span class="inline-block flex-grow basis-60">
+        <div class="form-control">
+          <label class="label">
+            <label class="label-text">Certainty</label></label
+          >
+          <label class="radio-label">
+            <input
+              v-model="certainty"
+              type="radio"
+              name="radio-11"
+              value="certain"
+              class="peer radio outline outline-2 checked:bg-secondary"
+            />
+            <span class="label-text peer-checked:text-secondary">Certain</span>
+          </label>
+          <label class="radio-label">
+            <input
+              v-model="certainty"
+              type="radio"
+              name="radio-11"
+              value="likely"
+              class="peer radio outline outline-2 checked:bg-secondary"
+            />
+            <span class="label-text peer-checked:text-secondary"
+              >Likely (This is an educated guess)</span
+            >
+          </label>
+        </div>
+      </span>
+    </div>
+    <!-- <v-select
         v-model="placeholderType"
         density="compact"
         variant="outlined"
@@ -133,8 +161,8 @@
         hide-details="auto"
         required
         :rules="[requiredRule]"
-      />
-      <v-select
+      /> -->
+    <!-- <v-select
         v-model="certainty"
         density="compact"
         variant="outlined"
@@ -143,78 +171,74 @@
         required
         hide-details="auto"
         :rules="[requiredRule]"
-      />
-      <div class="flex flex-row justify-between">
-        <div class="flex w-min flex-col gap-2">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Timezone</span>
-            </label>
+      /> -->
+    <div class="flex flex-row justify-between">
+      <div class="flex w-min flex-col gap-2">
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text">Timezone</span>
+          </label>
 
-            <select class="select-bordered select w-full max-w-xs border-solid">
-              <option value="Etc/GMT" selected>UTC (+0)</option>
-              <option value="Asia/Tokyo">JST (+8)</option>
-              <option value="America/Los_Angeles">Pacific Time (-?)</option>
-              <option value="America/New_York">
-                Eastern Time (EST/EDT) (-?)
-              </option>
-            </select>
-          </div>
-
-          <!-- ignore this error, it works fine -->
-          <date-picker
-            v-model="liveDate"
-            mode="dateTime"
-            :timezone="timezone"
-            :is-dark="theme.dark"
-            color="gray"
-            class=""
-            is24hr
-            :min-date="minDate"
-            :minute-increment="5"
-            :model-config="{ type: 'string', mask: 'iso' }"
-          ></date-picker>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Duration</span>
-              <span class="label-text-alt text-opacity-60"> </span>
-            </label>
-            <input
-              v-model="duration"
-              type="number"
-              class="input-bordered input w-full border-solid"
-            />
-          </div>
+          <select class="select-bordered select w-full max-w-xs border-solid">
+            <option value="Etc/GMT" selected>UTC (+0)</option>
+            <option value="Asia/Tokyo">JST (+8)</option>
+            <option value="America/Los_Angeles">Pacific Time (-?)</option>
+            <option value="America/New_York">
+              Eastern Time (EST/EDT) (-?)
+            </option>
+          </select>
         </div>
-        <div class="form-control mx-auto hidden w-full max-w-xs lg:block">
-          <label class="label"> <span class="label-text">Preview:</span></label>
-          <video-card
-            :video="(videoObj as any)"
-            include-channel
-            class="max-w-xs"
+
+        <!-- ignore this error, it works fine -->
+        <date-picker
+          v-model="liveDate"
+          mode="dateTime"
+          :timezone="timezone"
+          :is-dark="theme.dark"
+          color="gray"
+          class=""
+          is24hr
+          :min-date="minDate"
+          :minute-increment="5"
+          :model-config="{ type: 'string', mask: 'iso' }"
+        ></date-picker>
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text">Duration</span>
+            <span class="label-text-alt text-opacity-60"> </span>
+          </label>
+          <input
+            v-model="duration"
+            type="number"
+            class="input-bordered input w-full border-solid"
           />
         </div>
       </div>
-      <div class="form-control my-2 block w-full max-w-xs lg:hidden">
-        <div class="divider">Preview</div>
+      <div class="form-control mx-auto hidden w-full max-w-xs lg:block">
+        <label class="label"> <span class="label-text">Preview:</span></label>
         <video-card
           :video="(videoObj as any)"
           include-channel
           class="max-w-xs"
         />
       </div>
-
-      <v-btn color="primary" @click="onSubmit">
-        {{ id ? "Submit Placeholder Modification" : "Create new Placeholder" }}
-      </v-btn>
     </div>
-    <v-snackbar v-model="error" color="error">
-      {{ errorMessage }}
-    </v-snackbar>
-    <v-snackbar v-model="success" timeout="2000" color="success">
-      Successfully added Placeholder Stream
-    </v-snackbar>
-  </v-form>
+    <div class="form-control my-2 block w-full max-w-xs lg:hidden">
+      <div class="divider">Preview</div>
+      <video-card :video="(videoObj as any)" include-channel class="max-w-xs" />
+    </div>
+
+    <v-btn color="primary" @click="onSubmit">
+      {{ id ? "Submit Placeholder Modification" : "Create new Placeholder" }}
+    </v-btn>
+  </div>
+  <v-snackbar v-model="error" color="error">
+    {{ errorMessage }}
+  </v-snackbar>
+  <v-snackbar v-model="success" timeout="2000" color="success">
+    Successfully added Placeholder Stream
+  </v-snackbar>
+  <!-- </v-form> -->
 </template>
 
 <script lang="ts">
@@ -259,20 +283,6 @@ export default defineComponent({
       minDate: dayjs().startOf("day").toDate(),
       timezone: "Asia/Tokyo",
       duration: 60,
-      PLACEHOLDER_TYPES: [
-        {
-          title: "Scheduled YT Stream",
-          value: "scheduled-yt-stream",
-        },
-        {
-          title: "External Stream (eg. Twitch/Twitcast)",
-          value: "external-stream",
-        },
-        {
-          title: "Event",
-          value: "event",
-        },
-      ],
       CERTAINTY_CHOICE: [
         {
           title: "Certain",
@@ -447,4 +457,8 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style>
+.radio-label {
+  @apply flex items-center gap-2 px-1 py-2;
+}
+</style>
