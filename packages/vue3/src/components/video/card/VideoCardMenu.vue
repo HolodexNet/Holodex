@@ -8,7 +8,7 @@
     <template #activator="{ props }">
       <label
         tabindex="0"
-        :class="`video-menu-default-activator my-2 btn hover:bg-opacity-50 active:bg-opacity-50 bg-opacity-0 ${btnClass}`"
+        :class="`video-menu-default-activator btn my-2 bg-opacity-0 hover:bg-opacity-50 active:bg-opacity-50 ${btnClass}`"
         v-bind="props"
         @click.stop.prevent
       >
@@ -17,7 +17,7 @@
     </template>
     <v-sheet>
       <ul
-        class="p-2 overflow-y-auto menu video-menu bg-bgColor-500 text-base-content"
+        class="video-menu menu overflow-y-auto bg-bgColor-500 p-2 text-base-content"
       >
         <!-- Real Videos -->
         <template v-if="video.type !== 'placeholder'">

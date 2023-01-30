@@ -24,11 +24,16 @@ e.g. just doing .online will NOT work
   display: flex;
 }
 
-.btn {
+/* .btn {
   animation: none;
 }
 .btn:active:focus {
   transform: none;  
+} */
+
+/* DIRTY FIX, vuetify applying global styles causing conflict */
+.btn.btn-outline {
+  border-style: solid;
 }
 
 .tab.tab-bordered {
@@ -66,4 +71,40 @@ e.g. just doing .online will NOT work
 
 .btn-text { 
   @apply btn btn-sm bg-transparent hover:bg-transparent text-primary p-0;
+}
+
+.scroll-bar,
+* {
+  scrollbar-width: thin;
+}
+
+.scroll-bar::-webkit-scrollbar,
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+.scroll-bar::-webkit-scrollbar-track, ::-webkit-scrollbar-track {
+    /* background: #1b1b1b; */
+    @apply bg-bgColor-500;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
+    /* background: #575757; */
+    @apply bg-bgColor-50;
+}
+
+.theme--light ::-webkit-scrollbar-track {
+    background: #d6d6d6;
+}
+
+.theme--light ::-webkit-scrollbar-thumb {
+    background: #858585;
+}
+
+.btn-icon {
+  border: none;
+  background: transparent;
+  @apply btn-circle btn-ghost;
 }

@@ -1,17 +1,34 @@
 <template>
-  <div style="overflow: auto; height: 50%; font-size: 0.8rem" class="p-2">
-    <template v-for="item in tlHistory" :key="item.key">
-      <chat-message :source="item" />
-      <!-- :hide-author="hideAuthor(index)" -->
-    </template>
+  <div style="overflow: auto" class="flex">
+    <message-renderer :tl-history="filteredMessages" :reverse="!archive">
+      <div
+        v-if="tlHistoryCompleted && !props.archive"
+        class="text-md py-2 font-bold uppercase opacity-75"
+      >
+        Start of chat
+      </div>
+      <button
+        v-show="!tlHistoryCompleted && !tlHistoryLoading && !props.archive"
+        class="btn-text-ghost btn btn-sm text-primary"
+        @click="loadMessages()"
+      >
+        Load more
+      </button>
+      <div v-if="!tlHistoryLoading && !archive" class="text-xs opacity-75">
+        {{ tlHistory.length - filteredMessages.length }} messages blocked
+      </div>
+    </message-renderer>
   </div>
 </template>
 <script setup lang="ts">
+import { useTLStore } from "@/stores/tldex";
 import { useTldex } from "./useTldex";
 
 const props = defineProps<{
   videoId: string;
   lang: string;
+  startTime?: Date;
+  archive?: boolean;
 }>();
 
 const options = computed(() => ({
@@ -22,17 +39,36 @@ const options = computed(() => ({
   moderator: true,
   vtuber: true,
 }));
-const { loadMessages, tlHistory } = useTldex(options);
+const { loadMessages, tlHistory, tlHistoryCompleted, tlHistoryLoading } =
+  useTldex(options);
+const tldexStore = useTLStore();
+const filteredMessages = computed(() => {
+  const messages = props.archive
+    ? tlHistory.value
+    : [...tlHistory.value].reverse();
+  return messages
+    .filter((m) => {
+      const channelIdBlocked =
+        m.channel_id && tldexStore.blockset.has(m.channel_id);
+      const nameBlocked = m.channel_id && tldexStore.blockset.has(m.name);
+      return !(channelIdBlocked || nameBlocked);
+    })
+    .map((m) => {
+      return {
+        ...m,
+        ...(props.startTime && { relativeMs: +m.timestamp - +props.startTime }),
+      };
+    });
+});
 
 watch(
-  () => options.value,
+  () => [options.value, props.archive],
   () => {
     console.log("Loading messages...", props);
-    loadMessages();
+    loadMessages(props.archive);
   },
   {
     immediate: true,
   }
 );
-console.log("teste");
 </script>

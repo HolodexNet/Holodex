@@ -6,7 +6,6 @@ interface TldexOptions {
   videoId: string;
   lang: string;
   live?: boolean;
-
   verified?: boolean;
   moderator?: boolean;
   vtuber?: boolean;
@@ -38,7 +37,7 @@ export interface Message {
 export interface ParsedMessage extends Message {
   parsed: string; // parsed output after parseMessage
   key: string;
-  relativeMs?: number;
+  // relativeMs?: number;
 }
 
 type TldexPayload = VideoUpdatePayload | Message;
@@ -81,9 +80,6 @@ export function useTldex(options: Ref<TldexOptions>) {
         if (tlHistory.value.length === 0)
           tlHistory.value = data.map((x) => parseMessage(x));
         else tlHistory.value.unshift(...data.map((x) => parseMessage(x)));
-
-        // Set last message as breakpoint, used for maintaing scrolling and styling
-        // if (tlHistory.value.length) tlHistory.value[0].breakpoint = true;
       })
       .catch((e) => {
         console.error(e);
@@ -96,9 +92,8 @@ export function useTldex(options: Ref<TldexOptions>) {
   const socketStore = useSocket();
 
   function handleMessage(payload: TldexPayload) {
-    console.log("got message", payload);
     if ("message" in payload) {
-      tlHistory.value.unshift(parseMessage(payload));
+      tlHistory.value.push(parseMessage(payload));
     }
   }
   watch(
@@ -134,6 +129,8 @@ export function useTldex(options: Ref<TldexOptions>) {
   return {
     tlHistory,
     loadMessages,
+    tlHistoryCompleted,
+    tlHistoryLoading,
   };
 }
 
@@ -143,15 +140,11 @@ export function useTldex(options: Ref<TldexOptions>) {
  * @param relativeTsAnchor
  * @returns
  */
-export function parseMessage(
-  msg: Message,
-  relativeTsAnchor?: number
-): ParsedMessage {
+export function parseMessage(msg: Message): ParsedMessage {
   msg.timestamp = +msg.timestamp;
-  console.log("timing", msg.timestamp, relativeTsAnchor);
   const parsed: ParsedMessage = {
     ...msg,
-    ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),
+    // ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),
     key: msg.name + msg.timestamp + msg.message,
     parsed: "",
   };

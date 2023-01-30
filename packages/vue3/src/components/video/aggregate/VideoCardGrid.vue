@@ -33,11 +33,11 @@ const gridStyle = computed(() => {
     grid-column: 1/-1;
     content: "";
     display: inline-block;
-    cursor: pointer;
     width: calc(100% - 32px);
     position: absolute;
     transform: translateY(-10px);
-    border-bottom: 1px solid hsla(var(--n));
+    border-bottom: 1px solid;
+    @apply border-base-content opacity-50;
     z-index: 1;
   }
 }
