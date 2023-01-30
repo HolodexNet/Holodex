@@ -50,7 +50,7 @@ export default {
       return !(
         index === 0 ||
         index === this.tlHistory.length - 1 ||
-        this.tlHistory[index].name !== this.tlHistory[index + 1].name
+        this.tlHistory[index].name !== this.tlHistory[index - 1].name
       );
     },
     scrollToBottom() {

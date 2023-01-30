@@ -166,11 +166,12 @@ export default defineComponent({
   width: auto;
   height: 1.3em;
   vertical-align: middle;
+  display: inline;
 }
 
 .chat-caption {
-  letter-spacing: 0.0333333333em !important;
-  font-size: 0.85em;
+  /* letter-spacing: 0.0333333333em !important; */
+  font-size: 0.75rem;
 }
 
 /* .chat-time {

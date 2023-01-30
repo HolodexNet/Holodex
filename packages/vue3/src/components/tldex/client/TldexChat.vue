@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow: auto; height: 50%" class="flex">
+  <div style="overflow: auto" class="flex">
     <message-renderer :tl-history="filteredMessages" :reverse="!archive">
       <div
         v-if="tlHistoryCompleted && !props.archive"
@@ -9,12 +9,12 @@
       </div>
       <button
         v-show="!tlHistoryCompleted && !tlHistoryLoading && !props.archive"
-        class="btn-text-ghost btn-sm btn text-primary"
+        class="btn-text-ghost btn btn-sm text-primary"
         @click="loadMessages()"
       >
         Load more
       </button>
-      <div v-if="!tlHistoryLoading" class="text-xs opacity-75">
+      <div v-if="!tlHistoryLoading && !archive" class="text-xs opacity-75">
         {{ tlHistory.length - filteredMessages.length }} messages blocked
       </div>
     </message-renderer>

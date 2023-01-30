@@ -34,13 +34,13 @@
               />
             </div>
             <div class="ml-auto flex">
-              <button class="btn-outline btn-sm btn-circle btn">
+              <button class="btn-icon btn-sm btn">
                 <div class="i-tabler:layout-sidebar text-2xl" />
               </button>
-              <button class="btn-outline btn-sm btn-circle btn">
+              <button class="btn-icon btn-sm btn">
                 <save-to-playlist-btn :video="video" class="text-2xl" />
               </button>
-              <button class="btn-outline btn-sm btn-circle btn">
+              <button class="btn-icon btn-sm btn">
                 <div class="i-mdi:dots-vertical text-2xl" />
               </button>
             </div>
@@ -56,10 +56,10 @@
               <div class="font-bold line-clamp-2">{{ video.title }}</div>
               <span class="opacity-80">{{ channelName }}</span>
             </div>
-            <button class="btn-outline btn-primary btn-sm btn ml-auto">
+            <button class="btn-icon btn-sm btn ml-auto text-primary">
               <div class="i-mdi:heart text-xl" />
             </button>
-            <button class="btn-outline btn-primary btn-sm btn">
+            <button class="btn-icon btn-sm btn text-primary">
               <div class="i-mdi:share text-xl" />
             </button>
           </div>
