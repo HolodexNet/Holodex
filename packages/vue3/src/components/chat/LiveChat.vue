@@ -90,8 +90,8 @@ export default defineComponent({
   },
   data() {
     return {
-      showTl: false,
-      showYt: false,
+      showTl: true,
+      showYt: true,
     };
   },
 });

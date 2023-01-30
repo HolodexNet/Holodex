@@ -20,27 +20,31 @@
               <div v-if="video.topic_id" class="flex items-center text-sm">
                 <div class="i-fluent:tag-multiple-16-regular mr-0.5"></div>
                 {{ video.topic_id }}
+                &nbsp;
               </div>
-              &nbsp;
+
               <div v-if="video.live_viewers" class="flex items-center text-sm">
                 <div class="i-mdi:account mr-0.5 text-lg" />
                 {{ video.live_viewers }}
+                &nbsp;
               </div>
-              &nbsp;
-              <div class="i-mdi:clock mr-0.5 text-lg" />
-              <video-card-live-duration
-                :video="video"
-                class="bg-transparent text-sm"
-              />
+              <div v-if="video.available_at" class="flex items-center text-sm">
+                <div class="i-mdi:clock mr-0.5 text-lg" />
+                <video-card-live-duration
+                  :video="video"
+                  class="bg-transparent text-sm"
+                />
+                &nbsp;
+              </div>
             </div>
             <div class="ml-auto flex">
-              <button class="btn-icon btn-sm btn">
+              <button class="btn-icon btn btn-sm">
                 <div class="i-tabler:layout-sidebar text-2xl" />
               </button>
-              <button class="btn-icon btn-sm btn">
+              <button class="btn-icon btn btn-sm">
                 <save-to-playlist-btn :video="video" class="text-2xl" />
               </button>
-              <button class="btn-icon btn-sm btn">
+              <button class="btn-icon btn btn-sm">
                 <div class="i-mdi:dots-vertical text-2xl" />
               </button>
             </div>
@@ -56,10 +60,10 @@
               <div class="font-bold line-clamp-2">{{ video.title }}</div>
               <span class="opacity-80">{{ channelName }}</span>
             </div>
-            <button class="btn-icon btn-sm btn ml-auto text-primary">
+            <button class="btn-icon btn btn-sm ml-auto text-primary">
               <div class="i-mdi:heart text-xl" />
             </button>
-            <button class="btn-icon btn-sm btn text-primary">
+            <button class="btn-icon btn btn-sm text-primary">
               <div class="i-mdi:share text-xl" />
             </button>
           </div>
