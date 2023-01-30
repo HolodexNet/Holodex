@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'text-red-400': video.status === 'live' }">
+  <div>
     {{ formatted }}
   </div>
 </template>

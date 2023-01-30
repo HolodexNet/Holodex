@@ -33,6 +33,7 @@
                 <video-card-live-duration
                   :video="video"
                   class="bg-transparent text-sm"
+                  :class="{ 'text-red-400': video.status === 'live' }"
                 />
                 &nbsp;
               </div>
