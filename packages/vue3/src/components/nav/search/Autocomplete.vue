@@ -23,7 +23,17 @@
           @keydown="keyMonitor"
         />
       </div>
-      <slot name="caret" :open="showDropdown" :input="inputField"></slot>
+      <slot name="caret" :open="showDropdown" :input="inputField">
+        <div
+          class="i-ion:search opacity-40"
+          style="margin: auto 0px"
+          @click="
+            $nextTick(() => {
+              inputField?.focus();
+            })
+          "
+        ></div>
+      </slot>
     </div>
     <!-- Dropdown Menu -->
     <div
@@ -132,7 +142,10 @@ export default defineComponent({
           if (searchContent.value === "" && currentValue.state.value == -1)
             emit("submit");
           else {
-            emit("select", { n: currentValue.state.value });
+            emit("select", {
+              n: currentValue.state.value,
+              item: props.options[currentValue.state.value],
+            });
             currentValue.reset();
           }
           event.preventDefault();
@@ -173,7 +186,7 @@ export default defineComponent({
     const showDropdown = refDebounced(optionsShown, 300);
 
     const inputField = ref<HTMLInputElement>();
-
+    const log = console.log;
     return {
       optionsShown,
       showDropdown,
@@ -181,6 +194,7 @@ export default defineComponent({
       keyMonitor,
       inputField,
       activeIndex: currentValue.state,
+      log,
     };
   },
   computed: {},
@@ -236,7 +250,7 @@ export default defineComponent({
   // scrollbar-width: 4px;
 
   & .tags {
-    @apply flex flex-shrink-0 flex-grow-0 flex-nowrap items-center;
+    @apply flex flex-shrink-0 flex-nowrap items-center;
     margin: 0 2px;
   }
 

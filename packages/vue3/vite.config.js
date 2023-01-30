@@ -75,7 +75,7 @@ export default defineConfig({
     visualizer({ template: "treemap", gzipSize: true, brotliSize: true }),
   ],
   server: {
-    port: 8080,
+    port: 8082,
     proxy: {
       "/api": {
         target: API_BASE_URL,
