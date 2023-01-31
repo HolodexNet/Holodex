@@ -37,11 +37,22 @@ const queryClientConfig: QueryClientConfig = {
       const { logout } = useClient();
       const { open: toast } = useToast();
       // How to get status code fo error
-      if ((error as AxiosError).request.status === 401) {
+      console.error(error);
+
+      if (
+        (error as any).request &&
+        (error as AxiosError).request.status === 401
+      ) {
         logout();
         toast({
           position: "top-right",
           message: "Authentication error",
+          type: "error",
+        });
+      } else {
+        toast({
+          position: "top-right",
+          message: "Some kind of error",
           type: "error",
         });
       }
