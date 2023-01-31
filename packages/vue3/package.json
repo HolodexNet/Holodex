@@ -12,6 +12,7 @@
     "postinstall": "npm run build"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.8",
     "@kvs/indexeddb": "^2.1.1",
     "@mdi/js": "^7.0.96",
     "@tailwindcss/line-clamp": "^0.4.2",
