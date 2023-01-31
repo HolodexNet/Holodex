@@ -1,0 +1,26 @@
+name: Deploy to next
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy next
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script_stop: true
+          script: |
+            cd /opt/next_web/packages/vue3 || { echo "No directory found"; exit 1; } 
+            git pull origin next
+            npm ci
+            npm run build
+            rm -r /var/www/html/next.holodex.net/*
+            cp -r dist/* /var/www/html/next.holodex.net/
