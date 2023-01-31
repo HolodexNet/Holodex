@@ -1,14 +1,15 @@
 <template>
   <div v-if="'id' in video" class="live-chat flex flex-col">
     <div class="flex h-10 items-center bg-bgColor-400 px-2">
-      <button class="btn-icon btn btn-sm mx-1">
-        <div class="i-mdi:arrow-collapse-right text-xl" />
-      </button>
-
+      <slot name="top-bar">
+        <button class="btn-icon btn btn-sm mx-1">
+          <div class="i-mdi:arrow-collapse-right text-xl" />
+        </button>
+      </slot>
       <div class="btn-group ml-auto">
         <button
           class="btn-outline btn btn-primary btn-xs"
-          :class="{ 'border-primary bg-primary': showTl }"
+          :class="{ 'border-primary-600 bg-primary ': showTl }"
           @click="
             showTl = !showTl;
             showYt = showYt || (!showYt && !showTl);
@@ -18,7 +19,7 @@
         </button>
         <button
           class="btn-outline btn btn-primary btn-xs"
-          :class="{ 'border-primary bg-primary': showYt }"
+          :class="{ 'border-primary-600 bg-primary': showYt }"
           @click="
             showYt = !showYt;
             showTl = showTl || (!showYt && !showTl);
