@@ -14,9 +14,18 @@
       >
         Load more
       </button>
-      <div v-if="!tlHistoryLoading && !archive" class="text-xs opacity-75">
-        {{ tlHistory.length - filteredMessages.length }} messages blocked
-      </div>
+      <a
+        v-if="
+          !tlHistoryLoading &&
+          !archive &&
+          (messagesBlocked > 0 || bypassBlockedFilter)
+        "
+        class="link block text-xs opacity-75"
+        @click="bypassBlockedFilter = !bypassBlockedFilter"
+      >
+        {{ bypassBlockedFilter ? "Hide" : `View ${messagesBlocked}` }}
+        blocked messages
+      </a>
     </message-renderer>
   </div>
 </template>
@@ -39,6 +48,8 @@ const options = computed(() => ({
   moderator: true,
   vtuber: true,
 }));
+// Allow temporary bypass filter togggle
+const bypassBlockedFilter = ref(false);
 const { loadMessages, tlHistory, tlHistoryCompleted, tlHistoryLoading } =
   useTldex(options);
 const tldexStore = useTLStore();
@@ -48,6 +59,9 @@ const filteredMessages = computed(() => {
     : [...tlHistory.value].reverse();
   return messages
     .filter((m) => {
+      if (bypassBlockedFilter.value) {
+        return true;
+      }
       const channelIdBlocked =
         m.channel_id && tldexStore.blockset.has(m.channel_id);
       const nameBlocked = m.channel_id && tldexStore.blockset.has(m.name);
@@ -60,6 +74,10 @@ const filteredMessages = computed(() => {
       };
     });
 });
+
+const messagesBlocked = computed(
+  () => tlHistory.value.length - filteredMessages.value.length
+);
 
 watch(
   () => [options.value, props.archive],
