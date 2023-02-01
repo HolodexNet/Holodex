@@ -6,10 +6,12 @@
       'placeholder-thumbnail': isPlaceholder && video.status !== 'live',
     }"
   >
-    <img
-      :src="(srcs as any)?.[size] || srcs"
-      class="aspect-video rounded-md bg-slate-800 object-cover drop-shadow-md"
-    />
+    <h-lazy class="w-full">
+      <img
+        :src="(srcs as any)?.[size] || srcs"
+        class="aspect-video w-full rounded-md bg-slate-800 object-cover drop-shadow-md"
+      />
+    </h-lazy>
     <div
       class="absolute flex h-full w-full flex-col justify-between"
       style="z-index: 1"
