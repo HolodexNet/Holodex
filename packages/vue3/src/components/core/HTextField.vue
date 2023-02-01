@@ -7,11 +7,20 @@
       </span>
     </label>
     <input
+      v-if="as === 'input'"
       v-model="localValue"
       v-bind="$attrs"
       type="text"
       class="input-bordered input w-full border-solid"
     />
+    <textarea
+      v-if="as === 'textarea'"
+      v-model="localValue"
+      v-bind="$attrs"
+      type="text"
+      class="input-bordered input w-full border-solid"
+    />
+
     <label v-if="error || explanation" class="label">
       <span class="label-text-alt text-opacity-60">
         {{ error ? error : explanation }}
@@ -44,6 +53,10 @@ export default defineComponent({
     },
     error: {
       default: undefined,
+      type: String,
+    },
+    as: {
+      default: "input",
       type: String,
     },
   },

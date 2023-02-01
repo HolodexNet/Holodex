@@ -55,12 +55,17 @@
 import { watchDebounced } from "@vueuse/core";
 // import api from "@/utils/backend-api";
 import backendApi from "@/utils/backend-api";
+import { PropType } from "vue";
 
 export default defineComponent({
   props: {
     modelValue: {
       type: Object,
       default: undefined,
+    },
+    type: {
+      type: String as PropType<"vtuber" | "any_channel">,
+      default: "vtuber",
     },
   },
   emits: ["update:modelValue"],
@@ -83,7 +88,7 @@ export default defineComponent({
 
           const x = await backendApi.searchV3Autocomplete(
             newValue,
-            "vtuber",
+            props.type,
             10
           );
 

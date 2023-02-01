@@ -111,7 +111,11 @@ export default {
    * @param t if defined, will only provide one category. Vtuber or Topic.
    * @param n number of items to return back. 5 by default.
    */
-  searchV3Autocomplete(partial: string, t?: "vtuber" | "topic", n?: number) {
+  searchV3Autocomplete(
+    partial: string,
+    t?: "vtuber" | "topic" | "any_channel",
+    n?: number
+  ) {
     if (partial.length == 0) return { data: { vtuber: [], topic: [] } };
     const q = querystring.stringify({
       q: partial,
