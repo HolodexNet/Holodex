@@ -16,7 +16,7 @@
     <div class="basis-full">
       <div v-if="!hideAuthor" :class="nameClass">
         <span
-          class="chat-name chat-caption mr-[-16px]"
+          class="chat-name chat-caption relative"
           @click="showBlockChannelDialog = true"
         >
           <span v-if="source.is_vtuber">[Vt]</span>
@@ -25,8 +25,10 @@
             class="i-mdi:wrench font-sm mb-[-2px] inline-block"
           ></div>
           {{ source.name }}
-          <span v-if="source.is_verified" style="font-weight: 800"> ✓</span>:
-          <div class="i-mdi:cog font-sm chat-cog mb-[-2px] inline-block"></div>
+          <span v-if="source.is_verified" style="font-weight: 800">✓</span>:
+          <div
+            class="i-mdi:cog font-sm chat-cog absolute mt-1 inline-block"
+          ></div>
         </span>
       </div>
       <a class="chat-message" :data-time="source.relativeMs / 1000">
@@ -48,7 +50,7 @@
           <div class="card-actions">
             <button
               v-if="source.channel_id"
-              class="btn-md btn mr-1 bg-red-500 text-white"
+              class="btn btn-md mr-1 bg-red-500 text-white"
               :href="`https://youtube.com/channel/${source.channel_id}`"
               target="_blank"
             >
@@ -64,7 +66,7 @@
               Holodex
             </button>
             <button
-              class="btn-warning btn mr-1"
+              class="btn btn-warning mr-1"
               @click="toggleBlockName(source.name)"
             >
               {{ !tldexStore.blockset.has(source.name) ? "Block" : "Unblock" }}
@@ -132,6 +134,7 @@ export default defineComponent({
   methods: {
     toggleBlockName(name: string) {
       this.tldexStore.toggleBlocked(name);
+      console.log(this.tldexStore.blockset);
     },
   },
 });
