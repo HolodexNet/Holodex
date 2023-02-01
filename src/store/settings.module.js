@@ -22,6 +22,7 @@ const initialState = {
     scrollMode: true,
     hideThumbnail: false,
     hidePlaceholder: false,
+    hideMissing: false,
     nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
     hideCollabStreams: false,
     ignoredTopics: [],
@@ -117,6 +118,7 @@ const mutations = {
         "liveTlShowSubtitle",
         "liveTlHideSpoiler",
         "hidePlaceholder",
+        "hideMissing",
         "homeViewMode",
     ]),
     resetState(state) {

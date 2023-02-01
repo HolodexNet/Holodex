@@ -128,6 +128,7 @@ export default {
                 hideIgnoredTopics: true,
                 forOrg: "",
                 hidePlaceholder: false,
+                hideMissing: this.$store.state.settings.hideMissing,
                 ...this.filterConfig,
             };
             const filtered = this.videos.filter((v) => this.filterVideos(v, config));

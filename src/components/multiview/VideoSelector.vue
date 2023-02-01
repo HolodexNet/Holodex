@@ -215,6 +215,10 @@ export default {
             default: true,
             type: Boolean,
         },
+        hideMissing: {
+            default: true,
+            type: Boolean,
+        },
     },
     data() {
         return {
@@ -242,6 +246,7 @@ export default {
                 forOrg: this.isRealOrg && this.selectedOrg.name,
                 hideIgnoredTopics: true,
                 hidePlaceholder: this.hidePlaceholders,
+                hideMissing: this.hideMissing,
             };
             const isTwitchPlaceholder = (v) => (v.type === "placeholder" && v.link?.includes("twitch.tv"));
             return this.live.filter((l) => this.filterVideos(l, filterConfig) || (this.hidePlaceholders && isTwitchPlaceholder(l)));
