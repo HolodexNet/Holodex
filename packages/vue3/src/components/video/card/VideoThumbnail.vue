@@ -1,25 +1,23 @@
 <template>
   <!-- Video Image with Duration -->
   <div
-    class="relative flex flex-shrink-0 rounded-md shadow-md aspect-video video-thumbnail hover:shadow-2xl"
+    class="video-thumbnail relative flex aspect-video flex-shrink-0 rounded-md shadow-md hover:shadow-2xl"
     :class="{
       'placeholder-thumbnail': isPlaceholder && video.status !== 'live',
     }"
   >
-    <v-img
-      :aspect-ratio="16 / 9"
+    <img
       :src="(srcs as any)?.[size] || srcs"
-      cover
-      class="rounded-md drop-shadow-md bg-slate-800"
-    ></v-img>
+      class="aspect-video rounded-md bg-slate-800 object-cover drop-shadow-md"
+    />
     <div
-      class="absolute flex flex-col justify-between w-full h-full"
+      class="absolute flex h-full w-full flex-col justify-between"
       style="z-index: 1"
     >
       <div class="flex items-start justify-between">
         <!-- Topic Id display -->
         <div
-          class="text-white rounded-sm video-overlay-tag"
+          class="video-overlay-tag rounded-sm text-white"
           :style="{ visibility: video.topic_id ? 'visible' : 'hidden' }"
         >
           {{ video.topic_id }}
@@ -33,17 +31,17 @@
 
       <div class="flex justify-end text-white">
         <!-- Show music icon if songs exist -->
-        <div v-if="video.songcount" class="rounded-sm video-overlay-tag">
-          <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
+        <div v-if="video.songcount" class="video-overlay-tag rounded-sm">
+          <div class="i-icon-park-outline:music-menu text-lg"></div>
         </div>
         <!-- Show TL chat icon if recently active or has archive tl exist -->
         <div
           v-if="hasTLs"
-          class="rounded-sm video-overlay-tag"
+          class="video-overlay-tag rounded-sm"
           :title="tlIconTitle"
         >
           {{ tlLangInChat }}
-          <v-icon small color="white">{{ icons.tlChat }}</v-icon>
+          <div class="ml-1 font-bold">TL</div>
         </div>
         <!-- Duration/Current live stream time -->
         <video-card-live-duration
@@ -51,7 +49,7 @@
             !isPlaceholder && ((video.duration || 0) > 0 || video.start_actual)
           "
           :video="video"
-          class="rounded-sm video-overlay-tag"
+          class="video-overlay-tag rounded-sm"
           :class="{ '!bg-red-800 !bg-opacity-70': video.status === 'live' }"
         />
         <div
@@ -61,9 +59,7 @@
           <span class="mr-1">
             {{ placeholderTag.text }}
           </span>
-          <v-icon color="white" class="rounded-sm">
-            {{ placeholderTag.icon }}
-          </v-icon>
+          <div :class="placeholderTag.icon" class="text-xl"></div>
         </div>
       </div>
     </div>
@@ -75,13 +71,7 @@ import { useLangStore } from "@/stores/lang";
 import { useSiteStore } from "@/stores/site";
 import { useTLStore } from "@/stores/tldex";
 import { getVideoThumbnails } from "@/utils/functions";
-import {
-  mdiBroadcast,
-  mdiCalendar,
-  mdiTwitch,
-  mdiTwitter,
-  mdiYoutube,
-} from "@mdi/js";
+import { mdiBroadcast } from "@mdi/js";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify/lib/framework.mjs";
@@ -149,22 +139,26 @@ export default defineComponent({
       if (this.video.placeholderType === PLACEHOLDER_TYPES.EVENT) {
         return {
           text: this.t("component.videoCard.typeEventPlaceholder"),
-          icon: mdiCalendar,
+          icon: "i-material-symbols:auto-schedule-rounded",
         };
       }
       if (this.video.placeholderType === PLACEHOLDER_TYPES.YT_STREAM) {
         return {
           text: this.t("component.videoCard.typeScheduledYT"),
-          icon: mdiYoutube,
+          icon: "i-material-symbols:youtube-activity",
         };
       }
 
       if (this.video.placeholderType === PLACEHOLDER_TYPES.EXTERNAL_STREAM) {
-        let externalIcon = mdiBroadcast;
+        let externalIcon = "i-mdi:broadcast";
         if (this.video.link?.includes("twitch.tv")) {
-          externalIcon = mdiTwitch;
+          externalIcon = "i-mdi:twitch";
         } else if (this.video.link?.includes("twitter.com/i/spaces")) {
-          externalIcon = mdiTwitter;
+          externalIcon = "i-mdi:twitter";
+        } else if (this.video.link?.includes("instagram")) {
+          externalIcon = "i-mdi:instagram";
+        } else if (this.video.link?.includes("nicovideo")) {
+          externalIcon = "i-simple-icons:niconico";
         }
 
         return {

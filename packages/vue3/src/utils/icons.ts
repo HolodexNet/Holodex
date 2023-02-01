@@ -31,6 +31,13 @@ export const down = "i-bx:chevron-down";
 export const check = "i-mdi:check";
 export const plusBox = "i-mdi:plus-box";
 
+export const schedule = "i-material-symbols:auto-schedule-rounded";
+export const ytEvent = "i-material-symbols:youtube-activity";
+export const event = "i-mdi:broadcast";
+export const twitch = "i-mdi:twitch";
+// export const twitter = "i-mdi:twitter"
+export const instagram = "i-mdi:instagram";
+export const niconico = "i-simple-icons:niconico";
 /**
  * Search specific dropdown icons
  *
