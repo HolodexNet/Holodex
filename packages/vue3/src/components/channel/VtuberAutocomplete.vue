@@ -19,14 +19,7 @@
     @submit="() => {}"
   >
     <template #chips="{ selection: s }">
-      <channel-card
-        v-if="s && s[0]"
-        class="w-80 flex-grow"
-        :channel="s[0]"
-        variant="list"
-        no-link
-        slim
-      ></channel-card>
+      <channel-tag v-if="s && s[0]" :channel="s[0]"></channel-tag>
     </template>
     <template #dropdown="{ active }">
       <div

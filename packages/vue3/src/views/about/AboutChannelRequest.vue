@@ -68,6 +68,7 @@
         title="Channel URL"
         placeholder="https://www.youtube.com/..."
       ></h-text-field>
+
       <h-text-field
         v-if="type !== DELETE && type !== ADD_CLIPPER"
         v-model="english_name"
@@ -122,15 +123,13 @@
         class="h-40"
       />
     </template>
-    <v-btn
-      class="mt-4"
-      :color="success ? 'success' : 'primary'"
-      large
-      elevation="8"
+    <button
+      v-if="type"
+      class="btn-primary btn mt-2 w-32 text-lg shadow-md"
       @click="onSubmit"
     >
-      <v-icon>{{ icons.mdiCheck }}</v-icon>
-    </v-btn>
+      <div class="i-mdi:check"></div>
+    </button>
   </v-card-text>
   <v-snackbar v-model="error" color="error">
     {{ errorMessage }}
@@ -140,7 +139,6 @@
 
 <script lang="ts">
 import backendApi from "@/utils/backend-api";
-import { mdiMinusBox } from "@mdi/js";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
 const ADD_VTUBER =
   "Add a Vtuber ▶️ for Holodex to track the channel and clips.";
@@ -155,7 +153,6 @@ export default defineComponent({
   },
   data() {
     return {
-      mdiMinusBox,
       valid: true,
 
       languages: [

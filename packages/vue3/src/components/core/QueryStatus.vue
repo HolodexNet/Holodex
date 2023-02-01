@@ -34,13 +34,11 @@
         Retry
       </v-btn>
     </div>
-    <v-progress-circular
-      v-else-if="props.query.isLoading.value || props.query.isFetching.value"
-      indeterminate
-      color="primary"
-      :size="64"
-      class="m-auto"
-    ></v-progress-circular>
+    <logo
+      v-if="props.query.isLoading.value || props.query.isFetching.value"
+      class="mx-auto mt-32 w-1/2 max-w-sm"
+      :loading="props.query.isLoading.value || props.query.isFetching.value"
+    ></logo>
   </div>
 </template>
 <script setup lang="ts">
