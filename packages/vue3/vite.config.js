@@ -52,7 +52,7 @@ export default defineConfig({
     }),
     vuetify({
       autoImport: true,
-      styles: "expose",
+      styles: { configFile: './src/setup/vuetify/main.sass' }
     }),
     AutoImport({
       // AutoImports is temperamental, might add non-treeshaking.
@@ -75,7 +75,7 @@ export default defineConfig({
     visualizer({ template: "treemap", gzipSize: true, brotliSize: true }),
   ],
   server: {
-    port: 8082,
+    port: 8080,
     proxy: {
       "/api": {
         target: API_BASE_URL,
