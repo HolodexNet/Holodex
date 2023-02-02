@@ -414,16 +414,16 @@
               <v-icon class="float-right" @click="TLSetting = false">
                 {{ icons.mdiClose }}
               </v-icon>
-              <v-tooltip left>
-                <template #activator="{ props }">
-                  <v-icon class="float-right" v-bind="props">
+              <h-tooltip placement="left">
+                <template #activator>
+                  <v-icon class="float-right">
                     {{ mdiKeyboard }}
                   </v-icon>
                 </template>
                 <span>While typing in TL box</span><br />
                 <span><kbd>⇧</kbd><kbd>⇩</kbd> to change Profiles</span><br />
                 <span><kbd>Ctrl+[1~9]</kbd> to quick switch to Profile</span>
-              </v-tooltip>
+              </h-tooltip>
             </v-card-subtitle>
             <v-card-text class="d-flex align-stretch">
               <v-text-field

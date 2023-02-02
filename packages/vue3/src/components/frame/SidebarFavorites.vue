@@ -1,49 +1,46 @@
 <template>
   <template v-for="v in videoList" :key="'sidebar' + v.available_at + v.id">
     <div>
-      <v-hover v-slot="{ isHovering, props }">
-        <channel-card
-          v-bind="props"
-          :channel="v.channel"
-          slim
-          no-link
-          :live="v.status === 'live'"
-          class="relative hover:bg-bgColor-300"
-          >{{ formatDurationUpcoming(v.available_at) }}
-          <template #buttons>
-            <v-fade-transition>
-              <div
-                v-if="isHovering"
-                class="absolute right-0 left-14 flex h-12 gap-1 bg-bgColor-300 px-2 py-0.5"
-                style="width: 9.5rem"
-              >
-                <router-link
-                  class="c-card-icon h-full flex-shrink basis-3/4 rounded hover:text-primary"
-                  title="Watch"
-                  :to="`/watch/${v.id}`"
-                >
-                  <!-- :href="`https://youtube.com/channel/${v.id}`" -->
-                  <div :class="icons.playlist"></div>
-                  <!-- <logo class="my-1 h-5/6"></logo> -->
-                </router-link>
-                <router-link
-                  class="c-card-icon mr-1 h-full basis-1/4 rounded hover:text-primary"
-                  :to="`/multiview/...?${v.id}`"
-                  title="Multiview"
-                >
-                  <div class="i-clarity:grid-chart-solid"></div>
-                </router-link></div
-            ></v-fade-transition>
-          </template>
-        </channel-card>
-      </v-hover>
-      <v-tooltip activator="parent">
+      <h-tooltip placement="right" offset-distance="40px" class="w-full">
         <div
           class="-ml-6 w-60 max-w-md rounded-lg border-2 border-secondary bg-bgColor p-1 shadow-xl shadow-bgColor"
         >
           <h-lazy><video-card :video="v"></video-card></h-lazy>
         </div>
-      </v-tooltip>
+        <template #activator>
+          <channel-card
+            :channel="v.channel"
+            slim
+            no-link
+            :live="v.status === 'live'"
+            class="relative hover:bg-bgColor-300"
+            >{{ formatDurationUpcoming(v.available_at) }}
+            <!-- TODO refactor to a component and use the event hooks from popper -->
+            <!-- <template #buttons>
+              <v-fade-transition>
+                <div
+                  class="absolute right-0 left-14 flex h-12 gap-1 bg-bgColor-300 px-2 py-0.5"
+                  style="width: 9.5rem"
+                >
+                  <router-link
+                    class="c-card-icon h-full flex-shrink basis-3/4 rounded hover:text-primary"
+                    title="Watch"
+                    :to="`/watch/${v.id}`"
+                  >
+                    <div :class="icons.playlist"></div>
+                  </router-link>
+                  <router-link
+                    class="c-card-icon mr-1 h-full basis-1/4 rounded hover:text-primary"
+                    :to="`/multiview/...?${v.id}`"
+                    title="Multiview"
+                  >
+                    <div class="i-clarity:grid-chart-solid"></div>
+                  </router-link></div
+              ></v-fade-transition>
+            </template> -->
+          </channel-card>
+        </template>
+      </h-tooltip>
     </div>
   </template>
   <div style="height: 40px"></div>
