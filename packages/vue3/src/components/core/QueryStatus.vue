@@ -30,7 +30,7 @@
         </v-btn> -->
       </div>
       <v-btn small href="/">
-        <v-icon>{{ icons.mdiRefresh }}</v-icon>
+        <div class="i-mdi:refresh text-lg"></div>
         Retry
       </v-btn>
     </div>

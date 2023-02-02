@@ -13,7 +13,7 @@
         <slot name="visible" :current-org="currentOrg" :activator="activator">
           <div
             v-bind="activator.props"
-            class="inline-block cursor-pointer nav-title"
+            class="nav-title flex cursor-pointer flex-row items-center"
             style="position: relative"
           >
             <v-fade-transition hide-on-leave>
@@ -24,20 +24,18 @@
               >
             </v-fade-transition>
             <span ref="dexBtn" class="text-primary">dex</span>
-            <v-icon
-              size="30"
-              class="transition-transform change-org-icon"
+            <div
+              class="change-org-icon i-material-symbols:arrow-drop-down-rounded border-none text-xl transition-transform"
               :class="{
                 'rotate-180': activator.props['aria-expanded'] === 'true',
               }"
-            >
-              {{ icons.mdiMenuDown }}
-            </v-icon>
+              style="width: 30px; height: 30px"
+            ></div>
           </div>
         </slot>
       </template>
       <ul
-        class="overflow-y-auto border-2 rounded-md menu bg-bgColor-500 text-base-content border-secondary"
+        class="menu overflow-y-auto rounded-md border-2 border-secondary bg-bgColor-500 text-base-content"
       >
         <li
           v-for="org in orgFavorites"
@@ -59,7 +57,7 @@
   <v-dialog v-model="showOrgDialog">
     <v-card>
       <v-card-text
-        class="px-1 overflow-y-auto h-fit"
+        class="h-fit overflow-y-auto px-1"
         style="width: 30vw; min-width: 340px; max-width: 800px"
       >
         <v-text-field
@@ -70,7 +68,7 @@
           class="px-1"
           color="accent"
         />
-        <ul class="overflow-y-auto menu bg-bgColor">
+        <ul class="menu overflow-y-auto bg-bgColor">
           <li v-for="org in sortedOrgs" :key="org.name + '_list_item'">
             <!--             :class="orgFavoritesNameSet.has(org.name) ? 'bordered' : ''"
  -->
@@ -79,10 +77,10 @@
               @click="$emit('changed', org, closeDialog)"
             >
               <button
-                class="btn btn-sm btn-square"
+                class="btn btn-square btn-sm"
                 :class="
                   orgFavoritesNameSet.has(org.name)
-                    ? 'btn-primary btn-outline'
+                    ? 'btn-outline btn-primary'
                     : 'btn-ghost'
                 "
                 @click.stop="site.toggleFavoriteOrg(org)"
@@ -92,10 +90,10 @@
               <span class="flex flex-grow">{{ org.name }}</span>
               <div
                 v-if="orgFavoritesNameSet.has(org.name)"
-                class="self-end btn-group"
+                class="btn-group self-end"
               >
                 <button
-                  class="btn btn-sm btn-square btn-ghost"
+                  class="btn btn-ghost btn-square btn-sm"
                   @click.stop.prevent="
                     site.shiftOrgFavorites({ org, up: true })
                   "
@@ -103,7 +101,7 @@
                   <v-icon>{{ icons.mdiChevronUp }}</v-icon>
                 </button>
                 <button
-                  class="btn btn-sm btn-square btn-ghost"
+                  class="btn btn-ghost btn-square btn-sm"
                   @click.stop.prevent="
                     site.shiftOrgFavorites({ org, up: false })
                   "
@@ -248,12 +246,12 @@ export default defineComponent({
 .nav-title {
   text-decoration: none;
   font-size: 24px;
-  line-height: 1.2px;
+  line-height: 1.4;
 }
 
-.change-org-icon:focus::after {
+/* .change-org-icon:focus::after {
   opacity: 0 !important;
-}
+} */
 
 .first-visit-tooltip {
   width: 80%;
