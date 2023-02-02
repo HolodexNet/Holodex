@@ -6,7 +6,7 @@
     @keydown.ctrl.s.exact.prevent="processLog()"
   >
     <div class="d-flex flex-column" style="height: 100%; width: 100%">
-      <v-system-bar height="30" class="px-0 tl-topbar" color="secondary">
+      <v-system-bar height="30" class="tl-topbar px-0" color="secondary">
         <v-btn small outlined to="/">
           <v-icon>{{ icons.mdiHome }}</v-icon>
         </v-btn>
@@ -86,7 +86,7 @@
         </v-btn>
       </v-system-bar>
       <div
-        class="flex-row d-flex align-stretch"
+        class="d-flex align-stretch flex-row"
         style="height: 100%"
         @click="menuBool = false"
       >
@@ -113,7 +113,7 @@
                 <th>
                   <v-card-actions
                     v-if="!vidPlayer"
-                    class="flex-row ControlBox d-flex"
+                    class="ControlBox d-flex flex-row"
                   >
                     <v-btn small @click="timerTimeStop()">
                       <v-icon dark>
@@ -176,7 +176,7 @@
                 <tr v-if="selectedEntry === index" :key="index + 'control'">
                   <td colspan="5">
                     <v-card-actions
-                      class="flex-row d-flex justify-space-around"
+                      class="d-flex justify-space-around flex-row"
                     >
                       <v-btn
                         @click="
@@ -213,7 +213,7 @@
           outlined
         >
           <v-card id="player" height="100%" width="100%" />
-          <v-card class="flex-row justify-center d-flex">
+          <v-card class="d-flex flex-row justify-center">
             <EnhancedEntry
               v-if="displayEntry >= 0 && displayEntry < entries.length"
               :stext="entries[displayEntry].SText"
@@ -229,7 +229,7 @@
               "
             />
           </v-card>
-          <v-card-actions class="flex-row justify-center d-flex">
+          <v-card-actions class="d-flex flex-row justify-center">
             <v-btn small @click="timerTimeStop()">
               <v-icon dark>
                 {{ mdiStop }}
@@ -264,7 +264,7 @@
         @keydown.ctrl.left="ctrlLeft()"
         @keydown.ctrl.right="ctrlRight()"
       >
-        <v-row class="align-baseline">
+        <h-row class="align-baseline">
           <v-card
             style="
               display: flex;
@@ -310,7 +310,7 @@
                 </v-card>
 
                 <div
-                  class="flex-row d-flex"
+                  class="d-flex flex-row"
                   style="margin-left: 40%"
                   :style="{ width: 3 * secToPx * secPerBar + 'px' }"
                   @mouseleave="rulerMouseLeave()"
@@ -324,7 +324,7 @@
                     />
                     <v-card
                       :key="idx + 'card'"
-                      class="flex-row rounded-lg d-flex align-center Timecard"
+                      class="d-flex align-center Timecard flex-row rounded-lg"
                       elevation="2"
                       outlined
                       :style="{
@@ -371,8 +371,8 @@
               </div>
             </v-card>
           </v-card>
-        </v-row>
-        <v-row class="">
+        </h-row>
+        <h-row class="">
           <v-text-field
             v-model="inputString"
             placeholder="Type TL Here <Enter key to send>"
@@ -406,7 +406,7 @@
               {{ TLSetting ? mdiCogOff : mdiCog }}
             </v-icon>
           </v-btn>
-        </v-row>
+        </h-row>
         <v-expand-transition>
           <v-card v-if="TLSetting" class="mt-2">
             <v-card-subtitle>
@@ -682,7 +682,7 @@
             v-model="activeURLStream"
             :label="$t('views.tlClient.settingPanel.mainStreamLink')"
           />
-          <v-card-actions class="flex-row justify-center d-flex">
+          <v-card-actions class="d-flex flex-row justify-center">
             <v-btn @click="settingOKClick()">
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
@@ -749,7 +749,7 @@
               :label="$t('views.scriptEditor.editorModePanel.filterTranslator')"
               @change="filterTlChange"
             />
-            <v-card-actions class="flex-row justify-center d-flex">
+            <v-card-actions class="d-flex flex-row justify-center">
               <v-btn color="primary" @click="deactivateEditorMode()">
                 {{ $t("views.scriptEditor.editorModePanel.deactivateMode") }}
               </v-btn>

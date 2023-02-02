@@ -1,7 +1,7 @@
 <template>
   <v-container fluid style="max-height: 100vh; padding: 0px 12px">
-    <div class="flex flex-col flex-grow" style="height: 98vh; width: 100%">
-      <div height="30" class="tl-topbar px-0 justify-start" color="secondary">
+    <div class="flex flex-grow flex-col" style="height: 98vh; width: 100%">
+      <div height="30" class="tl-topbar justify-start px-0" color="secondary">
         <v-btn size="small" variant="outlined" to="/">
           <v-icon>{{ icons.mdiHome }}</v-icon>
           {{ $t("component.mainNav.home") }}
@@ -65,14 +65,14 @@
         </v-btn>
       </div>
       <div
-        class="flex items-stretch flex-row"
+        class="flex flex-row items-stretch"
         style="height: 100%"
         @mousemove="resizeMouseMove($event)"
         @mouseleave="resizeMouseLeave(1)"
         @mouseup="resizeMouseUp()"
       >
         <div
-          class="flex flex-col flex-grow flex-shrink"
+          class="flex flex-shrink flex-grow flex-col"
           :width="
             activeChat.length < 2
               ? videoPanelWidth1 + '%'
@@ -93,7 +93,7 @@
           />
           <v-card
             v-if="vidPlayer"
-            class="flex flex-col flex-grow flex-shrink"
+            class="flex flex-shrink flex-grow flex-col"
             outlined
             height="100%"
           >
@@ -226,7 +226,7 @@
         @keydown.ctrl.7.exact.prevent="profileJump(7)"
         @keydown.ctrl.8.exact.prevent="profileJump(8)"
       >
-        <v-row>
+        <h-row>
           <v-text-field
             v-model="inputString"
             placeholder="Type TL Here <Enter key to send>"
@@ -259,7 +259,7 @@
               {{ TLSetting ? mdiCogOff : mdiCog }}
             </v-icon>
           </v-btn>
-        </v-row>
+        </h-row>
         <v-expand-transition>
           <v-card v-if="TLSetting" class="mt-2">
             <v-card-subtitle>
@@ -278,7 +278,7 @@
                 <span><kbd>Ctrl+[1~9]</kbd> to quick switch to Profile</span>
               </v-tooltip>
             </v-card-subtitle>
-            <v-card-text class="flex align-stretch">
+            <v-card-text class="align-stretch flex">
               <v-text-field
                 v-model="profile[profileIdx].Prefix"
                 :label="$t('views.tlClient.tlControl.prefix')"
