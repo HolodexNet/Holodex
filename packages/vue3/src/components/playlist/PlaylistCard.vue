@@ -1,20 +1,20 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex h-full flex-col">
     <div>
-      <div v-if="editNameMode" class="flex flex-row w-full">
+      <div v-if="editNameMode" class="flex w-full flex-row">
         <input
           v-model="playlistName"
           type="text"
           placeholder="Type here"
-          class="flex-auto w-full input"
+          class="input w-full flex-auto"
           required
           aria-required
           autofocus
           @keydown.enter="editNameMode = false"
         />
-        <div class="flex-initial btn" @click="editNameMode = false">OK</div>
+        <div class="btn flex-initial" @click="editNameMode = false">OK</div>
       </div>
-      <span v-else class="flex-grow flex-shrink" style="flex-basis: 100%">
+      <span v-else class="flex-shrink flex-grow" style="flex-basis: 100%">
         <div class="inline-block py-1 text-lg font-bold">
           {{ playlist.name }}
         </div>
@@ -22,7 +22,7 @@
           v-show="isEditable"
           icon
           small
-          class="float-right btn-square btn-ghost btn btn-sm"
+          class="btn btn-ghost btn-square btn-sm float-right"
           @click="editNameMode = true"
         >
           <v-icon> {{ icons.mdiPencil }} </v-icon>
@@ -31,7 +31,7 @@
       <v-menu location="bottom" nudge-width="500">
         <template #activator="{ props }">
           <div
-            class="float-right btn btn-square btn-ghost btn-sm"
+            class="btn btn-ghost btn-square btn-sm float-right"
             v-bind="props"
           >
             <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
@@ -93,7 +93,7 @@
         </v-list>
       </v-menu>
     </div>
-    <span class="block text-sm text-right text-opacity-50 text-secondary-300">
+    <span class="block text-right text-sm text-secondary-300 text-opacity-50">
       {{ playlist.videos?.length }} / {{ maxPlaylistCount }}
     </span>
 
@@ -101,25 +101,25 @@
       <video-card-virtual-list :videos="playlist.videos || []">
         <template #default="{ video }">
           <div
-            class="self-center w-5 mr-1 text-sm btn-group btn-group-vertical"
+            class="btn-group btn-group-vertical mr-1 w-5 self-center text-sm"
           >
             <!-- <button class="p-0 btn btn-ghost btn-xs">
               <i class="i-bx:chevrons-up"></i>
             </button> -->
             <button
-              class="p-0 btn btn-ghost btn-xs"
+              class="btn btn-ghost btn-xs p-0"
               @click.stop.prevent="move(video.id, 'up')"
             >
               <div :class="icons.up"></div>
             </button>
             <button
-              class="p-0 btn btn-ghost btn-xs"
+              class="btn btn-ghost btn-xs p-0"
               @click.stop.prevent="del(video.id)"
             >
               <div :class="icons.trash"></div>
             </button>
             <button
-              class="p-0 btn btn-ghost btn-xs"
+              class="btn btn-ghost btn-xs p-0"
               @click.stop.prevent="move(video.id, 'down')"
             >
               <div :class="icons.down"></div>
@@ -159,29 +159,23 @@
     <v-card>
       <v-card-title>{{ $t("views.library.exportYTHeading") }}</v-card-title>
       <v-card-text>
-        <v-row>
-          <v-col cols="">
-            <p v-html="$t('views.library.exportYTExplanation')" />
-            <br />
+        <p v-html="$t('views.library.exportYTExplanation')" />
+        <br />
 
-            <br />
-            <p v-html="$t('views.library.exportYTInstructions')" />
-            <v-btn class="mx-2 mt-2" color="green" @click="exportToYT">
-              {{
-                $t("views.library.createYtPlaylistButton", [
-                  (playlist.videos || []).length,
-                ])
-              }}
-            </v-btn>
-            <v-btn class="mx-2 mt-2" @click="instructionsDialog = false">
-              {{ $t("views.library.deleteConfirmationCancel") }}
-            </v-btn>
-          </v-col>
-          <v-col cols="12" md="auto">
-            <!-- TODO BROKEN LINK HERE -->
-            <!-- <img src="/img/playlist-instruction.jpg" /> -->
-          </v-col>
-        </v-row>
+        <br />
+        <p v-html="$t('views.library.exportYTInstructions')" />
+        <v-btn class="mx-2 mt-2" color="green" @click="exportToYT">
+          {{
+            $t("views.library.createYtPlaylistButton", [
+              (playlist.videos || []).length,
+            ])
+          }}
+        </v-btn>
+        <v-btn class="mx-2 mt-2" @click="instructionsDialog = false">
+          {{ $t("views.library.deleteConfirmationCancel") }}
+        </v-btn>
+        <!-- TODO BROKEN LINK HERE -->
+        <!-- <img src="/img/playlist-instruction.jpg" /> -->
       </v-card-text>
     </v-card>
   </v-dialog>

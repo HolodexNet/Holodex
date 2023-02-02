@@ -1,11 +1,11 @@
 <template>
-  <v-row>
-    <v-col :cols="4">
+  <div class="flex flex-row">
+    <div class="basis-1/3">
       <kbd>VideoCard</kbd>
       <video-card :video="video" hide-channel-image />
       <video-card :video="placeholderVideo" hide-channel-image />
-    </v-col>
-    <v-col :cols="8">
+    </div>
+    <div class="basis-2/3">
       <kbd>VideoCard Horizontal Variant</kbd>
       <video-card
         :video="video"
@@ -16,9 +16,9 @@
         class="mb-2"
       />
       <video-card :video="placeholderVideo" horizontal hide-channel-image />
-    </v-col>
+    </div>
 
-    <v-col :cols="4">
+    <div class="basis-1/3">
       <kbd>core/H-List</kbd>
       <h-list style="min-height: 88px">
         <template #avatar>
@@ -35,8 +35,8 @@
       <video-card-text :video="video" />
       <kbd>VideoCardThumbnail</kbd>
       <video-thumbnail :video="video" />
-    </v-col>
-  </v-row>
+    </div>
+  </div>
   <video-card-grid>
     <template v-for="n in 20" :key="n">
       <video-card :video="video" />

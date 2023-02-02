@@ -1,12 +1,12 @@
 <template>
-  <v-col v-if="s" cols="12">
+  <div class="my-2 w-full">
     <div
-      class="drop-shadow-lg grid grid-cols-[repeat(auto-fill,_minmax(250px,_min-content))] gap-2 md:gap-4"
+      class="grid grid-cols-[repeat(auto-fill,_minmax(250px,_min-content))] gap-2 drop-shadow-lg md:gap-4"
     >
-      <div class="p-2 stat bg-bgColor-500 md:p-4">
+      <div class="stat bg-bgColor-500 p-2 md:p-4">
         <div class="stat-figure text-primary">
           <svg
-            class="w-8 h-8"
+            class="h-8 w-8"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -22,20 +22,22 @@
         </div>
         <div class="stat-title">VTubers</div>
         <div
+          v-if="s"
           class="stat-value text-primary"
           :value="s?.channelCount?.vtuber || 0"
         >
           0
         </div>
+        <logo v-else class="w-12" loading />
         <div class="stat-desc">
           +{{ s?.monthlyChannels?.vtuber || 0 }} last month
         </div>
       </div>
 
-      <div class="p-2 stat bg-bgColor-500 md:p-4">
+      <div class="stat bg-bgColor-500 p-2 md:p-4">
         <div class="stat-figure text-secondary">
           <svg
-            class="w-8 h-8"
+            class="h-8 w-8"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -51,19 +53,21 @@
         </div>
         <div class="stat-title">Subbers</div>
         <div
+          v-if="s"
           class="stat-value text-secondary"
           :value="s?.channelCount?.subber || 0"
         >
           0
         </div>
+        <logo v-else class="w-12" loading />
         <div class="stat-desc">
           +{{ s?.monthlyChannels?.vtuber || 0 }} last month
         </div>
       </div>
-      <div class="p-2 stat bg-bgColor-500 md:p-4">
+      <div class="stat bg-bgColor-500 p-2 md:p-4">
         <div class="stat-figure text-success">
           <svg
-            class="w-8 h-8"
+            class="h-8 w-8"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -78,15 +82,20 @@
           </svg>
         </div>
         <div class="stat-title">Videos</div>
-        <div class="stat-value text-success" :value="s?.totalVideos?.count || 0">
+        <div
+          v-if="s"
+          class="stat-value text-success"
+          :value="s?.totalVideos?.count || 0"
+        >
           0
         </div>
-        <div class="stat-desc">+{{ s.dailyVideos?.count || 0 }} yesterday</div>
+        <logo v-else class="w-12" loading />
+        <div class="stat-desc">+{{ s?.dailyVideos?.count || 0 }} yesterday</div>
       </div>
-      <div class="p-2 stat bg-bgColor-500 md:p-4">
+      <div class="stat bg-bgColor-500 p-2 md:p-4">
         <div class="stat-figure text-warning">
           <svg
-            class="w-8 h-8"
+            class="h-8 w-8"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -101,13 +110,18 @@
           </svg>
         </div>
         <div class="stat-title">Songs</div>
-        <div class="stat-value text-warning" :value="s?.totalSongs?.count || 0">
+        <div
+          v-if="s"
+          class="stat-value text-warning"
+          :value="s?.totalSongs?.count || 0"
+        >
           0
         </div>
+        <logo v-else class="w-12" loading />
         <div class="stat-desc"></div>
       </div>
     </div>
-  </v-col>
+  </div>
 </template>
 
 <script>
@@ -153,8 +167,7 @@ export default defineComponent({
 </script>
 
 <style>
-
 .stat {
-  @apply border border-bgColor-100 border-2 rounded-md;
+  @apply rounded-md border border-2 border-bgColor-100;
 }
 </style>
