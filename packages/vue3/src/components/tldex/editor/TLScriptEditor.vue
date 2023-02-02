@@ -6,7 +6,7 @@
     @keydown.ctrl.s.exact.prevent="processLog()"
   >
     <div class="d-flex flex-column" style="height: 100%; width: 100%">
-      <v-system-bar height="30" class="tl-topbar px-0" color="secondary">
+      <div class="tl-topbar h-7 bg-secondary px-0 text-secondary-content">
         <v-btn small outlined to="/">
           <v-icon>{{ icons.mdiHome }}</v-icon>
         </v-btn>
@@ -84,7 +84,7 @@
         >
           {{ $t("views.scriptEditor.menu.clearAll") }}
         </v-btn>
-      </v-system-bar>
+      </div>
       <div
         class="d-flex align-stretch flex-row"
         style="height: 100%"
