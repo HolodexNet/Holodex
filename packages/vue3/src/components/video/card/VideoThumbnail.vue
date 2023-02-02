@@ -42,8 +42,8 @@
           class="video-overlay-tag rounded-sm"
           :title="tlIconTitle"
         >
-          {{ tlLangInChat }}
-          <div class="ml-1 font-bold">TL</div>
+          {{ tlLangInChat ? `${tlLangInChat}&nbsp;` : "" }}
+          <div class="font-bold">TL</div>
         </div>
         <!-- Duration/Current live stream time -->
         <video-card-live-duration
