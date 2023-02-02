@@ -3,24 +3,24 @@
   <logo v-if="isLoading" :loading="true" class="max-h-32"></logo>
   <div v-else-if="channel" class="w-full">
     <scroll-parallax up :speed="0.4"
-      ><v-img v-if="bannerImage" :src="bannerImage" class="max-h-80"></v-img
-    ></scroll-parallax>
+      ><img v-if="bannerImage" :src="bannerImage" class="max-h-80" />
+    </scroll-parallax>
     <!-- <v-img
       v-if="bannerImage"
       :src="bannerImage"
       class="-mb-0 sm:-mb-6 md:-mb-12"
     /> -->
-    <div class="sticky z-10 mx-full top-12 bg-bgColor/95 backdrop-blur">
+    <div class="mx-full sticky top-12 z-10 bg-bgColor/95 backdrop-blur">
       <div class="container mx-auto">
         <channel-card
           :channel="channel!"
-          class="p-2 pb-0 rounded-none shadow-none"
+          class="rounded-none p-2 pb-0 shadow-none"
           no-link
         >
           <template #buttons>
-            <div class="grid grid-cols-2 gap-1 mr-2 md:mr-4 md:gap-2">
+            <div class="mr-2 grid grid-cols-2 gap-1 md:mr-4 md:gap-2">
               <a
-                class="w-8 h-8 c-social-icon md:w-12 md:h-12 hover:text-red-500"
+                class="c-social-icon h-8 w-8 hover:text-red-500 md:h-12 md:w-12"
                 :href="`https://youtube.com/channel/${channel.id}`"
                 target="_blank"
                 title="Youtube"
@@ -28,7 +28,7 @@
                 <div class="i-carbon:logo-youtube"></div>
               </a>
               <a
-                class="w-8 h-8 c-social-icon md:w-12 md:h-12 hover:text-cyan-500"
+                class="c-social-icon h-8 w-8 hover:text-cyan-500 md:h-12 md:w-12"
                 :class="{
                   'btn-disabled bg-inherit opacity-20': !channel.twitter,
                 }"
@@ -43,7 +43,7 @@
                 <div class="i-carbon:logo-twitter"></div>
               </a>
               <button
-                class="w-8 h-8 c-social-icon md:w-12 md:h-12"
+                class="c-social-icon h-8 w-8 md:h-12 md:w-12"
                 :title="
                   isFav
                     ? $t('component.channelSocials.removeFromFavorites')
@@ -58,7 +58,7 @@
                 ></div>
               </button>
               <button
-                class="w-8 h-8 c-social-icon md:w-12 md:h-12"
+                class="c-social-icon h-8 w-8 md:h-12 md:w-12"
                 :title="
                   !isBlocked
                     ? $t('component.channelSocials.block')
@@ -280,7 +280,7 @@ export default defineComponent({
 }
 
 .c-social-icon {
-  @apply p-2 btn-ghost rounded flex-grow;
+  @apply btn-ghost flex-grow rounded p-2;
 
   display: inline-flex;
   flex-shrink: 0;
