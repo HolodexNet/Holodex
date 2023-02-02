@@ -9,14 +9,14 @@
       {{ liveUpcomingHeaderSplit[1] }}
       <span
         v-if="liveUpcomingCounts.liveCnt"
-        class="mx-1 rounded-sm badge badge-secondary badge-sm sm:badge-md"
+        class="badge-secondary badge badge-sm mx-1 rounded-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.liveCnt }}
       </span>
       {{ liveUpcomingHeaderSplit[2] }}
       <span
         v-if="liveUpcomingCounts.upcomingCnt"
-        class="mx-1 rounded-sm badge badge-outline badge-sm sm:badge-md"
+        class="badge-outline badge badge-sm mx-1 rounded-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.upcomingCnt }}
       </span>
@@ -41,18 +41,18 @@
           :video="video"
           :hide-channel-image="currentTab !== Tabs.LIVE"
         />
-        <v-lazy v-else class="v-lazy-video">
+        <h-lazy v-else class="emptyable-div">
           <video-card
             :video="video"
             :hide-channel-image="currentTab !== Tabs.LIVE"
           />
-        </v-lazy>
+        </h-lazy>
       </template>
     </video-card-grid>
     <query-status :query="(videoQuery as any)" />
     <div
       v-if="videoQuery.isSuccess.value && currentTab !== Tabs.LIVE"
-      class="flex items-center justify-center h-20"
+      class="flex h-20 items-center justify-center"
     >
       <h-pagination v-model="currentPage" :total-pages="totalPages" />
     </div>
@@ -77,7 +77,7 @@ const Tabs = {
   ARCHIVE: 1,
   CLIPS: 2,
 } as const;
-const currentTab: Ref<typeof Tabs[keyof typeof Tabs]> = ref(Tabs.LIVE);
+const currentTab: Ref<(typeof Tabs)[keyof typeof Tabs]> = ref(Tabs.LIVE);
 const router = useRouter();
 const route = useRoute();
 
@@ -206,9 +206,9 @@ watch(
   () => route.path,
   () => updateTab(0, false)
 );
-const isLoading = computed(
-  () => videoQuery?.isLoading.value || videoQuery?.isFetching.value
-);
+// const isLoading = computed(
+//   () => videoQuery?.isLoading.value || videoQuery?.isFetching.value
+// );
 // const error = computed(() => videoQuery?.error.value);
 // const isError = computed(() => videoQuery?.isError.value);
 </script>
@@ -223,7 +223,7 @@ const isLoading = computed(
   min-width: 24px;
 }
 
-.v-lazy-video:empty {
+.emptyable-div:empty {
   width: 1px;
   height: 0;
   padding-bottom: calc((100% / (16 / 9)) + 88px);

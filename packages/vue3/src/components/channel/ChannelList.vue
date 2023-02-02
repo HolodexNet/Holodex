@@ -1,12 +1,12 @@
 <template>
-  <div class="grid gap-4 channel-grid justify-items-stretch">
+  <div class="channel-grid grid justify-items-stretch gap-4">
     <template v-for="(arr, group) in list" :key="group + '.group'">
       <div
         v-if="
           (groupKey === 'org' || groupKey === 'group') &&
           Object.keys(list).length > 1
         "
-        class="p-2 font-semibold rounded-md shadow-md col-span-full bg-bgColor"
+        class="col-span-full rounded-md bg-bgColor p-2 font-semibold shadow-md"
       >
         {{ arr[0] || "Unnamed Group" }}
       </div>
@@ -16,24 +16,24 @@
           :channel="channel"
           :variant="variant"
           :slim="slim"
-          class="shadow-xl bg-bgColor"
+          class="bg-bgColor shadow-xl"
         >
           <template v-if="$slots.default" #buttons>
             <slot :channel="channel"></slot>
           </template>
         </channel-card>
-        <v-lazy v-else style="height: 116px">
+        <h-lazy v-else style="height: 116px">
           <channel-card
             :channel="channel"
             :variant="variant"
             :slim="slim"
-            class="shadow-xl bg-bgColor"
+            class="bg-bgColor shadow-xl"
           >
             <template v-if="$slots.default" #buttons>
               <slot :channel="channel"></slot>
             </template>
           </channel-card>
-        </v-lazy>
+        </h-lazy>
       </template>
     </template>
   </div>

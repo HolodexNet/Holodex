@@ -41,7 +41,7 @@
         <div
           class="-ml-6 w-60 max-w-md rounded-lg border-2 border-secondary bg-bgColor p-1 shadow-xl shadow-bgColor"
         >
-          <v-lazy><video-card :video="v"></video-card></v-lazy>
+          <h-lazy><video-card :video="v"></video-card></h-lazy>
         </div>
       </v-tooltip>
     </div>
