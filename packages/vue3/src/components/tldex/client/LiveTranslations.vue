@@ -25,7 +25,7 @@
         {{ $t("views.app.close_btn") }}
       </v-btn>
     </v-overlay>
-    <v-card-subtitle class="py-1 flex justify-between">
+    <v-card-subtitle class="flex justify-between py-1">
       <div :class="success ? 'text-success' : 'text-error'">
         TLdex [{{ tlLang }}]
       </div>
@@ -38,9 +38,10 @@
           :title="$t('views.watch.chat.showSubtitle')"
           @click="chatMixin.showSubtitle.value = !chatMixin.showSubtitle.value"
         >
-          <v-icon :color="chatMixin.showSubtitle.value ? 'primary' : ''">
-            {{ mdiSubtitlesOutline }}
-          </v-icon>
+          <div
+            class="i-material-symbols:subtitles-rounded text-lg"
+            :class="{ 'text-primary': chatMixin.showSubtitle.value }"
+          ></div>
         </v-btn>
         <v-dialog v-if="!tlClient" v-model="expanded" width="800">
           <template #activator="{ props }">
@@ -51,9 +52,7 @@
               class="mr-1"
               :title="$t('views.watch.chat.expandTL')"
             >
-              <v-icon>
-                {{ mdiArrowExpand }}
-              </v-icon>
+              <div class="i-fluent:resize-large-16-regular text-lg"></div>
             </v-btn>
           </template>
 

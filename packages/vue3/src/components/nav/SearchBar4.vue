@@ -129,12 +129,12 @@
           </div>
         </template>
       </div>
-      <v-progress-linear
-        indeterminate
-        :class="autocomplete_loading && '-mb-2'"
-        color="accent"
-        :active="autocomplete_loading"
-      ></v-progress-linear>
+      <h-progress-indeterminate
+        v-show="autocomplete_loading"
+        style="height: 2px"
+        fore-class="bg-accent-200"
+        back-class="bg-primary-700"
+      ></h-progress-indeterminate>
     </template>
   </Autocomplete>
 </template>

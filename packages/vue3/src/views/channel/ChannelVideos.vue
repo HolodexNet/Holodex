@@ -10,16 +10,11 @@
       </template>
     </video-card-grid>
     <div v-if="videoQuery.isLoading.value" class="flex h-20">
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        :size="64"
-        class="m-auto"
-      ></v-progress-circular>
+      <logo loading class="w-32"></logo>
     </div>
     <div
       v-else-if="videoQuery.data.value?.total"
-      class="flex items-center justify-center h-20"
+      class="flex h-20 items-center justify-center"
     >
       <h-pagination
         v-model="page"

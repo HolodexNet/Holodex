@@ -1,11 +1,12 @@
 <template>
-  <div class="h-progress-bar" :class="back">
-    <div class="h-progress-bar__progress" :class="fore"></div>
+  <div class="h-progress-bar" :class="backClass">
+    <div class="h-progress-bar__progress" :class="foreClass"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{ fore: string; back: string }>();
+// eslint-disable-next-line vue/prop-name-casing
+defineProps<{ foreClass?: string; backClass?: string }>();
 </script>
 
 <style>
