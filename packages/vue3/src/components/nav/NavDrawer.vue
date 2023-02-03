@@ -34,9 +34,8 @@
             <div
               v-if="page.icon.startsWith('i')"
               :class="page.icon"
-              class="v-icon notranslate v-theme--dark v-icon--size-default v-list-item-icon"
+              class="ml-1 h-6 w-6"
             ></div>
-            <v-icon v-else :icon="page.icon"></v-icon>
             <div>{{ page.name }}</div>
           </router-link>
         </li>
@@ -74,21 +73,19 @@
       <li v-if="isMobile" class="py-0 text-xs font-semibold text-gray-400">
         <template v-if="!site.user">
           <router-link :to="'/login'">
-            <div
-              class="v-icon notranslate v-theme--dark v-icon--size-default v-list-item-icon i-ion:md-log-in"
-            ></div>
+            <div class="i-ion:md-log-in"></div>
             Login</router-link
           >
         </template>
         <template v-else-if="site.user">
           <router-link
             :to="'/settings/user'"
+            class="mt-3 h-6"
             style="padding-top: 3px; padding-bottom: 3px"
           >
-            <div class="i-tabler:user -mr-1"></div>
-            {{ site.user.username }} :
-            {{ site.user.contribution_count }}pts</router-link
-          >
+            <div class="i-tabler:user min-w-3 -mr-1 h-3"></div>
+            {{ site.user.username }} : {{ site.user.contribution_count }}pts
+          </router-link>
         </template>
       </li>
     </ul>
