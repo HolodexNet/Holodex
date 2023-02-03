@@ -6,7 +6,7 @@
   text-indent: 0.5rem;
 } */
 .btn > .h-icon {
-  @apply -ml-1 mr-1 h-6 w-6;
+  @apply h-6 w-6;
   font-size: inherit !important;
   line-height: inherit !important;
 }

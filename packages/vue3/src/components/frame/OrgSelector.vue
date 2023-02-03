@@ -25,7 +25,7 @@
             </v-fade-transition>
             <span ref="dexBtn" class="text-primary">dex</span>
             <div
-              class="change-org-icon i-material-symbols:arrow-drop-down-rounded border-none text-xl transition-transform"
+              class="change-org-icon i-material-symbols:arrow-drop-down-rounded transform-gpu border-none text-xl transition-transform"
               :class="{
                 'rotate-180': activator.props['aria-expanded'] === 'true',
               }"
@@ -93,7 +93,7 @@
                 class="btn-group self-end"
               >
                 <button
-                  class="btn btn-ghost btn-square btn-sm"
+                  class="btn btn-square btn-ghost btn-sm"
                   @click.stop.prevent="
                     site.shiftOrgFavorites({ org, up: true })
                   "
@@ -101,7 +101,7 @@
                   <v-icon>{{ icons.mdiChevronUp }}</v-icon>
                 </button>
                 <button
-                  class="btn btn-ghost btn-square btn-sm"
+                  class="btn btn-square btn-ghost btn-sm"
                   @click.stop.prevent="
                     site.shiftOrgFavorites({ org, up: false })
                   "

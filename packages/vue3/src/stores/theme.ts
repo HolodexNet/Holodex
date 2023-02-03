@@ -24,26 +24,6 @@ interface CachedTheme {
 export const useThemeStore = defineStore("site-theme", {
   // convert to a function
   state: (): Theme & CachedTheme => {
-    // const [convert, colormap] = convertToDaisyHSLAndColor(
-    //   presets[0].colors,
-    //   true // default is dark mode.
-    // );
-
-    // const out: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] = [
-    //   {
-    //     background: colormap["--b1"].rgb().hex(),
-    //     surface: (colormap["--b2"] || colormap["--b1"].darken(0.1)).rgb().hex(),
-    //     primary: colormap["--p"].rgb().hex(),
-    //     secondary: colormap["--s"].rgb().hex(),
-    //     accent: colormap["--a"].rgb().hex(),
-    //     error: colormap["--er"].rgb().hex(),
-    //     success: colormap["--su"].rgb().hex(),
-    //     info: colormap["--in"].rgb().hex(),
-    //     warning: colormap["--wa"].rgb().hex(),
-    //   },
-    //   convert,
-    // ];
-
     // const outputCache = out;
 
     const ts = Date.now();
