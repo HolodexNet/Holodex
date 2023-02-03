@@ -39,6 +39,7 @@
         </template>
         <v-list nav>
           <v-list-item v-if="isEditable" @click="$emit('new-playlist')">
+            <!-- Please migrate these V-Icon along with the list items coz it's not actually that easy to move one and not the other. -->
             <v-icon left color="success">
               {{ icons.mdiPlusBox }}
             </v-icon>

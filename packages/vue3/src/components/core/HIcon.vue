@@ -1,10 +1,25 @@
 <template>
-  <div class="h-icon"></div>
+  <div
+    class="h-icon"
+    :class="{
+      '-ml-1 mr-1': left,
+    }"
+  ></div>
 </template>
+<script lang="ts" setup>
+withDefaults(
+  defineProps<{
+    left: boolean;
+  }>(),
+  {
+    left: false,
+  }
+);
+</script>
 <style>
-/* .btn {
-  text-indent: 0.5rem;
-} */
+.h-icon {
+  @apply inline-block;
+}
 .btn > .h-icon {
   @apply h-6 w-6;
   font-size: inherit !important;

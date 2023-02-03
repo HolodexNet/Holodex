@@ -16,15 +16,15 @@
     *
   -->
   <div class="card bg-bgColor" style="min-width: 200px">
-    <div class="p-0 card-body">
+    <div class="card-body p-0">
       <div
         v-if="user"
-        class="flex flex-row p-2 cursor-pointer hover:bg-bgColor-300"
+        class="flex cursor-pointer flex-row p-2 hover:bg-bgColor-300"
         @click="$router.push({ path: '/settings/user' })"
       >
         <div class="flex items-center justify-center p-2 pr-4">
           <img
-            class="w-10 h-10"
+            class="h-10 w-10"
             :src="`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`"
           />
         </div>
@@ -64,15 +64,15 @@
         </div>
       </div>
 
-      <ul class="gap-1 p-1 menu">
+      <ul class="menu gap-1 p-1">
         <li v-if="!user">
           <router-link to="/login">
-            <v-icon :icon="icons.mdiLoginVariant"></v-icon>
+            <h-icon class="i-mdi:login-variant h-6 w-6"></h-icon>
             {{ $t("component.mainNav.login") }}
           </router-link>
         </li>
 
-        <div v-if="user && !inNavDrawer" class="my-0 divider" />
+        <div v-if="user && !inNavDrawer" class="divider my-0" />
         <li
           v-if="
             user &&
@@ -82,13 +82,15 @@
           "
         >
           <router-link to="/settings/user">
-            <v-icon :icon="icons.mdiAccountCircleOutline"></v-icon>
+            <h-icon
+              class="i-material-symbols:manage-accounts-rounded h-6 w-6"
+            ></h-icon>
             {{ $t("component.mainNav.accountSettings") }}
           </router-link>
         </li>
         <li v-if="user && !inNavDrawer">
           <a class="text-warning" @click.prevent.stop="logout">
-            <v-icon :icon="icons.mdiLogoutVariant"></v-icon>
+            <h-icon class="i-mdi:logout-variant h-6 w-6"></h-icon>
             {{ $t("component.mainNav.logout") }}
           </a>
         </li>

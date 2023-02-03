@@ -122,7 +122,7 @@
               "
             />
           </div>
-          <LiveTranslations
+          <!-- <LiveTranslations
             v-if="mainID"
             :tl-lang="TLLang.value"
             :tl-client="true"
@@ -134,7 +134,7 @@
             }"
             :style="{ height: vidPlayer ? tlChatHeight + 'px' : '100%' }"
             :use-local-subtitle-toggle="false"
-          />
+          /> -->
           <v-card
             v-if="profileDisplay && activeChat.length > 1"
             class="ProfileListCard flex flex-col"
