@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="showReportDialog" width="500">
-    <div v-if="video" class="max-w-full p-2 md:p-4 card bg-bgColor-500">
-      <div class="my-2 card-title">
+    <div v-if="video" class="card max-w-full bg-bgColor-500 p-2 md:p-4">
+      <div class="card-title my-2">
         {{ $t("component.reportDialog.title") }}
       </div>
       <div :v-if="!isLoading">
@@ -13,10 +13,10 @@
           <br />
           {{ video.channel.name }}
         </span>
-        <div class="mb-0 divider" />
+        <div class="divider mb-0" />
         <template v-for="reason in reasons" :key="reason.value">
           <div class="form-control">
-            <label class="cursor-pointer label">
+            <label class="label cursor-pointer">
               <span class="label-text">{{ reason.text }}</span>
               <input
                 v-model="selectedReason"
@@ -30,10 +30,10 @@
         </template>
         <div
           v-if="selectedReason == 'Wrong Category'"
-          class="shadow-lg alert alert-warning"
+          class="alert alert-warning shadow-lg"
         >
           <div>
-            <svg class="flex-shrink-0 m-1 text-2xl i-wpf:faq" style=""></svg>
+            <svg class="i-wpf:faq m-1 flex-shrink-0 text-2xl" style=""></svg>
             <span class="text-sm">
               {{
                 $t("component.reportDialog.collabing", {
@@ -56,7 +56,7 @@
 
       <div class="flex flex-row-reverse gap-2">
         <div
-          class="btn btn-outline btn-neutral"
+          class="btn-neutral btn btn-outline"
           @click="showReportDialog = false"
         >
           {{ $t("views.app.close_btn") }}
@@ -74,9 +74,9 @@
   <v-snackbar v-model="showSnackbar" :timeout="3000" color="success">
     {{ $t("component.reportDialog.success") }}
     <template #action>
-      <v-btn text class="ml-auto" @click="showSnackbar = false">
+      <h-btn text class="ml-auto" @click="showSnackbar = false">
         {{ $t("views.app.close_btn") }}
-      </v-btn>
+      </h-btn>
     </template>
   </v-snackbar>
 </template>

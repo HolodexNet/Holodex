@@ -26,19 +26,19 @@ e.g. just doing .online will NOT work
   display: flex;
 }
 
-.btn {
+.btn:not(.btn-square) {
   height: 2rem;
   min-height: 2rem;
 
   @apply px-3;
 }
-.btn-sm {
+.btn-sm:not(.btn-square) {
   height: 1.5rem;
   min-height: 1.5rem;
 
   @apply px-2;
 }
-.btn-lg {
+.btn-lg:not(.btn-square) {
   height: 2.5rem;
   min-height: 2.5rem;
 

@@ -228,9 +228,9 @@
       <video-card :video="(videoObj as any)" include-channel class="max-w-xs" />
     </div>
 
-    <v-btn color="primary" @click="onSubmit">
+    <h-btn color="primary" @click="onSubmit">
       {{ id ? "Submit Placeholder Modification" : "Create new Placeholder" }}
-    </v-btn>
+    </h-btn>
   </div>
   <v-snackbar v-model="error" color="error">
     {{ errorMessage }}

@@ -3,11 +3,11 @@
   <div
     class="max-w-lg bg-bgColor"
     :class="{
-      'm-auto mt-6 shadow-lg card max-w-md': $route.name !== 'Settings_User',
+      'card m-auto mt-6 max-w-md shadow-lg': $route.name !== 'Settings_User',
     }"
   >
     <user-card v-if="site.user" class="p-0" />
-    <div class="p-0 card-body">
+    <div class="card-body p-0">
       <div class="flex flex-col items-center">
         <div
           v-if="
@@ -27,26 +27,26 @@
         <div class="flex flex-col" style="max-width: 400px; width: 100%">
           <google-sign-in-button
             v-if="!site.user || !site.user.google_id"
-            class="h-8 my-1"
+            class="my-1 h-8"
             @on-credential-response="onGoogleSuccess"
           />
           <button
             v-if="!site.user || !site.user.discord_id"
-            class="h-8 my-1 normal-case btn btn-sm"
+            class="btn btn-sm my-1 h-8 normal-case"
             color="indigo"
             @click="loginDiscord"
           >
-            <div :class="icons.discord" class="mr-auto left-2"></div>
+            <div :class="icons.discord" class="left-2 mr-auto"></div>
 
             <span class="mr-auto">{{ $t("views.login.with.1") }}</span>
           </button>
           <button
             v-if="!site.user || !site.user.twitter_id"
-            class="h-8 my-1 normal-case btn btn-sm"
+            class="btn btn-sm my-1 h-8 normal-case"
             color="blue lighten-1"
             @click="loginTwitter"
           >
-            <div :class="icons.twitter" class="mr-auto left-2"></div>
+            <div :class="icons.twitter" class="left-2 mr-auto"></div>
 
             <span class="mr-auto">{{ $t("views.login.with.2") }}</span>
           </button>
@@ -58,7 +58,7 @@
         <!-- <div class="card-body"> -->
         <div class="divider"></div>
 
-        <span class="inline-block text-subtitle-2">{{
+        <span class="text-subtitle-2 inline-block">{{
           $t("views.login.username")
         }}</span>
         <div class="flex items-center">
@@ -71,7 +71,7 @@
             density="comfortable"
             hide-details="auto"
           />
-          <v-btn
+          <h-btn
             :color="editingUsername ? 'success' : 'primary'"
             style="margin-left: 10px"
             @click="editUsername"
@@ -81,14 +81,14 @@
                 ? $t("views.login.usernameBtn.2")
                 : $t("views.login.usernameBtn.0")
             }}
-          </v-btn>
+          </h-btn>
         </div>
         <!-- </div> -->
 
         <!-- <div class="card-body"> -->
         <!-- <v-divider /> -->
         <div class="mt-2 text-gray-500">
-          <span class="inline-block mb-1 text-subtitle-2">{{
+          <span class="text-subtitle-2 mb-1 inline-block">{{
             $t("views.login.ownedYtChannel")
           }}</span>
           <v-text-field
@@ -106,7 +106,7 @@
         </div>
         <div class="divider"></div>
 
-        <span class="inline-block mb-1 text-subtitle-2">API Key</span>
+        <span class="text-subtitle-2 mb-1 inline-block">API Key</span>
         <v-text-field
           v-model="site.user.api_key"
           readonly
@@ -118,13 +118,13 @@
           :append-inner-icon="icons.mdiClipboardPlusOutline"
           @click:append-inner="copyToClipboard(site.user?.api_key || '')"
         />
-        <v-btn small block color="warning" @click="resetKey">
+        <h-btn small block color="warning" @click="resetKey">
           {{ $t("views.login.apikeyNew") }}
-        </v-btn>
+        </h-btn>
         <span class="text-caption">
           {{ $t("views.login.apikeyMsg") }}
         </span>
-        <v-btn
+        <h-btn
           small
           block
           color="info"
@@ -135,7 +135,7 @@
           <v-icon small right>
             {{ icons.mdiOpenInNew }}
           </v-icon>
-        </v-btn>
+        </h-btn>
         <!-- </div> -->
       </template>
     </div>

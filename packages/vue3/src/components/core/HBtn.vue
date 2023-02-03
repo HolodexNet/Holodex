@@ -1,7 +1,12 @@
 <template>
   <a
-    class="btn btn-primary shadow-md"
-    :class="{ 'btn-sm': small, 'btn-ghost': text }"
+    class="btn btn-primary"
+    :class="{
+      'btn-sm': small,
+      'btn-ghost': text || ghost,
+      'shadow-md': shadow,
+      'w-full': block,
+    }"
   >
     <h-icon
       v-if="icon"
@@ -23,6 +28,18 @@ export default defineComponent({
       default: undefined,
     },
     text: {
+      type: Boolean,
+      default: false,
+    },
+    ghost: {
+      type: Boolean,
+      default: false,
+    },
+    shadow: {
+      type: Boolean,
+      default: false,
+    },
+    block: {
       type: Boolean,
       default: false,
     },

@@ -11,7 +11,7 @@
     "
     @update:model-value="(bool) => $emit('update:modelValue', bool)"
   >
-    <ul class="gap-0 sm:gap-1 menu" :class="!isMobile && 'p-2'">
+    <ul class="menu gap-0 sm:gap-1" :class="!isMobile && 'p-2'">
       <!-- {{
         modelValue
       }} -->
@@ -62,9 +62,13 @@
       <!-- </v-list> -->
       <v-divider />
       <div class="h-6">
-        <v-btn class="!h-6" block elevation="0" @click="expanded = !expanded">
-          <v-icon>{{ expanded ? mdiChevronUp : mdiChevronDown }}</v-icon>
-        </v-btn>
+        <h-btn
+          class="!h-6 w-full"
+          text
+          :icon="expanded ? 'i-mdi:chevron-up' : 'i-mdi:chevron-down'"
+          @click="expanded = !expanded"
+        >
+        </h-btn>
       </div>
       <slot />
       <li v-if="isMobile" class="py-0 text-xs font-semibold text-gray-400">
@@ -81,7 +85,7 @@
             :to="'/settings/user'"
             style="padding-top: 3px; padding-bottom: 3px"
           >
-            <div class="-mr-1 i-tabler:user"></div>
+            <div class="i-tabler:user -mr-1"></div>
             {{ site.user.username }} :
             {{ site.user.contribution_count }}pts</router-link
           >
@@ -105,7 +109,7 @@
       <a
         title="Support holodex (Ko-fi)"
         href="https://ko-fi.com/holodex"
-        class="text-sm i-simple-icons:kofi"
+        class="i-simple-icons:kofi text-sm"
         style="color: #ff5e5b"
       >
       </a>

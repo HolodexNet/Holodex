@@ -65,7 +65,7 @@
         ></playlist-button>
         <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
           <template #activator="{ props }">
-            <div v-bind="props" class="btn btn-ghost btn-square mr-2 text-2xl">
+            <div v-bind="props" class="btn-square btn btn-ghost mr-2 text-2xl">
               <v-icon v-if="!(site.user && site.user)">
                 {{ icons.mdiAccountCircleOutline }}
               </v-icon>
@@ -85,9 +85,13 @@
 
         <!--================= Search [🔍] Button (Mobile Only) ================-->
 
-        <v-btn v-if="isMobile" icon @click="searchBarExpanded = true">
-          <v-icon>{{ icons.mdiMagnify }}</v-icon>
-        </v-btn>
+        <h-btn
+          v-if="isMobile"
+          icon="i-material-symbols:search-rounded"
+          class="btn-icon"
+          @click="searchBarExpanded = true"
+        >
+        </h-btn>
       </template>
 
       <!--=========================== END OF Regular View ===========================-->
