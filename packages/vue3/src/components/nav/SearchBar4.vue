@@ -20,7 +20,7 @@
       <div
         v-for="(item, midx) in selection"
         :key="'chip' + item.type + item.value + midx"
-        class="badge-ghost badge mr-1 cursor-default rounded-sm border-0 bg-bgColor px-1 text-xs font-semibold tracking-tight hover:badge-error"
+        class="badge badge-ghost mr-1 cursor-default rounded-sm border-0 bg-bgColor px-1 text-xs font-semibold tracking-tight hover:badge-error"
         @click="query.splice(midx, 1)"
       >
         <span class=""> {{ categoryName(item) }}: </span>
@@ -130,10 +130,8 @@
         </template>
       </div>
       <h-progress-indeterminate
-        v-show="autocomplete_loading"
+        v-show="autocompleteLoading"
         style="height: 2px"
-        fore-class="bg-accent-200"
-        back-class="bg-primary-700"
       ></h-progress-indeterminate>
     </template>
   </Autocomplete>
@@ -200,7 +198,7 @@ export default defineComponent({
     const search = ref("");
     const query = ref([] as Array<QueryItem>);
 
-    const autocomplete_loading = ref(false);
+    const autocompleteLoading = ref(false);
     const autocomplete = ref();
     const ac_opts = reactive<
       Record<
@@ -353,7 +351,7 @@ export default defineComponent({
             search_class === "topic" ||
             search_class === undefined)
         ) {
-          autocomplete_loading.value = true;
+          autocompleteLoading.value = true;
 
           const x = await api.searchV3Autocomplete(
             search_term,
@@ -376,7 +374,7 @@ export default defineComponent({
               text: x.id,
             })) || [];
 
-          autocomplete_loading.value = false;
+          autocompleteLoading.value = false;
         } else {
           ac_opts.vtuber = []; // clear
           ac_opts.topic = []; // clear
@@ -422,7 +420,7 @@ export default defineComponent({
       query,
       dropdown,
       autocomplete,
-      autocomplete_loading,
+      autocompleteLoading,
       langPrefs,
     };
   },

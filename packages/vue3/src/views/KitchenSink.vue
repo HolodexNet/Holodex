@@ -1,5 +1,60 @@
 <template>
-  <div class="flex flex-row">
+  <div class="flex flex-row flex-wrap">
+    <div class="basis-1/3">
+      <kbd>Daisy Buttons</kbd>
+      <div>
+        <button class="btn btn-sm">
+          <h-icon class="i-mdi:refresh"></h-icon> Refresh
+        </button>
+        <button class="btn btn-primary">
+          <h-icon class="i-mdi:refresh"></h-icon> Refresh
+        </button>
+        <button class="btn btn-lg">
+          <h-icon class="i-mdi:refresh"></h-icon> Refresh
+        </button>
+      </div>
+      <div>
+        <button class="btn-icon btn btn-sm">
+          <h-icon class="i-mdi:refresh"></h-icon>
+        </button>
+        <button class="btn-icon btn btn-primary">
+          <h-icon class="i-mdi:refresh"></h-icon>
+        </button>
+        <button class="btn-icon btn btn-lg">
+          <h-icon class="i-mdi:refresh"></h-icon>
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-sm">
+          <h-icon class="i-mdi:refresh"></h-icon>
+        </button>
+        <button class="btn btn-primary">
+          <h-icon class="i-mdi:refresh"></h-icon>
+        </button>
+        <button class="btn btn-lg">
+          <h-icon class="i-mdi:refresh"></h-icon>
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-sm gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            />
+          </svg>
+          Button
+        </button>
+      </div>
+    </div>
     <div class="basis-1/3">
       <kbd>VideoCard</kbd>
       <video-card :video="video" hide-channel-image />

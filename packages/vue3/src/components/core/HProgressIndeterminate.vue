@@ -6,7 +6,10 @@
 
 <script setup lang="ts">
 // eslint-disable-next-line vue/prop-name-casing
-defineProps<{ foreClass?: string; backClass?: string }>();
+withDefaults(defineProps<{ foreClass?: string; backClass?: string }>(), {
+  backClass: "bg-primary-700",
+  foreClass: "bg-accent-200",
+});
 </script>
 
 <style>
