@@ -35,9 +35,12 @@
       </span>
     </v-list-item-title>
     <v-list-item-subtitle>
-      <template v-if="!noSubscriberCount">
+      <span
+        v-if="!noSubscriberCount"
+        class="subscriber-count"
+      >
         {{ subscriberCount }}
-      </template>
+      </span>
       <template v-if="includeVideoCount">
         •
         {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}

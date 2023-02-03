@@ -220,7 +220,10 @@
               }}
             </span>
           </template>
-          <template v-else-if="data.status === 'live' && data.live_viewers > 0">
+          <span
+            v-else-if="data.status === 'live' && data.live_viewers > 0"
+            class="live-viewers"
+          >
             •
             {{
               $tc(
@@ -229,7 +232,7 @@
                 [formatCount(data.live_viewers, lang)]
               )
             }}
-          </template>
+          </span>
         </div>
       </div>
       <!-- Vertical dots menu -->
