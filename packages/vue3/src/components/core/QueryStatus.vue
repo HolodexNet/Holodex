@@ -36,7 +36,7 @@
     </div>
     <logo
       v-if="props.query.isLoading.value || props.query.isFetching.value"
-      class="mx-auto mt-32 w-1/2 max-w-sm"
+      class="mx-auto mt-32 w-32"
       :loading="props.query.isLoading.value || props.query.isFetching.value"
     ></logo>
   </div>

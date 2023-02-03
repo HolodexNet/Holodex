@@ -1,7 +1,7 @@
 <template>
   <!-- Video Image with Duration -->
   <div
-    class="video-thumbnail relative flex aspect-video flex-shrink-0 rounded-md shadow-md hover:shadow-2xl"
+    class="video-thumbnail relative flex aspect-video flex-shrink-0 rounded-md hover:shadow-md"
     :class="{
       'placeholder-thumbnail': isPlaceholder && video.status !== 'live',
     }"

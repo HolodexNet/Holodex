@@ -57,9 +57,6 @@ export default {
   @apply brightness-150;
   animation: bounce 0.5s ease-in-out infinite alternate,
     stroke-move 8s linear infinite;
-
-  stroke: rgb(226, 235, 255);
-  stroke-dasharray: 12;
 }
 
 .l_loading #tri2 {
@@ -67,9 +64,6 @@ export default {
   animation: bounce 0.5s ease-in-out infinite alternate,
     stroke-move 8s linear infinite;
   animation-delay: 250ms;
-
-  stroke: rgb(226, 235, 255);
-  stroke-dasharray: 16;
 }
 
 @keyframes bounce {
@@ -79,11 +73,6 @@ export default {
 
   to {
     transform: translateY(10%);
-  }
-}
-@keyframes stroke-move {
-  to {
-    stroke-dashoffset: 190;
   }
 }
 </style>
