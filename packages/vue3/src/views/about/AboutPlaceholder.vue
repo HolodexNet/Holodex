@@ -19,12 +19,8 @@
   ></h-text-field>
 
   <v-tabs v-model="tab" icons-and-text class="mb-4">
-    <v-tab
-      >New <v-icon>{{ icons.mdiPlusBox }}</v-icon></v-tab
-    >
-    <v-tab
-      >Existing <v-icon>{{ icons.mdiPencil }}</v-icon></v-tab
-    >
+    <v-tab> New </v-tab>
+    <v-tab> Existing </v-tab>
   </v-tabs>
   <div class="flex flex-col gap-4 px-4">
     <div v-if="tab === 1" class="form-control">
@@ -39,7 +35,7 @@
           placeholder="4a7f32A_4a2"
           class="input-bordered input w-full border-solid"
         />
-        <button class="btn-square btn" @click="loadExistingPlaceholder(id)">
+        <button class="btn btn-square" @click="loadExistingPlaceholder(id)">
           <div class="i-ion:checkmark"></div>
         </button>
       </label>

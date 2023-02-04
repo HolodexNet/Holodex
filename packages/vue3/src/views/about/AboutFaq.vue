@@ -28,9 +28,10 @@
     <ul>
       <li>
         {{ $t("about.faq.mobile.content.android.0") }}
-        <v-icon color="primary">
-          {{ icons.mdiDotsVertical }}
-        </v-icon>
+        <h-icon
+          class="i-mdi:dots-vertical inline-block text-primary"
+          color="primary"
+        ></h-icon>
         {{ $t("about.faq.mobile.content.android.1") }}
       </li>
       <li>
@@ -68,7 +69,7 @@
   <h-disclosure :title="$t('about.faq.support.title')">
     <div v-html="$t('about.faq.support.contents.0')" />
     <button
-      class="btn-primary btn-wide btn-sm btn mt-2"
+      class="btn btn-primary btn-wide btn-sm mt-2"
       href="https://ko-fi.com/holodex"
     >
       Ko-fi: Support Holodex
