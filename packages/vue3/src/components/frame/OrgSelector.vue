@@ -76,38 +76,41 @@
               class="flex flex-row gap-1"
               @click="$emit('changed', org, closeDialog)"
             >
-              <button
+              <h-btn
                 class="btn btn-square btn-sm"
                 :class="
                   orgFavoritesNameSet.has(org.name)
                     ? 'btn-outline btn-primary'
                     : 'btn-ghost'
                 "
+                style="padding-top: 0px; padding-bottom: 0px"
+                icon="i-material-symbols:star-outline-rounded w-8 h-8"
                 @click.stop="site.toggleFavoriteOrg(org)"
               >
-                <v-icon>{{ icons.mdiStar }}</v-icon>
-              </button>
+              </h-btn>
               <span class="flex flex-grow">{{ org.name }}</span>
               <div
                 v-if="orgFavoritesNameSet.has(org.name)"
                 class="btn-group self-end"
               >
-                <button
-                  class="btn btn-square btn-ghost btn-sm"
+                <h-btn
+                  class="btn btn-ghost btn-sm p-0"
+                  style="padding-top: 0px; padding-bottom: 0px"
+                  icon="i-bx:chevron-up"
                   @click.stop.prevent="
                     site.shiftOrgFavorites({ org, up: true })
                   "
                 >
-                  <v-icon>{{ icons.mdiChevronUp }}</v-icon>
-                </button>
-                <button
-                  class="btn btn-square btn-ghost btn-sm"
+                </h-btn>
+                <h-btn
+                  class="btn btn-ghost btn-sm"
+                  style="padding-top: 0px; padding-bottom: 0px"
+                  icon="i-bx:chevron-down"
                   @click.stop.prevent="
                     site.shiftOrgFavorites({ org, up: false })
                   "
                 >
-                  <v-icon>{{ icons.mdiChevronDown }}</v-icon>
-                </button>
+                </h-btn>
               </div>
             </a>
           </li>
