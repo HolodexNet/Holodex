@@ -9,14 +9,14 @@
       {{ liveUpcomingHeaderSplit[1] }}
       <span
         v-if="liveUpcomingCounts.liveCnt"
-        class="badge badge-secondary badge-sm mx-1 rounded-sm sm:badge-md"
+        class="badge-secondary badge badge-sm mx-1 rounded-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.liveCnt }}
       </span>
       {{ liveUpcomingHeaderSplit[2] }}
       <span
         v-if="liveUpcomingCounts.upcomingCnt"
-        class="badge badge-outline badge-sm mx-1 rounded-sm sm:badge-md"
+        class="badge-outline badge badge-sm mx-1 rounded-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.upcomingCnt }}
       </span>
@@ -213,10 +213,6 @@ watch(
 // const isError = computed(() => videoQuery?.isError.value);
 </script>
 <style>
-.v-tabs.v-slide-group--is-overflowing:not(.v-slide-group--has-affixes)
-  .v-tab:first-child {
-  margin-left: 0 !important;
-}
 /* shared with favorites.vue */
 .stream-count-chip {
   letter-spacing: normal;

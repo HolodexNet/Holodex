@@ -5,9 +5,6 @@
         {{ $t("component.reportDialog.title") }}
       </div>
       <div :v-if="!isLoading">
-        <v-alert v-model="error" dense type="error" dismissible>
-          Error Occurred
-        </v-alert>
         <span class="block rounded bg-bgColor-200">
           <span class="text-warning">{{ video.title }}</span>
           <br />
@@ -56,7 +53,7 @@
 
       <div class="flex flex-row-reverse gap-2">
         <div
-          class="btn-neutral btn btn-outline"
+          class="btn-neutral btn-outline btn"
           @click="showReportDialog = false"
         >
           {{ $t("views.app.close_btn") }}
@@ -85,13 +82,16 @@
 import { useGlobalReportState } from "@/stores/report";
 import { useSiteStore } from "@/stores/site";
 import backendApi from "@/utils/backend-api";
+import { useToast } from "vue-toast-notification";
 
 export default defineComponent({
   name: "ReportVideo",
   setup() {
     const store = useGlobalReportState();
     const site = useSiteStore();
-    return { store, site };
+    const { open: toast } = useToast();
+
+    return { store, site, toast };
   },
   data() {
     return {
@@ -110,7 +110,6 @@ export default defineComponent({
           text: this.$t("component.reportDialog.reasons[4]"),
           value: "Wrong Category",
         },
-
         {
           text: this.$t("component.reportDialog.reasons[0]"),
           value: "Video tagged incorrectly",
@@ -147,8 +146,15 @@ export default defineComponent({
   },
   methods: {
     sendReport() {
-      if (this.selectedReason === "Other" && !this.comments.length) {
-        this.error = true;
+      if (!this.comments.length && this.comments.length < 8) {
+        this.toast({
+          //   TODO: i18n
+          message: "Please provide some more details.",
+          type: "error",
+          duration: 2500,
+          position: "bottom",
+        });
+
         return;
       }
       this.isLoading = true;
@@ -170,11 +176,9 @@ export default defineComponent({
         .then(() => {
           this.showReportDialog = false;
           this.showSnackbar = true;
-          this.error = false;
         })
         .catch((e) => {
           console.error(e);
-          this.error = true;
         })
         .finally(() => {
           this.isLoading = false;

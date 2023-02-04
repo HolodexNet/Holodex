@@ -1,16 +1,16 @@
 <template>
   <!-- <v-form ref="form" v-model="valid" lazy-validation> -->
-  <v-alert v-if="!isEditor && token && !expired" class="pa-2 mb-2" type="info">
+  <h-alert v-if="!isEditor && token && !expired" class="pa-2 mb-2" type="info">
     Editing as {{ token.user }} from
     {{ discordCredits ? discordCredits.data.guild.name : "" }} Discord
     <br />
     Your session expires: {{ expiresIn }}. Please refresh if it is about to
     expire
-  </v-alert>
-  <v-alert v-else-if="!isEditor" type="error">
+  </h-alert>
+  <h-alert v-else-if="!isEditor" type="error">
     You are not an editor or token has expired, please login or generate a new
     token using our bot
-  </v-alert>
+  </h-alert>
   <h-text-field
     v-if="isEditor"
     v-model="creditName"
@@ -228,12 +228,6 @@
       {{ id ? "Submit Placeholder Modification" : "Create new Placeholder" }}
     </h-btn>
   </div>
-  <v-snackbar v-model="error" color="error">
-    {{ errorMessage }}
-  </v-snackbar>
-  <v-snackbar v-model="success" timeout="2000" color="success">
-    Successfully added Placeholder Stream
-  </v-snackbar>
   <!-- </v-form> -->
 </template>
 
@@ -248,6 +242,7 @@ import { DatePicker } from "v-calendar";
 import { useThemeStore } from "@/stores/theme";
 import { useDisplay } from "vuetify";
 import VtuberAutocomplete from "@/components/channel/VtuberAutocomplete.vue";
+import { useToast } from "vue-toast-notification";
 
 export default defineComponent({
   components: {
@@ -259,7 +254,9 @@ export default defineComponent({
     const site = useSiteStore();
     const theme = useThemeStore();
     const creditName = ref(site.user?.username);
-    return { creditName, site, theme, display };
+    const { open: toast } = useToast();
+
+    return { creditName, site, theme, display, toast };
   },
   data() {
     return {
@@ -295,10 +292,6 @@ export default defineComponent({
       linkRule: (v: any) =>
         !!v.match(/^https?:\/\/[\w-]+(\.[\w-]+)+\.?(\/\S*)?/) || "Invalid url",
       timeRule: () => !!this.availableAt || "Invalid time",
-
-      error: false,
-      errorMessage: "",
-      success: false,
     };
   },
   computed: {
@@ -421,16 +414,29 @@ export default defineComponent({
             this.$route.query?.token
           )
           .then(() => {
-            this.success = true;
+            this.toast({
+              message: "Successfully added Placeholder Stream",
+              type: "success",
+              duration: 2500,
+              position: "bottom",
+            });
           })
           .catch((e) => {
-            this.error = true;
-            this.errorMessage = e;
+            this.toast({
+              message: e,
+              type: "error",
+              duration: 3000,
+              position: "bottom",
+            });
           });
       } else {
-        this.error = true;
-        this.errorMessage =
-          "You're not a valid Holodex Editor, or your discord-generated placeholder creation link has expired";
+        this.toast({
+          message:
+            "You're not a valid Holodex Editor, or your discord-generated placeholder creation link has expired",
+          type: "error",
+          duration: 3000,
+          position: "bottom",
+        });
       }
     },
     async loadExistingPlaceholder(id: string) {

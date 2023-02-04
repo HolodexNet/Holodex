@@ -6,7 +6,7 @@
     v-model="langStore.lang"
     :items="langs"
     item-value="val"
-    class="max-w-sm menu"
+    class="menu max-w-sm"
     variant="outlined"
     :hint="'» ' + langs.find((x) => x.val === langStore.lang)?.credit"
     persistent-hint
@@ -33,15 +33,15 @@
   <div class="mb-2 text-lg font-semibold">
     {{ $t("views.settings.useEnglishNameLabel") }}
   </div>
-  <div class="max-w-sm form-control lang-settings">
-    <label class="cursor-pointer label">
+  <div class="lang-settings form-control max-w-sm">
+    <label class="label cursor-pointer">
       <span class="label-text">{{
         $t("views.settings.useEnglishNameMsg")
       }}</span>
       <input
         v-model="langStore.useEnglishName"
         type="checkbox"
-        class="toggle toggle-primary"
+        class="toggle-primary toggle"
       />
     </label>
   </div>
@@ -51,25 +51,25 @@
     {{ $t("views.settings.clipLanguageSelection") }}
   </div>
   <!-- <v-container fluid> -->
-  <div class="max-w-sm form-control lang-settings">
+  <div class="lang-settings form-control max-w-sm">
     <label
       v-for="l in TL_LANGS"
       :key="l.value + 'settchkbx'"
-      class="cursor-pointer label"
+      class="label cursor-pointer"
     >
       <span class="label-text">{{ l.text }}</span>
       <input
         v-model="langStore.clipLangs"
         type="checkbox"
         :value="l.value"
-        class="checkbox checkbox-primary"
+        class="checkbox-primary checkbox"
       />
     </label>
   </div>
   <!-- </v-container> -->
 
   <!-- <v-hover v-if="overrideLanguage" v-slot="{ hover }">
-        <v-alert
+        <h-alert
           v-ripple
           dense
           block
@@ -87,7 +87,7 @@
             langs.find((x) => x.val === overrideLanguage)?.display
           }}</code
           >, click here to reset.
-        </v-alert>
+        </h-alert>
       </v-hover> -->
 </template>
 <script lang="ts">
@@ -146,6 +146,6 @@ export default defineComponent({
   padding-left: 2em;
 }
 .lang-settings label.label:nth-child(even) {
-  @apply bg-bgColor-500 rounded;
+  @apply rounded bg-bgColor-500;
 }
 </style>
