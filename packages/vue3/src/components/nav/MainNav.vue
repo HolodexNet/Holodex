@@ -67,7 +67,7 @@
           <template #activator="{ props }">
             <div
               v-bind="props"
-              class="btn-ghost btn-square btn mr-2 text-2xl"
+              class="btn btn-ghost btn-square mr-2 text-2xl"
               style="width: 3rem; height: 3rem; min-height: 3rem"
             >
               <h-icon v-if="!(site.user && site.user)">
@@ -127,16 +127,6 @@
       >
         <!-- this is just the element that covers up the notch. don't worry about it. -->
       </div>
-
-      <!-- Extension Slot for mobile v-tabs -->
-      <!-- Disable onScroll when ext is disabled. onScroll hooks on to window, so it can live anywhere -->
-      <!-- <span v-if="!disableExt" v-scroll="onScroll" /> -->
-      <!-- <template v-if="!disableExt" #extension> -->
-      <!-- <v-slide-y-transition> -->
-      <!-- v-tabs are teleported here from their respective view -->
-      <!-- <portal-target v-if="showExt" name="mainNavExt" slim /> -->
-      <!-- </v-slide-y-transition> -->
-      <!-- </template> -->
     </v-app-bar>
     <NavDrawer
       v-model="navDrawer"

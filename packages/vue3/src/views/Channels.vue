@@ -279,10 +279,6 @@ export default defineComponent({
   flex: auto;
 }
 
-.channels-tabs .v-slide-group__prev--disabled {
-  display: none !important;
-}
-
 .rotate-asc {
   transform: rotate(180deg);
 }
