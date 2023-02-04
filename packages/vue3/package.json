@@ -37,6 +37,7 @@
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "3.2.45",
     "vue-3-linkify": "^1.1.0",
+    "vue-color-kit": "^1.0.5",
     "vue-flatpickr-component": "^11.0.1",
     "vue-i18n": "^9.2.2",
     "vue-plugin-load-script": "^2.1.1",

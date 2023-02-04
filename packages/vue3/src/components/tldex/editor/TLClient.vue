@@ -374,14 +374,18 @@
       @click:outside.prevent="colourPickerClose()"
     >
       <v-card>
-        <v-color-picker
-          v-if="colourPick === 1"
-          v-model="profile[profileIdx].CC"
+        <ColorPicker
+          v-if="colourPick === 1 || colourPick === 2"
+          class="p-0"
+          theme="dark"
+          :color="
+            colourPick === 1 ? profile[profileIdx].CC : profile[profileIdx].OC
+          "
+          :colors-default="[]"
+          sucker-hide
+          @change-color="({hex}: any) => colourPick === 1 ? (profile[profileIdx].CC = hex) : (profile[profileIdx].OC = hex)"
         />
-        <v-color-picker
-          v-else-if="colourPick === 2"
-          v-model="profile[profileIdx].OC"
-        />
+
         <v-card-title :style="textStyle" style="font-weight: bold">
           {{ $t("views.tlClient.pangram") }}
         </v-card-title>
@@ -594,6 +598,8 @@ import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { useSiteStore } from "@/stores";
 import { Profile } from "./types";
+import { ColorPicker } from "vue-color-kit";
+import "vue-color-kit/dist/vue-color-kit.css";
 
 export default defineComponent({
   name: "Tlclient",
@@ -604,7 +610,7 @@ export default defineComponent({
       },
     };
   },
-  components: {},
+  components: { ColorPicker },
   setup() {
     const site = useSiteStore();
 

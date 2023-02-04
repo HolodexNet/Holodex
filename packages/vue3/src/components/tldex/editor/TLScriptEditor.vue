@@ -511,13 +511,16 @@
       @click:outside.prevent="colourPickerClose()"
     >
       <v-card>
-        <v-color-picker
-          v-if="colourPick === 1"
-          v-model="profile[profileIdx].CC"
-        />
-        <v-color-picker
-          v-else-if="colourPick === 2"
-          v-model="profile[profileIdx].OC"
+        <ColorPicker
+          v-if="colourPick === 1 || colourPick === 2"
+          class="p-0"
+          theme="dark"
+          :color="
+            colourPick === 1 ? profile[profileIdx].CC : profile[profileIdx].OC
+          "
+          :colors-default="[]"
+          sucker-hide
+          @change-color="({hex}: any) => colourPick === 1 ? (profile[profileIdx].CC = hex) : (profile[profileIdx].OC = hex)"
         />
         <v-card-title :style="textStyle" style="font-weight: bold">
           {{ $t("views.tlClient.pangram") }}
@@ -807,6 +810,8 @@ import backendApi from "@/utils/backend-api";
 import { tlClientTimeFormat } from "./functions";
 import { useSiteStore } from "@/stores";
 import { Entry, Profile, TransactionLogItem } from "./types";
+import { ColorPicker } from "vue-color-kit";
+import "vue-color-kit/dist/vue-color-kit.css";
 
 export default defineComponent({
   metaInfo() {
@@ -820,6 +825,7 @@ export default defineComponent({
     EnhancedEntry,
     Entrytr,
     ExportFile,
+    ColorPicker,
     ImportFile,
   },
   setup() {

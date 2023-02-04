@@ -13,12 +13,14 @@
       </button>
     </template>
     {{ theme.colors?.[daisyName] }}
-    <v-color-picker
-      :model-value="theme.colors?.[daisyName]"
-      mode="hex"
-      hide-inputs
-      @update:model-value="(v) => theme.setCustomTheme(daisyName, v)"
-    ></v-color-picker>
+    <ColorPicker
+      class="p-0"
+      :theme="theme.dark ? 'dark' : 'light'"
+      :color="theme.colors?.[daisyName]"
+      :colors-default="[]"
+      sucker-hide
+      @change-color="setColor"
+    />
   </v-menu>
 </template>
 <script lang="ts">
@@ -29,10 +31,15 @@ import {
 } from "@/hooks/theme-changer/daisy-utils/daisy-types";
 import { useThemeStore } from "@/stores";
 import { PropType } from "vue";
+import { ColorPicker } from "vue-color-kit";
+import "vue-color-kit/dist/vue-color-kit.css";
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "ThemeColorPicker",
+  components: {
+    ColorPicker,
+  },
   props: {
     daisyName: { type: String as PropType<DaisyColorName>, required: true },
     displayName: {
@@ -75,7 +82,11 @@ export default defineComponent({
     // },
   },
   watch: {},
-  methods: {},
+  methods: {
+    setColor({ hex }: { hex: string }) {
+      this.theme.colors[this.daisyName] = hex;
+    },
+  },
 });
 </script>
 <style>
