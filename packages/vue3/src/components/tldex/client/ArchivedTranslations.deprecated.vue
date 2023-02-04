@@ -1,6 +1,6 @@
 <template>
   <v-card class="text-body-2 tl-overlay" tile flat style="width: 100%">
-    <v-card-subtitle class="py-1 flex justify-between">
+    <v-card-subtitle class="flex justify-between py-1">
       <div>TLdex [{{ tldex.liveTlLang }}]</div>
       <span>
         <v-btn
@@ -54,7 +54,7 @@
           </template>
           <v-card>
             <portal-target name="expandedMessage" class="d-flex tl-expanded" />
-            <v-divider />
+            <h-divider />
             <v-card-actions>
               <v-spacer />
               <v-btn text color="red" @click="expanded = false">{{
@@ -66,7 +66,7 @@
         <WatchLiveTranslationsSetting />
       </span>
     </v-card-subtitle>
-    <v-divider />
+    <h-divider />
     <portal to="expandedMessage" :disabled="!expanded" slim>
       <!-- <virtual-list
         ref="tlBody"

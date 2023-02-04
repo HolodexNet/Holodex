@@ -39,11 +39,11 @@
             <div>{{ page.name }}</div>
           </router-link>
         </li>
-        <v-divider v-if="page.divider" :key="`${page.path}-divider`" />
+        <h-divider v-if="page.divider" :key="`${page.path}-divider`" />
       </template>
 
       <!-- Expanded part -->
-      <v-divider v-if="expanded" />
+      <h-divider v-if="expanded" />
 
       <template v-if="expanded">
         <li v-for="page in pages.filter((e) => e.extra)" :key="page.name">
@@ -59,7 +59,7 @@
         </li>
       </template>
       <!-- </v-list> -->
-      <v-divider />
+      <h-divider />
       <div class="h-6">
         <h-btn
           class="!h-6 w-full"

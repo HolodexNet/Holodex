@@ -50,7 +50,7 @@
                         ><h-icon left>{{ icons.mdiClipboardPlusOutline }}</h-icon>
                         {{ playlist.id ? "Copy sharable Playlist link" : "Save the playlist to enable link-sharing." }}
                     </v-list-item> -->
-          <v-divider />
+          <h-divider />
           <!-- Exporting options -->
           <v-list-item class="mt-1 mb-1" dense>
             <h-icon class="i-mdi:open-in-new"></h-icon>
@@ -67,7 +67,7 @@
             {{ $t("views.library.exportCsv") }}
           </v-list-item>
           <!-- End Exporting options -->
-          <v-divider class="mb-2" />
+          <h-divider class="mb-2" />
           <v-list-item v-if="isEditable" @click="deletePlaylist">
             <h-icon class="i-mdi:delete text-red-500"></h-icon>
             {{

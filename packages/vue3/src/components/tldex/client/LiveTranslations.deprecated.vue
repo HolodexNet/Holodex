@@ -58,7 +58,7 @@
 
           <v-card>
             <portal-target name="expandedMessage" class="d-flex tl-expanded" />
-            <v-divider />
+            <h-divider />
             <v-card-actions>
               <v-spacer />
               <v-btn text color="red" @click="expanded = false">
@@ -70,7 +70,7 @@
         <WatchLiveTranslationsSetting />
       </span>
     </v-card-subtitle>
-    <v-divider />
+    <h-divider />
     <portal to="expandedMessage" :disabled="!expanded" slim>
       <message-renderer
         ref="tlBody"

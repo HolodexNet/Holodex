@@ -116,7 +116,7 @@
           </li>
         </ul>
       </v-card-text>
-      <v-divider />
+      <h-divider />
       <v-card-actions>
         <v-spacer />
         <v-btn text color="red" @click="showOrgDialog = false">{{
