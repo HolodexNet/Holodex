@@ -18,73 +18,58 @@
         <div class="inline-block py-1 text-lg font-bold">
           {{ playlist.name }}
         </div>
-        <div
+        <h-btn
           v-show="isEditable"
-          icon
+          ghost
           small
-          class="btn btn-ghost btn-square btn-sm float-right"
+          class="btn float-right w-8"
           @click="editNameMode = true"
         >
-          <v-icon> {{ icons.mdiPencil }} </v-icon>
-        </div>
+          <h-icon class="i-mdi:pencil"></h-icon>
+        </h-btn>
       </span>
       <v-menu location="bottom" nudge-width="500">
         <template #activator="{ props }">
-          <div
-            class="btn btn-ghost btn-square btn-sm float-right"
-            v-bind="props"
-          >
-            <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
-          </div>
+          <h-btn ghost small class="btn float-right w-8" v-bind="props">
+            <h-icon class="i-mdi:dots-vertical"></h-icon>
+          </h-btn>
         </template>
-        <v-list nav>
+        <v-list nav dense>
           <v-list-item v-if="isEditable" @click="$emit('new-playlist')">
             <!-- Please migrate these V-Icon along with the list items coz it's not actually that easy to move one and not the other. -->
-            <v-icon left color="success">
-              {{ icons.mdiPlusBox }}
-            </v-icon>
+            <h-icon class="i-mdi:plus-box"></h-icon>
             {{ $t("component.playlist.menu.new-playlist") }}
           </v-list-item>
           <!-- feed back a green ripple on click... theoretically -->
           <v-list-item v-if="isEditable" @click="editNameMode = true">
-            <v-icon left>
-              {{ icons.mdiPencil }}
-            </v-icon>
+            <h-icon class="i-mdi:pencil"></h-icon>
             {{ $t("component.playlist.menu.rename-playlist") }}
           </v-list-item>
           <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
           <!-- <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
-                        ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
+                        ><h-icon left>{{ icons.mdiClipboardPlusOutline }}</h-icon>
                         {{ playlist.id ? "Copy sharable Playlist link" : "Save the playlist to enable link-sharing." }}
                     </v-list-item> -->
           <v-divider />
           <!-- Exporting options -->
           <v-list-item class="mt-1 mb-1" dense>
-            <v-icon left> {{ icons.mdiOpenInNew }} </v-icon
-            ><span>{{ $t("component.playlist.menu.export-playlist") }}</span>
+            <h-icon class="i-mdi:open-in-new"></h-icon>
+            {{ $t("component.playlist.menu.export-playlist") }}
           </v-list-item>
           <v-list-item
             dense
             class="ml-5"
             @click.stop="instructionsDialog = true"
           >
-            <v-icon left>
-              {{ icons.mdiYoutube }}
-            </v-icon>
             {{ $t("views.library.exportYtPlaylist") }}
           </v-list-item>
           <v-list-item dense class="mb-2 ml-5" @click.stop="downloadAsCSV">
-            <v-icon left>
-              {{ mdiFileDelimited }}
-            </v-icon>
             {{ $t("views.library.exportCsv") }}
           </v-list-item>
           <!-- End Exporting options -->
           <v-divider class="mb-2" />
           <v-list-item v-if="isEditable" @click="deletePlaylist">
-            <v-icon left color="error">
-              {{ icons.mdiDelete }}
-            </v-icon>
+            <h-icon class="i-mdi:delete text-red-500"></h-icon>
             {{
               playlist.id
                 ? $t("component.playlist.menu.delete-playlist")

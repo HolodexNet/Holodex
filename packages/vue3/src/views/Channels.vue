@@ -17,12 +17,14 @@
         <template #activator="{ props }">
           <label tabindex="0" class="dropdownLabelBtn" v-bind="props">
             {{ currentSortValue.text }}
-            <v-icon size="20">{{ mdiArrowDown }}</v-icon>
+            <h-icon
+              class="i-heroicons:chevron-down -mr-1 ml-1 h-4 w-4"
+            ></h-icon>
           </label>
         </template>
         <ul
           tabindex="0"
-          class="z-50 p-2 text-sm shadow dropdown-content menu bg-bgColor rounded-box"
+          class="dropdown-content menu rounded-box z-50 bg-bgColor p-2 text-sm shadow"
           style="min-width: 10rem"
         >
           <li
@@ -35,7 +37,7 @@
           </li>
         </ul>
       </v-menu>
-      <div class="dropdown dropdown-end"></div>
+      <div class="dropdown-end dropdown"></div>
     </template>
   </h-tabs>
 
@@ -46,7 +48,7 @@
           </v-icon>
         </div> -->
 
-  <div class="container px-2 mx-auto" style="min-height: 70vh">
+  <div class="container mx-auto px-2" style="min-height: 70vh">
     <!-- <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive"> -->
     <!-- <v-tabs v-model="category" class="channels-tabs secondary darken-1">
       <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>

@@ -132,9 +132,9 @@
           target="_blank"
         >
           API Documentation
-          <v-icon small right>
+          <h-icon small right>
             {{ icons.mdiOpenInNew }}
-          </v-icon>
+          </h-icon>
         </h-btn>
         <!-- </div> -->
       </template>
