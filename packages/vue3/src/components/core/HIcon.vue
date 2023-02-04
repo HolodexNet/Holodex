@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 withDefaults(
   defineProps<{
-    left: boolean;
+    left?: boolean;
   }>(),
   {
     left: false,

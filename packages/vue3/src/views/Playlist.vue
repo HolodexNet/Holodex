@@ -1,29 +1,35 @@
 <template>
-  <div class="container max-w-5xl pt-4 mx-auto">
+  <div class="container mx-auto max-w-5xl pt-4">
     <span class="text-3xl">{{ $t("views.playlist.page-heading") }}</span
     ><br />
-    <span class="text-sm text-opacity-50 text-primary-300">{{
+    <span class="text-sm text-primary-300 opacity-60">{{
       $t("views.playlist.page-instruction")
     }}</span>
     <!-- <v-list class="mt-4" color="transparent"> -->
-    <div id="new-playlist-btn" class="my-4" @click.stop="createNewPlaylist">
-      <div class="p-2 line-clamp-2 bg-bgColor-300 card">
-        <div class="px-2 font-bold sm:px-6">
-          <v-icon left x-large class="">
-            {{ icons.mdiPlaylistPlus }}
-          </v-icon>
-          {{ $t("views.playlist.new-playlist-btn-label") }}
-          <br />
-          <div v-if="!user" class="text-caption">
-            {{ $t("views.playlist.login-prompt") }}
-          </div>
+    <div
+      id="new-playlist-btn"
+      class="my-4 cursor-pointer"
+      @click.stop="createNewPlaylist"
+    >
+      <div class="card bg-bgColor-300 p-2 line-clamp-2">
+        <div class="flex items-center px-2 font-bold sm:px-6">
+          <h-icon
+            class="i-material-symbols:playlist-add-rounded h-12 w-12 text-primary"
+            left
+          ></h-icon>
+          <span>
+            {{ $t("views.playlist.new-playlist-btn-label") }}<br />
+            <div v-if="!user" class="opacity-60">
+              {{ $t("views.playlist.login-prompt") }}
+            </div>
+          </span>
         </div>
       </div>
     </div>
     <div
       v-for="playlist in playlists.data.value"
       :key="'plst' + playlist.id + playlist.name"
-      class="my-4 cursor-pointer card card-side bg-bgColor-300 card-compact sm:card-normal hover:shadow-xl hover:-translate-y-1"
+      class="card card-side card-compact my-4 cursor-pointer bg-bgColor-300 hover:-translate-y-1 hover:shadow-xl sm:card-normal"
       :class="
         playlist.id === current.currentPlaylistId
           ? 'active-playlist'
@@ -34,21 +40,20 @@
       <div class="card-body line-clamp-2">
         <v-list-item-title>
           <span class="font-weight-medium text-subtitle-1">
-            <v-icon left x-large color="secondary" class="">
-              {{ mdiFormatListText }}
-            </v-icon>
+            <h-icon
+              class="i-material-symbols:format-list-bulleted-rounded w-8 text-secondary"
+              left
+            ></h-icon>
             {{ playlist.name }}
           </span>
           <br />
-          <span v-show="playlist.updated_at" class="text-caption">
-            <span class="hidden-xs-only">{{
-              $t("views.playlist.item-last-updated")
-            }}</span>
+          <span v-show="playlist.updated_at" class="text-sm opacity-60">
+            <span class="">{{ $t("views.playlist.item-last-updated") }}</span>
             {{ toTime(playlist.updated_at) }}
           </span>
         </v-list-item-title>
       </div>
-      <div class="flex flex-row-reverse self-center ml-0 align-center">
+      <div class="align-center ml-0 flex flex-row-reverse self-center">
         <!-- local playlist support -->
         <div
           class="group"

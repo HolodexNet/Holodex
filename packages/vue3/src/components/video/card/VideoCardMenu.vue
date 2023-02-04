@@ -77,11 +77,10 @@
                 <a v-bind="props">
                   <div :class="icons.listPlus"></div>
                   {{ $t("component.mainNav.playlist") }}
-                  <v-icon right class="ml-auto mr-0">
-                    {{ icons.mdiChevronRight }}
-                  </v-icon>
+                  <h-icon class="i-mdi:chevron-right ml-auto mr-0"></h-icon>
                 </a>
               </template>
+              <!-- TODO MISSING COMPONENT -->
               <!-- <video-quick-playlist :key="video.id+Date.now()" :video-id="video.id" :video="video" /> -->
             </v-menu>
           </li>
@@ -100,9 +99,7 @@
               closeMenu();
             "
           >
-            <v-icon left>
-              {{ icons.mdiCalendar }}
-            </v-icon>
+            <div class="i-fluent:calendar-add-20-filled"></div>
             {{ $t("component.videoCard.googleCalendar") }}
           </v-list-item>
         </template>
