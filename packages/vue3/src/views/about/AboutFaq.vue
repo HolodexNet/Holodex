@@ -69,7 +69,7 @@
   <h-disclosure :title="$t('about.faq.support.title')">
     <div v-html="$t('about.faq.support.contents.0')" />
     <button
-      class="btn btn-primary btn-wide btn-sm mt-2"
+      class="btn btn-primary btn-sm btn-wide mt-2"
       href="https://ko-fi.com/holodex"
     >
       Ko-fi: Support Holodex

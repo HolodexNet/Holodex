@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sticky z-10 px-4 overflow-x-auto overflow-y-hidden tabs top-14 flex-nowrap no-scrollbar sm:mb-4"
+    class="no-scrollbar tabs sticky top-14 z-10 flex-nowrap overflow-x-auto overflow-y-hidden px-4 sm:mb-4"
     :class="xclass"
     style="box-shadow: inset 0px -1px hsl(var(--bc) / 0.2)"
   >
@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-  <div v-if="display.mobile.value" class="flex justify-end my-2 -mt-4">
+  <div v-if="display.mobile.value" class="my-2 -mt-4 flex justify-end">
     <slot name="filters"></slot>
   </div>
 </template>

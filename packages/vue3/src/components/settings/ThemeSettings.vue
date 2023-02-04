@@ -8,7 +8,7 @@
     :items="presets"
     item-value="name"
     item-title="name"
-    class="max-w-sm menu"
+    class="menu max-w-sm"
     variant="outlined"
     hide-details
     @update:model-value="(e) => theme.setTheme(e)"
@@ -33,15 +33,15 @@
   <div class="divider" />
   <div class="mb-2 text-lg font-semibold">Advanced Color Customization</div>
 
-  <div class="max-w-sm form-control">
-    <label class="cursor-pointer label">
+  <div class="form-control max-w-sm">
+    <label class="label cursor-pointer">
       <span class="label-text">
         <b>Dark Color Theme</b>: Indicate if the color theme is dark. Dark
         themes suit darker backgrounds.
       </span>
       <input
         type="checkbox"
-        class="toggle toggle-primary"
+        class="toggle-primary toggle"
         :checked="theme.dark"
         @input="flipDark"
       />
@@ -50,7 +50,7 @@
 
   <div style="display: none">
     <div
-      class="btn-primary btn-secondary btn-accent btn-neutral btn-info btn-success btn-warning btn-error"
+      class="btn-neutral btn-primary btn-secondary btn-accent btn-info btn-success btn-warning btn-error"
     />
     <!-- this is just to trick daisy into importing every single color space -->
   </div>
@@ -197,6 +197,6 @@ label.label {
   padding-left: 2em;
 }
 label.label:nth-child(even) {
-  @apply bg-bgColor-500 rounded;
+  @apply rounded bg-bgColor-500;
 }
 </style>

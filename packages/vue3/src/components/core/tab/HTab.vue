@@ -1,8 +1,8 @@
 <template>
   <component
     :is="component || 'a'"
-    class="tab sm:tab-lg tab-bordered border-transparent"
-    :class="props.active ? 'tab-active text-secondary !border-secondary' : ''"
+    class="tab tab-bordered border-transparent sm:tab-lg"
+    :class="props.active ? 'tab-active !border-secondary text-secondary' : ''"
   >
     <slot></slot>
   </component>

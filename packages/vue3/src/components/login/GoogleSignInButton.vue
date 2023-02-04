@@ -2,7 +2,7 @@
   <!-- <div> -->
   <div
     ref="divRef"
-    class="bg-transparent overflow-hidden w-100 rounded-md"
+    class="w-100 overflow-hidden rounded-md bg-transparent"
     style="height: 32px; max-width: 420px"
   />
 </template>

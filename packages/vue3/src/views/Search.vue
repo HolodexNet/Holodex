@@ -3,6 +3,6 @@
   <SearchBar4
     v-if="!isMobile"
     key="main-search-bar2"
-    class="mx-auto height-40px"
+    class="height-40px mx-auto"
   />
 </template>

@@ -8,33 +8,33 @@
       class="flex-grow rounded-md bg-bgColor"
       style="flex-basis: 160px; min-width: 160px"
     >
-      <ul class="w-full menu">
-        <li :class="{ 'bordered active': route.name === 'Settings_Language' }">
+      <ul class="menu w-full">
+        <li :class="{ 'active bordered': route.name === 'Settings_Language' }">
           <router-link to="/settings/lang" class="justify-center"
             >Language</router-link
           >
         </li>
-        <li :class="{ 'bordered active': route.name === 'Settings_Themes' }">
+        <li :class="{ 'active bordered': route.name === 'Settings_Themes' }">
           <router-link to="/settings/themes" class="justify-center"
             >Color Themes</router-link
           >
         </li>
-        <li :class="{ 'bordered active': route.name === 'Settings_User' }">
+        <li :class="{ 'active bordered': route.name === 'Settings_User' }">
           <router-link to="/settings/user" class="justify-center"
             >Account Settings</router-link
           >
         </li>
-        <li :class="{ 'bordered active': route.name === 'Settings_Homepage' }">
+        <li :class="{ 'active bordered': route.name === 'Settings_Homepage' }">
           <router-link to="/settings/homepage" class="justify-center"
             >Homepage & Filters</router-link
           >
         </li>
-        <li :class="{ 'bordered active': route.name === 'Settings_Blocked' }">
+        <li :class="{ 'active bordered': route.name === 'Settings_Blocked' }">
           <router-link to="/settings/blocked" class="justify-center"
             >Blocked Channels</router-link
           >
         </li>
-        <li :class="{ 'bordered active': route.name === 'Settings_Advanced' }">
+        <li :class="{ 'active bordered': route.name === 'Settings_Advanced' }">
           <router-link to="/settings/advanced" class="justify-center"
             >Advanced</router-link
           >
@@ -43,7 +43,7 @@
       </ul>
     </div>
     <div
-      class="flex-grow flex-shrink-0 p-3 rounded-md xs:max-w-full w-80 bg-bgColor"
+      class="xs:max-w-full w-80 flex-shrink-0 flex-grow rounded-md bg-bgColor p-3"
       style="flex-basis: 60%; min-width: 300px"
     >
       <router-view></router-view>
