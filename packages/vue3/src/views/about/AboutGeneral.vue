@@ -28,7 +28,7 @@
     <p>
       We'd like to thank our long list of contributors and over 100 editors:
     </p>
-    <ul class="list-inside list-item indent-4">
+    <ul class="list-item list-inside indent-4">
       <li>RiceCakes (creator, admin)</li>
       <li>Xrave (admin)</li>
       <li>Uetchy (dev, designer)</li>
@@ -40,46 +40,40 @@
     <p class="text-sm opacity-60">
       (If you'd like to add your name to this list, drop us a poke on Discord!)
     </p>
-    <h3 class="mt-4 text-lg mb-2">Quick Links</h3>
+    <h3 class="mt-4 mb-2 text-lg">Quick Links</h3>
     <div
       id="qlinks"
-      class="grid gap-2 grid-flow-dense"
+      class="grid grid-flow-dense gap-2"
       style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))"
     >
       <a
-        class="p-0 btn btn-sm btn-info btn-outline"
+        class="btn-outline btn btn-info p-0"
         title="Follow us on twitter"
         href="https://twitter.com/holodex"
       >
         <div class="i-carbon:logo-twitter"></div>
       </a>
       <a
-        class="p-0 btn btn-sm btn-secondary btn-outline"
+        class="btn-outline btn btn-secondary p-0"
         title="Support us on Ko-Fi"
         href="https://ko-fi.com/holodex"
       >
         <div class="i-cib:ko-fi"></div>
       </a>
-      <a
-        class="p-0 btn btn-sm btn-primary btn-outline"
-        title="Issues / Source Code"
-      >
+      <a class="btn-outline btn btn-primary p-0" title="Issues / Source Code">
         <div class="i-carbon:logo-github"></div>
       </a>
-      <a
-        class="p-0 btn btn-sm btn-warning btn-outline"
-        title="API Documentation"
-      >
+      <a class="btn-outline btn btn-warning p-0" title="API Documentation">
         <div class="i-fluent:document-flowchart-20-regular"></div>
       </a>
       <a
-        class="p-0 text-purple-500 border-purple-500 hover:bg-purple-500 btn btn-sm btn-outline"
+        class="btn-outline btn border-purple-500 p-0 text-purple-500 hover:bg-purple-500"
         title="Holodex Discord"
       >
         <div class="i-carbon:logo-discord"></div>
       </a>
     </div>
-    <p class="text-sm opacity-60 mt-4">
+    <p class="mt-4 text-sm opacity-60">
       Holodex V3 UI Build {{ abbreviatedSha }}, released {{ committerDate }}
     </p>
   </article>
@@ -89,14 +83,14 @@ import { abbreviatedSha, committerDate } from "~build/info";
 </script>
 <style>
 #qlinks a {
-  @apply flex flex-row flex-nowrap max-w-xs;
+  @apply flex max-w-xs flex-row flex-nowrap;
   margin-left: 0px;
   margin-right: 0px;
   padding: 0.5rem;
   text-decoration: none;
 }
 #qlinks a div {
-  @apply text-xl mr-2;
+  @apply mr-2 text-xl;
 }
 #qlinks a::after {
   content: attr(title);

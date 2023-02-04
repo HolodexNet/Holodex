@@ -8,11 +8,11 @@
     <template #activator="{ props }">
       <label
         tabindex="0"
-        :class="`video-menu-default-activator btn my-2 bg-opacity-0 hover:bg-opacity-50 active:bg-opacity-50 ${btnClass}`"
+        :class="`btn-icon btn my-2 bg-opacity-0 hover:bg-opacity-50 active:bg-opacity-50 ${btnClass}`"
         v-bind="props"
         @click.stop.prevent
       >
-        <div :class="icons.more" class="text-lg"></div>
+        <h-icon :class="icons.more" class="h-4 w-4"></h-icon>
       </label>
     </template>
     <v-sheet>
@@ -257,8 +257,6 @@ export default defineComponent({
   font-size: 0.875rem;
   height: 2rem;
   min-height: 2rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
   padding: 0px;
   width: 2rem;
 }

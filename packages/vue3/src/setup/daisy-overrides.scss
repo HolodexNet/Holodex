@@ -1,0 +1,24 @@
+@layer utilities {
+  .btn {
+    @apply px-3 h-8 min-h-8;
+
+    &-square {
+      @apply h-8 w-8 p-0;
+    }
+    &-circle {
+      @apply h-8 w-8 rounded-full p-0;
+    }
+  }
+  .btn-sm {
+    height: 1.5rem;
+    min-height: 1.5rem;
+
+    @apply px-2;
+  }
+  .btn-lg {
+    height: 2.5rem;
+    min-height: 2.5rem;
+
+    @apply px-3;
+  }
+}

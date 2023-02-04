@@ -1,8 +1,8 @@
 <template>
   <div v-if="channel" class="p-2 md:p-4">
     <div class="grid grid-flow-row-dense grid-cols-1 gap-4 md:grid-cols-3">
-      <div class="order-1 col-span-1 md:order-last card card-compact">
-        <div class="gap-0 shadow-xl card-body bg-bgColor md:gap-2">
+      <div class="card card-compact order-1 col-span-1 md:order-last">
+        <div class="card-body gap-0 bg-bgColor shadow-xl md:gap-2">
           <strong class="card-title">{{
             $t("component.channelInfo.stats")
           }}</strong>
@@ -26,7 +26,7 @@
           v-linkify:options="{
             attributes: {
               target: '_blank',
-              class: 'link link-primary ext-link',
+              class: 'link link-primary external-link',
             },
           }"
         >
@@ -57,9 +57,4 @@ export default {
 };
 </script>
 
-<style lang="css">
-.ext-link {
-  @apply after:content-['↗'] after:ml-[2px];
-  text-decoration: none;
-}
-</style>
+<style lang="css"></style>

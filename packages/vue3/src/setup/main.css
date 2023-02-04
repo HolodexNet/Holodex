@@ -1,8 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+@import "./daisy-overrides.scss";
 
 html {
   font-family: "Inter", "Roboto", ui-sans-serif, system-ui, -apple-system,
@@ -11,7 +14,7 @@ html {
     "Noto Color Emoji" !important;
 }
 /* Note to self: gotta be a bit careful specifying the specificity of overrides when overriding Daisy Styles.
-
+ 
 e.g. just doing .online will NOT work
 */
 .avatar.online::before {
@@ -26,30 +29,10 @@ e.g. just doing .online will NOT work
   display: flex;
 }
 
-.btn:not(.btn-square) {
-  height: 2rem;
-  min-height: 2rem;
-
-  @apply px-3;
+.external-link {
+  @apply after:ml-[2px] after:content-['↗'];
+  text-decoration: none;
 }
-.btn-sm:not(.btn-square) {
-  height: 1.5rem;
-  min-height: 1.5rem;
-
-  @apply px-2;
-}
-.btn-lg:not(.btn-square) {
-  height: 2.5rem;
-  min-height: 2.5rem;
-
-  @apply px-3;
-}
-/* .btn {
-  animation: none;
-}
-.btn:active:focus {
-  transform: none;  
-} */
 
 /* DIRTY FIX, vuetify applying global styles causing conflict */
 .btn.btn-outline {
