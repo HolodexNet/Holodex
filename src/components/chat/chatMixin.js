@@ -136,7 +136,7 @@ export default {
           relativeMs: x.start * 1000,
           duration: x.end * 1000 - x.start * 1000,
         }));
-      }, 20000);
+      }, 5000);
     },
     parseMessage(msg) {
       msg.timestamp = +msg.timestamp;
