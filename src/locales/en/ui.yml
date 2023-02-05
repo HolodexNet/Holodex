@@ -383,6 +383,10 @@ views:
       - Login with Google
       - Login with Discord
       - Login with Twitter
+    twitterMsg:
+      - Due to Twitter API policy change, Twitter Login is likely to no longer work after Feb 9th.
+      - You are only using Twitter Login at the moment. We strongly recommend linking a different login method now to prevent lockout. (on different devices or after a browser wipe).
+      - If you are failing to log into Holodex user via Twitter account (and have not bound any other login methods), please contact us on Twitter DMs or Discord for support.
     username: Username
     usernameBtn:
       - Change
