@@ -1,9 +1,9 @@
 import type { AC_Response } from "@/components/nav/search/types";
 import { dayjs } from "@/utils/time";
 import axios, { AxiosResponse } from "axios";
-import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 import type { Playlist, PlaylistList } from "./types";
+import { stringifyQuery } from "./functions";
 
 // Need full domain for socket.io to work!!
 export const API_BASE_URL = `${window.location.origin}/api`;
@@ -36,16 +36,16 @@ export default {
     });
   },
   channels(query: Record<any, unknown> | undefined) {
-    const q = querystring.stringify(query);
+    const q = stringifyQuery(query);
     return axiosInstance.get<FullChannel[]>(`/channels?${q}`);
   },
   videos(query: Record<any, unknown> | undefined) {
-    const q = querystring.stringify(query);
+    const q = stringifyQuery(query);
     // console.log(`/videos?${q}`);
     return axiosInstance.get(`/videos?${q}`);
   },
   live(query: Record<any, unknown> | undefined) {
-    const q = querystring.stringify(query);
+    const q = stringifyQuery(query);
     return axiosInstance.get(`/live?${q}`).then((res) =>
       res.data
         // .concat(res.data.upcoming)
@@ -79,14 +79,14 @@ export default {
    * @returns
    */
   video(id: string, lang?: string, c?: number) {
-    const q = querystring.stringify({ lang, c });
+    const q = stringifyQuery({ lang, c });
     return axiosInstance.get(`/videos/${id}?${q}`);
   },
   comments(videoId: any) {
     return axiosInstance.get(`/videos/${videoId}/comments`);
   },
   clips(query: Record<any, unknown> | undefined) {
-    const q = querystring.stringify(query);
+    const q = stringifyQuery(query);
     return axiosInstance.get(`/clips?${q}`);
   },
   searchAutocomplete(query: string) {
@@ -94,7 +94,7 @@ export default {
     const videoId = query.match(VIDEO_URL_REGEX);
 
     if (channelId && !channelId[0].includes("/c/")) {
-      const q = querystring.stringify({ q: channelId[1] });
+      const q = stringifyQuery({ q: channelId[1] });
       return axiosInstance.get(`/search/autocomplete?${q}`);
     }
 
@@ -102,7 +102,7 @@ export default {
       return { data: [{ type: "video url", value: `${videoId[5]}` }] };
     }
 
-    const q = querystring.stringify({ q: query });
+    const q = stringifyQuery({ q: query });
     return axiosInstance.get(`/search/autocomplete?${q}`);
   },
   /**
@@ -117,7 +117,7 @@ export default {
     n?: number
   ) {
     if (partial.length == 0) return { data: { vtuber: [], topic: [] } };
-    const q = querystring.stringify({
+    const q = stringifyQuery({
       q: partial,
       ...(t && { t }),
       ...(n && { n }),
@@ -137,7 +137,7 @@ export default {
     });
   },
   channelVideos(channelId: any, { type = "videos", query }: any) {
-    const q = querystring.stringify(query);
+    const q = stringifyQuery(query);
     return axiosInstance.get(`/channels/${channelId}/${type}?${q}`);
   },
   login(jwt: any, authToken: any, service: any) {
@@ -164,13 +164,13 @@ export default {
     });
   },
   favoritesVideos(jwt: any, query: Record<any, unknown> | undefined) {
-    const q = querystring.stringify(query);
+    const q = stringifyQuery(query);
     return axiosInstance.get(`/users/videos?${q}`, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   favoritesLive({ includePlaceholder = false }: any, jwt: any) {
-    // const q = querystring.stringify(query);
+    // const q = stringifyQuery(query);
     return axiosInstance
       .get(`/users/live?includePlaceholder=${includePlaceholder}`, {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
@@ -257,7 +257,7 @@ export default {
     });
   },
   chatHistory(videoId: any, query: Record<any, unknown> | undefined) {
-    const q = querystring.stringify(query);
+    const q = stringifyQuery(query);
     return axiosInstance.get(`videos/${videoId}/chats?${q}`);
   },
   getMentions(videoId: any) {
@@ -293,7 +293,7 @@ export default {
   //     return axiosInstance.post("/songs/latest", { ...condition, offset, limit });
   // },
   // trackSongPlay(channelId, videoId, name, jwt) {
-  //     const urlsafe = querystring.stringify({ n: name });
+  //     const urlsafe = stringifyQuery({ n: name });
   //     return axiosInstance.get(
   //         `/songs/record/${channelId}/${videoId}?${urlsafe}`,
   //         {
@@ -312,7 +312,7 @@ export default {
    * @param {string?} channelId = channel ID. only org name OR channel ID should be supplied, never both.
    */
   // hot(org, channelId) {
-  //     const q = querystring.stringify(
+  //     const q = stringifyQuery(
   //         org ? { org } : { channel_id: channelId },
   //     );
   //     return axiosInstance.get(`/songs/hot?${q}`);
@@ -403,7 +403,7 @@ export default {
     );
   },
   getTLStats(jwt: any, query: Record<any, unknown> | undefined) {
-    const q = querystring.stringify(query);
+    const q = stringifyQuery(query);
     return axiosInstance.get(`/tlutil?${q}`, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });

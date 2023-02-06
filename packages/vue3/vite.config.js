@@ -13,7 +13,6 @@ import vuetify from "vite-plugin-vuetify";
 import Unocss from "unocss/vite";
 import presetIcons from "@unocss/preset-icons";
 import * as icons from "./src/utils/icons.ts";
-import filesize from "rollup-plugin-filesize";
 import path from "node:path";
 
 const API_BASE_URL = process.env.API_BASE_URL || "https://staging.holodex.net";

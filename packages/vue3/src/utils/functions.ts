@@ -409,3 +409,8 @@ export function debounce<T extends (...args: any) => any>(
     if (immediate && !timeout) func.apply(context, args as any);
   };
 }
+
+export function stringifyQuery(object: any) {
+  const params = new URLSearchParams(object);
+  return params.toString();
+}
