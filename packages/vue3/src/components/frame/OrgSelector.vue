@@ -62,7 +62,7 @@
     </v-menu>
   </slot>
   <v-dialog v-model="showOrgDialog">
-    <div class="card-compact card h-[90vh] bg-base-100">
+    <div class="card card-compact h-[90vh] bg-base-100">
       <div class="card-body overflow-y-auto px-1" style="">
         <input
           v-model="search"
@@ -84,7 +84,7 @@
               @click="$emit('changed', org, closeDialog)"
             >
               <h-btn
-                class="btn btn-sm btn-square"
+                class="btn btn-square btn-sm"
                 :class="
                   orgFavoritesNameSet.has(org.name)
                     ? 'btn-outline btn-primary'

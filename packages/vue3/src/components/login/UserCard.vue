@@ -64,6 +64,12 @@
         </div>
       </div>
 
+      <h-list class="gap-1 p-1">
+        <h-list-item to="/login">
+          <h-icon class="i-mdi:login-variant h-6 w-6"></h-icon>
+          {{ $t("component.mainNav.login") }}
+        </h-list-item>
+      </h-list>
       <ul class="menu gap-1 p-1">
         <li v-if="!user">
           <router-link to="/login">

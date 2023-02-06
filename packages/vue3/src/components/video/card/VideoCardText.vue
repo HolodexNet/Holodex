@@ -1,5 +1,5 @@
 <template>
-  <h-list style="min-height: 88px" class="relative">
+  <video-card-template style="min-height: 88px" class="relative">
     <template v-if="!hideChannelImage" #avatar>
       <channel-img :channel="video.channel" :size="40" rounded />
     </template>
@@ -110,7 +110,7 @@
         />
       </div>
     </template>
-  </h-list>
+  </video-card-template>
 </template>
 
 <script lang="ts">

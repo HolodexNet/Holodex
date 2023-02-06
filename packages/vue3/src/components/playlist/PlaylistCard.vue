@@ -34,7 +34,7 @@
             <h-icon class="i-mdi:dots-vertical"></h-icon>
           </h-btn>
         </template>
-        <ul class="menu bg-base-100">
+        <h-list class="bg-base-100">
           <h-list-item v-if="isEditable" @click="$emit('new-playlist')">
             <!-- Please migrate these V-Icon along with the list items coz it's not actually that easy to move one and not the other. -->
             <h-icon class="i-mdi:plus-box"></h-icon>
@@ -72,7 +72,7 @@
                 : $t("component.playlist.menu.clear-playlist")
             }}
           </h-list-item>
-        </ul>
+        </h-list>
       </v-menu>
     </div>
     <span class="block text-right text-sm text-secondary-300 text-opacity-50">

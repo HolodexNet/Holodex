@@ -1,0 +1,12 @@
+<template>
+  <div role="listitem" class="flex">
+    <div v-if="$slots.avatar" class="mx-2 self-center">
+      <slot name="avatar"></slot>
+    </div>
+    <div class="flex flex-1 flex-col">
+      <slot></slot>
+    </div>
+    <slot name="action"></slot>
+  </div>
+</template>
+<script lang="ts" setup></script>

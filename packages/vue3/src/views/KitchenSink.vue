@@ -61,7 +61,7 @@
 
     <div class="basis-1/3">
       <kbd>core/H-List</kbd>
-      <h-list style="min-height: 88px">
+      <video-card-template style="min-height: 88px">
         <template #avatar>
           <channel-img :channel="video.channel" :size="40" rounded />
         </template>
@@ -71,7 +71,7 @@
         <template #action>
           <video-card-menu :video="video" />
         </template>
-      </h-list>
+      </video-card-template>
       <kbd>VideoCardText</kbd>
       <video-card-text :video="video" />
       <kbd>VideoCardThumbnail</kbd>

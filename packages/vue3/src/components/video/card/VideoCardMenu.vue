@@ -16,8 +16,8 @@
       </label>
     </template>
     <div class="bg-base-100">
-      <ul
-        class="video-menu menu overflow-y-auto bg-bgColor-500 p-2 text-base-content"
+      <h-list
+        class="video-menu overflow-y-auto bg-bgColor-500 p-2 text-base-content"
       >
         <!-- Real Videos -->
         <template v-if="video.type !== 'placeholder'">
@@ -133,7 +133,7 @@
             {{ $t("component.reportDialog.title") }}
           </a>
         </li>
-      </ul>
+      </h-list>
     </div>
   </v-menu>
 </template>
