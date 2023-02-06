@@ -13,7 +13,12 @@
     :show="show"
     v-bind="props"
   >
-    <div @click="toggle">
+    <div
+      aria-haspopup="true"
+      :aria-expanded="show"
+      @click="toggle"
+      @keydown.space.prevent="toggle"
+    >
       <div ref="activator">
         <slot name="activator"></slot>
       </div>
@@ -33,8 +38,9 @@ interface Props extends FloatProps {}
 const props = defineProps<Props>();
 
 const activator = ref(null);
-const floating = ref(null);
+const floating = ref<HTMLElement | null>(null);
 const show = ref(false);
+watchEffect(() => console.log(floating));
 const toggle = () => {
   show.value = !show.value;
 };
