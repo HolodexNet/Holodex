@@ -1,5 +1,5 @@
 <template>
-  <Teleport to="#modal">
+  <Teleport to="#h-floating-container">
     <Transition name="fade-pop">
       <div
         v-if="props.modelValue"
