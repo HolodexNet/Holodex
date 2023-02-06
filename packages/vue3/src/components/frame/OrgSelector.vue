@@ -62,7 +62,7 @@
     </v-menu>
   </slot>
   <v-dialog v-model="showOrgDialog">
-    <div class="card card-compact h-[90vh] bg-base-100">
+    <div class="card-compact card h-[90vh] max-w-xs bg-base-100">
       <div class="card-body overflow-y-auto px-1" style="">
         <input
           v-model="search"
@@ -84,7 +84,7 @@
               @click="$emit('changed', org, closeDialog)"
             >
               <h-btn
-                class="btn btn-square btn-sm"
+                class="btn btn-sm btn-square"
                 :class="
                   orgFavoritesNameSet.has(org.name)
                     ? 'btn-outline btn-primary'
@@ -124,11 +124,11 @@
         </ul>
       </div>
       <h-divider />
-      <v-card-actions>
+      <div class="h-12 w-full">
         <h-btn text class="text-red ml-auto" @click="showOrgDialog = false">{{
           $t("views.app.close_btn")
         }}</h-btn>
-      </v-card-actions>
+      </div>
     </div>
   </v-dialog>
 </template>
