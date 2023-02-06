@@ -79,7 +79,7 @@
               @click="$emit('changed', org, closeDialog)"
             >
               <h-btn
-                class="btn btn-square btn-sm"
+                class="btn btn-sm btn-square"
                 :class="
                   orgFavoritesNameSet.has(org.name)
                     ? 'btn-outline btn-primary'
@@ -120,8 +120,7 @@
       </div>
       <h-divider />
       <v-card-actions>
-        <v-spacer />
-        <h-btn text class="text-red" @click="showOrgDialog = false">{{
+        <h-btn text class="text-red ml-auto" @click="showOrgDialog = false">{{
           $t("views.app.close_btn")
         }}</h-btn>
       </v-card-actions>

@@ -137,15 +137,13 @@ text-transform: none; -->
       <div class="i-mdi:check"></div>
     </button>
   </div>
-  <v-snackbar v-model="error" color="error">
-    {{ errorMessage }}
-  </v-snackbar>
-  <v-snackbar v-model="success" timeout="2000" color="success"> OK </v-snackbar>
 </template>
 
 <script lang="ts">
 import backendApi from "@/utils/backend-api";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
+import { useToast } from "vue-toast-notification";
+
 const ADD_VTUBER =
   "Add a Vtuber ▶️ for Holodex to track the channel and clips.";
 const ADD_CLIPPER = "I'd like to ➕ add a clipping/subbing channel to Holodex.";
@@ -156,6 +154,11 @@ export default defineComponent({
     RadioGroup,
     RadioGroupLabel,
     RadioGroupOption,
+  },
+  setup() {
+    const { open: toast } = useToast();
+
+    return { toast };
   },
   data() {
     return {
@@ -218,10 +221,6 @@ export default defineComponent({
           value: DELETE,
         },
       ],
-
-      error: false,
-      errorMessage: "",
-      success: false,
 
       DELETE,
       ADD_CLIPPER,
@@ -378,7 +377,6 @@ export default defineComponent({
         backendApi
           .requestChannel(body)
           .then(() => {
-            this.success = true;
             this.link = "";
             this.channel = {
               text: "",
@@ -394,14 +392,28 @@ export default defineComponent({
             this.contact = "";
             this.comments = "";
             this.org = "";
+            this.toast({
+              message: "OK",
+              type: "success",
+              duration: 2000,
+              position: "bottom",
+            });
           })
           .catch((e) => {
-            this.error = true;
-            this.errorMessage = e;
+            this.toast({
+              message: "Error: " + e,
+              type: "error",
+              dismissible: true,
+              position: "bottom",
+            });
           });
       } else {
-        this.error = true;
-        this.errorMessage = "Some error occurred.";
+        this.toast({
+          message: "Form issues",
+          type: "error",
+          dismissible: true,
+          position: "bottom",
+        });
       }
     },
   },

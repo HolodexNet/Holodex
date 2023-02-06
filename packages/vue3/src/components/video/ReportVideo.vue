@@ -68,14 +68,6 @@
       </div>
     </div>
   </v-dialog>
-  <v-snackbar v-model="showSnackbar" :timeout="3000" color="success">
-    {{ $t("component.reportDialog.success") }}
-    <template #action>
-      <h-btn text class="ml-auto" @click="showSnackbar = false">
-        {{ $t("views.app.close_btn") }}
-      </h-btn>
-    </template>
-  </v-snackbar>
 </template>
 
 <script lang="ts">
@@ -98,7 +90,6 @@ export default defineComponent({
       selectedReason: "Video tagged incorrectly",
       comments: "",
       isLoading: false,
-      showSnackbar: false,
       error: false,
       readMore: false,
     };
@@ -175,7 +166,13 @@ export default defineComponent({
         )
         .then(() => {
           this.showReportDialog = false;
-          this.showSnackbar = true;
+
+          this.toast({
+            message: this.$t("component.reportDialog.success"),
+            type: "success",
+            duration: 3000,
+            position: "bottom",
+          });
         })
         .catch((e) => {
           console.error(e);

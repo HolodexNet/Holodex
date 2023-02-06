@@ -118,24 +118,6 @@
       </video-card-virtual-list>
     </div>
   </div>
-  <!-- Need login. -->
-  <v-snackbar v-model="loginWarning" :timeout="5000" color="warning">
-    {{ $t("component.playlist.save-error-not-logged-in") }}
-
-    <template #action="{ attrs }">
-      <h-btn
-        class="text-red-600"
-        text
-        v-bind="attrs"
-        @click="
-          $router.push('/login');
-          loginWarning = false;
-        "
-      >
-        {{ $t("component.mainNav.login") }}
-      </h-btn>
-    </template>
-  </v-snackbar>
 
   <!--* INSTRUCTIONS DIALOG FOR YOUTUBE --->
   <v-dialog
@@ -205,7 +187,6 @@ export default defineComponent({
       //   mdiChevronDoubleDown,
       editNameMode: false,
       instructionsDialog: false,
-      loginWarning: false,
       maxPlaylistCount: MAX_PLAYLIST_LENGTH,
       editedPlaylistName: "",
     };
