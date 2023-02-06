@@ -77,7 +77,6 @@
     </template>
   </v-select>
   <div class="divider" />
-  <div class="divider" />
 
   <div class="mb-2 text-lg font-semibold">Hide Features:</div>
   <div class="form-control max-w-sm">

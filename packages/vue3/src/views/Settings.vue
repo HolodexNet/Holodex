@@ -1,14 +1,11 @@
 <template>
-  <v-container
-    key="settingspg"
-    class="flex flex-row flex-wrap items-stretch gap-2 pt-3"
-  >
+  <div key="settingspg" class="flex flex-row flex-wrap items-stretch gap-2 p-4">
     <div
       id="setting-menu"
-      class="flex-grow rounded-md bg-bgColor"
+      class="h-fit flex-grow rounded-md bg-bgColor"
       style="flex-basis: 160px; min-width: 160px"
     >
-      <ul class="menu w-full">
+      <ul class="menu w-full rounded-md">
         <li :class="{ 'active bordered': route.name === 'Settings_Language' }">
           <router-link to="/settings/lang" class="justify-center"
             >Language</router-link
@@ -48,7 +45,7 @@
     >
       <router-view></router-view>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script lang="ts" setup>
