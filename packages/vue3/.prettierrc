@@ -1,5 +1,6 @@
 {
   "tabWidth": 2,
   "useTabs": false,
-  "htmlWhitespaceSensitivity": "css"
+  "htmlWhitespaceSensitivity": "css",
+  "endOfLine": "auto"
 }
