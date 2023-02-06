@@ -55,7 +55,7 @@
     </v-menu>
   </slot>
   <v-dialog v-model="showOrgDialog">
-    <div class="card card-compact h-[90vh] bg-base-100">
+    <div class="card-compact card h-[90vh] bg-base-100">
       <div class="card-body overflow-y-auto px-1" style="">
         <v-text-field
           v-model="search"
@@ -121,9 +121,9 @@
       <h-divider />
       <v-card-actions>
         <v-spacer />
-        <v-btn text color="red" @click="showOrgDialog = false">{{
+        <h-btn text class="text-red" @click="showOrgDialog = false">{{
           $t("views.app.close_btn")
-        }}</v-btn>
+        }}</h-btn>
       </v-card-actions>
     </div>
   </v-dialog>

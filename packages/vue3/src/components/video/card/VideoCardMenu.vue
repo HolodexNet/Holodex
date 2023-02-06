@@ -15,7 +15,7 @@
         <h-icon :class="icons.more" class="h-4 w-4"></h-icon>
       </label>
     </template>
-    <v-sheet>
+    <div class="bg-base-100">
       <ul
         class="video-menu menu overflow-y-auto bg-bgColor-500 p-2 text-base-content"
       >
@@ -134,7 +134,7 @@
           </a>
         </li>
       </ul>
-    </v-sheet>
+    </div>
   </v-menu>
 </template>
 <script lang="ts">

@@ -207,14 +207,6 @@ export default defineComponent({
 </script>
 
 <style>
-/**.bottom-nav {
-  padding-bottom: min(max(calc(env(safe-area-inset-bottom)), 2px), 10px);
-}
-.bottom-nav > .nav-btn {
-  padding-top: 0.4rem !important;
-  padding-bottom: 0.2rem !important;
-}*/
-
 .menu-group {
   --btn-text-case: "unset";
 }

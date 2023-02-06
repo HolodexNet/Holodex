@@ -123,8 +123,8 @@
     {{ $t("component.playlist.save-error-not-logged-in") }}
 
     <template #action="{ attrs }">
-      <v-btn
-        color="red darken-2"
+      <h-btn
+        class="text-red-600"
         text
         v-bind="attrs"
         @click="
@@ -133,7 +133,7 @@
         "
       >
         {{ $t("component.mainNav.login") }}
-      </v-btn>
+      </h-btn>
     </template>
   </v-snackbar>
 

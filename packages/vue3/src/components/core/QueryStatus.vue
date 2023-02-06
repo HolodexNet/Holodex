@@ -29,10 +29,10 @@
           {{ $t("component.mainNav.logout") }}
         </v-btn> -->
       </div>
-      <v-btn small href="/">
+      <h-btn small href="/">
         <div class="i-mdi:refresh text-lg"></div>
         Retry
-      </v-btn>
+      </h-btn>
     </div>
     <logo
       v-if="props.query.isLoading.value || props.query.isFetching.value"
