@@ -8,9 +8,10 @@ import {
 } from "@vueuse/core";
 const target = ref(null);
 const rendered = ref(false);
-const props = defineProps<{
-  observerOptions?: UseIntersectionObserverOptions;
-}>();
+interface Props extends UseIntersectionObserverOptions {}
+
+const props = defineProps<Props>();
+
 const { stop } = useIntersectionObserver(
   target,
   ([{ isIntersecting }]) => {
@@ -19,6 +20,6 @@ const { stop } = useIntersectionObserver(
       stop();
     }
   },
-  props.observerOptions
+  props
 );
 </script>
