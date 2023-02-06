@@ -12,6 +12,8 @@
     "postinstall": "npm run build"
   },
   "dependencies": {
+    "@floating-ui/vue": "^0.2.0",
+    "@headlessui-float/vue": "^0.10.1",
     "@headlessui/vue": "^1.7.8",
     "@kvs/indexeddb": "^2.1.1",
     "@mdi/js": "^7.0.96",
