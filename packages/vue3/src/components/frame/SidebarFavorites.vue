@@ -17,7 +17,6 @@
             >{{ formatDurationUpcoming(v.available_at) }}
             <!-- TODO refactor to a component and use the event hooks from popper -->
             <!-- <template #buttons>
-              <v-fade-transition>
                 <div
                   class="absolute right-0 left-14 flex h-12 gap-1 bg-bgColor-300 px-2 py-0.5"
                   style="width: 9.5rem"
@@ -36,7 +35,6 @@
                   >
                     <div class="i-clarity:grid-chart-solid"></div>
                   </router-link></div
-              ></v-fade-transition>
             </template> -->
           </channel-card>
         </template>

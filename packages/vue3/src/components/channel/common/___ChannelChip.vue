@@ -22,13 +22,11 @@
         />
         <!-- <span class="channel-name-overlay">{{ channelName }}</span> -->
         <slot :is-hover="isHover">
-          <v-fade-transition>
-            <v-overlay v-show="isHover" absolute class="chip-overlay">
-              <v-btn icon :to="`/channel/${channel.id}`">
-                <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
-              </v-btn>
-            </v-overlay>
-          </v-fade-transition>
+          <v-overlay v-show="isHover" absolute class="chip-overlay">
+            <v-btn icon :to="`/channel/${channel.id}`">
+              <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
+            </v-btn>
+          </v-overlay>
         </slot>
       </v-avatar>
     </template>

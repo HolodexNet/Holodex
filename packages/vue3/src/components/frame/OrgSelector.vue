@@ -16,13 +16,20 @@
             class="nav-title flex cursor-pointer flex-row items-center"
             style="position: relative"
           >
-            <v-fade-transition hide-on-leave>
+            <transition
+              enter-active-class="transition ease-out duration-200"
+              enter-from-class="transform opacity-0 "
+              enter-to-class="transform opacity-100 "
+              leave-active-class="transition ease-in duration-50 absolute"
+              leave-from-class="transform opacity-100 "
+              leave-to-class="transform opacity-0 "
+            >
               <span
                 :key="currentOrg.name + 'header'"
                 style="text-decoration: underline"
                 >{{ currentOrg.short || currentOrg.name }}</span
-              >
-            </v-fade-transition>
+              ></transition
+            >
             <span ref="dexBtn" class="text-primary">dex</span>
             <div
               class="change-org-icon i-material-symbols:arrow-drop-down-rounded transform-gpu border-none text-xl transition-transform"
