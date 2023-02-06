@@ -5,6 +5,7 @@
         v-if="props.modelValue"
         class="modal"
         :class="{ 'modal-open': props.modelValue }"
+        v-bind="$attrs"
       >
         <div ref="target" class="modal-box bg-transparent p-0">
           <slot v-bind="{ close }"></slot>
@@ -13,6 +14,13 @@
     </Transition>
   </Teleport>
 </template>
+<script>
+// use normal <script> to declare options
+// see: https://vuejs.org/guide/components/attrs.html#disabling-attribute-inheritance
+export default {
+  inheritAttrs: false,
+};
+</script>
 <script setup lang="ts">
 import { onClickOutside } from "@vueuse/core";
 
