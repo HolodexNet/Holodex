@@ -18,11 +18,22 @@
     explanation="Use a different name when being credited on the placeholder"
   ></h-text-field>
 
-  <v-tabs v-model="tab" icons-and-text class="mb-4">
-    <v-tab> New </v-tab>
-    <v-tab> Existing </v-tab>
-  </v-tabs>
-  <div class="flex flex-col gap-4 px-4">
+  <div class="flex flex-col gap-4">
+    <div class="tabs tabs-boxed bg-base-100 p-0">
+      <a
+        class="tab tab-lg"
+        :class="{ 'tab-active': tab === 0 }"
+        @click="tab = 0"
+        >New
+      </a>
+      <a
+        class="tab tab-lg"
+        :class="{ 'tab-active': tab === 1 }"
+        @click="tab = 1"
+        >Existing</a
+      >
+    </div>
+
     <div v-if="tab === 1" class="form-control">
       <label class="label">
         <span class="label-text">Existing Placeholder ID (11 characters)</span>
