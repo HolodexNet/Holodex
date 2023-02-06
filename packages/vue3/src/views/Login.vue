@@ -52,7 +52,6 @@
           </button>
         </div>
       </div>
-      <!-- <v-divider /> -->
 
       <template v-if="site.user">
         <!-- <div class="card-body"> -->
@@ -86,7 +85,6 @@
         <!-- </div> -->
 
         <!-- <div class="card-body"> -->
-        <!-- <v-divider /> -->
         <div class="mt-2 text-gray-500">
           <span class="text-subtitle-2 mb-1 inline-block">{{
             $t("views.login.ownedYtChannel")

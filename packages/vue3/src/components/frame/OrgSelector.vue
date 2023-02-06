@@ -55,11 +55,8 @@
     </v-menu>
   </slot>
   <v-dialog v-model="showOrgDialog">
-    <v-card>
-      <v-card-text
-        class="h-fit overflow-y-auto px-1"
-        style="width: 30vw; min-width: 340px; max-width: 800px"
-      >
+    <div class="card-compact card h-[90vh] bg-base-100">
+      <div class="card-body overflow-y-auto px-1" style="">
         <v-text-field
           v-model="search"
           hide-details
@@ -68,10 +65,15 @@
           class="px-1"
           color="accent"
         />
-        <ul class="menu overflow-y-auto bg-bgColor">
-          <li v-for="org in sortedOrgs" :key="org.name + '_list_item'">
-            <!--             :class="orgFavoritesNameSet.has(org.name) ? 'bordered' : ''"
- -->
+        <ul
+          class="menu menu-vertical flex-nowrap content-start overflow-y-auto bg-bgColor"
+        >
+          <li
+            v-for="org in sortedOrgs"
+            :key="org.name + '_list_item'"
+            class="max-w-xs"
+          >
+            <!--             :class="orgFavoritesNameSet.has(org.name) ? 'bordered' : ''" -->
             <a
               class="flex flex-row gap-1"
               @click="$emit('changed', org, closeDialog)"
@@ -115,7 +117,7 @@
             </a>
           </li>
         </ul>
-      </v-card-text>
+      </div>
       <h-divider />
       <v-card-actions>
         <v-spacer />
@@ -123,7 +125,7 @@
           $t("views.app.close_btn")
         }}</v-btn>
       </v-card-actions>
-    </v-card>
+    </div>
   </v-dialog>
 </template>
 

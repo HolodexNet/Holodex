@@ -142,28 +142,30 @@
     v-model="instructionsDialog"
     :width="display.mobile ? '90%' : '60vw'"
   >
-    <v-card>
-      <v-card-title>{{ $t("views.library.exportYTHeading") }}</v-card-title>
-      <v-card-text>
-        <p v-html="$t('views.library.exportYTExplanation')" />
-        <br />
-
-        <br />
+    <h-card>
+      <div class="card-body">
+        <div class="card-title">{{ $t("views.library.exportYTHeading") }}</div>
+        <p class="mb-2" v-html="$t('views.library.exportYTExplanation')" />
         <p v-html="$t('views.library.exportYTInstructions')" />
-        <v-btn class="mx-2 mt-2" color="green" @click="exportToYT">
-          {{
-            $t("views.library.createYtPlaylistButton", [
-              (playlist.videos || []).length,
-            ])
-          }}
-        </v-btn>
-        <v-btn class="mx-2 mt-2" @click="instructionsDialog = false">
-          {{ $t("views.library.deleteConfirmationCancel") }}
-        </v-btn>
+        <div>
+          <h-btn class="btn-primary mx-2 mt-2" @click="exportToYT">
+            {{
+              $t("views.library.createYtPlaylistButton", [
+                (playlist.videos || []).length,
+              ])
+            }}
+          </h-btn>
+          <h-btn
+            class="btn-error mx-2 mt-2"
+            @click="instructionsDialog = false"
+          >
+            {{ $t("views.library.deleteConfirmationCancel") }}
+          </h-btn>
+        </div>
         <!-- TODO BROKEN LINK HERE -->
         <!-- <img src="/img/playlist-instruction.jpg" /> -->
-      </v-card-text>
-    </v-card>
+      </div>
+    </h-card>
   </v-dialog>
 </template>
 

@@ -2,7 +2,13 @@
   <!-- <div class="text-xl">
       {{ $t("channelRequest.PageTitle") }}
     </div> -->
-  <v-card-text>
+  <!-- flex: 1 1 auto;
+font-size: 0.875rem;
+font-weight: 400;
+letter-spacing: 0.0178571429em;
+padding: 1rem;
+text-transform: none; -->
+  <div class="p-2">
     <div class="text-lg font-bold"></div>
 
     <RadioGroup v-model="type" class="2xl:flex 2xl:flex-row">
@@ -125,12 +131,12 @@
     </template>
     <button
       v-if="type"
-      class="btn-primary btn mt-2 w-32 text-lg shadow-md"
+      class="btn btn-primary mt-2 w-32 text-lg shadow-md"
       @click="onSubmit"
     >
       <div class="i-mdi:check"></div>
     </button>
-  </v-card-text>
+  </div>
   <v-snackbar v-model="error" color="error">
     {{ errorMessage }}
   </v-snackbar>
