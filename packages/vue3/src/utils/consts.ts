@@ -129,7 +129,7 @@ export const TL_LANGS = [
   },
 ] as const;
 
-export type TLLanguageCode = typeof TL_LANGS[number]["value"];
+export type TLLanguageCode = (typeof TL_LANGS)[number]["value"];
 
 export const CLIPPER_LANGS = TL_LANGS;
 

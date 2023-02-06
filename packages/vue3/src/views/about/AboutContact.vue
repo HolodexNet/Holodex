@@ -1,6 +1,6 @@
 <template>
   <div class="text-lg font-bold">Join Holodex Discord:</div>
-  <a href="" class="block mt-2">
+  <a href="" class="mt-2 block">
     <img
       src="https://discordapp.com/api/guilds/796190073271353385/widget.png?style=banner2"
       width="280"
@@ -8,7 +8,7 @@
   /></a>
   <div class="mt-4 text-lg font-bold">DM us on Twitter</div>
   <a
-    class="inline-block mt-2 mr-4"
+    class="mt-2 mr-4 inline-block"
     href="https://twitter.com/intent/follow?original_referer=https://holodex.net%2F&ref_src=twsrc%5Etfw%7Ctwcamp%5Ebuttonembed%7Ctwterm%5Efollow%7Ctwgr%5Eholodex&screen_name=holodex"
   >
     <img
@@ -17,7 +17,7 @@
     />
   </a>
   <a
-    class="inline-block mt-2"
+    class="mt-2 inline-block"
     href="https://twitter.com/messages/compose?recipient_id=1320894663084048384&text=Hello"
   >
     <img
@@ -28,7 +28,7 @@
   <form class="mt-2">
     <div class="grid max-w-lg grid-cols-1 gap-4 md:grid-cols-2">
       <div class="z-0 shrink-0">
-        <div class="w-full form-control">
+        <div class="form-control w-full">
           <label class="label">
             <span class="label-text">Name</span>
           </label>
@@ -36,12 +36,12 @@
             type="text"
             name="name"
             placeholder="Type here"
-            class="w-full border-solid input input-bordered input-primary"
+            class="input-bordered input-primary input w-full border-solid"
           />
         </div>
       </div>
       <div class="z-0 shrink-0">
-        <div class="w-full form-control">
+        <div class="form-control w-full">
           <label class="label">
             <span class="label-text">Email</span>
           </label>
@@ -49,7 +49,7 @@
             type="email"
             name="email"
             placeholder="Type here"
-            class="w-full border-solid input input-bordered input-primary"
+            class="input-bordered input-primary input w-full border-solid"
           />
         </div>
       </div>
@@ -59,13 +59,13 @@
             <span class="label-text">Message</span>
           </label>
           <textarea
-            class="h-24 border-solid textarea textarea-bordered textarea-primary"
+            class="textarea-bordered textarea-primary textarea h-24 border-solid"
             placeholder="..."
           ></textarea>
         </div>
       </div>
     </div>
-    <button type="submit" class="px-10 py-2 mt-5 btn-primary btn">
+    <button type="submit" class="btn btn-primary mt-5 px-10 py-2">
       Send Message
     </button>
   </form>

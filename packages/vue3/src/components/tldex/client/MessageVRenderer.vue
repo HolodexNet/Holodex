@@ -13,7 +13,7 @@
     :keeps="50"
     @click="(e) => $emit('message-click', e)"
   /> -->
-  <div ref="container" class="overflow-auto archive tl-body px-1 py-0 px-lg-3">
+  <div ref="container" class="archive tl-body px-lg-3 overflow-auto px-1 py-0">
     <div
       :style="{
         height: `${rowVirtualizer.getTotalSize()}px`,

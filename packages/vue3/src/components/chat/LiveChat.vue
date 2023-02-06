@@ -2,7 +2,7 @@
   <div v-if="'id' in video" class="live-chat flex flex-col">
     <div class="flex h-10 items-center bg-bgColor-400 px-2">
       <slot name="top-bar">
-        <button class="btn-icon btn btn-sm mx-1">
+        <button class="btn-icon btn-sm btn mx-1">
           <div class="i-mdi:arrow-collapse-right text-xl" />
         </button>
       </slot>

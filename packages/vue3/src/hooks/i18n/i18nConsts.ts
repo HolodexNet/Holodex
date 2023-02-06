@@ -31,7 +31,7 @@ export const langs = [
   { val: "th", display: "ไทย", credit: "SnowNeko#0282" },
 ] as const;
 
-export type SupportedLangCodes = typeof langs[number]["val"];
+export type SupportedLangCodes = (typeof langs)[number]["val"];
 
 // Holodex locales are slightly shorter than ISO whatever locales, but I think this helps with Browser language selection.
 export const STATIC_HOLODEX_LOCALE_MAP: Record<SupportedLangCodes, string> = {

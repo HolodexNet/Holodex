@@ -2,7 +2,7 @@
   <!-- <v-container class="channel-container" fluid> -->
   <div
     key="aboutpg"
-    class="container flex flex-col sm:flex-row flex-wrap items-stretch gap-2 p-1 pt-2 mx-auto"
+    class="container mx-auto flex flex-col flex-wrap items-stretch gap-2 p-1 pt-2 sm:flex-row"
   >
     <div
       id="about-menu"
@@ -15,45 +15,45 @@
       style="flex-basis: auto"
     >
       <ul
-        class="w-full p-2 menu"
+        class="menu w-full p-2"
         :class="{ 'menu-horizontal sm:menu-vertical': isDediAboutPage }"
       >
         <li
           v-if="!minimizeSidebar"
-          class="flex mb-2 text-lg"
+          class="mb-2 flex text-lg"
           style="flex-direction: row"
         >
-          <div class="w-full p-2 pb-1 text-xs font-bold pointer-events-none">
+          <div class="pointer-events-none w-full p-2 pb-1 text-xs font-bold">
             Quick Links:
           </div>
           <a
-            class="p-0 btn-square"
+            class="btn-square p-0"
             title="Follow us on twitter"
             href="https://twitter.com/holodex"
           >
-            <div class="m-auto i-carbon:logo-twitter"></div>
+            <div class="i-carbon:logo-twitter m-auto"></div>
           </a>
           <a
-            class="p-0 btn-square"
+            class="btn-square p-0"
             title="Support us on Ko-Fi"
             href="https://ko-fi.com/holodex"
           >
-            <div class="m-auto i-cib:ko-fi"></div>
+            <div class="i-cib:ko-fi m-auto"></div>
           </a>
-          <a class="p-0 btn-square" title="Issues / Source Code">
-            <div class="m-auto i-carbon:logo-github"></div>
+          <a class="btn-square p-0" title="Issues / Source Code">
+            <div class="i-carbon:logo-github m-auto"></div>
           </a>
         </li>
         <li v-for="tab in tabs" :key="tab.path">
           <router-link
             :to="tab.path"
-            class="justify-start min-h-12"
+            class="min-h-12 justify-start"
             :title="tab.name"
             :class="{ active: tab.active }"
           >
             <div
               :class="tab.class"
-              class="inline-block mx-1 text-xl md:mr-2"
+              class="mx-1 inline-block text-xl md:mr-2"
             ></div>
             <span v-if="!minimizeSidebar">{{ tab.name }}</span>
           </router-link>
@@ -62,7 +62,7 @@
     </div>
     <div
       v-if="!($route.path === '/about' && display.xs.value)"
-      class="flex-grow flex-shrink-0 p-3 rounded-md xs:max-w-full sm:w-80 bg-bgColor"
+      class="xs:max-w-full flex-shrink-0 flex-grow rounded-md bg-bgColor p-3 sm:w-80"
       :style="
         minimizeSidebar
           ? 'flex-basis:100%'
