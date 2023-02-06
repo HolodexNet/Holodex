@@ -1,6 +1,6 @@
 <template>
   <!-- <v-container fluid style="height: 100%"> -->
-  <div
+  <h-card
     class="max-w-lg bg-bgColor"
     :class="{
       'card m-auto mt-6 max-w-md shadow-lg': $route.name !== 'Settings_User',
@@ -61,26 +61,23 @@
           $t("views.login.username")
         }}</span>
         <div class="flex items-center">
-          <v-text-field
+          <h-text-field
             v-model="editUsernameInput"
             :disabled="!editingUsername"
-            :filled="!editingUsername"
             rounded
-            variant="outlined"
-            density="comfortable"
-            hide-details="auto"
-          />
-          <h-btn
-            :color="editingUsername ? 'success' : 'primary'"
-            style="margin-left: 10px"
-            @click="editUsername"
+            ><template #append>
+              <h-btn
+                :class="editingUsername ? 'btn-success' : 'btn-primary'"
+                @click="editUsername"
+              >
+                {{
+                  editingUsername
+                    ? $t("views.login.usernameBtn.2")
+                    : $t("views.login.usernameBtn.0")
+                }}
+              </h-btn>
+            </template></h-text-field
           >
-            {{
-              editingUsername
-                ? $t("views.login.usernameBtn.2")
-                : $t("views.login.usernameBtn.0")
-            }}
-          </h-btn>
         </div>
         <!-- </div> -->
 
@@ -89,12 +86,9 @@
           <span class="text-subtitle-2 mb-1 inline-block">{{
             $t("views.login.ownedYtChannel")
           }}</span>
-          <v-text-field
+          <h-text-field
             readonly
-            rounded
-            variant="outlined"
-            density="comfortable"
-            hide-details="auto"
+            class="rounded"
             :value="site.user.yt_channel_key"
             placeholder="None on file"
           />
@@ -105,17 +99,19 @@
         <div class="divider"></div>
 
         <span class="text-subtitle-2 mb-1 inline-block">API Key</span>
-        <v-text-field
+        <h-text-field
           v-model="site.user.api_key"
           readonly
-          rounded
-          variant="outlined"
-          density="comfortable"
-          hide-details="auto"
           placeholder="None on file"
-          :append-inner-icon="icons.mdiClipboardPlusOutline"
-          @click:append-inner="copyToClipboard(site.user?.api_key || '')"
-        />
+        >
+          <template #append>
+            <h-btn
+              class="btn-secondary"
+              icon="i-mdi:clipboard-plus-outline"
+              @click="copyToClipboard(site.user?.api_key || '')"
+            ></h-btn>
+          </template>
+        </h-text-field>
         <h-btn small block color="warning" @click="resetKey">
           {{ $t("views.login.apikeyNew") }}
         </h-btn>
@@ -137,7 +133,7 @@
         <!-- </div> -->
       </template>
     </div>
-  </div>
+  </h-card>
   <!-- </v-container> -->
 </template>
 

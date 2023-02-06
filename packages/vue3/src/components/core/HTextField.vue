@@ -6,20 +6,24 @@
         {{ subtitle }}
       </span>
     </label>
-    <input
-      v-if="as === 'input'"
-      v-model="localValue"
-      v-bind="$attrs"
-      type="text"
-      class="input-bordered input w-full border-solid"
-    />
-    <textarea
-      v-if="as === 'textarea'"
-      v-model="localValue"
-      v-bind="$attrs"
-      type="text"
-      class="input-bordered input w-full border-solid"
-    />
+    <div class="input-group">
+      <slot name="prepend"></slot>
+      <input
+        v-if="as === 'input'"
+        v-model="localValue"
+        v-bind="$attrs"
+        type="text"
+        class="input-bordered input w-full border-solid"
+      />
+      <textarea
+        v-if="as === 'textarea'"
+        v-model="localValue"
+        v-bind="$attrs"
+        type="text"
+        class="input-bordered input w-full border-solid"
+      />
+      <slot name="append"></slot>
+    </div>
 
     <label v-if="error || explanation" class="label">
       <span class="label-text-alt text-opacity-60">
@@ -71,4 +75,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.input-group > :first-child:last-child {
+  border-radius: var(--rounded-btn, 0.5rem);
+}
+</style>

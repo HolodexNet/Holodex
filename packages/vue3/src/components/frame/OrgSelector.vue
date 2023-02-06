@@ -64,13 +64,11 @@
   <v-dialog v-model="showOrgDialog">
     <div class="card-compact card h-[90vh] bg-base-100">
       <div class="card-body overflow-y-auto px-1" style="">
-        <v-text-field
+        <input
           v-model="search"
           hide-details
-          variant="underlined"
           :label="$t('component.search.searchLabel')"
-          class="px-1"
-          color="accent"
+          class="input-secondary input border-2 border-solid border-secondary px-1"
         />
         <ul
           class="menu menu-vertical flex-nowrap content-start overflow-y-auto bg-bgColor"
