@@ -14,7 +14,7 @@
     </Transition>
   </Teleport>
 </template>
-<script>
+<script lang="ts">
 // use normal <script> to declare options
 // see: https://vuejs.org/guide/components/attrs.html#disabling-attribute-inheritance
 export default {
