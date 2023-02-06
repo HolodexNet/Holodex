@@ -69,38 +69,30 @@
           <h-icon class="i-mdi:login-variant h-6 w-6"></h-icon>
           {{ $t("component.mainNav.login") }}
         </h-list-item>
-      </h-list>
-      <ul class="menu gap-1 p-1">
-        <li v-if="!user">
-          <router-link to="/login">
-            <h-icon class="i-mdi:login-variant h-6 w-6"></h-icon>
-            {{ $t("component.mainNav.login") }}
-          </router-link>
-        </li>
-
         <div v-if="user && !inNavDrawer" class="divider my-0" />
-        <li
+        <h-list-item
           v-if="
             user &&
             !inNavDrawer &&
             $route.name !== 'Settings_User' &&
             $route.name !== 'Login'
           "
+          to="/settings/user"
         >
-          <router-link to="/settings/user">
-            <h-icon
-              class="i-material-symbols:manage-accounts-rounded h-6 w-6"
-            ></h-icon>
-            {{ $t("component.mainNav.accountSettings") }}
-          </router-link>
-        </li>
-        <li v-if="user && !inNavDrawer">
-          <a class="text-warning" @click.prevent.stop="logout">
-            <h-icon class="i-mdi:logout-variant h-6 w-6"></h-icon>
-            {{ $t("component.mainNav.logout") }}
-          </a>
-        </li>
-      </ul>
+          <h-icon
+            class="i-material-symbols:manage-accounts-rounded h-6 w-6"
+          ></h-icon>
+          {{ $t("component.mainNav.accountSettings") }}
+        </h-list-item>
+        <h-list-item
+          v-if="user && !inNavDrawer"
+          class="text-warning"
+          @click.prevent.stop="logout"
+        >
+          <h-icon class="i-mdi:logout-variant h-6 w-6"></h-icon>
+          {{ $t("component.mainNav.logout") }}
+        </h-list-item>
+      </h-list>
     </div>
   </div>
 </template>
