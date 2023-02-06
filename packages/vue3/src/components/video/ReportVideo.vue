@@ -41,13 +41,16 @@
           </div>
         </div>
 
-        <v-textarea
+        <h-text-field
           v-model="comments"
-          filled
-          :label="$t('component.reportDialog.comments')"
-          persistent-hint
-          hint="* English / 日本語 / 繁體中文 OK"
-          :error="comments.length < 5"
+          as="textarea"
+          :title="$t('channelRequest.Comments')"
+          :explanation="
+            $t('component.reportDialog.comments') +
+            ' (* English / 日本語 / 繁體中文 OK)'
+          "
+          placeholder=""
+          class="h-40"
         />
       </div>
 
