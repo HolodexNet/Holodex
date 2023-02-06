@@ -92,7 +92,7 @@
           </li>
         </template>
         <template v-else>
-          <v-list-item
+          <h-list-item
             v-if="video.status === 'upcoming'"
             @click.prevent.stop="
               openGoogleCalendar();
@@ -101,7 +101,7 @@
           >
             <div class="i-fluent:calendar-add-20-filled"></div>
             {{ $t("component.videoCard.googleCalendar") }}
-          </v-list-item>
+          </h-list-item>
         </template>
 
         <li>

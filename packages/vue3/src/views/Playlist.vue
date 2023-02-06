@@ -38,20 +38,18 @@
       @click.stop="setNewPlaylist(playlist)"
     >
       <div class="card-body line-clamp-2">
-        <v-list-item-title>
-          <span class="font-weight-medium text-subtitle-1">
-            <h-icon
-              class="i-material-symbols:format-list-bulleted-rounded w-8 text-secondary"
-              left
-            ></h-icon>
-            {{ playlist.name }}
-          </span>
-          <br />
-          <span v-show="playlist.updated_at" class="text-sm opacity-60">
-            <span class="">{{ $t("views.playlist.item-last-updated") }}</span>
-            {{ toTime(playlist.updated_at) }}
-          </span>
-        </v-list-item-title>
+        <span class="font-weight-medium text-subtitle-1">
+          <h-icon
+            class="i-material-symbols:format-list-bulleted-rounded w-8 text-secondary"
+            left
+          ></h-icon>
+          {{ playlist.name }}
+        </span>
+        <br />
+        <span v-show="playlist.updated_at" class="text-sm opacity-60">
+          <span class="">{{ $t("views.playlist.item-last-updated") }}</span>
+          {{ toTime(playlist.updated_at) }}
+        </span>
       </div>
       <div class="align-center ml-0 flex flex-row-reverse self-center">
         <!-- local playlist support -->

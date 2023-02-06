@@ -34,49 +34,45 @@
             <h-icon class="i-mdi:dots-vertical"></h-icon>
           </h-btn>
         </template>
-        <v-list nav dense>
-          <v-list-item v-if="isEditable" @click="$emit('new-playlist')">
+        <ul class="menu bg-base-100">
+          <h-list-item v-if="isEditable" @click="$emit('new-playlist')">
             <!-- Please migrate these V-Icon along with the list items coz it's not actually that easy to move one and not the other. -->
             <h-icon class="i-mdi:plus-box"></h-icon>
             {{ $t("component.playlist.menu.new-playlist") }}
-          </v-list-item>
+          </h-list-item>
           <!-- feed back a green ripple on click... theoretically -->
-          <v-list-item v-if="isEditable" @click="editNameMode = true">
+          <h-list-item v-if="isEditable" @click="editNameMode = true">
             <h-icon class="i-mdi:pencil"></h-icon>
             {{ $t("component.playlist.menu.rename-playlist") }}
-          </v-list-item>
+          </h-list-item>
           <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
-          <!-- <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
+          <!-- <h-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
                         ><h-icon left>{{ icons.mdiClipboardPlusOutline }}</h-icon>
                         {{ playlist.id ? "Copy sharable Playlist link" : "Save the playlist to enable link-sharing." }}
-                    </v-list-item> -->
+                    </h-list-item> -->
           <h-divider />
           <!-- Exporting options -->
-          <v-list-item class="mt-1 mb-1" dense>
+          <h-list-item>
             <h-icon class="i-mdi:open-in-new"></h-icon>
             {{ $t("component.playlist.menu.export-playlist") }}
-          </v-list-item>
-          <v-list-item
-            dense
-            class="ml-5"
-            @click.stop="instructionsDialog = true"
-          >
+          </h-list-item>
+          <h-list-item class="ml-5" @click.stop="instructionsDialog = true">
             {{ $t("views.library.exportYtPlaylist") }}
-          </v-list-item>
-          <v-list-item dense class="mb-2 ml-5" @click.stop="downloadAsCSV">
+          </h-list-item>
+          <h-list-item dense class="ml-5" @click.stop="downloadAsCSV">
             {{ $t("views.library.exportCsv") }}
-          </v-list-item>
+          </h-list-item>
           <!-- End Exporting options -->
-          <h-divider class="mb-2" />
-          <v-list-item v-if="isEditable" @click="deletePlaylist">
+          <h-divider class="" />
+          <h-list-item v-if="isEditable" @click="deletePlaylist">
             <h-icon class="i-mdi:delete text-red-500"></h-icon>
             {{
               playlist.id
                 ? $t("component.playlist.menu.delete-playlist")
                 : $t("component.playlist.menu.clear-playlist")
             }}
-          </v-list-item>
-        </v-list>
+          </h-list-item>
+        </ul>
       </v-menu>
     </div>
     <span class="block text-right text-sm text-secondary-300 text-opacity-50">
