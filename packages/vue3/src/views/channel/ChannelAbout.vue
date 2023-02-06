@@ -1,7 +1,7 @@
 <template>
   <div v-if="channel" class="p-2 md:p-4">
     <div class="grid grid-flow-row-dense grid-cols-1 gap-4 md:grid-cols-3">
-      <div class="card card-compact order-1 col-span-1 md:order-last">
+      <div class="card-compact card order-1 col-span-1 md:order-last">
         <div class="card-body gap-0 bg-bgColor shadow-xl md:gap-2">
           <strong class="card-title">{{
             $t("component.channelInfo.stats")

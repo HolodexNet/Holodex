@@ -55,7 +55,7 @@
     </v-menu>
   </slot>
   <v-dialog v-model="showOrgDialog">
-    <div class="card-compact card h-[90vh] bg-base-100">
+    <div class="card card-compact h-[90vh] bg-base-100">
       <div class="card-body overflow-y-auto px-1" style="">
         <v-text-field
           v-model="search"

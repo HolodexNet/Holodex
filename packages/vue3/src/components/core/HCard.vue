@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card-compact card bg-base-100"
+    class="card card-compact bg-base-100"
     :class="{
       'border border-solid border-bgColor-50': outlined,
       shadow: !flat && !tile,
