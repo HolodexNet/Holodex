@@ -59,8 +59,6 @@ component:
     uploadScript: 翻訳スクリプトをアップロード
   videoDescription:
     description: 概要
-  video:
-    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
