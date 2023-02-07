@@ -12,6 +12,10 @@ interface Props extends UseIntersectionObserverOptions {}
 
 const props = defineProps<Props>();
 
+// Cant use withDefaults because of transpile bug
+// rootMargin 25% makes images things render when it is close to being visible
+const propsWithDefault = computed(() => ({ rootMargin: "25%", ...props }));
+
 const { stop } = useIntersectionObserver(
   target,
   ([{ isIntersecting }]) => {
@@ -20,6 +24,6 @@ const { stop } = useIntersectionObserver(
       stop();
     }
   },
-  props
+  propsWithDefault.value
 );
 </script>
