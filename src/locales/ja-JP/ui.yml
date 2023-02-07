@@ -59,6 +59,8 @@ component:
     uploadScript: 翻訳スクリプトをアップロード
   videoDescription:
     description: 概要
+  video:
+    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -354,6 +356,10 @@ views:
       - Googleでログイン
       - Discordでログイン
       - Twitterでログイン
+    twitterMsg:
+      - Twitter APIポリシーの変更により、2月9日以降、Twitterログインは機能しなくなる可能性があります。
+      - 現時点であなたはTwitterログインのみを使用しています。(異なるデバイスからログインする場合、またはブラウザのサイト情報を消去した後の) ロックアウトを防ぐため、今すぐ別のログイン方法をリンクすることを強くお勧めします。
+      - Twitterアカウント経由でHolodex ユーザーにログインできない場合 (また、他のログイン方法を紐付けていない場合) TwitterのDMまたはDiscordからお問い合わせください。
     username: ユーザー名
     usernameBtn:
       - 更新
