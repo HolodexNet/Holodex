@@ -59,6 +59,8 @@ component:
     uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -354,6 +356,10 @@ views:
       - Log masuk dengan Google
       - Log masuk dengan Discord
       - Log masuk dengan Twitter
+    twitterMsg:
+      - Perubahan dasar API Twitter mungkin menyebabkan log masuk menggunakan akaun Twitter tidak berfungsi lagi menjelang 9 hb Februari.
+      - Buat masa ini anda masih mengelog masuk menggunakan akaun Twitter. Anda amatlah disarankan menggunakan kaedah mengelog masuk yang lain bagi mengelakkan akaun anda dihalang masuk (sekiranya digunakan peranti lain ataupun setelah dipadam maklumat laman di penyemak imbas).
+      - Sekiranya anda tidak dapat mengelog masuk ke pengguna Holodex dengan akaun Twitter (manakala kaedah log masuk lain masih belum digunakan), sila dapatkan bantuan dengan menghubungi kami dengan PM tepi di Twitter ataupun melalui Discord.
     username: Nama Pengguna
     usernameBtn:
       - Ubah
