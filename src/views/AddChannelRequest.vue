@@ -21,6 +21,7 @@
               <v-radio-group
                 v-model="type"
                 :label="$t('channelRequest.RequestType')"
+                mandatory
               >
                 <v-radio
                   v-for="ct in channelTypes"

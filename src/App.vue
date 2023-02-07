@@ -16,6 +16,38 @@
     <PWAUpdate />
     <ReportDialog />
     <InstallPrompt v-if="$store.state.isMobile" />
+    <v-snackbar
+      v-model="showTwitter"
+      color="warning"
+      top
+      transition="scroll-y-transition"
+      timeout="25000"
+    >
+      <b>{{ $t("views.login.twitterMsg.0") }}</b>
+      <template #action="{ attrs }">
+        <div class="flex flex-col">
+          <v-btn
+            color="blue"
+            class="mt-2 mb-2"
+            v-bind="attrs"
+            to="/login"
+            @click="showTwitter = false"
+          >
+            {{ $t("views.login.linkAcc") }}
+          </v-btn>
+
+          <v-btn
+            color="red"
+            v-bind="attrs"
+            block
+            class="mb-2"
+            @click="showTwitter = false"
+          >
+            {{ $t("views.app.close_btn") }}
+          </v-btn>
+        </div>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -45,6 +77,7 @@ export default {
         return {
             needRefresh: false,
             favoritesUpdateTask: null,
+            showTwitter: false,
         };
     },
     computed: {
@@ -93,6 +126,13 @@ export default {
             this.syncThemeColor();
         },
     },
+    mounted() {
+        if (this.$store.state.userdata?.user?.twitter_id
+            && !this.$store.state.userdata?.user?.discord_id
+            && !this.$store.state.userdata?.user?.google_id) {
+            this.showTwitter = true;
+        }
+    },
     async created() {
         this.$store.commit("setVisiblityState", document.visibilityState);
         document.addEventListener("visibilitychange", () => {
@@ -132,7 +172,10 @@ export default {
     },
     methods: {
         updateIsMobile() {
-            this.$store.commit("setIsMobile", ["xs", "sm"].includes(this.$vuetify.breakpoint.name));
+            this.$store.commit(
+                "setIsMobile",
+                ["xs", "sm"].includes(this.$vuetify.breakpoint.name),
+            );
         },
         interceptError(error) {
             // Any status codes that falls outside the range of 2xx cause this function to trigger
@@ -174,7 +217,9 @@ export default {
         },
         syncThemeColor() {
             const themeColor = this.$vuetify.theme.themes.dark.secondary;
-            window.document.head.querySelector<HTMLMetaElement>("meta[name=theme-color]").content = themeColor;
+            window.document.head.querySelector<HTMLMetaElement>(
+                "meta[name=theme-color]",
+            ).content = themeColor;
         },
     },
 };

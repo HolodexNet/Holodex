@@ -357,6 +357,10 @@ views:
       - 使用 Google 帳號登入
       - 使用 Discord 帳號登入
       - 使用 Twitter 帳號登入
+    twitterMsg:
+      - 由於 Twitter API 的使用規範改變，2 月 9 日後可能無法再使用 Twitter 登入。
+      - 您目前僅使用 Twitter 作為登入方法。我們強烈建議您連結其他平台，以避免在切換裝置或是清除瀏覽器資料後無法登入你的帳戶。
+      - 如果您無法使用 Twitter 登入 Holodex，且沒有其他連結平台的話，請透過 Twitter 私訊或是 Discord 聯絡我們以取得協助。
     username: 使用者名稱
     usernameBtn:
       - 變更

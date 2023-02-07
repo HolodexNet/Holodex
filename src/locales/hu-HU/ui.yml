@@ -16,6 +16,7 @@ component:
     subscriberCount: '{n} Feliratkozó'
     subscriberNA: Feliratkozók száma nem elérhető
     totalViews: Megtekintések
+    inactiveChannel: Ez a csatorna már nem aktív.
   channelSocials:
     addToFavorites: Hozzáadás kedvencekhez
     removeFromFavorites: Eltávolítás kedvencek közül
@@ -48,14 +49,18 @@ component:
     googleCalendar: Hozzáadás a Google naptárhoz
     totalTLs: Összes élő chat fordítás
     tlPresence: Aktív fordító az utolsó 30 percben
+    uncertainPlaceholder: A kezdés időpontja nincs hivatalosan megerősítve, eltérhet a valóságtól.
     typeScheduledYT: Beütemezett stream
     typeExternalStream: Külső Stream
     typeEventPlaceholder: Beütemezett esemény
     openClient: Fordító kliens megnyitása
     openScriptEditor: Script szerkesztő megnyitása
+    popoutChat: Felugró ablak YouTube chat
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -73,6 +78,7 @@ component:
       org: org
       titledesc: cím/leírás
       title: cím
+      description: leírás
       comments: hozzászólások
       videourl: videó URL-címe
   relatedVideo:
@@ -267,6 +273,9 @@ views:
     update_btn: Frissítés
     close_btn: Bezárás
     check_about_page: Látogasd meg az Információ oldalt, hogy lásd a változásokat
+    nowSupportsMultiOrg: >-
+      Tipp: Itt tudod megváltoztatni az ügynökséget!
+    loginCallToAction: Jelentkezz be, hogy kedvenceket állíts.
   about:
     add_my_channel: Csatorna igénylés
   watch:
@@ -347,6 +356,10 @@ views:
       - Bejelentkezés Google fiókkal
       - Bejelentkezés Discorddal
       - Bejelentkezés Twitter fiókkal
+    twitterMsg:
+      - A Twitter API irányelvek változások miatt a bejelentkezés Twitterrel előreláthatólag nem fog működni február 9.-e után.
+      - Jelenleg csak Twitter bejelentkezést használsz. Erősen ajánljuk, hogy más bejelentkezési módot is állíts, hogy megelőzzük a fiókból való kizárást. (Más eszközökön vagy böngésző törlés után)
+      - Ha nem tudsz belépni Holodex fiókodba Twitter felhasználóval (valamint nincs más bejelentkezési módot beállítva) kérlek keress minket Twitteren privát üzenetben vagy Discordon segítségért.
     username: Felhasználónév
     usernameBtn:
       - Megváltoztatás

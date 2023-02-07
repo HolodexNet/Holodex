@@ -16,6 +16,7 @@ component:
     subscriberCount: '{n} Abonnenten'
     subscriberNA: Abonnentenzahl nicht verfügbar
     totalViews: Aufrufe insgesamt
+    inactiveChannel: Dieser Kanal ist nicht mehr aktiv.
   channelSocials:
     addToFavorites: Zu Favoriten hinzufügen
     removeFromFavorites: Aus Favoriten entfernen
@@ -48,14 +49,18 @@ component:
     googleCalendar: Zu Google Kalender hinzufügen
     totalTLs: Anzahl an Übersetzungen im Live-Chat
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
+    uncertainPlaceholder: Diese Startzeit ist nicht offiziell bestätigt, die tatsächliche Startzeit kann variieren.
     typeScheduledYT: Geplanter Stream
     typeExternalStream: Externer Stream
     typeEventPlaceholder: Geplantes Event
     openClient: TL-Client öffnen
     openScriptEditor: Skript-Editor öffnen
+    popoutChat: YouTube-Chat rauslösen
     uploadScript: TL-Skript hochladen
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -73,6 +78,7 @@ component:
       org: Organisation
       titledesc: Titel/Beschreibung
       title: titel
+      description: beschreibung
       comments: Kommentare
       videourl: Video-URL
   relatedVideo:
@@ -267,6 +273,9 @@ views:
     update_btn: Update
     close_btn: Schließen
     check_about_page: Besuche die Info-Seite um neue Änderungen zu sehen
+    nowSupportsMultiOrg: >-
+      Tipp: Hier kannst du die Organisation ändern!
+    loginCallToAction: Melde dich an, um deine eigenen Favoriten festzulegen.
   about:
     add_my_channel: Kanalanfrage
   watch:
@@ -347,6 +356,10 @@ views:
       - Mit Google anmelden
       - Mit Discord anmelden
       - Mit Twitter anmelden
+    twitterMsg:
+      - Aufgrund von Änderungen an den Twitter-API-Richtlinien funktioniert die Twitter-Anmeldung nach dem 9. Februar wahrscheinlich nicht mehr.
+      - Du verwendest derzeit nur die Twitter-Anmeldung. Wir empfehlen dringend, jetzt eine andere Anmeldemethode zu verknüpfen, um zu verhindern, dass du dich künftig aussperrst. (Auf einem neuen Gerät oder nachdem du deinen Browserverlauf löschst).
+      - Wenn du Probleme bei der Twitter-Anmeldung hast (und noch keine andere Login-Methode verknüpft hast), dann bitte uns in unseren Twitter-DMs oder auf Discord um Hilfe.
     username: Benutzername
     usernameBtn:
       - Ändern

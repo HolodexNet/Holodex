@@ -16,6 +16,7 @@ component:
     subscriberCount: '{n} Langganan'
     subscriberNA: Bilangan langganan tidak tersedia
     totalViews: Jumlah Tontonan
+    inactiveChannel: Saluran ini sudah tidak lagi bergiat.
   channelSocials:
     addToFavorites: Tambahkan pada Kegemaran
     removeFromFavorites: Alih keluar daripada Kegemaran
@@ -48,14 +49,18 @@ component:
     googleCalendar: Tambahkan ke Kalendar Google
     totalTLs: Jumlah terjemahan sembang langsung
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
+    uncertainPlaceholder: Masa mula tidak disahkan. Percanggahan masa mula sebenar mungkin ada.
     typeScheduledYT: Siaran Terancang
     typeExternalStream: Siaran Luar
     typeEventPlaceholder: Acara Terancang
     openClient: Buka Pelanggan Terjemahan
     openScriptEditor: Buka Penyunting Skrip
+    popoutChat: Timbulkan sembang YouTube
     uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -73,6 +78,7 @@ component:
       org: kumpulan
       titledesc: tajuk/perihalan
       title: judul
+      description: perihalan
       comments: ulasan
       videourl: url video
   relatedVideo:
@@ -267,6 +273,9 @@ views:
     update_btn: Kemas Kini
     close_btn: Tutup
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
+    nowSupportsMultiOrg: >-
+      Petunjuk: Di sini kumpulan boleh diubah!
+    loginCallToAction: Tetapkan kegemaran anda dengan mengelog masuk.
   about:
     add_my_channel: Memohon Penambahan Saluran
   watch:
@@ -347,6 +356,10 @@ views:
       - Log masuk dengan Google
       - Log masuk dengan Discord
       - Log masuk dengan Twitter
+    twitterMsg:
+      - Perubahan dasar API Twitter mungkin menyebabkan log masuk menggunakan akaun Twitter tidak berfungsi lagi menjelang 9 hb Februari.
+      - Buat masa ini anda masih mengelog masuk menggunakan akaun Twitter. Anda amatlah disarankan menggunakan kaedah mengelog masuk yang lain bagi mengelakkan akaun anda dihalang masuk (sekiranya digunakan peranti lain ataupun setelah dipadam maklumat laman di penyemak imbas).
+      - Sekiranya anda tidak dapat mengelog masuk ke pengguna Holodex dengan akaun Twitter (manakala kaedah log masuk lain masih belum digunakan), sila dapatkan bantuan dengan menghubungi kami dengan PM tepi di Twitter ataupun melalui Discord.
     username: Nama Pengguna
     usernameBtn:
       - Ubah
