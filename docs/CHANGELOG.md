@@ -6,8 +6,7 @@
 
 ### 2.31 Holodex [*Feb 6th, 2023*]
 
-- Twitter Login is deprecating and we added a notification for that. Sorry if you find it annoying. It goes away after you login with another method.
-- We will be adding LINE login support in a few days.
+- Twitter Login may be at risk and we added a notification for that. Sorry if you find it annoying. It goes away after you link another login method.
 - Some minor changes have been added, such as wrapping Live Viewer / Subscriber Count info into id'd spans so you can hide it with adblockers. (Thanks Livia)
 
 ### 2.30 Holodex [*January 19th, 2023*]
