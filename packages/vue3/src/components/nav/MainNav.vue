@@ -70,9 +70,10 @@
               class="btn btn-ghost btn-square mr-2 text-2xl"
               style="width: 3rem; height: 3rem; min-height: 3rem"
             >
-              <h-icon v-if="!(site.user && site.user)">
-                {{ icons.mdiAccountCircleOutline }}
-              </h-icon>
+              <h-icon
+                v-if="!(site.user && site.user)"
+                class="i-mdi:account-circle-outline"
+              ></h-icon>
               <img
                 v-else
                 class="h-10 w-10 rounded-full"

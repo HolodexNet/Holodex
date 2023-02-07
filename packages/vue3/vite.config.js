@@ -8,12 +8,13 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import dynamicImportVars from "@rollup/plugin-dynamic-import-vars";
 import yaml from "@rollup/plugin-yaml";
-import { visualizer } from "rollup-plugin-visualizer";
+// import { visualizer } from "rollup-plugin-visualizer";
 import vuetify from "vite-plugin-vuetify";
 import Unocss from "unocss/vite";
 import presetIcons from "@unocss/preset-icons";
 import * as icons from "./src/utils/icons.ts";
 import path from "node:path";
+import bundleAnalyzer from "rollup-plugin-bundle-analyzer";
 
 const API_BASE_URL = process.env.API_BASE_URL || "https://staging.holodex.net";
 const REWRITE_API_ROUTES = false;
@@ -31,6 +32,13 @@ export default defineConfig({
   },
   plugins: [
     BuildInfo(),
+    // visualizer({ template: "treemap", gzipSize: true, brotliSize: true }),
+    // ^ keeping this around, as it's still useful for answering "WHY is this component around", but its estimates are inaccurate.
+    bundleAnalyzer({
+      analyzerMode: "static",
+      reportFilename: "stats.html",
+      statsFilename: "stats.json",
+    }),
     // ViteYaml({
     //   // for converting yml into ES6 modules.
     //   include: ["src/locales/**/*.yml"]
@@ -51,7 +59,7 @@ export default defineConfig({
     }),
     vuetify({
       autoImport: true,
-      styles: { configFile: './src/setup/vuetify/main.sass' }
+      styles: { configFile: "./src/setup/vuetify/main.sass" },
     }),
     AutoImport({
       // AutoImports is temperamental, might add non-treeshaking.
@@ -71,7 +79,6 @@ export default defineConfig({
     // filesize({
     //   showBeforeSizes: "build",
     // }),
-    visualizer({ template: "treemap", gzipSize: true, brotliSize: true }),
   ],
   server: {
     port: 8080,

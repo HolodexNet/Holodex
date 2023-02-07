@@ -47,7 +47,7 @@
           </h-list-item>
           <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
           <!-- <h-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
-                        ><h-icon left>{{ icons.mdiClipboardPlusOutline }}</h-icon>
+                        ><h-icon left>{{ some sharing icon idk }}</h-icon>
                         {{ playlist.id ? "Copy sharable Playlist link" : "Save the playlist to enable link-sharing." }}
                     </h-list-item> -->
           <h-divider />
