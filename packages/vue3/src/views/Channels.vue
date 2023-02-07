@@ -13,34 +13,32 @@
       {{ $t("views.channels.tabs.Blocked") }}
     </h-tab>
     <template v-if="category !== Tabs.BLOCKED" #filters>
-      <v-menu>
-        <template #activator="{ props }">
-          <label tabindex="0" class="dropdownLabelBtn" v-bind="props">
-            {{ currentSortValue.text }}
+      <h-menu>
+        <template #activator>
+          <MenuButton class="dropdownLabelBtn"
+            >{{ currentSortValue.text }}
             <h-icon
               class="i-heroicons:chevron-down -mr-1 ml-1 h-4 w-4"
             ></h-icon>
-          </label>
+          </MenuButton>
         </template>
-        <ul
-          tabindex="0"
-          class="dropdown-content menu rounded-box z-50 bg-bgColor p-2 text-sm shadow"
-          style="min-width: 10rem"
-        >
-          <li
-            v-for="(item, index) in sortOptions"
-            :key="index"
-            link
-            @click="sort = item.value"
+        <template #default>
+          <MenuItems
+            class="menu rounded-box bg-bgColor-500 shadow-md focus:outline-none"
+            as="ul"
           >
-            <a>{{ item.text }}</a>
-          </li>
-        </ul>
-      </v-menu>
-      <div class="dropdown-end dropdown"></div>
+            <template v-for="item in sortOptions">
+              <MenuItem as="li" @click="sort = item.value">
+                <button>
+                  {{ item.text }}
+                </button>
+              </MenuItem>
+            </template>
+          </MenuItems>
+        </template>
+      </h-menu>
     </template>
   </h-tabs>
-
   <!-- Toggle of Card or Row view -->
   <!-- <div class="btn btn-outline" @click="cardView = !cardView">
           <v-icon>
@@ -108,9 +106,14 @@ import { useI18n } from "vue-i18n";
 import { useFavoritesList } from "@/services/favorites";
 import { useSettingsStore } from "@/stores/settings";
 import useOrgRouteParamSync from "@/hooks/common/useOrgRouteParamSync";
-
+import { MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 export default defineComponent({
   name: "Channels",
+  components: {
+    MenuButton,
+    MenuItems,
+    MenuItem,
+  },
   //   metaInfo() {
   //     const vm = this;
   //     return {
