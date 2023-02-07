@@ -77,7 +77,7 @@ export default {
         return {
             needRefresh: false,
             favoritesUpdateTask: null,
-            showTwitter: true,
+            showTwitter: false,
         };
     },
     computed: {
