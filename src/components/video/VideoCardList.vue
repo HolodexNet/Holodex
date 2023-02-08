@@ -123,11 +123,11 @@ export default {
     computed: {
         processedVideos() {
             const config = {
+                ...this.$store.state.settings,
                 ignoreBlock: false,
                 hideCollabs: false,
                 hideIgnoredTopics: true,
                 forOrg: "",
-                hidePlaceholder: false,
                 ...this.filterConfig,
             };
             const filtered = this.videos.filter((v) => this.filterVideos(v, config));
