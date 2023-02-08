@@ -59,8 +59,6 @@ component:
     uploadScript: 上傳翻譯文本
   videoDescription:
     description: 說明
-  video:
-    comment: { }
   description:
     showLess: 只顯示部分資訊
     showMore: 顯示完整資訊
