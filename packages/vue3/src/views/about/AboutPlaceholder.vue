@@ -11,7 +11,7 @@
     You are not an editor or token has expired, please login or generate a new
     token using our bot
   </h-alert>
-  <h-text-field
+  <h-input
     v-if="isEditor"
     v-model="creditName"
     title="Editor Credit Name"
@@ -48,7 +48,7 @@
           placeholder="4a7f32A_4a2"
           class="input-bordered input w-full border-solid"
         />
-        <button class="btn btn-square" @click="loadExistingPlaceholder(id)">
+        <button class="btn-square btn" @click="loadExistingPlaceholder(id)">
           <div class="i-ion:checkmark" />
         </button>
       </label>
@@ -66,24 +66,24 @@
       "
     /> -->
     <vtuber-autocomplete v-model="channel" />
-    <h-text-field
+    <h-input
       v-model="videoTitle"
       title="Video/Event Title"
       explanation="The title of placeholder"
     />
-    <h-text-field
+    <h-input
       v-model="videoTitleJP"
       title="Japanese Event Title"
       explanation="(shown to users with 'Use EN Name' turned off)"
     />
-    <h-text-field
+    <h-input
       v-model="sourceUrl"
       placeholder="https://twitter.com/..."
       title="Source URL"
       explanation="Link to more detail about the event. eg. URL to twitter schedule
             post or twitch channel, or link to a concert page"
     />
-    <h-text-field
+    <h-input
       v-model="thumbnail"
       placeholder="https://imgur.com/..."
       title="Thumbnail Image"

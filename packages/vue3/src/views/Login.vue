@@ -32,21 +32,21 @@
           />
           <button
             v-if="!site.user || !site.user.discord_id"
-            class="btn btn-sm my-1 h-8 normal-case"
+            class="btn-sm btn my-1 h-8 normal-case"
             color="indigo"
             @click="loginDiscord"
           >
-            <div :class="icons.discord" class="left-2 mr-auto"/>
+            <div :class="icons.discord" class="left-2 mr-auto" />
 
             <span class="mr-auto">{{ $t("views.login.with.1") }}</span>
           </button>
           <button
             v-if="!site.user || !site.user.twitter_id"
-            class="btn btn-sm my-1 h-8 normal-case"
+            class="btn-sm btn my-1 h-8 normal-case"
             color="blue lighten-1"
             @click="loginTwitter"
           >
-            <div :class="icons.twitter" class="left-2 mr-auto"/>
+            <div :class="icons.twitter" class="left-2 mr-auto" />
 
             <span class="mr-auto">{{ $t("views.login.with.2") }}</span>
           </button>
@@ -55,13 +55,13 @@
 
       <template v-if="site.user">
         <!-- <div class="card-body"> -->
-        <div class="divider"/>
+        <div class="divider" />
 
         <span class="text-subtitle-2 inline-block">
           {{ $t("views.login.username") }}
         </span>
         <div class="flex items-center">
-          <h-text-field
+          <h-input
             v-model="editUsernameInput"
             :disabled="!editingUsername"
             rounded
@@ -78,7 +78,7 @@
                 }}
               </h-btn>
             </template>
-          </h-text-field>
+          </h-input>
         </div>
         <!-- </div> -->
 
@@ -87,7 +87,7 @@
           <span class="text-subtitle-2 mb-1 inline-block">
             {{ $t("views.login.ownedYtChannel") }}
           </span>
-          <h-text-field
+          <h-input
             readonly
             class="rounded"
             :value="site.user.yt_channel_key"
@@ -97,10 +97,10 @@
             {{ $t("views.login.futureYtcOwnerMessage") }}
           </span>
         </div>
-        <div class="divider"/>
+        <div class="divider" />
 
         <span class="text-subtitle-2 mb-1 inline-block">API Key</span>
-        <h-text-field
+        <h-input
           v-model="site.user.api_key"
           readonly
           placeholder="None on file"
@@ -112,7 +112,7 @@
               @click="copyToClipboard(site.user?.api_key || '')"
             />
           </template>
-        </h-text-field>
+        </h-input>
         <h-btn small block color="warning" @click="resetKey">
           {{ $t("views.login.apikeyNew") }}
         </h-btn>

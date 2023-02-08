@@ -9,7 +9,7 @@ letter-spacing: 0.0178571429em;
 padding: 1rem;
 text-transform: none; -->
   <div class="p-2">
-    <div class="text-lg font-bold"/>
+    <div class="text-lg font-bold" />
 
     <RadioGroup v-model="type" class="2xl:flex 2xl:flex-row">
       <!-- <RadioGroupLabel>
@@ -68,14 +68,14 @@ text-transform: none; -->
         v-if="type === MODIFY_EXISTING || type === DELETE"
         v-model="channel"
       />
-      <h-text-field
+      <h-input
         v-else
         v-model="link"
         title="Channel URL"
         placeholder="https://www.youtube.com/..."
       />
 
-      <h-text-field
+      <h-input
         v-if="type !== DELETE && type !== ADD_CLIPPER"
         v-model="english_name"
         :title="$t('channelRequest.EnglishNameLabel')"
@@ -98,7 +98,7 @@ text-transform: none; -->
           type === ADD_CLIPPER || type === MODIFY_EXISTING ? [requiredRule] : []
         "
       />
-      <h-text-field
+      <h-input
         v-if="type === ADD_VTUBER || type === MODIFY_EXISTING"
         v-model="org"
         :title="$t('channelRequest.VtuberGroupLabel')"
@@ -106,21 +106,21 @@ text-transform: none; -->
         placeholder="Hololive, Nijisanji, ..."
       />
 
-      <h-text-field
+      <h-input
         v-if="type !== DELETE"
         v-model="twitter"
         :title="$t('channelRequest.TwitterHandle')"
         explanation="@username"
         placeholder="@xyzabc"
       />
-      <h-text-field
+      <h-input
         v-model="contact"
         :title="$t('channelRequest.DirectContactLabel')"
         :explanation="$t('channelRequest.DirectContactDisclaimer')"
         placeholder="@abc / discord#1234 / (email 😞)"
         :required="type === DELETE"
       />
-      <h-text-field
+      <h-input
         v-model="comments"
         as="textarea"
         :title="$t('channelRequest.Comments')"
@@ -131,10 +131,10 @@ text-transform: none; -->
     </template>
     <button
       v-if="type"
-      class="btn btn-primary mt-2 w-32 text-lg shadow-md"
+      class="btn-primary btn mt-2 w-32 text-lg shadow-md"
       @click="onSubmit"
     >
-      <div class="i-mdi:check"/>
+      <div class="i-mdi:check" />
     </button>
   </div>
 </template>

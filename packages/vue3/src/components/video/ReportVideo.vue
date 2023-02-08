@@ -30,7 +30,7 @@
           class="alert alert-warning shadow-lg"
         >
           <div>
-            <svg class="i-wpf:faq m-1 flex-shrink-0 text-2xl" style=""/>
+            <svg class="i-wpf:faq m-1 flex-shrink-0 text-2xl" style="" />
             <span class="text-sm">
               {{
                 $t("component.reportDialog.collabing", {
@@ -41,7 +41,7 @@
           </div>
         </div>
 
-        <h-text-field
+        <h-input
           v-model="comments"
           as="textarea"
           :title="$t('channelRequest.Comments')"
@@ -62,7 +62,7 @@
           {{ $t("views.app.close_btn") }}
         </div>
         <button
-          class="btn btn-primary"
+          class="btn-primary btn"
           :disabled="comments.length === 0"
           @click="sendReport"
         >
