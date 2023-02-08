@@ -41,7 +41,18 @@ module.exports = {
 
   rules: {
     "brace-style": [2, "1tbs", { allowSingleLine: true }],
-
+    "vue/html-self-closing": [
+      "warn",
+      {
+        html: {
+          void: "any",
+          normal: "always",
+          component: "always",
+        },
+        svg: "always",
+        math: "always",
+      },
+    ],
     // "vue/script-indent": ["error", 4, { baseIndent: 0, switchCase: 1 }],
 
     "vue/max-attributes-per-line": 0,
@@ -66,6 +77,6 @@ module.exports = {
     "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/ban-ts-comment": 0,
-    "@typescript-eslint/no-empty-interface": 0
+    "@typescript-eslint/no-empty-interface": 0,
   },
 };
