@@ -1,6 +1,6 @@
 <template>
   <div class="video-card-grid" :style="gridStyle" role="list">
-    <slot/>
+    <slot />
   </div>
 </template>
 <script lang="ts" setup>
@@ -35,10 +35,14 @@ const gridStyle = computed(() => {
     display: inline-block;
     width: calc(100% - 32px);
     position: absolute;
-    transform: translateY(-10px);
+    transform: translateY(-10px) translateX(-32px);
     border-bottom: 1px solid;
-    @apply border-base-content opacity-50;
+    @apply border-base-content opacity-30;
     z-index: 1;
   }
+}
+// No Firefox support, but it's additive so just looks better on Chrome/Safari :P
+.video-card-live:has(+ .video-card:not(.video-card-live)) {
+  padding-bottom: 8px;
 }
 </style>
