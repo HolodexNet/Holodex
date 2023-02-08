@@ -5,7 +5,7 @@
     :selection="selection"
     :options="options"
     :placeholder="'Pick Channel'"
-    class="!rounded !border !border-primary"
+    class="!rounded border-bgColor-50 p-1 focus-within:border-primary"
     @pop-chip="selection.pop()"
     @pointed="({ n }) => scrollIntoView(n)"
     @select="
@@ -22,7 +22,8 @@
       <channel-tag
         v-if="s && s[0]"
         :channel="s[0]"
-        class="h-32 rounded-none pl-3"
+        class="mr-2 h-8 rounded-md pl-1"
+        tile
       />
     </template>
     <template #dropdown="{ active }">

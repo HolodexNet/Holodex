@@ -20,7 +20,7 @@
       <div
         v-for="(item, midx) in selection"
         :key="'chip' + item.type + item.value + midx"
-        class="badge badge-ghost mr-1 cursor-default rounded-sm border-0 bg-bgColor px-1 text-xs font-semibold tracking-tight hover:badge-error"
+        class="badge-ghost badge mr-1 cursor-default rounded-sm border-0 bg-bgColor px-1 text-xs font-semibold tracking-tight hover:badge-error"
         @click="query.splice(midx, 1)"
       >
         <span class="">{{ categoryName(item) }}:</span>
@@ -31,18 +31,18 @@
       <div
         v-if="query.length == 0 || search.length > 0"
         class="i-ion:search opacity-40"
-        style="margin: auto 0px"
+        style="margin: auto 5px"
         @click="tryFocusInput"
       />
       <template v-else>
         <div
           class="i-icon-park-outline:enter-key hidden w-7 opacity-50 group-focus-within:block"
-          style="margin: auto 0px"
+          style="margin: auto 5px"
           @click="commitSearch"
         />
         <div
           class="i-lucide:text-cursor-input block w-7 opacity-25 hover:text-accent-400 hover:opacity-100 group-focus-within:hidden"
-          style="margin: auto 0px"
+          style="margin: auto 5px"
           @click="tryFocusInput"
         />
       </template>
@@ -56,7 +56,7 @@
           </span>
           <a class="ml-auto inline-flex opacity-50" href="#" :tabindex="40">
             <span>{{ $t("search.guide_btn") }}</span>
-            <div class="i-ion:help-circle-outline ml-1 text-[16px]"/>
+            <div class="i-ion:help-circle-outline ml-1 text-[16px]" />
           </a>
         </div>
       </template>

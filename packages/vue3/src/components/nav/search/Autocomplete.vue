@@ -11,7 +11,7 @@
     <div class="relative mx-auto flex w-full cursor-pointer flex-nowrap">
       <div class="multiselect-wrapper">
         <div class="tags">
-          <slot name="chips" :selection="selection"/>
+          <slot name="chips" :selection="selection" />
         </div>
         <input
           ref="inputField"
@@ -26,7 +26,7 @@
       <slot name="caret" :open="showDropdown" :input="inputField">
         <div
           class="i-ion:search opacity-40"
-          style="margin: auto 0px"
+          style="margin: auto 4px"
           @click="
             $nextTick(() => {
               inputField?.focus();
@@ -41,7 +41,7 @@
       class="multiselect-dropdown"
       :class="{ 'is-top': dropUp, 'flex-col-reverse': dropUp }"
     >
-      <slot name="dropdown" :active="activeIndex" :up="dropUp"/>
+      <slot name="dropdown" :active="activeIndex" :up="dropUp" />
     </div>
   </div>
 </template>

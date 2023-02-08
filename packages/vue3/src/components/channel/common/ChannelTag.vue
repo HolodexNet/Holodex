@@ -1,15 +1,18 @@
 <template>
   <div
-    class="badge badge-lg border-bgColor-100 bg-bgColor-300 pl-0 text-sm text-base-content"
+    class="badge badge-lg border-bgColor-100 bg-bgColor-300 text-sm text-base-content"
+    :class="{
+      'pl-0': !tile,
+    }"
   >
-    <channel-img :channel="channel" rounded :size="24" class="mr-2" />
+    <channel-img :channel="channel" :rounded="!tile" :size="24" class="mr-2" />
     {{ channelName }}
   </div>
 </template>
 <script lang="ts" setup>
 import { useLangStore } from "@/stores/lang";
 
-const props = defineProps<{ channel: ShortChannel }>();
+const props = defineProps<{ channel: ShortChannel; tile?: boolean }>();
 const langPrefs = useLangStore();
 const channelName = computed(
   () =>
