@@ -6,7 +6,7 @@
         {{ subtitle }}
       </span>
     </label>
-    <div class="input-group">
+    <div class="input-group" :class="{ 'shadow shadow-error': error }">
       <slot name="prepend" />
       <slot name="input">
         <input
@@ -28,7 +28,10 @@
     </div>
 
     <label v-if="error || explanation" class="label">
-      <span class="label-text-alt text-opacity-60">
+      <span
+        class="label-text-alt text-opacity-60"
+        :class="{ ' text-error text-opacity-100 ': error }"
+      >
         {{ error ? error : explanation }}
       </span>
     </label>
@@ -43,7 +46,7 @@ export default defineComponent({
   props: {
     modelValue: {
       default: "",
-      type: String,
+      type: [String, Number],
     },
     title: {
       default: "",
