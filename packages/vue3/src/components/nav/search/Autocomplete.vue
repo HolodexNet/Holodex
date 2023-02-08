@@ -217,7 +217,7 @@ export default defineComponent({
 </style>
 <style lang="scss" scoped>
 .multiselect {
-  @apply relative mx-auto box-border flex w-full cursor-pointer items-center justify-end rounded border border-bgColor-400 leading-snug outline-none;
+  @apply relative mx-auto box-border flex w-full cursor-pointer items-center justify-end rounded leading-snug;
 }
 
 .multiselect.is-disabled {
@@ -264,7 +264,7 @@ export default defineComponent({
   left: -1px;
   right: -1px;
   z-index: 5000;
-  @apply absolute bottom-0 -mt-[1px] flex max-h-80 translate-y-full transform flex-col overflow-y-scroll rounded-b border border-bgColor-100 bg-bgColor;
+  @apply absolute bottom-0 flex max-h-80 translate-y-full transform flex-col overflow-y-scroll rounded-b border border-bgColor-100 bg-bgColor;
 }
 
 .multiselect-dropdown.is-top {

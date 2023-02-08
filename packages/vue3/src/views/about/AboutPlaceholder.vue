@@ -37,21 +37,14 @@
     </div>
 
     <div v-if="tab === 1" class="form-control">
-      <label class="label">
-        <span class="label-text">Existing Placeholder ID (11 characters)</span>
-      </label>
-      <label class="input-group">
-        <span>ID</span>
-        <input
-          v-model="id"
-          type="text"
-          placeholder="4a7f32A_4a2"
-          class="input-bordered input w-full border-solid"
-        />
-        <button class="btn-square btn" @click="loadExistingPlaceholder(id)">
-          <div class="i-ion:checkmark" />
-        </button>
-      </label>
+      <h-input v-model="id" title="Existing Placeholder ID (11 characters)">
+        <template #prepend><span>ID</span></template>
+        <template #append>
+          <button class="btn-square btn" @click="loadExistingPlaceholder(id)">
+            <div class="i-ion:checkmark" />
+          </button>
+        </template>
+      </h-input>
     </div>
 
     <!-- <video-selector
@@ -65,7 +58,9 @@
         }
       "
     /> -->
-    <vtuber-autocomplete v-model="channel" />
+    <h-input title="Create Placeholder into Channel:">
+      <template #input><vtuber-autocomplete v-model="channel" /></template>
+    </h-input>
     <h-input
       v-model="videoTitle"
       title="Video/Event Title"
@@ -103,9 +98,7 @@
               value="scheduled-yt-stream"
               class="peer radio outline outline-2 checked:bg-red-500"
             />
-            <span class="label-text peer-checked:text-secondary">
-              Scheduled YT Stream
-            </span>
+            <span class="label-text">Scheduled YT Stream</span>
           </label>
           <label class="radio-label">
             <input
@@ -115,7 +108,7 @@
               value="external-stream"
               class="peer radio outline outline-2 checked:bg-blue-500"
             />
-            <span class="label-text peer-checked:text-secondary">
+            <span class="label-text">
               External Stream (eg. Twitch/Twitcast)
             </span>
           </label>
@@ -127,7 +120,7 @@
               value="event"
               class="peer radio outline outline-2 checked:bg-orange-500"
             />
-            <span class="label-text peer-checked:text-secondary">Event</span>
+            <span class="label-text">Event</span>
           </label>
         </div>
       </span>
@@ -257,13 +250,11 @@ import "v-calendar/dist/style.css";
 import { DatePicker } from "v-calendar";
 import { useThemeStore } from "@/stores/theme";
 import { useDisplay } from "vuetify";
-import VtuberAutocomplete from "@/components/channel/VtuberAutocomplete.vue";
 import { useToast } from "vue-toast-notification";
 
 export default defineComponent({
   components: {
     DatePicker,
-    VtuberAutocomplete,
   },
   setup() {
     const display = useDisplay();

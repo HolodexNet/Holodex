@@ -14,7 +14,7 @@
         v-else-if="$slots.default"
         class="live-indicator text-2xs indicator-bottom indicator-item right-5 mb-3 bg-slate-500 text-white"
       >
-        <slot/>
+        <slot />
       </span>
 
       <channel-img
@@ -57,7 +57,7 @@
         v-if="channel.top_topics && !slim"
         class="opacity-60 hover:opacity-100"
       >
-        <div class="i-uil:award inline-block align-middle text-lg"/>
+        <div class="i-uil:award inline-block align-middle text-lg" />
         <div
           v-for="t in channel.top_topics"
           :key="channel.id + 't' + t"
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <slot name="buttons"/>
+    <slot name="buttons" />
     <div v-if="!slim && !$slots.buttons" class="flex h-full flex-col gap-1">
       <a
         class="c-card-icon hover:text-red-500"
@@ -75,7 +75,7 @@
         target="_blank"
         title="Youtube"
       >
-        <div :class="icons.youtube"/>
+        <div :class="icons.youtube" />
       </a>
       <a
         class="c-card-icon hover:text-cyan-500"
@@ -84,7 +84,7 @@
         target="_blank"
         title="Twitter"
       >
-        <div :class="icons.twitter"/>
+        <div :class="icons.twitter" />
       </a>
       <button
         class="c-card-icon"

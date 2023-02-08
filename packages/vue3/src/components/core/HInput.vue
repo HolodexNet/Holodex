@@ -81,4 +81,7 @@ export default defineComponent({
 .input-group > :first-child:last-child {
   border-radius: var(--rounded-btn, 0.5rem);
 }
+.input-group > :not(span) :where(span) {
+  background-color: unset;
+}
 </style>
