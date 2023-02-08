@@ -16,7 +16,7 @@
     v-model="creditName"
     title="Editor Credit Name"
     explanation="Use a different name when being credited on the placeholder"
-  ></h-text-field>
+  />
 
   <div class="flex flex-col gap-4">
     <div class="tabs tabs-boxed bg-base-100 p-0">
@@ -24,14 +24,16 @@
         class="tab tab-lg"
         :class="{ 'tab-active': tab === 0 }"
         @click="tab = 0"
-        >New
+      >
+        New
       </a>
       <a
         class="tab tab-lg"
         :class="{ 'tab-active': tab === 1 }"
         @click="tab = 1"
-        >Existing</a
       >
+        Existing
+      </a>
     </div>
 
     <div v-if="tab === 1" class="form-control">
@@ -46,8 +48,8 @@
           placeholder="4a7f32A_4a2"
           class="input-bordered input w-full border-solid"
         />
-        <button class="btn btn-square" @click="loadExistingPlaceholder(id)">
-          <div class="i-ion:checkmark"></div>
+        <button class="btn-square btn" @click="loadExistingPlaceholder(id)">
+          <div class="i-ion:checkmark" />
         </button>
       </label>
     </div>
@@ -68,30 +70,30 @@
       v-model="videoTitle"
       title="Video/Event Title"
       explanation="The title of placeholder"
-    ></h-text-field>
+    />
     <h-text-field
       v-model="videoTitleJP"
       title="Japanese Event Title"
       explanation="(shown to users with 'Use EN Name' turned off)"
-    ></h-text-field>
+    />
     <h-text-field
       v-model="sourceUrl"
       placeholder="https://twitter.com/..."
       title="Source URL"
       explanation="Link to more detail about the event. eg. URL to twitter schedule
             post or twitch channel, or link to a concert page"
-    ></h-text-field>
+    />
     <h-text-field
       v-model="thumbnail"
       placeholder="https://imgur.com/..."
       title="Thumbnail Image"
-    ></h-text-field>
+    />
     <div class="flex flex-row flex-wrap gap-4">
       <span class="inline-block flex-grow basis-60">
         <div class="form-control">
           <label class="label">
-            <label class="label-text">Event Type</label></label
-          >
+            <label class="label-text">Event Type</label>
+          </label>
 
           <label class="radio-label">
             <input
@@ -125,15 +127,15 @@
               value="event"
               class="peer radio outline outline-2 checked:bg-orange-500"
             />
-            <span class="label-text peer-checked:text-secondary"> Event </span>
+            <span class="label-text peer-checked:text-secondary">Event</span>
           </label>
         </div>
       </span>
       <span class="inline-block flex-grow basis-60">
         <div class="form-control">
           <label class="label">
-            <label class="label-text">Certainty</label></label
-          >
+            <label class="label-text">Certainty</label>
+          </label>
           <label class="radio-label">
             <input
               v-model="certainty"
@@ -152,9 +154,9 @@
               value="likely"
               class="peer radio outline outline-2 checked:bg-secondary"
             />
-            <span class="label-text peer-checked:text-secondary"
-              >Likely (This is an educated guess)</span
-            >
+            <span class="label-text peer-checked:text-secondary">
+              Likely (This is an educated guess)
+            </span>
           </label>
         </div>
       </span>
@@ -186,10 +188,13 @@
             <span class="label-text">Timezone</span>
           </label>
 
-          <select class="select-bordered select w-full max-w-xs border-solid">
+          <select
+            v-model="timezone"
+            class="select-bordered select w-full max-w-xs border-solid"
+          >
             <option value="Etc/GMT" selected>UTC (+0)</option>
             <option value="Asia/Tokyo">JST (+8)</option>
-            <option value="America/Los_Angeles">Pacific Time (-?)</option>
+            <option value="America/Los_Angeles">Pacific Time (PST/PDT)</option>
             <option value="America/New_York">
               Eastern Time (EST/EDT) (-?)
             </option>
@@ -208,11 +213,11 @@
           :min-date="minDate"
           :minute-increment="5"
           :model-config="{ type: 'string', mask: 'iso' }"
-        ></date-picker>
+        />
         <div class="form-control w-full">
           <label class="label">
             <span class="label-text">Duration</span>
-            <span class="label-text-alt text-opacity-60"> </span>
+            <span class="label-text-alt text-opacity-60" />
           </label>
           <input
             v-model="duration"
@@ -222,7 +227,7 @@
         </div>
       </div>
       <div class="form-control mx-auto hidden w-full max-w-xs lg:block">
-        <label class="label"> <span class="label-text">Preview:</span></label>
+        <label class="label"><span class="label-text">Preview:</span></label>
         <video-card
           :video="(videoObj as any)"
           include-channel
@@ -284,7 +289,7 @@ export default defineComponent({
       placeholderType: undefined,
       certainty: undefined,
       liveDate: dayjs().startOf("hour").toISOString(),
-      minDate: dayjs().startOf("day").toDate(),
+      minDate: dayjs().startOf("day").subtract(1, "day").toDate(),
       timezone: "Asia/Tokyo",
       duration: 60,
       CERTAINTY_CHOICE: [
@@ -297,7 +302,6 @@ export default defineComponent({
           value: "likely",
         },
       ],
-      showDatePicker: false,
       discordCredits: undefined as any,
       requiredRule: (v: any) => !!v || "Required",
       linkRule: (v: any) =>
@@ -398,8 +402,9 @@ export default defineComponent({
   methods: {
     onSubmit() {
       if (
-        this.$refs.form.validate() &&
-        (this.isEditor || (this.token && !this.expired))
+        // this.$refs.form.validate() && (...
+        this.isEditor ||
+        (this.token && !this.expired)
       ) {
         const titlePayload = {
           name: this.videoTitle,

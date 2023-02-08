@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@headlessui-float/vue": "^0.10.1",
+    "@headlessui/tailwindcss": "^0.1.2",
     "@headlessui/vue": "^1.7.8",
     "@mdi/js": "^7.0.96",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -35,6 +36,7 @@
     "pinia-shared-state": "^0.3.0",
     "socket.io-client": "^4.5.2",
     "v-calendar": "^3.0.0-alpha.8",
+    "vee-validate": "^4.7.4",
     "vue": "3.2.45",
     "vue-3-linkify": "^1.1.0",
     "vue-color-kit": "^1.0.5",

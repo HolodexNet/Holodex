@@ -37,6 +37,7 @@ module.exports = {
   plugins: [
     require("daisyui"),
     require("@tailwindcss/line-clamp"),
+    require("@headlessui/tailwindcss"),
     function ({ addComponents }) {
       addComponents({
         ".container": {

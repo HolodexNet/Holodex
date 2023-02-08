@@ -19,7 +19,11 @@
     @submit="() => {}"
   >
     <template #chips="{ selection: s }">
-      <channel-tag v-if="s && s[0]" :channel="s[0]"></channel-tag>
+      <channel-tag
+        v-if="s && s[0]"
+        :channel="s[0]"
+        class="h-32 rounded-none pl-3"
+      />
     </template>
     <template #dropdown="{ active }">
       <div
@@ -38,7 +42,7 @@
           variant="list"
           no-link
           slim
-        ></channel-card>
+        />
       </div>
     </template>
   </autocomplete>
