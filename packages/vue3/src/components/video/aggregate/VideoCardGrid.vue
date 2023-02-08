@@ -1,5 +1,5 @@
 <template>
-  <div class="video-card-grid" :style="gridStyle" role="list">
+  <div class="video-card-grid relative" :style="gridStyle" role="list">
     <slot />
   </div>
 </template>
@@ -33,9 +33,9 @@ const gridStyle = computed(() => {
     grid-column: 1/-1;
     content: "";
     display: inline-block;
-    width: calc(100% - 32px);
+    width: calc(100%);
     position: absolute;
-    transform: translateY(-10px) translateX(-32px);
+    transform: translateY(-10px);
     border-bottom: 1px solid;
     @apply border-base-content opacity-30;
     z-index: 1;
