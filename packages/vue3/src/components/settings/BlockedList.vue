@@ -13,7 +13,7 @@
       >
         <div
           class="i-material-symbols:close mx-auto text-3xl text-red-500"
-        ></div>
+        />
       </button>
     </template>
   </channel-list>

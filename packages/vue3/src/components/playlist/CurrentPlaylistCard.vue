@@ -3,7 +3,7 @@
     v-if="currentPlaylist.data.value"
     :playlist="currentPlaylist.data.value"
     :is-editable="currentPlaylist.data.value.user_id == site.user?.id"
-  ></playlist-card>
+  />
 </template>
 
 <script setup lang="ts">

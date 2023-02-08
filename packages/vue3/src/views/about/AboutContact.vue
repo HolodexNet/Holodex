@@ -5,7 +5,8 @@
       src="https://discordapp.com/api/guilds/796190073271353385/widget.png?style=banner2"
       width="280"
       class="rounded"
-  /></a>
+    />
+  </a>
   <div class="mt-4 text-lg font-bold">DM us on Twitter</div>
   <a
     class="mt-2 mr-4 inline-block"
@@ -23,7 +24,8 @@
     <img
       alt="Twitter Message"
       src="https://img.shields.io/twitter/url?label=Message%20%40Holodex&style=social&url=https%3A%2F%2Fholodex.net"
-  /></a>
+    />
+  </a>
   <div class="mt-4 text-lg font-bold">Email us:</div>
   <form class="mt-2">
     <div class="grid max-w-lg grid-cols-1 gap-4 md:grid-cols-2">
@@ -61,7 +63,7 @@
           <textarea
             class="textarea-bordered textarea-primary textarea h-24 border-solid"
             placeholder="..."
-          ></textarea>
+          />
         </div>
       </div>
     </div>

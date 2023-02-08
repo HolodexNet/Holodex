@@ -12,12 +12,16 @@
   <h-disclosure :title="$t('about.faq.autoplayHeader')">
     {{ $t("about.faq.autoplayContent") }}
     <br />
-    <br />Safari: <br />
+    <br />
+    Safari:
+    <br />
     <img
       width="80%"
       src="https://www.imore.com/sites/imore.com/files/styles/large/public/field/image/2017/07/safari-custom-settings-websites-mac-screenshot-06.jpg?itok=ONVYTcno"
     />
-    <br />Firefox: <br />
+    <br />
+    Firefox:
+    <br />
     <img
       width="80%"
       src="https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/firefox/files/2019/04/Screen-Shot-2019-04-01-at-11.21.21-AM.png"
@@ -31,12 +35,12 @@
         <h-icon
           class="i-mdi:dots-vertical inline-block text-primary"
           color="primary"
-        ></h-icon>
+        />
         {{ $t("about.faq.mobile.content.android.1") }}
       </li>
       <li>
         {{ $t("about.faq.mobile.content.ios.0") }}
-        <span class="i-ph:export"></span>
+        <span class="i-ph:export"/>
         {{ $t("about.faq.mobile.content.ios[1]") }}
       </li>
     </ul>

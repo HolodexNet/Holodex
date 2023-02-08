@@ -7,7 +7,7 @@
         'btn-square': selection.selectedVideos.length,
       }"
     >
-      <div class="i-mdi:close-circle" @click="exit"></div>
+      <div class="i-mdi:close-circle" @click="exit"/>
     </div>
 
     <div class="carousel-vertical carousel h-9">
@@ -19,9 +19,9 @@
             >
               <span class="text-xs font-normal text-primary-300">
                 Selected
-                <span class="text-primary">{{
-                  selection.selectedVideos.length
-                }}</span>
+                <span class="text-primary">
+                  {{ selection.selectedVideos.length }}
+                </span>
                 videos
               </span>
             </div>
@@ -30,7 +30,7 @@
               class="btn-outline btn btn-primary btn-xs"
               @click="selection.selectedVideos = []"
             >
-              <div class="i-material-symbols:deselect"></div>
+              <div class="i-material-symbols:deselect"/>
             </div>
 
             <div
@@ -72,9 +72,9 @@
                 : 'btn-secondary bg-bgColor-400'
             "
           >
-            <div class="i-fluent:group-20-regular text-lg"></div>
+            <div class="i-fluent:group-20-regular text-lg"/>
             <span class="mx-1">Modify Attributes</span>
-            <div class="i-bx:chevron-up"></div>
+            <div class="i-bx:chevron-up"/>
 
             <v-menu activator="parent">
               <div
@@ -115,9 +115,9 @@
                 : 'btn-secondary bg-bgColor-400'
             "
           >
-            <div class="i-fluent:connected-20-filled text-lg"></div>
+            <div class="i-fluent:connected-20-filled text-lg"/>
             <span class="mx-1">Intelligent Multi-Edit</span>
-            <div class="i-bx:chevron-up"></div>
+            <div class="i-bx:chevron-up"/>
 
             <v-menu activator="parent">
               <div class="menu-group btn-group btn-group-vertical self-start">

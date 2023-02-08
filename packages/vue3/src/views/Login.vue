@@ -36,7 +36,7 @@
             color="indigo"
             @click="loginDiscord"
           >
-            <div :class="icons.discord" class="left-2 mr-auto"></div>
+            <div :class="icons.discord" class="left-2 mr-auto"/>
 
             <span class="mr-auto">{{ $t("views.login.with.1") }}</span>
           </button>
@@ -46,7 +46,7 @@
             color="blue lighten-1"
             @click="loginTwitter"
           >
-            <div :class="icons.twitter" class="left-2 mr-auto"></div>
+            <div :class="icons.twitter" class="left-2 mr-auto"/>
 
             <span class="mr-auto">{{ $t("views.login.with.2") }}</span>
           </button>
@@ -55,17 +55,18 @@
 
       <template v-if="site.user">
         <!-- <div class="card-body"> -->
-        <div class="divider"></div>
+        <div class="divider"/>
 
-        <span class="text-subtitle-2 inline-block">{{
-          $t("views.login.username")
-        }}</span>
+        <span class="text-subtitle-2 inline-block">
+          {{ $t("views.login.username") }}
+        </span>
         <div class="flex items-center">
           <h-text-field
             v-model="editUsernameInput"
             :disabled="!editingUsername"
             rounded
-            ><template #append>
+          >
+            <template #append>
               <h-btn
                 :class="editingUsername ? 'btn-success' : 'btn-primary'"
                 @click="editUsername"
@@ -76,16 +77,16 @@
                     : $t("views.login.usernameBtn.0")
                 }}
               </h-btn>
-            </template></h-text-field
-          >
+            </template>
+          </h-text-field>
         </div>
         <!-- </div> -->
 
         <!-- <div class="card-body"> -->
         <div class="mt-2 text-gray-500">
-          <span class="text-subtitle-2 mb-1 inline-block">{{
-            $t("views.login.ownedYtChannel")
-          }}</span>
+          <span class="text-subtitle-2 mb-1 inline-block">
+            {{ $t("views.login.ownedYtChannel") }}
+          </span>
           <h-text-field
             readonly
             class="rounded"
@@ -96,7 +97,7 @@
             {{ $t("views.login.futureYtcOwnerMessage") }}
           </span>
         </div>
-        <div class="divider"></div>
+        <div class="divider"/>
 
         <span class="text-subtitle-2 mb-1 inline-block">API Key</span>
         <h-text-field
@@ -109,7 +110,7 @@
               class="btn-secondary"
               icon="i-mdi:clipboard-plus-outline"
               @click="copyToClipboard(site.user?.api_key || '')"
-            ></h-btn>
+            />
           </template>
         </h-text-field>
         <h-btn small block color="warning" @click="resetKey">

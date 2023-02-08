@@ -1,6 +1,6 @@
 <template>
   <div class="video-card-grid" :style="gridStyle" role="list">
-    <slot></slot>
+    <slot/>
   </div>
 </template>
 <script lang="ts" setup>

@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "lint:fix": "prettier --write src/*"
   },
   "dependencies": {
     "@headlessui-float/vue": "^0.10.1",

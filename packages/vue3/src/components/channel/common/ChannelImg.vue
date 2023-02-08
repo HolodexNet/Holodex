@@ -27,7 +27,7 @@
       class="bg-secondary-300"
       :class="{ 'rounded-full': rounded, 'rounded-md': !rounded }"
     >
-      <div class="i-mdi:person" :style="{ 'font-size': `${size}px` }"></div>
+      <div class="i-mdi:person" :style="{ 'font-size': `${size}px` }"/>
     </div>
   </router-link>
 </template>

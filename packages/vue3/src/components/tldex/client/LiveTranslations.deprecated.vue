@@ -41,7 +41,7 @@
           <div
             class="i-material-symbols:subtitles-rounded text-lg"
             :class="{ 'text-primary': chatMixin.showSubtitle.value }"
-          ></div>
+          />
         </v-btn>
         <v-dialog v-if="!tlClient" v-model="expanded" width="800">
           <template #activator="{ props }">
@@ -52,7 +52,7 @@
               class="mr-1"
               :title="$t('views.watch.chat.expandTL')"
             >
-              <div class="i-fluent:resize-large-16-regular text-lg"></div>
+              <div class="i-fluent:resize-large-16-regular text-lg"/>
             </v-btn>
           </template>
 

@@ -37,12 +37,7 @@
           $emit('update:modelValue', { text: undefined, value: item });
         "
       >
-        <channel-card
-          :channel="item"
-          variant="list"
-          no-link
-          slim
-        />
+        <channel-card :channel="item" variant="list" no-link slim />
       </div>
     </template>
   </autocomplete>

@@ -4,7 +4,7 @@
     :class="{
       '-ml-1 mr-1': left,
     }"
-  ></div>
+  />
 </template>
 <script lang="ts" setup>
 withDefaults(

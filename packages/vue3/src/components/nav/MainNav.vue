@@ -32,7 +32,7 @@
             height="32"
             :loading="loading > 0"
           />
-          <div v-else class="i-ion:menu h-6 w-6"></div>
+          <div v-else class="i-ion:menu h-6 w-6"/>
         </div>
         <div class="mr-2 flex shrink-0 flex-row items-center gap-2">
           <router-link
@@ -62,7 +62,7 @@
         <playlist-button
           class="mr-2 flex-shrink"
           @click="playlistDrawer = !playlistDrawer"
-        ></playlist-button>
+        />
         <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
           <template #activator="{ props }">
             <div
@@ -73,7 +73,7 @@
               <h-icon
                 v-if="!(site.user && site.user)"
                 class="i-mdi:account-circle-outline"
-              ></h-icon>
+              />
               <img
                 v-else
                 class="h-10 w-10 rounded-full"
@@ -95,8 +95,7 @@
           icon="i-material-symbols:search-rounded"
           class="btn-icon"
           @click="searchBarExpanded = true"
-        >
-        </h-btn>
+        />
       </template>
 
       <!--=========================== END OF Regular View ===========================-->
@@ -135,8 +134,7 @@
       :temporary="isMdOrDown || isWatchPage"
       :expand="navbarExpanded"
       @expand="navbarExpanded = !navbarExpanded"
-    >
-    </NavDrawer>
+    />
 
     <v-navigation-drawer
       id="playlistDrawer"

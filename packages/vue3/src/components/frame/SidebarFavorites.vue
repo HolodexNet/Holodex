@@ -5,7 +5,7 @@
         <div
           class="-ml-6 w-60 max-w-md rounded-lg border-2 border-secondary bg-bgColor p-1 shadow-xl shadow-bgColor"
         >
-          <h-lazy><video-card :video="v"></video-card></h-lazy>
+          <h-lazy><video-card :video="v"/></h-lazy>
         </div>
         <template #activator>
           <channel-card
@@ -14,7 +14,8 @@
             no-link
             :live="v.status === 'live'"
             class="relative hover:bg-bgColor-300"
-            >{{ formatDurationUpcoming(v.available_at) }}
+          >
+            {{ formatDurationUpcoming(v.available_at) }}
             <!-- TODO refactor to a component and use the event hooks from popper -->
             <!-- <template #buttons>
                 <div
@@ -41,7 +42,7 @@
       </h-tooltip>
     </div>
   </template>
-  <div style="height: 40px"></div>
+  <div style="height: 40px"/>
 </template>
 <script setup lang="ts">
 import { useClient } from "@/hooks/auth/client";

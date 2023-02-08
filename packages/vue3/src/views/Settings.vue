@@ -7,34 +7,34 @@
     >
       <ul class="menu w-full rounded-md">
         <li :class="{ 'active bordered': route.name === 'Settings_Language' }">
-          <router-link to="/settings/lang" class="justify-center"
-            >Language</router-link
-          >
+          <router-link to="/settings/lang" class="justify-center">
+            Language
+          </router-link>
         </li>
         <li :class="{ 'active bordered': route.name === 'Settings_Themes' }">
-          <router-link to="/settings/themes" class="justify-center"
-            >Color Themes</router-link
-          >
+          <router-link to="/settings/themes" class="justify-center">
+            Color Themes
+          </router-link>
         </li>
         <li :class="{ 'active bordered': route.name === 'Settings_User' }">
-          <router-link to="/settings/user" class="justify-center"
-            >Account Settings</router-link
-          >
+          <router-link to="/settings/user" class="justify-center">
+            Account Settings
+          </router-link>
         </li>
         <li :class="{ 'active bordered': route.name === 'Settings_Homepage' }">
-          <router-link to="/settings/homepage" class="justify-center"
-            >Homepage & Filters</router-link
-          >
+          <router-link to="/settings/homepage" class="justify-center">
+            Homepage & Filters
+          </router-link>
         </li>
         <li :class="{ 'active bordered': route.name === 'Settings_Blocked' }">
-          <router-link to="/settings/blocked" class="justify-center"
-            >Blocked Channels</router-link
-          >
+          <router-link to="/settings/blocked" class="justify-center">
+            Blocked Channels
+          </router-link>
         </li>
         <li :class="{ 'active bordered': route.name === 'Settings_Advanced' }">
-          <router-link to="/settings/advanced" class="justify-center"
-            >Advanced</router-link
-          >
+          <router-link to="/settings/advanced" class="justify-center">
+            Advanced
+          </router-link>
         </li>
         <!-- Default Click behavior etc. -->
       </ul>
@@ -43,7 +43,7 @@
       class="xs:max-w-full w-80 flex-shrink-0 flex-grow rounded-md bg-bgColor p-3"
       style="flex-basis: 60%; min-width: 300px"
     >
-      <router-view></router-view>
+      <router-view/>
     </div>
   </div>
 </template>

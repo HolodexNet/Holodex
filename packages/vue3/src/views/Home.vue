@@ -28,7 +28,7 @@
       {{ $t("views.home.recentVideoToggles.subber") }}
     </h-tab>
     <template #filters>
-      <home-filter-button></home-filter-button>
+      <home-filter-button/>
     </template>
   </h-tabs>
   <div class="px-4">

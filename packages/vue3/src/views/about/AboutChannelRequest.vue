@@ -9,7 +9,7 @@ letter-spacing: 0.0178571429em;
 padding: 1rem;
 text-transform: none; -->
   <div class="p-2">
-    <div class="text-lg font-bold"></div>
+    <div class="text-lg font-bold"/>
 
     <RadioGroup v-model="type" class="2xl:flex 2xl:flex-row">
       <!-- <RadioGroupLabel>
@@ -59,7 +59,7 @@ text-transform: none; -->
       <div>
         <div
           class="i-icon-park-outline:guide-board mr-2 min-w-[32px] text-3xl"
-        ></div>
+        />
         <p v-html="alertText(type)" />
       </div>
     </div>
@@ -73,7 +73,7 @@ text-transform: none; -->
         v-model="link"
         title="Channel URL"
         placeholder="https://www.youtube.com/..."
-      ></h-text-field>
+      />
 
       <h-text-field
         v-if="type !== DELETE && type !== ADD_CLIPPER"
@@ -134,7 +134,7 @@ text-transform: none; -->
       class="btn btn-primary mt-2 w-32 text-lg shadow-md"
       @click="onSubmit"
     >
-      <div class="i-mdi:check"></div>
+      <div class="i-mdi:check"/>
     </button>
   </div>
 </template>

@@ -39,21 +39,21 @@
                 (user.discord_id ? ' text-primary-400' : '  text-gray-400')
               "
               class=""
-            ></div>
+            />
             <div
               :class="
                 icons.google +
                 (user.google_id ? ' text-primary-400' : '  text-gray-400')
               "
               class=""
-            ></div>
+            />
             <div
               :class="
                 icons.twitter +
                 (user.twitter_id ? ' text-primary-400' : '  text-gray-400')
               "
               class=""
-            ></div>
+            />
           </div>
           <div class="text-sm text-secondary">
             <span v-if="user.role !== 'user'" class="font-bold capitalize">
@@ -66,7 +66,7 @@
 
       <h-list class="gap-1 p-1">
         <h-list-item to="/login">
-          <h-icon class="i-mdi:login-variant h-6 w-6"></h-icon>
+          <h-icon class="i-mdi:login-variant h-6 w-6"/>
           {{ $t("component.mainNav.login") }}
         </h-list-item>
         <div v-if="user && !inNavDrawer" class="divider my-0" />
@@ -81,7 +81,7 @@
         >
           <h-icon
             class="i-material-symbols:manage-accounts-rounded h-6 w-6"
-          ></h-icon>
+          />
           {{ $t("component.mainNav.accountSettings") }}
         </h-list-item>
         <h-list-item
@@ -89,7 +89,7 @@
           class="text-warning"
           @click.prevent.stop="logout"
         >
-          <h-icon class="i-mdi:logout-variant h-6 w-6"></h-icon>
+          <h-icon class="i-mdi:logout-variant h-6 w-6"/>
           {{ $t("component.mainNav.logout") }}
         </h-list-item>
       </h-list>

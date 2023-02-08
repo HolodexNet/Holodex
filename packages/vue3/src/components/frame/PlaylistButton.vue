@@ -6,7 +6,7 @@
         'opacity-50':
           currentPlaylistQuery.isError.value || !currentPlaylistQuery.data,
       }"
-    ></div>
+    />
   </div>
 </template>
 <script setup lang="ts">

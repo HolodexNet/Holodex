@@ -139,10 +139,10 @@
             v-if="profileDisplay && activeChat.length > 1"
             class="ProfileListCard flex flex-col"
           >
-            <span v-for="(prf, index) in profile" :key="index"
-              ><span v-if="index === profileIdx">> </span
-              >{{ index + 1 + ". " + prf.Name }}</span
-            >
+            <span v-for="(prf, index) in profile" :key="index">
+              <span v-if="index === profileIdx">></span>
+              {{ index + 1 + ". " + prf.Name }}
+            </span>
           </v-card>
         </div>
         <div
@@ -203,10 +203,10 @@
             v-if="profileDisplay && activeChat.length < 2"
             class="ProfileListCard flex flex-col"
           >
-            <span v-for="(prf, index) in profile" :key="index"
-              ><span v-if="index === profileIdx">> </span
-              >{{ index + 1 + ". " + prf.Name }}</span
-            >
+            <span v-for="(prf, index) in profile" :key="index">
+              <span v-if="index === profileIdx">></span>
+              {{ index + 1 + ". " + prf.Name }}
+            </span>
           </v-card>
         </div>
       </div>
@@ -236,14 +236,14 @@
             @keypress.enter="addEntry()"
           >
             <template #prepend>
-              <span style="opacity: 0.8" class="mt-1">{{
-                profile[profileIdx].Prefix
-              }}</span>
+              <span style="opacity: 0.8" class="mt-1">
+                {{ profile[profileIdx].Prefix }}
+              </span>
             </template>
             <template #append>
-              <span style="opacity: 0.8" class="mt-1">{{
-                profile[profileIdx].Suffix
-              }}</span>
+              <span style="opacity: 0.8" class="mt-1">
+                {{ profile[profileIdx].Suffix }}
+              </span>
             </template>
           </v-text-field>
           <v-btn large class="mx-2" @click="addEntry()">
@@ -273,9 +273,18 @@
                     {{ mdiKeyboard }}
                   </v-icon>
                 </template>
-                <span>While typing in TL box</span><br />
-                <span><kbd>⇧</kbd><kbd>⇩</kbd> to change Profiles</span><br />
-                <span><kbd>Ctrl+[1~9]</kbd> to quick switch to Profile</span>
+                <span>While typing in TL box</span>
+                <br />
+                <span>
+                  <kbd>⇧</kbd>
+                  <kbd>⇩</kbd>
+                  to change Profiles
+                </span>
+                <br />
+                <span>
+                  <kbd>Ctrl+[1~9]</kbd>
+                  to quick switch to Profile
+                </span>
               </h-tooltip>
             </v-card-subtitle>
             <v-card-text class="align-stretch flex">
@@ -479,8 +488,9 @@
             <a
               style="text-decoration: underline; font-size: 0.7em"
               @click="changeUsernameClick()"
-              >{{ $t("views.watch.uploadPanel.usernameChange") }}</a
             >
+              {{ $t("views.watch.uploadPanel.usernameChange") }}
+            </a>
           </v-card-subtitle>
           <v-select
             v-model="TLLang"
@@ -496,9 +506,9 @@
             :label="$t('views.tlClient.settingPanel.mainStreamLink')"
             :readonly="$route.query.video ? true : false"
           />
-          <v-card-title>{{
-            $t("views.tlClient.settingPanel.collabLink")
-          }}</v-card-title>
+          <v-card-title>
+            {{ $t("views.tlClient.settingPanel.collabLink") }}
+          </v-card-title>
           <v-text-field
             v-for="(AuxLink, index) in collabLinks"
             :key="index"

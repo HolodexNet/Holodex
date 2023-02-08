@@ -11,8 +11,8 @@
     <h-icon
       v-if="icon"
       :class="{[icon!]: icon, '-ml-1 mr-1': $slots.default}"
-    ></h-icon>
-    <slot></slot>
+    />
+    <slot/>
   </a>
 </template>
 

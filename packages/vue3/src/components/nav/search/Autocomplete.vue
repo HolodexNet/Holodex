@@ -11,7 +11,7 @@
     <div class="relative mx-auto flex w-full cursor-pointer flex-nowrap">
       <div class="multiselect-wrapper">
         <div class="tags">
-          <slot name="chips" :selection="selection"></slot>
+          <slot name="chips" :selection="selection"/>
         </div>
         <input
           ref="inputField"
@@ -32,7 +32,7 @@
               inputField?.focus();
             })
           "
-        ></div>
+        />
       </slot>
     </div>
     <!-- Dropdown Menu -->
@@ -41,7 +41,7 @@
       class="multiselect-dropdown"
       :class="{ 'is-top': dropUp, 'flex-col-reverse': dropUp }"
     >
-      <slot name="dropdown" :active="activeIndex" :up="dropUp"> </slot>
+      <slot name="dropdown" :active="activeIndex" :up="dropUp"/>
     </div>
   </div>
 </template>

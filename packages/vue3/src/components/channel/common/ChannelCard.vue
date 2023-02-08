@@ -9,12 +9,13 @@
       <span
         v-if="live"
         class="live-indicator indicator-bottom indicator-item mb-4 mr-4"
-      ></span>
+      />
       <span
         v-else-if="$slots.default"
         class="live-indicator text-2xs indicator-bottom indicator-item right-5 mb-3 bg-slate-500 text-white"
-        ><slot></slot
-      ></span>
+      >
+        <slot/>
+      </span>
 
       <channel-img
         :channel="channel"
@@ -27,12 +28,14 @@
       class="flex-grow"
       :class="{ 'opacity-40': channel.inactive, 'ml-2': !slim }"
     >
-      <span class="text-xs text-base-content opacity-75 line-clamp-1"
-        ><b>{{
-          channel.org ||
-          (channel.type === "subber" && $t("views.channels.tabs.Subber")) ||
-          "???"
-        }}</b>
+      <span class="text-xs text-base-content opacity-75 line-clamp-1">
+        <b>
+          {{
+            channel.org ||
+            (channel.type === "subber" && $t("views.channels.tabs.Subber")) ||
+            "???"
+          }}
+        </b>
         {{ group ? "/ " + group : "" }}
       </span>
       <span class="-mt-1 line-clamp-1" :class="{ 'text-lg': !slim }">
@@ -54,7 +57,7 @@
         v-if="channel.top_topics && !slim"
         class="opacity-60 hover:opacity-100"
       >
-        <div class="i-uil:award inline-block align-middle text-lg"></div>
+        <div class="i-uil:award inline-block align-middle text-lg"/>
         <div
           v-for="t in channel.top_topics"
           :key="channel.id + 't' + t"
@@ -64,7 +67,7 @@
         </div>
       </div>
     </div>
-    <slot name="buttons"></slot>
+    <slot name="buttons"/>
     <div v-if="!slim && !$slots.buttons" class="flex h-full flex-col gap-1">
       <a
         class="c-card-icon hover:text-red-500"
@@ -72,7 +75,7 @@
         target="_blank"
         title="Youtube"
       >
-        <div :class="icons.youtube"></div>
+        <div :class="icons.youtube"/>
       </a>
       <a
         class="c-card-icon hover:text-cyan-500"
@@ -81,7 +84,7 @@
         target="_blank"
         title="Twitter"
       >
-        <div :class="icons.twitter"></div>
+        <div :class="icons.twitter"/>
       </a>
       <button
         class="c-card-icon"
@@ -94,7 +97,7 @@
       >
         <div
           :class="isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'"
-        ></div>
+        />
       </button>
     </div>
   </component>

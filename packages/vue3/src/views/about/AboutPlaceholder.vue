@@ -48,7 +48,7 @@
           placeholder="4a7f32A_4a2"
           class="input-bordered input w-full border-solid"
         />
-        <button class="btn-square btn" @click="loadExistingPlaceholder(id)">
+        <button class="btn btn-square" @click="loadExistingPlaceholder(id)">
           <div class="i-ion:checkmark" />
         </button>
       </label>

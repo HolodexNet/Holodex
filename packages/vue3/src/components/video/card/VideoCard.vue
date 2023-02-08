@@ -54,9 +54,9 @@
         'ml-2': horizontal,
       }"
     >
-      <template v-if="$slots.default" #action
-        ><slot :video="video"></slot
-      ></template>
+      <template v-if="$slots.default" #action>
+        <slot :video="video"/>
+      </template>
     </video-card-text>
     <!-- </a> -->
   </a>

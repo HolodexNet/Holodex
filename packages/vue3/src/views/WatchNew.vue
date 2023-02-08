@@ -9,7 +9,7 @@
             ref="playerInstance"
             :video="video"
             class="watch-video overflow-hidden rounded-xl"
-          ></video-player>
+          />
         </div>
 
         <div class="px-2 pb-1">
@@ -18,7 +18,7 @@
           <div class="flex items-center">
             <div class="flex items-center">
               <div v-if="video.topic_id" class="flex items-center text-sm">
-                <div class="i-fluent:tag-multiple-16-regular mr-0.5"></div>
+                <div class="i-fluent:tag-multiple-16-regular mr-0.5"/>
                 {{ video.topic_id }}
                 &nbsp;
               </div>
@@ -72,7 +72,7 @@
             v-if="video.mentions"
             class="mt-2 flex flex-wrap items-center gap-y-2"
           >
-            <div class="i-mdi:account-group mr-1 text-2xl"></div>
+            <div class="i-mdi:account-group mr-1 text-2xl"/>
             <template
               v-for="mention in mentionsShowMore
                 ? video.mentions
@@ -84,12 +84,13 @@
               v-if="video.mentions.length > 3"
               class="cursor-pointer text-sm text-primary"
               @click="mentionsShowMore = !mentionsShowMore"
-              >[{{ mentionsShowMore ? "-" : "+"
-              }}{{ video.mentions.length - 3 }}]</a
             >
+              [{{ mentionsShowMore ? "-" : "+"
+              }}{{ video.mentions.length - 3 }}]
+            </a>
           </div>
           <!-- </div> -->
-          <div class="divider m-0.5"></div>
+          <div class="divider m-0.5"/>
           <h-truncated-text
             :text="video.description"
             class="px-2 opacity-90"

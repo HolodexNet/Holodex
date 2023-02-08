@@ -6,13 +6,13 @@
       ref="player"
       :video-id="props.video.id"
       v-on="events"
-    ></youtube-player>
+    />
     <twitch-player
       v-else-if="props.video?.type === 'placeholder' && twitchChannel"
       ref="player"
       :channel-id="twitchChannel"
       v-on="events"
-    ></twitch-player>
+    />
   </div>
 </template>
 <script lang="ts" setup>

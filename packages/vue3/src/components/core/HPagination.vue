@@ -7,7 +7,7 @@
       }"
       @click="() => changePage(Math.max(modelValue - 1, 1))"
     >
-      <div class="i-material-symbols:chevron-left-rounded text-lg"></div>
+      <div class="i-material-symbols:chevron-left-rounded text-lg"/>
     </button>
     <template v-for="pageNum in paginationPages" :key="pageNum">
       <button
@@ -29,7 +29,7 @@
       }"
       @click="() => changePage(Math.min(props.modelValue + 1, totalPages))"
     >
-      <div class="i-material-symbols:chevron-right-rounded text-lg"></div>
+      <div class="i-material-symbols:chevron-right-rounded text-lg"/>
     </button>
   </div>
 </template>

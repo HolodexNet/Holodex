@@ -102,7 +102,7 @@
     </div>
     <template #action>
       <div class="self-center" @click.stop>
-        <slot name="action"></slot>
+        <slot name="action"/>
         <video-card-menu
           v-if="!$slots.action"
           :video="video"

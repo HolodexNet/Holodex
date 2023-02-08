@@ -20,7 +20,7 @@
       <DisclosurePanel
         class="bg-primary-700 bg-opacity-5 p-4 text-sm text-opacity-80"
       >
-        <slot></slot>
+        <slot/>
       </DisclosurePanel>
     </transition>
   </Disclosure>

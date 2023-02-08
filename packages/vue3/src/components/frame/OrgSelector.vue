@@ -27,9 +27,10 @@
               <span
                 :key="currentOrg.name + 'header'"
                 style="text-decoration: underline"
-                >{{ currentOrg.short || currentOrg.name }}</span
-              ></transition
-            >
+              >
+                {{ currentOrg.short || currentOrg.name }}
+              </span>
+            </transition>
             <span ref="dexBtn" class="text-primary">dex</span>
             <div
               class="change-org-icon i-material-symbols:arrow-drop-down-rounded transform-gpu border-none text-xl transition-transform"
@@ -37,7 +38,7 @@
                 'rotate-180': activator.props['aria-expanded'] === 'true',
               }"
               style="width: 30px; height: 30px"
-            ></div>
+            />
           </div>
         </slot>
       </template>
@@ -53,16 +54,16 @@
           <span>{{ org.name }}</span>
         </li>
         <li @click="showOrgDialog = true">
-          <span
-            ><i class="i-material-symbols:layers-rounded"></i
-            >{{ $t("views.favorites.showall") }}</span
-          >
+          <span>
+            <i class="i-material-symbols:layers-rounded"/>
+            {{ $t("views.favorites.showall") }}
+          </span>
         </li>
       </ul>
     </v-menu>
   </slot>
   <v-dialog v-model="showOrgDialog">
-    <div class="card-compact card h-[90vh] max-w-xs bg-base-100">
+    <div class="card card-compact h-[90vh] max-w-xs bg-base-100">
       <div class="card-body overflow-y-auto px-1" style="">
         <input
           v-model="search"
@@ -84,7 +85,7 @@
               @click="$emit('changed', org, closeDialog)"
             >
               <h-btn
-                class="btn btn-sm btn-square"
+                class="btn btn-square btn-sm"
                 :class="
                   orgFavoritesNameSet.has(org.name)
                     ? 'btn-outline btn-primary'
@@ -93,8 +94,7 @@
                 style="padding-top: 0px; padding-bottom: 0px"
                 icon="i-material-symbols:star-outline-rounded w-8 h-8"
                 @click.stop="site.toggleFavoriteOrg(org)"
-              >
-              </h-btn>
+              />
               <span class="flex flex-grow">{{ org.name }}</span>
               <div
                 v-if="orgFavoritesNameSet.has(org.name)"
@@ -107,8 +107,7 @@
                   @click.stop.prevent="
                     site.shiftOrgFavorites({ org, up: true })
                   "
-                >
-                </h-btn>
+                />
                 <h-btn
                   class="btn btn-ghost btn-sm"
                   style="padding-top: 0px; padding-bottom: 0px"
@@ -116,8 +115,7 @@
                   @click.stop.prevent="
                     site.shiftOrgFavorites({ org, up: false })
                   "
-                >
-                </h-btn>
+                />
               </div>
             </a>
           </li>
@@ -125,9 +123,9 @@
       </div>
       <h-divider />
       <div class="h-12 w-full">
-        <h-btn text class="text-red ml-auto" @click="showOrgDialog = false">{{
-          $t("views.app.close_btn")
-        }}</h-btn>
+        <h-btn text class="text-red ml-auto" @click="showOrgDialog = false">
+          {{ $t("views.app.close_btn") }}
+        </h-btn>
       </div>
     </div>
   </v-dialog>

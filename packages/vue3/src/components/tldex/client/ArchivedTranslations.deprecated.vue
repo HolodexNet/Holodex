@@ -14,9 +14,9 @@
             {{ mdiTransferLeft }}
           </v-icon>
         </v-btn>
-        <code class="mr-1">{{
-          `${timeOffset >= 0 ? "+" : ""}${timeOffset / 1000}s`
-        }}</code>
+        <code class="mr-1">
+          {{ `${timeOffset >= 0 ? "+" : ""}${timeOffset / 1000}s` }}
+        </code>
         <v-btn
           icon
           x-small
@@ -57,9 +57,9 @@
             <h-divider />
             <v-card-actions>
               <v-spacer />
-              <v-btn text color="red" @click="expanded = false">{{
-                $t("views.app.close_btn")
-              }}</v-btn>
+              <v-btn text color="red" @click="expanded = false">
+                {{ $t("views.app.close_btn") }}
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -85,7 +85,7 @@
       <message-v-renderer
         :messages="dividedTLs"
         @message-click="handleClick"
-      ></message-v-renderer>
+      />
     </portal>
     <portal v-if="chatMixin.showSubtitle.value" :to="`${videoId}-overlay`">
       <WatchSubtitleOverlay :messages="toDisplay" />

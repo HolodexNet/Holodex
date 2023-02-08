@@ -31,17 +31,17 @@
             title="Follow us on twitter"
             href="https://twitter.com/holodex"
           >
-            <div class="i-carbon:logo-twitter m-auto"></div>
+            <div class="i-carbon:logo-twitter m-auto"/>
           </a>
           <a
             class="btn-square p-0"
             title="Support us on Ko-Fi"
             href="https://ko-fi.com/holodex"
           >
-            <div class="i-cib:ko-fi m-auto"></div>
+            <div class="i-cib:ko-fi m-auto"/>
           </a>
           <a class="btn-square p-0" title="Issues / Source Code">
-            <div class="i-carbon:logo-github m-auto"></div>
+            <div class="i-carbon:logo-github m-auto"/>
           </a>
         </li>
         <li v-for="tab in tabs" :key="tab.path">
@@ -54,7 +54,7 @@
             <div
               :class="tab.class"
               class="mx-1 inline-block text-xl md:mr-2"
-            ></div>
+            />
             <span v-if="!minimizeSidebar">{{ tab.name }}</span>
           </router-link>
         </li>
@@ -72,7 +72,7 @@
       <h1 v-if="minimizeSidebar" class="mb-2 text-xl font-semibold">
         {{ tabs.find((x) => x.active)?.name }}
       </h1>
-      <router-view></router-view>
+      <router-view/>
     </div>
   </div>
 

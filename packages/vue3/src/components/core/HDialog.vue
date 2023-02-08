@@ -8,7 +8,7 @@
         v-bind="$attrs"
       >
         <div ref="target" class="modal-box bg-transparent p-0">
-          <slot v-bind="{ close }"></slot>
+          <slot v-bind="{ close }"/>
         </div>
       </div>
     </Transition>

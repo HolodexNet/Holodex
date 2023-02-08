@@ -30,14 +30,14 @@
           class="alert alert-warning shadow-lg"
         >
           <div>
-            <svg class="i-wpf:faq m-1 flex-shrink-0 text-2xl" style=""></svg>
+            <svg class="i-wpf:faq m-1 flex-shrink-0 text-2xl" style=""/>
             <span class="text-sm">
               {{
                 $t("component.reportDialog.collabing", {
                   org: site.currentOrg.name,
                 })
-              }}</span
-            >
+              }}
+            </span>
           </div>
         </div>
 

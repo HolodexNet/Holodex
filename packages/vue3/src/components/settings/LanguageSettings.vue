@@ -14,18 +14,18 @@
     <template #item="{ item, props }">
       <!-- {{item}} -->
       <div class="p-1" v-bind="props">
-        <span class="text-primary" style="">{{
-          (item as any).raw.display
-        }}</span>
+        <span class="text-primary" style="">
+          {{ (item as any).raw.display }}
+        </span>
         <span class="px-2 text-sm text-secondary">
-          ♡ {{ (item as any).raw.credit }}</span
-        >
+          ♡ {{ (item as any).raw.credit }}
+        </span>
       </div>
     </template>
     <template #selection="{ item }">
-      <span class="primary--text" style="">{{
-        (item as any).raw.display
-      }}</span>
+      <span class="primary--text" style="">
+        {{ (item as any).raw.display }}
+      </span>
     </template>
   </v-select>
   <div class="divider" />
@@ -35,9 +35,9 @@
   </div>
   <div class="lang-settings form-control max-w-sm">
     <label class="label cursor-pointer">
-      <span class="label-text">{{
-        $t("views.settings.useEnglishNameMsg")
-      }}</span>
+      <span class="label-text">
+        {{ $t("views.settings.useEnglishNameMsg") }}
+      </span>
       <input
         v-model="langStore.useEnglishName"
         type="checkbox"

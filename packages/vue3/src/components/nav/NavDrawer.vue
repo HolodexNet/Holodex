@@ -35,7 +35,7 @@
               v-if="page.icon.startsWith('i')"
               :class="page.icon"
               class="ml-1 h-6 w-6"
-            ></div>
+            />
             <div>{{ page.name }}</div>
           </router-link>
         </li>
@@ -66,16 +66,15 @@
           text
           :icon="expanded ? 'i-mdi:chevron-up' : 'i-mdi:chevron-down'"
           @click="expanded = !expanded"
-        >
-        </h-btn>
+        />
       </div>
       <slot />
       <li v-if="isMobile" class="py-0 text-xs font-semibold text-gray-400">
         <template v-if="!site.user">
           <router-link :to="'/login'">
-            <div class="i-ion:md-log-in"></div>
-            Login</router-link
-          >
+            <div class="i-ion:md-log-in"/>
+            Login
+          </router-link>
         </template>
         <template v-else-if="site.user">
           <router-link
@@ -83,14 +82,14 @@
             class="mt-3 h-6"
             style="padding-top: 3px; padding-bottom: 3px"
           >
-            <div class="i-tabler:user min-w-3 -mr-1 h-3"></div>
+            <div class="i-tabler:user min-w-3 -mr-1 h-3"/>
             {{ site.user.username }} : {{ site.user.contribution_count }}pts
           </router-link>
         </template>
       </li>
     </ul>
 
-    <sidebar-favorites></sidebar-favorites>
+    <sidebar-favorites/>
 
     <div
       id="bottom-bar"
@@ -101,16 +100,14 @@
         title="Twitter"
         :class="icons.twitter + ' text-sm'"
         style="color: #1da1f2"
-      >
-      </a>
+      />
       <a
         title="Support holodex (Ko-fi)"
         href="https://ko-fi.com/holodex"
         class="i-simple-icons:kofi text-sm"
         style="color: #ff5e5b"
-      >
-      </a>
-      <span class="tracking-tight"> ©2020 Holodex </span>
+      />
+      <span class="tracking-tight">©2020 Holodex</span>
       |
       <router-link to="/settings" class="line-clamp-1 hover:bg-slate-500">
         {{ language }}

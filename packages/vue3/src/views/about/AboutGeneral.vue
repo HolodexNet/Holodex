@@ -2,10 +2,10 @@
   <article class="prose">
     <h3 class="mb-2 text-lg">What we are?</h3>
     <p>
-      <b>Holodex</b> is a fan-built platform for watching VTubers. We are built
-      by DD for DDs.
+      <b>Holodex</b>
+      is a fan-built platform for watching VTubers. We are built by DD for DDs.
     </p>
-    <holodex-stats></holodex-stats>
+    <holodex-stats/>
     <p>
       We organize clips and collabs by talents included, tabulate songs sang
       inside individual videos and as part of karaoke streams, compile agencies
@@ -51,26 +51,26 @@
         title="Follow us on twitter"
         href="https://twitter.com/holodex"
       >
-        <div class="i-carbon:logo-twitter"></div>
+        <div class="i-carbon:logo-twitter"/>
       </a>
       <a
         class="btn-outline btn btn-secondary p-0"
         title="Support us on Ko-Fi"
         href="https://ko-fi.com/holodex"
       >
-        <div class="i-cib:ko-fi"></div>
+        <div class="i-cib:ko-fi"/>
       </a>
       <a class="btn-outline btn btn-primary p-0" title="Issues / Source Code">
-        <div class="i-carbon:logo-github"></div>
+        <div class="i-carbon:logo-github"/>
       </a>
       <a class="btn-outline btn btn-warning p-0" title="API Documentation">
-        <div class="i-fluent:document-flowchart-20-regular"></div>
+        <div class="i-fluent:document-flowchart-20-regular"/>
       </a>
       <a
         class="btn-outline btn border-purple-500 p-0 text-purple-500 hover:bg-purple-500"
         title="Holodex Discord"
       >
-        <div class="i-carbon:logo-discord"></div>
+        <div class="i-carbon:logo-discord"/>
       </a>
     </div>
     <p class="mt-4 text-sm opacity-60">

@@ -23,12 +23,13 @@
           <div
             v-if="source.is_moderator"
             class="i-mdi:wrench font-sm mb-[-2px] inline-block"
-          ></div>
+          />
           {{ source.name }}
-          <span v-if="source.is_verified" style="font-weight: 800">✓</span>:
+          <span v-if="source.is_verified" style="font-weight: 800">✓</span>
+          :
           <div
             class="i-mdi:cog font-sm chat-cog absolute mt-1 inline-block"
-          ></div>
+          />
         </span>
       </div>
       <a class="chat-message" :data-time="source.relativeMs / 1000">

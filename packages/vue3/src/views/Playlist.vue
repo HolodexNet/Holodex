@@ -1,10 +1,10 @@
 <template>
   <div class="container mx-auto max-w-5xl pt-4">
-    <span class="text-3xl">{{ $t("views.playlist.page-heading") }}</span
-    ><br />
-    <span class="text-sm text-primary-300 opacity-60">{{
-      $t("views.playlist.page-instruction")
-    }}</span>
+    <span class="text-3xl">{{ $t("views.playlist.page-heading") }}</span>
+    <br />
+    <span class="text-sm text-primary-300 opacity-60">
+      {{ $t("views.playlist.page-instruction") }}
+    </span>
     <!-- <v-list class="mt-4" color="transparent"> -->
     <div
       id="new-playlist-btn"
@@ -16,9 +16,10 @@
           <h-icon
             class="i-material-symbols:playlist-add-rounded h-12 w-12 text-primary"
             left
-          ></h-icon>
+          />
           <span>
-            {{ $t("views.playlist.new-playlist-btn-label") }}<br />
+            {{ $t("views.playlist.new-playlist-btn-label") }}
+            <br />
             <div v-if="!user" class="opacity-60">
               {{ $t("views.playlist.login-prompt") }}
             </div>
@@ -42,7 +43,7 @@
           <h-icon
             class="i-material-symbols:format-list-bulleted-rounded w-8 text-secondary"
             left
-          ></h-icon>
+          />
           {{ playlist.name }}
         </span>
         <br />

@@ -5,12 +5,12 @@
         id="tri1"
         d="M4.5 2a2 2 0 0 1 3-1.7L23 9.6a2 2 0 0 1 0 3.5L7.6 22.4a2 2 0 0 1-3-1.7V2Z"
         fill="url(#a-iid-3)"
-      ></path>
+      />
       <path
         id="tri2"
         d="M0 2A2 2 0 0 1 3 .3l15.5 9.3a2 2 0 0 1 0 3.5L3.1 22.4A2 2 0 0 1 0 20.7V2Z"
         fill="url(#b-iid-3)"
-      ></path>
+      />
     </g>
     <defs>
       <linearGradient
@@ -21,8 +21,8 @@
         y2="18.5"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#F06292"></stop>
-        <stop offset="1" stop-color="#FF3A81"></stop>
+        <stop stop-color="#F06292"/>
+        <stop offset="1" stop-color="#FF3A81"/>
       </linearGradient>
       <linearGradient
         id="b-iid-3"
@@ -32,8 +32,8 @@
         y2="11.3"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#5DA2F2"></stop>
-        <stop offset="1" stop-color="#715BF7" stop-opacity=".8"></stop>
+        <stop stop-color="#5DA2F2"/>
+        <stop offset="1" stop-color="#715BF7" stop-opacity=".8"/>
       </linearGradient>
     </defs>
   </svg>

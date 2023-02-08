@@ -3,7 +3,7 @@
     v-if="id && video"
     ref="playerInstance"
     :video="video"
-  ></video-player>
+  />
 </template>
 <script lang="ts" setup>
 import { PlayerRef } from "@/components/player/usePlayer";

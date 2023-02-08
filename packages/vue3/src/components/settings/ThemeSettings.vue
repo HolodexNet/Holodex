@@ -19,9 +19,9 @@
     <template #item="{ item, props }">
       <!-- {{item}} -->
       <div class="p-1 px-2" v-bind="props">
-        <span :style="{ color: item.raw.colors.primary }">{{
-          (item as any).raw.name
-        }}</span>
+        <span :style="{ color: item.raw.colors.primary }">
+          {{ (item as any).raw.name }}
+        </span>
       </div>
     </template>
     <template #selection="{ item }">
@@ -36,8 +36,9 @@
   <div class="form-control max-w-sm">
     <label class="label cursor-pointer">
       <span class="label-text">
-        <b>Dark Color Theme</b>: Indicate if the color theme is dark. Dark
-        themes suit darker backgrounds.
+        <b>Dark Color Theme</b>
+        : Indicate if the color theme is dark. Dark themes suit darker
+        backgrounds.
       </span>
       <input
         type="checkbox"
@@ -78,38 +79,38 @@
   <div class="grid grid-cols-4 gap-2">
     <div class="btn-group">
       <div class="btn btn-xs bg-primary-700">700</div>
-      <div class="btn btn-xs bg-primary-600"></div>
-      <div class="btn btn-xs bg-primary-500"></div>
-      <div class="btn btn-xs bg-primary"></div>
-      <div class="btn btn-xs bg-primary-300"></div>
-      <div class="btn btn-xs bg-primary-200"></div>
+      <div class="btn btn-xs bg-primary-600"/>
+      <div class="btn btn-xs bg-primary-500"/>
+      <div class="btn btn-xs bg-primary"/>
+      <div class="btn btn-xs bg-primary-300"/>
+      <div class="btn btn-xs bg-primary-200"/>
       <div class="btn btn-xs bg-primary-100">100</div>
     </div>
     <div class="btn-group">
       <div class="btn btn-xs bg-secondary-700">700</div>
-      <div class="btn btn-xs bg-secondary-600"></div>
-      <div class="btn btn-xs bg-secondary-500"></div>
-      <div class="btn btn-xs bg-secondary"></div>
-      <div class="btn btn-xs bg-secondary-300"></div>
-      <div class="btn btn-xs bg-secondary-200"></div>
+      <div class="btn btn-xs bg-secondary-600"/>
+      <div class="btn btn-xs bg-secondary-500"/>
+      <div class="btn btn-xs bg-secondary"/>
+      <div class="btn btn-xs bg-secondary-300"/>
+      <div class="btn btn-xs bg-secondary-200"/>
       <div class="btn btn-xs bg-secondary-100">100</div>
     </div>
     <div class="btn-group">
       <div class="btn btn-xs bg-accent-700">700</div>
-      <div class="btn btn-xs bg-accent-600"></div>
-      <div class="btn btn-xs bg-accent-500"></div>
-      <div class="btn btn-xs bg-accent"></div>
-      <div class="btn btn-xs bg-accent-300"></div>
-      <div class="btn btn-xs bg-accent-200"></div>
+      <div class="btn btn-xs bg-accent-600"/>
+      <div class="btn btn-xs bg-accent-500"/>
+      <div class="btn btn-xs bg-accent"/>
+      <div class="btn btn-xs bg-accent-300"/>
+      <div class="btn btn-xs bg-accent-200"/>
       <div class="btn btn-xs bg-accent-100">100</div>
     </div>
     <div class="btn-group">
       <div class="btn btn-xs bg-bgColor-700">700</div>
-      <div class="btn btn-xs bg-bgColor-600"></div>
-      <div class="btn btn-xs bg-bgColor-500"></div>
-      <div class="btn btn-xs bg-bgColor-400"></div>
-      <div class="btn btn-xs bg-bgColor-300"></div>
-      <div class="btn btn-xs bg-bgColor-200"></div>
+      <div class="btn btn-xs bg-bgColor-600"/>
+      <div class="btn btn-xs bg-bgColor-500"/>
+      <div class="btn btn-xs bg-bgColor-400"/>
+      <div class="btn btn-xs bg-bgColor-300"/>
+      <div class="btn btn-xs bg-bgColor-200"/>
       <div class="btn btn-xs bg-bgColor-100">100</div>
     </div>
   </div>

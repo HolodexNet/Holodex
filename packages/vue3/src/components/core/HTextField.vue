@@ -7,7 +7,7 @@
       </span>
     </label>
     <div class="input-group">
-      <slot name="prepend"></slot>
+      <slot name="prepend"/>
       <input
         v-if="as === 'input'"
         v-model="localValue"
@@ -22,7 +22,7 @@
         type="text"
         class="input-bordered input w-full border-solid"
       />
-      <slot name="append"></slot>
+      <slot name="append"/>
     </div>
 
     <label v-if="error || explanation" class="label">

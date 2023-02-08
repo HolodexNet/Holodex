@@ -75,7 +75,7 @@
     <div v-if="needExtension" class="pa-5">
       <i18n path="views.watch.chat.archiveNeedExtension" :tag="false">
         <template #0>
-          <router-link to="/extension"> Holodex+ </router-link>
+          <router-link to="/extension">Holodex+</router-link>
         </template>
       </i18n>
     </div>

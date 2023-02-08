@@ -23,8 +23,8 @@
         class="badge badge-ghost mr-1 cursor-default rounded-sm border-0 bg-bgColor px-1 text-xs font-semibold tracking-tight hover:badge-error"
         @click="query.splice(midx, 1)"
       >
-        <span class=""> {{ categoryName(item) }}: </span>
-        <span class="ml-1 rounded-lg"> {{ categoryValue(item) }} </span>
+        <span class="">{{ categoryName(item) }}:</span>
+        <span class="ml-1 rounded-lg">{{ categoryValue(item) }}</span>
       </div>
     </template>
     <template #caret>
@@ -33,30 +33,30 @@
         class="i-ion:search opacity-40"
         style="margin: auto 0px"
         @click="tryFocusInput"
-      ></div>
+      />
       <template v-else>
         <div
           class="i-icon-park-outline:enter-key hidden w-7 opacity-50 group-focus-within:block"
           style="margin: auto 0px"
           @click="commitSearch"
-        ></div>
+        />
         <div
           class="i-lucide:text-cursor-input block w-7 opacity-25 hover:text-accent-400 hover:opacity-100 group-focus-within:hidden"
           style="margin: auto 0px"
           @click="tryFocusInput"
-        ></div
-      ></template>
+        />
+      </template>
     </template>
     <template #dropdown="{ active }">
       <!-- MENU MAIN HEADER [Search Options.... Learn More <help>]-->
       <template v-if="results[0]?.incomplete">
         <div class="flex bg-bgColor py-2 pl-8 pr-4 text-xs font-extrabold">
-          <span class="cursor-default">{{
-            $t("search.menu_header_text")
-          }}</span>
+          <span class="cursor-default">
+            {{ $t("search.menu_header_text") }}
+          </span>
           <a class="ml-auto inline-flex opacity-50" href="#" :tabindex="40">
             <span>{{ $t("search.guide_btn") }}</span>
-            <div class="i-ion:help-circle-outline ml-1 text-[16px]"></div>
+            <div class="i-ion:help-circle-outline ml-1 text-[16px]"/>
           </a>
         </div>
       </template>
@@ -76,8 +76,8 @@
               :class="
                 icons.search[item.type] || 'i-fluent:grid-dots-20-regular'
               "
-            ></span>
-            <span class="ml-2 font-light"> {{ categoryName(item) }}: </span>
+            />
+            <span class="ml-2 font-light">{{ categoryName(item) }}:</span>
             <span class="ml-1 opacity-40">
               {{ categoryExplanation(item) }}
               {{ item.text !== "?" ? item.text : "" }}
@@ -118,21 +118,21 @@
             >
               <!-- search icon  -->
             </span>
-            <span class="font-light"> {{ categoryName(item) }}: </span>
+            <span class="font-light">{{ categoryName(item) }}:</span>
             <span class="" :class="{ 'text-red-300': !validateItem(item) }">
               {{ categoryValue(item) }}
             </span>
             <div
               v-if="idx === active"
               class="i-icon-park-solid:enter-key-one ml-auto mt-1 opacity-25"
-            ></div>
+            />
           </div>
         </template>
       </div>
       <h-progress-indeterminate
         v-show="autocompleteLoading"
         style="height: 2px"
-      ></h-progress-indeterminate>
+      />
     </template>
   </Autocomplete>
 </template>

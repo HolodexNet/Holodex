@@ -15,11 +15,11 @@
     <template v-if="category !== Tabs.BLOCKED" #filters>
       <h-menu>
         <template #activator>
-          <MenuButton class="dropdownLabelBtn"
-            >{{ currentSortValue.text }}
+          <MenuButton class="dropdownLabelBtn">
+            {{ currentSortValue.text }}
             <h-icon
               class="i-heroicons:chevron-down -mr-1 ml-1 h-4 w-4"
-            ></h-icon>
+            />
           </MenuButton>
         </template>
         <template #default>
@@ -66,8 +66,8 @@
         :query="query"
         :variant="cardView ? 'card' : 'list'"
         :grouping="currentSortValue.value"
-      ></channel-list>
-      <blocked-list v-else></blocked-list>
+      />
+      <blocked-list v-else/>
       <!-- Static channel list with no loading for locally stored blocked/favorites list -->
       <!-- <ChannelList
         :channels="channelList"

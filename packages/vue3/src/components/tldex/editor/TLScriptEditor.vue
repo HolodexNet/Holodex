@@ -22,7 +22,8 @@
           {{ $t("views.tlClient.menu.setting") }}
         </v-btn>
         <v-btn small outlined @click="processLog()">
-          {{ $t("views.scriptEditor.menu.save") }} <code>Ctrl-S</code>
+          {{ $t("views.scriptEditor.menu.save") }}
+          <code>Ctrl-S</code>
         </v-btn>
         <!-- <v-btn
           small
@@ -199,10 +200,10 @@
             v-if="profileDisplay"
             class="ProfileListCard d-flex flex-column"
           >
-            <span v-for="(prf, index) in profile" :key="index"
-              ><span v-if="index === profileIdx">> </span
-              >{{ index + 1 + ". " + prf.Name }}</span
-            >
+            <span v-for="(prf, index) in profile" :key="index">
+              <span v-if="index === profileIdx">></span>
+              {{ index + 1 + ". " + prf.Name }}
+            </span>
           </v-card>
         </v-card>
         <v-card
@@ -382,14 +383,14 @@
             @keypress.enter="addEntry()"
           >
             <template #prepend>
-              <span style="opacity: 0.8" class="mt-1">{{
-                profile[profileIdx].Prefix
-              }}</span>
+              <span style="opacity: 0.8" class="mt-1">
+                {{ profile[profileIdx].Prefix }}
+              </span>
             </template>
             <template #append>
-              <span style="opacity: 0.8" class="mt-1">{{
-                profile[profileIdx].Suffix
-              }}</span>
+              <span style="opacity: 0.8" class="mt-1">
+                {{ profile[profileIdx].Suffix }}
+              </span>
             </template>
           </v-text-field>
 
@@ -420,9 +421,18 @@
                     {{ mdiKeyboard }}
                   </v-icon>
                 </template>
-                <span>While typing in TL box</span><br />
-                <span><kbd>⇧</kbd><kbd>⇩</kbd> to change Profiles</span><br />
-                <span><kbd>Ctrl+[1~9]</kbd> to quick switch to Profile</span>
+                <span>While typing in TL box</span>
+                <br />
+                <span>
+                  <kbd>⇧</kbd>
+                  <kbd>⇩</kbd>
+                  to change Profiles
+                </span>
+                <br />
+                <span>
+                  <kbd>Ctrl+[1~9]</kbd>
+                  to quick switch to Profile
+                </span>
               </h-tooltip>
             </v-card-subtitle>
             <v-card-text class="d-flex align-stretch">
@@ -669,8 +679,9 @@
             <a
               style="text-decoration: underline; font-size: 0.7em"
               @click="changeUsernameClick()"
-              >{{ $t("views.watch.uploadPanel.usernameChange") }}</a
             >
+              {{ $t("views.watch.uploadPanel.usernameChange") }}
+            </a>
           </v-card-subtitle>
           <v-select
             v-model="TLLang"
@@ -764,7 +775,7 @@
       <!---------    TIME SHIFT    --------->
       <v-card v-if="modalMode === 9">
         <v-container>
-          <v-card-title> Time Shift </v-card-title>
+          <v-card-title>Time Shift</v-card-title>
           <v-card-text>
             <v-text-field
               v-model="offsetInput"

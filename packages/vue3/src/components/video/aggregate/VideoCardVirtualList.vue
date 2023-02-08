@@ -12,7 +12,7 @@
         :size="'default'"
       >
         <template v-if="$slots.default" #default="{ video }">
-          <slot :video="video"></slot>
+          <slot :video="video"/>
         </template>
       </video-card>
     </div>

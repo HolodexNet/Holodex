@@ -34,7 +34,7 @@
       <div class="flex justify-end text-white">
         <!-- Show music icon if songs exist -->
         <div v-if="video.songcount" class="video-overlay-tag rounded-sm">
-          <div class="i-icon-park-outline:music-menu text-lg"></div>
+          <div class="i-icon-park-outline:music-menu text-lg"/>
         </div>
         <!-- Show TL chat icon if recently active or has archive tl exist -->
         <div
@@ -61,7 +61,7 @@
           <span class="mr-1">
             {{ placeholderTag.text }}
           </span>
-          <div :class="placeholderTag.icon" class="text-xl"></div>
+          <div :class="placeholderTag.icon" class="text-xl"/>
         </div>
       </div>
     </div>

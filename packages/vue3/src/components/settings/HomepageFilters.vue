@@ -2,7 +2,7 @@
   <div class="mb-2 text-lg font-semibold">Default Homepage:</div>
   <div class="form-control max-w-sm">
     <label class="label cursor-pointer">
-      <span class="label-text"> Last Visited Org Home </span>
+      <span class="label-text">Last Visited Org Home</span>
       <input
         v-model="settings.defaultOpen"
         type="radio"
@@ -12,7 +12,7 @@
       />
     </label>
     <label class="label cursor-pointer">
-      <span class="label-text"> Favorites (When Logged In) </span>
+      <span class="label-text">Favorites (When Logged In)</span>
       <input
         v-model="settings.defaultOpen"
         type="radio"
@@ -67,9 +67,9 @@
     <template #item="{ item, props }">
       <!-- {{item}} -->
       <div class="p-1 px-2" v-bind="props">
-        <span :style="{ color: item.raw.colors.primary }">{{
-          (item as any).raw.name
-        }}</span>
+        <span :style="{ color: item.raw.colors.primary }">
+          {{ (item as any).raw.name }}
+        </span>
       </div>
     </template>
     <template #selection="{ item }">
@@ -81,7 +81,7 @@
   <div class="mb-2 text-lg font-semibold">Hide Features:</div>
   <div class="form-control max-w-sm">
     <label class="label cursor-pointer">
-      <span class="label-text"> Hide Video Thumbnails </span>
+      <span class="label-text">Hide Video Thumbnails</span>
       <input
         v-model="settings.hideThumbnail"
         type="checkbox"
@@ -89,7 +89,7 @@
       />
     </label>
     <label class="label cursor-pointer">
-      <span class="label-text"> Hide Collab Streams </span>
+      <span class="label-text">Hide Collab Streams</span>
       <input
         v-model="settings.hideCollabStreams"
         type="checkbox"
@@ -97,7 +97,7 @@
       />
     </label>
     <label class="label cursor-pointer">
-      <span class="label-text"> Hide Placeholder Streams </span>
+      <span class="label-text">Hide Placeholder Streams</span>
       <input
         v-model="settings.hidePlaceholder"
         type="checkbox"

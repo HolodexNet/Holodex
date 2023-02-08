@@ -13,7 +13,7 @@
       portal="#h-floating-container"
       v-bind="props"
     >
-      <slot name="activator"></slot>
+      <slot name="activator"/>
       <!-- <div
         aria-haspopup="true"
         :aria-expanded="show"
@@ -26,7 +26,7 @@
       </div> -->
       <!-- <div ref="floating" @click="show = false"> -->
 
-      <slot></slot>
+      <slot/>
 
       <!-- </div> -->
     </Float>
