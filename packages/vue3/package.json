@@ -13,6 +13,7 @@
     "lint:fix": "prettier --write src/*"
   },
   "dependencies": {
+    "@floating-ui/vue": "^0.2.0",
     "@headlessui-float/vue": "^0.10.1",
     "@headlessui/tailwindcss": "^0.1.2",
     "@headlessui/vue": "^1.7.8",
