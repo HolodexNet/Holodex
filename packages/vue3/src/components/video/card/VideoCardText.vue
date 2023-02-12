@@ -114,12 +114,12 @@
 </template>
 
 <script lang="ts">
+import { useDisplay } from "@/hooks/common/useDisplay";
 import { useLangStore } from "@/stores/lang";
 import { useSiteStore } from "@/stores/site";
 import { formatCount, decodeHTMLEntities } from "@/utils/functions";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
-import { useDisplay } from "vuetify/lib/framework.mjs";
 
 export default defineComponent({
   name: "VideoCard",

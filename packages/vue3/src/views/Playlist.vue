@@ -79,10 +79,10 @@ import { mdiFormatListText } from "@mdi/js";
 import { getVideoThumbnails } from "@/utils/functions";
 import { usePlaylistList } from "@/services/playlist";
 import { useLangStore } from "@/stores/lang";
-import { useDisplay } from "vuetify";
 import type { PlaylistListItem, Playlist } from "@/utils/types";
 import { usePlaylistState } from "@/stores/playlist";
 import { useSiteStore } from "@/stores/site";
+import { useDisplay } from "@/hooks/common/useDisplay";
 
 export default defineComponent({
   name: "Playlists",
@@ -97,7 +97,7 @@ export default defineComponent({
     return {
       playlists,
       langStore,
-      xs: display.xs,
+      xs: display.sm,
       current,
       user: loggedIn.user,
     };

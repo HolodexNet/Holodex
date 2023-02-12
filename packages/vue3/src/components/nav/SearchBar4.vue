@@ -139,7 +139,6 @@
 
 <script lang="ts">
 import api from "@/utils/backend-api";
-import { useDisplay } from "vuetify";
 import {
   FIRST_SEARCH,
   getQueryModelFromQuery,
@@ -156,6 +155,7 @@ import {
 } from "./search/types";
 import { CLIPPER_LANGS } from "@/utils/consts";
 import { useI18n } from "vue-i18n";
+import { useDisplay } from "@/hooks/common/useDisplay";
 
 type QueryItem = {
   type: SearchableCategory;

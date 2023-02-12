@@ -55,7 +55,7 @@
       }"
     >
       <template v-if="$slots.default" #action>
-        <slot :video="video"/>
+        <slot :video="video" />
       </template>
     </video-card-text>
     <!-- </a> -->
@@ -63,10 +63,10 @@
 </template>
 
 <script lang="ts">
+import { useDisplay } from "@/hooks/common/useDisplay";
 import { useVideoSelection } from "@/stores/selection";
 import { useSettingsStore } from "@/stores/settings";
 import { PropType } from "vue";
-import { useDisplay } from "vuetify/lib/framework.mjs";
 
 export default defineComponent({
   name: "VideoCard",

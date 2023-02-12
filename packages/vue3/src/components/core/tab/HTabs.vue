@@ -8,18 +8,19 @@
       class="flex w-full"
       :class="{ 'container mx-auto': props.withContainer }"
     >
-      <slot/>
+      <slot />
       <div v-if="!display.mobile.value" class="ml-auto mt-auto mb-auto">
-        <slot name="filters"/>
+        <slot name="filters" />
       </div>
     </div>
   </div>
   <div v-if="display.mobile.value" class="my-2 -mt-4 flex justify-end">
-    <slot name="filters"/>
+    <slot name="filters" />
   </div>
 </template>
 <script setup lang="ts">
-import { useDisplay } from "vuetify";
+import { useDisplay } from "@/hooks/common/useDisplay";
+
 // with-container will add a container wrapper to the tab
 const props = defineProps<{ withContainer?: boolean; xclass?: string }>();
 

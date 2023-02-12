@@ -34,7 +34,7 @@
       <div class="flex justify-end text-white">
         <!-- Show music icon if songs exist -->
         <div v-if="video.songcount" class="video-overlay-tag rounded-sm">
-          <div class="i-icon-park-outline:music-menu text-lg"/>
+          <div class="i-icon-park-outline:music-menu text-lg" />
         </div>
         <!-- Show TL chat icon if recently active or has archive tl exist -->
         <div
@@ -61,7 +61,7 @@
           <span class="mr-1">
             {{ placeholderTag.text }}
           </span>
-          <div :class="placeholderTag.icon" class="text-xl"/>
+          <div :class="placeholderTag.icon" class="text-xl" />
         </div>
       </div>
     </div>
@@ -76,10 +76,10 @@ import { getVideoThumbnails } from "@/utils/functions";
 import { mdiBroadcast } from "@mdi/js";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
-import { useDisplay } from "vuetify/lib/framework.mjs";
 import { PLACEHOLDER_TYPES } from "@/utils/consts";
 import { useTogglePlaylistVideo } from "@/stores/playlist";
 import { reactivePick } from "@vueuse/core";
+import { useDisplay } from "@/hooks/common/useDisplay";
 /* eslint-disable no-unused-vars */
 
 export default defineComponent({

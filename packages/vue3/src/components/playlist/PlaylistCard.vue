@@ -148,13 +148,13 @@
 </template>
 
 <script lang="ts">
+import { useDisplay } from "@/hooks/common/useDisplay";
 import { EditablePlaylist, usePlaylistPatcher } from "@/services/playlist";
 import { MAX_PLAYLIST_LENGTH } from "@/utils/consts";
 import type { Playlist } from "@/utils/types";
 import { mdiFileDelimited } from "@mdi/js";
 import { json2csvAsync } from "json-2-csv";
 import type { PropType } from "vue";
-import { useDisplay } from "vuetify";
 
 export default defineComponent({
   name: "PlaylistCard",

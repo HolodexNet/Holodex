@@ -118,7 +118,7 @@
           0
         </div>
         <logo v-else class="w-12" loading />
-        <div class="stat-desc"/>
+        <div class="stat-desc" />
       </div>
     </div>
   </div>
@@ -126,13 +126,10 @@
 
 <script>
 import backendApi from "@/utils/backend-api";
-import { useDisplay } from "vuetify";
 import { waitForElement } from "@/utils/functions";
 
 export default defineComponent({
   setup() {
-    const display = useDisplay();
-
     const metrics = ref({});
 
     backendApi.stats().then(({ data }) => (metrics.value = data));
@@ -155,7 +152,7 @@ export default defineComponent({
         animate();
       });
     });
-    return { display, metrics };
+    return { metrics };
   },
   computed: {
     s() {

@@ -44,7 +44,7 @@
         <template #prepend><span>ID</span></template>
         <template #append>
           <button
-            class="btn-square btn"
+            class="btn btn-square"
             @click="loadExistingPlaceholder(data.id)"
           >
             <div class="i-ion:checkmark" />
@@ -246,7 +246,6 @@ import { useSiteStore } from "@/stores/site";
 import "v-calendar/dist/style.css";
 import { DatePicker } from "v-calendar";
 import { useThemeStore } from "@/stores/theme";
-import { useDisplay } from "vuetify";
 import { useToast } from "vue-toast-notification";
 import useValidate from "vue-tiny-validate";
 
@@ -255,7 +254,6 @@ export default defineComponent({
     DatePicker,
   },
   setup() {
-    const display = useDisplay();
     const site = useSiteStore();
     const theme = useThemeStore();
     const creditName = ref(site.user?.username);
@@ -308,7 +306,7 @@ export default defineComponent({
 
     const { result } = useValidate(data, rules, { autoTest: true });
 
-    return { creditName, site, theme, display, toast, data, result };
+    return { creditName, site, theme, toast, data, result };
   },
   data() {
     return {

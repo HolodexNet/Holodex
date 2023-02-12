@@ -11,8 +11,8 @@
   </a>
 </template>
 <script lang="ts">
+import { useDisplay } from "@/hooks/common/useDisplay";
 import { useThemeStore } from "@/stores/theme";
-import { useDisplay } from "vuetify";
 
 export default defineComponent({
   setup() {

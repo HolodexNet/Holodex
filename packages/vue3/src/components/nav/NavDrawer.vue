@@ -72,7 +72,7 @@
       <li v-if="isMobile" class="py-0 text-xs font-semibold text-gray-400">
         <template v-if="!site.user">
           <router-link :to="'/login'">
-            <div class="i-ion:md-log-in"/>
+            <div class="i-ion:md-log-in" />
             Login
           </router-link>
         </template>
@@ -82,14 +82,14 @@
             class="mt-3 h-6"
             style="padding-top: 3px; padding-bottom: 3px"
           >
-            <div class="i-tabler:user min-w-3 -mr-1 h-3"/>
+            <div class="i-tabler:user min-w-3 -mr-1 h-3" />
             {{ site.user.username }} : {{ site.user.contribution_count }}pts
           </router-link>
         </template>
       </li>
     </ul>
 
-    <sidebar-favorites/>
+    <sidebar-favorites />
 
     <div
       id="bottom-bar"
@@ -121,9 +121,9 @@
 <script lang="ts">
 import { mdiPatreon, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import { useLangStore, useSiteStore } from "@/stores";
-import { useDisplay } from "vuetify";
 import { langs } from "@/hooks/i18n/i18nConsts";
 import { PropType } from "vue";
+import { useDisplay } from "@/hooks/common/useDisplay";
 
 type Page = {
   name: string;

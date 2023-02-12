@@ -31,17 +31,17 @@
             title="Follow us on twitter"
             href="https://twitter.com/holodex"
           >
-            <div class="i-carbon:logo-twitter m-auto"/>
+            <div class="i-carbon:logo-twitter m-auto" />
           </a>
           <a
             class="btn-square p-0"
             title="Support us on Ko-Fi"
             href="https://ko-fi.com/holodex"
           >
-            <div class="i-cib:ko-fi m-auto"/>
+            <div class="i-cib:ko-fi m-auto" />
           </a>
           <a class="btn-square p-0" title="Issues / Source Code">
-            <div class="i-carbon:logo-github m-auto"/>
+            <div class="i-carbon:logo-github m-auto" />
           </a>
         </li>
         <li v-for="tab in tabs" :key="tab.path">
@@ -51,17 +51,14 @@
             :title="tab.name"
             :class="{ active: tab.active }"
           >
-            <div
-              :class="tab.class"
-              class="mx-1 inline-block text-xl md:mr-2"
-            />
+            <div :class="tab.class" class="mx-1 inline-block text-xl md:mr-2" />
             <span v-if="!minimizeSidebar">{{ tab.name }}</span>
           </router-link>
         </li>
       </ul>
     </div>
     <div
-      v-if="!($route.path === '/about' && display.xs.value)"
+      v-if="!($route.path === '/about' && display.sm.value)"
       class="xs:max-w-full flex-shrink-0 flex-grow rounded-md bg-bgColor p-3 sm:w-80"
       :style="
         minimizeSidebar
@@ -72,7 +69,7 @@
       <h1 v-if="minimizeSidebar" class="mb-2 text-xl font-semibold">
         {{ tabs.find((x) => x.active)?.name }}
       </h1>
-      <router-view/>
+      <router-view />
     </div>
   </div>
 
@@ -81,7 +78,7 @@
 </template>
 
 <script lang="ts">
-import { useDisplay } from "vuetify";
+import { useDisplay } from "@/hooks/common/useDisplay";
 
 export default defineComponent({
   name: "NewAbout",
@@ -93,7 +90,7 @@ export default defineComponent({
   computed: {
     tabs(): { path: string; name: string; class: string; active: boolean }[] {
       console.log(
-        this.display.xs.value
+        this.display.sm.value
           ? this.$route.path === "/about/general"
           : this.$route.path === "/about" ||
               this.$route.path === "/about/general"
@@ -101,7 +98,7 @@ export default defineComponent({
       return [
         {
           path: `/about/general`,
-          active: this.display.xs.value
+          active: this.display.sm.value
             ? this.$route.path === "/about/general"
             : this.$route.path === "/about" ||
               this.$route.path === "/about/general",
@@ -144,7 +141,7 @@ export default defineComponent({
       });
     },
     minimizeSidebar() {
-      return this.display.xs.value && this.$route.path !== "/about";
+      return this.display.sm.value && this.$route.path !== "/about";
     },
     isDediAboutPage() {
       return this.$route.path !== "/about";
