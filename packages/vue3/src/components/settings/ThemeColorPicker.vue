@@ -1,5 +1,5 @@
 <template>
-  <v-menu :close-on-content-click="false">
+  <h-menu :close-on-content-click="false" placement="bottom">
     <template #activator="{ props }">
       <button
         id="picker"
@@ -21,7 +21,7 @@
       sucker-hide
       @change-color="setColor"
     />
-  </v-menu>
+  </h-menu>
 </template>
 <script lang="ts">
 import { generateForegroundColorFrom } from "@/hooks/theme-changer/daisy-utils/daisy-color-fns";

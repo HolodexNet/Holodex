@@ -8,7 +8,7 @@
       }
     "
   >
-    <v-menu bottom offset-y>
+    <h-menu strategy="fixed">
       <template #activator="activator">
         <slot name="visible" :current-org="currentOrg" :activator="activator">
           <div
@@ -34,10 +34,10 @@
             <span ref="dexBtn" class="text-primary">dex</span>
             <div
               class="change-org-icon i-material-symbols:arrow-drop-down-rounded transform-gpu border-none text-xl transition-transform"
-              :class="{
-                'rotate-180': activator.props['aria-expanded'] === 'true',
-              }"
               style="width: 30px; height: 30px"
+              :class="{
+                'rotate-180': activator.props.ariaExpanded,
+              }"
             />
           </div>
         </slot>
@@ -49,18 +49,19 @@
           v-for="org in orgFavorites"
           :key="org.name + 'select'"
           :input-value="org.name === currentOrg.name"
+          tabindex="0"
           @click="$emit('changed', org)"
         >
           <span>{{ org.name }}</span>
         </li>
         <li @click="showOrgDialog = true">
           <span>
-            <i class="i-material-symbols:layers-rounded"/>
+            <i class="i-material-symbols:layers-rounded" />
             {{ $t("views.favorites.showall") }}
           </span>
         </li>
       </ul>
-    </v-menu>
+    </h-menu>
   </slot>
   <v-dialog v-model="showOrgDialog">
     <div class="card card-compact h-[90vh] max-w-xs bg-base-100">

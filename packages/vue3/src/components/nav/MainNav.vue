@@ -32,7 +32,7 @@
             height="32"
             :loading="loading > 0"
           />
-          <div v-else class="i-ion:menu h-6 w-6"/>
+          <div v-else class="i-ion:menu h-6 w-6" />
         </div>
         <div class="mr-2 flex shrink-0 flex-row items-center gap-2">
           <router-link
@@ -63,7 +63,7 @@
           class="mr-2 flex-shrink"
           @click="playlistDrawer = !playlistDrawer"
         />
-        <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
+        <h-menu v-if="!isMobile" placement="bottom-end">
           <template #activator="{ props }">
             <div
               v-bind="props"
@@ -86,7 +86,7 @@
           <!------- USER CARD ------->
           <user-card />
           <!------- END USER CARD ------->
-        </v-menu>
+        </h-menu>
 
         <!--================= Search [🔍] Button (Mobile Only) ================-->
 

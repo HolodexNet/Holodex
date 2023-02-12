@@ -7,7 +7,7 @@
         'btn-square': selection.selectedVideos.length,
       }"
     >
-      <div class="i-mdi:close-circle" @click="exit"/>
+      <div class="i-mdi:close-circle" @click="exit" />
     </div>
 
     <div class="carousel-vertical carousel h-9">
@@ -30,7 +30,7 @@
               class="btn-outline btn btn-primary btn-xs"
               @click="selection.selectedVideos = []"
             >
-              <div class="i-material-symbols:deselect"/>
+              <div class="i-material-symbols:deselect" />
             </div>
 
             <div
@@ -64,86 +64,81 @@
               Make into new Playlist
             </div>
           </div>
-          <div
-            class="btn-outline btn btn-xs"
-            :class="
-              !selection.selectedVideos.length
-                ? 'btn-disabled'
-                : 'btn-secondary bg-bgColor-400'
-            "
-          >
-            <div class="i-fluent:group-20-regular text-lg"/>
-            <span class="mx-1">Modify Attributes</span>
-            <div class="i-bx:chevron-up"/>
 
-            <v-menu activator="parent">
-              <div
-                class="menu-group btn-group btn-group-vertical min-w-full self-start"
+          <h-menu>
+            <template #activator="{ props }">
+              <button
+                class="btn-outline btn btn-xs"
+                :class="
+                  !selection.selectedVideos.length
+                    ? 'btn-disabled'
+                    : 'btn-secondary bg-bgColor-400'
+                "
+                v-bind="props"
               >
-                <div
-                  class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
-                  @click="page = 1"
-                >
-                  Mentions
-                </div>
-                <div
-                  class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
-                  @click="page = 2"
-                >
-                  Sources
-                </div>
-                <div
-                  class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
-                  @click="page = 3"
-                >
-                  Topic
-                </div>
-                <div
-                  class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
-                >
-                  Language (clips only)
-                </div>
+                <div class="i-fluent:group-20-regular text-lg" />
+                <span class="mx-1">Modify Attributes</span>
+                <div class="i-bx:chevron-up" />
+              </button>
+            </template>
+            <div
+              class="menu-group btn-group btn-group-vertical min-w-full self-start"
+            >
+              <div
+                class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
+                @click="page = 1"
+              >
+                Mentions
               </div>
-            </v-menu>
-          </div>
-
-          <div
-            class="btn-outline btn btn-xs"
-            :class="
-              !selection.selectedVideos.length
-                ? 'btn-disabled'
-                : 'btn-secondary bg-bgColor-400'
-            "
-          >
-            <div class="i-fluent:connected-20-filled text-lg"/>
-            <span class="mx-1">Intelligent Multi-Edit</span>
-            <div class="i-bx:chevron-up"/>
-
-            <v-menu activator="parent">
-              <div class="menu-group btn-group btn-group-vertical self-start">
-                <div
-                  class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
-                >
-                  Make Simulwatch/Collab
-                </div>
-                <div
-                  class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
-                >
-                  Disassociate w/ Current Video (Watch Page only)
-                </div>
-                <div
-                  class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
-                >
-                  Disassociate w/ Current Channel (Channel Page only)
-                </div>
-                <div
-                  class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
-                >
-                  Hide Selected Videos (Clips only)
-                </div>
+              <div
+                class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
+                @click="page = 2"
+              >
+                Sources
               </div>
-            </v-menu>
-          </div>
+              <div
+                class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
+                @click="page = 3"
+              >
+                Topic
+              </div>
+              <div class="btn-outline btn btn-secondary btn-xs bg-bgColor-400">
+                Language (clips only)
+              </div>
+            </div>
+          </h-menu>
+
+          <h-menu>
+            <template #activator="{ props }">
+              <button
+                class="btn-outline btn btn-xs"
+                :class="
+                  !selection.selectedVideos.length
+                    ? 'btn-disabled'
+                    : 'btn-secondary bg-bgColor-400'
+                "
+                v-bind="props"
+              >
+                <div class="i-fluent:connected-20-filled text-lg" />
+                <span class="mx-1">Intelligent Multi-Edit</span>
+                <div class="i-bx:chevron-up" />
+              </button>
+            </template>
+            <div class="menu-group btn-group btn-group-vertical self-start">
+              <div class="btn-outline btn btn-secondary btn-xs bg-bgColor-400">
+                Make Simulwatch/Collab
+              </div>
+              <div class="btn-outline btn btn-secondary btn-xs bg-bgColor-400">
+                Disassociate w/ Current Video (Watch Page only)
+              </div>
+              <div class="btn-outline btn btn-secondary btn-xs bg-bgColor-400">
+                Disassociate w/ Current Channel (Channel Page only)
+              </div>
+              <div class="btn-outline btn btn-secondary btn-xs bg-bgColor-400">
+                Hide Selected Videos (Clips only)
+              </div>
+            </div>
+          </h-menu>
         </div>
       </div>
       <div v-if="page == 1" class="carousel-item h-full">

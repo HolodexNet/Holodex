@@ -25,24 +25,24 @@
           class="btn float-right w-8"
           @click="editNameMode = true"
         >
-          <h-icon class="i-mdi:pencil"/>
+          <h-icon class="i-mdi:pencil" />
         </h-btn>
       </span>
-      <v-menu location="bottom" nudge-width="500">
+      <h-menu placement="bottom-end">
         <template #activator="{ props }">
           <h-btn ghost small class="btn float-right w-8" v-bind="props">
-            <h-icon class="i-mdi:dots-vertical"/>
+            <h-icon class="i-mdi:dots-vertical" />
           </h-btn>
         </template>
         <h-list class="bg-base-100">
           <h-list-item v-if="isEditable" @click="$emit('new-playlist')">
             <!-- Please migrate these V-Icon along with the list items coz it's not actually that easy to move one and not the other. -->
-            <h-icon class="i-mdi:plus-box"/>
+            <h-icon class="i-mdi:plus-box" />
             {{ $t("component.playlist.menu.new-playlist") }}
           </h-list-item>
           <!-- feed back a green ripple on click... theoretically -->
           <h-list-item v-if="isEditable" @click="editNameMode = true">
-            <h-icon class="i-mdi:pencil"/>
+            <h-icon class="i-mdi:pencil" />
             {{ $t("component.playlist.menu.rename-playlist") }}
           </h-list-item>
           <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
@@ -53,7 +53,7 @@
           <h-divider />
           <!-- Exporting options -->
           <h-list-item>
-            <h-icon class="i-mdi:open-in-new"/>
+            <h-icon class="i-mdi:open-in-new" />
             {{ $t("component.playlist.menu.export-playlist") }}
           </h-list-item>
           <h-list-item class="ml-5" @click.stop="instructionsDialog = true">
@@ -65,7 +65,7 @@
           <!-- End Exporting options -->
           <h-divider class="" />
           <h-list-item v-if="isEditable" @click="deletePlaylist">
-            <h-icon class="i-mdi:delete text-red-500"/>
+            <h-icon class="i-mdi:delete text-red-500" />
             {{
               playlist.id
                 ? $t("component.playlist.menu.delete-playlist")
@@ -73,7 +73,7 @@
             }}
           </h-list-item>
         </h-list>
-      </v-menu>
+      </h-menu>
     </div>
     <span class="block text-right text-sm text-secondary-300 text-opacity-50">
       {{ playlist.videos?.length }} / {{ maxPlaylistCount }}
@@ -92,19 +92,19 @@
               class="btn btn-ghost btn-xs p-0"
               @click.stop.prevent="move(video.id, 'up')"
             >
-              <div :class="icons.up"/>
+              <div :class="icons.up" />
             </button>
             <button
               class="btn btn-ghost btn-xs p-0"
               @click.stop.prevent="del(video.id)"
             >
-              <div :class="icons.trash"/>
+              <div :class="icons.trash" />
             </button>
             <button
               class="btn btn-ghost btn-xs p-0"
               @click.stop.prevent="move(video.id, 'down')"
             >
-              <div :class="icons.down"/>
+              <div :class="icons.down" />
             </button>
             <!-- <button class="p-0 btn btn-ghost btn-xs">
               <div class="i-bx:chevrons-down"></div>

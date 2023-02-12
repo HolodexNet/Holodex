@@ -1,37 +1,40 @@
 <template>
-  <div class="h-menu">
-    <div ref="activator">
-      <slot
-        name="activator"
-        v-bind="{
-          props: { onClick: toggle, ariaExpanded: isOpen, ariaHasPopup: true },
-        }"
-      />
-    </div>
-    <Teleport to="#h-floating-container">
-      <Transition
-        enter-active-class="transition duration-100 ease-out"
-        enter-from-class="transform scale-95 opacity-0"
-        enter-to-class="transform scale-100 opacity-100"
-        leave-active-class="transition duration-75 ease-in"
-        leave-from-class="transform scale-100 opacity-100"
-        leave-to-class="transform scale-95 opacity-0"
+  <slot
+    name="activator"
+    v-bind="{
+      props: {
+        onClick: toggle,
+        ariaExpanded: isOpen,
+        ariaHasPopup: true,
+        ref: (el: any) => activator = el,
+      },
+    }"
+  />
+  <Teleport to="#h-floating-container">
+    <Transition
+      enter-active-class="transition duration-100 ease-out"
+      enter-from-class="transform scale-95 opacity-0"
+      enter-to-class="transform scale-100 opacity-100"
+      leave-active-class="transition duration-75 ease-in"
+      leave-from-class="transform scale-100 opacity-100"
+      leave-to-class="transform scale-95 opacity-0"
+    >
+      <div
+        v-if="isOpen"
+        ref="floating"
+        :style="floatingStyle"
+        role="menu"
+        @click="closeOnContentClick && (isOpen = false)"
       >
-        <div
-          v-if="isOpen"
-          ref="floating"
-          :style="floatingStyle"
-          role="menu"
-          @click="isOpen = false"
-        >
-          <slot />
-        </div>
-      </Transition>
-    </Teleport>
-  </div>
+        <slot />
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <script lang="ts" setup>
+/* eslint-disable vue/require-default-prop */
+
 import {
   autoUpdate,
   useFloating,
@@ -50,14 +53,14 @@ import type { Options as ShiftOptions } from "@floating-ui/core/src/middleware/s
 import type { Options as FlipOptions } from "@floating-ui/core/src/middleware/flip";
 import type { Options as AutoPlacementOptions } from "@floating-ui/core/src/middleware/autoPlacement";
 import type { Options as HideOptions } from "@floating-ui/core/src/middleware/hide";
-import type { Options as AutoUpdateOptions } from "@floating-ui/dom/src/autoUpdate";
+// import type { Options as AutoUpdateOptions } from "@floating-ui/dom/src/autoUpdate";
 import { onClickOutside } from "@vueuse/core";
 import { Ref, TransitionProps } from "vue";
 export interface FloatPropsType extends TransitionProps {
   // as?: string | Component;
   // floatingAs?: string | Component;
   show?: boolean;
-  placement?: Placement;
+  placement?: "auto" | Placement;
   strategy?: Strategy;
   offset?: OffsetOptions;
   shift?: boolean | number | Partial<ShiftOptions & DetectOverflowOptions>;
@@ -88,15 +91,17 @@ export interface FloatPropsType extends TransitionProps {
         referenceEl: Ref<HTMLElement | null>;
         floatingEl: Ref<HTMLElement | null>;
       }) => Middleware[]);
+  closeOnContentClick?: boolean;
 }
 
 // interface Props extends PopperProps {}
 const props = withDefaults(defineProps<FloatPropsType>(), {
-  placement: "bottom-end",
+  placement: "auto",
   zIndex: 9999,
   strategy: "absolute",
   middleware: () => [],
   transform: false,
+  closeOnClick: true,
 });
 const activator = ref<HTMLElement | null>(null);
 const floating = ref<HTMLElement | null>(null);
@@ -106,6 +111,7 @@ function toggle() {
 }
 
 const middleware = ref<Middleware[]>([]);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { x, y, strategy, middlewareData, update, isPositioned } = useFloating(
   activator,
   floating,
@@ -116,7 +122,7 @@ const { x, y, strategy, middlewareData, update, isPositioned } = useFloating(
       return cleanup;
     },
     middleware: middleware,
-    placement: props.placement,
+    placement: props.placement !== "auto" ? props.placement : "bottom-start",
     strategy: props.strategy,
   }
 );
@@ -152,6 +158,7 @@ watch(
     () => props.flip,
     () => props.shift,
     () => props.autoPlacement,
+    () => props.placement,
     () => props.hide,
     () => props.middleware,
   ],
@@ -191,8 +198,10 @@ watch(
     }
     if (
       props.autoPlacement === true ||
-      typeof props.autoPlacement === "object"
+      typeof props.autoPlacement === "object" ||
+      props.placement === "auto"
     ) {
+      console.log("using auto");
       _middleware.push(
         autoPlacement(
           typeof props.autoPlacement === "object"
