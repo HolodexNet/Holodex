@@ -104,7 +104,7 @@ const props = withDefaults(defineProps<FloatPropsType>(), {
   strategy: "absolute",
   middleware: () => [],
   transform: false,
-  closeOnClick: true,
+  closeOnContentClick: true,
   modelValue: undefined,
 });
 

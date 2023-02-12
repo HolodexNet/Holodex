@@ -13,7 +13,7 @@
       {{ $t("views.channels.tabs.Blocked") }}
     </h-tab>
     <template v-if="category !== Tabs.BLOCKED" #filters>
-      <h-menu strategy="fixed">
+      <h-menu strategy="fixed" placement="bottom">
         <template #activator="activator">
           <button class="dropdownLabelBtn" v-bind="activator.props">
             {{ currentSortValue.text }}
