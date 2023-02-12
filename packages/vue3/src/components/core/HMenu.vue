@@ -99,7 +99,7 @@ export interface FloatPropsType extends TransitionProps {
 }
 
 const props = withDefaults(defineProps<FloatPropsType>(), {
-  placement: "auto",
+  placement: "bottom",
   zIndex: 9999,
   strategy: "absolute",
   middleware: () => [],
