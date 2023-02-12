@@ -40,9 +40,26 @@ function close() {
   emit("update:modelValue", false);
 }
 onClickOutside(target, (e) => {
-  console.log(e);
   if (!props.persistent) emit("update:modelValue", false);
 });
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === "Escape") {
+    close();
+  }
+}
+watch(
+  () => props.modelValue,
+  () => {
+    if (props.modelValue) {
+      console.log("keydown attached");
+      document.addEventListener("keydown", handleKeydown);
+    } else {
+      console.log("keydown detached");
+      document.removeEventListener("keydown", handleKeydown);
+    }
+  }
+);
 </script>
 <style lang="scss">
 .fade-pop-enter-active,
