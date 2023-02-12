@@ -376,19 +376,25 @@ export function checkIOS() {
     );
 }
 
-export function waitForElement(selector) {
-    return new Promise((resolve) => {
-        if (document.querySelector(selector)) {
-            resolve(document.querySelector(selector));
-            return;
+export function waitForElement(selector, parent = document.body, waitTime = 90e3) {
+    return new Promise((resolve, reject) => {
+        const elem = parent.querySelector(selector);
+        if (elem) {
+            return resolve(elem);
         }
+        const timeout = setTimeout(() => {
+            observer.disconnect();
+            return reject(new Error(`${selector} timed out`));
+        }, waitTime);
         const observer = new MutationObserver(() => {
-            if (document.querySelector(selector)) {
-                resolve(document.querySelector(selector));
+            const elem = parent.querySelector(selector);
+            if (elem) {
+                clearTimeout(timeout);
                 observer.disconnect();
+                return resolve(elem);
             }
         });
-        observer.observe(document.body, {
+        observer.observe(parent, {
             childList: true,
             subtree: true,
         });
