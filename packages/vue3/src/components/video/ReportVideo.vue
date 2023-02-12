@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showReportDialog" width="500">
+  <h-dialog v-model="showReportDialog" width="500">
     <div v-if="video" class="card max-w-full bg-bgColor-500 p-2 md:p-4">
       <div class="card-title my-2">
         {{ $t("component.reportDialog.title") }}
@@ -62,7 +62,7 @@
           {{ $t("views.app.close_btn") }}
         </div>
         <button
-          class="btn-primary btn"
+          class="btn btn-primary"
           :disabled="comments.length === 0"
           @click="sendReport"
         >
@@ -70,7 +70,7 @@
         </button>
       </div>
     </div>
-  </v-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts">

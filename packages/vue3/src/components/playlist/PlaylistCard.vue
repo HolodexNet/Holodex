@@ -116,7 +116,7 @@
   </div>
 
   <!--* INSTRUCTIONS DIALOG FOR YOUTUBE --->
-  <v-dialog
+  <h-dialog
     v-model="instructionsDialog"
     :width="display.mobile ? '90%' : '60vw'"
   >
@@ -144,7 +144,7 @@
         <!-- <img src="/img/playlist-instruction.jpg" /> -->
       </div>
     </h-card>
-  </v-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts">

@@ -515,7 +515,7 @@
     </div>
 
     <!---------   COLOUR MODAL --------->
-    <v-dialog
+    <h-dialog
       v-model="colourDialogue"
       max-width="300px"
       @click:outside.prevent="colourPickerClose()"
@@ -545,7 +545,7 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </h-dialog>
     <!--========   COLOUR MODAL =======-->
 
     <!---------   NEXUS MODAL ---------
@@ -558,7 +558,7 @@
       7 Delete All
       8 Editor Mode
     -->
-    <v-dialog
+    <h-dialog
       v-model="modalNexus"
       :max-width="modalMode === 7 ? '300px' : '600px'"
       persistent
@@ -803,7 +803,7 @@
           </v-card-actions>
         </v-container>
       </v-card>
-    </v-dialog>
+    </h-dialog>
     <ImportFile v-model="importPanelShow" @bounceDataBack="processImportData" />
     <!--========   NEXUS MODAL =======-->
   </v-container>

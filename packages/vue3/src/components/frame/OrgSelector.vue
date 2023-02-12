@@ -63,8 +63,8 @@
       </ul>
     </h-menu>
   </slot>
-  <v-dialog v-model="showOrgDialog">
-    <div class="card card-compact h-[90vh] max-w-xs bg-base-100">
+  <h-dialog v-model="showOrgDialog">
+    <div class="card-compact card m-auto h-[80vh] max-w-xs bg-base-100">
       <div class="card-body overflow-y-auto px-1" style="">
         <input
           v-model="search"
@@ -129,7 +129,7 @@
         </h-btn>
       </div>
     </div>
-  </v-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts">

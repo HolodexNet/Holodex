@@ -377,7 +377,7 @@
     </div>
 
     <!---------   COLOUR MODAL --------->
-    <v-dialog
+    <h-dialog
       v-model="colourDialogue"
       max-width="300px"
       @click:outside.prevent="colourPickerClose()"
@@ -408,7 +408,7 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </h-dialog>
     <!--========   COLOUR MODAL =======-->
 
     <!---------   NEXUS MODAL ---------
@@ -418,7 +418,7 @@
       4 Load Chat
       5 Unload Chat ALL
     -->
-    <v-dialog
+    <h-dialog
       v-model="modalNexus"
       max-width="600px"
       persistent
@@ -578,7 +578,7 @@
           </v-card-actions>
         </v-container>
       </v-card>
-    </v-dialog>
+    </h-dialog>
     <!--========   NEXUS MODAL =======-->
     <v-snackbar
       v-if="errorMessage"

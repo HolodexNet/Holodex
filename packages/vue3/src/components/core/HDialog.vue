@@ -3,12 +3,16 @@
     <Transition name="fade-pop">
       <div
         v-if="props.modelValue"
-        class="modal"
+        class="modal z-[9999]"
         :class="{ 'modal-open': props.modelValue }"
         v-bind="$attrs"
       >
-        <div ref="target" class="modal-box bg-transparent p-0">
-          <slot v-bind="{ close }"/>
+        <div
+          ref="target"
+          class="modal-box w-fit bg-transparent p-0"
+          :style="{ width, maxWidth }"
+        >
+          <slot v-bind="{ close }" />
         </div>
       </div>
     </Transition>
@@ -24,14 +28,20 @@ export default {
 <script setup lang="ts">
 import { onClickOutside } from "@vueuse/core";
 
-const props = defineProps<{ modelValue: boolean }>();
+const props = defineProps<{
+  modelValue: boolean;
+  persistent?: boolean;
+  width?: string | number;
+  maxWidth?: string | number;
+}>();
 const emit = defineEmits(["update:modelValue"]);
 const target = ref(null);
 function close() {
   emit("update:modelValue", false);
 }
-onClickOutside(target, () => {
-  emit("update:modelValue", false);
+onClickOutside(target, (e) => {
+  console.log(e);
+  if (!props.persistent) emit("update:modelValue", false);
 });
 </script>
 <style lang="scss">
@@ -45,7 +55,7 @@ onClickOutside(target, () => {
   }
 
   &.modal {
-    --tw-bg-opacity: 0.4;
+    --tw-bg-opacity: 0.6;
     background-color: hsl(var(--nf, var(--n)) / var((--tw-bg-opacity)));
   }
 }
