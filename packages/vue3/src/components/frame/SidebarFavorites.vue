@@ -1,11 +1,11 @@
 <template>
   <template v-for="v in videoList" :key="'sidebar' + v.available_at + v.id">
     <div>
-      <h-tooltip placement="right" offset-distance="40px" class="w-full">
+      <h-tooltip placement="right" :offset="20" class="w-full">
         <div
           class="-ml-6 w-60 max-w-md rounded-lg border-2 border-secondary bg-bgColor p-1 shadow-xl shadow-bgColor"
         >
-          <h-lazy><video-card :video="v"/></h-lazy>
+          <h-lazy><video-card :video="v" /></h-lazy>
         </div>
         <template #activator>
           <channel-card
@@ -42,7 +42,7 @@
       </h-tooltip>
     </div>
   </template>
-  <div style="height: 40px"/>
+  <div style="height: 40px" />
 </template>
 <script setup lang="ts">
 import { useClient } from "@/hooks/auth/client";

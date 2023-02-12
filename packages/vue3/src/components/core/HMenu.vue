@@ -36,24 +36,25 @@
 /* eslint-disable vue/require-default-prop */
 
 import {
+  OffsetOptions,
+  ShiftOptions,
+  FlipOptions,
+  AutoPlacementOptions,
+  HideOptions,
+} from "@floating-ui/core";
+import {
   autoUpdate,
   useFloating,
   shift,
   autoPlacement,
   hide,
   offset,
-  DetectOverflowOptions,
   Middleware,
-  Placement,
-  Strategy,
   flip,
+  Placement,
+  DetectOverflowOptions,
+  Strategy,
 } from "@floating-ui/vue";
-import type { Options as OffsetOptions } from "@floating-ui/core/src/middleware/offset";
-import type { Options as ShiftOptions } from "@floating-ui/core/src/middleware/shift";
-import type { Options as FlipOptions } from "@floating-ui/core/src/middleware/flip";
-import type { Options as AutoPlacementOptions } from "@floating-ui/core/src/middleware/autoPlacement";
-import type { Options as HideOptions } from "@floating-ui/core/src/middleware/hide";
-// import type { Options as AutoUpdateOptions } from "@floating-ui/dom/src/autoUpdate";
 import { onClickOutside } from "@vueuse/core";
 import { Ref, TransitionProps } from "vue";
 
