@@ -1,4 +1,4 @@
-import { ThemeDefinition } from "vuetify";
+// import { ThemeDefinition } from "vuetify";
 import { DaisyColorConfig } from "./daisy-utils/daisy-types";
 import { presets } from "./presets";
 
