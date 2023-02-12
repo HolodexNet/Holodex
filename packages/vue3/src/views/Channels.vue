@@ -13,7 +13,7 @@
       {{ $t("views.channels.tabs.Blocked") }}
     </h-tab>
     <template v-if="category !== Tabs.BLOCKED" #filters>
-      <h-menu strategy="fixed" placement="bottom">
+      <h-menu strategy="fixed" placement="bottom-end">
         <template #activator="activator">
           <button class="dropdownLabelBtn" v-bind="activator.props">
             {{ currentSortValue.text }}
@@ -30,9 +30,10 @@
               v-for="(item, index) in sortOptions"
               :key="index"
               link
+              role="none"
               @click="sort = item.value"
             >
-              <a>{{ item.text }}</a>
+              <a role="menuitem">{{ item.text }}</a>
             </li>
           </ul>
         </template>
