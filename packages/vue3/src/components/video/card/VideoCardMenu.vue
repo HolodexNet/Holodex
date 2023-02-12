@@ -71,7 +71,7 @@
             </router-link>
           </li>
           <li>
-            <v-menu right absolute min-width="240">
+            <h-menu placement="right">
               <template #activator="{ props }">
                 <a v-bind="props">
                   <div :class="icons.listPlus" />
@@ -81,7 +81,7 @@
               </template>
               <!-- TODO MISSING COMPONENT -->
               <!-- <video-quick-playlist :key="video.id+Date.now()" :video-id="video.id" :video="video" /> -->
-            </v-menu>
+            </h-menu>
           </li>
           <li>
             <a>
