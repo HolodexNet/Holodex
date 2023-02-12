@@ -1,9 +1,8 @@
 <template>
-  <v-menu
+  <h-menu
     v-model="showMenu"
-    location="bottom end"
+    placement="bottom-end"
     :close-on-content-click="false"
-    transition="slide-y-transition"
   >
     <template #activator="{ props }">
       <label
@@ -12,7 +11,7 @@
         v-bind="props"
         @click.stop.prevent
       >
-        <h-icon :class="icons.more" class="h-4 w-4"/>
+        <h-icon :class="icons.more" class="h-4 w-4" />
       </label>
     </template>
     <div class="bg-base-100">
@@ -27,7 +26,7 @@
               target="_blank"
               @click.stop="closeMenu()"
             >
-              <div :class="icons.youtube"/>
+              <div :class="icons.youtube" />
               {{ $t("views.settings.redirectModeLabel") }}
             </a>
           </li>
@@ -39,7 +38,7 @@
                 selection.selectedVideos = [video];
               "
             >
-              <div class="i-material-symbols:fact-check"/>
+              <div class="i-material-symbols:fact-check" />
               {{ "Select" }}
             </a>
           </li>
@@ -51,7 +50,7 @@
                 closeMenu();
               "
             >
-              <div :class="icons.gcal"/>
+              <div :class="icons.gcal" />
               {{ $t("component.videoCard.googleCalendar") }}
             </a>
           </li>
@@ -61,13 +60,13 @@
                 video.type !== 'stream' ? '/mentions' : '/'
               }`"
             >
-              <div :class="icons.edit"/>
+              <div :class="icons.edit" />
               {{ $t("component.videoCard.edit") }}
             </router-link>
           </li>
           <li v-if="video.type !== 'clip'">
             <router-link :to="`/multiview/AAUY${video.id}%2CUAEYchat`">
-              <div class="i-clarity:grid-chart-solid"/>
+              <div class="i-clarity:grid-chart-solid" />
               {{ $t("component.mainNav.multiview") }}
             </router-link>
           </li>
@@ -75,9 +74,9 @@
             <v-menu right absolute min-width="240">
               <template #activator="{ props }">
                 <a v-bind="props">
-                  <div :class="icons.listPlus"/>
+                  <div :class="icons.listPlus" />
                   {{ $t("component.mainNav.playlist") }}
-                  <h-icon class="i-mdi:chevron-right ml-auto mr-0"/>
+                  <h-icon class="i-mdi:chevron-right ml-auto mr-0" />
                 </a>
               </template>
               <!-- TODO MISSING COMPONENT -->
@@ -86,7 +85,7 @@
           </li>
           <li>
             <a>
-              <div class="i-fluent:clipboard-link-20-filled"/>
+              <div class="i-fluent:clipboard-link-20-filled" />
               {{ $t("component.videoCard.copyLink") }}
             </a>
           </li>
@@ -99,14 +98,14 @@
               closeMenu();
             "
           >
-            <div class="i-fluent:calendar-add-20-filled"/>
+            <div class="i-fluent:calendar-add-20-filled" />
             {{ $t("component.videoCard.googleCalendar") }}
           </h-list-item>
         </template>
 
         <li>
           <a>
-            <div class="i-mdi:script-text"/>
+            <div class="i-mdi:script-text" />
             {{
               ["live", "upcoming"].includes(video.status)
                 ? $t("component.videoCard.openClient")
@@ -116,7 +115,7 @@
         </li>
         <li v-if="video.status === 'past'">
           <a>
-            <div class="i-majesticons:cloud-upload-line"/>
+            <div class="i-majesticons:cloud-upload-line" />
             {{ $t("component.videoCard.uploadScript") }}
           </a>
         </li>
@@ -129,13 +128,13 @@
               }
             "
           >
-            <div class="i-material-symbols:flag-rounded"/>
+            <div class="i-material-symbols:flag-rounded" />
             {{ $t("component.reportDialog.title") }}
           </a>
         </li>
       </h-list>
     </div>
-  </v-menu>
+  </h-menu>
 </template>
 <script lang="ts">
 import { useGlobalReportState } from "@/stores/report";

@@ -56,6 +56,7 @@ import type { Options as HideOptions } from "@floating-ui/core/src/middleware/hi
 // import type { Options as AutoUpdateOptions } from "@floating-ui/dom/src/autoUpdate";
 import { onClickOutside } from "@vueuse/core";
 import { Ref, TransitionProps } from "vue";
+
 export interface FloatPropsType extends TransitionProps {
   // as?: string | Component;
   // floatingAs?: string | Component;
@@ -72,7 +73,8 @@ export interface FloatPropsType extends TransitionProps {
   hide?: boolean | Partial<HideOptions & DetectOverflowOptions>;
   // autoUpdate?: boolean | Partial<AutoUpdateOptions>;
   zIndex?: number | string;
-  // transitionName?: string;
+  // TODO: impl transition stuff
+  transition?: string;
   // transitionType?: "transition" | "animation";
   // enter?: string;
   // enterFrom?: string;
@@ -92,9 +94,9 @@ export interface FloatPropsType extends TransitionProps {
         floatingEl: Ref<HTMLElement | null>;
       }) => Middleware[]);
   closeOnContentClick?: boolean;
+  modelValue?: boolean;
 }
 
-// interface Props extends PopperProps {}
 const props = withDefaults(defineProps<FloatPropsType>(), {
   placement: "auto",
   zIndex: 9999,
@@ -102,16 +104,36 @@ const props = withDefaults(defineProps<FloatPropsType>(), {
   middleware: () => [],
   transform: false,
   closeOnClick: true,
+  modelValue: undefined,
 });
+
 const activator = ref<HTMLElement | null>(null);
 const floating = ref<HTMLElement | null>(null);
-const isOpen = ref(false);
+
+const emit = defineEmits(["update:modelValue"]);
+const _isOpen = ref(false);
+
+// Allows v-model binding when needed
+const isOpen = computed({
+  get() {
+    return typeof props.modelValue !== "undefined"
+      ? props.modelValue
+      : _isOpen.value;
+  },
+  set(val) {
+    if (typeof props.modelValue !== "undefined") {
+      emit("update:modelValue", val);
+      return;
+    }
+    _isOpen.value = val;
+  },
+});
+
 function toggle() {
   isOpen.value = !isOpen.value;
 }
 
 const middleware = ref<Middleware[]>([]);
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { x, y, strategy, middlewareData, update, isPositioned } = useFloating(
   activator,
   floating,
@@ -127,6 +149,12 @@ const { x, y, strategy, middlewareData, update, isPositioned } = useFloating(
   }
 );
 
+// Handles outside click closing them menu
+onClickOutside(floating, () => (isOpen.value = false), {
+  ignore: [activator],
+});
+
+// Style object for floating piece
 const floatingStyle: any = computed(() => ({
   ...(props.transform
     ? {
@@ -152,6 +180,7 @@ const floatingStyle: any = computed(() => ({
   //     : "",
 }));
 
+// Modifies middleware list for useFloating based on props
 watch(
   [
     () => props.offset,
@@ -201,7 +230,6 @@ watch(
       typeof props.autoPlacement === "object" ||
       props.placement === "auto"
     ) {
-      console.log("using auto");
       _middleware.push(
         autoPlacement(
           typeof props.autoPlacement === "object"
@@ -227,8 +255,4 @@ watch(
   },
   { immediate: true }
 );
-
-onClickOutside(floating, () => (isOpen.value = false), {
-  ignore: [activator],
-});
 </script>
