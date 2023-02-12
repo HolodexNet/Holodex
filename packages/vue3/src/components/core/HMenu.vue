@@ -106,6 +106,8 @@ const props = withDefaults(defineProps<FloatPropsType>(), {
   transform: false,
   closeOnContentClick: true,
   modelValue: undefined,
+  shift: true,
+  flip: true,
 });
 
 const activator = ref<HTMLElement | null>(null);
