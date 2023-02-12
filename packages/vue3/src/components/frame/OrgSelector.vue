@@ -133,11 +133,11 @@
 </template>
 
 <script lang="ts">
+import { useDisplay } from "@/hooks/common/useDisplay";
 import useOrgRouteParamSync from "@/hooks/common/useOrgRouteParamSync";
 import { useOrgList } from "@/services/static";
 import { useSiteStore } from "@/stores";
 import { PropType } from "vue";
-import { useDisplay } from "vuetify";
 
 /**----------------------------------------------
  * *                   Org Selector
