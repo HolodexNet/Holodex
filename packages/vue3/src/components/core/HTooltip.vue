@@ -49,7 +49,7 @@ interface Props extends TransitionProps {
 }
 const props = withDefaults(defineProps<Props>(), {
   placement: "bottom",
-  zIndex: 1,
+  zIndex: 9999,
   middleware: () => [],
   transition: "fade",
   offset: undefined,
