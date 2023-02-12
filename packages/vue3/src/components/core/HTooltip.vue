@@ -81,7 +81,7 @@ const floatingStyle: any = computed(() => ({
   // ...(props.transform
   // ? {
   position: strategy.value,
-  zIndex: 1,
+  zIndex: props.zIndex,
   top: "0",
   left: "0",
   right: "auto",
