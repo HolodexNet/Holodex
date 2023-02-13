@@ -38,14 +38,14 @@
     "socket.io-client": "^4.5.2",
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "3.2.45",
-    "vue-3-linkify": "^1.1.0",
     "vue-color-kit": "^1.0.5",
     "vue-i18n": "^9.2.2",
     "vue-plugin-load-script": "^2.1.1",
     "vue-router": "^4.1.6",
     "vue-tiny-validate": "^0.2.4",
     "vue-toast-notification": "^3.0.4",
-    "vuetify": "^3.1.2"
+    "vuetify": "^3.1.2",
+    "xss": "^1.0.14"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",

@@ -10,8 +10,8 @@
       <span
         v-else
         v-linkify:options="{
-          target: '_blank',
           attributes: {
+            target: '_blank',
             onclick: 'event.stopPropagation()',
             class: 'link link-primary',
           },

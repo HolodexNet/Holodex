@@ -2,7 +2,6 @@ import "uno.css";
 import { createApp } from "vue";
 import router from "./router/index";
 import { VueQueryPlugin } from "@tanstack/vue-query";
-import { useI18n } from "vue-i18n";
 
 import App from "./App.vue";
 import { setupPinia, setupI18N, getVueQueryPluginOptions } from "./setup";
