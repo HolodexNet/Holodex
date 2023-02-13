@@ -12,7 +12,6 @@ import VueToast from "vue-toast-notification";
 
 import "@/setup/main.css"; // tailwind configuration
 
-import "@/setup/vuetify/main.sass"; // vuetify configuration
 import "vue-toast-notification/dist/theme-default.css";
 import * as icons from "@/utils/icons";
 

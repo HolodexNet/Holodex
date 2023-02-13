@@ -1,6 +1,6 @@
 <template>
   <!-- <v-container class="channel-container" fluid> -->
-  <logo v-if="isLoading" :loading="true" class="max-h-32"/>
+  <logo v-if="isLoading" :loading="true" class="max-h-32" />
   <div v-else-if="channel" class="w-full">
     <scroll-parallax up :speed="0.4">
       <img v-if="bannerImage" :src="bannerImage" class="max-h-80" />
@@ -25,7 +25,7 @@
                 target="_blank"
                 title="Youtube"
               >
-                <div class="i-carbon:logo-youtube"/>
+                <div class="i-carbon:logo-youtube" />
               </a>
               <a
                 class="c-social-icon h-8 w-8 hover:text-cyan-500 md:h-12 md:w-12"
@@ -40,7 +40,7 @@
                 target="_blank"
                 title="Twitter"
               >
-                <div class="i-carbon:logo-twitter"/>
+                <div class="i-carbon:logo-twitter" />
               </a>
               <button
                 class="c-social-icon h-8 w-8 md:h-12 md:w-12"
@@ -99,7 +99,7 @@
             :to="tab.path"
             class="min-h-[4rem] sm:min-h-[2.5rem]"
           >
-            <div :class="tab.class" class="mr-1 md:mr-2"/>
+            <div :class="tab.class" class="mr-1 md:mr-2" />
             {{ tab.name }}
           </h-tab>
         </h-tabs>
@@ -191,7 +191,7 @@ export default defineComponent({
         sm: tablet,
         xl: tv,
       };
-      return /*banners[this.$vuetify.breakpoint.name] ||*/ banner;
+      return banner;
     },
     // avatarSize() {
     //     switch (this.$vuetify.breakpoint.name) {

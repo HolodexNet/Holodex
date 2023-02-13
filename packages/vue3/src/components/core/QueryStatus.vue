@@ -35,7 +35,7 @@
         </v-btn> -->
       </div>
       <h-btn small href="/">
-        <div class="i-mdi:refresh text-lg"/>
+        <div class="i-mdi:refresh text-lg" />
         Retry
       </h-btn>
     </div>
@@ -49,10 +49,4 @@
 <script setup lang="ts">
 import { UseQueryReturnType } from "@tanstack/vue-query";
 const props = defineProps<{ query: UseQueryReturnType<any, any> }>();
-
-// watchEffect(() => {
-//   console.log("hey it changed");
-//   console.log(props.query.data.value);
-//   console.log(props.query.status.value);
-// });
 </script>

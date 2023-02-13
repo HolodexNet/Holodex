@@ -1,20 +1,4 @@
-// import { ThemeDefinition } from "vuetify";
 import { DaisyColorConfig } from "./daisy-utils/daisy-types";
-import { presets } from "./presets";
-
-export type VuetifyBrandColors = {
-  primary: string | number;
-  secondary: string | number;
-  accent: string | number;
-
-  success?: string | number;
-  warning?: string | number;
-  error?: string | number;
-  info?: string | number;
-
-  background: string | number;
-  surface?: string | number;
-};
 
 export type Theme = { name: string; colors: DaisyColorConfig; dark: boolean };
 

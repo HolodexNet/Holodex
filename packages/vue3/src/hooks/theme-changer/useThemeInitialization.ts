@@ -1,5 +1,4 @@
 import { useThemeStore } from "@/stores/theme";
-// import { useTheme } from "vuetify";
 import { useCSSVarTheme } from "./css-var-theme";
 
 export function useThemeInitialization() {

@@ -49,12 +49,6 @@ const queryClientConfig: QueryClientConfig = {
           message: "Authentication error",
           type: "error",
         });
-      } else {
-        toast({
-          position: "top-right",
-          message: "Some kind of error",
-          type: "error",
-        });
       }
     },
   }),

@@ -1,5 +1,5 @@
 import { convertToDaisyHSLAndColor } from "./../hooks/theme-changer/daisy-utils/daisy-color-fns";
-import { Theme, VuetifyBrandColors } from "@/hooks/theme-changer/helpers";
+import { Theme } from "@/hooks/theme-changer/helpers";
 import { DaisyDefaults, presets } from "@/hooks/theme-changer/presets";
 import {
   DaisyColorShorthand,
@@ -10,7 +10,8 @@ interface CachedTheme {
   /**
    * Cached output of Vuetify Brand color map (primary => #c01023) and Daisy Color Shorthand mapping (--p => #c01023).
    */
-  outputCache: [VuetifyBrandColors, Record<DaisyColorShorthand, string>];
+  // TODO: remove vuetify from this file and refactor
+  outputCache: [any, Record<DaisyColorShorthand, string>];
   /**
    * Timestamp of last outputCache computation
    */

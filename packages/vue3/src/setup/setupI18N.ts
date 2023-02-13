@@ -1,6 +1,5 @@
 import { createI18n } from "vue-i18n";
 import enTL from "../locales/en/ui.yml";
-import { en } from "vuetify/locale";
 import dayjs from "dayjs";
 import {
   asyncLang,
@@ -17,7 +16,7 @@ export function setupI18N() {
     globalInjection: true,
     // Set default locale messages,
     messages: {
-      en: { ...enTL, ...en },
+      en: { ...enTL },
     },
     pluralizationRules: {
       /**
@@ -84,7 +83,7 @@ export function setI18nLanguage(i18n, locale: SupportedLangCodes) {
 }
 
 const loadedLanguageCache: Partial<Record<SupportedLangCodes, any>> = {
-  en: { ...enTL, ...en },
+  en: { ...enTL },
 };
 
 export async function loadLocaleMessages(i18n, locale: SupportedLangCodes) {
