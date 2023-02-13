@@ -3,7 +3,7 @@
     <div ref="activator">
       <slot name="activator" />
     </div>
-    <div ref="floating" :style="floatingStyle">
+    <div v-if="isHovered" ref="floating" :style="floatingStyle">
       <transition
         enter-active-class="transition duration-200 ease-out"
         enter-from-class="opacity-0"
@@ -12,7 +12,7 @@
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <slot v-if="isHovered" />
+        <slot />
       </transition>
     </div>
   </div>
