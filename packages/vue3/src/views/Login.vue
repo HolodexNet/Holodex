@@ -32,7 +32,7 @@
           />
           <button
             v-if="!site.user || !site.user.discord_id"
-            class="btn-sm btn my-1 h-8 normal-case"
+            class="btn btn-sm my-1 h-8 normal-case"
             color="indigo"
             @click="loginDiscord"
           >
@@ -42,7 +42,7 @@
           </button>
           <button
             v-if="!site.user || !site.user.twitter_id"
-            class="btn-sm btn my-1 h-8 normal-case"
+            class="btn btn-sm my-1 h-8 normal-case"
             color="blue lighten-1"
             @click="loginTwitter"
           >
@@ -126,10 +126,7 @@
           href="https://holodex.stoplight.io/"
           target="_blank"
         >
-          API Documentation
-          <h-icon small right>
-            {{ icons.mdiOpenInNew }}
-          </h-icon>
+          API Documentation &lt; Insert Icon Here >
         </h-btn>
         <!-- </div> -->
       </template>

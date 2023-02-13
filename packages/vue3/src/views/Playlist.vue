@@ -30,7 +30,7 @@
     <div
       v-for="playlist in playlists.data.value"
       :key="'plst' + playlist.id + playlist.name"
-      class="card-compact card card-side my-4 cursor-pointer bg-bgColor-300 hover:-translate-y-1 hover:shadow-xl sm:card-normal"
+      class="card card-side card-compact my-4 cursor-pointer bg-bgColor-300 hover:-translate-y-1 hover:shadow-xl sm:card-normal"
       :class="
         playlist.id === current.currentPlaylistId
           ? 'active-playlist'
@@ -75,7 +75,6 @@
 
 <script lang="ts">
 import { localizedDayjs } from "@/utils/time";
-import { mdiFormatListText } from "@mdi/js";
 import { getVideoThumbnails } from "@/utils/functions";
 import { usePlaylistList } from "@/services/playlist";
 import { useLangStore } from "@/stores/lang";
@@ -104,7 +103,6 @@ export default defineComponent({
   },
   data() {
     return {
-      mdiFormatListText,
       serverside: [],
       loading: true,
     };

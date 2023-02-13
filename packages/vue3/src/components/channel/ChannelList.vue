@@ -19,7 +19,7 @@
           class="bg-bgColor shadow-xl"
         >
           <template v-if="$slots.default" #buttons>
-            <slot :channel="channel"/>
+            <slot :channel="channel" />
           </template>
         </channel-card>
         <h-lazy v-else style="height: 116px">
@@ -30,7 +30,7 @@
             class="bg-bgColor shadow-xl"
           >
             <template v-if="$slots.default" #buttons>
-              <slot :channel="channel"/>
+              <slot :channel="channel" />
             </template>
           </channel-card>
         </h-lazy>

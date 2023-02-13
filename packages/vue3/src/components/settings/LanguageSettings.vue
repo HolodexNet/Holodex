@@ -91,7 +91,6 @@
       </v-hover> -->
 </template>
 <script lang="ts">
-import { mdiFilterOutline, mdiEarth } from "@mdi/js";
 import { TL_LANGS } from "@/utils/consts";
 import { langs } from "@/hooks/i18n/i18nConsts";
 import { useLangStore, useSiteStore } from "@/stores";
@@ -108,8 +107,6 @@ export default defineComponent({
   data() {
     return {
       langs,
-      mdiFilterOutline,
-      mdiEarth,
       TL_LANGS,
     };
   },

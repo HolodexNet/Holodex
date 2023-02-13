@@ -241,7 +241,6 @@
 import { dayjs } from "@/utils/time";
 import jwtDecode from "jwt-decode";
 import backendApi from "@/utils/backend-api";
-import { mdiMinusBox } from "@mdi/js";
 import { useSiteStore } from "@/stores/site";
 import "v-calendar/dist/style.css";
 import { DatePicker } from "v-calendar";
@@ -310,8 +309,6 @@ export default defineComponent({
   },
   data() {
     return {
-      mdiMinusBox,
-
       tab: 0,
       minDate: dayjs().startOf("day").subtract(1, "day").toDate(),
 

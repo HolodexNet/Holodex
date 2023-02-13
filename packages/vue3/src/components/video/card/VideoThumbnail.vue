@@ -73,7 +73,6 @@ import { useLangStore } from "@/stores/lang";
 import { useSiteStore } from "@/stores/site";
 import { useTLStore } from "@/stores/tldex";
 import { getVideoThumbnails } from "@/utils/functions";
-import { mdiBroadcast } from "@mdi/js";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import { PLACEHOLDER_TYPES } from "@/utils/consts";

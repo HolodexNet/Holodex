@@ -111,7 +111,6 @@
 </template>
 
 <script lang="ts">
-import { mdiPatreon, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import { useLangStore, useSiteStore } from "@/stores";
 import { langs } from "@/hooks/i18n/i18nConsts";
 import { PropType } from "vue";
@@ -164,9 +163,6 @@ export default defineComponent({
       favoritesExpanded: false,
       showSettings: false,
       expanded: false,
-      mdiPatreon,
-      mdiChevronDown,
-      mdiChevronUp,
     };
   },
   computed: {

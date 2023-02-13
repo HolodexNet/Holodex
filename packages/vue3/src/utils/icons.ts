@@ -38,6 +38,20 @@ export const twitch = "i-mdi:twitch";
 // export const twitter = "i-mdi:twitter"
 export const instagram = "i-mdi:instagram";
 export const niconico = "i-simple-icons:niconico";
+
+export const sidebar_home = "i-material-symbols:home-storage-rounded";
+export const sidebar_fave = "i-material-symbols:favorite-rounded";
+export const sidebar_chan = "i-ion:people";
+export const sidebar_play = "i-material-symbols:playlist-play-rounded";
+export const sidebar_mult = "i-clarity:grid-chart-solid";
+export const sidebar_mus = "i-mdi:music-clef-treble";
+export const sidebar_set = "i-material-symbols:settings-rounded";
+export const sidebar_info = "i-ion:information-circle-outline";
+export const sidebar_tld = "i-bi:terminal";
+export const sidebar_edit = "i-uil:file-edit-alt";
+export const sidebar_manager = "i-mdi:file-arrow-up-down";
+export const sidebar_relaybot = "i-mdi:robot-industrial";
+
 /**
  * Search specific dropdown icons
  *
@@ -60,72 +74,7 @@ export const search: Record<string, string> = {
   advanced: "i-fluent:database-search-20-regular",
 };
 
-export {
-  mdiAccountBoxMultiple,
-  mdiAccountCircleOutline,
-  mdiAnimationPlay,
-  mdiArrowLeft,
-  mdiClipboardPlusOutline,
-  mdiClipboardArrowUpOutline,
-  mdiClose,
-  mdiCog,
-  mdiDatabaseOff,
-  mdiDelete,
-  mdiDotsVertical,
-  mdiEarth, // for language
-  mdiGoogle,
-  mdiHeart,
-  mdiHelpCircle,
-  mdiHome,
-  mdiLoginVariant,
-  mdiLogoutVariant,
-  mdiOpenInNew,
-  mdiMagnify,
-  mdiMenu,
-  mdiMusic,
-  mdiPencil, // for changing language
-  mdiPlay,
-  mdiPlaylistMusic,
-  mdiPlaylistPlay,
-  mdiPlaylistPlus,
-  mdiRefresh,
-  mdiStarFourPointsOutline,
-  mdiTypewriter,
-  mdiTranslate,
-  mdiTwitter,
-  mdiYoutube,
-  mdiMenuDown,
-  mdiPlusBox,
-  mdiCheck,
-  mdiGridLarge,
-  mdiChevronDown,
-  mdiChevronUp,
-  mdiChevronLeft,
-  mdiChevronRight,
-  mdiFullscreen,
-  mdiViewDashboard,
-  mdiViewComfy,
-  mdiViewGrid,
-  mdiViewModule,
-  mdiVolumeHigh,
-  mdiVolumeMute,
-  mdiFlag,
-  mdiStar,
-  mdiCalendar,
-  mdiTheater,
-  mdiSelectMultiple,
-  mdiSelectAll,
-  mdiSelectOff,
-  mdiContentSaveEdit,
-  mdiPinOutline,
-  mdiFileDocumentMultiple,
-  mdiRobot,
-  mdiNoteEdit,
-} from "@mdi/js";
-
 // TODO: fix this??
-import { mdiClose } from "@mdi/js";
-export const mdiDiscord = mdiClose;
 export const ytChat =
   "M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2zM9.9,10.8v3.8h-2v-3.8L5.1,6.6h2.4l1.4,2.2 l1.4-2.2h2.4L9.9,10.8zM18.9,8.6h-2v6h-2v-6h-2v-2h6V8.6z";
 export const tlChat =

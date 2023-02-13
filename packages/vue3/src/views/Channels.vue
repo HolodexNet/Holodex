@@ -100,7 +100,6 @@
 <script lang="ts">
 import { CHANNEL_TYPES } from "@/utils/consts";
 
-import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
 import { localSortChannels } from "@/utils/functions";
 import { useLangStore, useSiteStore } from "@/stores";
 import { useI18n } from "vue-i18n";
@@ -132,7 +131,6 @@ export default defineComponent({
   },
   data() {
     return {
-      ...{ mdiArrowDown, mdiViewList, mdiViewModule },
       // perPage: 25,
       identifier: +new Date(),
       // freeze object to stop Vue from creating watchers (small optimization)

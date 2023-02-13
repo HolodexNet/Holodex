@@ -146,7 +146,7 @@
         </div>
       </div>
       <div v-if="page == 1" class="carousel-item h-full">
-        <div class="breadcrumbs p-0 text-xs">
+        <div class="breadcrumbs items-center p-0 text-xs">
           <ul>
             <li @click="page = 0">
               <a>Selection ({{ selection.selectedVideos.length }})</a>
@@ -156,7 +156,7 @@
         </div>
       </div>
       <div v-if="page == 2" class="carousel-item h-full">
-        <div class="breadcrumbs p-0 text-xs">
+        <div class="breadcrumbs items-center p-0 text-xs">
           <ul>
             <li @click="page = 0">
               <a>Selection ({{ selection.selectedVideos.length }})</a>
@@ -166,7 +166,7 @@
         </div>
       </div>
       <div v-if="page == 3" class="carousel-item h-full">
-        <div class="breadcrumbs p-0 text-xs">
+        <div class="breadcrumbs items-center p-0 text-xs">
           <ul>
             <li @click="page = 0">
               <a>Selection ({{ selection.selectedVideos.length }})</a>
@@ -215,5 +215,9 @@ export default defineComponent({
   padding-left: 0.5rem;
 
   border-top: 2px solid hsl(var(--p));
+}
+
+.carousel-item {
+  @apply outline outline-dashed outline-primary;
 }
 </style>

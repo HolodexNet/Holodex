@@ -1,6 +1,13 @@
 {
   "globals": {
+    "Component": true,
+    "ComponentPublicInstance": true,
+    "ComputedRef": true,
     "EffectScope": true,
+    "InjectionKey": true,
+    "PropType": true,
+    "Ref": true,
+    "VNode": true,
     "acceptHMRUpdate": true,
     "computed": true,
     "createApp": true,
@@ -46,7 +53,6 @@
     "readonly": true,
     "ref": true,
     "resolveComponent": true,
-    "resolveDirective": true,
     "setActivePinia": true,
     "setMapStoreSuffix": true,
     "shallowReactive": true,

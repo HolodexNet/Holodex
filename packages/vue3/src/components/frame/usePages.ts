@@ -1,11 +1,5 @@
 import { useSiteStore } from "@/stores";
 import { musicdexURL } from "@/utils/consts";
-import {
-  mdiFileDocumentMultiple,
-  mdiNoteEdit,
-  mdiRobot,
-  mdiTypewriter,
-} from "@/utils/icons";
 import { useI18n } from "vue-i18n";
 
 export function usePages() {
@@ -64,28 +58,28 @@ export function usePages() {
     {
       name: "TL client",
       path: "/tlclient",
-      icon: mdiTypewriter,
+      icon: "i-bi:terminal",
       collapsible: true,
       extra: true,
     },
     {
       name: "Script Editor",
       path: "/scripteditor",
-      icon: mdiNoteEdit,
+      icon: "i-uil:file-edit-alt",
       collapsible: true,
       extra: true,
     },
     {
       name: "Script Manager",
       path: "/scriptmanager",
-      icon: mdiFileDocumentMultiple,
+      icon: "i-mdi:file-arrow-up-down",
       collapsible: true,
       extra: true,
     },
     {
       name: "Relay Bot Setting",
       path: "/relaybot",
-      icon: mdiRobot,
+      icon: "i-mdi:robot-industrial",
       collapsible: true,
       extra: true,
     },
