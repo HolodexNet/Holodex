@@ -30,7 +30,8 @@ watch(
     if (shouldShow.value !== props.modelValue) {
       emit("update:modelValue", shouldShow.value);
     }
-  }
+  },
+  { immediate: true }
 );
 </script>
 <style lang="scss" scoped>
