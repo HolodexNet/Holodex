@@ -7,15 +7,16 @@
       }"
       @click="() => changePage(Math.max(modelValue - 1, 1))"
     >
-      <div class="i-material-symbols:chevron-left-rounded text-lg"/>
+      <div class="i-material-symbols:chevron-left-rounded text-lg" />
     </button>
-    <template v-for="pageNum in paginationPages" :key="pageNum">
+    <template v-for="(pageNum, index) in paginationPages" :key="pageNum">
       <button
         class="btn btn-md bg-bgColor text-base-content"
         :class="{
           'btn-active': modelValue === pageNum,
           'btn-disabled': pageNum === '...',
           '!bg-bgColor-600': pageNum === '...',
+          'max-md:hidden': index > 6,
         }"
         @click="() => changePage(pageNum)"
       >
@@ -29,7 +30,7 @@
       }"
       @click="() => changePage(Math.min(props.modelValue + 1, totalPages))"
     >
-      <div class="i-material-symbols:chevron-right-rounded text-lg"/>
+      <div class="i-material-symbols:chevron-right-rounded text-lg" />
     </button>
   </div>
 </template>
@@ -50,14 +51,16 @@ function changePage(page: string | number) {
   emit("update:modelValue", page);
 }
 
+const MAX_DISPLAY = 10;
 // Calculate what pages to show in pagination buttons
 const paginationPages = computed(() => {
-  const toDisplay = Math.min(10, props.totalPages);
+  // check if there's less page than required
+  const toDisplay = Math.min(MAX_DISPLAY, props.totalPages);
   const toShift =
-    toDisplay === 10 && props.modelValue > toDisplay / 2
-      ? Math.ceil(props.modelValue - toDisplay / 2)
+    toDisplay === MAX_DISPLAY && props.modelValue > toDisplay / 2
+      ? Math.floor(props.modelValue - toDisplay / 2)
       : 0;
-  const pages: any[] = Array(toDisplay)
+  const pages = Array(toDisplay)
     .fill(0)
     .map((_, idx) => idx + 1 + toShift);
   if (toShift > 0) {
