@@ -64,7 +64,11 @@
           </v-list-item-content>
 
           <v-list-item-action>
-            <v-icon small color="primary accent-2" @click="deleteChip(selection.item)">
+            <v-icon
+              small
+              :color="$vuetify.theme.dark ? 'primary accent-2' : 'secondary lighten-3'"
+              @click="deleteChip(selection.item)"
+            >
               {{ icons.mdiClose }}
             </v-icon>
           </v-list-item-action>
