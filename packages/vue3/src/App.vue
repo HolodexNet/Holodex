@@ -22,14 +22,17 @@ import { useThemeInitialization } from "./hooks/theme-changer/useThemeInitializa
 import { useLangStore } from "./stores/lang";
 import { useSiteStore } from "./stores/site";
 import backendApi from "./utils/backend-api";
-import { usePlaylistState } from "@/stores/playlist";
-import { usePlaylist } from "@/services/playlist";
+import { usePlaylistState } from "./stores/playlist";
+import { usePlaylist } from "./services/playlist";
 import { useMigrateFromHolodexV2 } from "./stores/util/useMigrateFromHolodexV2";
 import { CURRENT_PLAYLIST_PROVIDE_KEY } from "./utils/consts";
 import { usePages } from "./components/frame/usePages";
+import { useDisplay } from "./hooks/common/useDisplay";
 
-const showSidebar = ref(true);
+const display = useDisplay();
+const showSidebar = ref(display.greater("lg").value);
 const pages = usePages();
+
 // initializing setup for Holodex:
 // Steps:
 useMigrateFromHolodexV2();
