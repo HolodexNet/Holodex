@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border-r border-bgColor-100 bg-bgColor"
+    class="h-full border-r border-bgColor-100 bg-bgColor"
     style="
       padding-top: env(safe-area-inset-top);
       padding-left: calc(env(safe-area-inset-left) / 1.3);
@@ -44,7 +44,7 @@
         <li v-for="page in pages.filter((e) => e.extra)" :key="page.name">
           <router-link
             :to="page.path"
-            :class="{ 'v-list-item--active': $route.fullPath === page.path }"
+            :class="{ active: $route.fullPath === page.path }"
             @click="(e) => handlePageClick(page, e)"
           >
             <div>
@@ -55,33 +55,20 @@
       </template>
       <!-- </v-list> -->
       <h-divider />
-      <div class="h-6">
-        <h-btn
-          class="!h-6 w-full"
-          text
-          :icon="expanded ? 'i-mdi:chevron-up' : 'i-mdi:chevron-down'"
-          @click="expanded = !expanded"
-        />
-      </div>
+
       <slot />
-      <li v-if="isMobile" class="py-0 text-xs font-semibold text-gray-400">
-        <template v-if="!site.user">
-          <router-link :to="'/login'">
-            <div class="i-ion:md-log-in" />
-            Login
-          </router-link>
-        </template>
-        <template v-else-if="site.user">
-          <router-link
-            :to="'/settings/user'"
-            class="mt-3 h-6"
-            style="padding-top: 3px; padding-bottom: 3px"
-          >
-            <div class="i-tabler:user min-w-3 -mr-1 h-3" />
-            {{ site.user.username }} : {{ site.user.contribution_count }}pts
-          </router-link>
-        </template>
+      <li v-if="isMobile && !site.user" class="text-gray-400">
+        <router-link :to="'/login'">
+          <div class="i-ion:md-log-in ml-1 h-6 w-6" />
+          Login
+        </router-link>
       </li>
+      <h-btn
+        class="!h-6 !min-h-0 w-full"
+        text
+        :icon="expanded ? 'i-mdi:chevron-up' : 'i-mdi:chevron-down'"
+        @click="expanded = !expanded"
+      />
     </ul>
 
     <sidebar-favorites />
@@ -195,6 +182,6 @@ export default defineComponent({
 #bottom-bar {
   position: fixed;
   bottom: 0;
-  @apply z-50 flex flex-row items-stretch justify-center gap-1 bg-bgColor-100 text-xs;
+  @apply z-50 flex w-full flex-row items-stretch justify-center gap-1 bg-bgColor-100 text-xs;
 }
 </style>

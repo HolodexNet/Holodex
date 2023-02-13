@@ -94,13 +94,13 @@
     <!--===================== Expanded Search Bar (Mobile Only) =======================-->
 
     <template v-else>
-      <v-app-bar-nav-icon
+      <!-- <v-app-bar-nav-icon
         style="margin-left: 0px"
         @click="searchBarExpanded = false"
       >
         <v-icon>some close button icon</v-icon>
       </v-app-bar-nav-icon>
-      <SearchBar key="main-search-bar" :autofocus="isMobile" class="mr-3" />
+      <SearchBar key="main-search-bar" :autofocus="isMobile" class="mr-3" /> -->
     </template>
 
     <!--=================== END OF Expanded Search (Mobile Only) =======================-->
