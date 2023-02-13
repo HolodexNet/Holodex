@@ -1,6 +1,6 @@
 @layer utilities {
   .btn {
-    @apply h-8 px-3;
+    @apply h-8 px-3 min-h-0;
 
     &-square {
       @apply h-8 w-8 p-0;

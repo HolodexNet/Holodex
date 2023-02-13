@@ -64,7 +64,7 @@
         </router-link>
       </li>
       <h-btn
-        class="!h-6 !min-h-0 w-full"
+        class="!h-6 w-full"
         text
         :icon="expanded ? 'i-mdi:chevron-up' : 'i-mdi:chevron-down'"
         @click="expanded = !expanded"
