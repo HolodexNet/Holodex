@@ -9,14 +9,14 @@
       {{ liveUpcomingHeaderSplit[1] }}
       <span
         v-if="liveUpcomingCounts.liveCnt"
-        class="badge badge-secondary badge-sm mx-1 rounded-sm sm:badge-md"
+        class="badge-secondary badge badge-sm mx-1 rounded-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.liveCnt }}
       </span>
       {{ liveUpcomingHeaderSplit[2] }}
       <span
         v-if="liveUpcomingCounts.upcomingCnt"
-        class="badge badge-outline badge-sm mx-1 rounded-sm sm:badge-md"
+        class="badge-outline badge badge-sm mx-1 rounded-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.upcomingCnt }}
       </span>
@@ -28,13 +28,16 @@
       {{ $t("views.home.recentVideoToggles.subber") }}
     </h-tab>
     <template #filters>
-      <home-filter-button/>
+      <home-filter-button />
     </template>
   </h-tabs>
   <div class="px-4">
+    <query-status :query="(videoQuery as any)" />
+
     <!-- TODO: make this better -->
     <div v-if="props.favorites && !isLoggedIn">Please login</div>
-    <video-card-grid>
+    <!-- Set opacity to 0 to prevent wrong data being shown immediately, but prerender -->
+    <video-card-grid :class="{ 'opacity-0': videoQuery.isRefetching.value }">
       <template v-for="(video, index) in videosToShow" :key="video.id">
         <video-card
           v-if="index < 20"
@@ -49,7 +52,6 @@
         </h-lazy>
       </template>
     </video-card-grid>
-    <query-status :query="(videoQuery as any)" />
     <div
       v-if="videoQuery.isSuccess.value && currentTab !== Tabs.LIVE"
       class="flex h-20 items-center justify-center"
