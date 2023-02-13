@@ -1,5 +1,9 @@
 <template>
-  <v-footer v-if="selection.selectionMode" id="selectionFooter" app>
+  <footer
+    v-if="selection.selectionMode"
+    id="selectionFooter"
+    class="flex w-full bg-bgColor-600 px-4 py-2"
+  >
     <div
       class="btn btn-secondary btn-xs mr-2 self-start transition-all"
       :class="{
@@ -172,7 +176,7 @@
         </div>
       </div>
     </div>
-  </v-footer>
+  </footer>
 </template>
 
 <script lang="ts">

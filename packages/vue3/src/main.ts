@@ -14,11 +14,7 @@ import "@/setup/main.css"; // tailwind configuration
 
 import "@/setup/vuetify/main.sass"; // vuetify configuration
 import "vue-toast-notification/dist/theme-default.css";
-import { createVuetify } from "vuetify";
-import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 import * as icons from "@/utils/icons";
-
-import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
 // a global logging hook for help with development.
 window.log = function (props: any) {
@@ -36,32 +32,11 @@ app.use(pinia);
 
 const i18n: any = setupI18N();
 
-export const vuetify = createVuetify({
-  display: {
-    thresholds: {
-      sm: 640,
-    },
-    mobileBreakpoint: "sm",
-  },
-  locale: { adapter: createVueI18nAdapter({ i18n, useI18n }) },
-  icons: {
-    defaultSet: "svg",
-    aliases,
-    sets: {
-      mdi,
-    },
-  } as any,
-  theme: {
-    defaultTheme: "dark",
-  },
-});
-
 app.use(router);
 
 // app.use(Vue3Linkify);
 
 app.use(i18n);
-app.use(vuetify);
 
 // misc
 app.use(LoadScript);

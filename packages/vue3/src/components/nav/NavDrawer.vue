@@ -1,15 +1,10 @@
 <template>
-  <v-navigation-drawer
-    :model-value="modelValue"
-    width="220"
-    class="nav-scroll"
-    :temporary="temporary"
-    :scrim="false"
+  <div
+    class="border-r border-bgColor-100 bg-bgColor"
     style="
       padding-top: env(safe-area-inset-top);
       padding-left: calc(env(safe-area-inset-left) / 1.3);
     "
-    @update:model-value="(bool) => $emit('update:modelValue', bool)"
   >
     <ul class="menu gap-0 sm:gap-1" :class="!isMobile && 'p-2'">
       <!-- {{
@@ -91,10 +86,7 @@
 
     <sidebar-favorites />
 
-    <div
-      id="bottom-bar"
-      class="z-50 flex flex-row justify-center gap-1 text-xs text-gray-400"
-    >
+    <div id="bottom-bar">
       <a
         href="https://twitter.com/holodex"
         title="Twitter"
@@ -115,7 +107,7 @@
     </div>
 
     <!-- </v-list> -->
-  </v-navigation-drawer>
+  </div>
 </template>
 
 <script lang="ts">
@@ -205,25 +197,8 @@ export default defineComponent({
 
 <style>
 #bottom-bar {
-  position: absolute;
-  width: 100%;
+  position: fixed;
   bottom: 0;
-  background-color: hsl(var(--b3));
-  border-top: 1px solid hsl(var(--b1));
-}
-
-.nav-scroll > .v-navigation-drawer__content:hover {
-  overflow-y: auto !important; /* firefox fallback */
-  overflow-y: overlay !important;
-}
-
-/* overflow-y: overlay does not work on temporary drawer */
-.nav-scroll.v-navigation-drawer--temporary > .v-navigation-drawer__content {
-  overflow-y: auto !important;
-}
-
-.nav-scroll > .v-navigation-drawer__content {
-  overflow-y: hidden !important;
-  padding-right: 0px;
+  @apply z-50 flex flex-row items-stretch justify-center gap-1 bg-bgColor-100 text-xs;
 }
 </style>

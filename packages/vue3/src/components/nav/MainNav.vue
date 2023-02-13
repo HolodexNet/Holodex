@@ -15,13 +15,13 @@
     v-show="showTopBar"
     id="top-bar"
     :app="showTopBar"
-    class="navbar sticky top-0 z-10 h-[56px] min-h-[56px] !border-b !border-bgColor-100 bg-base-100 bg-bgColor pb-0"
+    class="navbar sticky top-0 z-10 h-[56px] min-h-[56px] border-b border-bgColor-100 bg-bgColor pb-0"
     style="align-self: start"
   >
     <!--=============================== Top Bar (Regular View) =============================-->
     <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
       <!--================= Logo & Search Bar (Space permitting) ================-->
-      <div class="mr-2 cursor-pointer" @click.stop="navDrawer = !navDrawer">
+      <div class="mr-2 cursor-pointer" @click.stop="$emit('toggleSidebar')">
         <logo v-if="isSmOrDown" width="32" height="32" :loading="loading > 0" />
         <div v-else class="i-ion:menu h-6 w-6" />
       </div>
@@ -141,7 +141,6 @@
 </template>
 
 <script lang="ts">
-import { musicdexURL } from "@/utils/consts";
 import { useSiteStore } from "@/stores/site";
 import { useSettingsStore } from "@/stores/settings";
 import { useIsFetching } from "@tanstack/vue-query";
@@ -149,16 +148,16 @@ import { useDisplay } from "@/hooks/common/useDisplay";
 
 export default defineComponent({
   components: {},
+  emits: ["toggleSidebar"],
   setup() {
     const site = useSiteStore();
     const settings = useSettingsStore();
     const display = useDisplay();
     const loading = useIsFetching();
 
-    const isMobile = display.mobile.value;
-    const isSmOrDown = display.isSmallerOrEqual("sm");
-    const isMdOrDown = display.isSmallerOrEqual("md");
-    console.log(isMobile, isSmOrDown, isMdOrDown);
+    const isMobile = display.mobile;
+    const isSmOrDown = display.smaller("sm");
+    const isMdOrDown = display.smaller("lg");
     return {
       site,
       display,
@@ -205,87 +204,6 @@ export default defineComponent({
     },
     isMultiView() {
       return this.$route.name === "multiview";
-    },
-    pages() {
-      return [
-        {
-          routeName: "Home_Org",
-          name: this.$t("component.mainNav.home"),
-          path: "/org/" + this.site.currentOrg.name,
-          icon: "i-material-symbols:home-storage-rounded",
-        },
-        {
-          routeName: "Favorites",
-          name: this.$t("component.mainNav.favorites"),
-          path: "/favorites",
-          icon: "i-material-symbols:favorite-rounded",
-        },
-        {
-          name: this.$t("component.mainNav.channels"),
-          path: `/channels`,
-          icon: "i-ion:people",
-          routeName: "Channels_Org",
-        },
-        {
-          name: this.$t("component.mainNav.playlist"),
-          path: "/playlists",
-          icon: "i-material-symbols:playlist-play-rounded",
-          divider: true,
-        },
-        {
-          name: this.$t("component.mainNav.multiview"),
-          path: "/multiview",
-          icon: "i-clarity:grid-chart-solid",
-          collapsible: true,
-        },
-        {
-          name: "Musicdex",
-          path: musicdexURL,
-          icon: "i-mdi:music-clef-treble",
-          collapsible: true,
-          divider: true,
-        },
-        {
-          name: this.$t("component.mainNav.settings"),
-          path: "/settings",
-          icon: "i-material-symbols:settings-rounded",
-          collapsible: true,
-        },
-        {
-          name: this.$t("component.mainNav.about"),
-          path: "/about",
-          icon: "i-ion:information-circle-outline",
-          collapsible: true,
-        },
-        {
-          name: "TL client",
-          path: "/tlclient",
-          icon: this.icons.mdiTypewriter,
-          collapsible: true,
-          extra: true,
-        },
-        {
-          name: "Script Editor",
-          path: "/scripteditor",
-          icon: this.icons.mdiNoteEdit,
-          collapsible: true,
-          extra: true,
-        },
-        {
-          name: "Script Manager",
-          path: "/scriptmanager",
-          icon: this.icons.mdiFileDocumentMultiple,
-          collapsible: true,
-          extra: true,
-        },
-        {
-          name: "Relay Bot Setting",
-          path: "/relaybot",
-          icon: this.icons.mdiRobot,
-          collapsible: true,
-          extra: true,
-        },
-      ];
     },
   },
   watch: {

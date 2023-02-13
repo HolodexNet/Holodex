@@ -1,16 +1,18 @@
 <template>
-  <v-app>
-    <main-nav />
-    <!-- Sizes your content based upon application components -->
-    <v-main class="bg-bgColor-600">
-      <!-- Provides the application the proper gutter -->
-      <!-- If using vue-router -->
+  <app-frame v-model="showSidebar">
+    <template #header>
+      <main-nav @toggle-sidebar="showSidebar = !showSidebar" />
+    </template>
+    <template #main>
       <router-view />
-    </v-main>
+    </template>
+    <template #sidebar>
+      <NavDrawer :pages="pages" />
+    </template>
 
     <report-video />
-    <selection-control />
-  </v-app>
+    <template #footer><selection-control /></template>
+  </app-frame>
 </template>
 
 <script setup lang="ts">
@@ -24,7 +26,10 @@ import { usePlaylistState } from "@/stores/playlist";
 import { usePlaylist } from "@/services/playlist";
 import { useMigrateFromHolodexV2 } from "./stores/util/useMigrateFromHolodexV2";
 import { CURRENT_PLAYLIST_PROVIDE_KEY } from "./utils/consts";
+import { usePages } from "./components/frame/usePages";
 
+const showSidebar = ref(true);
+const pages = usePages();
 // initializing setup for Holodex:
 // Steps:
 useMigrateFromHolodexV2();

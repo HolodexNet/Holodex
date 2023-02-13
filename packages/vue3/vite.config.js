@@ -9,7 +9,7 @@ import Components from "unplugin-vue-components/vite";
 import dynamicImportVars from "@rollup/plugin-dynamic-import-vars";
 import yaml from "@rollup/plugin-yaml";
 // import { visualizer } from "rollup-plugin-visualizer";
-import vuetify from "vite-plugin-vuetify";
+// import vuetify from "vite-plugin-vuetify";
 import Unocss from "unocss/vite";
 import presetIcons from "@unocss/preset-icons";
 import * as icons from "./src/utils/icons.ts";
@@ -57,10 +57,10 @@ export default defineConfig({
         ...Object.values(icons.search),
       ],
     }),
-    vuetify({
-      autoImport: true,
-      styles: { configFile: "./src/setup/vuetify/main.sass" },
-    }),
+    // vuetify({
+    //   autoImport: true,
+    //   styles: { configFile: "./src/setup/vuetify/main.sass" },
+    // }),
     AutoImport({
       // AutoImports is temperamental, might add non-treeshaking.
       imports: ["vue", "pinia", "vue-router"],
