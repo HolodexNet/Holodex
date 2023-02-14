@@ -11,68 +11,42 @@
         'btn-square': selection.selectedVideos.length,
       }"
     >
-      <div class="i-mdi:close-circle" @click="exit" />
+      <h-icon class="i-mdi:close-circle" @click="exit" />
     </div>
 
     <div class="carousel-vertical carousel h-9">
       <div v-if="page == 0" class="carousel-item h-full">
         <div class="flex flex-row flex-wrap gap-2">
-          <div class="btn-group self-start">
-            <div
-              class="btn-disabled btn btn-secondary btn-ghost btn-xs pointer-events-auto cursor-default"
-            >
-              <span class="text-xs font-normal text-primary-300">
-                Selected
-                <span class="text-primary">
-                  {{ selection.selectedVideos.length }}
-                </span>
-                videos
+          <h-btn
+            v-show="selection.selectedVideos.length > 0"
+            class="btn-outline btn btn-primary btn-xs"
+            icon="i-material-symbols:deselect"
+            @click="selection.selectedVideos = []"
+          >
+            <span class="text-xs font-normal text-primary-300">
+              Deselect
+              <span class="text-primary">
+                {{ selection.selectedVideos.length }}
               </span>
-            </div>
-            <div
-              v-show="selection.selectedVideos.length > 0"
-              class="btn-outline btn btn-primary btn-xs"
-              @click="selection.selectedVideos = []"
-            >
-              <div class="i-material-symbols:deselect" />
-            </div>
+              videos
+            </span>
+          </h-btn>
 
-            <div
-              class="btn-outline btn btn-xs"
-              :class="
-                !selection.selectedVideos.length
-                  ? 'btn-disabled'
-                  : 'btn-secondary bg-bgColor-400'
-              "
-            >
-              Open in Multiview
-            </div>
-            <div
-              class="btn-outline btn btn-xs"
-              :class="
-                !selection.selectedVideos.length
-                  ? 'btn-disabled'
-                  : 'btn-secondary bg-bgColor-400'
-              "
-            >
-              Add to current Playlist
-            </div>
-            <div
-              class="btn-outline btn btn-xs"
-              :class="
-                !selection.selectedVideos.length
-                  ? 'btn-disabled'
-                  : 'btn-secondary bg-bgColor-400'
-              "
-            >
-              Make into new Playlist
-            </div>
+          <div
+            class="btn-outline btn btn-xs"
+            :class="
+              !selection.selectedVideos.length
+                ? 'btn-disabled'
+                : 'btn-secondary bg-bgColor-400'
+            "
+          >
+            Open in Multiview
           </div>
 
           <h-menu>
             <template #activator="{ props }">
-              <button
-                class="btn-outline btn btn-xs"
+              <h-btn
+                class="btn btn-xs"
                 :class="
                   !selection.selectedVideos.length
                     ? 'btn-disabled'
@@ -80,10 +54,46 @@
                 "
                 v-bind="props"
               >
-                <div class="i-fluent:group-20-regular text-lg" />
+                <div
+                  class="i-material-symbols:list-alt-outline -ml-1 mr-1 text-lg"
+                />
+                <span class="mx-1">Playlist</span>
+                <div class="i-bx:chevron-up" />
+              </h-btn>
+            </template>
+            <div
+              class="menu-group btn-group btn-group-vertical min-w-full self-start"
+            >
+              <div
+                class="btn btn-secondary btn-xs bg-bgColor-400"
+                @click="page = 1"
+              >
+                Add to current Playlist
+              </div>
+              <div
+                class="btn btn-secondary btn-xs bg-bgColor-400"
+                @click="page = 2"
+              >
+                Make into new Playlist
+              </div>
+            </div>
+          </h-menu>
+
+          <h-menu>
+            <template #activator="{ props }">
+              <h-btn
+                class="btn btn-xs"
+                :class="
+                  !selection.selectedVideos.length
+                    ? 'btn-disabled'
+                    : 'btn-secondary bg-bgColor-400'
+                "
+                v-bind="props"
+              >
+                <div class="i-fluent:group-20-regular -ml-1 mr-1 text-lg" />
                 <span class="mx-1">Modify Attributes</span>
                 <div class="i-bx:chevron-up" />
-              </button>
+              </h-btn>
             </template>
             <div
               class="menu-group btn-group btn-group-vertical min-w-full self-start"
@@ -123,7 +133,7 @@
                 "
                 v-bind="props"
               >
-                <div class="i-fluent:connected-20-filled text-lg" />
+                <div class="i-fluent:connected-20-filled mr-1 -ml-1 text-lg" />
                 <span class="mx-1">Intelligent Multi-Edit</span>
                 <div class="i-bx:chevron-up" />
               </button>
@@ -209,6 +219,7 @@ export default defineComponent({
 .menu-group {
   --btn-text-case: "unset";
 }
+
 #selectionFooter {
   --btn-text-case: "unset";
   /*background: hsl(var(--b1-50)) !important;*/
