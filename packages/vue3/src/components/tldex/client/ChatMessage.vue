@@ -19,10 +19,9 @@
           class="chat-name chat-caption relative"
           @click="showBlockChannelDialog = true"
         >
-          <div
+          <h-icon
             v-if="isFavorited"
-            class="i-mdi:heart font-sm mb-[-2px] mr-1 inline-block"
-            color="red"
+            class="i-mdi:heart text-red-500 mb-[-2px] mr-1"
           />
           <span v-if="source.is_vtuber">[Vt]</span>
           <div
@@ -139,7 +138,7 @@ export default defineComponent({
       }
     },
     isFavorited() {
-      return this.favList.value?.has(this.source.channel_id);
+      return this.favList?.has(this.source.channel_id);
     },
   },
   methods: {
