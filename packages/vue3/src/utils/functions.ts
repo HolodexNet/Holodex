@@ -227,15 +227,15 @@ export function videoTemporalComparator(a, b) {
  * @returns {Object}
  */
 export function getVideoIDFromUrl(url: string) {
-  if (VIDEO_URL_REGEX.test(url)) {
+  {
     const match = url.match(VIDEO_URL_REGEX);
-    if (match && match[5] && match[5].length === 11) {
+    if (match) {
       return {
-        id: match[5],
+        id: match.groups.id,
         type: "yt",
         custom: true,
         channel: {
-          name: match[5],
+          name: match.groups.id,
         },
       };
     }
@@ -252,15 +252,15 @@ export function getVideoIDFromUrl(url: string) {
         }
     }
     */
-  if (TWITCH_VIDEO_URL_REGEX.test(url)) {
+  {
     const match = url.match(TWITCH_VIDEO_URL_REGEX);
-    if (match && match[1]) {
+    if (match) {
       return {
-        id: match[1],
+        id: match.groups.id,
         type: "twitch",
         custom: true,
         channel: {
-          name: match[1],
+          name: match.groups.id,
         },
       };
     }
