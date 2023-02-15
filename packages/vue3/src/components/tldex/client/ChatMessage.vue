@@ -19,6 +19,11 @@
           class="chat-name chat-caption relative"
           @click="showBlockChannelDialog = true"
         >
+          <div
+            v-if="this.$store.getters['favorites/isFavorited'](source.channel_id)"
+            class="i-mdi:heart font-sm mb-[-2px] mr-1 inline-block"
+            color="red"
+          />
           <span v-if="source.is_vtuber">[Vt]</span>
           <div
             v-if="source.is_moderator"
