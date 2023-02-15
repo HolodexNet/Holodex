@@ -20,7 +20,7 @@
           @click="showBlockChannelDialog = true"
         >
           <div
-            v-if="this.$store.getters['favorites/isFavorited'](source.channel_id)"
+            v-if="isFavorited"
             class="i-mdi:heart font-sm mb-[-2px] mr-1 inline-block"
             color="red"
           />
@@ -87,6 +87,7 @@
 <script lang="ts">
 import { dayjs, formatDuration } from "@/utils/time";
 import { useTLStore } from "@/stores/tldex";
+import { useFavoritesIDSet } from "@/services/favorites";
 
 function realTimestamp(utc: any) {
   return dayjs(utc).format("LTS"); // localizedFormat
@@ -110,8 +111,9 @@ export default defineComponent({
   },
   setup() {
     const tldexStore = useTLStore();
+    const favList = useFavoritesIDSet();
 
-    return { tldexStore };
+    return { tldexStore, favList };
   },
   data() {
     return {
@@ -135,6 +137,9 @@ export default defineComponent({
         default:
           return "opacity-75";
       }
+    },
+    isFavorited() {
+      return this.favList.value?.has(this.source.channel_id);
     },
   },
   methods: {
