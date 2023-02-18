@@ -396,17 +396,13 @@ export function debounce<T extends (...args: any) => any>(
   immediate?: boolean
 ) {
   let timeout: number | undefined;
-  return function () {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const context = this;
-    // eslint-disable-next-line prefer-rest-params
-    const args = arguments;
+  return function (...args) {
     clearTimeout(timeout);
-    timeout = setTimeout(function () {
+    timeout = setTimeout(() => {
       timeout = undefined;
-      if (!immediate) func.apply(context, args as any);
+      if (!immediate) func.apply(this, args as any);
     }, wait);
-    if (immediate && !timeout) func.apply(context, args as any);
+    if (immediate && !timeout) func.apply(this, args as any);
   };
 }
 
