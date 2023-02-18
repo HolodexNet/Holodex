@@ -11,7 +11,7 @@
         Please submit the results in the Holodex Discord Mail-A-Admin ticket or
         Twitter DM to the Holodex twitter.
       </p>
-      <h-btn class="btn-success btn-lg">OK</h-btn>
+      <h-btn class="btn-success btn-lg" to="/debug/run">OK</h-btn>
     </div>
   </div>
 </template>
