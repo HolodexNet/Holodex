@@ -1,6 +1,7 @@
 import { useSiteStore } from "@/stores";
 import { useSettingsStore } from "@/stores/settings";
 import { musicdexURL } from "@/utils/consts";
+import Debug from "@/views/Debug.vue";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 // const channelVideos = () => import("@/views/channel/ChannelVideos.vue");
@@ -236,6 +237,16 @@ const routes: RouteRecordRaw[] = [
     path: "/watch/:id",
     name: "Watch",
     component: () => import("@/views/WatchNew.vue"),
+  },
+  {
+    path: "/debug",
+    name: "Debug",
+    component: Debug,
+  },
+  {
+    path: "/debug/run",
+    name: "Debug Run",
+    component: () => import("@/views/DebugRun.vue"),
   },
 ];
 const router = createRouter({
