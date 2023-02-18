@@ -19,6 +19,10 @@
           class="chat-name chat-caption relative"
           @click="showBlockChannelDialog = true"
         >
+          <h-icon
+            v-if="isFavorited"
+            class="i-mdi:heart text-red-500 mb-[-2px] mr-1"
+          />
           <span v-if="source.is_vtuber">[Vt]</span>
           <div
             v-if="source.is_moderator"
@@ -82,6 +86,7 @@
 <script lang="ts">
 import { dayjs, formatDuration } from "@/utils/time";
 import { useTLStore } from "@/stores/tldex";
+import { useFavoritesIDSet } from "@/services/favorites";
 
 function realTimestamp(utc: any) {
   return dayjs(utc).format("LTS"); // localizedFormat
@@ -105,8 +110,9 @@ export default defineComponent({
   },
   setup() {
     const tldexStore = useTLStore();
+    const favList = useFavoritesIDSet();
 
-    return { tldexStore };
+    return { tldexStore, favList };
   },
   data() {
     return {
@@ -130,6 +136,9 @@ export default defineComponent({
         default:
           return "opacity-75";
       }
+    },
+    isFavorited() {
+      return this.favList?.has(this.source.channel_id);
     },
   },
   methods: {

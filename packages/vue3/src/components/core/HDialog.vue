@@ -3,8 +3,7 @@
     <Transition name="fade-pop">
       <div
         v-if="props.modelValue"
-        class="modal z-[9999]"
-        :class="{ 'modal-open': props.modelValue }"
+        class="modal-visible modal z-[9999]"
         v-bind="$attrs"
       >
         <div
@@ -35,7 +34,7 @@ const props = defineProps<{
   maxWidth?: string | number;
 }>();
 const emit = defineEmits(["update:modelValue"]);
-const target = ref(null);
+const target = ref<HTMLElement | null>(null);
 function close() {
   emit("update:modelValue", false);
 }
@@ -52,28 +51,29 @@ watch(
   () => props.modelValue,
   () => {
     if (props.modelValue) {
-      console.log("keydown attached");
       document.addEventListener("keydown", handleKeydown);
     } else {
-      console.log("keydown detached");
       document.removeEventListener("keydown", handleKeydown);
     }
   }
 );
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.modal.modal-visible {
+  pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
+}
+.modal-visible .modal-box {
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+}
 .fade-pop-enter-active,
 .fade-pop-leave-active {
   .modal-box {
     --tw-scale-x: 1;
     --tw-scale-y: 1;
-    transform: scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     opacity: 1;
-  }
-
-  &.modal {
-    --tw-bg-opacity: 0.6;
-    background-color: hsl(var(--nf, var(--n)) / var((--tw-bg-opacity)));
   }
 }
 .fade-pop-enter-from,
@@ -81,13 +81,7 @@ watch(
   .modal-box {
     --tw-scale-x: 0.9;
     --tw-scale-y: 0.9;
-    transform: scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     opacity: 0;
-  }
-
-  &.modal {
-    --tw-bg-opacity: 0;
-    background-color: hsl(var(--nf, var(--n)) / var(--tw-bg-opacity));
   }
 }
 </style>
