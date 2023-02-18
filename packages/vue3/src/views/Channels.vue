@@ -59,7 +59,7 @@
         <template #default="{ channel, isFav, toggle }">
           <div class="h-0 basis-full" />
           <div
-            class="flex w-full shrink-0 basis-full flex-row flex-nowrap gap-2 border-t border-solid border-t-bgColor-700 bg-bgColor-500"
+            class="flex w-full shrink-0 basis-full flex-row flex-nowrap gap-1 border-t border-solid border-t-bgColor-700 bg-bgColor-500"
           >
             <h-btn
               :title="
@@ -67,19 +67,19 @@
                   ? $t('component.channelSocials.removeFromFavorites')
                   : $t('component.channelSocials.addToFavorites')
               "
-              class="btn-ghost w-6/12 shrink"
+              class="btn-ghost w-32 shrink"
               :icon="isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'"
               @click.prevent.stop="toggle"
             />
             <h-btn
               title="Button"
-              class="btn-ghost w-4/12 shrink"
+              class="btn-ghost w-3/12 shrink"
               :icon="icons.youtube"
               :href="`https://youtube.com/channel/${channel.id}`"
             />
             <h-btn
               title="Button"
-              class="btn-ghost w-4/12 shrink"
+              class="btn-ghost w-3/12 shrink"
               :class="{
                 'btn-disabled bg-inherit opacity-20': !channel.twitter,
               }"
@@ -88,7 +88,7 @@
             />
             <h-btn
               title="Button"
-              class="btn-ghost w-4/12 shrink"
+              class="btn-ghost w-3/12 shrink"
               :class="{ 'btn-disabled bg-inherit opacity-20': !channel.twitch }"
               :icon="icons.twitch"
               :href="channel.twitch || '#'"

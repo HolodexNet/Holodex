@@ -63,9 +63,9 @@ import { useTLStore } from "@/stores/tldex";
 interface YoutubeVideo {
   id: string;
   //   channel_id?: string;
-  available_at?: string;
+  available_at?: Date | string;
   channel?: Pick<ShortChannel, "id">;
-  status?: string;
+  status?: VIDEO_STATUSES;
 }
 
 interface PlaceholderVideo {
