@@ -27,8 +27,8 @@ export function useMigrateFromHolodexV2() {
     const settings = useSettingsStore();
 
     site.starredOrgs = v2.orgFavorites; // migrate straight.
-    site.jwtToken = v2.userdata.jwt;
-    site.user = v2.userdata.user;
+    if (v2.userdata.jwt) site.jwtToken = v2.userdata.jwt;
+    if (v2.userdata.user) site.user = v2.userdata.user;
 
     lang.lang = v2.settings.lang;
     lang.clipLangs = v2.settings.clipLangs;
