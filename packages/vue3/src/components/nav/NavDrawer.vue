@@ -177,8 +177,8 @@ export default defineComponent({
       // do default refresh if none
       this.$router.go(0);
     },
-    linkComponent(url: string) {
-      return /^https?:\/\//.test(url) ? 'a' : 'router-link';
+    linkComponent({ isAbsolute: boolean | undefined }) {
+      return isAbsolute ? 'a' : 'router-link';
     },
     // getChannelLiveAtTime,
   },
