@@ -2,8 +2,9 @@
   <!-- PLAIN BUTTON MODE -->
   <a
     v-if="!to"
-    class="btn btn-primary"
+    class="btn"
     :class="{
+      'btn-primary': !noColor,
       'btn-sm': small,
       'btn-ghost': text || ghost,
       'shadow-md': shadow,
@@ -20,8 +21,9 @@
   <router-link
     v-else
     :to="to"
-    class="btn btn-primary"
+    class="btn"
     :class="{
+      'btn-primary': !noColor,
       'btn-sm': small,
       'btn-ghost': text || ghost,
       'shadow-md': shadow,
@@ -68,6 +70,10 @@ export default defineComponent({
     to: {
       type: Object as PropType<RouteLocationRaw>,
       default: undefined,
+    },
+    noColor: {
+      type: Boolean,
+      default: false,
     },
   },
   setup() {
