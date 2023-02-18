@@ -5,12 +5,18 @@
 interface SelectionState {
   selectedVideos: VideoRef[];
   selectionMode: boolean;
+  context: {
+    // contextual information donated by other pages.
+    pageVideo?: VideoRef;
+    pageChannel?: ShortChannel;
+  };
 }
 export const useVideoSelection = defineStore("selection", {
   // convert to a function
   state: (): SelectionState => ({
     selectedVideos: [],
     selectionMode: false,
+    context: {},
   }),
   getters: {
     contains(s) {

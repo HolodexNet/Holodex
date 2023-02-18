@@ -18,7 +18,7 @@
           <div class="flex items-center">
             <div class="flex items-center">
               <div v-if="video.topic_id" class="flex items-center text-sm">
-                <div class="i-fluent:tag-multiple-16-regular mr-0.5"/>
+                <div class="i-fluent:tag-multiple-16-regular mr-0.5" />
                 {{ video.topic_id }}
                 &nbsp;
               </div>
@@ -72,7 +72,7 @@
             v-if="video.mentions"
             class="mt-2 flex flex-wrap items-center gap-y-2"
           >
-            <div class="i-mdi:account-group mr-1 text-2xl"/>
+            <div class="i-mdi:account-group mr-1 text-2xl" />
             <template
               v-for="mention in mentionsShowMore
                 ? video.mentions
@@ -90,7 +90,7 @@
             </a>
           </div>
           <!-- </div> -->
-          <div class="divider m-0.5"/>
+          <div class="divider m-0.5" />
           <h-truncated-text
             :text="video.description"
             class="px-2 opacity-90"
@@ -108,6 +108,7 @@
 import { PlayerRef } from "@/components/player/usePlayer";
 import { useVideoById } from "@/services/video";
 import { useLangStore } from "@/stores/lang";
+import { useVideoSelection } from "@/stores/selection";
 const route = useRoute();
 const playerInstance = ref<PlayerRef | null>(null);
 const clipLangRef = computed(() => ({
@@ -132,6 +133,17 @@ const channelName = computed(
 
 const mentionsShowMore = ref(false);
 // watchEffect(() => console.log(playerInstance.value?.currentTime));
+
+// update current page metadata for selection purposes
+const selection = useVideoSelection();
+selection.context.pageVideo = video.value;
+watch(
+  () => video.value?.id,
+  () => {
+    selection.context.pageVideo = video.value;
+    selection.context.pageChannel = video.value?.channel;
+  }
+);
 </script>
 <style lang="scss">
 $nav-bar-height: 56px;

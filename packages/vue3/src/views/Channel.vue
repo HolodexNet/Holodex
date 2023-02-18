@@ -124,6 +124,7 @@
 import { useChannel } from "@/services/channel";
 import { useFavoritesIDSet, useFavoritesPatcher } from "@/services/favorites";
 import { useLangStore } from "@/stores/lang";
+import { useVideoSelection } from "@/stores/selection";
 import { useSettingsStore } from "@/stores/settings";
 import { useSiteStore } from "@/stores/site";
 import { getBannerImages } from "@/utils/functions";
@@ -163,6 +164,15 @@ export default defineComponent({
     const settings = useSettingsStore();
     const isBlocked = computed(() => settings.blockedSet.has(id.value));
     const favPatcher = useFavoritesPatcher();
+
+    const selection = useVideoSelection();
+    selection.context.pageChannel = channel.data.value;
+    watch(
+      () => channel.data.value,
+      () => {
+        selection.context.pageChannel = channel.data.value;
+      }
+    );
 
     return {
       id,

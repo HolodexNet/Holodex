@@ -139,17 +139,33 @@
               </button>
             </template>
             <div class="menu-group btn-group btn-group-vertical self-start">
-              <div class="btn-outline btn btn-secondary btn-xs bg-bgColor-400">
+              <div
+                v-if="
+                  !selection.selectedVideos.find(
+                    (x) => x.type == 'clip' || x.type == 'placeholder'
+                  )
+                "
+                class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
+              >
                 Make Simulwatch/Collab
               </div>
-              <div class="btn-outline btn btn-secondary btn-xs bg-bgColor-400">
-                Disassociate w/ Current Video (Watch Page only)
+              <div
+                v-if="selection.context.pageVideo"
+                class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
+              >
+                Disassociate w/ Current Video
               </div>
-              <div class="btn-outline btn btn-secondary btn-xs bg-bgColor-400">
-                Disassociate w/ Current Channel (Channel Page only)
+              <div
+                v-if="selection.context.pageChannel"
+                class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
+              >
+                Disassociate w/ Current Channel
               </div>
-              <div class="btn-outline btn btn-secondary btn-xs bg-bgColor-400">
-                Hide Selected Videos (Clips only)
+              <div
+                v-if="selection.selectedVideos.find((x) => x.type == 'clip')"
+                class="btn-outline btn btn-secondary btn-xs bg-bgColor-400"
+              >
+                Hide Selected Clips
               </div>
             </div>
           </h-menu>
