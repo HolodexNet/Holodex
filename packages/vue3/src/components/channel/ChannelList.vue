@@ -18,19 +18,19 @@
           :slim="slim"
           class="bg-bgColor shadow-xl"
         >
-          <template v-if="$slots.default" #buttons>
-            <slot :channel="channel" />
+          <template v-if="$slots.default" #buttons="{ isFav }">
+            <slot :channel="channel" :is-fav="isFav" />
           </template>
         </channel-card>
-        <h-lazy v-else style="height: 116px">
+        <h-lazy v-else style="min-height: 116px">
           <channel-card
             :channel="channel"
             :variant="variant"
             :slim="slim"
             class="bg-bgColor shadow-xl"
           >
-            <template v-if="$slots.default" #buttons>
-              <slot :channel="channel" />
+            <template v-if="$slots.default" #buttons="{ isFav, toggle }">
+              <slot :channel="channel" :is-fav="isFav" :toggle="toggle" />
             </template>
           </channel-card>
         </h-lazy>

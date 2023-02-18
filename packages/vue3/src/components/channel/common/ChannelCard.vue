@@ -2,7 +2,7 @@
   <component
     :is="noLink ? 'div' : 'router-link'"
     class="channel-card flex flex-row items-center justify-self-auto overflow-hidden rounded-md"
-    :class="slim ? '' : 'h-50'"
+    :class="slim ? '' : 'h-50 flex-wrap'"
     :to="`/channel/${channel.id}`"
   >
     <div class="indicator flex-shrink-0">
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <slot name="buttons" />
+    <slot name="buttons" :is-fav="isFav" :toggle="favChannel" />
     <div v-if="!slim && !$slots.buttons" class="flex h-full flex-col gap-1">
       <a
         class="c-card-icon hover:text-red-500"
