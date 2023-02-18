@@ -241,7 +241,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/debug",
     name: "Debug",
-    component: Debug,
+    component: () => import("@/views/Debug.vue"),
   },
   {
     path: "/debug/run",
