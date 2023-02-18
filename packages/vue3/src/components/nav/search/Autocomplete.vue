@@ -8,46 +8,53 @@
     }"
   >
     <!-- Dropdown Input -->
-    <div class="relative mx-auto flex w-full cursor-pointer flex-nowrap">
-      <div class="multiselect-wrapper">
-        <div class="tags">
-          <slot name="chips" :selection="selection" />
-        </div>
-        <input
-          ref="inputField"
-          v-model="searchContent"
-          class="dropdown-input"
-          :placeholder="placeholder"
-          @focus="showOptions()"
-          @blur="exit"
-          @keydown="keyMonitor"
-        />
-      </div>
-      <slot name="caret" :open="showDropdown" :input="inputField">
+    <h-menu :model-value="optionsShown" use-ref-width>
+      <template
+        #activator="{ props: { ref: referenceEl, ariaExpanded, ariaHasPopup } }"
+      >
         <div
-          class="i-ion:search opacity-40"
-          style="margin: auto 4px"
-          @click="
-            $nextTick(() => {
-              inputField?.focus();
-            })
-          "
-        />
-      </slot>
-    </div>
+          :ref="referenceEl"
+          :aria-expanded="ariaExpanded"
+          :aria-haspopup="ariaHasPopup"
+          class="relative mx-auto flex w-full cursor-pointer flex-nowrap"
+        >
+          <div class="multiselect-wrapper">
+            <div class="tags">
+              <slot name="chips" :selection="selection" />
+            </div>
+            <input
+              ref="inputField"
+              v-model="searchContent"
+              class="dropdown-input bg-transparent"
+              :placeholder="placeholder"
+              @focus="showOptions()"
+              @blur="exit"
+              @keydown="keyMonitor"
+            />
+          </div>
+          <slot name="caret" :open="optionsShown" :input="inputField">
+            <div
+              class="i-ion:search opacity-40"
+              style="margin: auto 4px"
+              @click="
+                $nextTick(() => {
+                  inputField?.focus();
+                })
+              "
+            />
+          </slot>
+        </div>
+      </template>
+      <div v-show="showMenu" class="multiselect-dropdown">
+        <slot name="dropdown" :active="activeIndex" :up="dropUp" />
+      </div>
+    </h-menu>
     <!-- Dropdown Menu -->
-    <div
-      v-show="showDropdown && showMenu"
-      class="multiselect-dropdown"
-      :class="{ 'is-top': dropUp, 'flex-col-reverse': dropUp }"
-    >
-      <slot name="dropdown" :active="activeIndex" :up="dropUp" />
-    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { refDebounced, useVModel } from "@vueuse/core";
+import { useVModel } from "@vueuse/core";
 import type { Ref, WritableComputedRef } from "vue";
 
 function useRange(length: Ref<number>) {
@@ -183,13 +190,11 @@ export default defineComponent({
 
     // menu open /close
     const optionsShown = ref(false);
-    const showDropdown = refDebounced(optionsShown, 300);
 
     const inputField = ref<HTMLInputElement>();
     const log = console.log;
     return {
       optionsShown,
-      showDropdown,
       searchContent,
       keyMonitor,
       inputField,
@@ -261,13 +266,6 @@ export default defineComponent({
 }
 
 .multiselect-dropdown {
-  left: -1px;
-  right: -1px;
-  z-index: 5000;
-  @apply absolute bottom-0 flex max-h-80 translate-y-full transform flex-col overflow-y-scroll rounded-b border border-bgColor-100 bg-bgColor;
-}
-
-.multiselect-dropdown.is-top {
-  @apply top-px bottom-auto -translate-y-full rounded-b-none rounded-t;
+  @apply flex max-h-80 min-w-max flex-col overflow-y-scroll rounded-b border border-bgColor-100 bg-bgColor;
 }
 </style>

@@ -65,7 +65,7 @@
         <template v-if="item.incomplete">
           <!-- Incomplete Search Options -->
           <div
-            class="option"
+            class="searchbar-option"
             :class="{
               'bg-bgColor-200': idx === active,
             }"
@@ -98,7 +98,7 @@
           </div>
           <!-- Actual Item -->
           <div
-            class="option"
+            class="searchbar-option"
             :class="{
               'bg-bgColor-200': idx === active,
             }"
@@ -551,7 +551,7 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
+<style>
 .search-bar {
   max-width: min(v-bind('maxWidth+"px"'), 100%) !important;
 }
@@ -561,9 +561,8 @@ export default defineComponent({
   // width management.
   padding: 2px 6px;
   @apply rounded-md bg-bgColor-600;
-
-  .option {
-    @apply flex cursor-pointer gap-1 px-2 py-1 text-sm hover:bg-bgColor-300;
-  }
+}
+.searchbar-option {
+  @apply flex cursor-pointer gap-1 px-2 py-1 text-sm hover:bg-bgColor-300;
 }
 </style>

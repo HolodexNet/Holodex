@@ -54,6 +54,7 @@ import {
   Placement,
   DetectOverflowOptions,
   Strategy,
+  size,
 } from "@floating-ui/vue";
 import { onClickOutside } from "@vueuse/core";
 import { Ref, TransitionProps } from "vue";
@@ -96,6 +97,8 @@ export interface FloatPropsType extends TransitionProps {
       }) => Middleware[]);
   closeOnContentClick?: boolean;
   modelValue?: boolean;
+
+  useRefWidth?: boolean; // use the reference object's width as dropdown width.
 }
 
 const props = withDefaults(defineProps<FloatPropsType>(), {
@@ -108,6 +111,7 @@ const props = withDefaults(defineProps<FloatPropsType>(), {
   modelValue: undefined,
   shift: true,
   flip: true,
+  useRefWidth: false,
 });
 
 const activator = ref<HTMLElement | null>(null);
@@ -137,6 +141,7 @@ function toggle() {
 }
 
 const middleware = ref<Middleware[]>([]);
+
 const { x, y, strategy, middlewareData, update, isPositioned } = useFloating(
   activator,
   floating,
@@ -193,6 +198,7 @@ watch(
     () => props.placement,
     () => props.hide,
     () => props.middleware,
+    () => props.useRefWidth,
   ],
   () => {
     // updateElements();
@@ -252,6 +258,19 @@ watch(
     if (props.hide === true || typeof props.hide === "object") {
       _middleware.push(
         hide(typeof props.hide === "object" ? props.hide : undefined)
+      );
+    }
+    if (props.useRefWidth) {
+      _middleware.push(
+        size({
+          apply({ rects }) {
+            if (floating.value) {
+              Object.assign(floating.value.style, {
+                width: `${rects.reference.width}px`,
+              });
+            }
+          },
+        })
       );
     }
     middleware.value = _middleware;

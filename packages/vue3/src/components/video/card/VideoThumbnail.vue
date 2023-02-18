@@ -96,8 +96,8 @@ export default defineComponent({
   },
   setup(props) {
     const site = useSiteStore();
-    const display = useDisplay();
-    const isMobile = display.mobile;
+    // const display = useDisplay();
+    const isMobile = useDisplay().mobile;
     const langStore = useLangStore();
     const { toggleSaved, idSet } = useTogglePlaylistVideo();
 
@@ -107,7 +107,7 @@ export default defineComponent({
     const { t } = useI18n();
     return {
       site,
-      display,
+      // display,
       isMobile,
       langStore,
       liveTlLang,

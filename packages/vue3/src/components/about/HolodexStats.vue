@@ -1,9 +1,9 @@
 <template>
   <div class="my-2 w-full">
     <div
-      class="grid grid-cols-[repeat(auto-fill,_minmax(250px,_min-content))] gap-2 drop-shadow-lg md:gap-4"
+      class="grid grid-cols-[repeat(auto-fill,_minmax(200px,_min-content))] gap-2 drop-shadow-lg md:gap-4"
     >
-      <div class="stat bg-bgColor-500 p-2 md:p-4">
+      <div class="stat bg-bgColor-500 p-2 lg:p-4">
         <div class="stat-figure text-primary">
           <svg
             class="h-8 w-8"
@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <div class="stat bg-bgColor-500 p-2 md:p-4">
+      <div class="stat bg-bgColor-500 p-1 md:p-2 lg:p-4">
         <div class="stat-figure text-secondary">
           <svg
             class="h-8 w-8"
@@ -64,7 +64,7 @@
           +{{ s?.monthlyChannels?.vtuber || 0 }} last month
         </div>
       </div>
-      <div class="stat bg-bgColor-500 p-2 md:p-4">
+      <div class="stat bg-bgColor-500 p-1 md:p-2 lg:p-4">
         <div class="stat-figure text-success">
           <svg
             class="h-8 w-8"
@@ -92,7 +92,7 @@
         <logo v-else class="w-12" loading />
         <div class="stat-desc">+{{ s?.dailyVideos?.count || 0 }} yesterday</div>
       </div>
-      <div class="stat bg-bgColor-500 p-2 md:p-4">
+      <div class="stat bg-bgColor-500 p-1 md:p-2 lg:p-4">
         <div class="stat-figure text-warning">
           <svg
             class="h-8 w-8"
@@ -118,7 +118,7 @@
           0
         </div>
         <logo v-else class="w-12" loading />
-        <div class="stat-desc" />
+        <div class="stat-desc">&nbsp;</div>
       </div>
     </div>
   </div>
@@ -166,5 +166,8 @@ export default defineComponent({
 <style>
 .stat {
   @apply rounded-md border border-2 border-bgColor-100;
+}
+.stat-value {
+  @apply text-xl;
 }
 </style>

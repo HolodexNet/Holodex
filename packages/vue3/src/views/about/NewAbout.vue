@@ -2,14 +2,14 @@
   <!-- <v-container class="channel-container" fluid> -->
   <div
     key="aboutpg"
-    class="container mx-auto flex flex-col flex-wrap items-stretch gap-2 p-1 pt-2 sm:flex-row"
+    class="container mx-auto flex flex-col flex-nowrap items-stretch gap-2 p-1 pt-2 sm:flex-row"
   >
     <div
       id="about-menu"
       class="rounded-md bg-bgColor"
       :class="{
         'flex-grow': !minimizeSidebar,
-        shrink: minimizeSidebar,
+        'flex-shrink': minimizeSidebar,
         'max-w-full sm:max-w-[200px] md:max-w-[300px]': isDediAboutPage,
       }"
       style="flex-basis: auto"
@@ -59,7 +59,7 @@
     </div>
     <div
       v-if="!($route.path === '/about' && display.sm.value)"
-      class="xs:max-w-full flex-shrink-0 flex-grow rounded-md bg-bgColor p-3 sm:w-80"
+      class="xs:max-w-full flex-shrink flex-grow rounded-md bg-bgColor p-3 sm:w-80"
       :style="
         minimizeSidebar
           ? 'flex-basis:100%'
@@ -141,7 +141,9 @@ export default defineComponent({
       });
     },
     minimizeSidebar() {
-      return this.display.sm.value && this.$route.path !== "/about";
+      return (
+        this.display.smallerOrEqual("md").value && this.$route.path !== "/about"
+      );
     },
     isDediAboutPage() {
       return this.$route.path !== "/about";
