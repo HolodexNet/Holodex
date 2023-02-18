@@ -16,7 +16,8 @@
         :key="page.name"
       >
         <li>
-          <router-link
+          <component
+            :is="linkComponent(page.path)"
             :active-class="'active'"
             :class="{
               active:
@@ -24,6 +25,7 @@
                 ($route.name && $route.name === page.routeName),
             }"
             :to="page.path"
+            :href="page.path"
             @click="(e) => handlePageClick(page, e)"
           >
             <div
@@ -32,7 +34,7 @@
               class="ml-1 h-6 w-6"
             />
             <div>{{ page.name }}</div>
-          </router-link>
+          </component>
         </li>
         <h-divider v-if="page.divider" :key="`${page.path}-divider`" />
       </template>
@@ -42,15 +44,17 @@
 
       <template v-if="expanded">
         <li v-for="page in pages.filter((e) => e.extra)" :key="page.name">
-          <router-link
+          <component
+            :is="linkComponent(page.path)"
             :to="page.path"
+            :href="page.path"
             :class="{ active: $route.fullPath === page.path }"
             @click="(e) => handlePageClick(page, e)"
           >
             <div>
               <span>{{ page.name }}</span>
             </div>
-          </router-link>
+          </component>
         </li>
       </template>
       <!-- </v-list> -->
@@ -172,6 +176,9 @@ export default defineComponent({
       // check if there's a handler on the sequence
       // do default refresh if none
       this.$router.go(0);
+    },
+    linkComponent(url: string) {
+      return /^https?:\/\//.test(url) ? 'a' : 'router-link';
     },
     // getChannelLiveAtTime,
   },
