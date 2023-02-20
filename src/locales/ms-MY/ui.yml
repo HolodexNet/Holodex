@@ -264,6 +264,7 @@ views:
     hideCollabStreamsLabel: Sembunyikan Siarsama
     hideCollabStreamsMsg: Sembunyikan siarsama di laman Kegemaran
     hidePlaceholderStreams: Sembunyikan Siaran Sementara
+    hideMissingStreams: Siaran Tak Tersedia Disorok
     ignoredTopicsLabel: Topik Diketepikan
     ignoredTopicsMsg: Video yang bertopik berikut disembunyikan di laman Utama dan Kegemaran
     theme: Warna tema

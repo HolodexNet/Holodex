@@ -354,5 +354,21 @@ export default [
       },
     },
   },
+  {
+    name: "Reine",
+    id: 22,
+    themes: {
+      dark: {
+        background: "#090909",
+        primary: "#1775fb",
+        secondary: "#51c3a3",
+      },
+      light: {
+        background: "#f9f3f6",
+        primary: "#1c51a3",
+        secondary: "#5fbea3",
+      },
+    },
+  },
 
 ];

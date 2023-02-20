@@ -59,6 +59,8 @@ component:
     uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -262,6 +264,7 @@ views:
     hideCollabStreamsLabel: 콜라보 방송 숨기기
     hideCollabStreamsMsg: 즐겨찾기 피드에서 콜라보 방송을 숨깁니다
     hidePlaceholderStreams: 예약된 YouTube 방송만 표시하기
+    hideMissingStreams: 사라진 방송 숨기기
     ignoredTopicsLabel: 무시된 주제
     ignoredTopicsMsg: 홈과 즐겨찾기 페이지에서 해당 주제의 동영상을 숨깁니다
     theme: 테마
@@ -354,6 +357,10 @@ views:
       - Google 계정으로 로그인
       - Discord 계정으로 로그인
       - Twitter 계정으로 로그인
+    twitterMsg:
+      - Twitter의 API 정책 변경으로 인해 2월 9일부터 Twitter를 통한 로그인이 불가능할 수 있습니다.
+      - 현재 Twitter를 통해서만 로그인하고 계신 것으로 보입니다. (다른 기기에서의 로그인이나 브라우저의 기록 삭제로 인해) 계정에 더 이상 로그인하지 못하는 문제를 방지하기 위해 다른 로그인 수단을 추가하는 것을 강력하게 권장합니다.
+      - Twitter 계정으로 Holodex에 로그인할 수 없다면 (그리고 다른 로그인 수단을 추가하지 않았었다면) Twitter DM이나 Discord를 통해 문의해주시면 도와드리겠습니다.
     username: 아이디
     usernameBtn:
       - 변경
