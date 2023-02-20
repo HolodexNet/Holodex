@@ -1,7 +1,10 @@
 <template>
+  <!-- PLAIN BUTTON MODE -->
   <a
-    class="btn btn-primary"
+    v-if="!to"
+    class="btn"
     :class="{
+      'btn-primary': !noColor,
       'btn-sm': small,
       'btn-ghost': text || ghost,
       'shadow-md': shadow,
@@ -12,11 +15,32 @@
       v-if="icon"
       :class="{[icon!]: icon, '-ml-1 mr-1': $slots.default}"
     />
-    <slot/>
+    <slot />
   </a>
+  <!-- ROUTER LINK MODE -->
+  <router-link
+    v-else
+    :to="to"
+    class="btn"
+    :class="{
+      'btn-primary': !noColor,
+      'btn-sm': small,
+      'btn-ghost': text || ghost,
+      'shadow-md': shadow,
+      'w-full': block,
+    }"
+  >
+    <h-icon
+      v-if="icon"
+      :class="{[icon!]: icon, '-ml-1 mr-1': $slots.default}"
+    />
+    <slot />
+  </router-link>
 </template>
 
 <script lang="ts">
+import { RouteLocationRaw } from "vue-router";
+
 export default defineComponent({
   props: {
     small: {
@@ -40,6 +64,14 @@ export default defineComponent({
       default: false,
     },
     block: {
+      type: Boolean,
+      default: false,
+    },
+    to: {
+      type: Object as PropType<RouteLocationRaw>,
+      default: undefined,
+    },
+    noColor: {
       type: Boolean,
       default: false,
     },

@@ -11,6 +11,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "noImplicitThis": true,
+    "isolatedModules": true,
     "strict": true,
     "outDir": "dist",
     "jsx": "preserve", // necessary for VOLAR to be happy about vue3 JSX.
