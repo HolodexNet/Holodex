@@ -46,13 +46,15 @@
     "vue-tiny-validate": "^0.2.4",
     "vue-toast-notification": "^3.0.4",
     "vuetify": "^3.1.2",
-    "xss": "^1.0.14"
+    "xss": "^1.0.14",
+    "youtube-player": "^5.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
     "@iconify/json": "^2.2.13",
     "@modyfi/vite-plugin-yaml": "^1.0.4",
     "@rollup/plugin-dynamic-import-vars": "^2.0.2",
+    "@rollup/plugin-yaml": "^3.1.0",
     "@types/clientjs": "^0.2.0",
     "@types/clone": "^2.1.1",
     "@types/color": "^3.0.3",
