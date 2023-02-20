@@ -13,7 +13,7 @@
   -  Add ❤ mark for favorited channels in TLdex 
 - TY Nelo for these changes:
   - Always show block/unblock in Channel list. (It might look a bit squished up on smaller resolutions... until Holodex 3 comes out or someone fixes that.)
-
+- Fixed a huge bug where Google Login won't show up if you already have discord binded. Oops.
 
 ### 2.31 Holodex [*Feb 6th, 2023*]
 
