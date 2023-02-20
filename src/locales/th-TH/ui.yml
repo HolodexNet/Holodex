@@ -207,7 +207,7 @@ views:
     unsupportedQuery: >-
       ขณะนี้ไม่รองรับการค้นหาคลิปตาม <kbd>หัวข้อ</kbd> และ <kbd> ค่าย </kbd> ทำให้ไม่มี<b>คลิป</b>ปรากฏขึ้น
     sortByLabel: เรียงตาม
-    typeDropdownLabel: ปนะเภท
+    typeDropdownLabel: ประเภท
   settings:
     title: การตั้งค่า
     darkModeLabel: โหมดมืด
