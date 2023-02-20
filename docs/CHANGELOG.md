@@ -4,6 +4,17 @@
 
 - Development of Vue3 Holodex (release 3.0 ?!?!) is underway... If you like to influence how it looks, now is the best time to let us know.
 
+### 2.32 Holodex [*Feb 19th, 2023*]
+
+- TY Livia Medeiros for the following:
+  - Add Hide Missing Streams to settings
+  - respecting Hide Placeholder on channel pages
+  - Reine theme
+  -  Add ❤ mark for favorited channels in TLdex 
+- TY Nelo for these changes:
+  - Always show block/unblock in Channel list. (It might look a bit squished up on smaller resolutions... until Holodex 3 comes out or someone fixes that.)
+
+
 ### 2.31 Holodex [*Feb 6th, 2023*]
 
 - Twitter Login may be at risk and we added a notification for that. Sorry if you find it annoying. It goes away after you link another login method.
