@@ -13,7 +13,7 @@
       <v-card-text class="d-flex flex-column align-center">
         <div class="d-flex flex-column" style="max-width: 400px; width: 100%">
           <google-sign-in-button
-            v-if="!userdata.user || !userdata.user.discord_id"
+            v-if="!userdata.user || !userdata.user.google_id"
             @onCredentialResponse="loginGoogle"
           />
           <v-btn
