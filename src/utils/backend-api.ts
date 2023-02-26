@@ -67,16 +67,16 @@ export default {
     return axiosInstance.get(`/clips?${q}`);
   },
   searchAutocomplete(query) {
-    const channelId = query.match(CHANNEL_URL_REGEX);
-    const videoId = query.match(VIDEO_URL_REGEX);
+    const channelMatch = query.match(CHANNEL_URL_REGEX);
+    const videoMatch = query.match(VIDEO_URL_REGEX);
 
-    if (channelId && !channelId[0].includes("/c/")) {
-      const q = querystring.stringify({ q: channelId[1] });
+    if (channelMatch) {
+      const q = querystring.stringify({ q: channelMatch.groups.id });
       return axiosInstance.get(`/search/autocomplete?${q}`);
     }
 
-    if (videoId) {
-      return { data: [{ type: "video url", value: `${videoId[5]}` }] };
+    if (videoMatch) {
+      return { data: [{ type: "video url", value: videoMatch.groups.id }] };
     }
 
     const q = querystring.stringify({ q: query });
