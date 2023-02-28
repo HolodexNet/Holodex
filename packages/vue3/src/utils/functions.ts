@@ -229,7 +229,7 @@ export function videoTemporalComparator(a, b) {
 export function getVideoIDFromUrl(url: string) {
   {
     const match = url.match(VIDEO_URL_REGEX);
-    if (match) {
+    if (match && match.groups) {
       return {
         id: match.groups.id,
         type: "yt",
@@ -254,7 +254,7 @@ export function getVideoIDFromUrl(url: string) {
     */
   {
     const match = url.match(TWITCH_VIDEO_URL_REGEX);
-    if (match) {
+    if (match && match.groups) {
       return {
         id: match.groups.id,
         type: "twitch",
