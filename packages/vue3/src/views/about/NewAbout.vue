@@ -85,6 +85,14 @@ export default defineComponent({
   components: {},
   setup() {
     const display = useDisplay();
+    const router = useRouter();
+    const route = useRoute();
+
+    // if it's not mobile, do a redirect:
+    if (!display.mobile.value && route.path === "/about") {
+      router.replace("/about/general");
+    }
+
     return { display };
   },
   computed: {
