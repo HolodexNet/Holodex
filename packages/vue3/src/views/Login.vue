@@ -32,7 +32,7 @@
           />
           <button
             v-if="!site.user || !site.user.discord_id"
-            class="btn btn-sm my-1 h-8 normal-case"
+            class="btn-sm btn my-1 h-8 normal-case"
             color="indigo"
             @click="loginDiscord"
           >
@@ -42,7 +42,7 @@
           </button>
           <button
             v-if="!site.user || !site.user.twitter_id"
-            class="btn btn-sm my-1 h-8 normal-case"
+            class="btn-sm btn my-1 h-8 normal-case"
             color="blue lighten-1"
             @click="loginTwitter"
           >
@@ -69,6 +69,7 @@
             <template #append>
               <h-btn
                 :class="editingUsername ? 'btn-success' : 'btn-primary'"
+                class="!h-12"
                 @click="editUsername"
               >
                 {{

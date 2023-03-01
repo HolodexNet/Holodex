@@ -36,7 +36,6 @@ watch(
 </script>
 <style lang="scss" scoped>
 $header-height: 56px;
-$sidebar-width: 220px;
 
 .header {
   grid-area: header;
@@ -58,7 +57,7 @@ $sidebar-width: 220px;
 .sidebar > .sidebar-content {
   overflow-y: hidden;
   height: 100%;
-  width: $sidebar-width;
+  width: var(--sidebar-width-px);
 }
 
 .sidebar > .sidebar-content:hover {
@@ -88,7 +87,7 @@ $sidebar-width: 220px;
   min-height: 100vh;
   /* grid-template-rows: 56px calc(100vh - 56px); */
   grid-template-rows: $header-height auto;
-  grid-template-columns: $sidebar-width auto;
+  grid-template-columns: var(--sidebar-width-px) auto;
   position: relative;
   @apply duration-300 ease-in-out;
 }
@@ -105,7 +104,7 @@ $sidebar-width: 220px;
 
 .slide-enter-from,
 .slide-leave-to {
-  transform: translateX(-$sidebar-width);
+  transform: translateX(calc(-1 * var(--sidebar-width-px)));
 }
 
 .slide-enter-to,

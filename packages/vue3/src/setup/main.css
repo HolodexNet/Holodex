@@ -6,6 +6,7 @@
 
 @import "tailwindcss/utilities";
 @import "./daisy-overrides.scss";
+@import "constants.css";
 
 html {
   font-family: "Inter", "Roboto", ui-sans-serif, system-ui, -apple-system,
@@ -68,7 +69,7 @@ e.g. just doing .online will NOT work
 }
 
 .btn-text {
-  @apply btn btn-sm bg-transparent p-0 text-primary hover:bg-transparent;
+  @apply btn-sm btn bg-transparent p-0 text-primary hover:bg-transparent;
 }
 
 .scroll-bar,

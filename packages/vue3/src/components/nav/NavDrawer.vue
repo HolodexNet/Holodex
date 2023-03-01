@@ -182,6 +182,7 @@ export default defineComponent({
 #bottom-bar {
   position: fixed;
   bottom: 0;
+  width: var(--sidebar-width-px);
   @apply z-50 flex flex-row items-stretch justify-center gap-1 bg-bgColor-100 text-xs;
 }
 </style>
