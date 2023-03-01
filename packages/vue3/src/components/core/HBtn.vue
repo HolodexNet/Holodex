@@ -1,25 +1,6 @@
 <template>
-  <!-- PLAIN BUTTON MODE -->
-  <a
-    v-if="!to"
-    class="btn"
-    :class="{
-      'btn-primary': !noColor,
-      'btn-sm': small,
-      'btn-ghost': text || ghost,
-      'shadow-md': shadow,
-      'w-full': block,
-    }"
-  >
-    <h-icon
-      v-if="icon"
-      :class="{[icon!]: icon, '-ml-1 mr-1': $slots.default}"
-    />
-    <slot />
-  </a>
-  <!-- ROUTER LINK MODE -->
-  <router-link
-    v-else
+  <component
+    :is="comp"
     :to="to"
     class="btn"
     :class="{
@@ -35,11 +16,11 @@
       :class="{[icon!]: icon, '-ml-1 mr-1': $slots.default}"
     />
     <slot />
-  </router-link>
+  </component>
 </template>
 
 <script lang="ts">
-import { RouteLocationRaw } from "vue-router";
+import { RouteLocationRaw, RouterLink } from "vue-router";
 
 export default defineComponent({
   props: {
@@ -78,6 +59,11 @@ export default defineComponent({
   },
   setup() {
     return {};
+  },
+  computed: {
+    comp() {
+      return this.to ? RouterLink : "a";
+    },
   },
 });
 </script>
