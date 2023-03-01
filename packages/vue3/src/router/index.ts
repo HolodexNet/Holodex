@@ -1,11 +1,10 @@
 import { useSiteStore } from "@/stores";
 import { useSettingsStore } from "@/stores/settings";
 import { musicdexURL } from "@/utils/consts";
-import Debug from "@/views/Debug.vue";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 // const channelVideos = () => import("@/views/channel/ChannelVideos.vue");
-const routes: RouteRecordRaw[] = [
+export const routes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "Home",
@@ -241,12 +240,13 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/debug",
     name: "Debug",
-    component: () => import("@/views/Debug.vue"),
+    component: () => import("@/views/debug/index").then((w) => w.default.debug),
   },
   {
     path: "/debug/run",
     name: "Debug Run",
-    component: () => import("@/views/DebugRun.vue"),
+    component: () =>
+      import("@/views/debug/index").then((w) => w.default.debugRun),
   },
 ];
 const router = createRouter({
