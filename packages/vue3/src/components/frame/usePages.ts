@@ -83,5 +83,5 @@ export function usePages() {
       collapsible: true,
       extra: true,
     },
-  ];
+  ].map(page => Object.assign(page, /^https?:\/\//.test(page.path) ? { isAbsolute: true } : {}));
 }
