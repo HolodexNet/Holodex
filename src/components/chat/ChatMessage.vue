@@ -21,18 +21,10 @@
       >
         <span class="tl-name" @click="showBlockChannelDialog = true">
           <!-- <span v-if="source.is_owner">👑</span> -->
-          <v-icon
-            v-if="this.$store.getters['favorites/isFavorited'](source.channel_id)"
-            x-small
-            color="red"
-            class="tl-favorited"
-          >
-            {{ icons.mdiHeart }}
-          </v-icon>
           <span v-if="source.is_vtuber">[Vtuber]</span>
           <span v-if="source.is_moderator">[Mod]</span>
           {{ source.name }}<span v-if="source.is_verified" style="font-weight: 800"> ✓</span>:
-          <v-icon class="tl-settings" x-small style="margin-top: 2px; position: absolute; width: 11px">{{ icons.mdiCog }}</v-icon>
+          <v-icon x-small style="margin-top: 2px; position: absolute; width: 11px">{{ icons.mdiCog }}</v-icon>
         </span>
       </div>
       <a class="tl-message" :data-time="source.relativeMs/1000">
@@ -149,15 +141,11 @@ export default {
 .tl-name {
   cursor: pointer;
 }
-
-.tl-name .tl-favorited {
-  margin: -2px 2px 0 0;
-}
-
-.tl-name .tl-settings {
+.tl-name .v-icon {
   opacity: 0;
 }
-.tl-name:hover .tl-settings {
+
+.tl-name:hover .v-icon {
   opacity: 1;
 }
 
