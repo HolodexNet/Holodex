@@ -380,20 +380,21 @@ export function waitForElement(selector, parent = document.body, waitTime = 90e3
     return new Promise((resolve, reject) => {
         const elem = parent.querySelector(selector);
         if (elem) {
-            return resolve(elem);
+            resolve(elem);
         }
-        const timeout = setTimeout(() => {
-            observer.disconnect();
-            return reject(new Error(`${selector} timed out`));
-        }, waitTime);
+        let timeout;
         const observer = new MutationObserver(() => {
-            const elem = parent.querySelector(selector);
-            if (elem) {
+            const elem2 = parent.querySelector(selector);
+            if (elem2 && timeout) {
                 clearTimeout(timeout);
                 observer.disconnect();
-                return resolve(elem);
+                resolve(elem2);
             }
         });
+        timeout = setTimeout(() => {
+            observer.disconnect();
+            reject(new Error(`${selector} timed out`));
+        }, waitTime);
         observer.observe(parent, {
             childList: true,
             subtree: true,

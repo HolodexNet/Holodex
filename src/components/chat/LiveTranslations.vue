@@ -235,20 +235,20 @@ export default {
         },
         toDisplay() {
             if (!this.filteredMessages.length || !this.showSubtitle) return [];
-            const buffer = this.filteredMessages.slice(-2);
+            const buffer = this.filteredMessages.slice(-80);
             return buffer.filter((m) => {
                 const displayTime = +m.duration || m.message.length * 65 + 1800;
                 // Use receivedAt and Date.now for consistency, since live streams can have many forms of delay
                 // We just want to display messages for a certain period of time after they are received
-                const receivedRelativeSec = m.receivedAt
-                    ? m.receivedAt - this.startTimeMillis
-                    : m.relativeMs;
-                const curTime = Date.now() - this.startTimeMillis;
+                // const receivedRelativeSec = m.receivedAt
+                //     ? m.receivedAt - this.startTimeMillis
+                //     : m.relativeMs;
+                // const curTime = Date.now() - this.startTimeMillis;
                 // Bind updates to currentTime (pausing video will pause overlay)
                 return (
                     this.currentTime
-                    && curTime >= receivedRelativeSec
-                    && curTime < receivedRelativeSec + displayTime
+                    && this.currentTime * 1000 >= m.relativeMs
+                    && this.currentTime * 1000 < m.relativeMs + displayTime
                 );
             });
         },
@@ -276,6 +276,24 @@ export default {
                 this.$refs.tlBody.scrollToBottom();
             });
         },
+        // currentTime(time) {
+        //     if (!this.dividedTLs.length) return;
+        //         const msTime = time * 1000;
+        //         const cur = this.dividedTLs[this.curIndex].relativeMs;
+        //         // time jumped forward too fast, or backwards. Exhaustive search for next spot
+
+        //         const startIndex = time < cur ? 0 : this.curIndex;
+        //         for (let i = startIndex; i < this.tlHistory.length; i += 1) {
+        //           if (i === this.dividedTLs.length - 1) {
+        //             this.curIndex = this.dividedTLs.length - 1;
+        //             return;
+        //           }
+        //           if (msTime <= this.dividedTLs[i].relativeMs) {
+        //             this.curIndex = Math.max(i - 1, 0);
+        //             return;
+        //           }
+        //     }
+        // },
     },
     mounted() {
         if (this.$socket.connected) {
