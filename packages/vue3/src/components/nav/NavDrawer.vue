@@ -17,7 +17,7 @@
       >
         <li>
           <component
-            :is="linkComponent(page.path)"
+            :is="linkComponent(page)"
             :active-class="'active'"
             :class="{
               active:
@@ -26,7 +26,7 @@
             }"
             :to="page.path"
             :href="page.path"
-            @click="(e) => handlePageClick(page, e)"
+            @click="(e: MouseEvent) => handlePageClick(page, e)"
           >
             <div
               v-if="page.icon.startsWith('i')"
@@ -45,11 +45,11 @@
       <template v-if="expanded">
         <li v-for="page in pages.filter((e) => e.extra)" :key="page.name">
           <component
-            :is="linkComponent(page.path)"
+            :is="linkComponent(page)"
             :to="page.path"
             :href="page.path"
             :class="{ active: $route.fullPath === page.path }"
-            @click="(e) => handlePageClick(page, e)"
+            @click="(e: MouseEvent) => handlePageClick(page, e)"
           >
             <div>
               <span>{{ page.name }}</span>
@@ -113,6 +113,7 @@ type Page = {
   icon?: any;
   collapsible?: boolean;
   extra?: boolean;
+  isAbsolute?: boolean;
 };
 
 export default defineComponent({
@@ -177,8 +178,8 @@ export default defineComponent({
       // do default refresh if none
       this.$router.go(0);
     },
-    linkComponent({ isAbsolute: boolean | undefined }) {
-      return isAbsolute ? 'a' : 'router-link';
+    linkComponent({ isAbsolute }: { isAbsolute?: boolean }) {
+      return isAbsolute ? "a" : "router-link";
     },
     // getChannelLiveAtTime,
   },
