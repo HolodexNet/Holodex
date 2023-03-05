@@ -8,7 +8,7 @@
     }"
   >
     <!-- Dropdown Input -->
-    <h-menu :model-value="optionsShown" use-ref-width>
+    <h-menu :model-value="optionsShown" use-ref-width strategy="fixed">
       <template
         #activator="{ props: { ref: referenceEl, ariaExpanded, ariaHasPopup } }"
       >
