@@ -1,9 +1,9 @@
 <template>
   <div class="h-tooltip">
-    <div ref="activator">
+    <div ref="activator" @touchend="onTouchEnd">
       <slot name="activator" />
     </div>
-    <div v-if="isHovered" ref="floating" :style="floatingStyle">
+    <div v-if="showTooltip" ref="floating" :style="floatingStyle">
       <transition
         enter-active-class="transition duration-200 ease-out"
         enter-from-class="opacity-0"
@@ -30,11 +30,27 @@ import {
 import { useElementHover } from "@vueuse/core";
 import type { Options as OffsetOptions } from "@floating-ui/core/src/middleware/offset";
 import { TransitionProps } from "vue";
+import useTouchOutside from "@/hooks/common/useTouchOutside";
 
 const activator = ref<HTMLElement | null>(null);
 const floating = ref<HTMLElement | null>(null);
 
 const isHovered = useElementHover(activator);
+const showTooltip = computed(() => isHovered.value || isTouched.value);
+
+const isTouched = ref(false);
+
+function onTouchEnd(e: TouchEvent) {
+  if (!props.showOnFirstTouch) return;
+  if (!isTouched.value) {
+    e.preventDefault();
+    isTouched.value = true;
+    useTouchOutside(activator, () => {
+      isTouched.value = false;
+    });
+  }
+}
+
 interface Props extends TransitionProps {
   // as?: string | Component;
   // floatingAs?: string | Component;
@@ -46,6 +62,8 @@ interface Props extends TransitionProps {
   zIndex?: number | string;
   // TODO: impl transition stuff
   transition?: string;
+
+  showOnFirstTouch?: boolean;
 }
 const props = withDefaults(defineProps<Props>(), {
   placement: "bottom",
@@ -53,6 +71,7 @@ const props = withDefaults(defineProps<Props>(), {
   middleware: () => [],
   transition: "fade",
   offset: undefined,
+  showOnFirstTouch: true,
 });
 
 const middleware = computed(() => {
