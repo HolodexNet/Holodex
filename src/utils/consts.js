@@ -107,6 +107,10 @@ export const TL_LANGS = Object.freeze([
         text: "한국어",
         value: "ko",
     },
+    {
+        text: "TLDex-LIVE (test system)",
+        value: "tl",
+    },
 ]);
 
 // exports.CHANNEL_TYPE_TO_VIDEO_TYPE = {
