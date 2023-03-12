@@ -6,7 +6,10 @@
       padding-left: calc(env(safe-area-inset-left) / 1.3);
     "
   >
-    <ul class="menu gap-0 sm:gap-1" :class="!isMobile && 'p-2'">
+    <ul
+      class="menu menu-compact gap-0 font-medium sm:gap-1"
+      :class="!isMobile && 'p-2'"
+    >
       <!-- {{
         modelValue
       }} -->

@@ -19,7 +19,7 @@
 
       <channel-img
         :channel="channel"
-        :size="slim ? 44 : 100"
+        :size="slim ? 36 : 100"
         class="m-2"
         :class="imgClass"
       />
@@ -29,16 +29,17 @@
       :class="{ 'opacity-40': channel.inactive, 'ml-2': !slim }"
     >
       <span class="text-xs text-base-content opacity-75 line-clamp-1">
-        <b>
-          {{
-            channel.org ||
-            (channel.type === "subber" && $t("views.channels.tabs.Subber")) ||
-            "???"
-          }}
-        </b>
+        {{
+          channel.org ||
+          (channel.type === "subber" && $t("views.channels.tabs.Subber")) ||
+          "???"
+        }}
         {{ group ? "/ " + group : "" }}
       </span>
-      <span class="-mt-1 line-clamp-1" :class="{ 'text-lg': !slim }">
+      <span
+        class="-mt-1 font-medium line-clamp-1"
+        :class="{ 'text-lg': !slim, 'text-sm': slim }"
+      >
         {{ preferredName }}
       </span>
       <span
