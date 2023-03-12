@@ -23,7 +23,7 @@
       <!--================= Logo & Search Bar (Space permitting) ================-->
       <div class="mr-2 cursor-pointer" @click.stop="$emit('toggleSidebar')">
         <logo v-if="isSmOrDown" width="32" height="32" :loading="loading > 0" />
-        <div v-else class="i-ion:menu h-6 w-6" />
+        <!-- <div v-else class="i-ion:menu h-6 w-6" /> -->
       </div>
       <div class="mr-2 flex shrink-0 flex-row items-center gap-2">
         <router-link
@@ -58,7 +58,7 @@
         <template #activator="{ props }">
           <div
             v-bind="props"
-            class="btn btn-ghost btn-square mr-2 text-2xl"
+            class="btn-ghost btn-square btn mr-2 text-2xl"
             style="width: 3rem; height: 3rem; min-height: 3rem"
           >
             <h-icon

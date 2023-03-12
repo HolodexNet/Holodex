@@ -1,38 +1,52 @@
 <template>
   <div
     class="grid-frame bg-bgColor-600"
-    :class="{ 'hide-sidebar': !$slots.sidebar?.() || !props.modelValue }"
+    :class="{
+      'hide-sidebar': !$slots.sidebar?.() || !props.modelValue,
+      'temporary-sidebar': isTemporary,
+    }"
   >
     <div class="header"><slot name="header" /></div>
     <Transition name="slide">
       <div v-show="$slots.sidebar?.() && props.modelValue" class="sidebar">
-        <div class="sidebar-content">
+        <div class="sidebar-content bg-bgColor">
           <slot name="sidebar" />
         </div>
       </div>
     </Transition>
+    <div
+      v-if="isTemporary && props.modelValue"
+      class="temporary-sidebar-overlay"
+      @click="setShow(false)"
+    />
     <div class="main"><slot name="main" /></div>
     <div class="footer"><slot name="footer" /></div>
   </div>
 </template>
 <script setup lang="ts">
 import { useDisplay } from "@/hooks/common/useDisplay";
+import router from "@/router";
 
 // Show sidebar?
-const props = defineProps<{ modelValue: boolean }>();
+const props = defineProps<{ modelValue: boolean; temporary?: boolean }>();
 const emit = defineEmits(["update:modelValue"]);
 
 const display = useDisplay();
-const shouldShow = display.greater("lg");
+const isTemporary = computed(() => display.mobile.value || props.temporary);
+
+const setShow = (val: boolean) => emit("update:modelValue", val);
+// When temporary changes, usually because the window was resized
 watch(
-  () => shouldShow.value,
+  () => isTemporary.value,
   () => {
-    if (shouldShow.value !== props.modelValue) {
-      emit("update:modelValue", shouldShow.value);
-    }
+    setShow(!isTemporary.value);
   },
   { immediate: true }
 );
+
+router.afterEach(() => {
+  if (isTemporary.value) setShow(false);
+});
 </script>
 <style lang="scss" scoped>
 $header-height: 56px;
@@ -51,6 +65,27 @@ $header-height: 56px;
   position: fixed;
   top: $header-height;
   z-index: 10;
+}
+
+.grid-frame.temporary-sidebar {
+  display: grid;
+  grid-template-columns: 0px auto;
+}
+
+.temporary-sidebar .sidebar {
+  position: fixed;
+  top: $header-height;
+  z-index: 100;
+}
+
+.temporary-sidebar-overlay {
+  position: fixed;
+  top: $header-height;
+  width: 100vw;
+  height: 100vh;
+  content: "";
+  z-index: 10;
+  @apply bg-black opacity-50;
 }
 
 /* Here we need to make assumption that the first sidebar */
