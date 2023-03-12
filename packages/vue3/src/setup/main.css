@@ -94,14 +94,7 @@ e.g. just doing .online will NOT work
 ::-webkit-scrollbar-thumb {
   /* background: #575757; */
   @apply bg-bgColor-50;
-}
-
-.theme--light ::-webkit-scrollbar-track {
-  background: #d6d6d6;
-}
-
-.theme--light ::-webkit-scrollbar-thumb {
-  background: #858585;
+  border-radius: 10px;
 }
 
 .btn-icon {
