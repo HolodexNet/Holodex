@@ -9,6 +9,7 @@
       'btn-ghost': text || ghost,
       'shadow-md': shadow,
       'w-full': block,
+      '!p-0': icon,
     }"
   >
     <h-icon

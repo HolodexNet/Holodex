@@ -14,21 +14,25 @@
       <div class="container mx-auto">
         <channel-card
           :channel="channel!"
-          class="rounded-none p-2 pb-0 shadow-none"
+          class="max-w-[100vw] rounded-none p-2 pb-0 shadow-none"
           no-link
+          :slim="display.mobile.value"
         >
-          <template #buttons>
-            <div class="mr-2 grid grid-cols-2 gap-1 md:mr-4 md:gap-2">
-              <a
-                class="c-social-icon h-8 w-8 hover:text-red-500 md:h-12 md:w-12"
+          <template #buttons="{ isFav, toggle }">
+            <div
+              class="inline-flex w-fit shrink-[10] flex-row flex-wrap justify-end gap-1 self-start rounded md:gap-2 md:bg-black md:bg-opacity-30"
+              style="width: fit-content"
+            >
+              <h-btn
+                class="h-8 w-8 hover:text-red-500 md:h-12 md:w-12"
                 :href="`https://youtube.com/channel/${channel.id}`"
                 target="_blank"
                 title="Youtube"
-              >
-                <div class="i-carbon:logo-youtube" />
-              </a>
-              <a
-                class="c-social-icon h-8 w-8 hover:text-cyan-500 md:h-12 md:w-12"
+                icon="i-carbon:logo-youtube"
+                ghost
+              />
+              <h-btn
+                class="h-8 w-8 hover:text-cyan-500 md:h-12 md:w-12"
                 :class="{
                   'btn-disabled bg-inherit opacity-20': !channel.twitter,
                 }"
@@ -39,41 +43,50 @@
                 "
                 target="_blank"
                 title="Twitter"
-              >
-                <div class="i-carbon:logo-twitter" />
-              </a>
-              <button
-                class="c-social-icon h-8 w-8 md:h-12 md:w-12"
+                icon="i-carbon:logo-twitter"
+                ghost
+              />
+              <h-btn
+                class="h-8 w-8 hover:text-cyan-500 md:h-12 md:w-12"
+                :class="{
+                  'btn-disabled bg-inherit opacity-20': !channel.twitch,
+                }"
+                :href="
+                  channel.twitch ? `https://twitch.tv/${channel.twitch}` : '#'
+                "
+                target="_blank"
+                title="Twitter"
+                :icon="icons.twitch"
+                ghost
+              />
+              <h-btn
+                class="h-8 w-8 md:h-12 md:w-12"
+                ghost
                 :title="
                   isFav
                     ? $t('component.channelSocials.removeFromFavorites')
                     : $t('component.channelSocials.addToFavorites')
                 "
-                @click="favChannel"
-              >
-                <div
-                  :class="
-                    isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'
-                  "
-                />
-              </button>
-              <button
-                class="c-social-icon h-8 w-8 md:h-12 md:w-12"
+                :icon="
+                  isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'
+                "
+                @click="toggle"
+              />
+              <h-btn
+                ghost
+                class="h-8 w-8 !p-0 md:h-12 md:w-12"
                 :title="
                   !isBlocked
                     ? $t('component.channelSocials.block')
                     : $t('component.channelSocials.unblock')
                 "
+                :icon="
+                  isBlocked
+                    ? 'i-material-symbols:block text-red-500'
+                    : 'i-material-symbols:block'
+                "
                 @click="blockChannel"
-              >
-                <div
-                  :class="
-                    isBlocked
-                      ? 'i-material-symbols:block text-red-500'
-                      : 'i-material-symbols:block'
-                  "
-                />
-              </button>
+              />
             </div>
           </template>
         </channel-card>
@@ -121,6 +134,7 @@
 
 <script lang="ts">
 // import api from "@/utils/backend-api";
+import { useDisplay } from "@/hooks/common/useDisplay";
 import { useChannel } from "@/services/channel";
 import { useFavoritesIDSet, useFavoritesPatcher } from "@/services/favorites";
 import { useLangStore } from "@/stores/lang";
@@ -157,8 +171,8 @@ export default defineComponent({
       );
     });
 
-    const favList = useFavoritesIDSet();
-    const isFav = computed(() => favList.value?.has(id.value));
+    // const favList = useFavoritesIDSet();
+    // const isFav = computed(() => favList.value?.has(id.value));
     const canFav = computed(() => !!useSiteStore().user);
 
     const settings = useSettingsStore();
@@ -174,18 +188,21 @@ export default defineComponent({
       }
     );
 
+    const display = useDisplay();
+
     return {
       id,
       route,
       channel: channel.data,
       isLoading: channel.isLoading,
       preferredName,
-      favList,
+      // favList,
       canFav,
-      isFav,
+      // isFav,
       isBlocked,
       favPatcher,
       RouterLink,
+      display,
     };
   },
   computed: {
@@ -271,15 +288,15 @@ export default defineComponent({
             group: this.channel.group,
           });
     },
-    favChannel() {
-      this.favPatcher.mutateAsync([
-        {
-          op: this.isFav ? "remove" : "add",
-          channel_id: this.id,
-          channelTemp: this.channel,
-        },
-      ]);
-    },
+    // favChannel() {
+    //   this.favPatcher.mutateAsync([
+    //     {
+    //       op: this.isFav ? "remove" : "add",
+    //       channel_id: this.id,
+    //       channelTemp: this.channel,
+    //     },
+    //   ]);
+    // },
   },
 });
 </script>
@@ -287,42 +304,5 @@ export default defineComponent({
 <style lang="css">
 .router-link-exact-active {
   @apply tab-active;
-}
-
-.c-social-icon {
-  @apply btn-ghost flex-grow rounded p-2;
-
-  display: inline-flex;
-  flex-shrink: 0;
-  cursor: pointer;
-  -webkit-user-select: none;
-  user-select: none;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-
-  transition-property: color, background-color, border-color, fill, stroke,
-    opacity, box-shadow, transform, filter, -webkit-text-decoration-color,
-    -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color,
-    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
-    backdrop-filter;
-  transition-property: color, background-color, border-color,
-    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
-    backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: var(--rounded-btn, 0.5rem);
-
-  min-height: 20px;
-  padding: 0;
-  line-height: 1.4em;
-  font-weight: 600;
-  font-size: 1.4rem;
-  opacity: 0.5;
-  border: 0;
-}
-.c-social-icon:hover {
-  opacity: 1;
 }
 </style>

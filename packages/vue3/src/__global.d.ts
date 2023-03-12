@@ -216,6 +216,7 @@ declare global {
     created_at?: Date;
     top_topics?: string[];
     crawled_at?: Date;
+    twitch?: string;
   }
 
   interface Org {
