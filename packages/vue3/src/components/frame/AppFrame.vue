@@ -96,7 +96,7 @@ $header-height: 56px;
 }
 
 .sidebar > .sidebar-content:hover {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-y: overlay;
 }
 

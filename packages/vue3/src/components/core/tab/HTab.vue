@@ -1,10 +1,11 @@
 <template>
   <component
     :is="component || 'a'"
-    class="tab tab-bordered border-transparent sm:tab-lg"
+    class="tab-bordered tab tab-lg border-transparent"
+    style="--tab-padding: 0.5rem"
     :class="props.active ? 'tab-active !border-secondary text-secondary' : ''"
   >
-    <slot/>
+    <slot />
   </component>
 </template>
 <script setup lang="ts">

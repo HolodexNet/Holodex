@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-  <div v-if="display.mobile.value" class="my-2 -mt-4 flex justify-end">
+  <div v-if="display.mobile.value" class="flex justify-end">
     <slot name="filters" />
   </div>
 </template>

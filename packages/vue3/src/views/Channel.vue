@@ -10,13 +10,13 @@
       :src="bannerImage"
       class="-mb-0 sm:-mb-6 md:-mb-12"
     /> -->
-    <div class="mx-full sticky top-12 z-10 bg-bgColor/95 backdrop-blur">
+    <div class="sticky top-12 z-10 max-w-[100vw] bg-bgColor/95 backdrop-blur">
       <div class="container mx-auto">
         <channel-card
           :channel="channel!"
           class="max-w-[100vw] rounded-none p-2 pb-0 shadow-none"
           no-link
-          :slim="display.mobile.value"
+          :slim="mobile"
         >
           <template #buttons="{ isFav, toggle }">
             <div
@@ -90,18 +90,6 @@
             </div>
           </template>
         </channel-card>
-        <!-- <div class="tabs justify-evenly md:justify-center">
-          <router-link
-            v-for="tab in tabs"
-            :key="tab.path"
-            class="p-1 md:p-3 tab grow tab-md md:tab-lg tab-bordered"
-            :to="tab.path"
-            style="max-width: 180px"
-          >
-            <div :class="tab.class" class="mr-1 md:mr-2"></div>
-            {{ tab.name }}
-          </router-link>
-        </div> -->
 
         <h-tabs with-container>
           <h-tab
@@ -110,10 +98,19 @@
             :active="tab.name === $router.currentRoute.value.name"
             :component="RouterLink"
             :to="tab.path"
-            class="min-h-[4rem] sm:min-h-[2.5rem]"
+            :href="tab.path"
+            class="max-h-[4rem] sm:min-h-[2.5rem]"
           >
-            <div :class="tab.class" class="mr-1 md:mr-2" />
-            {{ tab.name }}
+            <div :class="tab.icon" class="mr-1 md:mr-2" />
+            <span
+              :class="
+                mobile && tab.path !== $router.currentRoute.value.path
+                  ? 'hidden'
+                  : ''
+              "
+            >
+              {{ tab.name }}
+            </span>
           </h-tab>
         </h-tabs>
       </div>
@@ -202,7 +199,7 @@ export default defineComponent({
       isBlocked,
       favPatcher,
       RouterLink,
-      display,
+      mobile: display.mobile,
     };
   },
   computed: {
@@ -230,35 +227,35 @@ export default defineComponent({
     //             return 80;
     //     }
     // },
-    tabs(): { path: string; name: string; class: string }[] {
+    tabs(): { path: string; name: string; icon: string }[] {
       return [
         {
           path: `/channel/${this.id}`,
           name: `${this.$t("views.channel.video")}`,
-          class: this.icons.videos,
+          icon: this.icons.videos,
         },
         {
           path: `/channel/${this.id}/clips`,
           name: `${this.$t("views.channel.clips")}`,
           hide: this.channel?.type === "subber",
-          class: this.icons.clips,
+          icon: this.icons.clips,
         },
         {
           path: `/channel/${this.id}/collabs`,
           name: `${this.$t("views.channel.collabs")}`,
           hide: this.channel?.type === "subber",
-          class: this.icons.collabs,
+          icon: this.icons.collabs,
         },
         {
           path: `/channel/${this.id}/music`,
           name: `${this.$t("views.channel.music")}`,
           hide: this.channel?.type === "subber",
-          class: this.icons.music,
+          icon: this.icons.music,
         },
         {
           path: `/channel/${this.id}/about`,
           name: `${this.$t("views.channel.about")}`,
-          class: this.icons.about,
+          icon: this.icons.about,
         },
         // { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
       ].filter((t) => !t.hide);
