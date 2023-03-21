@@ -17,7 +17,7 @@ import { useLangStore } from "@/stores/lang";
 const props = defineProps<{
   channel: ShortChannel;
   tile?: boolean;
-  color: string;
+  color?: string;
 }>();
 const langPrefs = useLangStore();
 const channelName = computed(

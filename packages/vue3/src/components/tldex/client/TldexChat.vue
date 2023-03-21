@@ -9,7 +9,7 @@
       </div>
       <button
         v-show="!tlHistoryCompleted && !tlHistoryLoading && !props.archive"
-        class="btn-text-ghost btn btn-sm text-primary"
+        class="btn-text btn-sm btn !text-primary"
         @click="loadMessages()"
       >
         Load more

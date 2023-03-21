@@ -43,33 +43,8 @@ e.g. just doing .online will NOT work
   --tw-text-opacity: 1;
 }
 
-.btn-text-ghost {
-  border-width: 1px;
-  border-color: transparent;
-  background-color: transparent;
-  --tw-text-opacity: 0.5;
-  color: rgba(var(--v-theme-on-background), var(--tw-text-opacity, 1));
-}
-.btn-text-ghost:hover,
-.btn-text-ghost.btn-active {
-  --tw-border-opacity: 0;
-  background-color: hsl(var(--bc) / var(--tw-bg-opacity));
-  --tw-bg-opacity: 0;
-  --tw-text-opacity: 0.8;
-}
-.btn-text-ghost:hover,
-.btn-text-ghost.btn-active {
-  --tw-border-opacity: 0;
-  background-color: hsl(var(--bc) / var(--tw-bg-opacity));
-  --tw-bg-opacity: 0;
-  --tw-text-opacity: 0.8;
-}
-.btn-text-ghost:focus-visible {
-  outline: 2px solid currentColor;
-}
-
 .btn-text {
-  @apply btn-sm btn bg-transparent p-0 text-primary hover:bg-transparent;
+  @apply btn bg-transparent !p-0 text-primary border-none hover:bg-transparent;
 }
 
 .scroll-bar,
