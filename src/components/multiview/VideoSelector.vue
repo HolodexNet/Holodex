@@ -189,6 +189,7 @@ import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
 import filterVideos from "@/mixins/filterVideos";
 import { mdiTwitch } from "@mdi/js";
 import CustomUrlField from "./CustomUrlField.vue";
+import { syncState } from "@/utils/functions";
 
 export default {
     name: "VideoSelector",
@@ -211,7 +212,7 @@ export default {
             type: Boolean,
             default: true,
         },
-        hidePlaceholders: {
+        hidePlaceholder: {
             default: true,
             type: Boolean,
         },
@@ -238,6 +239,10 @@ export default {
         ...mapState("favorites", { favUpdateTick: "lastLiveUpdate" }),
         ...mapState("home", { homeUpdateTick: "lastLiveUpdate" }),
         ...mapState("playlist", ["active"]),
+        ...syncState("settings", [
+            "hideCollabStreams",
+            "hidePlaceholder"
+        ]),
         baseFilteredLive() {
             const filterConfig = {
                 ignoreBlock: false,
@@ -245,11 +250,12 @@ export default {
                 hideCollabs: this.shouldHideCollabs,
                 forOrg: this.isRealOrg && this.selectedOrg.name,
                 hideIgnoredTopics: true,
-                hidePlaceholder: this.hidePlaceholders,
+                hidePlaceholder: this.hidePlaceholder,
                 hideMissing: this.hideMissing,
             };
             const isTwitchPlaceholder = (v) => (v.type === "placeholder" && v.link?.includes("twitch.tv"));
-            return this.live.filter((l) => this.filterVideos(l, filterConfig) || (this.hidePlaceholders && isTwitchPlaceholder(l)));
+            const isPlayable = (v) => (v.type === "stream" || isTwitchPlaceholder(v));
+            return this.live.filter((l) => this.filterVideos(l, filterConfig) && isPlayable(l));
         },
         topFilteredLive() {
             // Filter out lives for top bar
