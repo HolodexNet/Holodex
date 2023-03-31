@@ -34,9 +34,9 @@ const faces = [
 ];
 
 const uwu = (str) => {
-    str = Math.random() < 0.83 ? str.replace(/(?:l|r)/g, 'w') : str;
+    str = Math.random() < 0.5 ? str.replace(/(?:l|r)/g, 'w') : str;
 
-    str = Math.random() < 0.83 ? str.replace(/(?:L|R)/g, 'W') : str;
+    str = Math.random() < 0.5 ? str.replace(/(?:L|R)/g, 'W') : str;
 
     str = str.replace(/n([aeiou])/g, 'ny$1');
 
@@ -48,7 +48,7 @@ const uwu = (str) => {
 
     str = str.replace(/([!])+/g, v => `${faces[Math.floor(Math.random() * faces.length)]}`);
 
-    str = str.replace(/([.])+/g, v => `${faces[Math.floor(Math.random() * faces.length)]}`);
+    str = str.replace(/(?<!\d)\.+/g, v => `${faces[Math.floor(Math.random() * faces.length)]}`);
     return str;
 };
 
