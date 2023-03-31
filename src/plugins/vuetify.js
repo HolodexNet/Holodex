@@ -34,9 +34,9 @@ const faces = [
 ];
 
 const uwu = (str) => {
-    str = Math.random() < 0.5 ? str.replace(/(?:l|r)/g, 'w') : str;
+    str = Math.random() < 0.8 ? str.replace(/(?:l|r)/g, 'w') : str;
 
-    str = Math.random() < 0.5 ? str.replace(/(?:L|R)/g, 'W') : str;
+    str = Math.random() < 0.8 ? str.replace(/(?:L|R)/g, 'W') : str;
 
     str = str.replace(/n([aeiou])/g, 'ny$1');
 
