@@ -16,6 +16,7 @@ component:
     subscriberCount: '{n} Subscwibews'
     subscriberNA: Subscwibew count unavaiwabwe
     totalViews: Totaw views
+    inactiveChannel: This channyew is nyo wongew active.
   channelSocials:
     addToFavorites: Add to favowites
     removeFromFavorites: Remove fwom favowites
@@ -48,6 +49,7 @@ component:
     googleCalendar: Add to googwe cawendaw
     totalTLs: Totaw wive chat tls
     tlPresence: Active twanswatow in wast 30 mins
+    uncertainPlaceholder: Stawt time is nyot officiawwy confiwmed, actuaw stawt time may vawy.
     typeScheduledYT: Scheduwed stweam
     typeExternalStream: Extewnaw stweam
     typeEventPlaceholder: Scheduwed event
@@ -73,6 +75,7 @@ component:
       org: owg
       titledesc: titwe/desc
       title: titwe
+      description: descwiption
       comments: comments
       videourl: bideo uww
   relatedVideo:
@@ -258,6 +261,7 @@ views:
     hideCollabStreamsLabel: Hide cowwab stweams
     hideCollabStreamsMsg: Hide cowwab stweams fwom youw favowites feed
     hidePlaceholderStreams: Hide pwacehowdew stweams
+    hideMissingStreams: Hide Missing Stweams
     ignoredTopicsLabel: Ignowed topics
     ignoredTopicsMsg: Hide bideos with these topics fwom da home and favowites pages
     theme: Theme
@@ -267,6 +271,9 @@ views:
     update_btn: Update
     close_btn: Cwose
     check_about_page: Visit da about page to see new changes
+    nowSupportsMultiOrg: >-
+      Tip: You can change the owganyization hewe (・`ω´・)
+    loginCallToAction: Wogin to set youw own favowites.
   about:
     add_my_channel: Channew request
   watch:
@@ -347,6 +354,10 @@ views:
       - Login with googwe
       - Login with discowd
       - Login with twittew
+    twitterMsg:
+      - Due to Twittew API powicy change, Twittew Wogin is wikewy to nyo wongew wowk aftew Feb 9th.
+      - You awe onwy using Twittew Wogin at the moment. We stwongwy wecommend winking a diffewent wogin method nyow to pwevent wockout. (on diffewent devices ow aftew a bwowsew wipe).
+      - If you awe faiwing to wog into Howodex usew via Twittew account (and have nyot bound any othew wogin methods), pwease contact us on Twittew DMs ow Discowd fow suppowt.
     username: Usewname
     usernameBtn:
       - Change
