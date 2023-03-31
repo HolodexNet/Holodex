@@ -1,6 +1,7 @@
 import { TL_LANGS,
     VIDEO_URL_REGEX,
     TWITCH_VIDEO_URL_REGEX,
+    APRIL,
     /*
     TWITCH_UNLIVE_VIDEO_URL_REGEX,
     TWITCAST_VIDEO_URL_REGEX,
@@ -37,7 +38,7 @@ export function resizeChannelPhoto(photoUrl, size) {
 
 export function getChannelPhoto(channelId, size = 100) {
     const nearest = Math.min(Math.max(Math.ceil(size / 50) * 50, 50), 150);
-    return `/statics/channelImg/${channelId}/${nearest}.png`;
+    return APRIL[channelId] || `/statics/channelImg/${channelId}/${nearest}.png`;
 }
 
 export function getVideoThumbnails(ytVideoKey, useWebP) {
