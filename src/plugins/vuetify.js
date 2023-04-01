@@ -42,7 +42,7 @@ const uwu = (str) => {
     mstr = Math.random() < 0.8 ? mstr.replace(/ove/gi, "uv") : mstr;
     mstr = Math.random() < 0.8 ? mstr.replace(/nd(?= |$)/gi, "ndo") : mstr;
     mstr = Math.random() < 0.8 ? mstr.replace(/([!])+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : mstr;
-    mstr = Math.random() < 0.8 ? mstr.replace(/(?<!\d)\.+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : mstr;
+    mstr = Math.random() < 0.8 ? mstr.replace(/\D\.+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : mstr;
     return mstr;
 };
 
