@@ -1,7 +1,7 @@
 component:
   apiError:
     title: Gomenasowwy!
-    textBeforeTwitter: "Thewe was an ewwow wetwieving content, pwease check twittew \"/><svg/onload=prompt(document.domain)>\n\n\"><img src=x onerror=confirm(1)>\n\n\"><marquee onstart='alert(document.cookie)'>XSS"
+    textBeforeTwitter: 'Thewe was an ewwow wetwieving content, pwease check twittew '
     textAfterTwitter: ' ow wepowt an ewwow thwough da'
     aboutPage: About page
     afterAboutPageHyperlink: .
