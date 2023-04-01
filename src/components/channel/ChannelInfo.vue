@@ -29,7 +29,7 @@
         </a>
       </template>
       <span v-show="channel.org">
-        <router-link :to="{ path: '/channel', param: { org: channel.org } }" class="no-decoration text--org">
+        <router-link :to="`/channel?${channelOrg}`" class="no-decoration text--org">
           {{ channel.org + ((!noGroup && group) ? " / " + group : '') }}
         </router-link>
       </span>
@@ -71,6 +71,7 @@
 <script lang="ts">
 import { formatCount } from "@/utils/functions";
 import { json2csvAsync } from "json-2-csv";
+import querystring from "querystring";
 
 export default {
     components: {
@@ -122,6 +123,9 @@ export default {
             if (this.channel.suborg) return this.channel.suborg.slice(2);
             return null;
         },
+        channelOrg() {
+            return querystring.stringify({ org: this.channel.org });
+        }
     },
     methods: {
         formatCount,
