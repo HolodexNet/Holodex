@@ -37,12 +37,12 @@ const uwu = (str) => {
     let mstr = str;
     mstr = Math.random() < 0.8 ? mstr.replace(/(?:l|r)/g, "w") : mstr;
     mstr = Math.random() < 0.8 ? mstr.replace(/(?:L|R)/g, "W") : mstr;
-    mstr = Math.random() < 0.8 ? mstr.replace(/n([aeiou])/g, "ny$1") : str;
-    mstr = Math.random() < 0.8 ? mstr.replace(/N([aeiou])|N([AEIOU])/g, "Ny$1") : str;
-    mstr = Math.random() < 0.8 ? mstr.replace(/ove/gi, "uv") : str;
-    mstr = Math.random() < 0.8 ? mstr.replace(/nd(?= |$)/gi, "ndo") : str;
-    mstr = Math.random() < 0.8 ? mstr.replace(/([!])+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : str;
-    mstr = Math.random() < 0.8 ? mstr.replace(/(?<!\d)\.+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : str;
+    mstr = Math.random() < 0.8 ? mstr.replace(/n([aeiou])/g, "ny$1") : mstr;
+    mstr = Math.random() < 0.8 ? mstr.replace(/N([aeiou])|N([AEIOU])/g, "Ny$1") : mstr;
+    mstr = Math.random() < 0.8 ? mstr.replace(/ove/gi, "uv") : mstr;
+    mstr = Math.random() < 0.8 ? mstr.replace(/nd(?= |$)/gi, "ndo") : mstr;
+    mstr = Math.random() < 0.8 ? mstr.replace(/([!])+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : mstr;
+    mstr = Math.random() < 0.8 ? mstr.replace(/(?<!\d)\.+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : mstr;
     return mstr;
 };
 
