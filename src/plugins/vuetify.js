@@ -14,42 +14,36 @@ Vue.use(VueI18n);
 
 // From uwu-js
 const faces = [
-    '(*^ω^)',
-    '(◕‿◕✿)',
-    '(◕ᴥ◕)',
-    'ʕ•ᴥ•ʔ',
-    'ʕ￫ᴥ￩ʔ',
-    '(*^.^*)',
-    'owo',
-    'OwO',
-    '(｡♥‿♥｡)',
-    'uwu',
-    'UwU',
-    '(*￣з￣)',
-    '>w<',
-    '^w^',
-    '(つ✧ω✧)つ',
-    '(/ =ω=)/',
-    '~~'
+    "(*^ω^)",
+    "(◕‿◕✿)",
+    "(◕ᴥ◕)",
+    "ʕ•ᴥ•ʔ",
+    "ʕ￫ᴥ￩ʔ",
+    "(*^.^*)",
+    "owo",
+    "OwO",
+    "(｡♥‿♥｡)",
+    "uwu",
+    "UwU",
+    "(*￣з￣)",
+    ">w<",
+    "^w^",
+    "(つ✧ω✧)つ",
+    "(/ =ω=)/",
+    "~~",
 ];
 
 const uwu = (str) => {
-    str = Math.random() < 0.8 ? str.replace(/(?:l|r)/g, 'w') : str;
-
-    str = Math.random() < 0.8 ? str.replace(/(?:L|R)/g, 'W') : str;
-
-    str = str.replace(/n([aeiou])/g, 'ny$1');
-
-    str = str.replace(/N([aeiou])|N([AEIOU])/g, 'Ny$1');
-
-    str = str.replace(/ove/gi, 'uv');
-
-    str = str.replace(/nd(?= |$)/gi, 'ndo');
-
-    str = str.replace(/([!])+/g, v => `${faces[Math.floor(Math.random() * faces.length)]}`);
-
-    str = str.replace(/(?<!\d)\.+/g, v => `${faces[Math.floor(Math.random() * faces.length)]}`);
-    return str;
+    let mstr = str;
+    mstr = Math.random() < 0.8 ? mstr.replace(/(?:l|r)/g, "w") : mstr;
+    mstr = Math.random() < 0.8 ? mstr.replace(/(?:L|R)/g, "W") : mstr;
+    mstr = Math.random() < 0.8 ? mstr.replace(/n([aeiou])/g, "ny$1") : str;
+    mstr = Math.random() < 0.8 ? mstr.replace(/N([aeiou])|N([AEIOU])/g, "Ny$1") : str;
+    mstr = Math.random() < 0.8 ? mstr.replace(/ove/gi, "uv") : str;
+    mstr = Math.random() < 0.8 ? mstr.replace(/nd(?= |$)/gi, "ndo") : str;
+    mstr = Math.random() < 0.8 ? mstr.replace(/([!])+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : str;
+    mstr = Math.random() < 0.8 ? mstr.replace(/(?<!\d)\.+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : str;
+    return mstr;
 };
 
 export const langs = [
