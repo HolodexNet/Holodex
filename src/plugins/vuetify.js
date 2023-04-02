@@ -12,40 +12,6 @@ import * as VuetifyDirectives from "vuetify/lib/directives";
 // ====== i18n setup ======
 Vue.use(VueI18n);
 
-// From uwu-js
-const faces = [
-    "(*^ω^)",
-    "(◕‿◕✿)",
-    "(◕ᴥ◕)",
-    "ʕ•ᴥ•ʔ",
-    "ʕ￫ᴥ￩ʔ",
-    "(*^.^*)",
-    "owo",
-    "OwO",
-    "(｡♥‿♥｡)",
-    "uwu",
-    "UwU",
-    "(*￣з￣)",
-    ">w<",
-    "^w^",
-    "(つ✧ω✧)つ",
-    "(/ =ω=)/",
-    "~~",
-];
-
-const uwu = (str) => {
-    let mstr = str;
-    mstr = Math.random() < 0.8 ? mstr.replace(/(?:l|r)/g, "w") : mstr;
-    mstr = Math.random() < 0.8 ? mstr.replace(/(?:L|R)/g, "W") : mstr;
-    mstr = Math.random() < 0.8 ? mstr.replace(/n([aeiou])/g, "ny$1") : mstr;
-    mstr = Math.random() < 0.8 ? mstr.replace(/N([aeiou])|N([AEIOU])/g, "Ny$1") : mstr;
-    mstr = Math.random() < 0.8 ? mstr.replace(/ove/gi, "uv") : mstr;
-    mstr = Math.random() < 0.8 ? mstr.replace(/nd(?= |$)/gi, "ndo") : mstr;
-    mstr = Math.random() < 0.8 ? mstr.replace(/([!])+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : mstr;
-    mstr = Math.random() < 0.8 ? mstr.replace(/\D\.+/g, () => `${faces[Math.floor(Math.random() * faces.length)]}`) : mstr;
-    return mstr;
-};
-
 export const langs = [
     { val: "en", display: "English", credit: "@Holodex" },
     { val: "en-CA", display: "English (Canadian)", credit: "@Holodex" },
@@ -197,9 +163,6 @@ export const i18n = new VueI18n({
 
             return choicesLength < 4 ? 2 : 3;
         },
-    },
-    postTranslation(str) {
-        return uwu(str);
     },
 });
 

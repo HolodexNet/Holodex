@@ -1,7 +1,6 @@
 import { TL_LANGS,
     VIDEO_URL_REGEX,
     TWITCH_VIDEO_URL_REGEX,
-    APRIL,
     /*
     TWITCH_UNLIVE_VIDEO_URL_REGEX,
     TWITCAST_VIDEO_URL_REGEX,
@@ -38,7 +37,7 @@ export function resizeChannelPhoto(photoUrl, size) {
 
 export function getChannelPhoto(channelId, size = 100) {
     const nearest = Math.min(Math.max(Math.ceil(size / 50) * 50, 50), 150);
-    return APRIL[channelId] || `/statics/channelImg/${channelId}/${nearest}.png`;
+    return `/statics/channelImg/${channelId}/${nearest}.png`;
 }
 
 export function getVideoThumbnails(ytVideoKey, useWebP) {
@@ -381,23 +380,24 @@ export function waitForElement(selector, parent = document.body, waitTime = 90e3
     return new Promise((resolve, reject) => {
         const elem = parent.querySelector(selector);
         if (elem) {
-            return resolve(elem);
+            resolve(elem);
         }
-        const timeout = setTimeout(() => {
-            observer.disconnect();
-            return reject(new Error(`${selector} timed out`));
-        }, waitTime);
+        let timeout;
         const observer = new MutationObserver(() => {
-            const elem = parent.querySelector(selector);
-            if (elem) {
+            const elem2 = parent.querySelector(selector);
+            if (elem2) {
                 clearTimeout(timeout);
                 observer.disconnect();
-                return resolve(elem);
+                resolve(elem2);
             }
         });
         observer.observe(parent, {
             childList: true,
             subtree: true,
         });
+        timeout = setTimeout(() => {
+            observer.disconnect();
+            return reject(new Error(`${selector} timed out`));
+        }, waitTime);
     });
 }
