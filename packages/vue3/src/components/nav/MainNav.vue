@@ -271,17 +271,4 @@ export default defineComponent({
 .fade-leave-to {
   opacity: 0;
 }
-
-.main-playlist-border {
-  border: 2px solid var(--v-primary-base);
-  border-radius: 8px;
-}
-
-.theme--dark .main-playlist-border {
-  box-shadow: 0px 6px 12px -7px var(--v-primary-darken2);
-}
-
-.theme--light .main-playlist-border {
-  box-shadow: 0px 6px 12px -7px var(--v-primary-lighten2);
-}
 </style>
