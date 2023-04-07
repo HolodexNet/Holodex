@@ -88,6 +88,7 @@
       </v-list-item>
     </template>
     <v-list-item
+      v-if="video.type !== 'placeholder'"
       @click="
         openTlClient();
         closeMenu();
@@ -115,7 +116,7 @@
       {{ $t("component.videoCard.uploadScript") }}
     </v-list-item>
     <v-list-item
-      v-if="isLive"
+      v-if="video.type !== 'placeholder'"
       @click="
         openChatPopout();
         closeMenu();
