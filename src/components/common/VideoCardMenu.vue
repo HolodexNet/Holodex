@@ -88,7 +88,6 @@
       </v-list-item>
     </template>
     <v-list-item
-      v-if="video.type !== 'placeholder'"
       @click="
         openTlClient();
         closeMenu();
@@ -116,7 +115,7 @@
       {{ $t("component.videoCard.uploadScript") }}
     </v-list-item>
     <v-list-item
-      v-if="video.type !== 'placeholder'"
+      v-if="isChattable"
       @click="
         openChatPopout();
         closeMenu();
@@ -190,6 +189,18 @@ export default {
                 return true;
             }
             return false;
+        },
+        isChattable() {
+            if (!this.video) {
+                return false;
+            }
+            if (this.video.status === "past") {
+                return false;
+            }
+            if (this.video.type !== "stream") {
+                return false;
+            }
+            return true;
         },
     },
     methods: {
