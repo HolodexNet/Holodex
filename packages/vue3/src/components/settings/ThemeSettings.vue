@@ -4,14 +4,15 @@
     <!-- {{ $t("views.settings.languageSettings") }} -->
   </div>
   <h-select
-    :model-value="theme.name"
+    :model-value="presets.find((x) => x.name === theme.name)"
     :items="presets"
     item-value="name"
     item-title="name"
-    class="menu max-w-sm"
+    class="max-w-sm"
     variant="outlined"
+    placeholder="Select a predefined theme"
     hide-details
-    @update:model-value="(e) => theme.setTheme(e)"
+    @update:model-value="(e) => theme.setTheme(e.name)"
   >
     <!--     :hint="'» ' + langs.find((x) => x.val === langStore.lang)?.credit"
     persistent-hint
@@ -49,12 +50,6 @@
     </label>
   </div>
 
-  <div style="display: none">
-    <div
-      class="btn-neutral btn-primary btn-secondary btn-accent btn-info btn-success btn-warning btn-error"
-    />
-    <!-- this is just to trick daisy into importing every single color space -->
-  </div>
   <div
     class="grid gap-4"
     :style="{

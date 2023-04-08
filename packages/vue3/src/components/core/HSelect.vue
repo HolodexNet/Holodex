@@ -1,11 +1,18 @@
 <template>
-  <Listbox v-model="selectedItem">
-    <div class="relative mt-1">
+  <Listbox
+    :model-value="modelValue"
+    @update:model-value="(value) => emit('update:modelValue', value)"
+  >
+    <div class="relative">
       <ListboxButton
-        class="relative w-full cursor-default rounded-lg bg-bgColor-500 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
+        class="relative w-full cursor-default rounded-lg bg-bgColor-500 py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-300 sm:text-sm"
       >
         <span class="block truncate">
-          {{ selectedItem?.[itemTitle] ?? selectedItem }}
+          {{
+            (itemTitle ? modelValue?.[itemTitle] : undefined) ??
+            modelValue ??
+            placeholder
+          }}
         </span>
         <span
           class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
@@ -20,12 +27,12 @@
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-bgColor-500 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          class="absolute mt-2 max-h-80 w-full overflow-auto rounded-md bg-bgColor-500 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
         >
           <ListboxOption
             v-for="item in items"
             v-slot="{ active, selected }"
-            :key="item?.[itemValue] ?? item"
+            :key="itemValue ? item?.[itemValue] : item"
             :value="item"
             as="template"
           >
@@ -41,7 +48,7 @@
                   'block truncate',
                 ]"
               >
-                {{ item?.[itemTitle] ?? item }}
+                {{ itemTitle ? item?.[itemTitle] : item }}
               </span>
               <span
                 v-if="selected"
@@ -57,122 +64,22 @@
   </Listbox>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {
   Listbox,
   ListboxButton,
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/vue";
+// import { useVModel } from "@vueuse/core";
 
-export default {
-  name: "VSelect",
-
-  components: {
-    Listbox,
-    ListboxButton,
-    ListboxOption,
-    ListboxOptions,
-  },
-
-  props: {
-    items: {
-      type: Array,
-      required: true,
-    },
-    itemValue: {
-      type: String,
-      required: true,
-    },
-    itemTitle: {
-      type: String,
-      required: true,
-    },
-    modelValue: {
-      type: Object,
-    },
-    placeholder: {
-      type: String,
-      default: "Select an item",
-    },
-    class: {
-      type: String,
-      default: "",
-    },
-    variant: {
-      type: String,
-      default: "",
-    },
-    hideDetails: {
-      type: Boolean,
-      default: true,
-    },
-    hint: {
-      type: String,
-      default: "",
-    },
-    persistentHint: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  data() {
-    return {
-      selectedItem: this.modelValue,
-      searchTerm: "",
-    };
-  },
-
-  computed: {
-    buttonClasses() {
-      return [
-        "w-full flex items-center justify-between border rounded-md",
-        this.variant === "outlined"
-          ? "border-gray-300"
-          : "border-gray-400 bg-gray-50",
-        this.class,
-      ];
-    },
-
-    optionsClasses() {
-      return [
-        "absolute w-full mt-1 py-1 bg-white rounded-md shadow-lg max-h-60 overflow-auto z-10",
-        this.variant === "outlined"
-          ? "border border-gray-300"
-          : "border border-gray-400 bg-gray-50",
-        this.class,
-      ];
-    },
-
-    optionProps() {
-      return {
-        class:
-          "text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9",
-        activeClass: "bg-indigo-600 text-white",
-        inactiveClass: "text-gray-900",
-      };
-    },
-
-    filteredItems() {
-      if (!this.searchTerm) {
-        return this.items;
-      }
-
-      return this.items.filter((item) => {
-        const itemTitle = item[this.itemTitle];
-        return itemTitle.toLowerCase().includes(this.searchTerm.toLowerCase());
-      });
-    },
-  },
-
-  watch: {
-    modelValue(newValue) {
-      this.selectedItem = newValue;
-    },
-    selectedItem(newValue) {
-      this.$emit("update:modelValue", newValue);
-    },
-  },
-};
+const props = defineProps<{
+  items: readonly any[] | readonly Record<string, unknown>[];
+  itemValue?: string;
+  itemTitle?: string;
+  modelValue: any | Record<string, unknown>;
+  placeholder?: string;
+}>();
+const emit = defineEmits(["update:modelValue"]);
+// const currentItem = useVModel(props, "modelValue", emit);
 </script>

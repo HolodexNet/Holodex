@@ -2,33 +2,41 @@
   <div class="mb-2 text-lg font-semibold">
     {{ $t("views.settings.languageSettings") }}
   </div>
-  <h-select
-    v-model="langStore.lang"
-    :items="langs"
-    item-value="val"
-    class="menu max-w-sm"
-    variant="outlined"
-    :hint="'» ' + langs.find((x) => x.val === langStore.lang)?.credit"
-    persistent-hint
-    item-title="display"
-  >
-    <template #item="{ item, props }">
-      <!-- {{item}} -->
-      <div class="p-1" v-bind="props">
-        <span class="text-primary" style="">
-          {{ (item as any).raw.display }}
-        </span>
-        <span class="px-2 text-sm text-secondary">
-          ♡ {{ (item as any).raw.credit }}
-        </span>
-      </div>
+  <h-input>
+    <template #input>
+      <h-select
+        :model-value="langs.find((x) => x.val === langStore.lang) || langs[0]"
+        :items="langs"
+        item-value="val"
+        item-title="display"
+        class="w-full max-w-sm"
+        :hint="'» ' + langs.find((x) => x.val === langStore.lang)?.credit"
+        persistent-hint
+        @update:model-value="
+          (v) => {
+            langStore.lang = v.val;
+          }
+        "
+      >
+        <template #item="{ item, props }">
+          <!-- {{item}} -->
+          <div class="p-1" v-bind="props">
+            <span class="text-primary" style="">
+              {{ (item as any).display }}
+            </span>
+            <span class="px-2 text-sm text-secondary">
+              ♡ {{ (item as any).credit }}
+            </span>
+          </div>
+        </template>
+        <template #selection="{ item }">
+          <span class="primary--text" style="">
+            {{ (item as any).display }}
+          </span>
+        </template>
+      </h-select>
     </template>
-    <template #selection="{ item }">
-      <span class="primary--text" style="">
-        {{ (item as any).raw.display }}
-      </span>
-    </template>
-  </h-select>
+  </h-input>
   <div class="divider" />
 
   <div class="mb-2 text-lg font-semibold">
