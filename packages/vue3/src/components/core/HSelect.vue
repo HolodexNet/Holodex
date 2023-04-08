@@ -5,7 +5,7 @@
   >
     <div class="relative">
       <ListboxButton
-        class="relative w-full cursor-default rounded-lg bg-bgColor-500 py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-300 sm:text-sm"
+        class="relative w-full cursor-default rounded-lg bg-bgColor-500 py-2 pl-6 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-300 sm:text-sm"
       >
         <span class="block truncate">
           {{
@@ -27,7 +27,7 @@
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="absolute mt-2 max-h-80 w-full overflow-auto rounded-md bg-bgColor-500 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          class="absolute mt-2 max-h-80 w-full overflow-auto rounded-md bg-bgColor-600 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
         >
           <ListboxOption
             v-for="item in items"
@@ -39,7 +39,8 @@
             <li
               :class="[
                 active ? 'text-primary' : 'text-base-content',
-                'relative cursor-default select-none py-2 pl-10 pr-4',
+                'relative cursor-default select-none py-2 pl-6 pr-4',
+                selected && 'bg-bgColor-400',
               ]"
             >
               <span
@@ -52,9 +53,12 @@
               </span>
               <span
                 v-if="selected"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
+                class="absolute inset-y-0 left-0 flex items-center px-3 text-primary-600"
               >
-                <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                <h-icon
+                  class="i-material-symbols:check-small-rounded h-5 w-5 text-primary"
+                  aria-hidden="true"
+                />
               </span>
             </li>
           </ListboxOption>

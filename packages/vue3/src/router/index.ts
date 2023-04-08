@@ -124,19 +124,19 @@ export const routes: RouteRecordRaw[] = [
         path: ":id(lang)?",
         component: () =>
           // structured a bit strangely to avoid chunking the files into tiny pieces.
-          import("@/components/settings/index").then((w) => w.langSettings),
+          import("@/views/settings/index").then((w) => w.langSettings),
       },
       {
         name: "Settings_Themes",
         path: "themes",
         component: () =>
-          import("@/components/settings/index").then((w) => w.themeSettings),
+          import("@/views/settings/index").then((w) => w.themeSettings),
       },
       {
         name: "Settings_Homepage",
         path: "homepage",
         component: () =>
-          import("@/components/settings/index").then((w) => w.homeSettings),
+          import("@/views/settings/index").then((w) => w.homeSettings),
       },
       {
         name: "Settings_User",
@@ -147,13 +147,13 @@ export const routes: RouteRecordRaw[] = [
         name: "Settings_Blocked",
         path: "blocked",
         component: () =>
-          import("@/components/settings/index").then((w) => w.blockedSettings),
+          import("@/views/settings/index").then((w) => w.blockedSettings),
       },
       {
         name: "Settings_Advanced",
         path: "advanced",
         component: () =>
-          import("@/components/settings/index").then((w) => w.langSettings),
+          import("@/views/settings/index").then((w) => w.langSettings),
       },
     ],
   },

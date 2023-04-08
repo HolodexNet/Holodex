@@ -2,7 +2,11 @@
   <div class="mb-2 text-lg font-semibold">
     {{ $t("views.settings.languageSettings") }}
   </div>
-  <h-input>
+  <h-input
+    :explanation="
+      '&emsp;» ' + langs.find((x) => x.val === langStore.lang)?.credit
+    "
+  >
     <template #input>
       <h-select
         :model-value="langs.find((x) => x.val === langStore.lang) || langs[0]"
@@ -10,8 +14,6 @@
         item-value="val"
         item-title="display"
         class="w-full max-w-sm"
-        :hint="'» ' + langs.find((x) => x.val === langStore.lang)?.credit"
-        persistent-hint
         @update:model-value="
           (v) => {
             langStore.lang = v.val;

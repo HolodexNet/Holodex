@@ -82,22 +82,36 @@ text-transform: none; -->
         :explanation="$t('channelRequest.EnglishNameHint')"
       />
 
-      <v-select
-        v-if="
-            type !== ADD_VTUBER &&
-            type !== DELETE &&
-            type === MODIFY_EXISTING &&
-            channel &&
-            (channel.value as any)?.type === 'clipper'
+      <h-input :title="$t('channelRequest.ChannelLanguageLabel')">
+        <template #input>
+          <h-select
+            v-if="
+            (type !== ADD_VTUBER &&
+            type !== DELETE) ||
+            type === MODIFY_EXISTING ||
+            (channel &&
+            (channel.value as any)?.type === 'clipper')
           "
-        v-model="lang"
-        :items="languages"
-        :label="$t('channelRequest.ChannelLanguageLabel')"
-        :required="type === ADD_CLIPPER || type === MODIFY_EXISTING"
-        :rules="
-          type === ADD_CLIPPER || type === MODIFY_EXISTING ? [requiredRule] : []
-        "
-      />
+            :model-value="languages.find((x) => x.value === lang)"
+            :items="languages"
+            item-title="text"
+            item-value="value"
+            class="w-full"
+            placeholder="..."
+            :required="type === ADD_CLIPPER || type === MODIFY_EXISTING"
+            :rules="
+              type === ADD_CLIPPER || type === MODIFY_EXISTING
+                ? [requiredRule]
+                : []
+            "
+            @update:model-value="
+              (v) => {
+                lang = v.value;
+              }
+            "
+          />
+        </template>
+      </h-input>
       <h-input
         v-if="type === ADD_VTUBER || type === MODIFY_EXISTING"
         v-model="org"
@@ -131,7 +145,7 @@ text-transform: none; -->
     </template>
     <button
       v-if="type"
-      class="btn-primary btn mt-2 w-32 text-lg shadow-md"
+      class="btn btn-primary mt-2 w-32 text-lg shadow-md"
       @click="onSubmit"
     >
       <div class="i-mdi:check" />
