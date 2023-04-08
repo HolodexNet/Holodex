@@ -27,7 +27,7 @@
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="absolute mt-2 max-h-80 w-full overflow-auto rounded-md bg-bgColor-600 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          class="absolute z-30 mt-2 max-h-80 w-full overflow-auto rounded-md bg-bgColor-600 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
         >
           <ListboxOption
             v-for="item in items"
