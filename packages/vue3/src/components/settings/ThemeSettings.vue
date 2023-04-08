@@ -3,7 +3,7 @@
     Preset Themes
     <!-- {{ $t("views.settings.languageSettings") }} -->
   </div>
-  <v-select
+  <h-select
     :model-value="theme.name"
     :items="presets"
     item-value="name"
@@ -27,7 +27,7 @@
     <template #selection="{ item }">
       <span class="text-primary" style="">{{ (item as any).raw.name }}</span>
     </template>
-  </v-select>
+  </h-select>
   <div class="divider" />
 
   <div class="divider" />
@@ -55,7 +55,12 @@
     />
     <!-- this is just to trick daisy into importing every single color space -->
   </div>
-  <div class="grid grid-cols-2 gap-4 pt-2 md:grid-cols-4 lg:grid-cols-6">
+  <div
+    class="grid gap-4"
+    :style="{
+      'grid-template-columns': 'repeat(auto-fill, minmax(200px, 1fr))',
+    }"
+  >
     <theme-color-picker daisy-name="primary" shorthand="--p" />
     <theme-color-picker daisy-name="secondary" shorthand="--s" />
     <theme-color-picker daisy-name="accent" shorthand="--a" />
@@ -76,41 +81,46 @@
   <div class="divider">
     <span>Test Color (for beta only):</span>
   </div>
-  <div class="grid grid-cols-4 gap-2">
+  <div
+    class="grid gap-2"
+    :style="{
+      'grid-template-columns': 'repeat(auto-fill, minmax(250px, 1fr))',
+    }"
+  >
     <div class="btn-group">
       <div class="btn btn-xs bg-primary-700">700</div>
-      <div class="btn btn-xs bg-primary-600"/>
-      <div class="btn btn-xs bg-primary-500"/>
-      <div class="btn btn-xs bg-primary"/>
-      <div class="btn btn-xs bg-primary-300"/>
-      <div class="btn btn-xs bg-primary-200"/>
+      <div class="btn btn-xs bg-primary-600" />
+      <div class="btn btn-xs bg-primary-500" />
+      <div class="btn btn-xs bg-primary" />
+      <div class="btn btn-xs bg-primary-300" />
+      <div class="btn btn-xs bg-primary-200" />
       <div class="btn btn-xs bg-primary-100">100</div>
     </div>
     <div class="btn-group">
       <div class="btn btn-xs bg-secondary-700">700</div>
-      <div class="btn btn-xs bg-secondary-600"/>
-      <div class="btn btn-xs bg-secondary-500"/>
-      <div class="btn btn-xs bg-secondary"/>
-      <div class="btn btn-xs bg-secondary-300"/>
-      <div class="btn btn-xs bg-secondary-200"/>
+      <div class="btn btn-xs bg-secondary-600" />
+      <div class="btn btn-xs bg-secondary-500" />
+      <div class="btn btn-xs bg-secondary" />
+      <div class="btn btn-xs bg-secondary-300" />
+      <div class="btn btn-xs bg-secondary-200" />
       <div class="btn btn-xs bg-secondary-100">100</div>
     </div>
     <div class="btn-group">
       <div class="btn btn-xs bg-accent-700">700</div>
-      <div class="btn btn-xs bg-accent-600"/>
-      <div class="btn btn-xs bg-accent-500"/>
-      <div class="btn btn-xs bg-accent"/>
-      <div class="btn btn-xs bg-accent-300"/>
-      <div class="btn btn-xs bg-accent-200"/>
+      <div class="btn btn-xs bg-accent-600" />
+      <div class="btn btn-xs bg-accent-500" />
+      <div class="btn btn-xs bg-accent" />
+      <div class="btn btn-xs bg-accent-300" />
+      <div class="btn btn-xs bg-accent-200" />
       <div class="btn btn-xs bg-accent-100">100</div>
     </div>
     <div class="btn-group">
       <div class="btn btn-xs bg-bgColor-700">700</div>
-      <div class="btn btn-xs bg-bgColor-600"/>
-      <div class="btn btn-xs bg-bgColor-500"/>
-      <div class="btn btn-xs bg-bgColor-400"/>
-      <div class="btn btn-xs bg-bgColor-300"/>
-      <div class="btn btn-xs bg-bgColor-200"/>
+      <div class="btn btn-xs bg-bgColor-600" />
+      <div class="btn btn-xs bg-bgColor-500" />
+      <div class="btn btn-xs bg-bgColor-400" />
+      <div class="btn btn-xs bg-bgColor-300" />
+      <div class="btn btn-xs bg-bgColor-200" />
       <div class="btn btn-xs bg-bgColor-100">100</div>
     </div>
   </div>

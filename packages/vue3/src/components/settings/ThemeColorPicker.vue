@@ -6,15 +6,19 @@
         class="btn h-20"
         v-bind="props"
         :class="'btn-' + daisyName"
-        :style="{ 'background-color': color, color: foreground }"
+        :style="{
+          'min-width': '200px',
+          'background-color': color,
+          color: foreground,
+        }"
       >
         {{ displayName || daisyName }}
         <span class="ml-auto mr-auto text-xs font-light">{{ color }}</span>
       </button>
     </template>
-    {{ theme.colors?.[daisyName] }}
+    <!-- {{ theme.colors?.[daisyName] }} -->
     <ColorPicker
-      class="p-0"
+      class="box-content p-0"
       :theme="theme.dark ? 'dark' : 'light'"
       :color="theme.colors?.[daisyName]"
       :colors-default="[]"

@@ -76,7 +76,7 @@ export const useThemeStore = defineStore("site-theme", {
     _saveAndCacheVuetify() {
       if (this.outputCacheTS === this.lastModified) return; // no changes needed.
       // console.log("compiling site-theme (expensive)");
-      const [convert, colormap] = convertToDaisyHSLAndColor(
+      const [convert,] = convertToDaisyHSLAndColor(
         {
           ...this.colors,
           ...DaisyDefaults,
@@ -84,20 +84,7 @@ export const useThemeStore = defineStore("site-theme", {
         this.dark
       );
 
-      const out: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] = [
-        {
-          background: colormap["--b1"].rgb().hex(),
-          surface: (colormap["--b2"] || colormap["--b1"].darken(0.1))
-            .rgb()
-            .hex(),
-          primary: colormap["--p"].rgb().hex(),
-          secondary: colormap["--s"].rgb().hex(),
-          accent: colormap["--a"].rgb().hex(),
-          error: colormap["--er"].rgb().hex(),
-          success: colormap["--su"].rgb().hex(),
-          info: colormap["--in"].rgb().hex(),
-          warning: colormap["--wa"].rgb().hex(),
-        },
+      const out: [any, Record<DaisyColorShorthand, string>] = [{ /* used to be vuetify colors */ },
         convert,
       ];
 
@@ -107,7 +94,7 @@ export const useThemeStore = defineStore("site-theme", {
   },
   share: {
     enable: true,
-    initialize: true, // when initializing, fetch from another tab.
+    initialize: true, // when initializing, fetch from another tab.F
   },
   persistedState: {
     persist: true,

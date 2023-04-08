@@ -21,7 +21,6 @@
         'rounded-xl border-8 border-transparent border-opacity-0 opacity-80 ring-2 ring-primary transition-all':
           selected && selection.selectionMode && horizontal,
       }"
-      class=""
     />
     <div
       v-if="selection.selectionMode"
@@ -37,14 +36,6 @@
       }"
       @change.stop.prevent
     />
-    <!-- <a
-      :href="watchLink"
-      rel="noopener"
-      :class="{
-        'w-full': horizontal,
-      }"
-      @click.exact.stop.prevent="goToVideo()"
-    > -->
     <video-card-text
       :video="video"
       :hide-channel-image="hideChannelImage"
@@ -58,7 +49,6 @@
         <slot :video="video" />
       </template>
     </video-card-text>
-    <!-- </a> -->
   </a>
 </template>
 

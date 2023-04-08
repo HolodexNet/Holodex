@@ -19,11 +19,9 @@ export function useThemeInitialization() {
     () => [theme.outputCache, theme.outputCacheTS],
     () => {
       console.log("Applying Color Cache to Themes...");
-      // vt.themes.value[vt.name.value].colors = theme.outputCache[0] as any;
       daisyTheme.set({ theme: theme.outputCache[1] });
     }
   );
-  // vt.themes.value[vt.name.value].colors = theme.outputCache[0] as any;
 
   return { theme };
 }

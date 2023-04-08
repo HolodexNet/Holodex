@@ -2,7 +2,7 @@
   <div class="mb-2 text-lg font-semibold">
     {{ $t("views.settings.languageSettings") }}
   </div>
-  <v-select
+  <h-select
     v-model="langStore.lang"
     :items="langs"
     item-value="val"
@@ -10,6 +10,7 @@
     variant="outlined"
     :hint="'» ' + langs.find((x) => x.val === langStore.lang)?.credit"
     persistent-hint
+    item-title="display"
   >
     <template #item="{ item, props }">
       <!-- {{item}} -->
@@ -27,7 +28,7 @@
         {{ (item as any).raw.display }}
       </span>
     </template>
-  </v-select>
+  </h-select>
   <div class="divider" />
 
   <div class="mb-2 text-lg font-semibold">

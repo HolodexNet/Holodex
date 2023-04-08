@@ -57,14 +57,12 @@
         <!-- <div class="card-body"> -->
         <div class="divider" />
 
-        <span class="text-subtitle-2 inline-block">
-          {{ $t("views.login.username") }}
-        </span>
         <div class="flex items-center">
           <h-input
             v-model="editUsernameInput"
             :disabled="!editingUsername"
             rounded
+            :title="$t('views.login.username')"
           >
             <template #append>
               <h-btn
@@ -85,14 +83,12 @@
 
         <!-- <div class="card-body"> -->
         <div class="mt-2 text-gray-500">
-          <span class="text-subtitle-2 mb-1 inline-block">
-            {{ $t("views.login.ownedYtChannel") }}
-          </span>
           <h-input
             readonly
             class="rounded"
             :value="site.user.yt_channel_key"
             placeholder="None on file"
+            :title="$t('views.login.ownedYtChannel')"
           />
           <span class="text-sm">
             {{ $t("views.login.futureYtcOwnerMessage") }}
@@ -108,7 +104,7 @@
         >
           <template #append>
             <h-btn
-              class="btn-secondary"
+              class="btn-secondary !h-12"
               icon="i-mdi:clipboard-plus-outline"
               @click="copyToClipboard(site.user?.api_key || '')"
             />
@@ -126,8 +122,9 @@
           color="info"
           href="https://holodex.stoplight.io/"
           target="_blank"
+          icon="i-ion:document-text"
         >
-          API Documentation &lt; Insert Icon Here >
+          API Documentation
         </h-btn>
         <!-- </div> -->
       </template>
