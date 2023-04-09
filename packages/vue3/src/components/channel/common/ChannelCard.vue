@@ -68,39 +68,7 @@
         </div>
       </div>
     </div>
-    <slot name="buttons" :is-fav="isFav" :toggle="favChannel" />
-    <div v-if="!slim && !$slots.buttons" class="flex h-full flex-col gap-1">
-      <a
-        class="c-card-icon hover:text-red-500"
-        :href="`https://youtube.com/channel/${channel.id}`"
-        target="_blank"
-        title="Youtube"
-      >
-        <div :class="icons.youtube" />
-      </a>
-      <a
-        class="c-card-icon hover:text-cyan-500"
-        :class="{ 'btn-disabled bg-inherit opacity-20': !channel.twitter }"
-        :href="channel.twitter ? `https://twitter.com/${channel.twitter}` : '#'"
-        target="_blank"
-        title="Twitter"
-      >
-        <div :class="icons.twitter" />
-      </a>
-      <button
-        class="c-card-icon"
-        :title="
-          isFav
-            ? $t('component.channelSocials.removeFromFavorites')
-            : $t('component.channelSocials.addToFavorites')
-        "
-        @click.prevent.stop="favChannel"
-      >
-        <div
-          :class="isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'"
-        />
-      </button>
-    </div>
+    <slot name="buttons" :is-fav="isFav" :toggle-fav="favChannel" />
   </component>
 </template>
 <script lang="ts">
@@ -180,7 +148,7 @@ export default defineComponent({
 }
 
 .channel-card {
-  grid-template-columns: min-content 1fr;
+  grid-template-columns: min-content 1fr min-content;
   // grid-template-rows: repeat(2, 1fr);
 }
 .channel-card:hover {

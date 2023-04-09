@@ -18,10 +18,9 @@
           no-link
           :slim="mobile"
         >
-          <template #buttons="{ isFav, toggle }">
+          <template #buttons="{ isFav, toggleFav }">
             <div
-              class="inline-flex w-fit shrink-[10] flex-row flex-wrap justify-end gap-1 self-start rounded md:gap-2 md:bg-black md:bg-opacity-30"
-              style="width: fit-content"
+              class="sm:w-30 col-span-2 row-start-2 w-40 grid-flow-row flex-row justify-end gap-1 self-start justify-self-end rounded sm:row-start-auto md:col-span-1 md:w-40 md:gap-2 md:bg-black md:bg-opacity-30"
             >
               <h-btn
                 class="h-8 w-8 hover:text-red-500 md:h-12 md:w-12"
@@ -70,7 +69,7 @@
                 :icon="
                   isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'
                 "
-                @click="toggle"
+                @click="toggleFav"
               />
               <h-btn
                 ghost
@@ -133,7 +132,6 @@
 // import api from "@/utils/backend-api";
 import { useDisplay } from "@/hooks/common/useDisplay";
 import { useChannel } from "@/services/channel";
-import { useFavoritesIDSet, useFavoritesPatcher } from "@/services/favorites";
 import { useLangStore } from "@/stores/lang";
 import { useVideoSelection } from "@/stores/selection";
 import { useSettingsStore } from "@/stores/settings";
@@ -174,7 +172,6 @@ export default defineComponent({
 
     const settings = useSettingsStore();
     const isBlocked = computed(() => settings.blockedSet.has(id.value));
-    const favPatcher = useFavoritesPatcher();
 
     const selection = useVideoSelection();
     selection.context.pageChannel = channel.data.value;
@@ -197,7 +194,6 @@ export default defineComponent({
       canFav,
       // isFav,
       isBlocked,
-      favPatcher,
       RouterLink,
       mobile: display.mobile,
     };
@@ -207,14 +203,14 @@ export default defineComponent({
       if (!this.channel?.banner) {
         return "";
       }
-      const { mobile, tablet, tv, banner } = getBannerImages(
+      const { /*mobile, tablet, tv,*/ banner } = getBannerImages(
         this.channel.banner
       );
-      const banners = {
-        xs: mobile,
-        sm: tablet,
-        xl: tv,
-      };
+      // const banners = {
+      //   xs: mobile,
+      //   sm: tablet,
+      //   xl: tv,
+      // };
       return banner;
     },
     // avatarSize() {

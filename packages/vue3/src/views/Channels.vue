@@ -56,7 +56,7 @@
         :variant="cardView ? 'card' : 'list'"
         :grouping="currentSortValue.value"
       >
-        <template #default="{ channel, isFav, toggle }">
+        <template #default="{ channel, isFav, toggleFav }">
           <!-- <div class="h-0 basis-full" /> -->
           <div
             class="col-span-2 flex w-full flex-row flex-nowrap gap-1 border-t border-solid border-t-bgColor-700 bg-bgColor-500"
@@ -69,7 +69,7 @@
               "
               class="btn-ghost w-32 shrink"
               :icon="isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'"
-              @click.prevent.stop="toggle"
+              @click.prevent.stop="toggleFav"
             />
             <h-btn
               title="Button"
