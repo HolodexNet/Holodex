@@ -17,16 +17,16 @@
     <!--     :hint="'» ' + langs.find((x) => x.val === langStore.lang)?.credit"
     persistent-hint
  -->
-    <template #item="{ item, props }">
+    <template #item="{ item, selected }">
       <!-- {{item}} -->
-      <div class="p-1 px-2" v-bind="props">
-        <span :style="{ color: item.raw.colors.primary }">
-          {{ (item as any).raw.name }}
+      <div class="p-1 px-2" :class="selected && 'font-bold'">
+        <span :style="{ color: item.colors.primary }">
+          {{ (item as any).name }}
         </span>
       </div>
     </template>
     <template #selection="{ item }">
-      <span class="text-primary" style="">{{ (item as any).raw.name }}</span>
+      <span class="text-primary" style="">{{ (item as any).name }}</span>
     </template>
   </h-select>
   <div class="divider" />

@@ -20,9 +20,9 @@
           }
         "
       >
-        <template #item="{ item, props }">
+        <template #item="{ item, selected }">
           <!-- {{item}} -->
-          <div class="p-1" v-bind="props">
+          <div class="p-1" :class="selected && 'font-bold'">
             <span class="text-primary" style="">
               {{ (item as any).display }}
             </span>
@@ -39,6 +39,7 @@
       </h-select>
     </template>
   </h-input>
+  <span>Help Translate Holodex!</span>
   <div class="divider" />
 
   <div class="mb-2 text-lg font-semibold">

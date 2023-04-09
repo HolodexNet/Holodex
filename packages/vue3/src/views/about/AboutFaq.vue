@@ -40,7 +40,7 @@
       </li>
       <li>
         {{ $t("about.faq.mobile.content.ios.0") }}
-        <span class="i-ph:export"/>
+        <span class="i-ph:export" />
         {{ $t("about.faq.mobile.content.ios[1]") }}
       </li>
     </ul>
@@ -73,7 +73,7 @@
   <h-disclosure :title="$t('about.faq.support.title')">
     <div v-html="$t('about.faq.support.contents.0')" />
     <button
-      class="btn btn-primary btn-sm btn-wide mt-2"
+      class="btn btn-primary btn-wide btn-sm mt-2"
       href="https://ko-fi.com/holodex"
     >
       Ko-fi: Support Holodex
@@ -84,5 +84,8 @@
     {{ $t("about.gdprContent") }}
     <b>{{ $t("about.gdprDeletion") }}</b>
   </h-disclosure>
+
+  <div class="block py-4" />
+  <about-contact />
 </template>
 <script setup lang="ts"></script>

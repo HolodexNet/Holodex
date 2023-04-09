@@ -14,14 +14,14 @@
           v-model="localValue"
           v-bind="$attrs"
           type="text"
-          class="input-bordered input w-full border-solid"
+          class="input-bordered input w-full border-solid bg-bgColor-500"
         />
         <textarea
           v-if="as === 'textarea'"
           v-model="localValue"
           v-bind="$attrs"
           type="text"
-          class="input-bordered input w-full border-solid"
+          class="input-bordered input w-full border-solid bg-bgColor-500"
         />
       </slot>
       <slot name="append" />

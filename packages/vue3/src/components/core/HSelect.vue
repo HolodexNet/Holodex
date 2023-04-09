@@ -5,20 +5,25 @@
   >
     <div class="relative">
       <ListboxButton
-        class="relative w-full cursor-default rounded-lg bg-bgColor-500 py-2 pl-6 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-300 sm:text-sm"
+        class="input-bordered input relative w-full cursor-default rounded-lg bg-bgColor-500 py-2 pl-6 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-300 sm:text-sm"
       >
-        <span class="block truncate">
-          {{
-            (itemTitle ? modelValue?.[itemTitle] : undefined) ??
-            modelValue ??
-            placeholder
-          }}
-        </span>
-        <span
-          class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
-        >
-          <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </span>
+        <slot name="selection" :item="modelValue">
+          <span class="block truncate">
+            {{
+              (itemTitle ? modelValue?.[itemTitle] : undefined) ??
+              modelValue ??
+              placeholder
+            }}
+          </span>
+          <span
+            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
+          >
+            <ChevronUpDownIcon
+              class="h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+          </span>
+        </slot>
       </ListboxButton>
 
       <transition
@@ -39,27 +44,34 @@
             <li
               :class="[
                 active ? 'text-primary' : 'text-base-content',
-                'relative cursor-default select-none py-2 pl-6 pr-4',
+                'relative cursor-default select-none py-2 pl-6 pr-4 hover:bg-bgColor-300',
                 selected && 'bg-bgColor-400',
               ]"
             >
-              <span
-                :class="[
-                  selected ? 'font-medium' : 'font-normal',
-                  'block truncate',
-                ]"
+              <slot
+                name="item"
+                :item="item"
+                :selected="selected"
+                :active="active"
               >
-                {{ itemTitle ? item?.[itemTitle] : item }}
-              </span>
-              <span
-                v-if="selected"
-                class="absolute inset-y-0 left-0 flex items-center px-3 text-primary-600"
-              >
-                <h-icon
-                  class="i-material-symbols:check-small-rounded h-5 w-5 text-primary"
-                  aria-hidden="true"
-                />
-              </span>
+                <span
+                  :class="[
+                    selected ? 'font-medium' : 'font-normal',
+                    'block truncate',
+                  ]"
+                >
+                  {{ itemTitle ? item?.[itemTitle] : item }}
+                </span>
+                <span
+                  v-if="selected"
+                  class="absolute inset-y-0 left-0 flex items-center px-3 text-primary-600"
+                >
+                  <h-icon
+                    class="i-material-symbols:check-small-rounded h-5 w-5 text-primary"
+                    aria-hidden="true"
+                  />
+                </span>
+              </slot>
             </li>
           </ListboxOption>
         </ListboxOptions>
