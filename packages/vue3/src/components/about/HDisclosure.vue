@@ -1,7 +1,7 @@
 <template>
   <Disclosure v-slot="{ open }">
     <DisclosureButton
-      class="flex w-full justify-between bg-primary-500 bg-opacity-10 px-4 py-2 text-left text-sm font-medium first-of-type:rounded-t last-of-type:rounded-b hover:bg-opacity-20"
+      class="text flex w-full justify-between bg-primary-500 bg-opacity-10 px-4 py-2 text-left font-medium first-of-type:rounded-t last-of-type:rounded-b hover:bg-opacity-20"
     >
       <span>{{ title }}</span>
       <div
@@ -18,9 +18,9 @@
       leave-to-class="transform scale-95 opacity-0"
     >
       <DisclosurePanel
-        class="bg-primary-700 bg-opacity-5 p-4 text-sm text-opacity-80"
+        class="text bg-primary-700 bg-opacity-5 p-4 text-opacity-80"
       >
-        <slot/>
+        <slot />
       </DisclosurePanel>
     </transition>
   </Disclosure>

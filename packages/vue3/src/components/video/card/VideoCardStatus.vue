@@ -22,6 +22,13 @@ export default defineComponent({
     const { t } = useI18n();
     const langStore = useLangStore();
     const formattedTime = ref("");
+
+    watchEffect(() => {
+      if (props.video.status == "live") {
+        formattedTime.value = t("component.videoCard.liveNow");
+      }
+    });
+
     useIntervalFn(
       () => {
         switch (props.video.status) {
@@ -71,7 +78,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .text-live {
   color: red;
   font-weight: 500;
