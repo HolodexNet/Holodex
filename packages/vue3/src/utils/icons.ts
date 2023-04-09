@@ -71,7 +71,7 @@ export const search: Record<string, string> = {
   channel: "i-ion:people-outline",
   lang: "i-ion:language-outline",
   has_song: "i-fluent:music-note-2-20-regular",
-  advanced: "i-fluent:database-search-20-regular",
+  // advanced: "i-fluent:database-search-20-regular",
 };
 
 // TODO: fix this??

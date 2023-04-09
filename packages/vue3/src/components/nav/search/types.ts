@@ -70,11 +70,11 @@ export const JSON_SCHEMA: Record<
     suggestionOK: suggest_if_query_doesnt_have("has_song"),
     suggested_only: true,
   },
-  advanced: {
-    type: "string",
-    suggestionOK: suggest_if_query_doesnt_have("advanced"),
-    validation: validation_nonzero,
-  },
+  // advanced: {
+  //   type: "string",
+  //   suggestionOK: suggest_if_query_doesnt_have("advanced"),
+  //   validation: validation_nonzero,
+  // },
 };
 export interface VideoQueryModel {
   /**
@@ -91,7 +91,7 @@ export interface VideoQueryModel {
   vtuber?: string[]; //id of vtubers.
   lang?: string[];
   has_song?: "one" | "none" | "many" | "non-zero";
-  advanced?: string;
+  // advanced?: string;
 }
 
 export interface WhitelistCategory {

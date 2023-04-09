@@ -33,7 +33,7 @@ export const FIRST_SEARCH: QueryItem[] = [
   { type: "lang", incomplete: true, value: "", text: "?" },
   { type: "has_song", incomplete: true, value: "", text: "?" },
   { type: "description", incomplete: true, value: "", text: "?" },
-  { type: "advanced", incomplete: true, value: "", text: "?" },
+  // { type: "advanced", incomplete: true, value: "", text: "?" },
 ];
 
 export const AUTOCOMPLETE_OPTIONS = {
