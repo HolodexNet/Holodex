@@ -102,6 +102,7 @@ $header-height: 56px;
 
 .main {
   grid-area: main;
+  scrollbar-gutter: stable both-edges;
 }
 .right {
   grid-area: right;

@@ -57,9 +57,9 @@
         :grouping="currentSortValue.value"
       >
         <template #default="{ channel, isFav, toggle }">
-          <div class="h-0 basis-full" />
+          <!-- <div class="h-0 basis-full" /> -->
           <div
-            class="flex w-full shrink-0 basis-full flex-row flex-nowrap gap-1 border-t border-solid border-t-bgColor-700 bg-bgColor-500"
+            class="col-span-2 flex w-full flex-row flex-nowrap gap-1 border-t border-solid border-t-bgColor-700 bg-bgColor-500"
           >
             <h-btn
               :title="
@@ -313,7 +313,7 @@ export default defineComponent({
 }
 
 .dropdownLabelBtn {
-  @apply tab tab-bordered tab-sm;
+  @apply tab-bordered tab tab-sm;
 
   height: 2rem;
   font-size: 0.875rem;

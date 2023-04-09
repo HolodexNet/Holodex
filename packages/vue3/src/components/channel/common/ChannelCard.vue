@@ -1,11 +1,11 @@
 <template>
   <component
     :is="noLink ? 'div' : 'router-link'"
-    class="channel-card flex flex-row items-center justify-self-auto overflow-hidden rounded-md"
+    class="channel-card grid gap-0 overflow-hidden rounded-md"
     :class="slim ? '' : 'h-50 flex-wrap'"
     :to="`/channel/${channel.id}`"
   >
-    <div class="indicator flex-shrink-0">
+    <div class="indicator">
       <span
         v-if="live"
         class="live-indicator indicator-bottom indicator-item mb-4 mr-4"
@@ -25,10 +25,10 @@
       />
     </div>
     <div
-      class="flex-grow"
-      :class="{ 'opacity-40': channel.inactive, 'ml-2': !slim }"
+      class="justify-center pt-2"
+      :class="{ 'opacity-40': channel.inactive, 'ml-1': !slim }"
     >
-      <span class="text-xs text-base-content opacity-75 line-clamp-1">
+      <span class="line-clamp-1 text-xs text-base-content opacity-75">
         {{
           channel.org ||
           (channel.type === "subber" && $t("views.channels.tabs.Subber")) ||
@@ -37,14 +37,14 @@
         {{ group ? "/ " + group : "" }}
       </span>
       <span
-        class="-mt-1 font-medium line-clamp-1"
+        class="-mt-1 line-clamp-1 font-medium"
         :class="{ 'text-lg': !slim, 'text-sm': slim }"
       >
         {{ preferredName }}
       </span>
       <span
         v-if="!slim"
-        class="text-sm text-base-content opacity-75 line-clamp-1"
+        class="line-clamp-1 text-sm text-base-content opacity-75"
       >
         {{ subscribers }} •
         {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
@@ -167,7 +167,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .c-card-icon {
-  @apply btn-ghost btn flex-grow rounded-sm pr-2;
+  @apply btn btn-ghost flex-grow rounded-sm pr-2;
 
   width: 2.5rem;
   min-height: 20px;
@@ -179,6 +179,10 @@ export default defineComponent({
   opacity: 0.5;
 }
 
+.channel-card {
+  grid-template-columns: min-content 1fr;
+  // grid-template-rows: repeat(2, 1fr);
+}
 .channel-card:hover {
   .c-card-icon {
     opacity: 1;
