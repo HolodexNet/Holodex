@@ -968,13 +968,13 @@ export default {
                 if (!link) return;
                 // TODO: this doesn't make complete sense
                 // Not all YT videos are able to be submitted normally
-                const ytMatch = link.match(VIDEO_URL_REGEX)?.[5];
+                const ytVideoId = link.match(VIDEO_URL_REGEX)?.groups.id;
                 backendApi
                     .postTL({
-                        videoId: ytMatch || "custom",
+                        videoId: ytVideoId || "custom",
                         jwt: this.userdata.jwt,
                         lang: this.TLLang.value,
-                        ...(!ytMatch && { custom_video_id: link }),
+                        ...(!ytVideoId && { custom_video_id: link }),
                         body: bodydt,
                     })
                     .then(({ status, data }) => {
@@ -1008,8 +1008,7 @@ export default {
             // if (!parseVideoID) {
             //     return;
             // }
-            const ytId = this.mainStreamLink.match(VIDEO_URL_REGEX);
-            const id = ytId?.[5] || this.mainStreamLink;
+            const ytId = this.mainStreamLink.match(VIDEO_URL_REGEX)?.groups.id || this.mainStreamLink;
             this.$store.commit("tlclient/resetState");
             this.$store.commit("tlclient/setId", id);
             this.$store.dispatch("tlclient/fetchVideo");
