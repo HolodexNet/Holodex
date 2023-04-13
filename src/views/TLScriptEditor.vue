@@ -1755,8 +1755,10 @@ export default {
                     if (this.timerActive) {
                         this.timerActive = false;
                     }
-                    const isCustom = !VIDEO_URL_REGEX.test(this.activeURLStream);
-                    if (!isCustom) { this.loadVideoYT(this.activeURLStream.match(VIDEO_URL_REGEX)[5]); }
+                    const ytId = this.activeURLStream.match(VIDEO_URL_REGEX)?.groups.id;
+                    if (ytId) { // not custom
+                        this.loadVideoYT(ytId);
+                    }
                     // const StreamURL = getVideoIDFromUrl(this.activeURLStream);
                     // if (StreamURL) {
                     //     this.vidType = StreamURL.type;
@@ -2722,7 +2724,7 @@ export default {
             };
             this.videoData = vidData;
             try {
-                const parseVideoID = this.activeURLStream.match(VIDEO_URL_REGEX)?.[5];
+                const parseVideoID = this.activeURLStream.match(VIDEO_URL_REGEX)?.groups.id;
                 if (parseVideoID) {
                     vidData = (await backendApi.video(parseVideoID, this.TLLang.value))
                         .data;
