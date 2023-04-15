@@ -62,7 +62,8 @@ export function generateForegroundColorFrom(input: string, percentage = 0.8) {
   }
 }
 // Feel free to change these values, idk what I'm doing
-const variants: any = {
+const darken_variants: any = { // first value is lightness change from default (400), second value is saturation change from default.
+  "-950": [-0.8, -0.02], // darker
   "-900": [-0.75, -0.06],
   "-800": [-0.6, -0.12],
   "-700": [-0.45, -0.18],
@@ -72,16 +73,31 @@ const variants: any = {
   "-300": [0.15, -0.06],
   "-200": [0.3, -0.12],
   "-100": [0.45, -0.18],
-  "-50": [0.6, -0.24],
+  "-50": [0.6, -0.24], // brighter
 };
+const lighten_variants: any = {
+  "-950": [0.8, -0.02], // brighter
+  "-900": [0.75, -0.06],
+  "-800": [0.6, -0.12],
+  "-700": [0.45, -0.18],
+  "-600": [0.3, -0.24],
+  "-500": [0.15, -0.3],
+  "-400": [0, 0],
+  "-300": [-0.15, -0.06],
+  "-200": [-0.3, -0.12],
+  "-100": [-0.45, -0.18],
+  "-50": [-0.6, -0.24], // darker
+};
+
 const generateVariants = function (
   prefix: string,
   color: Color,
-  darkMode = true
+  darkMode = true,
+  primaryColor?: Color,
 ): Record<string, string> {
   const toCol = (color2: Color, r1: number, s1: number) => {
     const c = color2[
-      (darkMode && r1 > 0) || (!darkMode && r1 < 0) ? "lighten" : "darken"
+      r1 > 0 ? "lighten" : "darken"
     ](Math.abs(r1))
       .saturate(s1)
       .hsl()
@@ -91,8 +107,13 @@ const generateVariants = function (
   };
 
   const out: Record<string, string> = {};
+  const variants = (darkMode ? darken_variants : lighten_variants)
   for (const i in variants) {
+    // standard variation
     out[prefix + i] = toCol(color, variants[i][0], variants[i][1]);
+    // if(prefix == '--b1') {
+    //   out[prefix + i] = 
+    // }
   }
   return out;
 };

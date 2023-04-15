@@ -39,13 +39,13 @@
               </div>
             </div>
             <div class="ml-auto flex">
-              <button class="btn-icon btn btn-sm">
+              <button class="btn-icon btn-sm btn">
                 <div class="i-tabler:layout-sidebar text-2xl" />
               </button>
-              <button class="btn-icon btn btn-sm">
+              <button class="btn-icon btn-sm btn">
                 <save-to-playlist-btn :video="video" class="text-2xl" />
               </button>
-              <button class="btn-icon btn btn-sm">
+              <button class="btn-icon btn-sm btn">
                 <div class="i-mdi:dots-vertical text-2xl" />
               </button>
             </div>
@@ -58,13 +58,13 @@
               class="mr-2 flex flex-shrink-0"
             />
             <div>
-              <div class="font-bold line-clamp-2">{{ video.title }}</div>
-              <span class="opacity-80">{{ channelName }}</span>
+              <div class="line-clamp-2 font-bold">{{ preferredTitle }}</div>
+              <span class="opacity-80">{{ preferredChannelName }}</span>
             </div>
-            <button class="btn-icon btn btn-sm ml-auto text-primary">
+            <button class="btn-icon btn-sm btn ml-auto text-primary">
               <div class="i-mdi:heart text-xl" />
             </button>
-            <button class="btn-icon btn btn-sm text-primary">
+            <button class="btn-icon btn-sm btn text-primary">
               <div class="i-mdi:share text-xl" />
             </button>
           </div>
@@ -106,8 +106,8 @@
 </template>
 <script lang="ts" setup>
 import { PlayerRef } from "@/components/player/usePlayer";
+import { useVideoFormat } from "@/hooks/common/useVideoService";
 import { useVideoById } from "@/services/video";
-import { useLangStore } from "@/stores/lang";
 import { useVideoSelection } from "@/stores/selection";
 const route = useRoute();
 const playerInstance = ref<PlayerRef | null>(null);
@@ -121,15 +121,7 @@ const id = computed(() =>
 const { data: video, isLoading } = useVideoById(id, clipLangRef, {
   enabled: computed(() => !!id.value),
 });
-const langPrefs = useLangStore();
-
-const channelName = computed(
-  () =>
-    langPrefs.preferredLocaleFn(
-      video.value?.channel.english_name,
-      video.value?.channel.name
-    ) || ""
-);
+const { preferredChannelName, preferredTitle } = useVideoFormat(video);
 
 const mentionsShowMore = ref(false);
 // watchEffect(() => console.log(playerInstance.value?.currentTime));
@@ -144,6 +136,17 @@ watch(
     selection.context.pageChannel = video.value?.channel;
   }
 );
+
+/**
+ * @TODO:
+ *
+ * [ ] Favorite button hookup
+ * [ ] Share link hookup
+ * [ ] Dropdown menu items.
+ * [ ] When this window is too small, it doesn't autoscale the video to fit. Is that desirable? :think:
+ * [ ] Top bar should be retractable (if necessary)
+ * [ ] Sidebar should be retractable (side bar should always retract?)
+ */
 </script>
 <style lang="scss">
 $nav-bar-height: 56px;

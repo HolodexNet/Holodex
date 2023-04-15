@@ -88,7 +88,8 @@ export default defineComponent({
   watch: {},
   methods: {
     setColor({ hex }: { hex: string }) {
-      this.theme.colors[this.daisyName] = hex;
+      this.theme.setCustomTheme(this.daisyName, hex as any);
+      // this.theme.colors[this.daisyName] = hex;
     },
   },
 });
