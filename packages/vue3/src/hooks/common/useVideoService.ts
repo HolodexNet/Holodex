@@ -1,18 +1,22 @@
-import { useLangStore } from "@/stores/lang";
+import type { MaybeRef } from '@vueuse/core';
+import { get } from '@vueuse/core';
 
-export function useVideoFormat(video: Video) {
-  const langPrefs = useLangStore();
+import { useLangStore } from "@/stores/lang";
+import { decodeHTMLEntities } from "@/utils/functions";
+
+export function useVideoFormat(video: MaybeRef<Video | undefined>) {
+  const langStore = useLangStore();
 
   const preferredChannelName = computed(() => {
-    return langPrefs.preferredLocaleFn(
-      video.channel.english_name,
-      video.channel.name
+    return langStore.preferredLocaleFn(
+      get(video)?.channel.english_name,
+      get(video)?.channel.name
     );
   });
 
   const preferredTitle = computed(() => {
-    return langPrefs.preferredLocaleFn(video.title, video.jp_name);
+    return decodeHTMLEntities(langStore.preferredLocaleFn(get(video)?.title, get(video)?.jp_name));
   });
 
-  return { preferredTitle, preferredChannelName };
+  return { preferredTitle, preferredChannelName, langStore };
 }

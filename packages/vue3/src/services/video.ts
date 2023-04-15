@@ -294,7 +294,9 @@ export function useVideoListDatasource(
         q.value.type === "stream_schedule" ? 2.5 * 60 * 1000 : 5 * 60 * 1000 // only Live needs 2.5 min invalidation.
     ),
     enabled: computed(() => unref(config.value.enabled)),
-  });
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  } satisfies UseQueryOptions);
 
   const response = useQuery<{ items: Video[]; total?: number }>({
     queryKey: [urlTarget, query, computed(() => site.jwtToken)],

@@ -5,18 +5,18 @@
     </template>
     <div class="my-1 box-content flex flex-1 flex-col justify-around text-sm">
       <div
-        class="video-card-title font-medium leading-5 line-clamp-2"
-        :title="title"
+        class="video-card-title line-clamp-2 font-medium leading-5"
+        :title="preferredTitle"
         :class="{ 'pr-6': !$slots.action }"
       >
-        {{ title }}
+        {{ preferredTitle }}
       </div>
       <div class="flex-shrink-1 flex">
         <h-tooltip v-if="video.mentions?.length" placement="bottom">
           <template #activator>
             <a
               v-if="!hideChannelName"
-              class="leading-4 line-clamp-1 hover:opacity-80"
+              class="line-clamp-1 leading-4 hover:opacity-80"
               :class="{
                 'text-secondary':
                   video.type === 'stream' || video.channel.type === 'vtuber',
@@ -62,7 +62,7 @@
         </h-tooltip>
         <a
           v-else-if="!hideChannelName"
-          class="leading-4 line-clamp-1 hover:opacity-80"
+          class="line-clamp-1 leading-4 hover:opacity-80"
           :title="channelHoverTitle"
           :class="{
             'text-secondary':
@@ -115,9 +115,9 @@
 
 <script lang="ts">
 import { useDisplay } from "@/hooks/common/useDisplay";
-import { useLangStore } from "@/stores/lang";
+import { useVideoFormat } from "@/hooks/common/useVideoService";
 import { useSiteStore } from "@/stores/site";
-import { formatCount, decodeHTMLEntities } from "@/utils/functions";
+import { formatCount } from "@/utils/functions";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -131,15 +131,17 @@ export default defineComponent({
     hideChannelName: Boolean,
     hideChannelImage: Boolean,
   },
-  setup() {
+  setup(props) {
     const site = useSiteStore();
     const display = useDisplay();
 
     const isMobile = display.mobile;
-
-    const langStore = useLangStore();
+    const { preferredTitle, preferredChannelName, langStore } = useVideoFormat(
+      props.video
+    );
     const lang = computed(() => langStore.lang);
     const { t } = useI18n();
+
     return {
       lang,
       site,
@@ -147,29 +149,13 @@ export default defineComponent({
       isMobile,
       langStore,
       t,
+      preferredTitle,
+      preferredChannelName,
     };
   },
   computed: {
     isPlaceholder() {
       return this.video.type === "placeholder";
-    },
-    preferredChannelName() {
-      return this.langStore.preferredLocaleFn(
-        this.video.channel.english_name,
-        this.video.channel.name
-      );
-    },
-    title() {
-      if (this.isPlaceholder) {
-        return decodeHTMLEntities(
-          this.langStore.preferredLocaleFn(
-            this.video.title ?? this.video.jp_name,
-            this.video.jp_name ?? this.video.title
-          ) || ""
-        );
-      }
-      if (!this.video.title) return "";
-      return decodeHTMLEntities(this.video.title);
     },
     channelHoverTitle() {
       return (

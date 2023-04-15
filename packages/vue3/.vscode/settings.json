@@ -10,5 +10,6 @@
   "i18n-ally.pathMatcher": "{locale}/ui.yml",
   "i18n-ally.keystyle": "nested",
   "scss.lint.unknownAtRules": "ignore",
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

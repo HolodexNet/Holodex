@@ -130,6 +130,7 @@
 
 <script lang="ts">
 // import api from "@/utils/backend-api";
+import { useChannelPreferredName } from "@/hooks/common/useChannelService";
 import { useDisplay } from "@/hooks/common/useDisplay";
 import { useChannel } from "@/services/channel";
 import { useLangStore } from "@/stores/lang";
@@ -157,14 +158,8 @@ export default defineComponent({
       }
     });
     const channel = useChannel(id, true);
-    const langPrefs = useLangStore();
 
-    const preferredName = computed(() => {
-      return langPrefs.preferredLocaleFn(
-        channel.data.value?.english_name || "",
-        channel.data.value?.name || ""
-      );
-    });
+    const preferredName = useChannelPreferredName(channel.data);
 
     // const favList = useFavoritesIDSet();
     // const isFav = computed(() => favList.value?.has(id.value));

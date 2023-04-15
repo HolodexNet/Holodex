@@ -2,6 +2,9 @@ import backendApi from "@/utils/backend-api";
 import { Ref } from "vue";
 import { useQuery, useInfiniteQuery } from "@tanstack/vue-query";
 import { MaybeRef } from "@tanstack/vue-query/build/lib/types";
+import { useSiteStore } from "@/stores";
+import { useSettingsStore } from "@/stores/settings";
+import { useFavoritesIDSet, useFavoritesPatcher } from "./favorites";
 
 export function useChannels(query: Ref<object>, enabled: MaybeRef<boolean>) {
   return useInfiniteQuery(
@@ -44,4 +47,37 @@ export function useChannel(
       refetchOnWindowFocus: false,
     }
   );
+}
+
+/**
+ * Unifies a bunch of logic to do with whether you've favorited or blocked a channel.
+ * @param id 
+ */
+export function useChannelFunctions(id: Ref<undefined | string>) {
+      // const favList = useFavoritesIDSet();
+    const favList = useFavoritesIDSet();
+
+    const isFav = computed(() => !!id.value && favList.value?.has(id.value));
+    const canFav = computed(() => !!useSiteStore().user);
+
+    const settings = useSettingsStore();
+    const isBlocked = computed(() => !!id.value && settings.blockedSet.has(id.value));
+
+    const favPatcher = useFavoritesPatcher();
+
+    /**
+     * Toggles the favorited status of the channel.
+     * @param channelData provide a channel data optionally to avoid expensive Favorites Query refetch by 5s. If not provided, Favorites query will immediately refetch.
+     */
+    async function toggleFav(channelData?: ShortChannel) {
+      return !!id.value && canFav.value && favPatcher.mutateAsync([
+        {
+          op: isFav.value ? "remove" : "add",
+          channel_id: id.value,
+          channelTemp: channelData,
+        },
+      ]);
+    }
+
+    return { isFav, canFav, toggleFav, settings, isBlocked,  }
 }

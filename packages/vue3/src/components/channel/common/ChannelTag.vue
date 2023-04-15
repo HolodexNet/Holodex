@@ -12,19 +12,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useLangStore } from "@/stores/lang";
+import { useChannelPreferredName } from "@/hooks/common/useChannelService";
 
 const props = defineProps<{
   channel: ShortChannel;
   tile?: boolean;
   color?: string;
 }>();
-const langPrefs = useLangStore();
-const channelName = computed(
-  () =>
-    langPrefs.preferredLocaleFn(
-      props.channel.english_name,
-      props.channel.name
-    ) || ""
-);
+const channelName = useChannelPreferredName(props.channel);
 </script>
