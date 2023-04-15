@@ -20,13 +20,15 @@
     <template #item="{ item, selected }">
       <!-- {{item}} -->
       <div class="p-1 px-2" :class="selected && 'font-bold'">
-        <span :style="{ color: item.colors.primary }">
-          {{ (item as any).name }}
+        <span :style="{ color: item?.colors.primary ?? '#fff' }">
+          {{ (item as any)?.name || "CUSTOM COLOR" }}
         </span>
       </div>
     </template>
     <template #selection="{ item }">
-      <span class="text-primary" style="">{{ (item as any).name }}</span>
+      <span class="text-primary" style="">
+        {{ (item as any)?.name || "CUSTOM COLOR" }}
+      </span>
     </template>
   </h-select>
   <div class="divider" />
@@ -83,40 +85,40 @@
     }"
   >
     <div class="btn-group">
-      <div class="btn btn-xs bg-primary-700">700</div>
-      <div class="btn btn-xs bg-primary-600" />
-      <div class="btn btn-xs bg-primary-500" />
-      <div class="btn btn-xs bg-primary" />
-      <div class="btn btn-xs bg-primary-300" />
-      <div class="btn btn-xs bg-primary-200" />
-      <div class="btn btn-xs bg-primary-100">100</div>
+      <div class="btn-xs btn bg-primary-700">700</div>
+      <div class="btn-xs btn bg-primary-600" />
+      <div class="btn-xs btn bg-primary-500" />
+      <div class="btn-xs btn bg-primary" />
+      <div class="btn-xs btn bg-primary-300" />
+      <div class="btn-xs btn bg-primary-200" />
+      <div class="btn-xs btn bg-primary-100">100</div>
     </div>
     <div class="btn-group">
-      <div class="btn btn-xs bg-secondary-700">700</div>
-      <div class="btn btn-xs bg-secondary-600" />
-      <div class="btn btn-xs bg-secondary-500" />
-      <div class="btn btn-xs bg-secondary" />
-      <div class="btn btn-xs bg-secondary-300" />
-      <div class="btn btn-xs bg-secondary-200" />
-      <div class="btn btn-xs bg-secondary-100">100</div>
+      <div class="btn-xs btn bg-secondary-700">700</div>
+      <div class="btn-xs btn bg-secondary-600" />
+      <div class="btn-xs btn bg-secondary-500" />
+      <div class="btn-xs btn bg-secondary" />
+      <div class="btn-xs btn bg-secondary-300" />
+      <div class="btn-xs btn bg-secondary-200" />
+      <div class="btn-xs btn bg-secondary-100">100</div>
     </div>
     <div class="btn-group">
-      <div class="btn btn-xs bg-accent-700">700</div>
-      <div class="btn btn-xs bg-accent-600" />
-      <div class="btn btn-xs bg-accent-500" />
-      <div class="btn btn-xs bg-accent" />
-      <div class="btn btn-xs bg-accent-300" />
-      <div class="btn btn-xs bg-accent-200" />
-      <div class="btn btn-xs bg-accent-100">100</div>
+      <div class="btn-xs btn bg-accent-700">700</div>
+      <div class="btn-xs btn bg-accent-600" />
+      <div class="btn-xs btn bg-accent-500" />
+      <div class="btn-xs btn bg-accent" />
+      <div class="btn-xs btn bg-accent-300" />
+      <div class="btn-xs btn bg-accent-200" />
+      <div class="btn-xs btn bg-accent-100">100</div>
     </div>
     <div class="btn-group">
-      <div class="btn btn-xs bg-bgColor-700">700</div>
-      <div class="btn btn-xs bg-bgColor-600" />
-      <div class="btn btn-xs bg-bgColor-500" />
-      <div class="btn btn-xs bg-bgColor-400" />
-      <div class="btn btn-xs bg-bgColor-300" />
-      <div class="btn btn-xs bg-bgColor-200" />
-      <div class="btn btn-xs bg-bgColor-100">100</div>
+      <div class="btn-xs btn bg-bgColor-700">700</div>
+      <div class="btn-xs btn bg-bgColor-600" />
+      <div class="btn-xs btn bg-bgColor-500" />
+      <div class="btn-xs btn bg-bgColor-400" />
+      <div class="btn-xs btn bg-bgColor-300" />
+      <div class="btn-xs btn bg-bgColor-200" />
+      <div class="btn-xs btn bg-bgColor-100">100</div>
     </div>
   </div>
 </template>
