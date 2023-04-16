@@ -1010,7 +1010,7 @@ export default {
             // }
             const ytId = this.mainStreamLink.match(VIDEO_URL_REGEX)?.groups.id || this.mainStreamLink;
             this.$store.commit("tlclient/resetState");
-            this.$store.commit("tlclient/setId", id);
+            this.$store.commit("tlclient/setId", ytId);
             this.$store.dispatch("tlclient/fetchVideo");
 
             this.localPrefix = `[${this.TLLang.value}] `;
