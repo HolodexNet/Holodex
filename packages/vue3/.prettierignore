@@ -1,3 +1,5 @@
 src/locales/**
 components.d.ts
 src/auto-imports.d.ts
+node_modules
+dist

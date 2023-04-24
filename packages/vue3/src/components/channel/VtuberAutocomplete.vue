@@ -19,13 +19,20 @@
     @focus="selection = []"
     @submit="() => {}"
   >
-    <template #chips="{ selection: s }">
+    <template #chips="{ selection: list }">
       <channel-tag
-        v-if="s && s[0]"
-        :key="`${s[0].id}_chip`"
-        :channel="s[0]"
+        v-for="s in list"
+        :key="`${s.id}_chip`"
+        :channel="s"
         class="mr-2 h-8 rounded-md pl-1"
         tile
+        closeable
+        @close="
+          () => {
+            selection = selection.filter((x) => x != s);
+            $emit('update:modelValue', multi ? selection : undefined);
+          }
+        "
       />
     </template>
     <template #dropdown="{ active }">

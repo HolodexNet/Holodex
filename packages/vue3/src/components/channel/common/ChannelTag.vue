@@ -9,6 +9,12 @@
   >
     <channel-img :channel="channel" :rounded="!tile" :size="24" class="mr-2" />
     {{ preferredName }}
+    <div
+      v-if="closeable"
+      class="ml-2 hover:text-warning"
+      :class="icons.close"
+      @click="$emit('close')"
+    />
   </div>
 </template>
 <script lang="ts" setup>
@@ -18,6 +24,9 @@ const props = defineProps<{
   channel: ShortChannel;
   tile?: boolean;
   color?: string;
+  closeable?: boolean;
 }>();
+defineEmits(["close"]);
+
 const { preferredName } = useChannelPreferredName(props.channel);
 </script>

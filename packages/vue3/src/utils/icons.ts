@@ -25,6 +25,7 @@ export const more = "i-ic:baseline-more-vert";
 export const edit = "i-fluent:edit-20-filled";
 export const listPlus = "i-tabler:playlist-add";
 export const trash = "i-bx:trash";
+export const close = "i-material-symbols:close-rounded";
 // positional
 export const up = "i-bx:chevron-up";
 export const down = "i-bx:chevron-down";
