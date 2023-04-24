@@ -1,5 +1,5 @@
-import type { MaybeRef } from '@vueuse/core';
-import { get } from '@vueuse/core';
+import type { MaybeRef } from "@vueuse/core";
+import { get } from "@vueuse/core";
 
 import { useLangStore } from "@/stores/lang";
 import { decodeHTMLEntities } from "@/utils/functions";
@@ -15,7 +15,9 @@ export function useVideoFormat(video: MaybeRef<Video | undefined>) {
   });
 
   const preferredTitle = computed(() => {
-    return decodeHTMLEntities(langStore.preferredLocaleFn(get(video)?.title, get(video)?.jp_name));
+    return decodeHTMLEntities(
+      langStore.preferredLocaleFn(get(video)?.title, get(video)?.jp_name)
+    );
   });
 
   return { preferredTitle, preferredChannelName, langStore };

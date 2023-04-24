@@ -27,7 +27,7 @@
               v-model="searchContent"
               class="dropdown-input bg-transparent"
               :placeholder="placeholder"
-              @focus="showOptions()"
+              @focus="showOptions"
               @blur="exit"
               @keydown="keyMonitor"
             />
@@ -54,6 +54,8 @@
 </template>
 
 <script lang="ts">
+// designed to be reusable and flexible. It can be used to implement a dropdown menu with a search feature and a multiselect option.
+//
 import { useVModel } from "@vueuse/core";
 import type { Ref, WritableComputedRef } from "vue";
 
@@ -139,6 +141,7 @@ export default defineComponent({
     );
     const currentValue = useRange(computed(() => props.options.length));
 
+    // handle keyboard events such as keydown, enter, arrow-up, and arrow-down. It also defines methods to show and hide the dropdown menu.
     function keyMonitor(event: KeyboardEvent) {
       switch (event.key) {
         case "Backspace":
@@ -205,11 +208,13 @@ export default defineComponent({
   computed: {},
   watch: {},
   methods: {
-    showOptions() {
+    showOptions(e) {
       this.optionsShown = true;
     },
-    exit() {
-      this.optionsShown = false;
+    exit(e) {
+      setTimeout(() => {
+        this.optionsShown = false;
+      }, 100);
     },
     // Selecting when pressing Enter
   },

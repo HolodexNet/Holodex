@@ -44,7 +44,7 @@ e.g. just doing .online will NOT work
 }
 
 .btn-text {
-  @apply btn bg-transparent !p-0 text-primary border-none hover:bg-transparent;
+  @apply btn border-none bg-transparent !p-0 text-primary hover:bg-transparent;
 }
 
 .scroll-bar,

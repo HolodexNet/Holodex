@@ -11,7 +11,7 @@
       class="my-4 cursor-pointer"
       @click.stop="createNewPlaylist"
     >
-      <div class="card bg-bgColor-300 p-2 line-clamp-2">
+      <div class="card line-clamp-2 bg-bgColor-300 p-2">
         <div class="flex items-center px-2 font-bold sm:px-6">
           <h-icon
             class="i-material-symbols:playlist-add-rounded h-12 w-12 text-primary"
@@ -30,7 +30,7 @@
     <div
       v-for="playlist in playlists.data.value"
       :key="'plst' + playlist.id + playlist.name"
-      class="card card-side card-compact my-4 cursor-pointer bg-bgColor-300 hover:-translate-y-1 hover:shadow-xl sm:card-normal"
+      class="card-compact card card-side my-4 cursor-pointer bg-bgColor-300 sm:card-normal hover:-translate-y-1 hover:shadow-xl"
       :class="
         playlist.id === current.currentPlaylistId
           ? 'active-playlist'

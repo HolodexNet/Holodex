@@ -76,7 +76,7 @@ export const useThemeStore = defineStore("site-theme", {
     _saveAndCacheVuetify() {
       if (this.outputCacheTS === this.lastModified) return; // no changes needed.
       // console.log("compiling site-theme (expensive)");
-      const [convert,] = convertToDaisyHSLAndColor(
+      const [convert] = convertToDaisyHSLAndColor(
         {
           ...this.colors,
           ...DaisyDefaults,
@@ -84,7 +84,10 @@ export const useThemeStore = defineStore("site-theme", {
         this.dark
       );
 
-      const out: [any, Record<DaisyColorShorthand, string>] = [{ /* used to be vuetify colors */ },
+      const out: [any, Record<DaisyColorShorthand, string>] = [
+        {
+          /* used to be vuetify colors */
+        },
         convert,
       ];
 

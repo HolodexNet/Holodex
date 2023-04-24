@@ -5,14 +5,15 @@
     :selection="selection"
     :options="options"
     :placeholder="'Pick Channel'"
-    class="!rounded border border-solid border-bgColor-50 p-1 outline-base-content focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary focus-within:outline"
+    class="!rounded border border-solid border-bgColor-50 p-1 outline-base-content focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary"
     @pop-chip="selection.pop()"
     @pointed="({ n }) => scrollIntoView(n)"
     @select="
       ({ n, item }) => {
         search = '';
-        selection = [item];
-        $emit('update:modelValue', { text: undefined, value: item });
+        if (multi) selection.push(item);
+        else selection = [item];
+        $emit('update:modelValue', multi ? selection : item);
       }
     "
     @focus="selection = []"
@@ -30,7 +31,7 @@
       <div
         v-for="(item, idx) in options"
         :key="item.id + idx"
-        class="dropdown-opt flex bg-bgColor py-2 px-3 text-sm"
+        class="dropdown-opt flex bg-bgColor px-3 py-2 text-sm"
         :class="{ 'border-primary-200 bg-bgColor-200': idx === active }"
         @click.stop.prevent.capture="
           selection = [item];
@@ -60,6 +61,10 @@ export default defineComponent({
       type: String as PropType<"vtuber" | "any_channel">,
       default: "vtuber",
     },
+    multi: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
@@ -70,7 +75,11 @@ export default defineComponent({
     const loading = ref(false);
 
     const selection = ref(
-      props.modelValue?.value ? [props.modelValue.value] : []
+      props.multi
+        ? props.modelValue ?? []
+        : props.modelValue
+        ? [props.modelValue]
+        : []
     );
 
     watchDebounced(

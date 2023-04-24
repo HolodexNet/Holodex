@@ -145,7 +145,7 @@ text-transform: none; -->
     </template>
     <button
       v-if="type"
-      class="btn btn-primary mt-2 w-32 text-lg shadow-md"
+      class="btn-primary btn mt-2 w-32 text-lg shadow-md"
       @click="onSubmit"
     >
       <div class="i-mdi:check" />

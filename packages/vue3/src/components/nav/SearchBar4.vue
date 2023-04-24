@@ -9,8 +9,8 @@
     @pop-chip="query.pop()"
     @pointed="({ n }) => scrollIntoView(n)"
     @select="
-      ({ n }) => {
-        eventTriggerSelectItem(results[n]);
+      ({ item }) => {
+        eventTriggerSelectItem(item);
       }
     "
     @focus="if (!orgsEnabled) orgsEnabled = true;"
@@ -20,7 +20,7 @@
       <div
         v-for="(item, midx) in selection"
         :key="'chip' + item.type + item.value + midx"
-        class="badge-ghost badge mr-1 cursor-default rounded-sm border-0 bg-bgColor px-1 text-xs font-semibold tracking-tight hover:badge-error"
+        class="badge badge-ghost mr-1 cursor-default rounded-sm border-0 bg-bgColor px-1 text-xs font-semibold tracking-tight hover:badge-error"
         @click="query.splice(midx, 1)"
       >
         <span class="">{{ categoryName(item) }}:</span>
@@ -89,7 +89,7 @@
           <!-- Category Heading: -->
           <div
             v-if="results[idx].type !== results[idx - 1]?.type"
-            class="flex cursor-default border-t-2 border-bgColor-50 pb-1 pt-2 pl-8 text-xs font-extrabold uppercase"
+            class="flex cursor-default border-t-2 border-bgColor-50 pb-1 pl-8 pt-2 text-xs font-extrabold uppercase"
           >
             {{ categoryName(item) }}:
             <span class="ml-1 normal-case opacity-40">
@@ -503,6 +503,7 @@ export default defineComponent({
       return v ?? true;
     },
     eventTriggerSelectItem(item: QueryItem) {
+      console.log("selected item");
       if (item.incomplete) {
         this.logWithContext("incomplete-item")(item);
         this.search = this.categoryName(item) + ":";

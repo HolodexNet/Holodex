@@ -64,7 +64,7 @@
     </h-menu>
   </slot>
   <h-dialog v-model="showOrgDialog">
-    <div class="card-compact card m-auto h-[80vh] max-w-xs bg-base-100">
+    <div class="card card-compact m-auto h-[80vh] max-w-xs bg-base-100">
       <div class="card-body overflow-y-auto px-1" style="">
         <input
           v-model="search"
@@ -86,7 +86,7 @@
               @click="$emit('changed', org, closeDialog)"
             >
               <h-btn
-                class="btn btn-square btn-sm"
+                class="btn-square btn-sm btn"
                 :class="
                   orgFavoritesNameSet.has(org.name)
                     ? 'btn-outline btn-primary'
@@ -102,7 +102,7 @@
                 class="btn-group self-end"
               >
                 <h-btn
-                  class="btn btn-ghost btn-sm p-0"
+                  class="btn-ghost btn-sm btn p-0"
                   style="padding-top: 0px; padding-bottom: 0px"
                   icon="i-bx:chevron-up"
                   @click.stop.prevent="
@@ -110,7 +110,7 @@
                   "
                 />
                 <h-btn
-                  class="btn btn-ghost btn-sm"
+                  class="btn-ghost btn-sm btn"
                   style="padding-top: 0px; padding-bottom: 0px"
                   icon="i-bx:chevron-down"
                   @click.stop.prevent="

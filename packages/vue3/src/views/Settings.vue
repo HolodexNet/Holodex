@@ -43,7 +43,7 @@
       class="xs:max-w-full w-80 flex-shrink-0 flex-grow rounded-md bg-bgColor p-3"
       style="flex-basis: 60%; min-width: 300px"
     >
-      <router-view/>
+      <router-view />
     </div>
   </div>
 </template>

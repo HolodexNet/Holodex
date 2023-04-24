@@ -5,7 +5,7 @@
       <b>Holodex</b>
       is a fan-built platform for watching VTubers. We are built by DD for DDs.
     </p>
-    <holodex-stats/>
+    <holodex-stats />
     <p>
       We organize clips and collabs by talents included, tabulate songs sang
       inside individual videos and as part of karaoke streams, compile agencies
@@ -20,7 +20,7 @@
       Please reach out to us via Discord or Twitter DM for any service
       inquiries.
     </p>
-    <h3 class="mt-6 mb-2 text-lg">Credits</h3>
+    <h3 class="mb-2 mt-6 text-lg">Credits</h3>
     <p>
       Big shout out to Jet/HoloTools for helping us with the API and inspiring
       the Multiview.
@@ -40,37 +40,37 @@
     <p class="text-sm opacity-60">
       (If you'd like to add your name to this list, drop us a poke on Discord!)
     </p>
-    <h3 class="mt-4 mb-2 text-lg">Quick Links</h3>
+    <h3 class="mb-2 mt-4 text-lg">Quick Links</h3>
     <div
       id="qlinks"
       class="grid grid-flow-dense gap-2"
       style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))"
     >
       <a
-        class="btn-outline btn btn-info p-0"
+        class="btn-outline btn-info btn p-0"
         title="Follow us on twitter"
         href="https://twitter.com/holodex"
       >
-        <div class="i-carbon:logo-twitter"/>
+        <div class="i-carbon:logo-twitter" />
       </a>
       <a
-        class="btn-outline btn btn-secondary p-0"
+        class="btn-outline btn-secondary btn p-0"
         title="Support us on Ko-Fi"
         href="https://ko-fi.com/holodex"
       >
-        <div class="i-cib:ko-fi"/>
+        <div class="i-cib:ko-fi" />
       </a>
-      <a class="btn-outline btn btn-primary p-0" title="Issues / Source Code">
-        <div class="i-carbon:logo-github"/>
+      <a class="btn-outline btn-primary btn p-0" title="Issues / Source Code">
+        <div class="i-carbon:logo-github" />
       </a>
-      <a class="btn-outline btn btn-warning p-0" title="API Documentation">
-        <div class="i-fluent:document-flowchart-20-regular"/>
+      <a class="btn-outline btn-warning btn p-0" title="API Documentation">
+        <div class="i-fluent:document-flowchart-20-regular" />
       </a>
       <a
         class="btn-outline btn border-purple-500 p-0 text-purple-500 hover:bg-purple-500"
         title="Holodex Discord"
       >
-        <div class="i-carbon:logo-discord"/>
+        <div class="i-carbon:logo-discord" />
       </a>
     </div>
     <p class="mt-4 text-sm opacity-60">

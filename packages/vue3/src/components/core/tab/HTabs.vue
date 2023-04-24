@@ -9,7 +9,7 @@
       :class="{ 'container mx-auto': props.withContainer }"
     >
       <slot />
-      <div v-if="!display.mobile.value" class="ml-auto mt-auto mb-auto">
+      <div v-if="!display.mobile.value" class="mb-auto ml-auto mt-auto">
         <slot name="filters" />
       </div>
     </div>

@@ -44,7 +44,7 @@
         <template #prepend><span>ID</span></template>
         <template #append>
           <button
-            class="btn btn-square"
+            class="btn-square btn"
             @click="loadExistingPlaceholder(data.id)"
           >
             <div class="i-ion:checkmark" />

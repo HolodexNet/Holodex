@@ -1,5 +1,5 @@
 <template>
-  <div class="btn btn-ghost btn-square text-2xl">
+  <div class="btn-ghost btn-square btn text-2xl">
     <div
       :class="{
         [icons.playlist]: true,

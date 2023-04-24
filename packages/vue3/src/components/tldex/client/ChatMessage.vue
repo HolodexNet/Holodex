@@ -21,7 +21,7 @@
         >
           <h-icon
             v-if="isFavorited"
-            class="i-mdi:heart text-red-500 mb-[-2px] mr-1"
+            class="i-mdi:heart mb-[-2px] mr-1 text-red-500"
           />
           <span v-if="source.is_vtuber">[Vt]</span>
           <div
@@ -31,9 +31,7 @@
           {{ source.name }}
           <span v-if="source.is_verified" style="font-weight: 800">✓</span>
           :
-          <div
-            class="i-mdi:cog font-sm chat-cog absolute mt-1 inline-block"
-          />
+          <div class="i-mdi:cog font-sm chat-cog absolute mt-1 inline-block" />
         </span>
       </div>
       <a class="chat-message" :data-time="source.relativeMs / 1000">
@@ -55,7 +53,7 @@
           <div class="card-actions">
             <button
               v-if="source.channel_id"
-              class="btn btn-md mr-1 bg-red-500 text-white"
+              class="btn-md btn mr-1 bg-red-500 text-white"
               :href="`https://youtube.com/channel/${source.channel_id}`"
               target="_blank"
             >
@@ -71,7 +69,7 @@
               Holodex
             </button>
             <button
-              class="btn btn-warning mr-1"
+              class="btn-warning btn mr-1"
               @click="toggleBlockName(source.name)"
             >
               {{ !tldexStore.blockset.has(source.name) ? "Block" : "Unblock" }}

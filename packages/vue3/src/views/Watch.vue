@@ -1,9 +1,5 @@
 <template>
-  <video-player
-    v-if="id && video"
-    ref="playerInstance"
-    :video="video"
-  />
+  <video-player v-if="id && video" ref="playerInstance" :video="video" />
 </template>
 <script lang="ts" setup>
 import { PlayerRef } from "@/components/player/usePlayer";

@@ -9,7 +9,7 @@
   </a>
   <div class="mt-4 text-lg font-bold">DM us on Twitter</div>
   <a
-    class="mt-2 mr-4 inline-block"
+    class="mr-4 mt-2 inline-block"
     href="https://twitter.com/intent/follow?original_referer=https://holodex.net%2F&ref_src=twsrc%5Etfw%7Ctwcamp%5Ebuttonembed%7Ctwterm%5Efollow%7Ctwgr%5Eholodex&screen_name=holodex"
   >
     <img
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-5 px-10 py-2">
+    <button type="submit" class="btn-primary btn mt-5 px-10 py-2">
       Send Message
     </button>
   </form>

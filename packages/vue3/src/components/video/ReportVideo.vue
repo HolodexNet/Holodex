@@ -62,7 +62,7 @@
           {{ $t("views.app.close_btn") }}
         </div>
         <button
-          class="btn btn-primary"
+          class="btn-primary btn"
           :disabled="comments.length === 0"
           @click="sendReport"
         >

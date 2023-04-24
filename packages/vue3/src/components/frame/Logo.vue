@@ -21,8 +21,8 @@
         y2="18.5"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#F06292"/>
-        <stop offset="1" stop-color="#FF3A81"/>
+        <stop stop-color="#F06292" />
+        <stop offset="1" stop-color="#FF3A81" />
       </linearGradient>
       <linearGradient
         id="b-iid-3"
@@ -32,8 +32,8 @@
         y2="11.3"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#5DA2F2"/>
-        <stop offset="1" stop-color="#715BF7" stop-opacity=".8"/>
+        <stop stop-color="#5DA2F2" />
+        <stop offset="1" stop-color="#715BF7" stop-opacity=".8" />
       </linearGradient>
     </defs>
   </svg>

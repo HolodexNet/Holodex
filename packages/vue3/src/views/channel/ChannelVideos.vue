@@ -10,7 +10,7 @@
       </template>
     </video-card-grid>
     <div v-if="videoQuery.isLoading.value" class="flex h-20">
-      <logo loading class="w-32"/>
+      <logo loading class="w-32" />
     </div>
     <div
       v-else-if="videoQuery.data.value?.total"

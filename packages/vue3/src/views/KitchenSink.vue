@@ -8,25 +8,25 @@
         <h-btn class="btn-lg" icon="i-mdi:refresh">Refresh</h-btn>
       </div>
       <div>
-        <button class="btn-icon btn btn-sm">
-          <h-icon class="i-mdi:refresh"/>
+        <button class="btn-icon btn-sm btn">
+          <h-icon class="i-mdi:refresh" />
         </button>
-        <button class="btn-icon btn btn-primary">
-          <h-icon class="i-mdi:refresh"/>
+        <button class="btn-icon btn-primary btn">
+          <h-icon class="i-mdi:refresh" />
         </button>
-        <button class="btn-icon btn btn-lg">
-          <h-icon class="i-mdi:refresh"/>
+        <button class="btn-icon btn-lg btn">
+          <h-icon class="i-mdi:refresh" />
         </button>
       </div>
       <div>
-        <button class="btn btn-sm">
-          <h-icon class="i-mdi:refresh"/>
+        <button class="btn-sm btn">
+          <h-icon class="i-mdi:refresh" />
         </button>
-        <button class="btn btn-primary">
-          <h-icon class="i-mdi:refresh"/>
+        <button class="btn-primary btn">
+          <h-icon class="i-mdi:refresh" />
         </button>
-        <button class="btn btn-lg">
-          <h-icon class="i-mdi:refresh"/>
+        <button class="btn-lg btn">
+          <h-icon class="i-mdi:refresh" />
         </button>
       </div>
       <div>
@@ -39,7 +39,7 @@
         <v-btn text disabled color="red">{{ $t("views.app.close_btn") }}</v-btn>
         <h-btn class="btn-disabled">{{ $t("views.app.close_btn") }}</h-btn>
       </div>
-      <div/>
+      <div />
     </div>
     <div class="basis-1/3">
       <kbd>VideoCard</kbd>

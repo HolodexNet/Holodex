@@ -89,19 +89,19 @@
               <i class="i-bx:chevrons-up"></i>
             </button> -->
             <button
-              class="btn btn-ghost btn-xs p-0"
+              class="btn-ghost btn-xs btn p-0"
               @click.stop.prevent="move(video.id, 'up')"
             >
               <div :class="icons.up" />
             </button>
             <button
-              class="btn btn-ghost btn-xs p-0"
+              class="btn-ghost btn-xs btn p-0"
               @click.stop.prevent="del(video.id)"
             >
               <div :class="icons.trash" />
             </button>
             <button
-              class="btn btn-ghost btn-xs p-0"
+              class="btn-ghost btn-xs btn p-0"
               @click.stop.prevent="move(video.id, 'down')"
             >
               <div :class="icons.down" />

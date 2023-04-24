@@ -313,7 +313,7 @@ export default defineComponent({
 }
 
 .dropdownLabelBtn {
-  @apply tab-bordered tab tab-sm;
+  @apply tab tab-bordered tab-sm;
 
   height: 2rem;
   font-size: 0.875rem;

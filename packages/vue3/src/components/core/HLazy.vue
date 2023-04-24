@@ -1,5 +1,5 @@
 <template>
-  <div ref="target" class="h-lazy"><slot v-if="rendered"/></div>
+  <div ref="target" class="h-lazy"><slot v-if="rendered" /></div>
 </template>
 <script setup lang="ts">
 import {

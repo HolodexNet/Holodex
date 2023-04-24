@@ -20,7 +20,7 @@
       leave-to-class="transform scale-95 opacity-0"
     >
       <div
-        v-if="isOpen"
+        v-show="isOpen"
         ref="floating"
         :style="floatingStyle"
         role="menu"
@@ -158,9 +158,15 @@ const { x, y, strategy, middlewareData, update, isPositioned } = useFloating(
 );
 
 // Handles outside click closing them menu
-onClickOutside(floating, () => (isOpen.value = false), {
-  ignore: [activator],
-});
+onClickOutside(
+  floating,
+  () => {
+    if (isOpen.value !== false) isOpen.value = false;
+  },
+  {
+    ignore: [activator],
+  }
+);
 
 // Style object for floating piece
 const floatingStyle: any = computed(() => ({

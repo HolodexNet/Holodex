@@ -135,7 +135,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .c-card-icon {
-  @apply btn btn-ghost flex-grow rounded-sm pr-2;
+  @apply btn-ghost btn flex-grow rounded-sm pr-2;
 
   width: 2.5rem;
   min-height: 20px;

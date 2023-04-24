@@ -1,5 +1,5 @@
 <template>
-  <div class="btn-icon btn btn-sm text-lg" @click="click">
+  <div class="btn-icon btn-sm btn text-lg" @click="click">
     <div class="i-fluent:table-settings-20-regular" />
   </div>
 </template>

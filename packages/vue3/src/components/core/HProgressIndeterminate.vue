@@ -1,6 +1,6 @@
 <template>
   <div class="h-progress-bar" :class="backClass">
-    <div class="h-progress-bar__progress" :class="foreClass"/>
+    <div class="h-progress-bar__progress" :class="foreClass" />
   </div>
 </template>
 

@@ -6,7 +6,7 @@
           <strong class="card-title">
             {{ $t("component.channelInfo.stats") }}
           </strong>
-          <div class="divider"/>
+          <div class="divider" />
           {{ $t("component.channelInfo.videoCount", [channel?.video_count]) }}
           <br />
           <!-- {{ channel?.clip_count }} -->

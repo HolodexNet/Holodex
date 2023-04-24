@@ -1,6 +1,6 @@
 <template>
   <div ref="scrollParallax">
-    <slot/>
+    <slot />
   </div>
 </template>
 

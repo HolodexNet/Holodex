@@ -11,9 +11,7 @@
         :title="$t('component.channelSocials.unblock')"
         @click.prevent.stop="unblock(channel)"
       >
-        <div
-          class="i-material-symbols:close mx-auto text-3xl text-red-500"
-        />
+        <div class="i-material-symbols:close mx-auto text-3xl text-red-500" />
       </button>
     </template>
   </channel-list>
