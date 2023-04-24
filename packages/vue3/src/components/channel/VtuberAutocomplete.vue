@@ -22,6 +22,7 @@
     <template #chips="{ selection: s }">
       <channel-tag
         v-if="s && s[0]"
+        :key="`${s[0].id}_chip`"
         :channel="s[0]"
         class="mr-2 h-8 rounded-md pl-1"
         tile
@@ -76,7 +77,7 @@ export default defineComponent({
 
     const selection = ref(
       props.multi
-        ? props.modelValue ?? []
+        ? (props.modelValue as any[]) ?? []
         : props.modelValue
         ? [props.modelValue]
         : []

@@ -8,7 +8,7 @@
     }"
   >
     <channel-img :channel="channel" :rounded="!tile" :size="24" class="mr-2" />
-    {{ channelName }}
+    {{ preferredName }}
   </div>
 </template>
 <script lang="ts" setup>
@@ -19,5 +19,5 @@ const props = defineProps<{
   tile?: boolean;
   color?: string;
 }>();
-const channelName = useChannelPreferredName(props.channel);
+const { preferredName } = useChannelPreferredName(props.channel);
 </script>

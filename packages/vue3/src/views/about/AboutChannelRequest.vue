@@ -66,7 +66,7 @@ text-transform: none; -->
     <template v-if="type">
       <vtuber-autocomplete
         v-if="type === MODIFY_EXISTING || type === DELETE"
-        v-model="channel"
+        v-model="channel.value"
       />
       <h-input
         v-else
