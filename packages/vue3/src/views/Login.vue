@@ -1,12 +1,14 @@
 <template>
   <!-- <v-container fluid style="height: 100%"> -->
   <h-card
+    :outlined="false"
+    flat
     class="max-w-lg bg-bgColor"
     :class="{
       'card m-auto mt-6 max-w-md shadow-lg': $route.name !== 'Settings_User',
     }"
   >
-    <user-card v-if="site.user" class="p-0" />
+    <user-card v-if="site.user" class="gap-4 p-0" />
     <div class="card-body p-0">
       <div class="flex flex-col items-center">
         <div
@@ -55,7 +57,7 @@
 
       <template v-if="site.user">
         <!-- <div class="card-body"> -->
-        <div class="divider" />
+        <h-divider class="my-2" />
 
         <div class="flex items-center">
           <h-input
@@ -94,7 +96,7 @@
             {{ $t("views.login.futureYtcOwnerMessage") }}
           </span>
         </div>
-        <div class="divider" />
+        <h-divider class="my-2" />
 
         <span class="text-subtitle-2 mb-1 inline-block">API Key</span>
         <h-input
