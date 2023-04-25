@@ -56,26 +56,7 @@
     Ignored Topics
     <!-- {{ $t("views.settings.languageSettings") }} -->
   </div>
-  <v-select
-    :items="[]"
-    item-value="name"
-    item-title="name"
-    class="menu max-w-sm"
-    variant="outlined"
-    hide-details
-  >
-    <template #item="{ item, props }">
-      <!-- {{item}} -->
-      <div class="p-1 px-2" v-bind="props">
-        <span :style="{ color: item.raw.colors.primary }">
-          {{ (item as any).raw.name }}
-        </span>
-      </div>
-    </template>
-    <template #selection="{ item }">
-      <span class="text-primary" style="">{{ (item as any).raw.name }}</span>
-    </template>
-  </v-select>
+  <topic-autocomplete v-model="settings.ignoredTopics" multi />
   <div class="divider" />
 
   <div class="mb-2 text-lg font-semibold">Hide Features:</div>

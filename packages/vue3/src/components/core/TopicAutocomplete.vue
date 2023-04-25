@@ -4,7 +4,7 @@
     v-model:search="search"
     :selection="selection"
     :options="options"
-    :placeholder="'Pick Channel'"
+    :placeholder="'Pick Topics'"
     class="!rounded border border-solid border-bgColor-50 p-1 outline-base-content focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary"
     @pop-chip="selection.pop()"
     @pointed="({ n }) => scrollIntoView(n)"
@@ -23,7 +23,7 @@
       <h-tag
         v-for="s in list"
         :key="`${s}_chip`"
-        class="mr-2 h-8 pl-1"
+        class="mr-2 h-8 pl-2"
         tile
         closeable
         no-link
