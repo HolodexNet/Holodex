@@ -46,7 +46,12 @@
         </div>
       </template>
       <div v-show="showMenu" class="multiselect-dropdown">
-        <slot name="dropdown" :active="activeIndex" :up="dropUp" />
+        <slot
+          name="dropdown"
+          :active="activeIndex"
+          :up="dropUp"
+          :select="(item: any) => $emit('select', {item: item})"
+        />
       </div>
     </h-menu>
     <!-- Dropdown Menu -->

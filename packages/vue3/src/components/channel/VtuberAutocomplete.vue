@@ -9,7 +9,7 @@
     @pop-chip="selection.pop()"
     @pointed="({ n }) => scrollIntoView(n)"
     @select="
-      ({ n, item }) => {
+      ({ item }) => {
         search = '';
         if (multi) selection.push(item);
         else selection = [item];
@@ -36,17 +36,13 @@
         "
       />
     </template>
-    <template #dropdown="{ active }">
+    <template #dropdown="{ active, select }">
       <div
         v-for="(item, idx) in options"
         :key="item.id + idx"
-        class="dropdown-opt flex bg-bgColor px-3 py-2 text-sm"
+        class="dropdown-opt flex cursor-pointer bg-bgColor px-3 py-2 text-sm hover:bg-bgColor-200"
         :class="{ 'border-primary-200 bg-bgColor-200': idx === active }"
-        @click.stop.prevent.capture="
-          selection = [item];
-          search = '';
-          $emit('update:modelValue', { text: undefined, value: item });
-        "
+        @click.stop.prevent.capture="select(item)"
       >
         <channel-card :channel="item" variant="list" no-link slim />
       </div>
