@@ -33,24 +33,24 @@
         </div>
         <div class="flex flex-row gap-2 text-lg">
           <div
-            :class="
-              icons.discord +
-              (user.discord_id ? ' text-primary-400' : '  text-gray-400')
-            "
+            :class="[
+              icons.discord,
+              user.discord_id ? 'text-primary-400' : 'text-gray-400',
+            ]"
             class=""
           />
           <div
-            :class="
-              icons.google +
-              (user.google_id ? ' text-primary-400' : '  text-gray-400')
-            "
+            :class="[
+              icons.google,
+              user.google_id ? 'text-primary-400' : 'text-gray-400',
+            ]"
             class=""
           />
           <div
-            :class="
-              icons.twitter +
-              (user.twitter_id ? ' text-primary-400' : '  text-gray-400')
-            "
+            :class="[
+              icons.twitter,
+              user.twitter_id ? 'text-primary-400' : 'text-gray-400',
+            ]"
             class=""
           />
         </div>
@@ -64,6 +64,19 @@
     </div>
     <h-list class="gap-1 p-1">
       <!-- <h-divider v-if="user && !inNavDrawer" class="" /> -->
+      <h-list-item
+        v-if="user && user.role != 'user'"
+        :href="
+          langStore.lang.includes('en') || langStore.lang.includes('lol')
+            ? 'https://github.com/HolodexNet/Holodex/wiki/Editor\'s-Guide-to-Holodex'
+            : `https://github-com.translate.goog/HolodexNet/Holodex/wiki/Editor's-Guide-to-Holodex?_x_tr_sl=en&_x_tr_tl=${langStore.lang}&_x_tr_hl=en&_x_tr_pto=wapp`
+        "
+        target="_blank"
+      >
+        <h-icon class="h-6 w-6" :class="icons.sidebar_info" />
+        Editor Guide
+      </h-list-item>
+
       <h-list-item
         v-if="
           user &&
@@ -94,7 +107,7 @@
 
 <script lang="ts" setup>
 import { useClient } from "@/hooks/auth/client";
-import { useSiteStore } from "@/stores";
+import { useLangStore, useSiteStore } from "@/stores";
 
 defineProps({
   inNavDrawer: Boolean,
@@ -103,6 +116,7 @@ defineProps({
 const site = useSiteStore();
 const user = computed(() => site.user);
 const { logout } = useClient();
+const langStore = useLangStore();
 </script>
 
 <style></style>

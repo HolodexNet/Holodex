@@ -1,6 +1,6 @@
 <template>
   <div
-    class="badge badge-lg border-bgColor-100 pl-0 text-sm text-base-content"
+    class="badge badge-lg border-bgColor-100 text-sm text-base-content"
     :class="{
       'bg-bgColor-300': !color,
       'rounded-md': tile,
