@@ -49,6 +49,11 @@
         <slot :video="video" />
       </template>
     </video-card-text>
+    <div v-if="selection.selectionMode && video.mentions">
+      <template v-for="mention in video.mentions" :key="mention.id + '_vc_men'">
+        <channel-tag class="mx-0.5" no-link tile :channel="mention" />
+      </template>
+    </div>
   </a>
 </template>
 

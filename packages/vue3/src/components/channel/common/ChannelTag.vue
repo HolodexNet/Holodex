@@ -1,13 +1,19 @@
 <template>
   <div
-    class="badge badge-lg border-bgColor-100 text-sm text-base-content"
+    class="badge badge-lg border-bgColor-100 pl-0 text-sm text-base-content"
     :class="{
-      'pl-0': !tile,
       'bg-bgColor-300': !color,
+      'rounded-md': tile,
       [color!]: color,
     }"
   >
-    <channel-img :channel="channel" :rounded="!tile" :size="24" class="mr-2" />
+    <channel-img
+      :channel="channel"
+      :rounded="!tile"
+      :size="24"
+      class="mr-2"
+      :no-link="noLink"
+    />
     {{ preferredName }}
     <div
       v-if="closeable"
@@ -25,6 +31,7 @@ const props = defineProps<{
   tile?: boolean;
   color?: string;
   closeable?: boolean;
+  noLink?: boolean;
 }>();
 defineEmits(["close"]);
 

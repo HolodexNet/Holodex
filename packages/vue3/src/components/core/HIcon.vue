@@ -25,6 +25,9 @@ withDefaults(
   font-size: inherit !important;
   line-height: inherit !important;
 }
+.btn-xs > .h-icon {
+  @apply h-5 w-5;
+}
 .btn-sm > .h-icon {
   @apply h-5 w-5;
 }

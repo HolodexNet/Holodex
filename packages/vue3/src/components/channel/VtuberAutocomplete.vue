@@ -24,9 +24,10 @@
         v-for="s in list"
         :key="`${s.id}_chip`"
         :channel="s"
-        class="mr-2 h-8 rounded-md pl-1"
+        class="mr-2 h-8 pl-1"
         tile
         closeable
+        no-link
         @close="
           () => {
             selection = selection.filter((x) => x != s);

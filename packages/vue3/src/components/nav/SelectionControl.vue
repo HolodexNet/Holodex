@@ -19,21 +19,16 @@
         <div class="flex flex-row flex-wrap gap-2">
           <h-btn
             v-show="selection.selectedVideos.length > 0"
-            class="btn-outline btn-primary btn-xs btn"
-            icon="i-material-symbols:deselect"
+            class="btn-outline btn-primary btn-xs"
             @click="selection.selectedVideos = []"
           >
-            <span class="text-xs font-normal text-primary-300">
-              Deselect
-              <span class="text-primary">
-                {{ selection.selectedVideos.length }}
-              </span>
-              videos
-            </span>
+            <div class="i-material-symbols:deselect -ml-1 mr-1 text-lg" />
+
+            Deselect {{ selection.selectedVideos.length }} videos
           </h-btn>
 
-          <div
-            class="btn-outline btn-xs btn"
+          <h-btn
+            class="btn-outline btn-xs"
             :class="
               !selection.selectedVideos.length
                 ? 'btn-disabled'
@@ -41,7 +36,7 @@
             "
           >
             Open in Multiview
-          </div>
+          </h-btn>
 
           <h-menu>
             <template #activator="{ props }">
