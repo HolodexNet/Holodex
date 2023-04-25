@@ -2,13 +2,13 @@
   <component
     :is="noLink ? 'div' : 'router-link'"
     class="channel-card grid gap-0 overflow-hidden rounded-md"
-    :class="slim ? '' : 'h-50 flex-wrap'"
+    :class="[slim ? '' : 'h-50 flex-wrap']"
     :to="`/channel/${channel.id}`"
   >
     <div class="indicator">
       <span
         v-if="live"
-        class="live-indicator indicator-bottom indicator-item mb-4 mr-4"
+        class="live-indicator indicator-bottom indicator-item mb-3 mr-3 box-border aspect-square"
       />
       <span
         v-else-if="$slots.default"
@@ -21,7 +21,10 @@
         :channel="channel"
         :size="slim ? 36 : 100"
         class="m-2"
-        :class="imgClass"
+        :class="{
+          'opacity-40': channel.inactive,
+          'shadow-live ': live,
+        }"
       />
     </div>
     <div
@@ -110,11 +113,6 @@ export default defineComponent({
         ? formatCount(this.channel.subscriber_count, this.lang.lang)
         : "";
     },
-    imgClass() {
-      return {
-        "opacity-40": this.channel.inactive,
-      };
-    },
     group() {
       return this.channel.group || this.channel.suborg?.slice(2);
     },
@@ -159,5 +157,9 @@ export default defineComponent({
 
 .live-indicator {
   @apply badge badge-xs border-transparent bg-red-500 outline outline-4 outline-bgColor;
+  box-sizing: content-box;
+}
+.shadow-live > * {
+  @apply ring-2 ring-red-800;
 }
 </style>

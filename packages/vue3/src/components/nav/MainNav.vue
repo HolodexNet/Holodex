@@ -54,7 +54,7 @@
         class="mr-2 flex-shrink"
         @click="playlistDrawer = !playlistDrawer"
       />
-      <h-menu v-if="!isMobile" placement="bottom-end">
+      <h-menu v-if="!isMobile" placement="bottom-end" strategy="fixed">
         <template #activator="{ props }">
           <div
             v-bind="props"
@@ -75,7 +75,7 @@
         </template>
 
         <!------- USER CARD ------->
-        <user-card />
+        <user-card class="border border-bgColor-100 shadow-md drop-shadow" />
         <!------- END USER CARD ------->
       </h-menu>
 

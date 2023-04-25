@@ -28,11 +28,11 @@
             :src="`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`"
           />
         </div>
-        <div class="flex flex-col">
-          <div class="text-lg font-bold">
+        <div class="flex flex-col gap-1">
+          <div class="font-bold">
             {{ user.username }}
           </div>
-          <div class="flex flex-row gap-2 text-2xl">
+          <div class="flex flex-row gap-2 text-lg">
             <div
               :class="
                 icons.discord +
