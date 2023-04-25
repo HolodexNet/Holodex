@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  parser: "vue-eslint-parser",
   env: {
     node: true,
     "vue/setup-compiler-macros": true,
@@ -13,9 +14,9 @@ module.exports = {
   ],
   parserOptions: {
     parser: "@typescript-eslint/parser",
-    sourceType: "module",
-    ecmaVersion: 2021,
-  }, // "parser": {
+  },
+  plugins: ["@typescript-eslint", "prettier"],
+  // "parser": {
   //   // Script parser for `<script>`
   //   "js": "espree",
 
@@ -40,6 +41,7 @@ module.exports = {
   ignorePatterns: ["./components.d.ts", "./src/auto-imports.d.ts"],
 
   rules: {
+    "prettier/prettier": "error",
     "brace-style": [2, "1tbs", { allowSingleLine: true }],
     "vue/html-self-closing": [
       "warn",

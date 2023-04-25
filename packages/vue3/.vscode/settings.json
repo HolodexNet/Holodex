@@ -1,16 +1,19 @@
 {
-  "i18n-ally.localesPaths": ["src/locales"],
+  "i18n-ally.localesPaths": [
+    "src/locales"
+  ],
   "editor.formatOnPaste": false,
   "editor.formatOnType": false,
   "editor.formatOnSave": true,
   "i18n-ally.dirStructure": "dir",
-  "i18n-ally.enabledParsers": ["yaml"],
+  "i18n-ally.enabledParsers": [
+    "yaml"
+  ],
   "i18n-ally.pathMatcher": "{locale}/ui.yml",
   "i18n-ally.keystyle": "nested",
   "scss.lint.unknownAtRules": "ignore",
   "css.lint.unknownAtRules": "ignore",
   "typescript.tsdk": "node_modules/typescript/lib",
   "vue3snippets.enable-compile-vue-file-on-did-save-code": true,
-  "prettier.enableDebugLogs": true,
-  "prettier.requireConfig": true,
+  "eslint.format.enable": true,
 }
