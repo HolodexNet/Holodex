@@ -14,7 +14,7 @@
       or in VODs with community-caption-alike features).
     </p>
     <p>
-      We comply with the Derivative Work Agreement of Hololive Productions and
+      We comply with the Derivative Work Agreement of hololive production and
       attempt to extend that to other orgs and agencies. We also operate within
       the specifications of Youtube Data API and Embed Player Terms of Service.
       Please reach out to us via Discord or Twitter DM for any service

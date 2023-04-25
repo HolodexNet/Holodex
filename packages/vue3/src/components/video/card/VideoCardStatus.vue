@@ -22,51 +22,49 @@ export default defineComponent({
     const { t } = useI18n();
     const langStore = useLangStore();
     const formattedTime = ref("");
-
+    const available_at = computed(() => props.video.available_at);
     watchEffect(() => {
       if (props.video.status == "live") {
         formattedTime.value = t("component.videoCard.liveNow");
       }
     });
 
-    useIntervalFn(
-      () => {
-        switch (props.video.status) {
-          case "upcoming":
-            // print relative time in hours if less than 24 hours,
-            // print full date if greater than 24 hours
-            formattedTime.value = formatDistance(
-              props.video.start_scheduled || props.video.available_at,
-              langStore.lang,
-              t.bind(this),
-              false, // allowNegative = false
-              dayjs()
-            ); // upcoming videos don't get to be ("5 minutes ago")
-            return;
-          case "live":
-            formattedTime.value = t("component.videoCard.liveNow");
-            return;
-          default:
-            formattedTime.value = formatDistance(
-              props.video.available_at,
-              langStore.lang,
-              t.bind(this),
-              true,
-              dayjs()
-            );
-        }
-      },
-      60 * 1000,
-      { immediateCallback: true }
-    );
+    function triggerUpdate() {
+      switch (props.video.status) {
+        case "upcoming":
+          // print relative time in hours if less than 24 hours,
+          // print full date if greater than 24 hours
+          formattedTime.value = formatDistance(
+            props.video.start_scheduled || props.video.available_at,
+            langStore.lang,
+            t,
+            false, // allowNegative = false
+            dayjs()
+          ); // upcoming videos don't get to be ("5 minutes ago")
+          return;
+        case "live":
+          formattedTime.value = t("component.videoCard.liveNow");
+          return;
+        default:
+          formattedTime.value = formatDistance(
+            props.video.available_at,
+            langStore.lang,
+            t,
+            true,
+            dayjs()
+          );
+      }
+    }
+
+    watch(() => [available_at.value, props.video.status], triggerUpdate);
+
+    useIntervalFn(triggerUpdate, 60 * 1000, { immediateCallback: true });
 
     const absoluteTimeString = computed(() => {
-      const ts = localizedDayjs(props.video.available_at, langStore.lang);
+      const ts = localizedDayjs(available_at.value, langStore.lang);
 
-      const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
-      const ts2 = ts
-        .tz("Asia/Tokyo")
-        .format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
+      const ts1 = ts.format(`ddd DD LT zzz`);
+      const ts2 = ts.tz("Asia/Tokyo").format(`ddd DD LT zzz`);
       if (ts1 === ts2) {
         return ts1;
       }

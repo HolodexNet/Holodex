@@ -1,5 +1,4 @@
 <template>
-  <!-- <v-form ref="form" v-model="valid" lazy-validation> -->
   <h-alert v-if="!isEditor && token && !expired" class="pa-2 mb-2" type="info">
     Editing as {{ token.user }} from
     {{ discordCredits ? discordCredits.data.guild.name : "" }} Discord
@@ -210,6 +209,10 @@
           include-channel
           class="max-w-xs"
         />
+        <div class="i-heroicons:clock" />
+        <p class="whitespace-pre text-xs">
+          {{ absoluteTimeString }}
+        </p>
       </div>
     </div>
     <div class="form-control my-2 block w-full max-w-xs lg:hidden">
@@ -220,6 +223,10 @@
         include-channel
         class="max-w-xs"
       />
+      <div class="i-heroicons:clock" />
+      <p class="whitespace-pre text-xs">
+        {{ absoluteTimeString }}
+      </p>
     </div>
 
     <h-btn
@@ -234,11 +241,10 @@
       }}
     </h-btn>
   </div>
-  <!-- </v-form> -->
 </template>
 
 <script lang="ts">
-import { dayjs } from "@/utils/time";
+import { dayjs, localizedDayjs } from "@/utils/time";
 import jwtDecode from "jwt-decode";
 import backendApi from "@/utils/backend-api";
 import { useSiteStore } from "@/stores/site";
@@ -247,6 +253,7 @@ import { DatePicker } from "v-calendar";
 import { useThemeStore } from "@/stores/theme";
 import { useToast } from "vue-toast-notification";
 import useValidate from "vue-tiny-validate";
+import { useLangStore } from "@/stores";
 
 export default defineComponent({
   components: {
@@ -260,7 +267,7 @@ export default defineComponent({
 
     const data = reactive({
       id: "",
-      channel: undefined as undefined | { text: string; value: ShortChannel },
+      channel: undefined as ShortChannel | undefined,
       videoTitle: "",
       videoTitleJP: "",
       sourceUrl: "",
@@ -303,9 +310,31 @@ export default defineComponent({
       },
     });
 
-    const { result } = useValidate(data, rules, { autoTest: true });
+    const { result } = useValidate(
+      toRefs(data),
+      rules,
+      reactive({
+        autoTest: true,
+      })
+    );
 
-    return { creditName, site, theme, toast, data, result };
+    const langStore = useLangStore();
+    const absoluteTimeString = computed(() => {
+      const ts = localizedDayjs(data.liveDate, langStore.lang);
+
+      const ts1 = ts.format(`ddd DD LT zzz`);
+      const ts2 = ts.tz("Asia/Tokyo").format(`ddd DD LT zzz`);
+      const ts5 = ts.tz("America/New_York").format(`ddd DD LT zzz`);
+      const ts3 = ts.tz("America/Los_Angeles").format(`ddd DD LT zzz`);
+      const ts4 = ts.tz("Europe/Paris").format(`ddd DD LT zzz`);
+
+      if (ts1 === ts2) {
+        return ts1;
+      }
+      return new Array(...new Set([ts1, ts2, ts3, ts4, ts5])).join("\n");
+    });
+
+    return { creditName, site, theme, toast, data, result, absoluteTimeString };
   },
   data() {
     return {
@@ -377,9 +406,9 @@ export default defineComponent({
         title: this.data.videoTitle || "Example Title",
         placeholderType: this.data.placeholderType || "scheduled-yt-stream",
         channel: {
-          id: this.data.channel?.value?.id || "ExampleIdThatDoesntExist",
-          name: this.data.channel?.value?.name || "<CHANNEL>",
-          english_name: this.data.channel?.value?.english_name || "<CHANNEL>",
+          id: this.data.channel?.id || "ExampleIdThatDoesntExist",
+          name: this.data.channel?.name || "<CHANNEL>",
+          english_name: this.data.channel?.english_name || "<CHANNEL>",
         },
         thumbnail: this.data.thumbnail || "",
         type: "placeholder",
@@ -432,7 +461,7 @@ export default defineComponent({
           credits: this.credits,
         };
         const body = {
-          channel_id: this.data.channel?.value?.id,
+          channel_id: this.data.channel?.id,
           title: titlePayload,
           liveTime: this.availableAt,
           duration: +this.data.duration * 60, // convert min to sec
@@ -485,7 +514,7 @@ export default defineComponent({
       this.data.liveDate = vt.toISOString();
       this.data.duration = video.duration / 60;
       this.data.certainty = video.certainty;
-      this.data.channel = { text: video.channel.name, value: video.channel };
+      this.data.channel = video.channel;
     },
   },
 });

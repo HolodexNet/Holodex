@@ -122,7 +122,7 @@ import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
-  name: "VideoCard",
+  name: "VideoCardText",
   props: {
     video: {
       type: Object as PropType<Video>,
@@ -137,7 +137,7 @@ export default defineComponent({
 
     const isMobile = display.mobile;
     const { preferredTitle, preferredChannelName, langStore } = useVideoFormat(
-      props.video
+      computed(() => props.video)
     );
     const lang = computed(() => langStore.lang);
     const { t } = useI18n();
