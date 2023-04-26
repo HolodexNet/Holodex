@@ -43,7 +43,7 @@
           >
             <li
               :class="[
-                active ? 'text-primary' : 'text-base-content',
+                active ? 'bg-bgColor-300 text-primary' : 'text-base-content',
                 'relative cursor-default select-none py-2 pl-6 pr-4 hover:bg-bgColor-300',
                 selected && 'bg-bgColor-400',
               ]"

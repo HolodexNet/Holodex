@@ -2,44 +2,45 @@
   <div class="mb-2 text-lg font-semibold">
     {{ $t("views.settings.languageSettings") }}
   </div>
-  <h-input
-    :explanation="
-      '&emsp;» ' + langs.find((x) => x.val === langStore.lang)?.credit
-    "
-  >
-    <template #input>
-      <h-select
-        :model-value="langs.find((x) => x.val === langStore.lang) || langs[0]"
-        :items="langs"
-        item-value="val"
-        item-title="display"
-        class="w-full max-w-sm"
-        @update:model-value="
-          (v) => {
-            langStore.lang = v.val;
-          }
-        "
-      >
-        <template #item="{ item, selected }">
-          <!-- {{item}} -->
-          <div class="p-1" :class="selected && 'font-bold'">
-            <span class="text-primary" style="">
+  <div class="lang-settings pl-8">
+    <h-input
+      :explanation="'» ' + langs.find((x) => x.val === langStore.lang)?.credit"
+    >
+      <template #input>
+        <h-select
+          :model-value="langs.find((x) => x.val === langStore.lang) || langs[0]"
+          :items="langs"
+          item-value="val"
+          item-title="display"
+          class="w-full max-w-sm"
+          @update:model-value="
+            (v) => {
+              langStore.lang = v.val;
+            }
+          "
+        >
+          <template #item="{ item, selected }">
+            <div class="p-1" :class="[selected && 'font-bold']">
+              <span class="font-bold" style="">
+                {{ (item as any).display }}
+              </span>
+              <span class="px-2 text-sm opacity-60">
+                ♡ {{ (item as any).credit }}
+              </span>
+            </div>
+          </template>
+          <template #selection="{ item }">
+            <span class="primary--text" style="">
               {{ (item as any).display }}
             </span>
-            <span class="px-2 text-sm text-secondary">
-              ♡ {{ (item as any).credit }}
-            </span>
-          </div>
-        </template>
-        <template #selection="{ item }">
-          <span class="primary--text" style="">
-            {{ (item as any).display }}
-          </span>
-        </template>
-      </h-select>
-    </template>
-  </h-input>
-  <span>Help Translate Holodex!</span>
+          </template>
+        </h-select>
+      </template>
+    </h-input>
+  </div>
+  <span class="external-link link-primary link px-8 text-sm">
+    Help Translate Holodex!
+  </span>
   <div class="divider" />
 
   <div class="mb-2 text-lg font-semibold">
@@ -143,7 +144,7 @@ export default defineComponent({
   methods: {},
 });
 </script>
-<style scoped>
+<style>
 .lang-settings .checkbox,
 .lang-settings .toggle {
   /*border-width: 2px !important;*/
