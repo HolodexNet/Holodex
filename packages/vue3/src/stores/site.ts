@@ -1,7 +1,6 @@
 // responsible for site-level globals:
 
 import { User } from "@/hooks/auth/user";
-import { useSettingsStore } from "./settings";
 
 interface Org {
   name: string;
@@ -24,38 +23,17 @@ interface SiteStatePersistentShared {
     shownUpdateDetails: boolean;
     lastShownInstallPrompt: number;
   };
-
-  /**
-   * Settings are directly modified and read.
-   */
-  // settings: {
-  //   redirectMode: boolean;
-  //   autoplayVideo: boolean;
-  //   scrollMode: boolean;
-  //   hideThumbnail: boolean;
-  //   hidePlaceholder: boolean;
-  //   hideCollabStreams: boolean;
-  //   ignoredTopics: string[];
-  //   blockedChannels: [];
-  //   homeViewMode: "grid" | "list" | "denseList";
-  //   gridDensity: number;
-  // };
-}
-const USER_ROLES = {
-  ADMIN: "admin",
-  EDITOR: "editor",
-};
-interface SiteStateTransient {
-  // Socket counter, if it is zero, then close the shared WebSocket
-  activeSockets: number;
-  // Open/Close main Nav drawer
-  navDrawer: boolean;
 }
 
+/**
+ * User roles, such as ADMIN and EDITOR, are used to determine if a user has editor-level access or higher.
+ * Actions like logging out, toggling favorite organizations, and shifting organization favorites can be performed on the stored state.
+ *
+ * In summary, the Global Storage Component is designed to efficiently manage site-wide state, making it easier to handle
+ * user-related data, organizational settings, and other key aspects of the application.
+ */
 export const useSiteStore = defineStore("site", {
-  // convert to a function
   state: (): SiteStatePersistentShared => ({
-    //TODO impl
     key: 0,
     user: null,
     jwtToken: null,

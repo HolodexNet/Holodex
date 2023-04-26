@@ -306,10 +306,10 @@ export function useVideoListDatasource(
             : {},
       });
       if ("items" in data && "total" in data) {
-        out.items =
-          q.value.type === "stream_schedule"
-            ? data.items.filter(filterDeadStreams)
-            : data.items;
+        out.items = data.items;
+        // out.items = q.value.type === "stream_schedule"
+        //   ? data.items.filter(filterDeadStreams)
+        //   : data.items;
         out.total = data.total;
       } else if (typeof data === "object") {
         out.items = data;
