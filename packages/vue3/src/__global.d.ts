@@ -228,7 +228,7 @@ declare global {
   /**
    * Type of Tab: clip is 'clips only', stream_schedule is all upcoming and live, archive is what it is, and videos just gets all videos.
    */
-  type TabType = "clip" | "stream_schedule" | "archive" | "videos";
+  type TabType = "clip" | "stream_schedule" | "archive" | "videos" | "collabs";
   interface OrgLookup {
     favorites: never;
     channelId: never;

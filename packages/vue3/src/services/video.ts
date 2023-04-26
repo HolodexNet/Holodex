@@ -1,7 +1,7 @@
 import { useLangStore } from "@/stores";
 import { useSettingsStore } from "@/stores/settings";
 import { useSiteStore } from "@/stores/site";
-import backendApi, { axiosInstance } from "@/utils/backend-api";
+import backendApi, { axiosInstance_v2 } from "@/utils/backend-api";
 import { MaybeRef, toReactive } from "@vueuse/core";
 import dayjs, { isDayjs } from "dayjs";
 import { Ref } from "vue";
@@ -41,7 +41,7 @@ export function useVideos(
   return useQuery(
     ["videos", query],
     async () => {
-      const { data } = await axiosInstance.get(
+      const { data } = await axiosInstance_v2.get(
         `/videos?${stringifyQuery(query.value)}`
       );
       return data.filter(filterDeadStreams);
@@ -50,45 +50,45 @@ export function useVideos(
   );
 }
 
-export function usePaginatedVideos(
-  query: Ref<Partial<VideoApiQuery> & { paginated: true }>,
-  config: QueryConfig<{ items: Video[]; total: number }>
-) {
-  return useQuery<{ items: Video[]; total: number }>(
-    ["videos", query],
-    async () => {
-      const { data } = await axiosInstance.get(
-        `/videos?${stringifyQuery(query.value)}`
-      );
-      return data;
-    },
-    config
-  );
-}
+// export function usePaginatedVideos(
+//   query: Ref<Partial<VideoApiQuery> & { paginated: true }>,
+//   config: QueryConfig<{ items: Video[]; total: number }>
+// ) {
+//   return useQuery<{ items: Video[]; total: number }>(
+//     ["videos", query],
+//     async () => {
+//       const { data } = await axiosInstance.get(
+//         `/videos?${stringifyQuery(query.value)}`
+//       );
+//       return data;
+//     },
+//     config
+//   );
+// }
 
-export function useVideosInfinite(
-  query: Ref<Partial<VideoApiQuery>>,
-  config: QueryConfig<Video[]>
-) {
-  return useInfiniteQuery<Video[]>(
-    ["videos", query],
-    async ({ pageParam }) => {
-      const q = {
-        ...query.value,
-        offset: pageParam,
-      };
-      const { data } = await axiosInstance.get(`/videos?${stringifyQuery(q)}`);
-      return data.filter(filterDeadStreams);
-    },
-    {
-      getNextPageParam: (lastPage, pages) =>
-        pages.reduce((prev, curr) => prev + curr.length, 0),
-      enabled: config.enabled,
-      keepPreviousData: false,
-      refetchOnMount: false,
-    }
-  );
-}
+// export function useVideosInfinite(
+//   query: Ref<Partial<VideoApiQuery>>,
+//   config: QueryConfig<Video[]>
+// ) {
+//   return useInfiniteQuery<Video[]>(
+//     ["videos", query],
+//     async ({ pageParam }) => {
+//       const q = {
+//         ...query.value,
+//         offset: pageParam,
+//       };
+//       const { data } = await axiosInstance.get(`/videos?${stringifyQuery(q)}`);
+//       return data.filter(filterDeadStreams);
+//     },
+//     {
+//       getNextPageParam: (lastPage, pages) =>
+//         pages.reduce((prev, curr) => prev + curr.length, 0),
+//       enabled: config.enabled,
+//       keepPreviousData: false,
+//       refetchOnMount: false,
+//     }
+//   );
+// }
 interface VideoByIdApiQuery {
   lang: string; // which langs to pull for clips, comma separated string.
   c: string; // provide comments.
@@ -101,7 +101,7 @@ export function useVideoById(
   return useQuery<ExtendedVideo>(
     ["video", id, query],
     async (e) => {
-      const { data } = await axiosInstance.get(
+      const { data } = await axiosInstance_v2.get(
         `/videos/${unref(id)}?${stringifyQuery(query.value)}`
       );
       return data;
@@ -129,38 +129,38 @@ export function useVideoById(
 //   );
 // }
 
-export function useLive(
-  query: Ref<Partial<VideoApiQuery>>,
-  config: QueryConfig<Video[]>
-) {
-  return useQuery<Video[]>(
-    ["live", query],
-    async () => {
-      const { data } = await axiosInstance.get(
-        `/live?${stringifyQuery(query.value)}`
-      );
-      return data.filter(filterDeadStreams);
-    },
-    config
-  );
-}
+// export function useLive(
+//   query: Ref<Partial<VideoApiQuery>>,
+//   config: QueryConfig<Video[]>
+// ) {
+//   return useQuery<Video[]>(
+//     ["live", query],
+//     async () => {
+//       const { data } = await axiosInstance.get(
+//         `/live?${stringifyQuery(query.value)}`
+//       );
+//       return data.filter(filterDeadStreams);
+//     },
+//     config
+//   );
+// }
 
-export function useFavoritesLive(config: QueryConfig<Video[]>) {
-  // const {AxiosInstance, token} = useClient()
-  const site = useSiteStore();
-  const jwt = site.jwtToken;
-  const settings = useSettingsStore();
-  return useQuery<Video[]>(
-    ["favorites", settings.hidePlaceholder],
-    async () => {
-      return backendApi.favoritesLive(
-        { includePlaceholder: !settings.hidePlaceholder },
-        jwt
-      );
-    },
-    config
-  );
-}
+// export function useFavoritesLive(config: QueryConfig<Video[]>) {
+//   // const {AxiosInstance, token} = useClient()
+//   const site = useSiteStore();
+//   const jwt = site.jwtToken;
+//   const settings = useSettingsStore();
+//   return useQuery<Video[]>(
+//     ["favorites", settings.hidePlaceholder],
+//     async () => {
+//       return backendApi.favoritesLive(
+//         { includePlaceholder: !settings.hidePlaceholder },
+//         jwt
+//       );
+//     },
+//     config
+//   );
+// }
 
 function stringifyQuery(query: Record<string, any>) {
   return new URLSearchParams(query).toString();
@@ -208,77 +208,67 @@ export function useVideoListDatasource(
       ...q.value.filter,
     };
 
-    const overrideStatus = q.value.statuses
-      ? q.value.statuses.join(",")
-      : undefined;
+    const baseConfig = {
+      org: q.value.flavor.org,
+      channelId: q.value.flavor.channelId,
+    };
 
-    switch (q.value.type) {
-      case "archive":
-        fq.include = "clips,mentions";
-        fq.type = "stream";
-        fq.status = overrideStatus ?? "past,missing";
-        fq.paginated = true;
-        fq.org = q.value.flavor.org;
-        fq.channel_id = q.value.flavor.channelId;
-        fq.max_upcoming_hours = 1;
-        break;
+    const overrideStatus = q.value.statuses?.join(",");
+    const showPlaceholder =
+      q.value.showPlaceholderOverride ?? !settings.hidePlaceholder;
 
-      case "clip":
-        fq.type = "clip";
-        fq.status = overrideStatus ?? "past";
-        fq.paginated = true;
-        fq.org = q.value.flavor.org;
-        fq.mentioned_channel_id = q.value.flavor.channelId;
-        fq.lang = langs.clipLangsCSV;
-        break;
-
-      case "stream_schedule":
-        fq.include = "live_info,mentions";
-        fq.type =
-          q.value.showPlaceholderOverride ?? !settings.hidePlaceholder
-            ? "stream,placeholder"
-            : "stream";
-        fq.org = q.value.flavor.org;
-        if (overrideStatus) fq.status = overrideStatus;
-        // if(q.value.flavor.org) { // the live api already has this, so no need to redefine it.
-        //   fq.max_upcoming_hours = 48;
-        // }
-        fq.channel_id = q.value.flavor.channelId;
-        break;
-
-      case "videos":
-        // all statuses is okay.
-        fq.channel_id = q.value.flavor.channelId;
-        fq.org = q.value.flavor.org;
-        fq.status = overrideStatus;
-        fq.type =
-          q.value.showPlaceholderOverride ?? !settings.hidePlaceholder
-            ? "clip,stream,placeholder"
-            : "clip,stream";
-        fq.paginated = true;
-        break;
-
-      case "collabs":
-        fq.mentioned_channel_id = q.value.flavor.channelId;
-        fq.paginated = true;
-        fq.type =
-          q.value.showPlaceholderOverride ?? !settings.hidePlaceholder
-            ? "stream,placeholder"
-            : "stream";
-        fq.include = "clips,mentions";
-        if (overrideStatus) fq.status = overrideStatus;
-        break;
-
-      default: // all other cases:
-        fq.channel_id = q.value.flavor.channelId;
-        fq.org = q.value.flavor.org;
-        fq.type = q.value.type.join(",");
-        fq.status = overrideStatus;
-        break;
-    }
-    // console.log(fq);
-
-    return fq;
+    const configByType = {
+      archive: {
+        ...baseConfig,
+        include: "clips,mentions",
+        type: "stream",
+        paginated: true,
+        status: overrideStatus ?? "past,missing",
+        max_upcoming_hours: 1,
+      },
+      clip: {
+        ...baseConfig,
+        type: "clip",
+        include: "mentions",
+        status: overrideStatus ?? "past",
+        mentioned_channel_id: q.value.flavor.channelId,
+        channel_id: undefined,
+        lang: langs.clipLangsCSV,
+        paginated: true,
+      },
+      stream_schedule: {
+        ...baseConfig,
+        include: "live_info,mentions",
+        type: showPlaceholder ? "stream,placeholder" : "stream",
+        status: overrideStatus,
+      },
+      videos: {
+        ...baseConfig,
+        include: "live_info,mentions",
+        type: showPlaceholder ? "clip,stream,placeholder," : "clip,stream",
+        status: overrideStatus,
+        paginated: true,
+      },
+      collabs: {
+        ...baseConfig,
+        channel_id: undefined,
+        org: undefined,
+        mentioned_channel_id: q.value.flavor.channelId,
+        type: showPlaceholder ? "stream,placeholder" : "stream",
+        include: "clips,mentions",
+        status: overrideStatus,
+      },
+    } as Record<TabType, Partial<VideoApiQuery>>;
+    return {
+      ...fq,
+      ...(typeof q.value.type === "string"
+        ? configByType[q.value.type]
+        : {
+            ...baseConfig,
+            type: q.value.type.join(","),
+            status: overrideStatus,
+          }),
+    };
   });
 
   const queryCfg = reactive({
@@ -308,7 +298,7 @@ export function useVideoListDatasource(
       // console.log("Querying", path, "?>>>", query, "auth", jwt.slice(0, 10));
       console.time("Query Time:" + path);
       if (q.value.flavor?.favorites && !jwt) return out;
-      const { data } = await axiosInstance.get(path, {
+      const { data } = await axiosInstance_v2.get(path, {
         params: query,
         headers:
           q.value.flavor?.favorites && jwt
@@ -325,14 +315,10 @@ export function useVideoListDatasource(
         out.items = data;
       }
 
-      if (q.value.flavor?.favorites) {
-        out.items = out.items.sort(
-          (a, b) =>
-            dayjs(a.available_at).valueOf() - dayjs(b.available_at).valueOf()
-        );
-        // console.log(out.items);
-      }
-      console.timeEnd("Query Time:" + path);
+      out.items = out.items.sort(
+        (a, b) =>
+          dayjs(a.available_at).valueOf() - dayjs(b.available_at).valueOf()
+      );
 
       return out;
     },

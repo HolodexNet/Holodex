@@ -9,7 +9,7 @@ import { stringifyQuery } from "./functions";
 export const API_BASE_URL = `${window.location.origin}/api`;
 export const SITE_BASE_URL = `${window.location.origin}`;
 
-export const axiosInstance = (() => {
+export const axiosInstance_v2 = (() => {
   const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
   return instance;
 })();
@@ -30,23 +30,23 @@ export default {
     ).then<ShortChannel>((r) => r.json());
   },
   stats() {
-    return axiosInstance({
+    return axiosInstance_v2({
       url: "/statics/stats.json",
       baseURL: SITE_BASE_URL,
     });
   },
   channels(query: Record<any, unknown> | undefined) {
     const q = stringifyQuery(query);
-    return axiosInstance.get<FullChannel[]>(`/channels?${q}`);
+    return axiosInstance_v2.get<FullChannel[]>(`/channels?${q}`);
   },
   videos(query: Record<any, unknown> | undefined) {
     const q = stringifyQuery(query);
     // console.log(`/videos?${q}`);
-    return axiosInstance.get(`/videos?${q}`);
+    return axiosInstance_v2.get(`/videos?${q}`);
   },
   live(query: Record<any, unknown> | undefined) {
     const q = stringifyQuery(query);
-    return axiosInstance.get(`/live?${q}`).then((res) =>
+    return axiosInstance_v2.get(`/live?${q}`).then((res) =>
       res.data
         // .concat(res.data.upcoming)
         // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
@@ -69,7 +69,7 @@ export default {
     );
   },
   channel(id: any) {
-    return axiosInstance.get(`/channels/${id}`);
+    return axiosInstance_v2.get(`/channels/${id}`);
   },
   /**
    * Fetches a video
@@ -80,14 +80,14 @@ export default {
    */
   video(id: string, lang?: string, c?: number) {
     const q = stringifyQuery({ lang, c });
-    return axiosInstance.get(`/videos/${id}?${q}`);
+    return axiosInstance_v2.get(`/videos/${id}?${q}`);
   },
   comments(videoId: any) {
-    return axiosInstance.get(`/videos/${videoId}/comments`);
+    return axiosInstance_v2.get(`/videos/${videoId}/comments`);
   },
   clips(query: Record<any, unknown> | undefined) {
     const q = stringifyQuery(query);
-    return axiosInstance.get(`/clips?${q}`);
+    return axiosInstance_v2.get(`/clips?${q}`);
   },
   searchAutocomplete(query: string) {
     const channelMatch = query.match(CHANNEL_URL_REGEX);
@@ -95,7 +95,7 @@ export default {
 
     if (channelMatch) {
       const q = stringifyQuery({ q: channelMatch.groups.id });
-      return axiosInstance.get(`/search/autocomplete?${q}`);
+      return axiosInstance_v2.get(`/search/autocomplete?${q}`);
     }
 
     if (videoMatch) {
@@ -103,7 +103,7 @@ export default {
     }
 
     const q = stringifyQuery({ q: query });
-    return axiosInstance.get(`/search/autocomplete?${q}`);
+    return axiosInstance_v2.get(`/search/autocomplete?${q}`);
   },
   /**
    *
@@ -126,22 +126,22 @@ export default {
   },
 
   searchVideo(queryObject: any) {
-    return axiosInstance.post("/search/videoSearch", queryObject);
+    return axiosInstance_v2.post("/search/videoSearch", queryObject);
   },
   searchComments(queryObject: any) {
-    return axiosInstance.post("/search/commentSearch", queryObject);
+    return axiosInstance_v2.post("/search/commentSearch", queryObject);
   },
   searchChannel(queryObject: any, jwt: string) {
-    return axiosInstance.post("/search/channelSearch", queryObject, {
+    return axiosInstance_v2.post("/search/channelSearch", queryObject, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   channelVideos(channelId: any, { type = "videos", query }: any) {
     const q = stringifyQuery(query);
-    return axiosInstance.get(`/channels/${channelId}/${type}?${q}`);
+    return axiosInstance_v2.get(`/channels/${channelId}/${type}?${q}`);
   },
   login(jwt: any, authToken: any, service: any) {
-    return axiosInstance.post(
+    return axiosInstance_v2.post(
       "/user/login",
       { token: authToken, service },
       {
@@ -150,7 +150,7 @@ export default {
     );
   },
   loginIsValid(jwt: any): Promise<false | AxiosResponse<any>> {
-    return axiosInstance
+    return axiosInstance_v2
       .get("/user/check", {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
       })
@@ -159,19 +159,19 @@ export default {
     // fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
   },
   favorites(jwt: any) {
-    return axiosInstance.get<FullChannel[]>("/users/favorites", {
+    return axiosInstance_v2.get<FullChannel[]>("/users/favorites", {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   favoritesVideos(jwt: any, query: Record<any, unknown> | undefined) {
     const q = stringifyQuery(query);
-    return axiosInstance.get(`/users/videos?${q}`, {
+    return axiosInstance_v2.get(`/users/videos?${q}`, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   favoritesLive({ includePlaceholder = false }: any, jwt: any) {
     // const q = stringifyQuery(query);
-    return axiosInstance
+    return axiosInstance_v2
       .get(`/users/live?includePlaceholder=${includePlaceholder}`, {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
       })
@@ -213,19 +213,19 @@ export default {
     jwt: any,
     operations: { op: "add" | "remove"; channel_id: string }[]
   ) {
-    return axiosInstance.patch("/users/favorites", operations, {
+    return axiosInstance_v2.patch("/users/favorites", operations, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   getVideoTopic(videoId: any) {
-    return axiosInstance.get(`/videos/${videoId}/topic`);
+    return axiosInstance_v2.get(`/videos/${videoId}/topic`);
   },
   topics() {
     // gets topics from backend
-    return axiosInstance.get("/topics");
+    return axiosInstance_v2.get("/topics");
   },
   topicSet(topicId: any, videoId: any, jwt: any) {
-    return axiosInstance.post(
+    return axiosInstance_v2.post(
       "/topics/video",
       { videoId, topicId },
       {
@@ -234,23 +234,23 @@ export default {
     );
   },
   rotation() {
-    return axiosInstance.get("/rotation");
+    return axiosInstance_v2.get("/rotation");
   },
   songListByVideo(channelId: any, videoId: any, allowCache: any) {
     const dt = allowCache ? "_" : Math.floor(Math.random() * 100);
-    return axiosInstance.post(`/songs/latest?c=${dt}`, {
+    return axiosInstance_v2.post(`/songs/latest?c=${dt}`, {
       channel_id: channelId,
       video_id: videoId,
       limit: 100,
     });
   },
   tryCreateSong(songObj: any, jwt: any) {
-    return axiosInstance.put("/songs", songObj, {
+    return axiosInstance_v2.put("/songs", songObj, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   deleteSong(songObj: any, jwt: any) {
-    return axiosInstance.delete("/songs", {
+    return axiosInstance_v2.delete("/songs", {
       data: { ...songObj },
 
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
@@ -258,13 +258,13 @@ export default {
   },
   chatHistory(videoId: any, query: Record<any, unknown> | undefined) {
     const q = stringifyQuery(query);
-    return axiosInstance.get(`videos/${videoId}/chats?${q}`);
+    return axiosInstance_v2.get(`videos/${videoId}/chats?${q}`);
   },
   getMentions(videoId: any) {
-    return axiosInstance.get(`videos/${videoId}/mentions`);
+    return axiosInstance_v2.get(`videos/${videoId}/mentions`);
   },
   deleteMentions(videoId: any, channelIds: any, jwt: any) {
-    return axiosInstance.delete(`videos/${videoId}/mentions`, {
+    return axiosInstance_v2.delete(`videos/${videoId}/mentions`, {
       data: {
         channel_ids: channelIds,
       },
@@ -273,7 +273,7 @@ export default {
     });
   },
   addMention(videoId: any, channelId: any, jwt: any) {
-    return axiosInstance.post(
+    return axiosInstance_v2.post(
       `videos/${videoId}/mentions`,
       {
         channel_id: channelId,
@@ -319,41 +319,41 @@ export default {
   // },
   getPlaylistList(jwt: string) {
     if (!jwt) throw new Error("Not authorized");
-    return axiosInstance.get<PlaylistList>("/users/playlists", {
+    return axiosInstance_v2.get<PlaylistList>("/users/playlists", {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   getPlaylist(id: string | number) {
     if (!id) throw new Error("Arg bad");
-    return axiosInstance.get<Playlist>(`/playlist/${id}`);
+    return axiosInstance_v2.get<Playlist>(`/playlist/${id}`);
   },
   savePlaylist(obj: object, jwt: string) {
-    return axiosInstance.post("/playlist/", obj, {
+    return axiosInstance_v2.post("/playlist/", obj, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   deletePlaylist(id: string | number, jwt: string) {
     if (!id || !jwt) throw new Error("Arg bad");
-    return axiosInstance.delete(`/playlist/${id}`, {
+    return axiosInstance_v2.delete(`/playlist/${id}`, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   reportVideo(id: string, body: Array<object>, jwt: string) {
     if (!id) throw new Error("Arg bad");
-    return axiosInstance.post(`/reports/video/${id}`, body, {
+    return axiosInstance_v2.post(`/reports/video/${id}`, body, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   trackMultiviewLink(link: any) {
-    return axiosInstance.get(`/multiview/record/${link}`);
+    return axiosInstance_v2.get(`/multiview/record/${link}`);
   },
   discordServerInfo(inviteLink: any) {
-    return axiosInstance.get(
+    return axiosInstance_v2.get(
       `https://discord.com/api/v8/invites/${inviteLink}`
     );
   },
   addPlaceholderStream(body: any, jwt: any, token: any) {
-    return axiosInstance.post(
+    return axiosInstance_v2.post(
       `videos/placeholder${token ? `?token=${token}` : ""}`,
       body,
       {
@@ -362,30 +362,33 @@ export default {
     );
   },
   deletePlaceholderStream(videoId: any, jwt: any) {
-    return axiosInstance.delete(`videos/placeholder/${videoId}`, {
+    return axiosInstance_v2.delete(`videos/placeholder/${videoId}`, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   getPlaylistState(videoId: any, jwt: any) {
-    return axiosInstance.get<{ id: number; name: string; contains: boolean }[]>(
-      `/video-playlist/${videoId}`,
+    return axiosInstance_v2.get<
+      { id: number; name: string; contains: boolean }[]
+    >(`/video-playlist/${videoId}`, {
+      headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+    });
+  },
+  addVideoToPlaylist(videoId: any, playlistId: any, jwt: any) {
+    return axiosInstance_v2.put(
+      `/video-playlist/${playlistId}/${videoId}`,
+      null,
       {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
       }
     );
   },
-  addVideoToPlaylist(videoId: any, playlistId: any, jwt: any) {
-    return axiosInstance.put(`/video-playlist/${playlistId}/${videoId}`, null, {
-      headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-    });
-  },
   deleteVideoFromPlaylist(videoId: any, playlistId: any, jwt: any) {
-    return axiosInstance.delete(`/video-playlist/${playlistId}/${videoId}`, {
+    return axiosInstance_v2.delete(`/video-playlist/${playlistId}/${videoId}`, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
   postTL(videoID: any, jwt: any, langCode: any, body: any) {
-    return axiosInstance.post(
+    return axiosInstance_v2.post(
       `/videos/${videoID}/chats?lang=${langCode}`,
       body,
       {
@@ -394,7 +397,7 @@ export default {
     );
   },
   postBulkTL(videoID: any, jwt: any, langCode: any, body: any) {
-    return axiosInstance.post(
+    return axiosInstance_v2.post(
       `/videos/${videoID}/chatsBulk?lang=${langCode}`,
       body,
       {
@@ -404,7 +407,7 @@ export default {
   },
   getTLStats(jwt: any, query: Record<any, unknown> | undefined) {
     const q = stringifyQuery(query);
-    return axiosInstance.get(`/tlutil?${q}`, {
+    return axiosInstance_v2.get(`/tlutil?${q}`, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
@@ -422,7 +425,7 @@ export default {
     if (override) {
       head.Override = "true";
     }
-    return axiosInstance.post(
+    return axiosInstance_v2.post(
       `/videos/${videoID}/scripteditor/log?lang=${langCode}`,
       body,
       {
@@ -437,13 +440,13 @@ export default {
     });
   },
   checkMchadMigrate(room: any, pass: any) {
-    return axiosInstance.post("/tlutil/migrate/check", {
+    return axiosInstance_v2.post("/tlutil/migrate/check", {
       Room: room,
       Pass: pass,
     });
   },
   claimMchadMigrate(jwt: any, room: any, pass: any) {
-    return axiosInstance.post(
+    return axiosInstance_v2.post(
       "/tlutil/migrate/claim",
       {
         Room: room,
@@ -455,7 +458,7 @@ export default {
     );
   },
   requestChannel(obj: any) {
-    return axiosInstance.post("/reports/channel", obj);
+    return axiosInstance_v2.post("/reports/channel", obj);
   },
 
   // ---------- RELAY BOT DISCORD LOGIN ----------
