@@ -1,15 +1,18 @@
 /**
  * Persistent (and X-Tab Shared) Long Term Storage for Site-wide State
  */
+export interface VideoListFilters {
+  hideCollabStreams: boolean;
+  ignoredTopics: string[];
+  blockedChannels: ShortChannel[];
+  filterDeadStreams: boolean;
+}
 interface SettingStatePersistentShared {
   redirectMode: boolean;
   // autoplayVideo: boolean; // auto play video should always be off.
   // scrollMode: boolean; // scroll mode is deprecated - kinda complicated until we have a good virtual scroller
   hideThumbnail: boolean;
   hidePlaceholder: boolean;
-  hideCollabStreams: boolean;
-  ignoredTopics: string[];
-  blockedChannels: ShortChannel[];
   homeViewMode: "grid" | "list" | "denseList";
   gridDensity: number;
   defaultOpen: string;
@@ -17,13 +20,14 @@ interface SettingStatePersistentShared {
 
 export const useSettingsStore = defineStore("settings", {
   // convert to a function
-  state: (): SettingStatePersistentShared => ({
+  state: (): SettingStatePersistentShared & VideoListFilters => ({
     redirectMode: false,
     // autoplayVideo: false,
     // scrollMode: false,
     hideThumbnail: false,
     hidePlaceholder: false,
     hideCollabStreams: false,
+    filterDeadStreams: true,
     ignoredTopics: [],
     blockedChannels: [],
     homeViewMode: "grid",
