@@ -14,11 +14,13 @@ const click = () => {
       settings.gridDensity += 1;
     } else {
       settings.gridDensity = 0;
-      settings.homeViewMode = "list";
+      // settings.homeViewMode = "list"; <-- re enable this line to enable other view modes.
     }
   } else if (settings.homeViewMode === "list") {
+    // TODO these are disabled at the moment.
     settings.homeViewMode = "denseList";
   } else if (settings.homeViewMode === "denseList") {
+    // TODO these are disabled at the moment.
     settings.homeViewMode = "grid";
   }
 };

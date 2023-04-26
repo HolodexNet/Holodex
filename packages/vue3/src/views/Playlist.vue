@@ -30,7 +30,7 @@
     <div
       v-for="playlist in playlists.data.value"
       :key="'plst' + playlist.id + playlist.name"
-      class="card-compact card card-side my-4 cursor-pointer bg-bgColor-300 sm:card-normal hover:-translate-y-1 hover:shadow-xl"
+      class="card card-side card-compact my-4 cursor-pointer bg-bgColor-300 sm:card-normal hover:-translate-y-1 hover:shadow-xl"
       :class="
         playlist.id === current.currentPlaylistId
           ? 'active-playlist'
