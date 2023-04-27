@@ -27,7 +27,7 @@
 
   <div class="mb-2 text-lg font-semibold">Grid Size:</div>
 
-  <div class="btn-group">
+  <div class="btn-group pl-8">
     <button
       class="btn"
       :class="{ 'btn-active': settings.gridDensity === 0 }"
@@ -56,7 +56,9 @@
     Ignored Topics
     <!-- {{ $t("views.settings.languageSettings") }} -->
   </div>
-  <topic-autocomplete v-model="settings.ignoredTopics" multi />
+  <div class="pl-8">
+    <topic-autocomplete v-model="settings.ignoredTopics" multi />
+  </div>
   <div class="divider" />
 
   <div class="mb-2 text-lg font-semibold">Hide Features:</div>

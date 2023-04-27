@@ -8,7 +8,12 @@
     }"
   >
     <!-- Dropdown Input -->
-    <h-menu :model-value="optionsShown" use-ref-width strategy="fixed">
+    <h-menu
+      :model-value="optionsShown"
+      use-ref-width
+      strategy="fixed"
+      :offset="5"
+    >
       <template
         #activator="{ props: { ref: referenceEl, ariaExpanded, ariaHasPopup } }"
       >
@@ -45,7 +50,10 @@
           </slot>
         </div>
       </template>
-      <div v-show="showMenu" class="multiselect-dropdown">
+      <div
+        v-show="showMenu && options?.length > 0"
+        class="multiselect-dropdown"
+      >
         <slot
           name="dropdown"
           :active="activeIndex"

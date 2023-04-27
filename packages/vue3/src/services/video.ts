@@ -315,10 +315,10 @@ export function useVideoListDatasource(
         out.items = data;
       }
 
-      out.items = out.items.sort(
-        (a, b) =>
-          dayjs(a.available_at).valueOf() - dayjs(b.available_at).valueOf()
-      );
+      // out.items = out.items.sort(
+      //   (a, b) =>
+      //     dayjs(a.available_at).valueOf() - dayjs(b.available_at).valueOf()
+      // );
 
       return out;
     },
