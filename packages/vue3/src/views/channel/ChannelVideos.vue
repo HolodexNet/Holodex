@@ -54,6 +54,13 @@ const dsConfig: Ref<VideoListLookup> = computed(
 );
 
 watch(
+  () => dsConfig.value,
+  () => {
+    console.log(dsConfig.value, route.name);
+  }
+);
+
+watch(
   () => page.value,
   () => {
     grid.value && grid.value.scrollIntoView({ behavior: "smooth" });

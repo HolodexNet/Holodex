@@ -210,8 +210,9 @@ export function useVideoListDatasource(
 
     const baseConfig = {
       org: q.value.flavor.org,
-      channelId: q.value.flavor.channelId,
+      channel_id: q.value.flavor.channelId,
     };
+    console.log(baseConfig);
 
     const overrideStatus = q.value.statuses?.join(",");
     const showPlaceholder =
