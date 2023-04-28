@@ -5,7 +5,7 @@
     class="flex w-full bg-bgColor-600 px-4 py-2"
   >
     <div
-      class="btn-secondary btn-xs btn mr-2 self-start transition-all"
+      class="btn-secondary btn-xs btn self-start transition-[width]"
       :class="{
         'md:w-16': selection.selectedVideos.length === 0,
         'btn-square': selection.selectedVideos.length,
@@ -14,7 +14,7 @@
       <h-icon class="i-mdi:close-circle" @click="exit" />
     </div>
 
-    <div class="carousel-vertical carousel h-9">
+    <div class="carousel-vertical carousel">
       <div v-if="page == 0" class="carousel-item h-full">
         <div class="flex flex-row flex-wrap gap-2">
           <h-btn
@@ -23,16 +23,32 @@
             @click="selection.selectedVideos = []"
           >
             <div class="i-material-symbols:deselect -ml-1 mr-1 text-lg" />
-
-            Deselect {{ selection.selectedVideos.length }} videos
+            Deselect
           </h-btn>
 
           <h-btn
-            class="btn-outline btn-xs"
+            v-show="selection.selectedVideos.length > 0"
+            class="btn-outline btn-primary btn-xs"
+            @click="showVideos = true"
+          >
+            <div class="i-mdi:select-search -ml-1 mr-1 text-lg" />
+            Show {{ selection.selectedVideos.length }} Videos
+          </h-btn>
+          <h-dialog v-model="showVideos" :persistent="false">
+            <h-card class="h-[80vh] p-4">
+              <video-card-virtual-list
+                class="w-full p-2"
+                :videos="selection.selectedVideos"
+              />
+            </h-card>
+          </h-dialog>
+
+          <h-btn
+            class="btn-xs"
             :class="
               !selection.selectedVideos.length
                 ? 'btn-disabled'
-                : 'btn-secondary bg-bgColor-400'
+                : 'btn-secondary'
             "
           >
             Open in Multiview
@@ -42,10 +58,11 @@
             <template #activator="{ props }">
               <h-btn
                 class="btn-xs btn"
+                no-color
                 :class="
                   !selection.selectedVideos.length
                     ? 'btn-disabled'
-                    : 'btn-secondary bg-bgColor-400'
+                    : 'btn-secondary'
                 "
                 v-bind="props"
               >
@@ -78,10 +95,11 @@
             <template #activator="{ props }">
               <h-btn
                 class="btn-xs btn"
+                no-color
                 :class="
-                  !selection.selectedVideos.length
+                  selection.selectedVideos.length === 0
                     ? 'btn-disabled'
-                    : 'btn-secondary bg-bgColor-400'
+                    : 'btn-secondary'
                 "
                 v-bind="props"
               >
@@ -119,48 +137,54 @@
 
           <h-menu>
             <template #activator="{ props }">
-              <button
+              <h-btn
                 class="btn-outline btn-xs btn"
+                no-color
                 :class="
                   !selection.selectedVideos.length
                     ? 'btn-disabled'
-                    : 'btn-secondary bg-bgColor-400'
+                    : 'btn-secondary'
                 "
                 v-bind="props"
               >
                 <div class="i-fluent:connected-20-filled -ml-1 mr-1 text-lg" />
                 <span class="mx-1">Intelligent Multi-Edit</span>
                 <div class="i-bx:chevron-up" />
-              </button>
+              </h-btn>
             </template>
             <div class="menu-group btn-group btn-group-vertical self-start">
               <div
                 v-if="
                   !selection.selectedVideos.find(
                     (x) => x.type == 'clip' || x.type == 'placeholder'
-                  )
+                  ) && selection.selectedVideos.length > 1
                 "
-                class="btn-outline btn-secondary btn-xs btn bg-bgColor-400"
+                class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"
               >
                 Make Simulwatch/Collab
               </div>
               <div
                 v-if="selection.context.pageVideo"
-                class="btn-outline btn-secondary btn-xs btn bg-bgColor-400"
+                class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"
               >
                 Disassociate w/ Current Video
               </div>
               <div
                 v-if="selection.context.pageChannel"
-                class="btn-outline btn-secondary btn-xs btn bg-bgColor-400"
+                class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"
               >
                 Disassociate w/ Current Channel
               </div>
               <div
                 v-if="selection.selectedVideos.find((x) => x.type == 'clip')"
-                class="btn-outline btn-secondary btn-xs btn bg-bgColor-400"
+                class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"
               >
                 Hide Selected Clips
+              </div>
+              <div
+                class="btn-outline btn-outline btn-disabled btn-secondary btn-secondary btn-xs btn-xs btn hidden max-w-xs bg-bgColor-400 first:block"
+              >
+                No options available for selected videos.
               </div>
             </div>
           </h-menu>
@@ -207,8 +231,16 @@ export default defineComponent({
   name: "SelectionControl",
   setup() {
     const selection = useVideoSelection();
-
-    return { selection };
+    const showVideos = ref(false);
+    watch(
+      () => selection.selectedVideos.length,
+      (v) => {
+        if (v === 0) {
+          showVideos.value = false;
+        }
+      }
+    );
+    return { selection, showVideos };
   },
   data() {
     return {

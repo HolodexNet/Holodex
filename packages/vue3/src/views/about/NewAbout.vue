@@ -2,7 +2,7 @@
   <!-- <v-container class="channel-container" fluid> -->
   <div
     key="aboutpg"
-    class="container mx-auto flex flex-col flex-nowrap items-stretch gap-2 p-1 pt-2 sm:flex-row"
+    class="container mx-auto flex flex-col flex-nowrap items-stretch gap-2 p-2 sm:flex-row"
   >
     <div
       id="about-menu"

@@ -8,6 +8,7 @@
     :target="openInNew ? '_blank' : ''"
     :href="watchLink"
     rel="noopener"
+    v-bind="$attrs"
     @click="intercept"
   >
     <video-thumbnail
@@ -49,12 +50,17 @@
         <slot :video="video" />
       </template>
     </video-card-text>
-    <div v-if="selection.selectionMode && video.mentions">
+    <div v-if="selection.selectionMode && video.mentions && !horizontal">
       <template v-for="mention in video.mentions" :key="mention.id + '_vc_men'">
         <channel-tag class="mx-0.5" no-link tile :channel="mention" />
       </template>
     </div>
   </a>
+  <div v-if="selection.selectionMode && video.mentions && horizontal">
+    <template v-for="mention in video.mentions" :key="mention.id + '_vc_men'">
+      <channel-tag class="mx-0.5" no-link tile :channel="mention" />
+    </template>
+  </div>
 </template>
 
 <script lang="ts">

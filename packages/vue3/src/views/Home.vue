@@ -9,14 +9,14 @@
       {{ liveUpcomingHeaderSplit[1] }}
       <span
         v-if="liveUpcomingCounts.liveCnt"
-        class="badge badge-secondary badge-sm mx-1 rounded-sm sm:badge-md"
+        class="badge-secondary badge badge-sm mx-1 rounded-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.liveCnt }}
       </span>
       {{ liveUpcomingHeaderSplit[2] }}
       <span
         v-if="liveUpcomingCounts.upcomingCnt"
-        class="badge badge-outline badge-sm mx-1 rounded-sm sm:badge-md"
+        class="badge-outline badge badge-sm mx-1 rounded-sm sm:badge-md"
       >
         {{ liveUpcomingCounts.upcomingCnt }}
       </span>
@@ -42,12 +42,12 @@
         <video-card
           v-if="index < 20"
           :video="video"
-          :hide-channel-image="currentTab !== Tabs.LIVE"
+          :hide-channel-image="currentTab == Tabs.CLIPS"
         />
         <h-lazy v-else class="lazy-video-card">
           <video-card
             :video="video"
-            :hide-channel-image="currentTab !== Tabs.LIVE"
+            :hide-channel-image="currentTab !== Tabs.CLIPS"
           />
         </h-lazy>
       </template>

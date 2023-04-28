@@ -43,6 +43,7 @@ onClickOutside(target, (e) => {
 });
 
 function handleKeydown(e: KeyboardEvent) {
+  console.log(e);
   if (e.key === "Escape") {
     close();
   }
@@ -51,8 +52,10 @@ watch(
   () => props.modelValue,
   () => {
     if (props.modelValue) {
+      console.log("ESC listener attached");
       document.addEventListener("keydown", handleKeydown);
     } else {
+      console.log("ESC listener detached");
       document.removeEventListener("keydown", handleKeydown);
     }
   }
