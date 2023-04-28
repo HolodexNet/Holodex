@@ -197,7 +197,7 @@ export const routes: RouteRecordRaw[] = [
         path: `extensions`,
         name: "Extensions",
         component: () =>
-          import("@/views/about/index").then((w) => w.defaultPage),
+          import("@/views/about/index").then((w) => w.extensions),
       },
       {
         path: `contact`,
