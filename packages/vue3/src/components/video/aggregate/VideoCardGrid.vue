@@ -27,22 +27,24 @@ const gridStyle = computed(() => {
 }
 
 /* Separate live from past videos */
-.video-card-live + .video-card:not(.video-card-live) {
-  grid-column-start: 1;
-  &::after {
-    grid-column: 1/-1;
-    content: "";
-    display: inline-block;
-    width: calc(100%);
-    position: absolute;
-    transform: translateY(-10px);
-    border-bottom: 1px solid;
-    @apply border-base-content opacity-30;
-    z-index: 1;
+.video-card-grid {
+  .video-card-live + .video-card:not(.video-card-live) {
+    grid-column-start: 1;
+    &::after {
+      grid-column: 1/-1;
+      content: "";
+      display: inline-block;
+      width: calc(100%);
+      position: absolute;
+      transform: translateY(-10px);
+      border-bottom: 1px solid;
+      @apply border-base-content opacity-30;
+      z-index: 1;
+    }
   }
-}
-// No Firefox support, but it's additive so just looks better on Chrome/Safari :P
-.video-card-live:has(+ .video-card:not(.video-card-live)) {
-  padding-bottom: 8px;
+  // No Firefox support, but it's additive so just looks better on Chrome/Safari :P
+  .video-card-live:has(+ .video-card:not(.video-card-live)) {
+    padding-bottom: 8px;
+  }
 }
 </style>

@@ -17,9 +17,9 @@
       :class="{
         'my-auto h-[80px]': horizontal,
         'opacity-60 saturate-50': !selected && selection.selectionMode,
-        '-mb-[7px] rounded-xl border-8 border-transparent border-opacity-0 opacity-80 ring-2 ring-primary transition-all':
+        '-mb-[7px] box-content rounded-lg border-8 border-transparent border-opacity-0 opacity-80 ring-2 ring-primary transition-all':
           selected && selection.selectionMode && !horizontal,
-        'rounded-xl border-8 border-transparent border-opacity-0 opacity-80 ring-2 ring-primary transition-all':
+        'box-content rounded-lg border-4 border-transparent border-opacity-0 opacity-80 ring-2 ring-primary transition-all':
           selected && selection.selectionMode && horizontal,
       }"
     />
