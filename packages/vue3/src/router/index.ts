@@ -207,8 +207,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: `privacy`,
         name: "Privacy Policy",
-        component: () =>
-          import("@/views/about/index").then((w) => w.defaultPage),
+        component: () => import("@/views/about/AboutPrivacyPolicy.vue"),
       },
       {
         path: `changelog`,

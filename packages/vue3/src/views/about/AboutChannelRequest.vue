@@ -11,7 +11,7 @@ text-transform: none; -->
   <div class="p-2">
     <div class="text-lg font-bold" />
 
-    <RadioGroup v-model="type" class="2xl:flex 2xl:flex-row">
+    <RadioGroup v-model="type" class="mb-2 2xl:flex 2xl:flex-row">
       <!-- <RadioGroupLabel>
         {{ $t("channelRequest.RequestType") }}
       </RadioGroupLabel> -->
@@ -54,7 +54,7 @@ text-transform: none; -->
     </RadioGroup>
     <!-- </v-radio-group> -->
 
-    <div v-show="type && alertText(type)" class="alert my-4 border border-info">
+    <div v-show="type && alertText(type)" class="alert mb-4 border border-info">
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div>
         <div
@@ -66,7 +66,7 @@ text-transform: none; -->
     <template v-if="type">
       <vtuber-autocomplete
         v-if="type === MODIFY_EXISTING || type === DELETE"
-        v-model="channel.value"
+        v-model="channel"
       />
       <h-input
         v-else
@@ -86,12 +86,10 @@ text-transform: none; -->
         <template #input>
           <h-select
             v-if="
-            (type !== ADD_VTUBER &&
-            type !== DELETE) ||
-            type === MODIFY_EXISTING ||
-            (channel &&
-            (channel.value as any)?.type === 'clipper')
-          "
+              (type !== ADD_VTUBER && type !== DELETE) ||
+              type === MODIFY_EXISTING ||
+              (channel && channel?.type === 'clipper')
+            "
             :model-value="languages.find((x) => x.value === lang)"
             :items="languages"
             item-title="text"
@@ -249,28 +247,14 @@ export default defineComponent({
       contact: "",
       comments: "",
       org: "",
-      channel: {
-        text: "",
-        value: {
-          id: "",
-          name: "",
-          english_name: "",
-        },
-      },
+      channel: undefined,
     };
   },
   computed: {},
   watch: {
     type() {
       this.link = "";
-      this.channel = {
-        text: "",
-        value: {
-          id: "",
-          name: "",
-          english_name: "",
-        },
-      };
+      this.channel = undefined;
       this.english_name = "";
       this.lang = "";
       this.twitter = "";
@@ -392,14 +376,7 @@ export default defineComponent({
           .requestChannel(body)
           .then(() => {
             this.link = "";
-            this.channel = {
-              text: "",
-              value: {
-                id: "",
-                name: "",
-                english_name: "",
-              },
-            };
+            this.channel = undefined;
             this.english_name = "";
             this.lang = "";
             this.twitter = "";

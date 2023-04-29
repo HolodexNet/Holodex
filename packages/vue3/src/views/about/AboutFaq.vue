@@ -4,7 +4,8 @@
     <br />
     <a
       href="https://support.mozilla.org/en-US/kb/third-party-cookies-firefox-tracking-protection?redirectslug=disable-third-party-cookies"
-      class="link text-primary"
+      target="blank"
+      class="external-link link text-primary"
     >
       {{ $t("about.faq.ytchatFirefox") }}
     </a>
@@ -52,9 +53,9 @@
 
   <h-disclosure :title="$t('about.faq.subber.title')">
     {{ $t("about.faq.subber.contents.0") }}
-    <a href="https://forms.gle/xkN4w8fyPr6YTGfx6">
+    <RouterLink to="/about/request" class="link-primary link">
       {{ $t("about.faq.subber.contents.1") }}
-    </a>
+    </RouterLink>
     {{ $t("about.faq.subber.contents.2") }}
   </h-disclosure>
 
@@ -73,7 +74,7 @@
   <h-disclosure :title="$t('about.faq.support.title')">
     <div v-html="$t('about.faq.support.contents.0')" />
     <button
-      class="btn-primary btn-sm btn-wide btn mt-2"
+      class="btn-primary btn-wide btn-sm btn mt-2"
       href="https://ko-fi.com/holodex"
     >
       Ko-fi: Support Holodex
