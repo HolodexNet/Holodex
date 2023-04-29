@@ -38,7 +38,7 @@ Here are the outstanding tasks for MVP and beta deployment:
 - [ ] Implement playlist sidebar
 - [ ] Implement filter settings (homepage)
 - [ ] Polish Polish Polish
-- [ ] Implement caching to improve performance
+- [ ] Implement event driven cache busting to improve performance serverside
 - [ ] Add more unit and integration tests (It may be necessary to kitchensink test some components.)
 
 Please feel free to contribute to any of these tasks or suggest new ones after sync'ing with us on Discord. Thank you for your interest in Holodex! 
