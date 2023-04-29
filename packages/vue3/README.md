@@ -28,7 +28,15 @@ Here are the outstanding tasks for MVP and beta deployment:
     - [ ] Multi source editing
 - [ ] Implement intelligent multi editing shortcuts
 - [ ] Write the regular edit page/pane for normal users
+- [ ] Music tagging
 - [ ] TLDex Settings & Replay controls
+- [ ] Implement Video page
+- [ ] Implement PWA
+- [ ] implement Mobile navigations
+- [ ] Fix pagination
+- [ ] Fix channels page loading
+- [ ] Implement playlist sidebar
+- [ ] Implement filter settings (homepage)
 - [ ] Polish Polish Polish
 - [ ] Implement caching to improve performance
 - [ ] Add more unit and integration tests (It may be necessary to kitchensink test some components.)
