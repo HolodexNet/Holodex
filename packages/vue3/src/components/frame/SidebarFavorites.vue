@@ -47,11 +47,12 @@
 <script setup lang="ts">
 import { useClient } from "@/hooks/auth/client";
 import { useVideoListDatasource } from "@/services/video";
+import { useVideoFilter } from "@/services/video-filter";
 import { dayjs, formatDurationShort } from "@/utils/time";
 const { isLoggedIn } = useClient();
 
-const lookupState = ref({
-  flavor: { favorites: true },
+const lookupState = ref<VideoListLookup>({
+  flavor: { favorites: true } satisfies FavLookup,
   type: "stream_schedule",
   statuses: undefined,
   pagination: undefined,
@@ -67,11 +68,11 @@ const formatDurationUpcoming = function (ts: any) {
   return formatDurationShort(Math.abs(secs));
 };
 
+const videos = useVideoFilter(videoQuery.data, lookupState);
+
 const videoList = computed(() => {
-  const firstUpcoming = videoQuery.data?.value?.items?.findIndex(
-    (x) => x.status === "upcoming"
-  );
-  return videoQuery.data?.value?.items
+  const firstUpcoming = videos.value.findIndex((x) => x.status === "upcoming");
+  return videos.value
     ?.slice(0, Math.max(50, (firstUpcoming ?? 0) + 3))
     .filter((x) => dayjs(x.available_at).diff(dayjs()) < 172800000); //48 hours cutoff?
 });
