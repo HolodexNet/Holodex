@@ -53,6 +53,7 @@ export const sidebar_edit = "i-uil:file-edit-alt";
 export const sidebar_manager = "i-mdi:file-arrow-up-down";
 export const sidebar_relaybot = "i-mdi:robot-industrial";
 
+export const changelog = "i-fluent:sparkle-20-regular";
 /**
  * Search specific dropdown icons
  *

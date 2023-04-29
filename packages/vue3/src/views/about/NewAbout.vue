@@ -114,6 +114,11 @@ export default defineComponent({
           class: this.icons.about,
         },
         {
+          path: `/about/changelog`,
+          name: "Changelog",
+          class: this.icons.changelog,
+        },
+        {
           path: `/about/faq`,
           name: "Frequently Asked Questions",
           class: "i-wpf:faq",

@@ -210,6 +210,11 @@ export const routes: RouteRecordRaw[] = [
         component: () =>
           import("@/views/about/index").then((w) => w.defaultPage),
       },
+      {
+        path: `changelog`,
+        name: "Changelog",
+        component: () => import("@/views/about/index").then((w) => w.changelog),
+      },
     ],
   },
   {
