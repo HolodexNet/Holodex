@@ -11,7 +11,9 @@
     </template>
 
     <report-video />
-    <template #footer><selection-control /></template>
+    <template #footer>
+      <selection-panel v-if="site.user?.role === 'editor'" />
+    </template>
   </app-frame>
 </template>
 
@@ -33,6 +35,10 @@ const display = useDisplay();
 const showSidebar = ref(display.greater("lg").value);
 const pages = usePages();
 
+const SelectionPanel = defineAsyncComponent(
+  () => import("@/components/nav/SelectionControl.vue")
+);
+
 // initializing setup for Holodex:
 // Steps:
 useMigrateFromHolodexV2();
@@ -44,6 +50,8 @@ useI18nInitialization();
 useThemeInitialization();
 
 const router = useRouter();
+const site = useSiteStore();
+
 /** Configure global ?org and ?lang listening. */
 router.beforeEach((to, from, next) => {
   if (to.name === "Search") return next();
@@ -60,7 +68,6 @@ router.beforeEach((to, from, next) => {
 
   const queryOrg = to.query.org;
   if (queryOrg) {
-    const site = useSiteStore();
     if (site.currentOrg.name !== queryOrg) {
       backendApi.orgs().then((orgs: Org[]) => {
         const overrideOrg = orgs.find((o) => o.name === queryOrg);

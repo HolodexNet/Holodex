@@ -78,7 +78,7 @@
       />
     </ul>
 
-    <sidebar-favorites />
+    <SidebarFavoritesAsync v-if="site.user?.id" />
 
     <div id="bottom-bar">
       <a
@@ -121,7 +121,11 @@ type Page = {
 
 export default defineComponent({
   name: "NavDrawer",
-  components: {},
+  components: {
+    SidebarFavoritesAsync: defineAsyncComponent(
+      () => import("@/components/frame/SidebarFavorites.vue")
+    ),
+  },
   props: {
     pages: {
       required: true,

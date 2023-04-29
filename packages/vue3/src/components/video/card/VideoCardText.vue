@@ -11,70 +11,64 @@
       >
         {{ preferredTitle }}
       </div>
-      <div class="flex-shrink-1 flex">
-        <h-tooltip v-if="video.mentions?.length" placement="bottom">
-          <template #activator>
-            <a
-              v-if="!hideChannelName"
-              class="line-clamp-1 leading-4 hover:opacity-80"
-              :class="{
-                'text-secondary':
-                  video.type === 'stream' || video.channel.type === 'vtuber',
-              }"
-              :href="channelLink"
-              data-ctx="channel"
-              :data-obj="video.channel.id"
-            >
-              {{ preferredChannelName }} {{ `(+${video.mentions?.length})` }}
-            </a>
-          </template>
-          <div
-            class="flex flex-col gap-1 rounded-lg bg-bgColor-500 p-3 shadow-md"
+      <!-- <div class="flex-shrink-1 flex"> -->
+      <h-tooltip v-if="video.mentions?.length" placement="bottom">
+        <template #activator>
+          <a
+            v-if="!hideChannelName"
+            class="line-clamp-1 leading-4 hover:opacity-80"
+            :class="{
+              'text-secondary':
+                video.type === 'stream' || video.channel.type === 'vtuber',
+            }"
+            :href="channelLink"
+            data-ctx="channel"
+            :data-obj="video.channel.id"
           >
-            <template
-              v-for="mention in video.mentions.slice(0, 10)"
-              :key="mention.id"
-            >
-              <div class="flex items-center">
-                <channel-img
-                  :channel="mention"
-                  :size="32"
-                  rounded
-                  class="mr-2"
-                  data-ctx="channel"
-                  :data-obj="mention.id"
-                />
-                {{
-                  langStore.preferredLocaleFn(
-                    mention.english_name,
-                    mention.name
-                  )
-                }}
-              </div>
-            </template>
-            <div
-              v-if="video.mentions.length > 10"
-              class="text-center opacity-80"
-            >
-              {{ `+${video.mentions.length - 10} more` }}
-            </div>
-          </div>
-        </h-tooltip>
-        <a
-          v-else-if="!hideChannelName"
-          class="line-clamp-1 leading-4 hover:opacity-80"
-          :title="channelHoverTitle"
-          :class="{
-            'text-secondary':
-              video.type === 'stream' || video.channel.type === 'vtuber',
-          }"
-          :href="channelLink"
-          data-ctx="channel"
-          :data-obj="video.channel.id"
+            {{ preferredChannelName }} {{ `(+${video.mentions?.length})` }}
+          </a>
+        </template>
+        <div
+          class="flex flex-col gap-1 rounded-lg bg-bgColor-500 p-3 shadow-md"
         >
-          {{ preferredChannelName }}
-        </a>
-      </div>
+          <template
+            v-for="mention in video.mentions.slice(0, 10)"
+            :key="mention.id"
+          >
+            <div class="flex items-center">
+              <channel-img
+                :channel="mention"
+                :size="32"
+                rounded
+                class="mr-2"
+                data-ctx="channel"
+                :data-obj="mention.id"
+              />
+              {{
+                langStore.preferredLocaleFn(mention.english_name, mention.name)
+              }}
+            </div>
+          </template>
+          <div v-if="video.mentions.length > 10" class="text-center opacity-80">
+            {{ `+${video.mentions.length - 10} more` }}
+          </div>
+        </div>
+      </h-tooltip>
+      <a
+        v-else-if="!hideChannelName"
+        class="line-clamp-1 leading-4 hover:opacity-80"
+        :title="channelHoverTitle"
+        :class="{
+          'text-secondary':
+            video.type === 'stream' || video.channel.type === 'vtuber',
+        }"
+        :href="channelLink"
+        data-ctx="channel"
+        :data-obj="video.channel.id"
+      >
+        {{ preferredChannelName }}
+      </a>
+      <!-- </div> -->
       <div class="leading-4 opacity-80">
         <video-card-status :video="video" />
         <template v-if="video.clips && video.clips.length > 0">

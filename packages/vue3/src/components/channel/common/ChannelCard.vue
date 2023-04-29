@@ -9,10 +9,11 @@
       <span
         v-if="live"
         class="live-indicator indicator-bottom indicator-item mb-3 mr-3 box-border aspect-square"
+        style="background-color: rgb(239 68 68)"
       />
       <span
         v-else-if="$slots.default"
-        class="live-indicator text-2xs indicator-bottom indicator-item right-5 mb-3 bg-slate-500 text-white"
+        class="live-indicator text-2xs indicator-bottom indicator-item right-5 mb-3 text-white"
       >
         <slot />
       </span>
@@ -156,8 +157,7 @@ export default defineComponent({
 }
 
 .live-indicator {
-  @apply badge badge-xs border-transparent bg-red-500 outline outline-4 outline-bgColor;
-  box-sizing: content-box;
+  @apply badge badge-xs border-transparent outline outline-4 outline-bgColor;
 }
 .shadow-live > * {
   @apply ring-2 ring-red-800;
