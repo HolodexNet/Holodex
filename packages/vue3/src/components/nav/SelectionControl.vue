@@ -4,6 +4,8 @@
     id="selectionFooter"
     class="flex w-full bg-bgColor-600 px-4 py-2"
   >
+    <selected-videos-modal v-model="showVideos" />
+
     <div
       class="btn-secondary btn-xs btn self-start transition-[width]"
       :class="{
@@ -29,19 +31,13 @@
           <h-btn
             v-show="selection.selectedVideos.length > 0"
             class="btn-outline btn-primary btn-xs"
-            @click="showVideos = true"
+            @click="showVideos = !showVideos"
           >
             <div class="i-mdi:select-search -ml-1 mr-1 text-lg" />
             Show {{ selection.selectedVideos.length }} Videos
           </h-btn>
-          <h-dialog v-model="showVideos" :persistent="false">
-            <h-card class="h-[80vh] p-4">
-              <video-card-virtual-list
-                class="w-full p-2"
-                :videos="selection.selectedVideos"
-              />
-            </h-card>
-          </h-dialog>
+          <!-- <h-dialog v-model="showVideos" :persistent="false">
+          </h-dialog> -->
 
           <h-btn
             class="btn-xs"
@@ -135,59 +131,7 @@
             </div>
           </h-menu>
 
-          <h-menu>
-            <template #activator="{ props }">
-              <h-btn
-                class="btn-outline btn-xs btn"
-                no-color
-                :class="
-                  !selection.selectedVideos.length
-                    ? 'btn-disabled'
-                    : 'btn-secondary'
-                "
-                v-bind="props"
-              >
-                <div class="i-fluent:connected-20-filled -ml-1 mr-1 text-lg" />
-                <span class="mx-1">Intelligent Multi-Edit</span>
-                <div class="i-bx:chevron-up" />
-              </h-btn>
-            </template>
-            <div class="menu-group btn-group btn-group-vertical self-start">
-              <div
-                v-if="
-                  !selection.selectedVideos.find(
-                    (x) => x.type == 'clip' || x.type == 'placeholder'
-                  ) && selection.selectedVideos.length > 1
-                "
-                class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"
-              >
-                Make Simulwatch/Collab
-              </div>
-              <div
-                v-if="selection.context.pageVideo"
-                class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"
-              >
-                Disassociate w/ Current Video
-              </div>
-              <div
-                v-if="selection.context.pageChannel"
-                class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"
-              >
-                Disassociate w/ Current Channel
-              </div>
-              <div
-                v-if="selection.selectedVideos.find((x) => x.type == 'clip')"
-                class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"
-              >
-                Hide Selected Clips
-              </div>
-              <div
-                class="btn-outline btn-outline btn-disabled btn-secondary btn-secondary btn-xs btn-xs btn hidden max-w-xs bg-bgColor-400 first:block"
-              >
-                No options available for selected videos.
-              </div>
-            </div>
-          </h-menu>
+          <selection-edit-shortcuts />
         </div>
       </div>
       <div v-if="page == 1" class="carousel-item h-full">
@@ -258,7 +202,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="scss">
 .menu-group {
   --btn-text-case: "unset";
 }
@@ -273,5 +217,22 @@ export default defineComponent({
 
 .carousel-item {
   @apply outline outline-dashed outline-primary;
+}
+
+.fade-pop-enter-active,
+.fade-pop-leave-active {
+  &#selected-video-list {
+    --tw-scale-x: 1;
+    --tw-scale-y: 1;
+    opacity: 1;
+  }
+}
+.fade-pop-enter-from,
+.fade-pop-leave-to {
+  &#selected-video-list {
+    --tw-scale-x: 0.9;
+    --tw-scale-y: 0.9;
+    opacity: 0;
+  }
 }
 </style>

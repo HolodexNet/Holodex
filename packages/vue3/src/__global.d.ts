@@ -2,6 +2,8 @@
 
 export {};
 
+declare module "vue-virtual-scroller";
+
 declare module "~build/info" {
   export const abbreviatedSha: string;
   export const committerDate: string;
@@ -230,19 +232,13 @@ declare global {
    */
   type TabType = "clip" | "stream_schedule" | "archive" | "videos" | "collabs";
   interface OrgLookup {
-    favorites: never;
-    channelId: never;
     org: string;
   }
   interface FavLookup {
     favorites: true;
-    channelId: never;
-    org: never;
   }
   interface ChaLookup {
-    favorites: never;
     channelId: string;
-    org: never;
   }
 
   interface VideoListLookup {
