@@ -22,6 +22,13 @@ Here are the outstanding tasks for MVP and beta deployment:
 - [ ] Migrate TLdex Client / Script Editor / Script Manager
 - [ ] Implement Multiview functionality
 - [ ] Implement search functionality
+- [ ] Implement multi editing selection tools
+    - [ ] Multi topic assignment
+    - [ ] Multi mention assignment
+    - [ ] Multi source editing
+- [ ] Implement intelligent multi editing shortcuts
+- [ ] Write the regular edit page/pane for normal users
+- [ ] TLDex Settings & Replay controls
 - [ ] Polish Polish Polish
 - [ ] Implement caching to improve performance
 - [ ] Add more unit and integration tests (It may be necessary to kitchensink test some components.)
