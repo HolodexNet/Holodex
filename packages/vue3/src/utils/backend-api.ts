@@ -1,4 +1,7 @@
-import type { AC_Response } from "@/components/nav/search/types";
+import type {
+  AC_Response,
+  VideoQueryContainer,
+} from "@/components/nav/search/types";
 import { dayjs } from "@/utils/time";
 import axios, { AxiosResponse } from "axios";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
@@ -124,7 +127,9 @@ export default {
     });
     return axiosInstance_v3.get<AC_Response>(`/search/autocomplete?${q}`);
   },
-
+  searchV3(queryObject: VideoQueryContainer) {
+    return axiosInstance_v3.post("/search/videoSearch", queryObject);
+  },
   searchVideo(queryObject: any) {
     return axiosInstance_v2.post("/search/videoSearch", queryObject);
   },

@@ -94,6 +94,19 @@ export interface VideoQueryModel {
   // advanced?: string;
 }
 
+export interface VideoQueryContainer {
+  tags?: string[];
+  query?: VideoQueryModel;
+  facet: string[];
+  pagination: {
+    sort: "latest" | "oldest" | "score" | "longest" | "shortest" | "views";
+    // pit?: string; // point-in-time Elastic object
+    search_after?: any[]; // [value, shard_doc]
+    // offset: number;
+    size: number;
+  };
+}
+
 export interface WhitelistCategory {
   category: SearchableCategory;
 }

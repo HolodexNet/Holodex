@@ -88,7 +88,7 @@ declare global {
 
   interface VideoRef {
     id: string;
-    lang: string;
+    lang?: string;
     type: VIDEO_TYPES;
     title: string;
     status: VIDEO_STATUSES;
