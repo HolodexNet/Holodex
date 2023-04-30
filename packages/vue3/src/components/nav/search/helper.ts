@@ -1,7 +1,13 @@
 import backendApi from "@/utils/backend-api";
 import { dayjs } from "@/utils/time";
-import type { SearchableCategory, VideoQueryModel } from "./types";
+import type {
+  SearchableCategory,
+  VideoQueryContainer,
+  VideoQueryModel,
+} from "./types";
 import { JSON_SCHEMA } from "./types";
+import { MaybeRef, get } from "@vueuse/shared";
+import { UseQueryOptions, useQuery } from "@tanstack/vue-query";
 
 type QueryItem = {
   type: SearchableCategory;
@@ -167,4 +173,30 @@ export async function getQueryFromQueryModel(
   }
 
   return await gen2array(generator());
+}
+
+type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+export function useSearch(
+  queryModel: MaybeRef<VideoQueryModel>,
+  queryContainer: MaybeRef<WithOptional<VideoQueryContainer, "query">>
+  // options: Ref<Partial<UseQueryOptions>>
+) {
+  const query = computed(() => {
+    const qC = get(queryContainer);
+    qC.query = get(queryModel);
+
+    return qC;
+  });
+
+  return useQuery(
+    ["search", query] as const,
+    async (key) => {
+      return (await backendApi.searchV3(key.queryKey[1] as any)).data;
+    },
+    {
+      enabled: true,
+      staleTime: 10 * 60 * 1000, // 10min.
+      cacheTime: 12 * 60 * 1000, // 12min.
+    }
+  );
 }

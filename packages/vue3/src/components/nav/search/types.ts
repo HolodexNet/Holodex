@@ -97,7 +97,7 @@ export interface VideoQueryModel {
 export interface VideoQueryContainer {
   tags?: string[];
   query?: VideoQueryModel;
-  facet: string[];
+  facet?: string[];
   pagination: {
     sort: "latest" | "oldest" | "score" | "longest" | "shortest" | "views";
     // pit?: string; // point-in-time Elastic object

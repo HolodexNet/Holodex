@@ -7,6 +7,7 @@ import axios, { AxiosResponse } from "axios";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 import type { Playlist, PlaylistList } from "./types";
 import { stringifyQuery } from "./functions";
+import { SearchResponse } from "@/components/nav/search/responseTypes";
 
 // Need full domain for socket.io to work!!
 export const API_BASE_URL = `${window.location.origin}/api`;
@@ -128,7 +129,10 @@ export default {
     return axiosInstance_v3.get<AC_Response>(`/search/autocomplete?${q}`);
   },
   searchV3(queryObject: VideoQueryContainer) {
-    return axiosInstance_v3.post("/search/videoSearch", queryObject);
+    return axiosInstance_v3.post<SearchResponse>(
+      "/search/videoSearch",
+      queryObject
+    );
   },
   searchVideo(queryObject: any) {
     return axiosInstance_v2.post("/search/videoSearch", queryObject);

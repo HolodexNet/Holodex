@@ -37,7 +37,10 @@
     <!-- TODO: make this better -->
     <div v-if="props.favorites && !isLoggedIn">Please login</div>
     <!-- Set opacity to 0 to prevent wrong data being shown immediately, but prerender -->
-    <video-card-grid :class="{ 'opacity-0': videoQuery.isRefetching.value }">
+    <video-card-grid
+      :class="{ 'opacity-0': videoQuery.isRefetching.value }"
+      class="transition-opacity"
+    >
       <template v-for="(video, index) in videosToShow" :key="video.id">
         <video-card
           v-if="index < 20"
