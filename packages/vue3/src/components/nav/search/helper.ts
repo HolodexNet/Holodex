@@ -98,10 +98,19 @@ async function gen2array<T>(gen: AsyncIterable<T>): Promise<T[]> {
   return out;
 }
 
+/**
+ * This is a TypeScript function that takes a VideoQueryModel object and returns a promise that resolves to an array of QueryItem objects.
+
+ * This is to facilitate display of a input VideoQueryModel object (which usually lacks metadata to become nicely renderable chips)
+ * @param queryModel
+ */
 export async function getQueryFromQueryModel(
   queryModel: VideoQueryModel
 ): Promise<QueryItem[]> {
   console.log(queryModel);
+  /**
+   * The function uses a generator function to loop over the keys of the queryModel object and yield promises for each QueryItem that should be included in the final array.
+   */
   async function* generator() {
     for (const key of Object.keys(queryModel) as (keyof VideoQueryModel)[]) {
       // if its a vtuber (needs special handling)

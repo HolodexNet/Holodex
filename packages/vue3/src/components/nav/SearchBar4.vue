@@ -17,15 +17,12 @@
     @submit="commitSearch()"
   >
     <template #chips="{ selection }">
-      <div
+      <search-chip
         v-for="(item, midx) in selection"
         :key="'chip' + item.type + item.value + midx"
-        class="badge badge-ghost mr-1 cursor-default rounded-sm border-0 bg-bgColor px-1 text-xs font-semibold tracking-tight hover:badge-error"
+        :item="item"
         @click="query.splice(midx, 1)"
-      >
-        <span class="">{{ categoryName(item) }}:</span>
-        <span class="ml-1 rounded-lg">{{ categoryValue(item) }}</span>
-      </div>
+      />
     </template>
     <template #caret>
       <div
@@ -143,7 +140,7 @@ import {
   FIRST_SEARCH,
   getQueryModelFromQuery,
   splitSearchClassTerms,
-  getQueryFromQueryModel,
+  autocompleteQueryItemsFromQueryModel,
 } from "./search/helper";
 import { useOrgList } from "@/services/static";
 import { useLangStore, useSiteStore } from "@/stores";
@@ -401,7 +398,7 @@ export default defineComponent({
       () => route.query,
       async () => {
         if (route.query) {
-          query.value = await getQueryFromQueryModel(
+          query.value = await autocompleteQueryItemsFromQueryModel(
             route.query as unknown as VideoQueryModel
           );
           console.log(JSON.stringify(route.query));
