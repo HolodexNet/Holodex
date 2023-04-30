@@ -140,7 +140,7 @@ import {
   FIRST_SEARCH,
   getQueryModelFromQuery,
   splitSearchClassTerms,
-  autocompleteQueryItemsFromQueryModel,
+  getQueryFromQueryModel,
 } from "./search/helper";
 import { useOrgList } from "@/services/static";
 import { useLangStore, useSiteStore } from "@/stores";
@@ -398,7 +398,7 @@ export default defineComponent({
       () => route.query,
       async () => {
         if (route.query) {
-          query.value = await autocompleteQueryItemsFromQueryModel(
+          query.value = await getQueryFromQueryModel(
             route.query as unknown as VideoQueryModel
           );
           console.log(JSON.stringify(route.query));
