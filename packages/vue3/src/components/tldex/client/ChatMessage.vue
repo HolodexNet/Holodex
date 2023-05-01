@@ -9,7 +9,6 @@
         v-if="!hideAuthor"
         :channel="{ id: source.channel_id, name: source.name }"
         :size="28"
-        rounded
         no-link
       />
     </div>

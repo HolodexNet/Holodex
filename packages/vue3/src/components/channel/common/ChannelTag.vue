@@ -7,13 +7,7 @@
       [color!]: color,
     }"
   >
-    <channel-img
-      :channel="channel"
-      :rounded="!tile"
-      :size="24"
-      class="mr-2"
-      :no-link="noLink"
-    />
+    <channel-img :channel="channel" :size="24" class="mr-2" :no-link="noLink" />
     {{ preferredName }}
     <div
       v-if="closeable"

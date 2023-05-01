@@ -53,8 +53,7 @@
           <div class="flex items-center">
             <channel-img
               :channel="video.channel"
-              :size="36"
-              rounded
+              :size="42"
               class="mr-2 flex flex-shrink-0"
             />
             <div>

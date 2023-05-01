@@ -17,15 +17,14 @@
       :src="photo"
       crossorigin="anonymous"
       loading="lazy"
-      :class="{ 'rounded-full': rounded, 'rounded-md': !rounded }"
+      class="rounded-md"
       :style="{ width: `${size}px`, height: `${size}px` }"
       @error="err = true"
     />
     <div
       v-else
       :style="{ width: `${size}px` }"
-      class="bg-secondary-300"
-      :class="{ 'rounded-full': rounded, 'rounded-md': !rounded }"
+      class="rounded-md bg-secondary-300"
     >
       <div class="i-mdi:person" :style="{ 'font-size': `${size}px` }" />
     </div>
@@ -51,10 +50,6 @@ export default defineComponent({
       default: false,
     },
     noAlt: {
-      type: Boolean,
-      default: false,
-    },
-    rounded: {
       type: Boolean,
       default: false,
     },

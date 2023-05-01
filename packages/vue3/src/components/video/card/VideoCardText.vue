@@ -1,7 +1,7 @@
 <template>
   <video-card-template style="min-height: 88px" class="relative">
     <template v-if="!hideChannelImage" #avatar>
-      <channel-img :channel="video.channel" :size="40" rounded />
+      <channel-img :channel="video.channel" :size="40" />
     </template>
     <div class="my-1 box-content flex flex-1 flex-col justify-around text-sm">
       <div
