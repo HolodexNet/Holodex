@@ -14,7 +14,7 @@ interface SearchableCategoryClassificationInterface {
   type: "array" | "string" | "boolean" | "date";
   required?: boolean;
   suggestionOK?: (current_query: QueryItem[]) => "replace" | "ok" | false;
-  validation?: (item: QueryItem) => boolean;
+  validation?: (item: QueryItem, rest: QueryItem[]) => boolean;
   suggested_only?: boolean; //only autocompleted items can be autofilled.
 }
 
@@ -38,21 +38,28 @@ export const JSON_SCHEMA: Record<
     type: "date",
     suggestionOK: suggest_if_query_doesnt_have("from"),
     suggested_only: true,
-    validation: (item) => {
-      return item.value.length > 3 && dayjs(item.value).isValid();
+    validation: (item, rest) => {
+      const from = dayjs(item.value);
+      const to = rest.find((x) => x.type === "to")?.value;
+      const beforeToExists = from ? dayjs(from).isBefore(to) : true;
+
+      return item.value.length > 3 && from.isValid() && beforeToExists;
     },
   }, //ms epoch or SerializedDate
   to: {
     type: "date",
+    suggested_only: true,
     suggestionOK: suggest_if_query_doesnt_have("to"),
-    validation: (item) => {
-      return item.value.length > 3 && dayjs(item.value).isValid();
+    validation: (item, rest) => {
+      const to = dayjs(item.value);
+      const from = rest.find((x) => x.type === "from")?.value;
+      const beforeToExists = from ? dayjs(from).isBefore(to) : true;
+      return item.value.length > 3 && to.isValid() && beforeToExists;
     },
   }, //ms epoch or SerializedDate
   // uploader_id: { type: "string" },
   search: {
     type: "string",
-    required: true,
     suggestionOK: suggest_if_query_doesnt_have("search"),
     validation: validation_nonzero,
   },
@@ -84,7 +91,7 @@ export interface VideoQueryModel {
   from?: Date | string; //ms epoch or SerializedDate
   to?: Date | string; //ms epoch or SerializedDate
   // uploader_id?: string;
-  search: string;
+  search?: string;
   description?: string;
   type?: string[];
   topic?: string[]; // OR'd.

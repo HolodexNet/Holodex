@@ -71,7 +71,7 @@ export function getQueryModelFromQuery(
   query: QueryItem[]
 ): VideoQueryModel | null {
   if (!query) return null;
-  const vqm: VideoQueryModel = { search: "" };
+  const vqm: VideoQueryModel = {};
 
   query.forEach((tag) => {
     const cat = tag.type,
@@ -104,6 +104,21 @@ async function gen2array<T>(gen: AsyncIterable<T>): Promise<T[]> {
   return out;
 }
 
+/** sometimes the query model has strings where an array is expected. */
+export function sanitizeQueryModel(
+  dirtyQueryModel: Partial<Record<keyof VideoQueryModel, any>>
+): VideoQueryModel {
+  const out = {} as any;
+  for (const key of Object.keys(dirtyQueryModel) as (keyof VideoQueryModel)[]) {
+    if (
+      JSON_SCHEMA[key].type === "array" &&
+      typeof dirtyQueryModel[key] === "string"
+    )
+      out[key] = [dirtyQueryModel[key]] as any; //force upcast string to array.
+    else out[key] = dirtyQueryModel[key];
+  }
+  return out as VideoQueryModel;
+}
 /**
  * This is a TypeScript function that takes a VideoQueryModel object and returns a promise that resolves to an array of QueryItem objects.
 
@@ -183,7 +198,7 @@ export function useSearch(
 ) {
   const query = computed(() => {
     const qC = get(queryContainer);
-    qC.query = get(queryModel);
+    qC.query = sanitizeQueryModel(get(queryModel));
 
     return qC;
   });

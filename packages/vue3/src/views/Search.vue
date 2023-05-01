@@ -6,20 +6,16 @@
         v-for="(item, midx) in query"
         :key="'_sp_chip' + item.type + item.value + midx"
         :item="item"
-        @click="query.splice(midx, 1)"
       />
     </div>
     <video-card-grid>
-      <template
-        v-for="(hit, index) in resp.data.value?.hits.hits || []"
-        :key="hit._source.id + index + '_sid'"
-      >
-        <video-card :video="hit._source as any" />
+      <template v-for="hit in resp.data.value?.hits.hits || []">
+        <video-card :video="(hit._source as any)" />
       </template>
     </video-card-grid>
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import {
   getQueryFromQueryModel,
   useSearch,

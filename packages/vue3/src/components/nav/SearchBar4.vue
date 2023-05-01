@@ -192,11 +192,12 @@ export default defineComponent({
       enabled: orgsEnabled,
       initialData: currentOrgs.starredOrgs,
     });
+
     const search = ref("");
     const query = ref([] as Array<QueryItem>);
 
     const autocompleteLoading = ref(false);
-    const autocomplete = ref();
+    const autocomplete = ref(); // Autocomplete Component Ref.
     const ac_opts = reactive<
       Record<
         "org" | "vtuber" | "topic" | "has_song" | "lang" | "type" | "other",
@@ -495,7 +496,7 @@ export default defineComponent({
         : query.text;
     },
     validateItem(item: QueryItem) {
-      const v = JSON_SCHEMA[item.type]?.validation?.(item);
+      const v = JSON_SCHEMA[item.type]?.validation?.(item, this.query);
       // this.logWithContext("validateItem")({ item, v });
       return v ?? true;
     },
