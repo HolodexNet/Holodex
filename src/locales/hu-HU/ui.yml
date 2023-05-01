@@ -59,6 +59,8 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -262,6 +264,7 @@ views:
     hideCollabStreamsLabel: Vendégkénti streamek elrejtése
     hideCollabStreamsMsg: Vendégkénti streamek elrejtése a kedvencek közül
     hidePlaceholderStreams: Tervezett streamek elrejtése
+    hideMissingStreams: Hiányzó streamek elrejtése
     ignoredTopicsLabel: Figyelmen kívül hagyott témák
     ignoredTopicsMsg: Elrejti a Kezdőlapból és a Kedvencekből a videókat ebben a témában
     theme: Téma
