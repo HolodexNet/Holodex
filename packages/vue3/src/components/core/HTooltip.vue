@@ -1,7 +1,7 @@
 <template>
   <div class="h-tooltip">
-    <div ref="activator" @touchend="onTouchEnd">
-      <slot name="activator" />
+    <div @click="focused = false">
+      <slot name="activator" :activator-props="activatorProps" />
     </div>
     <div v-if="showTooltip" ref="floating" :style="floatingStyle">
       <transition
@@ -27,16 +27,26 @@ import {
   shift,
   useFloating,
 } from "@floating-ui/vue";
-import { useElementHover } from "@vueuse/core";
+import { onClickOutside, useElementHover, useFocus } from "@vueuse/core";
 import type { Options as OffsetOptions } from "@floating-ui/core/src/middleware/offset";
-import { TransitionProps } from "vue";
+import { HTMLAttributes, TransitionProps, VNodeRef } from "vue";
+
 import useTouchOutside from "@/hooks/common/useTouchOutside";
 
 const activator = ref<HTMLElement | null>(null);
 const floating = ref<HTMLElement | null>(null);
 
+const { focused } = useFocus(activator);
 const isHovered = useElementHover(activator);
-const showTooltip = computed(() => isHovered.value || isTouched.value);
+const showTooltip = computed(
+  () => isHovered.value || focused.value || isTouched.value
+);
+
+// TODO: switch to HTMLAttributes & ReservedProps on version vue v3.3
+const activatorProps: HTMLAttributes & { ref: VNodeRef } = {
+  onTouchend: onTouchEnd,
+  ref: (r: any) => (activator.value = r),
+};
 
 const isTouched = ref(false);
 
@@ -45,7 +55,12 @@ function onTouchEnd(e: TouchEvent) {
   if (!isTouched.value) {
     e.preventDefault();
     isTouched.value = true;
+    // Listeners should be cleaned up afterwards?
     useTouchOutside(activator, () => {
+      isTouched.value = false;
+    });
+    // Edge case, touch screen computer + mouse
+    onClickOutside(activator, () => {
       isTouched.value = false;
     });
   }

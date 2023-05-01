@@ -7,13 +7,13 @@
         >
           <h-lazy><video-card :video="v" /></h-lazy>
         </div>
-        <template #activator>
+        <template #activator="{ activatorProps }">
           <channel-card
             :channel="v.channel"
             slim
-            no-link
             :live="v.status === 'live'"
             class="relative hover:bg-bgColor-300"
+            v-bind="activatorProps"
           >
             {{ formatDurationUpcoming(v.available_at) }}
             <!-- TODO refactor to a component and use the event hooks from popper -->
