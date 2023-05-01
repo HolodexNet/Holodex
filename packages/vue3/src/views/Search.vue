@@ -1,7 +1,15 @@
 <template>
   <div class="p-4">
     <div class="flex w-full flex-row flex-wrap items-center p-4">
-      <div class="i-ion:filter mr-2 inline-block" />
+      <select
+        v-model="container.pagination.sort"
+        class="select-bordered select select-xs w-fit max-w-xs"
+      >
+        <option v-for="s in SORT_OPTIONS" :key="`_ssort_${s}`" :value="s">
+          {{ s }}
+        </option>
+      </select>
+      <div class="i-ion:filter mx-2 inline-block" />
       <search-chip
         v-for="(item, midx) in query"
         :key="'_sp_chip' + item.type + item.value + midx"
@@ -24,6 +32,7 @@ import {
   SearchableCategory,
   VideoQueryContainer,
   VideoQueryModel,
+  SORT_OPTIONS,
 } from "@/components/nav/search/types";
 
 type QueryItem = {

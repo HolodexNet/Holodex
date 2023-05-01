@@ -106,13 +106,22 @@ export interface VideoQueryContainer {
   query?: VideoQueryModel;
   facet?: string[];
   pagination: {
-    sort: "latest" | "oldest" | "score" | "longest" | "shortest" | "views";
+    sort: (typeof SORT_OPTIONS)[number];
     // pit?: string; // point-in-time Elastic object
     search_after?: any[]; // [value, shard_doc]
     // offset: number;
     size: number;
   };
 }
+
+export const SORT_OPTIONS = [
+  "latest",
+  "oldest",
+  "score",
+  "longest",
+  "shortest",
+  "views",
+] as const;
 
 export interface WhitelistCategory {
   category: SearchableCategory;
