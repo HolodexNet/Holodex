@@ -14,7 +14,7 @@
         {{ $t("component.apiError.title") }}
       </h4>
       <code v-if="props.query.error.value" class="text-md my-2">
-        {{ props.query.error.value.message }}
+        {{ props.query.error.value }}
       </code>
       <div class="my-4 text-center">
         {{ $t("component.apiError.textBeforeTwitter") }}
