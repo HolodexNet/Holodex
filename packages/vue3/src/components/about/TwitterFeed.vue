@@ -4,7 +4,7 @@
     data-dnt="true"
     :data-height="display.mobile.value ? '410' : '650'"
     :data-theme="theme.dark ? 'dark' : 'light'"
-    data-chrome="transparent noborders"
+    data-chrome=""
     href="https://twitter.com/holodex?ref_src=twsrc%5Etfw"
   >
     Tweets by @holodex
@@ -76,4 +76,11 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style>
+.twitter-timeline {
+  border-radius: 13px;
+}
+.twitter-timeline iframe {
+  border-radius: 13px;
+}
+</style>

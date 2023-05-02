@@ -1,14 +1,14 @@
 <template>
-  <div class="m-auto flex min-h-fit">
+  <div class="m-auto flex h-full min-h-fit">
     <logo
       v-if="props.query.isLoading.value || props.query.isFetching.value"
-      class="mt-32 w-32"
+      class="mx-auto w-32"
       :loading="props.query.isLoading.value || props.query.isFetching.value"
     />
 
     <div
       v-if="props.query.isError.value"
-      class="flex flex-1 flex-col items-center justify-center"
+      class="mt-32 flex flex-1 flex-col items-center justify-center"
     >
       <h4 class="text-2xl font-medium">
         {{ $t("component.apiError.title") }}
@@ -39,8 +39,11 @@
         <v-btn v-if="$store.state.userdata.user" small @click="$store.dispatch('logout')">
           {{ $t("component.mainNav.logout") }}
         </v-btn> -->
+        <div class="mx-auto max-w-xs rounded-xl bg-bgColor">
+          <twitter-feed />
+        </div>
       </div>
-      <h-btn small href="/">
+      <h-btn @click="reload">
         <div class="i-mdi:refresh text-lg" />
         Retry
       </h-btn>
@@ -49,4 +52,8 @@
 </template>
 <script setup lang="ts">
 const props = defineProps<{ query: Record<string, any> }>();
+
+function reload() {
+  window.location.reload();
+}
 </script>
