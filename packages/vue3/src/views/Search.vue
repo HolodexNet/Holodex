@@ -16,7 +16,7 @@
         :item="item"
       />
     </div>
-    <video-card-grid>
+    <video-card-grid hide-divider>
       <template v-for="hit in resp.data.value?.hits.hits || []">
         <video-card :video="(hit._source as any)" />
       </template>

@@ -1,10 +1,17 @@
 <template>
-  <div class="video-card-grid relative" :style="gridStyle" role="list">
+  <div
+    class="video-card-grid relative"
+    :class="[hideDivider ? '' : 'with-divider']"
+    :style="gridStyle"
+    role="list"
+  >
     <slot />
   </div>
 </template>
 <script lang="ts" setup>
 import { useSettingsStore } from "@/stores/settings";
+
+const props = defineProps<{ hideDivider?: boolean }>();
 
 const settings = useSettingsStore();
 const maxWidth = ["300px", "260px", "220px"];
@@ -27,7 +34,7 @@ const gridStyle = computed(() => {
 }
 
 /* Separate live from past videos */
-.video-card-grid {
+.video-card-grid.with-divider {
   .video-card-live + .video-card:not(.video-card-live) {
     grid-column-start: 1;
     &::after {

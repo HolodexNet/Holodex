@@ -233,12 +233,18 @@ declare global {
   type TabType = "clip" | "stream_schedule" | "archive" | "videos" | "collabs";
   interface OrgLookup {
     org: string;
+    channelId: undefined;
+    favorites: undefined;
   }
   interface FavLookup {
     favorites: true;
+    channelId: undefined;
+    org: undefined;
   }
   interface ChaLookup {
     channelId: string;
+    favorites: undefined;
+    org: undefined;
   }
 
   interface VideoListLookup {

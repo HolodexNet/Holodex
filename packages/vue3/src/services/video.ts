@@ -287,6 +287,7 @@ export function useVideoListDatasource(
     enabled: computed(() => unref(config.value.enabled)),
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,
+    keepPreviousData: computed(() => q.value.type !== "stream_schedule"),
   } satisfies UseQueryOptions);
 
   const response = useQuery<{ items: Video[]; total?: number }>({

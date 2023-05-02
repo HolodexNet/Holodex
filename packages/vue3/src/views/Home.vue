@@ -31,15 +31,16 @@
       <home-filter-button />
     </template>
   </h-tabs>
-  <div class="px-4">
-    <query-status :query="(videoQuery as any)" />
-
+  <div class="relative px-4">
     <!-- TODO: make this better -->
     <div v-if="props.favorites && !isLoggedIn">Please login</div>
     <!-- Set opacity to 0 to prevent wrong data being shown immediately, but prerender -->
     <video-card-grid
-      :class="{ 'opacity-0': videoQuery.isRefetching.value }"
-      class="transition-opacity"
+      :class="{
+        'absolute opacity-50':
+          videoQuery.isLoading.value || videoQuery.isFetching.value,
+      }"
+      class="z-[2] transition-opacity"
     >
       <template v-for="(video, index) in videosToShow" :key="video.id">
         <video-card
@@ -55,6 +56,17 @@
         </h-lazy>
       </template>
     </video-card-grid>
+
+    <query-status
+      :query="videoQuery"
+      class="z-0 transition-transform"
+      :class="[
+        videoQuery.isLoading.value || videoQuery.isFetching.value
+          ? 'absolute left-0 right-0 top-12 translate-y-4'
+          : '',
+      ]"
+    />
+
     <div
       v-if="videoQuery.isSuccess.value && currentTab !== Tabs.LIVE"
       class="flex h-20 items-center justify-center"
@@ -193,6 +205,8 @@ watchEffect(() => {
     const upcomingCnt =
       live?.filter((v) => v.status === "upcoming").length || 0;
     liveUpcomingCounts.value = { liveCnt, upcomingCnt };
+  } else {
+    liveUpcomingCounts.value = { liveCnt: 0, upcomingCnt: 0 };
   }
 });
 

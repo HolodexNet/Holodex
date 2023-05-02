@@ -1,5 +1,11 @@
 <template>
-  <div class="m-auto flex h-full">
+  <div class="m-auto flex min-h-fit">
+    <logo
+      v-if="props.query.isLoading.value || props.query.isFetching.value"
+      class="mt-32 w-32"
+      :loading="props.query.isLoading.value || props.query.isFetching.value"
+    />
+
     <div
       v-if="props.query.isError.value"
       class="flex flex-1 flex-col items-center justify-center"
@@ -39,14 +45,8 @@
         Retry
       </h-btn>
     </div>
-    <logo
-      v-if="props.query.isLoading.value || props.query.isFetching.value"
-      class="mx-auto mt-32 w-32"
-      :loading="props.query.isLoading.value || props.query.isFetching.value"
-    />
   </div>
 </template>
 <script setup lang="ts">
-import { UseQueryReturnType } from "@tanstack/vue-query";
-const props = defineProps<{ query: UseQueryReturnType<any, any> }>();
+const props = defineProps<{ query: Record<string, any> }>();
 </script>

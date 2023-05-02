@@ -115,9 +115,9 @@ export interface VideoQueryContainer {
 }
 
 export const SORT_OPTIONS = [
+  "score",
   "latest",
   "oldest",
-  "score",
   "longest",
   "shortest",
   "views",
