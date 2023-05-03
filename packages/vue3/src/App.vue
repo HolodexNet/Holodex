@@ -12,7 +12,9 @@
 
     <report-video />
     <template #footer>
-      <selection-panel v-if="site.user?.role === 'editor'" />
+      <selection-panel
+        v-if="site.user?.role === 'editor' || site.user?.role === 'admin'"
+      />
     </template>
   </app-frame>
 </template>

@@ -21,7 +21,7 @@ Here are the outstanding tasks for MVP and beta deployment:
 
 - [ ] Migrate TLdex Client / Script Editor / Script Manager
 - [ ] Implement Multiview functionality
-- [ ] Implement search functionality
+- [x] Implement search functionality
 - [ ] Implement multi editing selection tools
     - [ ] Multi topic assignment
     - [ ] Multi mention assignment
@@ -38,6 +38,7 @@ Here are the outstanding tasks for MVP and beta deployment:
 - [ ] Implement playlist sidebar
 - [ ] Implement filter settings (homepage)
 - [ ] Polish Polish Polish
+    - [ ] Search
     - [ ] TopicAutocomplete and VideoAutocomplete needs a progress bar. I think Autocomplete component should add a :loading prop and implement it inside.
 - [ ] Implement event driven cache busting to improve performance serverside
 - [ ] Add more unit and integration tests (It may be necessary to kitchensink test some components.)

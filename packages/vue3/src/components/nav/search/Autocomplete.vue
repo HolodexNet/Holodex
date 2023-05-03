@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="options"
-    class="multiselect"
+    class="multiselect input-bordered input !rounded !bg-bgColor-500"
     :class="{
       'is-open': !dropUp && optionsShown,
       'is-open-top': dropUp && optionsShown,
@@ -30,7 +30,8 @@
             <input
               ref="inputField"
               v-model="searchContent"
-              class="dropdown-input bg-transparent"
+              class="bg-transparent"
+              style="font-size: 1rem"
               :placeholder="placeholder"
               @focus="showOptions"
               @blur="exit"
@@ -240,7 +241,7 @@ export default defineComponent({
 </style>
 <style lang="scss" scoped>
 .multiselect {
-  @apply relative mx-auto box-border flex w-full cursor-pointer items-center justify-end rounded leading-snug;
+  @apply relative mx-auto box-border flex w-full cursor-pointer items-center justify-end leading-snug outline-base-content;
 }
 
 .multiselect.is-disabled {
@@ -263,8 +264,8 @@ export default defineComponent({
   overflow-y: clip;
   // height: 40px;
   white-space: nowrap;
-  font-size: 13px;
-  line-height: 20px;
+  // font-size: 13px;
+  // line-height: 20px;
   height: 32px;
 
   flex-wrap: nowrap;

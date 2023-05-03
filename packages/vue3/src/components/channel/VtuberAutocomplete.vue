@@ -5,7 +5,7 @@
     :selection="selection"
     :options="options"
     :placeholder="'Pick Channel'"
-    class="!rounded border border-solid border-bgColor-50 p-1 outline-base-content focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary"
+    class=""
     @pop-chip="selection.pop()"
     @pointed="({ n }) => scrollIntoView(n)"
     @select="

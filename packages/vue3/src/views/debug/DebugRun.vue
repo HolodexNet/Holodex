@@ -15,7 +15,7 @@
           style="max-height: calc(100vh - 200px); min-height: 100px"
         >
           <h-icon
-            class="i-mdi:data-matrix-scan absolute h-24 w-24 shrink-0 opacity-5"
+            class="i-carbon:report absolute h-24 w-24 shrink-0 opacity-5"
           />
           <pre
             class="codeblock whitespace-pre-wrap"
