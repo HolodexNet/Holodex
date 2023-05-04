@@ -55,7 +55,6 @@
 import { watchDebounced } from "@vueuse/core";
 // import api from "@/utils/backend-api";
 import backendApi from "@/utils/backend-api";
-import { PropType } from "vue";
 import { AC_Topic } from "../nav/search/types";
 
 export default defineComponent({

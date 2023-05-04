@@ -1,46 +1,17 @@
 import { useSocket } from "@/stores/socket";
 import { Ref } from "vue";
 import api from "@/utils/backend-api";
+import { TLLanguageCode } from "@/utils/consts";
+import { ParsedMessage } from "@/stores/socket_types";
 
 interface TldexOptions {
   videoId: string;
-  lang: string;
+  lang: TLLanguageCode;
   live?: boolean;
   verified?: boolean;
   moderator?: boolean;
   vtuber?: boolean;
 }
-
-export type VideoUpdatePayload = Pick<
-  Video,
-  "id" | "live_viewers" | "status" | "start_actual"
->;
-
-export interface Message {
-  timestamp: number | string;
-  message: string;
-  name: string; // name of creator
-  channel_id?: string;
-  // breakpoint?: boolean; // breakpoints are used to add styling separation
-  receivedAt?: number;
-  duration?: number;
-
-  // TL Dex Live Message items:
-  type?: string;
-  is_tl?: boolean;
-  is_owner?: boolean;
-  is_vtuber?: boolean;
-  is_moderator?: boolean;
-  is_verified?: boolean;
-}
-
-export interface ParsedMessage extends Message {
-  parsed: string; // parsed output after parseMessage
-  key: string;
-  // relativeMs?: number;
-}
-
-type TldexPayload = VideoUpdatePayload | Message;
 
 const EACH_LOAD_LIMIT = 20;
 
@@ -91,16 +62,11 @@ export function useTldex(options: Ref<TldexOptions>) {
 
   const socketStore = useSocket();
 
-  function handleMessage(payload: TldexPayload) {
-    if ("message" in payload) {
-      tlHistory.value.push(parseMessage(payload));
-    }
-  }
   watch(
     () =>
       [options.value.videoId, options.value.lang, options.value.live] as [
         string,
-        string,
+        TLLanguageCode,
         boolean
       ],
     (newVal, oldVal) => {
@@ -108,10 +74,10 @@ export function useTldex(options: Ref<TldexOptions>) {
       if (oldVal) {
         console.log("calling unsub");
         const [oldVideoId, oldLang, oldLive] = oldVal;
-        if (oldLive) socketStore.leaveRoom(oldVideoId, oldLang, handleMessage);
+        if (oldLive) socketStore.leaveRoom(oldVideoId, oldLang);
       }
       console.log("calling sub", live);
-      if (live) socketStore.joinRoom(videoId, lang, handleMessage);
+      if (live) socketStore.joinRoom(videoId, lang);
     },
     {
       immediate: true,
@@ -122,40 +88,15 @@ export function useTldex(options: Ref<TldexOptions>) {
     const { videoId, lang, live } = unref(options);
     if (live) {
       console.log("unmounted, offing");
-      socketStore.leaveRoom(videoId, lang, handleMessage);
+      socketStore.leaveRoom(videoId, lang);
     }
   });
 
   return {
     tlHistory,
+    socketStore,
     loadMessages,
     tlHistoryCompleted,
     tlHistoryLoading,
   };
-}
-
-/**
- * Parses and augments message body with parsed value and key.
- * @param msg
- * @param relativeTsAnchor
- * @returns
- */
-export function parseMessage(msg: Message): ParsedMessage {
-  msg.timestamp = +msg.timestamp;
-  const parsed: ParsedMessage = {
-    ...msg,
-    // ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),
-    key: msg.name + msg.timestamp + msg.message,
-    parsed: "",
-  };
-  // Check if there's any emojis represented as URLs formatted by backend
-  if (msg.message.includes("https://") && !("parsed" in msg)) {
-    // match a :HUMU:https://<url>
-    const regex =
-      /(\S+)(https:\/\/(yt\d+\.ggpht\.com\/[a-zA-Z0-9_\-=/]+-c-k-nd|www\.youtube\.com\/[a-zA-Z0-9_\-=/]+\.svg))/gi;
-    parsed.parsed = msg.message
-      .replace(/<([^>]*)>/g, "($1)")
-      .replace(regex, '<img src="$2" />');
-  }
-  return parsed;
 }
