@@ -1,4 +1,5 @@
 // Loads store settings, exposes loadHistory and parseMessage function
+import { ParsedMessage, TLDexMessage } from "@/stores/socket_types";
 import { useTLStore } from "@/stores/tldex";
 import api from "@/utils/backend-api";
 // import { dayjs } from "@/utils/time";
@@ -39,11 +40,11 @@ export interface Message {
  * @param relativeTsAnchor
  * @returns
  */
-export function parseMessage(msg: Message, relativeTsAnchor?: number) {
+export function parseMessage(
+  msg: TLDexMessage
+  // relativeTsAnchor?: number
+): ParsedMessage {
   msg.timestamp = +msg.timestamp;
-  if (relativeTsAnchor) {
-    msg.relativeMs = msg.timestamp - relativeTsAnchor;
-  }
   msg.key = msg.name + msg.timestamp + msg.message;
   // Check if there's any emojis represented as URLs formatted by backend
   if (msg.message.includes("https://") && !msg.parsed) {

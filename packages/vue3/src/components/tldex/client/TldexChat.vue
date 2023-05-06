@@ -32,10 +32,11 @@
 <script setup lang="ts">
 import { useTLStore } from "@/stores/tldex";
 import { useTldex } from "./useTldex";
+import { TLLanguageCode } from "@/utils/consts";
 
 const props = defineProps<{
   videoId: string;
-  lang: string;
+  lang: TLLanguageCode;
   startTime?: Date;
   archive?: boolean;
 }>();
@@ -50,13 +51,16 @@ const options = computed(() => ({
 }));
 // Allow temporary bypass filter togggle
 const bypassBlockedFilter = ref(false);
-const { loadMessages, tlHistory, tlHistoryCompleted, tlHistoryLoading } =
-  useTldex(options);
+const {
+  loadMessages,
+  tlHistory,
+  tlHistoryCompleted,
+  tlHistoryLoading,
+  socketStore,
+} = useTldex(options);
 const tldexStore = useTLStore();
 const filteredMessages = computed(() => {
-  const messages = props.archive
-    ? tlHistory.value
-    : [...tlHistory.value].reverse();
+  const messages = tlHistory.value;
   return messages
     .filter((m) => {
       if (bypassBlockedFilter.value) {

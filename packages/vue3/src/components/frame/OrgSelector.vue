@@ -13,7 +13,7 @@
         <slot name="visible" :current-org="currentOrg" :activator="activator">
           <div
             v-bind="activator.props"
-            class="nav-title flex cursor-pointer flex-row items-center"
+            class="nav-title flex cursor-pointer flex-row items-end rounded-md py-0 pl-2"
             style="position: relative"
           >
             <transition
@@ -33,7 +33,7 @@
             </transition>
             <span ref="dexBtn" class="text-primary">dex</span>
             <div
-              class="change-org-icon i-material-symbols:arrow-drop-down-rounded transform-gpu border-none text-xl transition-transform"
+              class="change-org-icon i-material-symbols:arrow-drop-down-rounded self-center text-xl"
               style="width: 30px; height: 30px"
               :class="{
                 'rotate-180': activator.props.ariaExpanded,
@@ -254,7 +254,11 @@ export default defineComponent({
 .nav-title {
   text-decoration: none;
   font-size: 24px;
-  line-height: 1.4;
+}
+
+.nav-title:hover {
+  /* @apply bg-gradient-to-b from-bgColor-600 to-bgColor-500 to-40%; */
+  @apply bg-bgColor-600;
 }
 
 /* .change-org-icon:focus::after {

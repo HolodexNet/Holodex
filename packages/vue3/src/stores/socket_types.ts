@@ -14,6 +14,9 @@ export interface TLDexMessage {
   is_vtuber?: boolean;
   is_moderator?: boolean;
   is_verified?: boolean;
+
+  // rendering consideration?
+  key?: string;
 }
 
 export interface ParsedMessage extends TLDexMessage {
@@ -24,7 +27,33 @@ export interface ParsedMessage extends TLDexMessage {
 
 export type VideoUpdatePayload = Pick<
   Video,
-  "id" | "live_viewers" | "status" | "start_actual"
->;
+  "live_viewers" | "status" | "start_actual"
+> & { type: "update" };
 
 export type TldexPayload = VideoUpdatePayload | TLDexMessage;
+
+/**
+ * Parses and augments message body with parsed value and key.
+ * @param msg
+ * @param relativeTsAnchor
+ * @returns
+ */
+export function toParsedMessage(msg: TLDexMessage): ParsedMessage {
+  msg.timestamp = +msg.timestamp;
+  const parsed: ParsedMessage = {
+    ...msg,
+    // ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),
+    key: msg.name + msg.timestamp + msg.message,
+    parsed: "",
+  };
+  // Check if there's any emojis represented as URLs formatted by backend
+  if (msg.message.includes("https://") && !("parsed" in msg)) {
+    // match a :HUMU:https://<url>
+    const regex =
+      /(\S+)(https:\/\/(yt\d+\.ggpht\.com\/[a-zA-Z0-9_\-=/]+-c-k-nd|www\.youtube\.com\/[a-zA-Z0-9_\-=/]+\.svg))/gi;
+    parsed.parsed = msg.message
+      .replace(/<([^>]*)>/g, "($1)")
+      .replace(regex, '<img src="$2" />');
+  }
+  return parsed;
+}

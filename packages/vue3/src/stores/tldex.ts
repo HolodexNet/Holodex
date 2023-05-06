@@ -3,7 +3,7 @@ import { getTLLangRecommendation } from "@/utils/functions";
 import { useLangStore } from "./lang";
 import { defineStore } from "pinia";
 
-interface State {
+export interface TLDexStoreState {
   // whether live TL sticks to the bottom or not
   liveTlStickBottom: boolean;
   // language of dexTL
@@ -30,7 +30,7 @@ interface State {
 }
 
 export const useTLStore = defineStore("pref-dexTL", {
-  state: (): State => {
+  state: (): TLDexStoreState => {
     const langStore = useLangStore();
     const lang = getTLLangRecommendation(langStore.lang);
     return {
@@ -53,7 +53,7 @@ export const useTLStore = defineStore("pref-dexTL", {
     },
   },
   actions: {
-    saveNewDefaults(newState: State) {
+    saveNewDefaults(newState: TLDexStoreState) {
       this.$state = newState;
     },
     toggleBlocked(name: string) {
