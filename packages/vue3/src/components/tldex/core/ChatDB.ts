@@ -9,7 +9,16 @@ import backendApi from "@/utils/backend-api";
 import { TLLanguageCode } from "@/utils/consts";
 import sorted from "sorted-array-functions";
 
-type RoomIDString = `${string}/${TLLanguageCode}`;
+export type RoomIDString = `${string}/${TLLanguageCode}`;
+
+interface RoomState {
+  /** whether or not a room has finished loading all archived chat content*/
+  completed: boolean;
+  /**whether or not a room is currently loading some content */
+  loading: boolean;
+  /** the playhead location of the video for this room in seconds */
+  playhead: number;
+}
 
 /**
  * Defines APIs for dealing with multiple chat rooms
@@ -21,7 +30,7 @@ export class ChatDB {
   /** Tracks the chat messages in each room */
   rooms: Map<RoomIDString, Array<ParsedMessage>>;
   /** Tracks the loading state of history for each room. */
-  roomState: Map<RoomIDString, { completed: boolean; loading: boolean }>;
+  roomState: Map<RoomIDString, RoomState>;
 
   constructor() {
     this.rooms = new Map();
@@ -97,7 +106,11 @@ export class ChatDB {
       this.rooms.set(room, []);
     }
     if (!this.roomState.has(room)) {
-      this.roomState.set(room, { completed: false, loading: false });
+      this.roomState.set(room, {
+        completed: false,
+        loading: false,
+        playhead: 0,
+      });
     }
   }
 
@@ -116,7 +129,7 @@ export class ChatDB {
     if (this.roomState.get(room)!.loading) return;
 
     const countToLoad = partial || 10000;
-    const prior = this.rooms.get(room)?.[0].timestamp;
+    const prior = this.rooms.get(room)?.[0]?.timestamp;
 
     const videoId = room.split("/")[0];
 
@@ -134,6 +147,8 @@ export class ChatDB {
       .chatHistory(videoId, query)
       .then(({ data }: { data: TLDexMessage[] }) => {
         this.roomState.set(room, {
+          playhead: 0,
+          ...this.roomState.get(room),
           completed: data.length !== countToLoad,
           loading: false,
         });
@@ -144,9 +159,11 @@ export class ChatDB {
       })
       .catch((e) => {
         console.error(e);
-      })
-      .finally(() => {
-        this.roomState.set(room, { completed: false, loading: false });
+        this.roomState.set(room, {
+          completed: false,
+          loading: false,
+          playhead: 0,
+        });
       });
   }
 

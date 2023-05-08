@@ -6,7 +6,6 @@ import { debounce } from "@/utils/functions";
 import { TLLanguageCode } from "@/utils/consts";
 import type {
   ParsedMessage,
-  TLDexMessage,
   TldexPayload,
   VideoUpdatePayload,
 } from "./socket_types";
@@ -159,6 +158,7 @@ export const useSocket = defineStore(
         video_id: videoId,
         lang,
       });
+      log("Sent subscription request: ", videoId, lang);
       const handler = (a: any) => {
         _handleMessage(roomKey, a);
       };
@@ -188,9 +188,8 @@ export const useSocket = defineStore(
       socket,
       connected,
       activeSockets: 0,
-      channelMessages: new Map(),
-      roomReferenceCounter: new Map(),
       videoState: new Map(),
+      chatDB,
 
       joinRoom,
       leaveRoom,

@@ -46,6 +46,7 @@
     "vue-tiny-validate": "^0.2.4",
     "vue-toast-notification": "^3.1.1",
     "vue-virtual-scroller": "^2.0.0-beta.8",
+    "vue3-virtual-scroll-list": "^0.2.1",
     "xss": "^1.0.14",
     "youtube-player": "^5.6.0"
   },

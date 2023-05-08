@@ -5,35 +5,46 @@
     :style="{
       'font-size': fontSize + 'px',
     }"
-    :class="{
-      'ios-safari-reverse-fix': isIOS,
-      '!flex-col-reverse': reverse,
-    }"
+    :class="{}"
   >
-    <transition-group name="fade" :class="{ 'ios-safari-reverse-fix': isIOS }">
-      <chat-message
-        v-for="(item, index) in tlHistory"
-        :key="item.key"
-        :source="item"
-        :hide-author="hideAuthor(index)"
-        class="chat-message"
-      />
-    </transition-group>
-    <!-- Slot for adding a Load More button on top of Messages -->
-    <div class="text-center" :class="{ 'ios-safari-reverse-fix': isIOS }">
-      <slot />
-    </div>
+    <VirtualList
+      v-show="!!tlHistory.length"
+      ref="vsl"
+      class="scroll-touch h-full"
+      :class="{ overflow: true }"
+      :data-key="'key'"
+      :data-sources="tlHistory"
+      :data-component="ChatMessage"
+      :estimate-size="20"
+    >
+      <!--       @resized="onItemRendered"
+      @totop="onTotop"
+ -->
+      <template #header>
+        <!-- <div v-show="overflow" class="header">
+          <div v-show="!finished" class="spinner" />
+          <div v-show="finished" class="finished">No More</div>
+        </div> -->
+        Header content
+      </template>
+    </VirtualList>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { ParsedMessage } from "@/stores/socket_types";
 import { checkIOS } from "@/utils/functions";
+import VirtualList from "vue3-virtual-scroll-list";
+import ChatMessage from "./ChatMessage.vue";
 
-export default {
+export default defineComponent({
   name: "MessageRenderer",
+  components: {
+    VirtualList,
+  },
   props: {
     tlHistory: {
-      type: Array,
+      type: Array as PropType<ParsedMessage[]>,
       default: () => [],
     },
     fontSize: {
@@ -42,28 +53,14 @@ export default {
     },
     reverse: Boolean,
   },
-  data() {
-    return { isIOS: checkIOS() };
+  setup() {
+    return { ChatMessage };
   },
-  methods: {
-    hideAuthor(index) {
-      return !(
-        index === 0 ||
-        index === this.tlHistory.length - 1 ||
-        this.tlHistory[index].name !== this.tlHistory[index + 1].name
-      );
-    },
-    scrollToBottom() {
-      if (
-        Math.abs(
-          this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight
-        ) <= 0.15
-      ) {
-        this.$refs.tlBody.scrollTop = 0;
-      }
-    },
-  },
-};
+  // data() {
+  //   return { isIOS: checkIOS() };
+  // },
+  methods: {},
+});
 </script>
 
 <style>
