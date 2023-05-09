@@ -10,23 +10,23 @@
     <VirtualList
       v-show="!!tlHistory.length"
       ref="vsl"
-      class="scroll-touch h-full"
-      :class="{ overflow: true }"
+      class=""
+      style="overflow-y: auto; height: 100%"
       :data-key="'key'"
       :data-sources="tlHistory"
       :data-component="ChatMessage"
-      :estimate-size="20"
+      :estimate-size="100"
     >
       <!--       @resized="onItemRendered"
       @totop="onTotop"
  -->
-      <template #header>
-        <!-- <div v-show="overflow" class="header">
+      <!-- <template #header> -->
+      <!-- <div v-show="overflow" class="header">
           <div v-show="!finished" class="spinner" />
           <div v-show="finished" class="finished">No More</div>
         </div> -->
-        Header content
-      </template>
+      <!-- Header content -->
+      <!-- </template> -->
     </VirtualList>
   </div>
 </template>
@@ -54,6 +54,8 @@ export default defineComponent({
     reverse: Boolean,
   },
   setup() {
+    const snapToNow = ref(true);
+
     return { ChatMessage };
   },
   // data() {

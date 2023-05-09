@@ -16,8 +16,6 @@ interface RoomState {
   completed: boolean;
   /**whether or not a room is currently loading some content */
   loading: boolean;
-  /** the playhead location of the video for this room in seconds */
-  playhead: number;
 }
 
 /**
@@ -31,10 +29,13 @@ export class ChatDB {
   rooms: Map<RoomIDString, Array<ParsedMessage>>;
   /** Tracks the loading state of history for each room. */
   roomState: Map<RoomIDString, RoomState>;
+  /** the playhead location of the video for this room in seconds */
+  playheads: Map<string, number>;
 
   constructor() {
     this.rooms = new Map();
     this.roomState = new Map();
+    this.playheads = new Map();
   }
 
   private static checkArrayIsUnique(sortedMessageList: ParsedMessage[]) {
@@ -109,9 +110,12 @@ export class ChatDB {
       this.roomState.set(room, {
         completed: false,
         loading: false,
-        playhead: 0,
       });
     }
+  }
+
+  updateRoomPlayhead(video_id: string, playhead: number) {
+    this.playheads.set(video_id, playhead);
   }
 
   /**
@@ -147,8 +151,6 @@ export class ChatDB {
       .chatHistory(videoId, query)
       .then(({ data }: { data: TLDexMessage[] }) => {
         this.roomState.set(room, {
-          playhead: 0,
-          ...this.roomState.get(room),
           completed: data.length !== countToLoad,
           loading: false,
         });
@@ -162,7 +164,6 @@ export class ChatDB {
         this.roomState.set(room, {
           completed: false,
           loading: false,
-          playhead: 0,
         });
       });
   }

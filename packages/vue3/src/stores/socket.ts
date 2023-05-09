@@ -10,6 +10,8 @@ import type {
   VideoUpdatePayload,
 } from "./socket_types";
 
+import { toParsedMessage } from "./socket_types";
+
 import { ChatDB } from "@/components/tldex/core/ChatDB";
 
 interface State {
@@ -135,7 +137,7 @@ export const useSocket = defineStore(
 
     function _handleMessage(room: RoomIDString, payload: TldexPayload) {
       if ("message" in payload) {
-        const parsed = parseMessage(payload);
+        const parsed = toParsedMessage(payload);
         chatDB.addMessage(room, parsed);
       }
     }

@@ -2,7 +2,11 @@ import { useSocket } from "@/stores/socket";
 import { Ref } from "vue";
 import api from "@/utils/backend-api";
 import { TLLanguageCode } from "@/utils/consts";
-import { ParsedMessage } from "@/stores/socket_types";
+import {
+  ParsedMessage,
+  TLDexMessage,
+  toParsedMessage,
+} from "@/stores/socket_types";
 
 interface TldexOptions {
   videoId: string;
@@ -46,11 +50,11 @@ export function useTldex(options: Ref<TldexOptions>) {
 
     api
       .chatHistory(videoId, query)
-      .then(({ data }: { data: Message[] }) => {
+      .then(({ data }: { data: TLDexMessage[] }) => {
         tlHistoryCompleted.value = data.length !== EACH_LOAD_LIMIT || loadAll;
         if (tlHistory.value.length === 0)
-          tlHistory.value = data.map((x) => parseMessage(x));
-        else tlHistory.value.unshift(...data.map((x) => parseMessage(x)));
+          tlHistory.value = data.map((x) => toParsedMessage(x));
+        else tlHistory.value.unshift(...data.map((x) => toParsedMessage(x)));
       })
       .catch((e) => {
         console.error(e);

@@ -22,6 +22,7 @@
 
 import { TWITCH_VIDEO_URL_REGEX } from "@/utils/consts";
 import { VideoPlayer } from "./usePlayer";
+import { useSocket } from "@/stores/socket";
 const player = ref<VideoPlayer | null>(null);
 const props = defineProps<{
   video: Partial<Video> & Pick<Video, "id">;
@@ -55,6 +56,8 @@ const volume = ref(50);
 // const paused = ref(true);
 // const ended = ref(false);
 
+const store = useSocket().chatDB;
+
 async function refreshPlayerValues() {
   if (player.value) {
     // Parallelize this async calls for speed,
@@ -65,6 +68,7 @@ async function refreshPlayerValues() {
       player.value.getVolume(),
     ]);
     currentTime.value = t;
+    store.updateRoomPlayhead(props.video.id, t);
     muted.value = m;
     volume.value = v;
   }
