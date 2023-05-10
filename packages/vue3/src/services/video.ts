@@ -101,9 +101,16 @@ export function useVideoById(
   return useQuery<ExtendedVideo>(
     ["video", id, query],
     async (e) => {
-      const { data } = await axiosInstance_v2.get(
+      const { data } = await axiosInstance_v2.get<ExtendedVideo>(
         `/videos/${unref(id)}?${stringifyQuery(query.value)}`
       );
+      if (data.available_at)
+        data.available_at = dayjs(data.available_at).toDate();
+      if (data.start_actual)
+        data.start_actual = dayjs(data.start_actual).toDate();
+      if (data.start_scheduled)
+        data.start_scheduled = dayjs(data.start_scheduled).toDate();
+
       return data;
     },
     config

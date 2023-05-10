@@ -29,15 +29,26 @@ export class ChatDB {
   rooms: Map<RoomIDString, Array<ParsedMessage>>;
   /** Tracks the loading state of history for each room. */
   roomState: Map<RoomIDString, RoomState>;
-  /** the playhead location of the video for this room in seconds */
-  playheads: Map<string, number>;
+  /** where each video's elapsed timers are at */
+  playheads: Map<string, { elapsed: number; absolute: number }>;
+  // roomCurrentTL: Map<RoomIDString, ParsedMessage>;
+  private videoToRoomMap: Map<string, Set<RoomIDString>>;
 
   constructor() {
     this.rooms = new Map();
     this.roomState = new Map();
     this.playheads = new Map();
+
+    // this.roomCurrentTL = new Map();
+    this.videoToRoomMap = new Map();
   }
 
+  /**
+   * Check if an array of ParsedMessage objects is unique based on their key field.
+   *
+   * @param {ParsedMessage[]} sortedMessageList - An array of ParsedMessage objects sorted by key.
+   * @return {boolean} Returns true if the array is unique, false otherwise.
+   */
   private static checkArrayIsUnique(sortedMessageList: ParsedMessage[]) {
     for (let i = 1; i < sortedMessageList.length; i++) {
       if (sortedMessageList[i - 1].key == sortedMessageList[i].key) {
@@ -59,6 +70,14 @@ export class ChatDB {
     return ret;
   }
 
+  /**
+   * Compares two ParsedMessage objects based on their timestamps.
+   *
+   * @param {ParsedMessage} a - The first ParsedMessage to compare.
+   * @param {ParsedMessage} b - The second ParsedMessage to compare.
+   * @return {number} Returns 1 if a is greater than b, -1 if a is less than b,
+   * and 0 if a and b are equal.
+   */
   static ParsedMessageComparator(a: ParsedMessage, b: ParsedMessage) {
     if (a.timestamp > b.timestamp) return 1;
     if (a.timestamp < b.timestamp) return -1;
@@ -105,6 +124,11 @@ export class ChatDB {
   createRoomStateIfNotExists(room: RoomIDString) {
     if (!this.rooms.has(room)) {
       this.rooms.set(room, []);
+      const videoId = room.split("/")[0];
+      this.videoToRoomMap.set(
+        videoId,
+        new Set([room, ...(this.videoToRoomMap.get(videoId)?.values() ?? [])])
+      );
     }
     if (!this.roomState.has(room)) {
       this.roomState.set(room, {
@@ -114,8 +138,15 @@ export class ChatDB {
     }
   }
 
-  updateRoomPlayhead(video_id: string, playhead: number) {
-    this.playheads.set(video_id, playhead);
+  /**
+   * Updates the current offset of a video,
+   * @param video_id
+   * @param elapsed elapsed time in seconds
+   * @param absolute the elapsed time + available_at time
+   */
+  updateRoomElapsed(video_id: string, elapsed: number, absolute: number) {
+    const now = { elapsed, absolute };
+    this.playheads.set(video_id, now);
   }
 
   /**

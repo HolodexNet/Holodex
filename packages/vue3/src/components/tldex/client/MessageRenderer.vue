@@ -33,12 +33,13 @@
 
 <script lang="ts">
 import { ParsedMessage } from "@/stores/socket_types";
-import { checkIOS } from "@/utils/functions";
+// import { checkIOS } from "@/utils/functions";
 import VirtualList from "vue3-virtual-scroll-list";
 import ChatMessage from "./ChatMessage.vue";
+import { useSocket } from "@/stores/socket";
 
 export default defineComponent({
-  name: "MessageRenderer",
+  name: "ListMessageRenderer",
   components: {
     VirtualList,
   },

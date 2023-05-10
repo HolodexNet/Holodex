@@ -58,17 +58,23 @@ const volume = ref(50);
 
 const store = useSocket().chatDB;
 
-async function refreshPlayerValues() {
+async function updatePlayerState() {
   if (player.value) {
     // Parallelize this async calls for speed,
     // helps prevent player.value undefined when unmounting mid way through a call
     const [t, m, v] = await Promise.all([
-      player.value.getCurrentTime(),
-      player.value.getMuted(),
-      player.value.getVolume(),
+      player.value?.getCurrentTime(),
+      player.value?.getMuted(),
+      player.value?.getVolume(),
     ]);
     currentTime.value = t;
-    store.updateRoomPlayhead(props.video.id, t);
+    store.updateRoomElapsed(
+      props.video.id,
+      t,
+      props.video.available_at
+        ? props.video.available_at.valueOf() / 1000 + t
+        : Date.now() / 1000
+    );
     muted.value = m;
     volume.value = v;
   }
@@ -78,7 +84,7 @@ const timer = ref<number | null>(null);
 watchEffect(async (onCleanup) => {
   if (!props.disableReactiveVariable) {
     timer.value = setInterval(
-      refreshPlayerValues,
+      updatePlayerState,
       props.refreshIntervalMs || 500
     );
   }

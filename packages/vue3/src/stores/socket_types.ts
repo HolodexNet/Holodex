@@ -1,10 +1,17 @@
 export interface TLDexMessage {
+  /** timestamp of message being sent or created. */
   timestamp: number | string;
+  /** a more accurate timestamp of seconds into video (may be not available) */
+  videoOffset: number;
+  /** message content */
   message: string;
   name: string; // name of creator
   channel_id?: string;
   // breakpoint?: boolean; // breakpoints are used to add styling separation
-  receivedAt?: number;
+  // receivedAt?: number;
+  // I don't know why ReceivedAt was even in the definition in the first place, b/c nothing in the API or Holodex v2 codebase WRITEs it.
+
+  /** duration of the translation */
   duration?: number;
 
   // TL Dex Live Message items:
