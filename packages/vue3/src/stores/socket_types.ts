@@ -29,6 +29,8 @@ export interface TLDexMessage {
 export interface ParsedMessage extends TLDexMessage {
   parsed: string; // parsed output after parseMessage
   key: string;
+
+  is_current?: boolean;
   // relativeMs?: number;
 }
 
@@ -52,6 +54,7 @@ export function toParsedMessage(msg: TLDexMessage): ParsedMessage {
     // ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),
     key: msg.name + msg.timestamp + msg.message,
     parsed: "",
+    duration: msg.duration ?? msg.message.length * 65 + 1800,
   };
   // Check if there's any emojis represented as URLs formatted by backend
   if (msg.message.includes("https://") && !("parsed" in msg)) {

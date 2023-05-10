@@ -31,15 +31,13 @@ export class ChatDB {
   roomState: Map<RoomIDString, RoomState>;
   /** where each video's elapsed timers are at */
   playheads: Map<string, { elapsed: number; absolute: number }>;
-  // roomCurrentTL: Map<RoomIDString, ParsedMessage>;
-  private videoToRoomMap: Map<string, Set<RoomIDString>>;
+  videoToRoomMap: Map<string, Set<RoomIDString>>;
 
   constructor() {
     this.rooms = new Map();
     this.roomState = new Map();
     this.playheads = new Map();
 
-    // this.roomCurrentTL = new Map();
     this.videoToRoomMap = new Map();
   }
 
@@ -147,6 +145,33 @@ export class ChatDB {
   updateRoomElapsed(video_id: string, elapsed: number, absolute: number) {
     const now = { elapsed, absolute };
     this.playheads.set(video_id, now);
+    this.videoToRoomMap.get(video_id)?.forEach((room) => {
+      this.rooms.get(room)?.forEach((message) => {
+        if (message.videoOffset) {
+          if (
+            message.videoOffset > elapsed &&
+            message.videoOffset +
+              (message.duration || message.message.length * 65 + 1800) <=
+              elapsed
+          ) {
+            message.is_current = true;
+          } else if (message.is_current) {
+            message.is_current = false;
+          }
+        } else {
+          if (
+            +message.timestamp > absolute &&
+            +message.timestamp +
+              (message.duration || message.message.length * 65 + 1800) <=
+              absolute
+          ) {
+            message.is_current = true;
+          } else if (message.is_current) {
+            message.is_current = false;
+          }
+        }
+      });
+    });
   }
 
   /**

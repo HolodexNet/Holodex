@@ -15,7 +15,7 @@
   "css.lint.unknownAtRules": "ignore",
   "typescript.tsdk": "node_modules/typescript/lib",
   "vue3snippets.enable-compile-vue-file-on-did-save-code": true,
-  "eslint.format.enable": false,
+  "eslint.format.enable": true,
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

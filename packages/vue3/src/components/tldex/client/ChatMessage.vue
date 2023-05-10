@@ -1,5 +1,11 @@
 <template>
-  <div class="flex flex-row" :class="{ 'with-author': !hideAuthor }">
+  <div
+    class="flex flex-row"
+    :class="{
+      'with-author': !hideAuthor,
+      'bg-primary-800 text-primary-focus': source.is_current,
+    }"
+  >
     <div
       v-if="source.is_vtuber && source.channel_id"
       style="min-width: 28px"
