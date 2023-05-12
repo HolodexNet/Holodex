@@ -168,6 +168,11 @@ onClickOutside(
   }
 );
 
+/**
+ * TODO
+ * BREAKING: Floating UI / VUE 1.0.0 has a floatingStyle generated from `useFloating`. Use that maybe?
+ * see https://github.com/floating-ui/floating-ui/releases/tag/%40floating-ui%2Fvue%401.0.0
+ */
 // Style object for floating piece
 const floatingStyle: any = computed(() => ({
   ...(props.transform
