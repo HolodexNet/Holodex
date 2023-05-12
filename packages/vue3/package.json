@@ -10,7 +10,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "postinstall": "npm run build",
-    "lint:fix": "prettier --write src/*"
+    "lint:fix": "prettier --write src"
   },
   "dependencies": {
     "@floating-ui/vue": "^0.2.1",
