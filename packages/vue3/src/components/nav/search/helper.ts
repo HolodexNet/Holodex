@@ -134,6 +134,7 @@ export async function getQueryFromQueryModel(
    */
   async function* generator() {
     for (const key of Object.keys(queryModel) as (keyof VideoQueryModel)[]) {
+      if ((key as string) === "page") continue;
       // if its a vtuber (needs special handling)
       if (key === "vtuber") {
         if (typeof queryModel[key] === "string")

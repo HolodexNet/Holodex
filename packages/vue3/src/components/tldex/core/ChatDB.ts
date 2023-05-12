@@ -154,21 +154,13 @@ export class ChatDB {
       // console.log(room);
       this.rooms.get(room)?.map((message, idx) => {
         if (message.video_offset) {
-          if (message.video_offset < elapsed)
-            console.log(
-              message.video_offset,
-              elapsed,
-              message.video_offset +
-                (message.duration || message.message.length * 65 + 1800) / 1000
-            );
-
           if (
             message.video_offset < elapsed &&
             message.video_offset +
               (message.duration || message.message.length * 65 + 1800) / 1000 >=
               elapsed
           ) {
-            console.log(message);
+            // console.log(message);
             message.is_current = true;
           } else if (message.is_current) {
             message.is_current = false;
@@ -181,7 +173,7 @@ export class ChatDB {
                 (message.message.length * 65 + 1800) / 1000) >=
               absolute
           ) {
-            console.log(message);
+            // console.log(message);
             message.is_current = true;
           } else if (message.is_current) {
             message.is_current = false;

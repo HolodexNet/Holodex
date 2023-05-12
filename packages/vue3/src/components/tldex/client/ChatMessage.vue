@@ -22,7 +22,9 @@
       <div v-if="!hideAuthor" :class="nameClass">
         <span
           class="chat-name chat-caption relative"
-          @click="showBlockChannelDialog = true"
+          @click="
+            openBlockDialog(source.name, source.channel_id, source.is_vtuber)
+          "
         >
           <h-icon
             v-if="isFavorited"
@@ -55,38 +57,6 @@
         <span v-else>{{ source.message }}</span>
       </a>
     </div>
-    <h-dialog v-model="showBlockChannelDialog">
-      <div class="card bg-base-100 shadow-xl">
-        <div class="card-body">
-          <h2 class="card-title">{{ source.name }}</h2>
-          <div class="card-actions">
-            <button
-              v-if="source.channel_id"
-              class="btn-md btn mr-1 bg-red-500 text-white"
-              :href="`https://youtube.com/channel/${source.channel_id}`"
-              target="_blank"
-            >
-              <div class="i-mdi:youtube text-xl" />
-              Youtube
-            </button>
-            <button
-              v-if="source.channel_id && source.is_vtuber"
-              :href="`https://holodex.net/channel/${source.channel_id}`"
-              target="_blank"
-              class="btn mr-1 bg-secondary-400 text-white"
-            >
-              Holodex
-            </button>
-            <button
-              class="btn-warning btn mr-1"
-              @click="toggleBlockName(source.name)"
-            >
-              {{ !tldexStore.blockset.has(source.name) ? "Block" : "Unblock" }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </h-dialog>
   </div>
 </template>
 
@@ -94,7 +64,7 @@
 import { dayjs, formatDuration } from "@/utils/time";
 import { useTLStore } from "@/stores/tldex";
 import { useFavoritesIDSet } from "@/services/favorites";
-
+import type { ParsedMessage } from "@/stores/socket_types";
 function realTimestamp(utc: any) {
   return dayjs(utc).format("LTS"); // localizedFormat
 }
@@ -104,7 +74,7 @@ export default defineComponent({
   components: {},
   props: {
     source: {
-      type: Object,
+      type: Object as PropType<ParsedMessage>,
       required: true,
     },
     index: {
@@ -119,12 +89,8 @@ export default defineComponent({
     const tldexStore = useTLStore();
     const favList = useFavoritesIDSet();
 
-    return { tldexStore, favList };
-  },
-  data() {
-    return {
-      showBlockChannelDialog: false,
-    };
+    const { openBlockDialog } = inject("showChannelBlockDialog");
+    return { tldexStore, favList, openBlockDialog };
   },
   computed: {
     time() {
@@ -145,13 +111,7 @@ export default defineComponent({
       }
     },
     isFavorited() {
-      return this.favList?.has(this.source.channel_id);
-    },
-  },
-  methods: {
-    toggleBlockName(name: string) {
-      this.tldexStore.toggleBlocked(name);
-      console.log(this.tldexStore.blockset);
+      return this.favList?.has(this.source.channel_id || "_");
     },
   },
 });

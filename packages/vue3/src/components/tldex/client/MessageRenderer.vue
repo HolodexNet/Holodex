@@ -28,6 +28,42 @@
       <!-- Header content -->
       <!-- </template> -->
     </VirtualList>
+    <h-dialog v-model="channelBlock.showBlockChannelDialog">
+      <div v-if="channelBlock.name" class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">{{ channelBlock.name }}</h2>
+          <div class="card-actions">
+            <button
+              v-if="channelBlock.channel_id"
+              class="btn-md btn mr-1 bg-red-500 text-white"
+              :href="`https://youtube.com/channel/${channelBlock.channel_id}`"
+              target="_blank"
+            >
+              <div class="i-mdi:youtube text-xl" />
+              Youtube
+            </button>
+            <button
+              v-if="channelBlock.channel_id && channelBlock.is_vtuber"
+              :href="`https://holodex.net/channel/${channelBlock.channel_id}`"
+              target="_blank"
+              class="btn mr-1 bg-secondary-400 text-white"
+            >
+              Holodex
+            </button>
+            <button
+              class="btn-warning btn mr-1"
+              @click="toggleBlockName(channelBlock.name)"
+            >
+              {{
+                !tldexStore.blockset.has(channelBlock.name)
+                  ? "Block"
+                  : "Unblock"
+              }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </h-dialog>
   </div>
 </template>
 
@@ -37,6 +73,7 @@ import { ParsedMessage } from "@/stores/socket_types";
 import VirtualList from "vue3-virtual-scroll-list";
 import ChatMessage from "./ChatMessage.vue";
 import { useSocket } from "@/stores/socket";
+import { useTLStore } from "@/stores/tldex";
 
 export default defineComponent({
   name: "ListMessageRenderer",
@@ -56,13 +93,42 @@ export default defineComponent({
   },
   setup() {
     const snapToNow = ref(true);
+    const tldexStore = useTLStore();
 
-    return { ChatMessage };
+    const channelBlock: Ref<{
+      showBlockChannelDialog: boolean;
+      channel_id?: string;
+      name: string;
+      is_vtuber?: boolean;
+    }> = ref({
+      showBlockChannelDialog: false,
+      channel_id: undefined,
+      name: "",
+      is_vtuber: false,
+    });
+
+    function openBlockDialog(
+      name: string,
+      channel_id?: string,
+      is_vtuber?: boolean
+    ) {
+      channelBlock.value.showBlockChannelDialog = true;
+      channelBlock.value.channel_id = channel_id;
+      channelBlock.value.name = name;
+      channelBlock.value.is_vtuber = is_vtuber;
+    }
+
+    provide("showChannelBlockDialog", {
+      openBlockDialog,
+    });
+
+    function toggleBlockName(name: string) {
+      tldexStore.toggleBlocked(name);
+      console.log(tldexStore.blockset);
+    }
+
+    return { ChatMessage, channelBlock, toggleBlockName, tldexStore };
   },
-  // data() {
-  //   return { isIOS: checkIOS() };
-  // },
-  methods: {},
 });
 </script>
 
