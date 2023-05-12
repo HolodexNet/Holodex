@@ -154,10 +154,18 @@ export class ChatDB {
       // console.log(room);
       this.rooms.get(room)?.map((message, idx) => {
         if (message.video_offset) {
+          if (message.video_offset < elapsed)
+            console.log(
+              message.video_offset,
+              elapsed,
+              message.video_offset +
+                (message.duration || message.message.length * 65 + 1800) / 1000
+            );
+
           if (
-            message.video_offset > elapsed &&
+            message.video_offset < elapsed &&
             message.video_offset +
-              (message.duration || message.message.length * 65 + 1800) <=
+              (message.duration || message.message.length * 65 + 1800) / 1000 >=
               elapsed
           ) {
             console.log(message);
@@ -167,10 +175,10 @@ export class ChatDB {
           }
         } else {
           if (
-            +message.timestamp / 1000 > absolute &&
+            +message.timestamp / 1000 < absolute &&
             +message.timestamp / 1000 +
               (message.duration ||
-                (message.message.length * 65 + 1800) / 1000) <=
+                (message.message.length * 65 + 1800) / 1000) >=
               absolute
           ) {
             console.log(message);

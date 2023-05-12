@@ -3,7 +3,7 @@
     class="flex flex-row"
     :class="{
       'with-author': !hideAuthor,
-      'bg-primary-800 text-primary-focus': source.is_current,
+      'bg-primary-800 bg-opacity-30 text-primary-focus': source.is_current,
     }"
   >
     <div
