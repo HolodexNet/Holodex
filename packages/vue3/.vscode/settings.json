@@ -17,7 +17,23 @@
   "vue3snippets.enable-compile-vue-file-on-did-save-code": true,
   "eslint.format.enable": true,
   "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "vue.codeActions.enabled": false
+  "vue.codeActions.enabled": false,
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#1F1A1D",
+    "activityBar.foreground": "#C2AAB7",
+    "activityBar.inactiveForeground": "#82767D",
+    "activityBar.activeBorder": "#D38FA8",
+    "activityBar.activeBackground": "#312D31",
+    "activityBar.border": "#312D31",
+    "titleBar.activeBackground": "#1F1A1D",
+    "titleBar.activeForeground": "#C2AAB7",
+    "titleBar.inactiveBackground": "#2A2528",
+    "titleBar.inactiveForeground": "#82767D",
+    "titleBar.border": "#312D31",
+    "statusBar.background": "#1F1A1D",
+    "statusBar.foreground": "#C2AAB7",
+    "statusBar.border": "#312D31"
+  }
 }

@@ -23,6 +23,7 @@
 import { TWITCH_VIDEO_URL_REGEX } from "@/utils/consts";
 import { VideoPlayer } from "./usePlayer";
 import { useSocket } from "@/stores/socket";
+import { useEventListener } from "@vueuse/core";
 const player = ref<VideoPlayer | null>(null);
 const props = defineProps<{
   video: Partial<Video> & Pick<Video, "id">;
@@ -79,6 +80,24 @@ async function updatePlayerState() {
     volume.value = v;
   }
 }
+
+useEventListener(document, "click", (evt: MouseEvent) => {
+  console.log(evt);
+  if (
+    (evt.target as HTMLElement)?.matches?.(".timestamp-link, .timestamp-link *")
+  ) {
+    const x = (evt.target as HTMLElement).closest(
+      "[data-time][data-video]"
+    ) as HTMLElement;
+    if (x) {
+      const { time, video: vid } = x.dataset;
+      console.log(time, vid);
+      if (vid === props.video.id && time) {
+        player.value?.seekTo(+time);
+      }
+    }
+  }
+});
 
 const timer = ref<number | null>(null);
 watchEffect(async (onCleanup) => {

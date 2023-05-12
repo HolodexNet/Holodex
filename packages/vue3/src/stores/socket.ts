@@ -6,6 +6,7 @@ import { debounce } from "@/utils/functions";
 import { TLLanguageCode } from "@/utils/consts";
 import type {
   ParsedMessage,
+  RoomIDString,
   TldexPayload,
   VideoUpdatePayload,
 } from "./socket_types";
@@ -77,8 +78,6 @@ function log(...args: any[]) {
   console.log("[Socket]", ...args);
 }
 
-type RoomIDString = `${string}/${TLLanguageCode}`;
-
 export const useSocket = defineStore(
   "socket-dexTL",
   () => {
@@ -135,9 +134,13 @@ export const useSocket = defineStore(
       cleanup();
     });
 
-    function _handleMessage(room: RoomIDString, payload: TldexPayload) {
+    function _handleMessage(
+      room: RoomIDString,
+      payload: TldexPayload,
+      video_id?: string
+    ) {
       if ("message" in payload) {
-        const parsed = toParsedMessage(payload);
+        const parsed = toParsedMessage(payload, video_id);
         chatDB.addMessage(room, parsed);
       }
     }
@@ -162,7 +165,7 @@ export const useSocket = defineStore(
       });
       log("Sent subscription request: ", videoId, lang);
       const handler = (a: any) => {
-        _handleMessage(roomKey, a);
+        _handleMessage(roomKey, a, videoId);
       };
       socket.on(roomKey, handler);
       roomReferenceCounter.set(roomKey, 1);

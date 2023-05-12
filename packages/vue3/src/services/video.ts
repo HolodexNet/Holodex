@@ -44,7 +44,20 @@ export function useVideos(
       const { data } = await axiosInstance_v2.get(
         `/videos?${stringifyQuery(query.value)}`
       );
-      return data.filter(filterDeadStreams);
+      return data
+        .map((data: any) => {
+          if (data.available_at)
+            data.available_at = dayjs(data.available_at).valueOf();
+          if (data.start_actual)
+            data.start_actual = dayjs(data.start_actual).valueOf();
+          if (data.end_actual)
+            data.end_actual = dayjs(data.end_actual).valueOf();
+          if (data.start_scheduled)
+            data.start_scheduled = dayjs(data.start_scheduled).valueOf();
+
+          return data;
+        })
+        .filter(filterDeadStreams);
     },
     config
   );
@@ -105,11 +118,12 @@ export function useVideoById(
         `/videos/${unref(id)}?${stringifyQuery(query.value)}`
       );
       if (data.available_at)
-        data.available_at = dayjs(data.available_at).toDate();
+        data.available_at = dayjs(data.available_at).valueOf();
       if (data.start_actual)
-        data.start_actual = dayjs(data.start_actual).toDate();
+        data.start_actual = dayjs(data.start_actual).valueOf();
+      if (data.end_actual) data.end_actual = dayjs(data.end_actual).valueOf();
       if (data.start_scheduled)
-        data.start_scheduled = dayjs(data.start_scheduled).toDate();
+        data.start_scheduled = dayjs(data.start_scheduled).valueOf();
 
       return data;
     },

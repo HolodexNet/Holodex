@@ -95,7 +95,7 @@ declare global {
     title: string;
     status: VIDEO_STATUSES;
     channel: ShortChannel;
-    available_at?: Date;
+    available_at?: Date | number;
     duration?: number;
   }
 
@@ -150,11 +150,11 @@ declare global {
   interface ExtendedVideo extends VideoDetailed {
     channel: FullChannel;
     // if request LIVE_INFO
-    start_scheduled?: Date;
+    start_scheduled?: Date | number;
     // if request LIVE_INFO
-    start_actual?: Date;
+    start_actual?: Date | number;
     // if request LIVE_INFO
-    end_actual?: Date;
+    end_actual?: Date | number;
     // if request LIVE_INFO
     updated_at?: Date | number;
     // if request LIVE_INFO

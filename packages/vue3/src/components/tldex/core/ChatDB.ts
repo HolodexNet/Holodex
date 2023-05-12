@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   ParsedMessage,
+  RoomIDString,
   TLDexMessage,
+  roomToLang,
+  roomToVideoID,
   toParsedMessage,
 } from "@/stores/socket_types";
 import { TLDexStoreState } from "@/stores/tldex";
 import backendApi from "@/utils/backend-api";
-import { TLLanguageCode } from "@/utils/consts";
 import sorted from "sorted-array-functions";
-
-export type RoomIDString = `${string}/${TLLanguageCode}`;
 
 interface RoomState {
   /** whether or not a room has finished loading all archived chat content*/
@@ -49,7 +49,10 @@ export class ChatDB {
    */
   private static checkArrayIsUnique(sortedMessageList: ParsedMessage[]) {
     for (let i = 1; i < sortedMessageList.length; i++) {
-      if (sortedMessageList[i - 1].key == sortedMessageList[i].key) {
+      if (
+        sortedMessageList[i - 1].key == sortedMessageList[i].key ||
+        (sortedMessageList[i - 1].id || 0) == (sortedMessageList[i].id || 1)
+      ) {
         return false;
       }
     }
@@ -122,7 +125,7 @@ export class ChatDB {
   createRoomStateIfNotExists(room: RoomIDString) {
     if (!this.rooms.has(room)) {
       this.rooms.set(room, []);
-      const videoId = room.split("/")[0];
+      const videoId = roomToVideoID(room);
       this.videoToRoomMap.set(
         videoId,
         new Set([room, ...(this.videoToRoomMap.get(videoId)?.values() ?? [])])
@@ -144,27 +147,33 @@ export class ChatDB {
    */
   updateRoomElapsed(video_id: string, elapsed: number, absolute: number) {
     const now = { elapsed, absolute };
+    // console.log(now);
     this.playheads.set(video_id, now);
+    // console.log(this.videoToRoomMap);
     this.videoToRoomMap.get(video_id)?.forEach((room) => {
-      this.rooms.get(room)?.forEach((message) => {
-        if (message.videoOffset) {
+      // console.log(room);
+      this.rooms.get(room)?.map((message, idx) => {
+        if (message.video_offset) {
           if (
-            message.videoOffset > elapsed &&
-            message.videoOffset +
+            message.video_offset > elapsed &&
+            message.video_offset +
               (message.duration || message.message.length * 65 + 1800) <=
               elapsed
           ) {
+            console.log(message);
             message.is_current = true;
           } else if (message.is_current) {
             message.is_current = false;
           }
         } else {
           if (
-            +message.timestamp > absolute &&
-            +message.timestamp +
-              (message.duration || message.message.length * 65 + 1800) <=
+            +message.timestamp / 1000 > absolute &&
+            +message.timestamp / 1000 +
+              (message.duration ||
+                (message.message.length * 65 + 1800) / 1000) <=
               absolute
           ) {
+            console.log(message);
             message.is_current = true;
           } else if (message.is_current) {
             message.is_current = false;
@@ -191,10 +200,10 @@ export class ChatDB {
     const countToLoad = partial || 10000;
     const prior = this.rooms.get(room)?.[0]?.timestamp;
 
-    const videoId = room.split("/")[0];
+    const videoId = roomToVideoID(room);
 
     const query = {
-      lang: room.split("/")[1],
+      lang: roomToLang(room),
       verified: preferences.liveTlShowVerified,
       moderator: preferences.liveTlShowModerator,
       vtuber: preferences.liveTlShowVtuber,
@@ -212,7 +221,7 @@ export class ChatDB {
         });
         this.addMessages(
           room,
-          data.map((x) => toParsedMessage(x))
+          data.map((x) => toParsedMessage(x, videoId))
         );
       })
       .catch((e) => {

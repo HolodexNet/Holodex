@@ -1,8 +1,10 @@
+import { TLLanguageCode } from "@/utils/consts";
+
 export interface TLDexMessage {
   /** timestamp of message being sent or created. */
   timestamp: number | string;
   /** a more accurate timestamp of seconds into video (may be not available) */
-  videoOffset: number;
+  video_offset: number;
   /** message content */
   message: string;
   name: string; // name of creator
@@ -24,13 +26,20 @@ export interface TLDexMessage {
 
   // rendering consideration?
   key?: string;
+  // ID is a Database Unique Key.
+  id?: string;
 }
 
 export interface ParsedMessage extends TLDexMessage {
-  parsed: string; // parsed output after parseMessage
+  /** parsed message if the message contains a link */
+  parsed: string;
   key: string;
 
   is_current?: boolean;
+  /**
+   * optionally provided video ID
+   */
+  video_id?: string;
   // relativeMs?: number;
 }
 
@@ -41,13 +50,26 @@ export type VideoUpdatePayload = Pick<
 
 export type TldexPayload = VideoUpdatePayload | TLDexMessage;
 
+export type RoomIDString = `${string}/${TLLanguageCode}`;
+
+export function roomToVideoID(room: RoomIDString): string {
+  return room.split("/")[0];
+}
+
+export function roomToLang(room: RoomIDString): TLLanguageCode {
+  return room.split("/")[1] as TLLanguageCode;
+}
+
 /**
  * Parses and augments message body with parsed value and key.
  * @param msg
  * @param relativeTsAnchor
  * @returns
  */
-export function toParsedMessage(msg: TLDexMessage): ParsedMessage {
+export function toParsedMessage(
+  msg: TLDexMessage,
+  video_id?: string
+): ParsedMessage {
   msg.timestamp = +msg.timestamp;
   const parsed: ParsedMessage = {
     ...msg,
@@ -55,6 +77,7 @@ export function toParsedMessage(msg: TLDexMessage): ParsedMessage {
     key: msg.name + msg.timestamp + msg.message,
     parsed: "",
     duration: msg.duration ?? msg.message.length * 65 + 1800,
+    video_id,
   };
   // Check if there's any emojis represented as URLs formatted by backend
   if (msg.message.includes("https://") && !("parsed" in msg)) {

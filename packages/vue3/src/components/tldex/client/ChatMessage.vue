@@ -39,7 +39,11 @@
           <div class="i-mdi:cog font-sm chat-cog absolute mt-1 inline-block" />
         </span>
       </div>
-      <a class="chat-message" :data-time="source.relativeMs / 1000">
+      <a
+        class="chat-message timestamp-link"
+        :data-time="source.video_offset"
+        :data-video="source.video_id"
+      >
         <span
           v-if="source.timestamp"
           class="chat-caption chat-time mr-1 opacity-75"
@@ -124,10 +128,10 @@ export default defineComponent({
   },
   computed: {
     time() {
-      return this.tldexStore.liveTlShowLocalTime || !this.source.relativeMs
+      return this.tldexStore.liveTlShowLocalTime || !this.source.video_offset
         ? realTimestamp(this.source.timestamp)
-        : (Math.sign(this.source.relativeMs) < 0 ? "-" : "") +
-            formatDuration(Math.abs(this.source.relativeMs));
+        : (Math.sign(this.source.video_offset) < 0 ? "-" : "") +
+            formatDuration(Math.abs(this.source.video_offset * 1000));
     },
     nameClass() {
       const { is_owner, is_verified, is_vtuber, is_moderator } = this.source;
@@ -156,6 +160,7 @@ export default defineComponent({
 <style>
 .chat-name,
 .chat-message {
+  cursor: pointer;
   word-break: break-word;
 }
 
