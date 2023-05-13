@@ -152,6 +152,8 @@ export class ChatDB {
     // console.log(this.videoToRoomMap);
     this.videoToRoomMap.get(video_id)?.forEach((room) => {
       // console.log(room);
+
+      // TODO: optimize this maybe.
       this.rooms.get(room)?.map((message, idx) => {
         if (message.video_offset) {
           if (

@@ -7,6 +7,7 @@
     }"
     :class="{}"
   >
+    <!-- TODO: add search box to VirtualList -->
     <VirtualList
       v-show="!!tlHistory.length"
       ref="vsl"
@@ -54,11 +55,7 @@
               class="btn-warning btn mr-1"
               @click="toggleBlockName(channelBlock.name)"
             >
-              {{
-                !tldexStore.blockset.has(channelBlock.name)
-                  ? "Block"
-                  : "Unblock"
-              }}
+              {{ !tldexStore.blockset.has(channelBlock.name) ? "Block" : "Unblock" }}
             </button>
           </div>
         </div>
@@ -107,11 +104,7 @@ export default defineComponent({
       is_vtuber: false,
     });
 
-    function openBlockDialog(
-      name: string,
-      channel_id?: string,
-      is_vtuber?: boolean
-    ) {
+    function openBlockDialog(name: string, channel_id?: string, is_vtuber?: boolean) {
       channelBlock.value.showBlockChannelDialog = true;
       channelBlock.value.channel_id = channel_id;
       channelBlock.value.name = name;
