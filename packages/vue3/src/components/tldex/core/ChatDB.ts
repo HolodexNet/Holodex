@@ -41,28 +41,17 @@ export function isMessageCurrent(
   elapsed?: number,
   absolute?: number
 ): boolean {
+  const duration =
+    (message.duration || message.message.length * 65 + 1800) / 1000;
+
   if (message.video_offset && elapsed) {
-    if (
+    return (
       message.video_offset < elapsed &&
-      message.video_offset +
-        (message.duration || (message.message.length * 65 + 1800) / 1000) >=
-        elapsed
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+      elapsed <= message.video_offset + duration
+    );
   } else if (absolute) {
-    if (
-      +message.timestamp / 1000 < absolute &&
-      +message.timestamp / 1000 +
-        (message.duration || (message.message.length * 65 + 1800) / 1000) >=
-        absolute
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    const timestamp = +message.timestamp / 1000;
+    return timestamp < absolute && absolute <= timestamp + duration;
   }
   return false;
 }
