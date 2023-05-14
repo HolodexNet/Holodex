@@ -12,7 +12,7 @@
       v-show="!!tlHistory.length"
       ref="vsl"
       class=""
-      style="overflow-y: auto; height: 100%"
+      style="overflow-y: auto; height: 100%; scroll-behavior: smooth"
       :data-key="'key'"
       :data-sources="tlHistory"
       :data-component="ChatMessage"

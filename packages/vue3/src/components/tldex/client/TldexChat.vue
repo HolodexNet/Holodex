@@ -68,29 +68,35 @@ const state = computed(() => chatDB.rooms.get(roomID.value)?.state);
 chatDB.loadMessages(roomID.value, tldexStore, props.archive ? 0 : 30);
 
 const currentMessageIndexes = computed(() => {
-  const elapsed = chatDB.rooms.get(roomID.value)?.elapsed;
-  const absolute = chatDB.rooms.get(roomID.value)?.absolute;
-  if (absolute) {
+  const room = roomID.value;
+  const elapsed = chatDB.rooms.get(room)?.elapsed;
+  const absolute = chatDB.rooms.get(room)?.absolute;
+  console.log(elapsed, absolute);
+  if (absolute || elapsed) {
     // gt: => [ 12, 14, 16, 32]
     // current =    15 ^
     // get the IDX of 16, rollback a couple messages and process linearly.
     let highIdx = sorted.gt(
-      chatDB.rooms.get(roomID.value)?.messages || [],
-      { timestamp: absolute * 1000 } as any,
+      chatDB.rooms.get(room)?.messages || [],
+      { timestamp: (absolute || -1) * 1000 } as any,
       ChatDB.ParsedMessageComparator
     );
-    if (highIdx == -1)
-      highIdx = chatDB.rooms.get(roomID.value)?.messages.length || -1;
+    if (highIdx == -1) highIdx = chatDB.rooms.get(room)?.messages.length || -1;
     const out: number[] = [];
-    for (let idx = Math.max(0, highIdx - 4); idx < highIdx; idx++) {
+    for (
+      let idx = Math.max(0, highIdx - 4);
+      idx < Math.min(highIdx, chatDB.rooms.get(room)?.messages.length || 0);
+      idx++
+    ) {
       if (
         isMessageCurrent(
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          chatDB.rooms.get(roomID.value)!.messages[idx],
+          chatDB.rooms.get(room)!.messages[idx],
           elapsed,
           absolute
         )
       ) {
+        console.log(idx);
         out.push(idx);
       }
     }

@@ -41,10 +41,16 @@ export function isMessageCurrent(
   elapsed?: number,
   absolute?: number
 ): boolean {
-  const duration =
-    (message.duration || message.message.length * 65 + 1800) / 1000;
-
+  const duration = (message.duration || 4000) / 1000;
   if (message.video_offset && elapsed) {
+    console.debug(
+      `[${message.video_offset}] [${
+        message.video_offset < elapsed
+      }] [${elapsed}] [${elapsed <= message.video_offset + duration}] [${
+        message.video_offset + duration
+      }]`
+    );
+
     return (
       message.video_offset < elapsed &&
       elapsed <= message.video_offset + duration
