@@ -3,7 +3,6 @@
     class="flex flex-row"
     :class="{
       'with-author': !hideAuthor,
-      'bg-primary-800 bg-opacity-30 text-primary-focus': source.is_current,
     }"
   >
     <div
@@ -84,12 +83,16 @@ export default defineComponent({
     hideAuthor: {
       type: Boolean,
     },
+    highlightedIndexes: {
+      type: Object as PropType<number[]>,
+      default: undefined,
+    },
   },
   setup() {
     const tldexStore = useTLStore();
     const favList = useFavoritesIDSet();
 
-    const { openBlockDialog } = inject("showChannelBlockDialog");
+    const { openBlockDialog } = inject("showChannelBlockDialog") as any;
     return { tldexStore, favList, openBlockDialog };
   },
   computed: {
@@ -122,6 +125,7 @@ export default defineComponent({
 .chat-message {
   cursor: pointer;
   word-break: break-word;
+  @apply block;
 }
 
 .chat-name {
@@ -155,6 +159,9 @@ export default defineComponent({
   font-size: 0.75rem;
 }
 
+.highlighted .chat-message {
+  @apply bg-primary-800 bg-opacity-30 text-primary-focus;
+}
 /* .chat-time {
   display: inline-block;
   width: 45px;

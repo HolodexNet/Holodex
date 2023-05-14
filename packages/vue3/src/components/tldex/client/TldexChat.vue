@@ -1,6 +1,6 @@
 <template>
   <div style="overflow: auto" class="flex">
-    <message-renderer :tl-history="messages">
+    <message-renderer ref="listRenderer" :tl-history="messages">
       <div
         v-if="state?.completed && !props.archive"
         class="text-md py-2 font-bold uppercase opacity-75"
@@ -32,7 +32,10 @@
 import { useTLStore } from "@/stores/tldex";
 import { TLLanguageCode } from "@/utils/consts";
 import { useSocket } from "@/stores/socket";
-import { RoomIDString } from "../core/ChatDB";
+import { RoomIDString } from "@/stores/socket_types";
+import sorted from "sorted-array-functions";
+import { ChatDB, isMessageCurrent } from "../core/ChatDB";
+import MessageRenderer from "./MessageRenderer.vue";
 
 const props = defineProps<{
   videoId: string;
@@ -52,16 +55,57 @@ const options = computed(() => ({
 // Allow temporary bypass filter togggle
 const bypassBlockedFilter = ref(false);
 const socketStore = useSocket();
-const room = socketStore.chatDB;
+const chatDB = socketStore.chatDB;
 const tldexStore = useTLStore();
+const listRenderer = ref<typeof MessageRenderer>();
 
 const roomID: ComputedRef<RoomIDString> = computed(
   () => `${props.videoId}/${props.lang}` satisfies RoomIDString
 );
-const messages = computed(() => room.rooms.get(roomID.value) || []);
-const state = computed(() => room.roomState.get(roomID.value));
+const messages = computed(() => chatDB.rooms.get(roomID.value)?.messages || []);
+const state = computed(() => chatDB.rooms.get(roomID.value)?.state);
 
-room.loadMessages(roomID.value, tldexStore, props.archive ? 0 : 30);
+chatDB.loadMessages(roomID.value, tldexStore, props.archive ? 0 : 30);
+
+const currentMessageIndexes = computed(() => {
+  const elapsed = chatDB.rooms.get(roomID.value)?.elapsed;
+  const absolute = chatDB.rooms.get(roomID.value)?.absolute;
+  if (absolute) {
+    // gt: => [ 12, 14, 16, 32]
+    // current =    15 ^
+    // get the IDX of 16, rollback a couple messages and process linearly.
+    let highIdx = sorted.gt(
+      chatDB.rooms.get(roomID.value)?.messages || [],
+      { timestamp: absolute * 1000 } as any,
+      ChatDB.ParsedMessageComparator
+    );
+    if (highIdx == -1)
+      highIdx = chatDB.rooms.get(roomID.value)?.messages.length || -1;
+    const out: number[] = [];
+    for (let idx = Math.max(0, highIdx - 4); idx < highIdx; idx++) {
+      if (
+        isMessageCurrent(
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          chatDB.rooms.get(roomID.value)!.messages[idx],
+          elapsed,
+          absolute
+        )
+      ) {
+        out.push(idx);
+      }
+    }
+
+    return out;
+  }
+  return [];
+});
+
+watchEffect(() => {
+  if (currentMessageIndexes.value?.length) {
+    console.log(currentMessageIndexes.value[0]);
+  }
+  listRenderer.value?.highlightItem(currentMessageIndexes.value);
+});
 
 onMounted(() => {
   socketStore.joinRoom(props.videoId, props.lang);

@@ -1,7 +1,7 @@
 <template>
   <div
     ref="tlBody"
-    class="tl-body p-lg-3 w-full p-2"
+    class="tl-body p-lg-3 relative w-full p-2"
     :style="{
       'font-size': fontSize + 'px',
     }"
@@ -17,6 +17,10 @@
       :data-sources="tlHistory"
       :data-component="ChatMessage"
       :estimate-size="100"
+      :item-class-add="
+        (idx) => (highlightedIndexes.includes(idx) ? 'highlighted' : '')
+      "
+      @scroll="logProps"
     >
       <!--       @resized="onItemRendered"
       @totop="onTotop"
@@ -29,6 +33,12 @@
       <!-- Header content -->
       <!-- </template> -->
     </VirtualList>
+    <div
+      class="btn-secondary btn-circle btn absolute bottom-8 right-8 p-0 text-2xl text-opacity-40 hover:text-opacity-80"
+      @click="snapped = true"
+    >
+      <div class="i-bx:reset" />
+    </div>
     <h-dialog v-model="channelBlock.showBlockChannelDialog">
       <div v-if="channelBlock.name" class="card bg-base-100 shadow-xl">
         <div class="card-body">
@@ -55,7 +65,11 @@
               class="btn-warning btn mr-1"
               @click="toggleBlockName(channelBlock.name)"
             >
-              {{ !tldexStore.blockset.has(channelBlock.name) ? "Block" : "Unblock" }}
+              {{
+                !tldexStore.blockset.has(channelBlock.name)
+                  ? "Block"
+                  : "Unblock"
+              }}
             </button>
           </div>
         </div>
@@ -88,8 +102,10 @@ export default defineComponent({
     },
     reverse: Boolean,
   },
-  setup() {
-    const snapToNow = ref(true);
+  setup(props, context) {
+    const snapped = ref(true);
+    const highlightedIndexes = ref<number[]>([]);
+    const vsl = ref<typeof VirtualList>(null);
     const tldexStore = useTLStore();
 
     const channelBlock: Ref<{
@@ -104,7 +120,11 @@ export default defineComponent({
       is_vtuber: false,
     });
 
-    function openBlockDialog(name: string, channel_id?: string, is_vtuber?: boolean) {
+    function openBlockDialog(
+      name: string,
+      channel_id?: string,
+      is_vtuber?: boolean
+    ) {
       channelBlock.value.showBlockChannelDialog = true;
       channelBlock.value.channel_id = channel_id;
       channelBlock.value.name = name;
@@ -115,12 +135,40 @@ export default defineComponent({
       openBlockDialog,
     });
 
+    function highlightItem(indexes: number[]) {
+      // scroll to the item at index
+      highlightedIndexes.value = indexes;
+      if (snapped && indexes.length > 0) {
+        vsl.value?.scrollToIndex(Math.max(...indexes));
+        console.log("scrolling to: ", Math.max(...indexes));
+      }
+    }
+
+    function perItemClass(x) {
+      return;
+    }
+
+    context.expose({ highlightItem });
+
     function toggleBlockName(name: string) {
       tldexStore.toggleBlocked(name);
       console.log(tldexStore.blockset);
     }
 
-    return { ChatMessage, channelBlock, toggleBlockName, tldexStore };
+    return {
+      ChatMessage,
+      channelBlock,
+      toggleBlockName,
+      tldexStore,
+      vsl,
+      snapped,
+      highlightedIndexes,
+    };
+  },
+  methods: {
+    logProps(...props: any) {
+      console.log(...props);
+    },
   },
 });
 </script>

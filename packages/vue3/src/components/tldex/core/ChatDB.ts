@@ -18,6 +18,57 @@ interface RoomState {
   loading: boolean;
 }
 
+interface RoomInfo {
+  messages: Array<ParsedMessage>;
+  /** Tracks the loading state of history */
+  state: RoomState;
+  /** playhead location */
+  elapsed: number;
+  /** absolute second epoch of video player @ location */
+  absolute: number;
+}
+
+/**
+ * Determines if a message is currently visible based on the elapsed time or the absolute timestamp.
+ *
+ * @param {ParsedMessage} message - The parsed message to check.
+ * @param {number} [elapsed] - The elapsed time in milliseconds.
+ * @param {number} [absolute] - The absolute timestamp in milliseconds.
+ * @return {boolean} - `true` if the message is currently visible, `false` otherwise.
+ */
+export function isMessageCurrent(
+  message: ParsedMessage,
+  elapsed?: number,
+  absolute?: number
+): boolean {
+  if (message.video_offset && elapsed) {
+    if (
+      message.video_offset < elapsed &&
+      message.video_offset +
+        (message.duration || message.message.length * 65 + 1800) / 1000 >=
+        elapsed
+    ) {
+      // console.log(message);
+      return true;
+    } else if (message.is_current) {
+      return false;
+    }
+  } else if (absolute) {
+    if (
+      +message.timestamp / 1000 < absolute &&
+      +message.timestamp / 1000 +
+        (message.duration || (message.message.length * 65 + 1800) / 1000) >=
+        absolute
+    ) {
+      // console.log(message);
+      return true;
+    } else if (message.is_current) {
+      return false;
+    }
+  }
+  return false;
+}
+
 /**
  * Defines APIs for dealing with multiple chat rooms
 
@@ -26,17 +77,11 @@ interface RoomState {
  */
 export class ChatDB {
   /** Tracks the chat messages in each room */
-  rooms: Map<RoomIDString, Array<ParsedMessage>>;
-  /** Tracks the loading state of history for each room. */
-  roomState: Map<RoomIDString, RoomState>;
-  /** where each video's elapsed timers are at */
-  playheads: Map<string, { elapsed: number; absolute: number }>;
+  rooms: Map<RoomIDString, RoomInfo>;
   videoToRoomMap: Map<string, Set<RoomIDString>>;
 
   constructor() {
     this.rooms = new Map();
-    this.roomState = new Map();
-    this.playheads = new Map();
 
     this.videoToRoomMap = new Map();
   }
@@ -93,16 +138,16 @@ export class ChatDB {
   addMessage(room: RoomIDString, message: ParsedMessage) {
     this.createRoomStateIfNotExists(room);
     sorted.add(
-      this.rooms.get(room) as ParsedMessage[],
+      this.rooms.get(room)!.messages as ParsedMessage[],
       message,
       ChatDB.ParsedMessageComparator
     );
-    if (!ChatDB.checkArrayIsUnique(this.rooms.get(room) as ParsedMessage[])) {
-      this.rooms.set(
-        room,
-        ChatDB.distinctSortedArray(this.rooms.get(room) as ParsedMessage[])
-      );
-    }
+    // if (!ChatDB.checkArrayIsUnique(this.rooms.get(room) as ParsedMessage[])) {
+    //   this.rooms.set(
+    //     room,
+    //     ChatDB.distinctSortedArray(this.rooms.get(room) as ParsedMessage[])
+    //   );
+    // }
   }
 
   /**
@@ -112,30 +157,29 @@ export class ChatDB {
    */
   addMessages(room: RoomIDString, messages: ParsedMessage[]) {
     this.createRoomStateIfNotExists(room);
-    this.rooms.get(room)?.push(...messages);
-    this.rooms.get(room)?.sort(ChatDB.ParsedMessageComparator);
-    if (!ChatDB.checkArrayIsUnique(this.rooms.get(room) as ParsedMessage[])) {
-      this.rooms.set(
-        room,
-        ChatDB.distinctSortedArray(this.rooms.get(room) as ParsedMessage[])
-      );
-    }
+    this.rooms.get(room)!.messages.push(...messages);
+    this.rooms.get(room)!.messages.sort(ChatDB.ParsedMessageComparator);
+    // if (!ChatDB.checkArrayIsUnique(this.rooms.get(room) as ParsedMessage[])) {
+    //   this.rooms.set(
+    //     room,
+    //     ChatDB.distinctSortedArray(this.rooms.get(room) as ParsedMessage[])
+    //   );
+    // }
   }
 
   createRoomStateIfNotExists(room: RoomIDString) {
     if (!this.rooms.has(room)) {
-      this.rooms.set(room, []);
+      this.rooms.set(room, {
+        messages: [],
+        state: { completed: false, loading: false },
+        elapsed: 0,
+        absolute: 0,
+      });
       const videoId = roomToVideoID(room);
       this.videoToRoomMap.set(
         videoId,
         new Set([room, ...(this.videoToRoomMap.get(videoId)?.values() ?? [])])
       );
-    }
-    if (!this.roomState.has(room)) {
-      this.roomState.set(room, {
-        completed: false,
-        loading: false,
-      });
     }
   }
 
@@ -146,42 +190,11 @@ export class ChatDB {
    * @param absolute the elapsed time + available_at time
    */
   updateRoomElapsed(video_id: string, elapsed: number, absolute: number) {
-    const now = { elapsed, absolute };
-    // console.log(now);
-    this.playheads.set(video_id, now);
-    // console.log(this.videoToRoomMap);
+    // const now = { elapsed, absolute };
     this.videoToRoomMap.get(video_id)?.forEach((room) => {
       // console.log(room);
-
-      // TODO: optimize this maybe.
-      this.rooms.get(room)?.map((message, idx) => {
-        if (message.video_offset) {
-          if (
-            message.video_offset < elapsed &&
-            message.video_offset +
-              (message.duration || message.message.length * 65 + 1800) / 1000 >=
-              elapsed
-          ) {
-            // console.log(message);
-            message.is_current = true;
-          } else if (message.is_current) {
-            message.is_current = false;
-          }
-        } else {
-          if (
-            +message.timestamp / 1000 < absolute &&
-            +message.timestamp / 1000 +
-              (message.duration ||
-                (message.message.length * 65 + 1800) / 1000) >=
-              absolute
-          ) {
-            // console.log(message);
-            message.is_current = true;
-          } else if (message.is_current) {
-            message.is_current = false;
-          }
-        }
-      });
+      this.rooms.get(room)!.elapsed = elapsed;
+      this.rooms.get(room)!.absolute = absolute;
     });
   }
 
@@ -197,10 +210,10 @@ export class ChatDB {
     partial?: number
   ) {
     this.createRoomStateIfNotExists(room);
-    if (this.roomState.get(room)!.loading) return;
+    if (this.rooms.get(room)!.state.loading) return;
 
     const countToLoad = partial || 10000;
-    const prior = this.rooms.get(room)?.[0]?.timestamp;
+    const prior = this.rooms.get(room)?.messages?.[0]?.timestamp;
 
     const videoId = roomToVideoID(room);
 
@@ -213,25 +226,25 @@ export class ChatDB {
       ...(prior && { before: prior }),
     };
 
-    this.roomState.get(room)!.loading = true;
+    this.rooms.get(room)!.state.loading = true;
     backendApi
       .chatHistory(videoId, query)
       .then(({ data }: { data: TLDexMessage[] }) => {
-        this.roomState.set(room, {
-          completed: data.length !== countToLoad,
-          loading: false,
-        });
         this.addMessages(
           room,
           data.map((x) => toParsedMessage(x, videoId))
         );
+        this.rooms.get(room)!.state = {
+          completed: data.length !== countToLoad,
+          loading: false,
+        };
       })
       .catch((e) => {
         console.error(e);
-        this.roomState.set(room, {
+        this.rooms.get(room)!.state = {
           completed: false,
           loading: false,
-        });
+        };
       });
   }
 
