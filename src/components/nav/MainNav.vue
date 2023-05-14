@@ -18,7 +18,7 @@
     </NavDrawer>
 
     <!--* nav drawer is for the left --->
-    <BottomNav v-if="isMobile" :pages="pages.filter((page) => !page.collapsible)" :active="!isWatchPage" />
+    <BottomNav v-if="isMobile" :pages="pages.filter((page) => !page.collapsible)" :active="!isWatchPage" :key="$route.path" />
     <!--* bottom bar --->
 
     <v-app-bar
