@@ -69,11 +69,6 @@ async function updatePlayerState() {
       player.value?.getVolume(),
     ]);
     currentTime.value = t;
-    console.log(
-      props.video.available_at
-        ? "available at is available"
-        : "available_at not available"
-    );
     store.updateRoomElapsed(
       props.video.id,
       t,

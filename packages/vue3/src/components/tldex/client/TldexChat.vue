@@ -100,12 +100,14 @@ const currentMessageIndexes = computed(() => {
   return [];
 });
 
-watchEffect(() => {
-  if (currentMessageIndexes.value?.length) {
-    console.log(currentMessageIndexes.value[0]);
-  }
-  listRenderer.value?.highlightItem(currentMessageIndexes.value);
-});
+// watchEffect(() => {
+//   if (currentMessageIndexes.value?.length) {
+//     console.log(currentMessageIndexes.value[0]);
+//   }
+//   listRenderer.value?.highlightItem(currentMessageIndexes.value);
+// });
+
+provide("highlightedIndexes", currentMessageIndexes);
 
 onMounted(() => {
   socketStore.joinRoom(props.videoId, props.lang);

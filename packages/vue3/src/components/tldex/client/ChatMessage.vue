@@ -83,10 +83,6 @@ export default defineComponent({
     hideAuthor: {
       type: Boolean,
     },
-    highlightedIndexes: {
-      type: Object as PropType<number[]>,
-      default: undefined,
-    },
   },
   setup(props) {
     const tldexStore = useTLStore();

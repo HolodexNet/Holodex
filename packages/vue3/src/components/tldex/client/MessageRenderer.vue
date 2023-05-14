@@ -103,7 +103,9 @@ export default defineComponent({
   },
   setup(props, context) {
     const snapped = ref(true);
-    const highlightedIndexes = ref<number[]>([]);
+    const highlightedIndexes: Ref<number[]> | undefined =
+      inject("highlightedIndexes");
+
     const vsl = ref<typeof VirtualList>(null);
     const tldexStore = useTLStore();
 
@@ -134,17 +136,24 @@ export default defineComponent({
       openBlockDialog,
     });
 
-    function highlightItem(indexes: number[]) {
-      // scroll to the item at index
-      highlightedIndexes.value = indexes;
+    watchEffect(() => {
+      const indexes = highlightedIndexes?.value ?? [];
       if (snapped && indexes.length > 0) {
         vsl.value?.scrollToIndex(Math.max(...indexes));
         console.log("scrolling to: ", Math.max(...indexes));
       }
-    }
+    });
 
-    provide("highlightedIndexes", highlightedIndexes);
-    context.expose({ highlightItem });
+    // function highlightItem(indexes: number[]) {
+    //   // scroll to the item at index
+    //   highlightedIndexes.value = indexes;
+    //   if (snapped && indexes.length > 0) {
+    //     vsl.value?.scrollToIndex(Math.max(...indexes));
+    //     console.log("scrolling to: ", Math.max(...indexes));
+    //   }
+    // }
+
+    // context.expose({ highlightItem });
 
     function toggleBlockName(name: string) {
       tldexStore.toggleBlocked(name);
