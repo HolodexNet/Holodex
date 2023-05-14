@@ -17,7 +17,7 @@
         no-link
       />
     </div>
-    <div class="basis-full">
+    <div class="basis-full" :class="hlclass">
       <div v-if="!hideAuthor" :class="nameClass">
         <span
           class="chat-name chat-caption relative"
@@ -88,12 +88,18 @@ export default defineComponent({
       default: undefined,
     },
   },
-  setup() {
+  setup(props) {
     const tldexStore = useTLStore();
     const favList = useFavoritesIDSet();
 
     const { openBlockDialog } = inject("showChannelBlockDialog") as any;
-    return { tldexStore, favList, openBlockDialog };
+    const highlightedIndex: Ref<number[]> | undefined =
+      inject("highlightedIndexes");
+
+    const hlclass = computed(() =>
+      highlightedIndex?.value.includes(props.index) ? "highlighted" : ""
+    );
+    return { tldexStore, favList, openBlockDialog, hlclass };
   },
   computed: {
     time() {

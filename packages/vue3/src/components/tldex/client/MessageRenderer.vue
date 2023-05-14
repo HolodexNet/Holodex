@@ -17,15 +17,14 @@
       :data-sources="tlHistory"
       :data-component="ChatMessage"
       :estimate-size="100"
-      :item-class-add="
-        (idx) => (highlightedIndexes.includes(idx) ? 'highlighted' : '')
-      "
       @scroll="logProps"
     >
       <!--       @resized="onItemRendered"
       @totop="onTotop"
  -->
-      <!-- <template #header> -->
+      <template #header>
+        <slot />
+      </template>
       <!-- <div v-show="overflow" class="header">
           <div v-show="!finished" class="spinner" />
           <div v-show="finished" class="finished">No More</div>
@@ -144,10 +143,7 @@ export default defineComponent({
       }
     }
 
-    function perItemClass(x) {
-      return;
-    }
-
+    provide("highlightedIndexes", highlightedIndexes);
     context.expose({ highlightItem });
 
     function toggleBlockName(name: string) {
