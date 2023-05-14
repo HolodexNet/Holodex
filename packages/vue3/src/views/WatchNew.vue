@@ -18,24 +18,22 @@
           <div class="flex items-center">
             <div class="flex items-center">
               <div v-if="video.topic_id" class="flex items-center text-sm">
-                <div class="i-fluent:tag-multiple-16-regular mr-0.5" />
+                <div class="i-fluent:tag-16-regular mr-0.5" />
                 {{ video.topic_id }}
-                &nbsp;
               </div>
 
               <div v-if="video.live_viewers" class="flex items-center text-sm">
-                <div class="i-mdi:account mr-0.5 text-lg" />
+                <div class="i-fluent:person-16-regular mr-0.5" />
                 {{ video.live_viewers }}
-                &nbsp;
               </div>
+
               <div v-if="video.available_at" class="flex items-center text-sm">
-                <div class="i-mdi:clock mr-0.5 text-lg" />
+                <div class="i-fluent:clock-16-regular mr-0.5" />
                 <video-card-live-duration
                   :video="video"
                   class="bg-transparent text-sm"
                   :class="{ 'text-red-400': video.status === 'live' }"
                 />
-                &nbsp;
               </div>
             </div>
             <div class="ml-auto flex">
@@ -45,9 +43,10 @@
               <button class="btn-icon btn-sm btn">
                 <save-to-playlist-btn :video="video" class="text-2xl" />
               </button>
-              <button class="btn-icon btn-sm btn">
-                <div class="i-mdi:dots-vertical text-2xl" />
-              </button>
+              <video-card-menu
+                :video="video"
+                btn-class="!p-0 !m-0 btn-sm btn-icon"
+              />
             </div>
           </div>
           <div class="flex items-center">
@@ -59,13 +58,13 @@
             <div>
               <div class="line-clamp-2 font-bold">{{ preferredTitle }}</div>
               <span class="opacity-80">{{ preferredChannelName }}</span>
+              <!-- <button class="btn-text btn-xs btn ml-auto text-primary">
+                <div class="i-mdi:heart" />
+              </button>
+              <button class="btn-text btn-xs btn text-primary">
+                <div class="i-mdi:share" />
+              </button>-->
             </div>
-            <button class="btn-icon btn-sm btn ml-auto text-primary">
-              <div class="i-mdi:heart text-xl" />
-            </button>
-            <button class="btn-icon btn-sm btn text-primary">
-              <div class="i-mdi:share text-xl" />
-            </button>
           </div>
           <div
             v-if="video.mentions"
@@ -140,8 +139,8 @@ watch(
  * @TODO:
  *
  * [ ] Favorite button hookup
- * [ ] Share link hookup
- * [ ] Dropdown menu items.
+ * [x] Share link hookup
+ * [x] Dropdown menu items.
  * [ ] When this window is too small, it doesn't autoscale the video to fit. Is that desirable? :think:
  * [ ] Top bar should be retractable (if necessary)
  * [ ] Sidebar should be retractable (side bar should always retract?)
@@ -176,5 +175,6 @@ $nav-bar-height: 56px;
   height: calc(100vh - $nav-bar-height);
   position: fixed;
   right: 0;
+  resize: horizontal;
 }
 </style>

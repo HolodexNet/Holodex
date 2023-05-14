@@ -196,6 +196,7 @@ export class ChatDB {
     preferences: TLDexStoreState,
     partial?: number
   ) {
+    console.log("[Load message] room:", room, "partial:", partial);
     this.createRoomStateIfNotExists(room);
     if (this.rooms.get(room)!.state.loading) return;
 

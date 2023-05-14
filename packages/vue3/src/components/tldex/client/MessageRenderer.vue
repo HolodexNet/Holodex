@@ -33,6 +33,7 @@
       <!-- </template> -->
     </VirtualList>
     <div
+      v-if="snapped === false"
       class="btn-secondary btn-circle btn absolute bottom-8 right-8 p-0 text-2xl text-opacity-40 hover:text-opacity-80"
       @click="snapped = true"
     >
