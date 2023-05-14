@@ -17,7 +17,7 @@
       :data-sources="tlHistory"
       :data-component="ChatMessage"
       :estimate-size="100"
-      @scroll="logProps"
+      @scroll="scrollHandler"
     >
       <!--       @resized="onItemRendered"
       @totop="onTotop"
@@ -103,6 +103,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const snapped = ref(true);
+    const expectingScroll = ref(false);
     const highlightedIndexes: Ref<number[]> | undefined =
       inject("highlightedIndexes");
 
@@ -139,8 +140,9 @@ export default defineComponent({
     watchEffect(() => {
       const indexes = highlightedIndexes?.value ?? [];
       if (snapped && indexes.length > 0) {
+        expectingScroll.value = true;
         vsl.value?.scrollToIndex(Math.max(...indexes));
-        console.log("scrolling to: ", Math.max(...indexes));
+        console.log("scrolling to: ", highlightedIndexes.value);
       }
     });
 
@@ -160,6 +162,11 @@ export default defineComponent({
       console.log(tldexStore.blockset);
     }
 
+    function scrollHandler(evt) {
+      if (!expectingScroll.value) snapped.value = false;
+      else expectingScroll.value = false;
+    }
+
     return {
       ChatMessage,
       channelBlock,
@@ -168,6 +175,7 @@ export default defineComponent({
       vsl,
       snapped,
       highlightedIndexes,
+      scrollHandler,
     };
   },
   methods: {

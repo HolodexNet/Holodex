@@ -32,8 +32,8 @@ interface RoomInfo {
  * Determines if a message is currently visible based on the elapsed time or the absolute timestamp.
  *
  * @param {ParsedMessage} message - The parsed message to check.
- * @param {number} [elapsed] - The elapsed time in milliseconds.
- * @param {number} [absolute] - The absolute timestamp in milliseconds.
+ * @param {number} [elapsed] - The elapsed time in seconds.
+ * @param {number} [absolute] - The absolute timestamp in seconds.
  * @return {boolean} - `true` if the message is currently visible, `false` otherwise.
  */
 export function isMessageCurrent(
@@ -45,12 +45,11 @@ export function isMessageCurrent(
     if (
       message.video_offset < elapsed &&
       message.video_offset +
-        (message.duration || message.message.length * 65 + 1800) / 1000 >=
+        (message.duration || (message.message.length * 65 + 1800) / 1000) >=
         elapsed
     ) {
-      // console.log(message);
       return true;
-    } else if (message.is_current) {
+    } else {
       return false;
     }
   } else if (absolute) {
@@ -60,9 +59,8 @@ export function isMessageCurrent(
         (message.duration || (message.message.length * 65 + 1800) / 1000) >=
         absolute
     ) {
-      // console.log(message);
       return true;
-    } else if (message.is_current) {
+    } else {
       return false;
     }
   }

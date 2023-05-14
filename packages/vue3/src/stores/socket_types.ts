@@ -76,7 +76,7 @@ export function toParsedMessage(
     // ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),
     key: msg.name + msg.timestamp + msg.message,
     parsed: "",
-    duration: msg.duration ?? msg.message.length * 65 + 1800,
+    duration: msg.duration ?? (msg.message.length * 65 + 1800) / 1000,
     video_id,
   };
   // Check if there's any emojis represented as URLs formatted by backend
