@@ -69,7 +69,9 @@ interface UseConfirmOptions {
   confirmText?: string;
   cancelText?: string;
 
+  /** hook if cancelled. If not provided, the open method will still provide an async promise. */
   cancelFn?: () => void;
+  /** hook if confirmed. If not provided, the open method will still provide an async promise. */
   confirmFn?: () => void;
 }
 /**
@@ -80,35 +82,41 @@ interface UseConfirmOptions {
  */
 export const useConfirm = (globalProps: UseConfirmOptions) => {
   return {
-    open(options: UseConfirmOptions) {
+    async open(options: UseConfirmOptions) {
       const { cancelFn, confirmFn, ...props } = Object.assign(
         {},
         globalProps,
         options
       );
       const opts: UseConfirmOptions = props;
-      let destroy: null | (() => void) = null;
-      function onDismiss() {
-        setTimeout(() => {
-          destroy?.();
-        }, 100);
-      }
-      opts.cancelFn = () => {
-        cancelFn?.();
-        onDismiss();
-      };
-      opts.confirmFn = () => {
-        confirmFn?.();
-        onDismiss();
-      };
 
-      const instance = mount(HConfirm, {
-        props: opts,
-        element: document.body,
+      const promise = new Promise<boolean>((resolve, reject) => {
+        let destroy: null | (() => void) = null;
+
+        function onDismiss() {
+          setTimeout(() => {
+            destroy?.();
+          }, 100);
+        }
+        opts.cancelFn = () => {
+          cancelFn?.();
+          resolve(false);
+          onDismiss();
+        };
+        opts.confirmFn = () => {
+          confirmFn?.();
+          resolve(true);
+          onDismiss();
+        };
+
+        const instance = mount(HConfirm, {
+          props: opts,
+          element: document.body,
+        });
+        destroy = instance.destroy;
       });
-      destroy = instance.destroy;
 
-      return instance;
+      return promise;
     },
   };
 };
