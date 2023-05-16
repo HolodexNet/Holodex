@@ -1,68 +1,42 @@
 <template>
-  <v-container fluid style="max-height: 100vh; padding: 0px 12px">
+  <div class="max-h-full p-2">
     <div class="flex flex-grow flex-col" style="height: 98vh; width: 100%">
-      <div height="30" class="tl-topbar justify-start px-0" color="secondary">
-        <v-btn size="small" variant="outlined" to="/">
-          <v-icon>{{ icons.mdiHome }}</v-icon>
+      <div
+        height="30"
+        class="tl-topbar btn-group justify-start px-0"
+        color="secondary"
+      >
+        <h-btn small to="/" icon="i-material-symbols:home-outline-rounded">
           {{ $t("component.mainNav.home") }}
-        </v-btn>
-        <v-btn
-          size="small"
-          variant="outlined"
-          @click="
-            modalMode = 3;
-            modalNexus = true;
-          "
-        >
+        </h-btn>
+        <h-btn small @click="configModal = true">
           {{ $t("views.tlClient.menu.setting") }}
-        </v-btn>
-        <v-btn
-          size="small"
-          variant="outlined"
-          :to="activeChat.length && `/scripteditor?video=${activeChat[0].text}`"
+        </h-btn>
+        <h-btn
+          small
+          :to="
+            activeChat.length
+              ? `/scripteditor?video=${activeChat[0].text}`
+              : undefined
+          "
         >
           {{ $t("component.videoCard.openScriptEditor") }}
-        </v-btn>
-        <v-spacer />
-        <v-btn
-          v-if="!vidPlayer"
-          size="small"
-          variant="outlined"
-          @click="loadVideo()"
-        >
+        </h-btn>
+        <div class="mx-auto w-auto" />
+        <h-btn v-if="!vidPlayer" small @click="loadVideo()">
           {{ $t("views.tlClient.menu.loadVideo") }}
-        </v-btn>
-        <v-btn
-          v-if="vidPlayer"
-          size="small"
-          variant="outlined"
-          @click="unloadVideo()"
-        >
+        </h-btn>
+        <h-btn v-if="vidPlayer" small @click="unloadVideo()">
           {{ $t("views.tlClient.menu.unloadVideo") }}
-        </v-btn>
-        <v-spacer />
+        </h-btn>
+        <!-- <div class="mx-auto w-auto" /> -->
 
-        <v-btn
-          size="small"
-          variant="outlined"
-          @click="
-            modalMode = 4;
-            modalNexus = true;
-            activeURLStream = '';
-          "
-        >
+        <h-btn small @click="promptAddChat">
           {{ $t("views.tlClient.menu.loadChat") }}
-        </v-btn>
-        <v-btn
-          size="small"
-          variant="outlined"
-          @click="
-            modalMode = 5;
-            modalNexus = true;
-          "
-        >
+        </h-btn>
+        <h-btn small @click="promptCloseAllChat">
           {{ $t("views.tlClient.menu.unloadChat") }}
-        </v-btn>
+        </h-btn>
       </div>
       <div
         class="flex flex-row items-stretch"
@@ -188,8 +162,8 @@
           >
             <p class="text-center" style="margin-top: 5px">
               {{ ChatURL.text }}
-              <v-icon class="float-right" @click="closeActiveChat(index)">
-                {{ mdiCloseCircle }}
+              <v-icon class="float-right" @click="unloadChatAtIndex(index)">
+                {{ "mdiCloseCircle" }}
               </v-icon>
             </p>
             <iframe
@@ -256,7 +230,7 @@
                 : $t("views.tlClient.tlControl.showSetting")
             }}
             <v-icon>
-              {{ TLSetting ? mdiCogOff : mdiCog }}
+              {{ TLSetting ? "mdiCogOff" : "mdiCog" }}
             </v-icon>
           </v-btn>
         </h-row>
@@ -265,12 +239,12 @@
             <v-card-subtitle>
               Current Profile [{{ profile[profileIdx].Name }}] Settings
               <v-icon class="float-right" @click="TLSetting = false">
-                {{ icons.mdiClose }}
+                {{ "icons.mdiClose" }}
               </v-icon>
               <h-tooltip placement="left">
                 <template #activator>
                   <v-icon class="float-right">
-                    {{ mdiKeyboard }}
+                    {{ "mdiKeyboard" }}
                   </v-icon>
                 </template>
                 <span>While typing in TL box</span>
@@ -304,35 +278,6 @@
                 hide-details
                 class="mr-2"
               />
-              <!--
-                  <v-checkbox
-                    v-model="profile[profileIdx].useCC"
-                    class="shrink"
-                    :label="$t('views.tlClient.tlControl.fontColour') + ' : '"
-                    hide-details
-                  />
-                  <v-btn
-                    class="ColourButton"
-                    small
-                    :style="{ background: profile[profileIdx].CC }"
-                    @click.stop="colourTemp = profile[profileIdx].CC; colourPick = 1; colourDialogue = true;"
-                  >
-                    {{ profile[profileIdx].CC }}
-                  </v-btn>
-                  <v-checkbox
-                    v-model="profile[profileIdx].useOC"
-                    :label="$t('views.tlClient.tlControl.outlineColour') + ' : '"
-                    hide-details
-                  />
-                  <v-btn
-                    class="ColourButton"
-                    small
-                    :style="{ background: profile[profileIdx].OC }"
-                    @click.stop="colourTemp = profile[profileIdx].OC; colourPick = 2; colourDialogue = true;"
-                  >
-                    {{ profile[profileIdx].OC }}
-                  </v-btn>
-                  -->
               <v-spacer />
               <v-text-field
                 v-model="localPrefix"
@@ -343,22 +288,12 @@
               />
             </v-card-text>
             <v-card-text>
-              <v-btn
-                style="margin-right: 5px"
-                @click="
-                  modalMode = 1;
-                  modalNexus = true;
-                  addProfileNameString = 'Profile ' + profile.length;
-                "
-              >
+              <v-btn style="margin-right: 5px" @click="addProfile">
                 {{ $t("views.tlClient.tlControl.addProfile") }}
               </v-btn>
               <v-btn
                 style="margin-right: 5px"
-                @click="
-                  modalMode = 2;
-                  modalNexus = true;
-                "
+                @click="profile.splice(profileIdx, 1)"
               >
                 {{ $t("views.tlClient.tlControl.removeProfile") }} ({{
                   profile[profileIdx].Name
@@ -376,240 +311,88 @@
       </v-container>
     </div>
 
-    <!---------   COLOUR MODAL --------->
-    <h-dialog
-      v-model="colourDialogue"
-      max-width="300px"
-      @click:outside.prevent="colourPickerClose()"
-    >
-      <v-card>
-        <ColorPicker
-          v-if="colourPick === 1 || colourPick === 2"
-          class="p-0"
-          theme="dark"
-          :color="
-            colourPick === 1 ? profile[profileIdx].CC : profile[profileIdx].OC
-          "
-          :colors-default="[]"
-          sucker-hide
-          @change-color="({hex}: any) => colourPick === 1 ? (profile[profileIdx].CC = hex) : (profile[profileIdx].OC = hex)"
-        />
-
-        <v-card-title :style="textStyle" style="font-weight: bold">
-          {{ $t("views.tlClient.pangram") }}
-        </v-card-title>
-        <v-card-actions>
-          <v-btn @click="colourPickerClose()">
-            {{ $t("views.tlClient.cancelBtn") }}
-          </v-btn>
-
-          <v-btn style="margin-left: auto" @click="colourPickerOK()">
-            {{ $t("views.tlClient.okBtn") }}
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </h-dialog>
-    <!--========   COLOUR MODAL =======-->
-
-    <!---------   NEXUS MODAL ---------
-      1 Add profile
-      2 Remove Profile
-      3 Setting
-      4 Load Chat
-      5 Unload Chat ALL
-    -->
-    <h-dialog
-      v-model="modalNexus"
-      max-width="600px"
-      persistent
-      @click:outside="modalNexusOutsideClick()"
-    >
-      <!---------    ADD PROFILE     --------->
-      <v-card v-if="modalMode === 1">
-        <v-container>
-          <v-card-title>
-            {{ $t("views.tlClient.addProfilePanel.title") }}
-          </v-card-title>
-          <v-text-field
-            v-model="addProfileNameString"
-            :label="$t('views.tlClient.addProfilePanel.inputLabel')"
-            :placeholder="$t('views.tlClient.addProfilePanel.inputLabel')"
-            dense
-            rounded
-            outlined
-          />
-          <v-card-actions>
-            <v-btn @click="modalNexus = false">
-              {{ $t("views.tlClient.cancelBtn") }}
-            </v-btn>
-
-            <v-btn style="margin-left: auto" @click="addProfile()">
-              {{ $t("views.tlClient.okBtn") }}
-            </v-btn>
-          </v-card-actions>
-        </v-container>
-      </v-card>
-
-      <!---------    Remove PROFILE     --------->
-      <v-card v-if="modalMode === 2">
-        <v-container>
-          <v-card-title>
-            {{
-              $t("views.tlClient.removeProfileTitle") +
-              " " +
-              profile[profileIdx].Name
-            }}.
-          </v-card-title>
-          <v-card-actions>
-            <v-btn @click="modalNexus = false">
-              {{ $t("views.tlClient.cancelBtn") }}
-            </v-btn>
-
-            <v-btn style="margin-left: auto" @click="deleteProfile()">
-              {{ $t("views.tlClient.okBtn") }}
-            </v-btn>
-          </v-card-actions>
-        </v-container>
-      </v-card>
-
-      <!---------    SETTING     --------->
-      <v-card v-if="modalMode === 3">
-        <v-container>
-          <v-card-title>
+    <h-dialog v-model="configModal" persistent>
+      <div class="card card-side bg-base-100 shadow-xl">
+        <div class="card-body max-w-md shrink-0">
+          <h2 class="card-title">
             {{ $t("views.tlClient.settingPanel.title") }}
-          </v-card-title>
-          <v-card-subtitle>
-            {{
-              $t("views.watch.uploadPanel.usernameText") +
-              " : " +
-              user.username +
-              " "
-            }}
+          </h2>
+          <div class="border-1 border-bgColor-50">
+            {{ $t("views.watch.uploadPanel.usernameText") + " : " }}
+            <span>{{ user?.username }}</span>
             <a
               style="text-decoration: underline; font-size: 0.7em"
               @click="changeUsernameClick()"
             >
               {{ $t("views.watch.uploadPanel.usernameChange") }}
             </a>
-          </v-card-subtitle>
-          <v-select
-            v-model="TLLang"
-            :items="TL_LANGS"
-            item-title="text"
-            item-value="value"
-            :label="$t('views.watch.uploadPanel.tlLang')"
-            return-object
-            @change="localPrefix = '[' + TLLang.value + '] '"
-          />
-          <v-text-field
-            v-model="mainStreamLink"
-            :label="$t('views.tlClient.settingPanel.mainStreamLink')"
-            :readonly="$route.query.video ? true : false"
-          />
-          <v-card-title>
-            {{ $t("views.tlClient.settingPanel.collabLink") }}
-          </v-card-title>
-          <v-text-field
-            v-for="(AuxLink, index) in collabLinks"
-            :key="index"
-            v-model="collabLinks[index]"
-            :append-outer-icon="mdiPlusCircle"
-            :prepend-icon="mdiMinusCircle"
-            style="margin-left: 17px"
-            @click:prepend="deleteAuxLink(index)"
-            @click:append-outer="collabLinks.push('')"
-          />
-          <v-card-actions class="flex flex-row justify-center">
-            <v-btn @click="settingOKClick()">
-              {{ $t("views.tlClient.okBtn") }}
-            </v-btn>
-          </v-card-actions>
-        </v-container>
-      </v-card>
-
-      <!-------  LOAD ACTIVE CHAT ------->
-      <v-card v-if="modalMode === 4">
-        <v-container>
-          <v-card-title>
-            {{ $t("views.tlClient.loadChatPanel.title") }}
-          </v-card-title>
-          <v-text-field
-            v-model="activeURLStream"
-            :label="$t('views.tlClient.loadChatPanel.inputLabel')"
-          />
-          <v-card-actions>
-            <v-btn @click="modalNexus = false">
-              {{ $t("views.tlClient.cancelBtn") }}
-            </v-btn>
-
-            <v-btn
-              style="margin-left: auto"
-              @click="
-                loadChat(activeURLStream);
-                modalNexus = false;
+          </div>
+          <div>
+            <h-input :title="$t('views.watch.uploadPanel.tlLang')">
+              <template #input>
+                <h-select
+                  v-model="TLLang"
+                  :items="TL_LANGS"
+                  item-title="text"
+                  item-value="value"
+                  return-object
+                  @change="localPrefix = '[' + TLLang.value + '] '"
+                />
+              </template>
+            </h-input>
+          </div>
+          <div>
+            <h-input
+              v-model="mainStreamLink"
+              :title="$t('views.tlClient.settingPanel.mainStreamLink')"
+            />
+            <figure v-if="thumbnail">
+              <img :src="thumbnail" />
+            </figure>
+          </div>
+          <div>
+            <h-input
+              v-for="(_, index) in collabLinks"
+              :key="'collab-link' + index"
+              v-model="collabLinks[index]"
+              :title="
+                index == 0 ? $t('views.tlClient.settingPanel.collabLink') : ''
               "
             >
+              <template #prepend>
+                <h-btn
+                  class="btn-info !h-12"
+                  icon="i-mdi:minus-circle"
+                  @click="deleteAuxLink(index)"
+                />
+              </template>
+              <template #append>
+                <h-btn
+                  class="btn-info !h-12"
+                  icon="i-mdi:plus-circle"
+                  @click="collabLinks.push('')"
+                />
+              </template>
+            </h-input>
+          </div>
+          <div class="card-actions mt-6 justify-stretch">
+            <h-btn class="btn-primary w-full" @click="settingOKClick()">
               {{ $t("views.tlClient.okBtn") }}
-            </v-btn>
-          </v-card-actions>
-        </v-container>
-      </v-card>
-
-      <!-------  UNLOAD ALL ACTIVE CHAT ------->
-      <v-card v-if="modalMode === 5">
-        <v-container>
-          <v-card-title>
-            {{ $t("views.tlClient.unloadChatTitle") }}
-          </v-card-title>
-          <v-card-actions>
-            <v-btn @click="modalNexus = false">
-              {{ $t("views.tlClient.cancelBtn") }}
-            </v-btn>
-
-            <v-btn
-              style="margin-left: auto"
-              @click="
-                unloadAll();
-                modalNexus = false;
-              "
-            >
-              {{ $t("views.tlClient.okBtn") }}
-            </v-btn>
-          </v-card-actions>
-        </v-container>
-      </v-card>
+            </h-btn>
+          </div>
+        </div>
+      </div>
     </h-dialog>
-    <!--========   NEXUS MODAL =======-->
-    <v-snackbar
-      v-if="errorMessage"
-      v-model="showErrorAlert"
-      color="error"
-      dismissible
-      absolute
-      timeout="4000"
-      bottom
-    >
-      {{ errorMessage }}
-    </v-snackbar>
-  </v-container>
+  </div>
 </template>
 
 <script lang="ts">
 import { TL_LANGS } from "@/utils/consts";
-import {
-  mdiPlusCircle,
-  mdiMinusCircle,
-  mdiCloseCircle,
-  mdiKeyboard,
-  mdiCog,
-  mdiCogOff,
-} from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { useSiteStore } from "@/stores";
 import { Profile } from "./types";
-import { ColorPicker } from "vue-color-kit";
-import "vue-color-kit/dist/vue-color-kit.css";
+import { getVideoThumbnails } from "@/utils/functions";
 
 export default defineComponent({
   name: "Tlclient",
@@ -620,7 +403,7 @@ export default defineComponent({
       },
     };
   },
-  components: { ColorPicker },
+  components: {},
   setup() {
     const site = useSiteStore();
 
@@ -634,12 +417,12 @@ export default defineComponent({
   data() {
     return {
       TL_LANGS,
-      mdiPlusCircle,
-      mdiMinusCircle,
-      mdiCloseCircle,
-      mdiCog,
-      mdiKeyboard,
-      mdiCogOff,
+      // mdiPlusCircle,
+      // mdiMinusCircle,
+      // mdiCloseCircle,
+      // mdiCog,
+      // mdiKeyboard,
+      // mdiCogOff,
       TLSetting: true,
       firstLoad: true,
       profile: [
@@ -656,17 +439,11 @@ export default defineComponent({
       profileContainer: {},
       profileIdx: 0,
       profileDisplay: false,
-      profileDisplayTimer: undefined,
+      profileDisplayTimer: undefined as undefined | number,
       inputString: "",
       localPrefix: `[${TL_LANGS[0].value}] `,
-      // ------ COLOUR -------
-      colourPick: 0,
-      colourDialogue: false,
-      colourTemp: "",
       // ------ MODAL --------
-      modalNexus: true,
-      modalMode: 3,
-      addProfileNameString: "",
+      configModal: true,
       // ------ SETTING ------
       TLLang: { ...TL_LANGS[0] },
       mainID: "",
@@ -695,20 +472,12 @@ export default defineComponent({
     };
   },
   computed: {
-    // ...mapState("tlclient", ["video", "isLoading", "hasError"]),
-    textStyle() {
-      return {
-        "-webkit-text-fill-color":
-          this.profile[this.profileIdx].CC === ""
-            ? "unset"
-            : this.profile[this.profileIdx].CC,
-        "-webkit-text-stroke-color":
-          this.profile[this.profileIdx].OC === ""
-            ? "unset"
-            : this.profile[this.profileIdx].OC,
-        "-webkit-text-stroke-width":
-          this.profile[this.profileIdx].OC === "" ? "0px" : "1px",
-      };
+    thumbnail() {
+      const vid = getVideoIDFromUrl(this.mainStreamLink);
+      if (vid && vid.type === "yt" && vid.id.length === 11) {
+        return getVideoThumbnails(vid.id, false).maxres;
+      }
+      return "";
     },
     activeChatGridRow() {
       if (this.activeChat.length < 4) {
@@ -744,7 +513,7 @@ export default defineComponent({
     this.init();
     if (localStorage.getItem("Holodex-TLClient")) {
       const defaultSetting = JSON.parse(
-        localStorage.getItem("Holodex-TLClient")
+        localStorage.getItem("Holodex-TLClient") as any
       );
       if (defaultSetting.tlChatHeight) {
         this.tlChatHeight = defaultSetting.tlChatHeight;
@@ -758,10 +527,11 @@ export default defineComponent({
     }
   },
   methods: {
+    getVideoIDFromUrl,
+    getVideoThumbnails,
     init() {
       this.firstLoad = true;
-      this.modalNexus = true;
-      this.modalMode = 3;
+      this.configModal = true;
       this.unloadVideo();
       this.unloadAll();
       this.checkLoginValidity();
@@ -930,11 +700,8 @@ export default defineComponent({
     deleteAuxLink(idx: number) {
       if (this.collabLinks.length !== 1) {
         this.collabLinks.splice(idx, 1);
-      }
-    },
-    modalNexusOutsideClick() {
-      if (this.modalMode !== 3) {
-        this.modalNexus = false;
+      } else {
+        this.collabLinks = [""];
       }
     },
     settingOKClick() {
@@ -946,7 +713,7 @@ export default defineComponent({
       this.mainID = parseVideoID.id;
 
       this.localPrefix = `[${this.TLLang.value}] `;
-      this.modalNexus = false;
+      this.configModal = false;
       if (this.firstLoad) {
         this.loadChat(this.mainStreamLink);
         this.loadVideo();
@@ -1008,21 +775,15 @@ export default defineComponent({
       this.showProfileList();
     },
     addProfile() {
-      if (this.addProfileNameString.trim() === "") {
-        this.addProfileNameString = `Profile ${this.profile.length}`;
+      let profileName = prompt(
+        this.$t("views.tlClient.addProfilePanel.title"),
+        this.$t("views.tlClient.addProfilePanel.inputLabel")
+      )?.trim();
+      if (!profileName) {
+        profileName = `Profile ${this.profile.length}`;
       }
-      this.profile.push({
-        Name: this.addProfileNameString,
-        Prefix: "",
-        Suffix: "",
-        useCC: false,
-        CC: "#000000",
-        useOC: false,
-        OC: "#000000",
-      });
-      this.profileIdx = this.profile.length - 1;
-      this.modalNexus = false;
-      this.showProfileList();
+
+      // TODO store.addProfile(profileName);
     },
     deleteProfile() {
       if (this.profileIdx !== 0) {
@@ -1052,7 +813,13 @@ export default defineComponent({
     unloadAll() {
       this.activeChat = [];
     },
-    closeActiveChat(idx: number) {
+    promptCloseAllChat() {
+      const res = confirm(this.$t("views.tlClient.unloadChatTitle"));
+      if (res) {
+        this.unloadAll();
+      }
+    },
+    unloadChatAtIndex(idx: number) {
       this.activeChat.splice(idx, 1);
     },
     URLExtender(s: string) {
@@ -1069,6 +836,17 @@ export default defineComponent({
 
         default:
           return "";
+      }
+    },
+    promptAddChat() {
+      const res = prompt(
+        this.$t("views.tlClient.loadChatPanel.title") +
+          ": " +
+          this.$t("views.tlClient.loadChatPanel.inputLabel"),
+        "https://youtube.com/watch?v=..."
+      );
+      if (res) {
+        this.loadChat(res);
       }
     },
     loadChat(s: string) {
@@ -1367,17 +1145,6 @@ export default defineComponent({
     },
     // ================================= LAYOUT CONTROLLER =================================
 
-    colourPickerClose() {
-      if (this.colourPick === 1) {
-        this.profile[this.profileIdx].CC = this.colourTemp;
-      } else if (this.colourPick === 2) {
-        this.profile[this.profileIdx].OC = this.colourTemp;
-      }
-      this.colourDialogue = false;
-    },
-    colourPickerOK() {
-      this.colourDialogue = false;
-    },
     async checkLoginValidity() {
       const check = await backendApi.loginIsValid(this.jwt);
       if (check === false) {
@@ -1392,7 +1159,7 @@ export default defineComponent({
       }
     },
     changeUsernameClick() {
-      this.$router.push({ path: "/login" });
+      window.open("/login", "_self");
     },
   },
 });
