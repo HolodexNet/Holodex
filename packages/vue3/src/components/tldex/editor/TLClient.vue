@@ -201,7 +201,7 @@
         @keydown.ctrl.8.exact.prevent="profileJump(8)"
       >
         <h-row>
-          <v-text-field
+          <h-input
             v-model="inputString"
             placeholder="Type TL Here <Enter key to send>"
             outlined
@@ -219,7 +219,7 @@
                 {{ profile[profileIdx].Suffix }}
               </span>
             </template>
-          </v-text-field>
+          </h-input>
           <v-btn large class="mx-2" @click="addEntry()">
             {{ $t("views.tlClient.tlControl.enterBtn") }}
           </v-btn>
@@ -262,29 +262,20 @@
               </h-tooltip>
             </v-card-subtitle>
             <v-card-text class="align-stretch flex">
-              <v-text-field
+              <h-input
                 v-model="profile[profileIdx].Prefix"
-                :label="$t('views.tlClient.tlControl.prefix')"
-                dense
-                variant="outlined"
-                hide-details
+                :title="$t('views.tlClient.tlControl.prefix')"
                 class="mr-2"
               />
-              <v-text-field
+              <h-input
                 v-model="profile[profileIdx].Suffix"
-                :label="$t('views.tlClient.tlControl.suffix')"
-                dense
-                variant="outlined"
-                hide-details
+                :title="$t('views.tlClient.tlControl.suffix')"
                 class="mr-2"
               />
               <v-spacer />
-              <v-text-field
+              <h-input
                 v-model="localPrefix"
-                :label="$t('views.tlClient.tlControl.localPrefix')"
-                dense
-                variant="outlined"
-                hide-details
+                :title="$t('views.tlClient.tlControl.localPrefix')"
               />
             </v-card-text>
             <v-card-text>
@@ -417,12 +408,6 @@ export default defineComponent({
   data() {
     return {
       TL_LANGS,
-      // mdiPlusCircle,
-      // mdiMinusCircle,
-      // mdiCloseCircle,
-      // mdiCog,
-      // mdiKeyboard,
-      // mdiCogOff,
       TLSetting: true,
       firstLoad: true,
       profile: [
@@ -649,7 +634,7 @@ export default defineComponent({
       });
 
       const bodydt = {
-        name: this.user.username,
+        name: this.userdata.user.username,
         timestamp: Date.now(),
         message:
           this.profile[this.profileIdx].Prefix +
@@ -666,7 +651,13 @@ export default defineComponent({
 
       // SEND TO API
       backendApi
-        .postTL(this.mainID, this.jwt, this.TLLang.value, bodydt)
+        .postTL({
+          videoId: this.video?.id || "custom",
+          jwt: this.userdata.jwt,
+          lang: this.TLLang.value,
+          ...(!this.video?.id && { custom_video_id: this.mainStreamLink }),
+          body: bodydt,
+        })
         .then(({ status, data }) => {
           if (status !== 200) {
             console.log(`ERR : ${data}`);
@@ -676,23 +667,31 @@ export default defineComponent({
           console.log(`ERR : ${err}`);
         });
 
-      this.collabLinkIDs.forEach((e) => {
-        if (e && e.id) {
-          backendApi
-            .postTL(e.id, this.jwt, this.TLLang.value, bodydt)
-            .then(({ status, data }) => {
-              if (status !== 200) {
-                console.log(`ERR : ${data}`);
-                this.errorMessage = data;
-                this.showError = true;
-              }
-            })
-            .catch((err) => {
-              console.log(`ERR : ${err}`);
-              this.errorMessage = err;
+      this.collabLinks.forEach((link) => {
+        if (!link) return;
+        // TODO: this doesn't make complete sense
+        // Not all YT videos are able to be submitted normally
+        const ytVideoId = link.match(VIDEO_URL_REGEX)?.groups.id;
+        backendApi
+          .postTL({
+            videoId: ytVideoId || "custom",
+            jwt: this.userdata.jwt,
+            lang: this.TLLang.value,
+            ...(!ytVideoId && { custom_video_id: link }),
+            body: bodydt,
+          })
+          .then(({ status, data }) => {
+            if (status !== 200) {
+              console.log(`ERR : ${data}`);
+              this.errorMessage = data;
               this.showError = true;
-            });
-        }
+            }
+          })
+          .catch((err) => {
+            console.log(`ERR : ${err}`);
+            this.errorMessage = err;
+            this.showError = true;
+          });
       });
 
       this.inputString = "";

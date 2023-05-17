@@ -396,23 +396,41 @@ export default {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
-  postTL(videoID: any, jwt: any, langCode: any, body: any) {
-    return axiosInstance_v2.post(
-      `/videos/${videoID}/chats?lang=${langCode}`,
-      body,
-      {
-        headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-      }
-    );
+  postTL({
+    videoId,
+    jwt,
+    body,
+    lang,
+    custom_video_id,
+  }: {
+    videoId: string;
+    jwt: string;
+    body: any;
+    lang: string;
+    custom_video_id?: string;
+  }) {
+    const q = stringifyQuery({ lang, custom_video_id });
+    return axiosInstance_v2.post(`/videos/${videoId}/chats?${q}`, body, {
+      headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+    });
   },
-  postBulkTL(videoID: any, jwt: any, langCode: any, body: any) {
-    return axiosInstance_v2.post(
-      `/videos/${videoID}/chatsBulk?lang=${langCode}`,
-      body,
-      {
-        headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-      }
-    );
+  postBulkTL({
+    videoId,
+    jwt,
+    body,
+    lang,
+    custom_video_id,
+  }: {
+    videoId: string;
+    jwt: string;
+    body: any;
+    lang: string;
+    custom_video_id?: string;
+  }) {
+    const q = stringifyQuery({ lang, custom_video_id });
+    return axiosInstance_v2.post(`/videos/${videoId}/chatsBulk?${q}`, body, {
+      headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+    });
   },
   getTLStats(jwt: any, query: Record<any, unknown> | undefined) {
     const q = stringifyQuery(query);
