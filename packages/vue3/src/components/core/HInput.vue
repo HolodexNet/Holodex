@@ -6,7 +6,7 @@
         {{ subtitle }}
       </span>
     </label>
-    <div class="input-group" :class="{ 'shadow shadow-error': error }">
+    <div class="h-group input-group" :class="{ 'shadow shadow-error': error }">
       <slot name="prepend" />
       <slot name="input">
         <input
@@ -14,7 +14,7 @@
           v-model="localValue"
           v-bind="$attrs"
           type="text"
-          class="input-bordered input w-full border-solid bg-bgColor-500"
+          class="input-anchor input-bordered input w-full border-solid bg-bgColor-500"
         />
         <textarea
           v-if="as === 'textarea'"
@@ -79,12 +79,21 @@ export default defineComponent({
   },
 });
 </script>
+F
 
-<style scoped>
-.input-group > :first-child:last-child {
+<style lang="scss">
+.input-group.h-group > :first-child:last-child {
   border-radius: var(--rounded-btn, 0.5rem);
 }
-.input-group > :not(span) :where(span) {
+.input-group.h-group > :not(span) :where(span) {
   background-color: unset;
+}
+.h-group {
+  & > .btn:first-child {
+    height: 3rem !important;
+  }
+  .input-anchor ~ .btn {
+    height: 3rem !important;
+  }
 }
 </style>

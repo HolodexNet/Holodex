@@ -23,10 +23,10 @@
           {{ $t("component.videoCard.openScriptEditor") }}
         </h-btn>
         <div class="mx-auto w-auto" />
-        <h-btn v-if="!vidPlayer" small @click="loadVideo()">
+        <h-btn v-if="!showVideo" small @click="loadVideo()">
           {{ $t("views.tlClient.menu.loadVideo") }}
         </h-btn>
-        <h-btn v-if="vidPlayer" small @click="unloadVideo()">
+        <h-btn v-if="showVideo" small @click="unloadVideo()">
           {{ $t("views.tlClient.menu.unloadVideo") }}
         </h-btn>
         <!-- <div class="mx-auto w-auto" /> -->
@@ -65,16 +65,16 @@
               z-index: 1;
             "
           />
-          <v-card
-            v-if="vidPlayer"
+          <div
+            v-if="showVideo"
             class="flex flex-shrink flex-grow flex-col"
             outlined
             height="100%"
           >
-            <v-card id="player" height="100%" width="100%" />
-          </v-card>
+            <!-- <v-card id="player" height="100%" width="100%" /> -->
+          </div>
           <div
-            v-if="vidPlayer"
+            v-if="showVideo"
             id="horizontal-resize-bar"
             style="
               cursor: s-resize;
@@ -106,7 +106,7 @@
               'flex-shrink': true,
               'tl-full-height': false,
             }"
-            :style="{ height: vidPlayer ? tlChatHeight + 'px' : '100%' }"
+            :style="{ height: showVideo ? tlChatHeight + 'px' : '100%' }"
             :use-local-subtitle-toggle="false"
           /> -->
           <v-card
@@ -168,7 +168,7 @@
             </p>
             <iframe
               class="activeChatIFrame"
-              :src="URLExtender(ChatURL.text)"
+              :src="videoIDToChatEmbedURL(ChatURL.text)"
               frameborder="0"
               @load="IFrameLoaded($event, ChatURL.text)"
             />
@@ -210,14 +210,20 @@
             @keypress.enter="addEntry()"
           >
             <template #prepend>
-              <span style="opacity: 0.8" class="mt-1">
+              <span
+                v-if="profile[profileIdx].Prefix"
+                class="btn-disabled btn-ghost btn"
+              >
                 {{ profile[profileIdx].Prefix }}
               </span>
             </template>
             <template #append>
-              <span style="opacity: 0.8" class="mt-1">
+              <button
+                v-if="profile[profileIdx].Suffix"
+                class="btn-disabled btn"
+              >
                 {{ profile[profileIdx].Suffix }}
-              </span>
+              </button>
             </template>
           </h-input>
           <v-btn large class="mx-2" @click="addEntry()">
@@ -263,6 +269,10 @@
             </v-card-subtitle>
             <v-card-text class="align-stretch flex">
               <h-input
+                v-model="localPrefix"
+                :title="$t('views.tlClient.tlControl.localPrefix')"
+              />
+              <h-input
                 v-model="profile[profileIdx].Prefix"
                 :title="$t('views.tlClient.tlControl.prefix')"
                 class="mr-2"
@@ -271,11 +281,6 @@
                 v-model="profile[profileIdx].Suffix"
                 :title="$t('views.tlClient.tlControl.suffix')"
                 class="mr-2"
-              />
-              <v-spacer />
-              <h-input
-                v-model="localPrefix"
-                :title="$t('views.tlClient.tlControl.localPrefix')"
               />
             </v-card-text>
             <v-card-text>
@@ -310,11 +315,8 @@
           </h2>
           <div class="border-1 border-bgColor-50">
             {{ $t("views.watch.uploadPanel.usernameText") + " : " }}
-            <span>{{ user?.username }}</span>
-            <a
-              style="text-decoration: underline; font-size: 0.7em"
-              @click="changeUsernameClick()"
-            >
+            <span class="font-bold">{{ user?.username }}</span>
+            <a class="link ml-1 text-sm" @click="changeUsernameClick()">
               {{ $t("views.watch.uploadPanel.usernameChange") }}
             </a>
           </div>
@@ -403,7 +405,12 @@ export default defineComponent({
       router.push("/login");
     }
 
-    return { user: site.user, jwt: site.jwtToken, site };
+    const activeChat: {
+      id: string;
+      iframeElement: HTMLIFrameElement | null;
+    }[] = reactive([]);
+
+    return { user: site.user, jwt: site.jwtToken, site, activeChat };
   },
   data() {
     return {
@@ -435,15 +442,15 @@ export default defineComponent({
       mainStreamLink: "",
       collabLinks: [""],
       // ---- ACTIVE CHAT ----
-      activeChat: [] as any[],
-      activeURLStream: "",
+      // activeChat: [] as any[],
+      // activeURLStream: "",
       // ---- ACTIVE VIDEO ----
-      activeURLInput: "",
-      vidType: "",
-      vidPlayer: false,
-      vidIframeEle: null as HTMLElement | null,
-      player: null,
-      IFOrigin: "",
+      // activeURLInput: "",
+      // vidType: "",
+      showVideo: false,
+      // vidIframeEle: null as HTMLElement | null,
+      // player: null,
+      // IFOrigin: "",
       // ---- LAYOUT ----
       tlChatHeight: 200,
       videoPanelWidth1: 60,
@@ -821,7 +828,7 @@ export default defineComponent({
     unloadChatAtIndex(idx: number) {
       this.activeChat.splice(idx, 1);
     },
-    URLExtender(s: string) {
+    videoIDToChatEmbedURL(s: string) {
       switch (s.slice(0, 3)) {
         case "YT_":
           return `https://www.youtube.com/live_chat?v=${s.slice(
@@ -874,203 +881,11 @@ export default defineComponent({
 
     // ---------------------- VIDEO CONTROLLER ----------------------
     loadVideo() {
-      this.vidPlayer = true;
-      const checker = setInterval(() => {
-        const PlayerDiv = document.getElementById("player");
-        if (PlayerDiv) {
-          clearInterval(checker);
-          const StreamURL = getVideoIDFromUrl(this.mainStreamLink);
-          if (StreamURL) {
-            this.vidType = StreamURL.type;
-            switch (StreamURL.type) {
-              case "twitch":
-                this.loadVideoTW(StreamURL.id, true);
-                break;
-
-              case "twitch_vod":
-                this.loadVideoTW(StreamURL.id, false);
-                break;
-
-              case "twitcast":
-                this.setupIframeTC(StreamURL.id, StreamURL.id, true);
-                break;
-
-              case "twitcast_vod":
-                this.setupIframeTC(StreamURL.id, StreamURL.channel.name, false);
-                break;
-
-              case "niconico":
-                // niconico doesn't allow third party player hosting... at least for now...
-                // this.setupIframeNC(StreamURL.id, true);
-                break;
-
-              case "niconico_vod":
-                this.setupIframeNC(StreamURL.id, false);
-                break;
-
-              case "bilibili":
-                // bilibili live player is flash -> the one in FLASH link in the share button
-                // https://s1.hdslb.com/bfs/static/blive/live-assets/player/flash/pageplayer-latest.swf?room_id=0&cid=xxxxxx&state=LIVE
-                break;
-
-              case "bilibili_vod":
-                this.setupIframeBL(StreamURL.id);
-                break;
-
-              default:
-                this.loadVideoYT(StreamURL.id);
-                break;
-            }
-          }
-        }
-      }, 1000);
+      this.showVideo = true;
     },
     unloadVideo() {
-      this.vidPlayer = false;
+      this.showVideo = false;
     },
-    setupIframeTC(MID: string, UID: string, Live: boolean): void {
-      if (this.vidIframeEle) {
-        this.vidIframeEle.parentNode?.removeChild(this.vidIframeEle);
-      }
-      this.vidIframeEle = document.createElement("iframe");
-      if (Live) {
-        this.vidIframeEle.src = `https://twitcasting.tv/${UID}/embeddedplayer/live?auto_play=false&default_mute=false`;
-        this.vidIframeEle.loading = "lazy";
-      } else {
-        this.vidIframeEle.src = `https://twitcasting.tv/${UID}/embeddedplayer/${MID}?auto_play=false&default_mute=false`;
-      }
-      this.vidIframeEle.width = "100%";
-      this.vidIframeEle.height = "100%";
-      this.vidIframeEle.frameBorder = "0";
-
-      this.loadIframe("TC");
-    },
-    setupIframeBL(VID: string): void {
-      let embedID = "";
-      if (this.vidIframeEle) {
-        this.vidIframeEle.parentNode?.removeChild(this.vidIframeEle);
-      }
-
-      switch (VID.slice(0, 2).toLowerCase()) {
-        case "bv":
-          embedID = `bvid=${VID.slice(2)}`;
-          break;
-
-        case "av":
-          embedID = `aid=${VID.slice(2)}`;
-          break;
-
-        default:
-          embedID = `cid=${VID}`;
-          break;
-      }
-
-      this.vidIframeEle = document.createElement("iframe");
-      this.vidIframeEle.src = `https://player.bilibili.com/player.html?${embedID}&page=1&as_wide=1&high_quality=0&danmaku=0`;
-      this.vidIframeEle.width = "100%";
-      this.vidIframeEle.height = "100%";
-      this.vidIframeEle.frameBorder = "0";
-
-      this.loadIframe("BL");
-    },
-    setupIframeNC(VID: string, Live: boolean): void {
-      if (this.vidIframeEle) {
-        this.vidIframeEle.parentNode?.removeChild(this.vidIframeEle);
-      }
-
-      this.vidIframeEle = document.createElement("iframe");
-      if (Live) {
-        this.vidIframeEle.src = `https://live.nicovideo.jp/embed/${VID}`;
-      } else {
-        this.vidIframeEle.src = `https://embed.nicovideo.jp/watch/${VID}?autoplay=0`;
-      }
-      this.vidIframeEle.width = "100%";
-      this.vidIframeEle.height = "100%";
-      this.vidIframeEle.frameBorder = "0";
-      this.vidIframeEle.allow = "encrypted-media;";
-
-      this.loadIframe("NC");
-    },
-
-    // -----------------  IFRAME  -----------------
-    loadIframe(): void {
-      if (this.vidIframeEle) {
-        const PlayerDiv = document.getElementById("player");
-        if (PlayerDiv) {
-          PlayerDiv.append(this.vidIframeEle);
-        }
-      }
-    },
-    //= ================  IFRAME  =================
-
-    // -----------------  YT  -----------------
-    loadVideoYT(VID: string) {
-      if (window.YT) {
-        this.startVideoYT(VID);
-        return;
-      }
-
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      const firstScriptTag = document.getElementsByTagName("script")[0];
-      if (firstScriptTag.parentNode) {
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      }
-
-      window.onYouTubeIframeAPIReady = () => this.startVideoYT(VID);
-    },
-    startVideoYT(VID: string) {
-      this.player = new window.YT.Player("player", {
-        videoId: VID,
-        playerVars: {
-          playsinline: 1,
-        },
-      });
-    },
-    //= ================  YT  =================
-
-    // -----------------  TW  -----------------
-    loadVideoTW(VID: string, Live: boolean) {
-      //   this.startTWTracker();
-      if (window.Twitch) {
-        this.startVideoTW(VID, Live);
-        return;
-      }
-
-      const tag = document.createElement("script");
-      tag.src = "https://player.twitch.tv/js/embed/v1.js";
-      const firstScriptTag = document.getElementsByTagName("script")[0];
-      if (firstScriptTag.parentNode) {
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      }
-
-      const Checker = setInterval(() => {
-        if (window.Twitch) {
-          clearInterval(Checker);
-          this.startVideoTW(VID, Live);
-        }
-      }, 1000);
-    },
-    startVideoTW(VID: string, Live: boolean) {
-      if (Live) {
-        this.player = new window.Twitch.Player("player", {
-          width: "100%",
-          height: "100%",
-          channel: VID,
-          autoplay: false,
-          time: "0h0m0s",
-        });
-      } else {
-        this.player = new window.Twitch.Player("player", {
-          width: "100%",
-          height: "100%",
-          video: VID,
-          autoplay: false,
-          time: "0h0m0s",
-        });
-      }
-    },
-    //= ================  TW  =================
     //= ====================== VIDEO CONTROLLER ======================
 
     // --------------------------------- LAYOUT CONTROLLER ---------------------------------

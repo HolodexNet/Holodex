@@ -5,7 +5,7 @@
   >
     <div class="relative">
       <ListboxButton
-        class="input-bordered input relative w-full cursor-default rounded-lg bg-bgColor-500 py-2 pl-6 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-300 sm:text-sm"
+        class="input-bordered input relative w-full cursor-default bg-bgColor-500 py-2 pl-6 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-300 sm:text-sm"
       >
         <slot name="selection" :item="modelValue">
           <span class="block truncate">
