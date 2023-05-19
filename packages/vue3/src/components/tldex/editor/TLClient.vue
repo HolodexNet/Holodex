@@ -66,7 +66,7 @@
             <!-- <v-card id="player" height="100%" width="100%" /> -->
             <video-player
               :video="{ id: mainID }"
-              class="aspect-video"
+              class="aspect-video rounded-xl"
               style="position: relative; height: 100%"
             />
           </div>
