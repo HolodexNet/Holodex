@@ -1,15 +1,12 @@
 <template>
   <div class="max-h-full p-2">
     <div class="flex flex-grow flex-col" style="height: 98vh; width: 100%">
-      <div
-        height="30"
-        class="tl-topbar btn-group justify-start px-0"
-        color="secondary"
-      >
+      <div height="30" class="tl-topbar btn-group justify-start px-0">
         <h-btn small to="/" icon="i-material-symbols:home-outline-rounded">
           {{ $t("component.mainNav.home") }}
         </h-btn>
-        <h-btn small @click="configModal = true">
+        <div class="h-6 w-2 bg-primary opacity-60" />
+        <h-btn no-color class="btn-secondary" small @click="configModal = true">
           {{ $t("views.tlClient.menu.setting") }}
         </h-btn>
         <h-btn
@@ -22,15 +19,14 @@
         >
           {{ $t("component.videoCard.openScriptEditor") }}
         </h-btn>
-        <div class="mx-auto w-auto" />
+        <div class="h-6 w-2 bg-primary opacity-60" />
         <h-btn v-if="!showVideo" small @click="loadVideo()">
           {{ $t("views.tlClient.menu.loadVideo") }}
         </h-btn>
         <h-btn v-if="showVideo" small @click="unloadVideo()">
           {{ $t("views.tlClient.menu.unloadVideo") }}
         </h-btn>
-        <!-- <div class="mx-auto w-auto" /> -->
-
+        <div class="h-6 w-2 bg-primary opacity-60" />
         <h-btn small @click="promptAddChat">
           {{ $t("views.tlClient.menu.loadChat") }}
         </h-btn>
@@ -47,11 +43,7 @@
       >
         <div
           class="flex flex-shrink flex-grow flex-col"
-          :width="
-            activeChat.length < 2
-              ? videoPanelWidth1 + '%'
-              : videoPanelWidth2 + '%'
-          "
+          :width="videoWidth + '%'"
           style="height: 100%; display: flex"
           @mouseleave="resizeMouseLeave(0)"
         >
@@ -72,34 +64,22 @@
             height="100%"
           >
             <!-- <v-card id="player" height="100%" width="100%" /> -->
+            <video-player
+              :video="{ id: mainID }"
+              class="aspect-video"
+              style="position: relative; height: 100%"
+            />
           </div>
           <div
             v-if="showVideo"
-            id="horizontal-resize-bar"
-            style="
-              cursor: s-resize;
-              min-height: 9px;
-              background: var(--v-background-base);
-            "
+            class="horizontal-resize-bar"
             @mousedown="resizeMouseDown($event, 0)"
           >
-            <div
-              style="
-                width: 10%;
-                min-width: 40px;
-                margin-left: auto;
-                margin-right: auto;
-                background: #444;
-                height: 3px;
-                border-radius: 2px;
-                margin-top: 3px;
-              "
-            />
+            <div class="hr-resize-core" />
           </div>
-          <!-- <LiveTranslations
+          <TldexChat
             v-if="mainID"
-            :tl-lang="TLLang.value"
-            :tl-client="true"
+            :lang="TLLang.value"
             :video="{ id: mainID }"
             :video-id="mainID"
             :class="{
@@ -107,8 +87,8 @@
               'tl-full-height': false,
             }"
             :style="{ height: showVideo ? tlChatHeight + 'px' : '100%' }"
-            :use-local-subtitle-toggle="false"
-          /> -->
+          />
+          <!-- :use-local-subtitle-toggle="false" (TODO what does this do?) -->
           <v-card
             v-if="profileDisplay && activeChat.length > 1"
             class="ProfileListCard flex flex-col"
@@ -121,26 +101,14 @@
         </div>
         <div
           v-if="activeChat.length > 0"
-          id="vertical-resize-bar"
-          style="cursor: e-resize; width: 9px"
+          class="vertical-resize-bar"
           @mousedown="resizeMouseDown($event, 1)"
         >
-          <div
-            style="
-              height: 10%;
-              min-height: 40px;
-              margin-top: 40vh;
-              margin-bottom: auto;
-              background: #444;
-              width: 3px;
-              border-radius: 2px;
-              margin-left: 3px;
-            "
-          />
+          <div class="vr-resize-core" />
         </div>
         <div
           v-if="activeChat.length > 0"
-          class="ChatPanelContainer"
+          class="chat-panel-container"
           :style="activeChatGridRow"
           variant="outlined"
         >
@@ -154,25 +122,29 @@
               z-index: 1;
             "
           />
-          <v-card
+          <div
             v-for="(ChatURL, index) in activeChat"
-            :key="ChatURL.text"
+            :key="'chat' + ChatURL.id"
             class="flex flex-col"
             variant="outlined"
           >
             <p class="text-center" style="margin-top: 5px">
-              {{ ChatURL.text }}
-              <v-icon class="float-right" @click="unloadChatAtIndex(index)">
-                {{ "mdiCloseCircle" }}
-              </v-icon>
+              {{ ChatURL.id }}
+              <h-btn
+                class="btn-icon float-right"
+                ghost
+                small
+                icon="i-mdi:close-circle"
+                @click="unloadChatAtIndex(index)"
+              />
             </p>
             <iframe
               class="activeChatIFrame"
-              :src="videoIDToChatEmbedURL(ChatURL.text)"
+              :src="videoIDToChatEmbedURL(ChatURL.id)"
               frameborder="0"
-              @load="IFrameLoaded($event, ChatURL.text)"
+              @load="IFrameLoaded($event, ChatURL.id)"
             />
-          </v-card>
+          </div>
           <v-card
             v-if="profileDisplay && activeChat.length < 2"
             class="ProfileListCard flex flex-col"
@@ -185,7 +157,8 @@
         </div>
       </div>
 
-      <v-container
+      <div
+        class="container mx-auto"
         @keydown.up.exact="profileUp()"
         @keydown.down.exact="profileDown()"
         @keydown.tab.exact.prevent="profileDown()"
@@ -218,93 +191,91 @@
               </span>
             </template>
             <template #append>
-              <button
-                v-if="profile[profileIdx].Suffix"
-                class="btn-disabled btn"
-              >
+              <button v-if="profile[profileIdx].Suffix" class="normal-case">
                 {{ profile[profileIdx].Suffix }}
               </button>
+              <h-btn class="btn-lg" @click="addEntry()">
+                {{ $t("views.tlClient.tlControl.enterBtn") }}
+              </h-btn>
             </template>
           </h-input>
-          <v-btn large class="mx-2" @click="addEntry()">
-            {{ $t("views.tlClient.tlControl.enterBtn") }}
-          </v-btn>
-          <v-btn large color="primary" @click="TLSetting = !TLSetting">
+          <h-btn large color="primary" @click="TLSetting = !TLSetting">
             {{
               TLSetting
                 ? $t("views.tlClient.tlControl.hideSetting")
                 : $t("views.tlClient.tlControl.showSetting")
             }}
-            <v-icon>
-              {{ TLSetting ? "mdiCogOff" : "mdiCog" }}
-            </v-icon>
-          </v-btn>
+            <h-icon :class="TLSetting ? 'i-mdi:cog-off' : 'i-mdi:cog'" />
+          </h-btn>
         </h-row>
-        <v-expand-transition>
-          <v-card v-if="TLSetting" class="mt-2">
-            <v-card-subtitle>
-              Current Profile [{{ profile[profileIdx].Name }}] Settings
-              <v-icon class="float-right" @click="TLSetting = false">
-                {{ "icons.mdiClose" }}
-              </v-icon>
-              <h-tooltip placement="left">
-                <template #activator>
-                  <v-icon class="float-right">
-                    {{ "mdiKeyboard" }}
-                  </v-icon>
-                </template>
-                <span>While typing in TL box</span>
-                <br />
-                <span>
-                  <kbd>⇧</kbd>
-                  <kbd>⇩</kbd>
-                  to change Profiles
-                </span>
-                <br />
-                <span>
-                  <kbd>Ctrl+[1~9]</kbd>
-                  to quick switch to Profile
-                </span>
-              </h-tooltip>
-            </v-card-subtitle>
-            <v-card-text class="align-stretch flex">
-              <h-input
-                v-model="localPrefix"
-                :title="$t('views.tlClient.tlControl.localPrefix')"
-              />
-              <h-input
-                v-model="profile[profileIdx].Prefix"
-                :title="$t('views.tlClient.tlControl.prefix')"
-                class="mr-2"
-              />
-              <h-input
-                v-model="profile[profileIdx].Suffix"
-                :title="$t('views.tlClient.tlControl.suffix')"
-                class="mr-2"
-              />
-            </v-card-text>
-            <v-card-text>
-              <v-btn style="margin-right: 5px" @click="addProfile">
-                {{ $t("views.tlClient.tlControl.addProfile") }}
-              </v-btn>
-              <v-btn
-                style="margin-right: 5px"
-                @click="profile.splice(profileIdx, 1)"
-              >
-                {{ $t("views.tlClient.tlControl.removeProfile") }} ({{
-                  profile[profileIdx].Name
-                }})
-              </v-btn>
-              <v-btn style="margin-right: 5px" @click="shiftProfileUp()">
-                {{ $t("views.tlClient.tlControl.shiftUp") }}
-              </v-btn>
-              <v-btn @click="shiftProfileDown()">
-                {{ $t("views.tlClient.tlControl.shiftDown") }}
-              </v-btn>
-            </v-card-text>
-          </v-card>
-        </v-expand-transition>
-      </v-container>
+        <div v-if="TLSetting" class="card-bordered card mt-2 shadow-2xl">
+          <v-card-subtitle>
+            Current Profile [{{ profile[profileIdx].Name }}] Settings
+            <h-btn
+              class="btn-icon float-right"
+              ghost
+              small
+              icon="i-mdi:close-circle"
+              @click="TLSetting = false"
+            />
+
+            <h-tooltip placement="left">
+              <template #activator>
+                <v-icon class="float-right">
+                  {{ "mdiKeyboard" }}
+                </v-icon>
+              </template>
+              <span>While typing in TL box</span>
+              <br />
+              <span>
+                <kbd>⇧</kbd>
+                <kbd>⇩</kbd>
+                to change Profiles
+              </span>
+              <br />
+              <span>
+                <kbd>Ctrl+[1~9]</kbd>
+                to quick switch to Profile
+              </span>
+            </h-tooltip>
+          </v-card-subtitle>
+          <v-card-text class="align-stretch flex">
+            <h-input
+              v-model="localPrefix"
+              :title="$t('views.tlClient.tlControl.localPrefix')"
+            />
+            <h-input
+              v-model="profile[profileIdx].Prefix"
+              :title="$t('views.tlClient.tlControl.prefix')"
+              class="mr-2"
+            />
+            <h-input
+              v-model="profile[profileIdx].Suffix"
+              :title="$t('views.tlClient.tlControl.suffix')"
+              class="mr-2"
+            />
+          </v-card-text>
+          <v-card-text>
+            <v-btn style="margin-right: 5px" @click="addProfile">
+              {{ $t("views.tlClient.tlControl.addProfile") }}
+            </v-btn>
+            <v-btn
+              style="margin-right: 5px"
+              @click="profile.splice(profileIdx, 1)"
+            >
+              {{ $t("views.tlClient.tlControl.removeProfile") }} ({{
+                profile[profileIdx].Name
+              }})
+            </v-btn>
+            <v-btn style="margin-right: 5px" @click="shiftProfileUp()">
+              {{ $t("views.tlClient.tlControl.shiftUp") }}
+            </v-btn>
+            <v-btn @click="shiftProfileDown()">
+              {{ $t("views.tlClient.tlControl.shiftDown") }}
+            </v-btn>
+          </v-card-text>
+        </div>
+      </div>
     </div>
 
     <h-dialog v-model="configModal" persistent>
@@ -386,6 +357,7 @@ import backendApi from "@/utils/backend-api";
 import { useSiteStore } from "@/stores";
 import { Profile } from "./types";
 import { getVideoThumbnails } from "@/utils/functions";
+import { useForceHideTopBarWhileActive } from "@/stores/frame";
 
 export default defineComponent({
   name: "Tlclient",
@@ -399,6 +371,7 @@ export default defineComponent({
   components: {},
   setup() {
     const site = useSiteStore();
+    useForceHideTopBarWhileActive();
 
     const router = useRouter();
     if (!site.user || !site.jwtToken) {
@@ -407,7 +380,7 @@ export default defineComponent({
 
     const activeChat: {
       id: string;
-      iframeElement: HTMLIFrameElement | null;
+      iframeElement?: HTMLIFrameElement;
     }[] = reactive([]);
 
     return { user: site.user, jwt: site.jwtToken, site, activeChat };
@@ -453,8 +426,7 @@ export default defineComponent({
       // IFOrigin: "",
       // ---- LAYOUT ----
       tlChatHeight: 200,
-      videoPanelWidth1: 60,
-      videoPanelWidth2: 40,
+      videoWidth: 60,
       resizeActive: false,
       resizeMode: 0,
       resizePos: 0,
@@ -474,19 +446,11 @@ export default defineComponent({
     activeChatGridRow() {
       if (this.activeChat.length < 4) {
         return {
-          "grid-template-rows": "1fr",
-          width:
-            this.activeChat.length < 2
-              ? 100 - this.videoPanelWidth1 + "%"
-              : 100 - this.videoPanelWidth2 + "%",
+          width: 100 - this.videoWidth + "%",
         };
       }
       return {
-        "grid-template-rows": "1fr 1fr",
-        width:
-          this.activeChat.length < 2
-            ? 100 - this.videoPanelWidth1 + "%"
-            : 100 - this.videoPanelWidth2 + "%",
+        width: 100 - this.videoWidth + "%",
       };
     },
     collabLinkIDs() {
@@ -510,11 +474,8 @@ export default defineComponent({
       if (defaultSetting.tlChatHeight) {
         this.tlChatHeight = defaultSetting.tlChatHeight;
       }
-      if (defaultSetting.videoPanelWidth1) {
-        this.videoPanelWidth1 = defaultSetting.videoPanelWidth1;
-      }
-      if (defaultSetting.videoPanelWidth2) {
-        this.videoPanelWidth2 = defaultSetting.videoPanelWidth2;
+      if (defaultSetting.videoWidth) {
+        this.videoWidth = defaultSetting.videoWidth;
       }
     }
   },
@@ -528,14 +489,14 @@ export default defineComponent({
       this.unloadAll();
       this.checkLoginValidity();
     },
-    IFrameLoaded(event, target: string) {
+    IFrameLoaded(event: Event, target: string) {
       for (let i = 0; i < this.activeChat.length; i += 1) {
-        if (this.activeChat[i].text === target) {
-          this.activeChat[i].IFrameEle = event.target;
+        if (this.activeChat[i].id === target) {
+          this.activeChat[i].iframeElement = event.target as HTMLIFrameElement;
           switch (target.slice(0, 3)) {
             case "YT_": {
-              if (event.target.contentWindow) {
-                event.target.contentWindow.postMessage(
+              if ((event.target as HTMLIFrameElement).contentWindow) {
+                (event.target as HTMLIFrameElement).contentWindow.postMessage(
                   {
                     n: "HolodexSync",
                     d: "Initiate",
@@ -545,8 +506,10 @@ export default defineComponent({
               } else {
                 let trial = 0;
                 const id = setInterval(() => {
-                  if (event.target.contentWindow) {
-                    event.target.contentWindow?.postMessage(
+                  if ((event.target as HTMLIFrameElement).contentWindow) {
+                    (
+                      event.target as HTMLIFrameElement
+                    ).contentWindow?.postMessage(
                       {
                         n: "HolodexSync",
                         d: "Initiate",
@@ -566,8 +529,8 @@ export default defineComponent({
             }
 
             case "TW_": {
-              if (event.target.contentWindow) {
-                event.target.contentWindow.postMessage(
+              if ((event.target as HTMLIFrameElement).contentWindow) {
+                (event.target as HTMLIFrameElement).contentWindow.postMessage(
                   {
                     n: "HolodexSync",
                     d: "Initiate",
@@ -577,8 +540,10 @@ export default defineComponent({
               } else {
                 let trial = 0;
                 const id = setInterval(() => {
-                  if (event.target.contentWindow) {
-                    event.target.contentWindow?.postMessage(
+                  if ((event.target as HTMLIFrameElement).contentWindow) {
+                    (
+                      event.target as HTMLIFrameElement
+                    ).contentWindow?.postMessage(
                       {
                         n: "HolodexSync",
                         d: "Initiate",
@@ -606,9 +571,9 @@ export default defineComponent({
     addEntry() {
       // SEND TO HOLODEX +
       this.activeChat.forEach((e) => {
-        switch (e.text.slice(0, 3)) {
+        switch (e.id.slice(0, 3)) {
           case "YT_":
-            e.IFrameEle?.contentWindow?.postMessage(
+            e.iframeElement?.contentWindow?.postMessage(
               {
                 n: "HolodexSync",
                 d:
@@ -622,7 +587,7 @@ export default defineComponent({
             break;
 
           case "TW_":
-            e.IFrameEle?.contentWindow?.postMessage(
+            e.iframeElement?.contentWindow?.postMessage(
               {
                 n: "HolodexSync",
                 d:
@@ -861,16 +826,16 @@ export default defineComponent({
         switch (StreamURL.type) {
           case "twitch": {
             this.activeChat.push({
-              text: `TW_${StreamURL.id}`,
-              IFrameEle: undefined,
+              id: `TW_${StreamURL.id}`,
+              iframeElement: undefined,
             });
             break;
           }
 
           default: {
             this.activeChat.push({
-              text: `YT_${StreamURL.id}`,
-              IFrameEle: undefined,
+              id: `YT_${StreamURL.id}`,
+              iframeElement: undefined,
             });
             break;
           }
@@ -896,8 +861,7 @@ export default defineComponent({
           "Holodex-TLClient",
           JSON.stringify({
             tlChatHeight: this.tlChatHeight,
-            videoPanelWidth1: this.videoPanelWidth1,
-            videoPanelWidth2: this.videoPanelWidth2,
+            videoWidth: this.videoWidth,
           })
         );
       }
@@ -919,8 +883,7 @@ export default defineComponent({
         "Holodex-TLClient",
         JSON.stringify({
           tlChatHeight: this.tlChatHeight,
-          videoPanelWidth1: this.videoPanelWidth1,
-          videoPanelWidth2: this.videoPanelWidth2,
+          videoWidth: this.videoWidth,
         })
       );
     },
@@ -937,23 +900,13 @@ export default defineComponent({
           const xChange =
             ((event.clientX - this.resizePos) * 100) / window.innerWidth;
           this.resizePos = event.clientX;
-          if (this.activeChat.length < 2) {
-            if (
-              this.videoPanelWidth1 + xChange > 75 ||
-              this.videoPanelWidth1 + xChange < 33
-            ) {
-              return;
-            }
-            this.videoPanelWidth1 += xChange;
-          } else {
-            if (
-              this.videoPanelWidth2 + xChange > 75 ||
-              this.videoPanelWidth2 + xChange < 33
-            ) {
-              return;
-            }
-            this.videoPanelWidth2 += xChange;
+          if (
+            this.videoWidth + xChange > 75 ||
+            this.videoWidth + xChange < 33
+          ) {
+            return;
           }
+          this.videoWidth += xChange;
         }
       }
     },
@@ -1032,11 +985,45 @@ export default defineComponent({
   width: 100%;
   height: 100%;
 }
-.tl-topbar > *:not(:first-child):not(:last-child) {
-  margin: 0px 3px;
-}
 .tl-topbar > * {
-  border-radius: 0px;
   text-transform: unset !important;
+}
+
+.horizontal-resize-bar {
+  cursor: s-resize;
+  min-height: 9px;
+  background: var(--v-background-base);
+}
+.horizontal-resize-bar > .hr-resize-core {
+  width: 10%;
+  min-width: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #444;
+  height: 3px;
+  border-radius: 2px;
+  margin-top: 3px;
+}
+
+.vertical-resize-bar {
+  cursor: e-resize;
+  width: 9px;
+}
+.vertical-resize-bar > .vr-resize-core {
+  height: 10%;
+  min-height: 40px;
+  margin-top: 40vh;
+  margin-bottom: auto;
+  background: #444;
+  width: 3px;
+  border-radius: 2px;
+  margin-left: 3px;
+}
+
+.chat-panel-container {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(50px, 1fr));
 }
 </style>

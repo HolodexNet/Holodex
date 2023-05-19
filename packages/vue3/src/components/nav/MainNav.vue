@@ -1,20 +1,6 @@
 <template>
-  <!-- <div id="nav-container"> -->
-  <!-- watch page nav drawer is temporary, but causes layout shifting from hiding/unhiding -->
-  <!-- create two different instances as a work around -->
-
-  <!--* nav drawer is for the left --->
-  <!-- <BottomNav
-      v-if="isSmOrDown"
-      :pages="pages.filter((page) => !page.collapsible)"
-      :active="!isWatchPage"
-    /> -->
-  <!--* bottom bar --->
-
   <div
-    v-show="showTopBar"
     id="top-bar"
-    :app="showTopBar"
     class="navbar sticky top-0 z-10 h-[56px] min-h-[56px] border-b border-bgColor-100 bg-bgColor pb-0"
     style="align-self: start"
   >
@@ -119,25 +105,6 @@
       <!-- this is just the element that covers up the notch. don't worry about it. -->
     </div>
   </div>
-  <!-- <NavDrawer
-      v-model="navDrawer"
-      :pages="pages"
-      :temporary="isMdOrDown || isWatchPage"
-      :expand="navbarExpanded"
-      @expand="navbarExpanded = !navbarExpanded"
-    /> -->
-
-  <!-- <v-navigation-drawer
-      id="playlistDrawer"
-      v-model="playlistDrawer"
-      location="right"
-      temporary
-      :width="360"
-      class="py-2 pl-2"
-    >
-      <current-playlist-card />
-    </v-navigation-drawer> -->
-  <!-- </div> -->
 </template>
 
 <script lang="ts">
@@ -158,6 +125,7 @@ export default defineComponent({
     const isMobile = display.mobile;
     const isSmOrDown = display.smaller("sm");
     const isMdOrDown = display.smaller("lg");
+
     return {
       site,
       display,
@@ -180,6 +148,7 @@ export default defineComponent({
   },
   computed: {
     showTopBar() {
+      if (this.mustHideTopBar) return false;
       if (this.isMultiView) return false;
       if (this.isMobile && this.isWatchPage) {
         return false;

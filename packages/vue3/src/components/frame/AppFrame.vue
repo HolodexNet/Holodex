@@ -3,6 +3,7 @@
     class="grid-frame bg-bgColor-600"
     :class="{
       'hide-sidebar': !$slots.sidebar?.() || !props.modelValue,
+      'hide-header': mustHideTopBar,
       'temporary-sidebar': isTemporary,
     }"
   >
@@ -26,6 +27,7 @@
 <script setup lang="ts">
 import { useDisplay } from "@/hooks/common/useDisplay";
 import router from "@/router";
+import { mustHideTopBar } from "@/stores/frame";
 
 // Show sidebar?
 const props = defineProps<{ modelValue: boolean; temporary?: boolean }>();
@@ -58,6 +60,7 @@ $header-height: 56px;
   z-index: 10;
   height: $header-height;
   grid-row: $header-height;
+  transition: top 0.2s ease-in-out;
 }
 .sidebar {
   grid-area: sidebar;
@@ -65,17 +68,6 @@ $header-height: 56px;
   position: fixed;
   top: $header-height;
   z-index: 10;
-}
-
-.grid-frame.temporary-sidebar {
-  display: grid;
-  grid-template-columns: 0px auto;
-}
-
-.temporary-sidebar .sidebar {
-  position: fixed;
-  top: $header-height;
-  z-index: 100;
 }
 
 .temporary-sidebar-overlay {
@@ -131,6 +123,26 @@ $header-height: 56px;
 .grid-frame.hide-sidebar {
   display: grid;
   grid-template-columns: 0px auto;
+}
+
+.grid-frame.temporary-sidebar {
+  display: grid;
+  grid-template-columns: 0px auto;
+  & .sidebar {
+    z-index: 100;
+  }
+}
+
+.grid-frame.hide-header {
+  grid-template-rows: 0px auto;
+  .header {
+    top: -60px;
+    position: absolute;
+  }
+  .sidebar {
+    top: 0;
+    height: 100vh;
+  }
 }
 
 .slide-leave-active,
