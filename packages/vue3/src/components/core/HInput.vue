@@ -6,7 +6,10 @@
         {{ subtitle }}
       </span>
     </label>
-    <div class="h-group input-group" :class="{ 'shadow shadow-error': error }">
+    <div
+      class="h-group input-group"
+      :class="[groupClass, { 'shadow shadow-error': error }]"
+    >
       <slot name="prepend" />
       <slot name="input">
         <input
@@ -66,6 +69,10 @@ export default defineComponent({
     },
     as: {
       default: "input",
+      type: String,
+    },
+    groupClass: {
+      default: undefined,
       type: String,
     },
   },

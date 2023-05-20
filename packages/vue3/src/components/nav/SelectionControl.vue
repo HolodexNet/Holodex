@@ -215,10 +215,6 @@ export default defineComponent({
   border-top: 2px solid hsl(var(--p));
 }
 
-.carousel-item {
-  @apply outline outline-dashed outline-primary;
-}
-
 .fade-pop-enter-active,
 .fade-pop-leave-active {
   &#selected-video-list {

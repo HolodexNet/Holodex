@@ -6,15 +6,15 @@ export interface Entry {
   Profile: number;
 }
 
-export interface Profile {
-  Name: string;
-  Prefix: string;
-  Suffix: string;
-  useCC: boolean;
-  CC: string; // hex color
-  useOC: boolean;
-  OC: string; //hex color
-}
+// export interface Profile {
+//   Name: string;
+//   Prefix: string;
+//   Suffix: string;
+//   useCC: boolean;
+//   CC: string; // hex color
+//   useOC: boolean;
+//   OC: string; //hex color
+// }
 
 /**
   Delete

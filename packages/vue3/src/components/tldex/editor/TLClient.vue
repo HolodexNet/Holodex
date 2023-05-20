@@ -13,7 +13,7 @@
           small
           :to="
             activeChat.length
-              ? `/scripteditor?video=${activeChat[0].text}`
+              ? `/scripteditor?video=${activeChat[0].id}`
               : undefined
           "
         >
@@ -89,15 +89,6 @@
             :style="{ height: showVideo ? tlChatHeight + 'px' : '100%' }"
           />
           <!-- :use-local-subtitle-toggle="false" (TODO what does this do?) -->
-          <v-card
-            v-if="profileDisplay && activeChat.length > 1"
-            class="ProfileListCard flex flex-col"
-          >
-            <span v-for="(prf, index) in profile" :key="index">
-              <span v-if="index === profileIdx">></span>
-              {{ index + 1 + ". " + prf.Name }}
-            </span>
-          </v-card>
         </div>
         <div
           v-if="activeChat.length > 0"
@@ -109,7 +100,7 @@
         <div
           v-if="activeChat.length > 0"
           class="chat-panel-container"
-          :style="activeChatGridRow"
+          :style="{ width: 100 - videoWidth + '%' }"
           variant="outlined"
         >
           <div
@@ -142,138 +133,224 @@
               class="activeChatIFrame"
               :src="videoIDToChatEmbedURL(ChatURL.id)"
               frameborder="0"
-              @load="IFrameLoaded($event, ChatURL.id)"
+              @load="iframeHookup($event, ChatURL.id)"
             />
           </div>
-          <v-card
-            v-if="profileDisplay && activeChat.length < 2"
-            class="ProfileListCard flex flex-col"
-          >
-            <span v-for="(prf, index) in profile" :key="index">
-              <span v-if="index === profileIdx">></span>
-              {{ index + 1 + ". " + prf.Name }}
-            </span>
-          </v-card>
         </div>
       </div>
-
       <div
-        class="container mx-auto"
-        @keydown.up.exact="profileUp()"
-        @keydown.down.exact="profileDown()"
-        @keydown.tab.exact.prevent="profileDown()"
-        @keydown.shift.tab.exact.prevent="profileJumpToDefault()"
-        @keydown.ctrl.0.exact.prevent="profileJump(0)"
-        @keydown.ctrl.1.exact.prevent="profileJump(1)"
-        @keydown.ctrl.2.exact.prevent="profileJump(2)"
-        @keydown.ctrl.3.exact.prevent="profileJump(3)"
-        @keydown.ctrl.4.exact.prevent="profileJump(4)"
-        @keydown.ctrl.5.exact.prevent="profileJump(5)"
-        @keydown.ctrl.6.exact.prevent="profileJump(6)"
-        @keydown.ctrl.7.exact.prevent="profileJump(7)"
-        @keydown.ctrl.8.exact.prevent="profileJump(8)"
+        class="flex flex-row gap-4 px-10"
+        @keydown.up.exact="profileStore.prevProfile()"
+        @keydown.down.exact="profileStore.nextProfile()"
+        @keydown.tab.exact.prevent="profileStore.nextProfile()"
+        @keydown.shift.tab.exact.prevent="profileStore.goToProfile(0)"
+        @keydown.ctrl.0.exact.prevent="profileStore.goToProfile(0)"
+        @keydown.ctrl.1.exact.prevent="profileStore.goToProfile(1)"
+        @keydown.ctrl.2.exact.prevent="profileStore.goToProfile(2)"
+        @keydown.ctrl.3.exact.prevent="profileStore.goToProfile(3)"
+        @keydown.ctrl.4.exact.prevent="profileStore.goToProfile(4)"
+        @keydown.ctrl.5.exact.prevent="profileStore.goToProfile(5)"
+        @keydown.ctrl.6.exact.prevent="profileStore.goToProfile(6)"
+        @keydown.ctrl.7.exact.prevent="profileStore.goToProfile(7)"
+        @keydown.ctrl.8.exact.prevent="profileStore.goToProfile(8)"
+        @keydown.ctrl.9.exact.prevent="profileStore.goToProfile(9)"
       >
-        <h-row>
-          <h-input
-            v-model="inputString"
-            placeholder="Type TL Here <Enter key to send>"
-            outlined
-            hide-details
-            dense
-            @keypress.enter="addEntry()"
+        <h-card
+          flat
+          tile
+          class="carousel-vertical carousel-center carousel mt-4 min-w-max max-w-xs grow"
+          :class="{
+            'h-12': !TLSetting,
+            'h-full': TLSetting,
+          }"
+        >
+          <b class="carousel-item line-clamp-1 whitespace-nowrap px-1">
+            Profiles:
+          </b>
+          <div
+            v-for="(prf, index) in profileStore.profiles"
+            :id="'prf' + index"
+            :key="'prf' + index"
+            :class="{
+              'active-profile bg-bgColor-200 text-primary-200':
+                index === profileStore.activeProfileIdx,
+            }"
+            class="profile-element carousel-item line-clamp-1 whitespace-nowrap"
+            style="border-right-width: 4px"
+            @click="profileStore.goToProfile(index)"
           >
-            <template #prepend>
-              <span
-                v-if="profile[profileIdx].Prefix"
-                class="btn-disabled btn-ghost btn"
-              >
-                {{ profile[profileIdx].Prefix }}
-              </span>
-            </template>
-            <template #append>
-              <button v-if="profile[profileIdx].Suffix" class="normal-case">
-                {{ profile[profileIdx].Suffix }}
-              </button>
-              <h-btn class="btn-lg" @click="addEntry()">
-                {{ $t("views.tlClient.tlControl.enterBtn") }}
-              </h-btn>
-            </template>
-          </h-input>
-          <h-btn large color="primary" @click="TLSetting = !TLSetting">
-            {{
-              TLSetting
-                ? $t("views.tlClient.tlControl.hideSetting")
-                : $t("views.tlClient.tlControl.showSetting")
-            }}
-            <h-icon :class="TLSetting ? 'i-mdi:cog-off' : 'i-mdi:cog'" />
-          </h-btn>
-        </h-row>
-        <div v-if="TLSetting" class="card-bordered card mt-2 shadow-2xl">
-          <v-card-subtitle>
-            Current Profile [{{ profile[profileIdx].Name }}] Settings
-            <h-btn
-              class="btn-icon float-right"
-              ghost
-              small
-              icon="i-mdi:close-circle"
-              @click="TLSetting = false"
-            />
-
-            <h-tooltip placement="left">
-              <template #activator>
-                <v-icon class="float-right">
-                  {{ "mdiKeyboard" }}
-                </v-icon>
-              </template>
-              <span>While typing in TL box</span>
-              <br />
-              <span>
-                <kbd>⇧</kbd>
-                <kbd>⇩</kbd>
-                to change Profiles
-              </span>
-              <br />
-              <span>
-                <kbd>Ctrl+[1~9]</kbd>
-                to quick switch to Profile
-              </span>
-            </h-tooltip>
-          </v-card-subtitle>
-          <v-card-text class="align-stretch flex">
+            {{ index + ". " + prf.name }}
+          </div>
+        </h-card>
+        <div class="w-full grow">
+          <h-row class="gap-2">
             <h-input
-              v-model="localPrefix"
-              :title="$t('views.tlClient.tlControl.localPrefix')"
-            />
-            <h-input
-              v-model="profile[profileIdx].Prefix"
-              :title="$t('views.tlClient.tlControl.prefix')"
-              class="mr-2"
-            />
-            <h-input
-              v-model="profile[profileIdx].Suffix"
-              :title="$t('views.tlClient.tlControl.suffix')"
-              class="mr-2"
-            />
-          </v-card-text>
-          <v-card-text>
-            <v-btn style="margin-right: 5px" @click="addProfile">
-              {{ $t("views.tlClient.tlControl.addProfile") }}
-            </v-btn>
-            <v-btn
-              style="margin-right: 5px"
-              @click="profile.splice(profileIdx, 1)"
+              v-model="inputString"
+              placeholder="Type TL Here <Enter key to send>"
+              outlined
+              hide-details
+              dense
+              group-class="focus-within:outline outline-2 outline-offset-2 outline-primary rounded-sm z-10"
+              @keypress.enter="addEntry()"
             >
-              {{ $t("views.tlClient.tlControl.removeProfile") }} ({{
-                profile[profileIdx].Name
-              }})
-            </v-btn>
-            <v-btn style="margin-right: 5px" @click="shiftProfileUp()">
-              {{ $t("views.tlClient.tlControl.shiftUp") }}
-            </v-btn>
-            <v-btn @click="shiftProfileDown()">
-              {{ $t("views.tlClient.tlControl.shiftDown") }}
-            </v-btn>
-          </v-card-text>
+              <template #input>
+                <div
+                  class="input-anchor border-1 input flex h-12 w-full flex-row border border-primary-800 bg-bgColor-500"
+                >
+                  <span class="prefix pl-0">
+                    {{ profileStore.activeProfile.prefix }}
+                  </span>
+                  <input
+                    id="tl-input"
+                    type="text"
+                    class="w-full bg-bgColor-500 focus:outline-none"
+                    placeholder="Type TL Here <Enter key to send>"
+                  />
+                  <span class="suffix pr-0">
+                    {{ profileStore.activeProfile.suffix }}
+                  </span>
+                </div>
+              </template>
+              <template #append>
+                <h-btn class="btn-lg" @click="addEntry()">
+                  {{ $t("views.tlClient.tlControl.enterBtn") }}
+                </h-btn>
+              </template>
+            </h-input>
+            <h-btn
+              class="btn-secondary self-end"
+              :style="{
+                'border-radius': TLSetting ? '10px 10px 0 0' : '10px',
+              }"
+              @click="TLSetting = !TLSetting"
+            >
+              {{
+                TLSetting
+                  ? $t("views.tlClient.tlControl.hideSetting")
+                  : $t("views.tlClient.tlControl.showSetting")
+              }}
+              <h-icon :class="TLSetting ? 'i-mdi:cog-off' : 'i-mdi:cog'" />
+            </h-btn>
+          </h-row>
+          <transition
+            enter-active-class="transition duration-200 ease-out"
+            enter-from-class="opacity-0 translate-y-12 height-0"
+            enter-to-class="opacity-100 translate-y-0"
+            leave-active-class="transition duration-150 ease-in"
+            leave-from-class="opacity-100 translate-y-0 height-0"
+            leave-to-class="opacity-0 translate-y-12 "
+          >
+            <div
+              v-if="TLSetting"
+              class="card-bordered card bg-secondary bg-opacity-10 p-4 shadow-2xl"
+              style="border-radius: 10px 0 10px 10px"
+            >
+              <div class="card-title">
+                <span>
+                  Current Profile [{{ profileStore.activeProfile.name }}]
+                  Settings
+                </span>
+                <h-btn
+                  class="btn-icon ml-auto"
+                  ghost
+                  small
+                  icon="i-mdi:close-circle"
+                  @click="TLSetting = false"
+                />
+                <h-tooltip placement="top">
+                  <template #activator="{ activatorProps }">
+                    <h-icon
+                      class="i-mdi:keyboard my-auto block h-6 w-6 self-end"
+                      v-bind="activatorProps"
+                    />
+                  </template>
+                  <div
+                    class="card card-compact gap-2 bg-bgColor-800 p-2 text-sm font-normal"
+                  >
+                    <b>Keyboard Shortcuts while typing in TL box</b>
+                    <span>
+                      <kbd class="kbd kbd-sm">▲</kbd>
+                      /
+                      <kbd class="kbd kbd-sm">▼</kbd>
+                      to change Profiles
+                    </span>
+                    <span>
+                      <kbd class="kbd kbd-sm">Ctrl</kbd>
+                      +
+                      <kbd class="kbd kbd-sm">[1~9]</kbd>
+                      to quick switch to Profile 1 ~ 9.
+                    </span>
+                    <span>
+                      <kbd class="kbd kbd-sm">Shift</kbd>
+                      +
+                      <kbd class="kbd kbd-sm">TAB</kbd>
+                      /
+                      <kbd class="kbd kbd-sm">Ctrl</kbd>
+                      +
+                      <kbd class="kbd kbd-sm">0</kbd>
+                      to switch to Default Profile (0)
+                    </span>
+                  </div>
+                </h-tooltip>
+              </div>
+              <h-row class="gap-2">
+                <div class="grow basis-4/5">
+                  <h-row class="max-w-xl gap-2">
+                    <h-input
+                      v-model="
+                        profileStore.profiles[profileStore.activeProfileIdx]
+                          .prefix
+                      "
+                      :title="$t('views.tlClient.tlControl.prefix')"
+                    />
+                    <h-input
+                      v-model="
+                        profileStore.profiles[profileStore.activeProfileIdx]
+                          .suffix
+                      "
+                      :title="$t('views.tlClient.tlControl.suffix')"
+                    />
+                  </h-row>
+                  <div class="mt-2">
+                    <div class="btn-group mr-2 mt-1">
+                      <h-btn small @click="addProfile">
+                        {{ $t("views.tlClient.tlControl.addProfile") }}
+                      </h-btn>
+                      <h-btn
+                        small
+                        @click="
+                          profileStore.deleteProfile(
+                            profileStore.activeProfileIdx
+                          )
+                        "
+                      >
+                        {{ $t("views.tlClient.tlControl.removeProfile") }} ({{
+                          profileStore.activeProfile.name
+                        }})
+                      </h-btn>
+                    </div>
+                    <div class="btn-group mt-1">
+                      <h-btn small @click="profileStore.shiftActiveProfileUp()">
+                        {{ $t("views.tlClient.tlControl.shiftUp") }}
+                      </h-btn>
+                      <h-btn
+                        small
+                        @click="profileStore.shiftActiveProfileDown()"
+                      >
+                        {{ $t("views.tlClient.tlControl.shiftDown") }}
+                      </h-btn>
+                    </div>
+                  </div>
+                </div>
+                <h-input
+                  v-model="localPrefix"
+                  class="max-w-xs"
+                  :explanation="`Will be used as prefix when sync-ing TLs to youtube chat. You're currently submitting ${TLLang.text} translation into TLdex. Use TLdex Room Settings at the top to change room language instead.`"
+                  :title="$t('views.tlClient.tlControl.localPrefix')"
+                />
+              </h-row>
+            </div>
+          </transition>
         </div>
       </div>
     </div>
@@ -327,7 +404,7 @@
                 <h-btn
                   class="btn-info !h-12"
                   icon="i-mdi:minus-circle"
-                  @click="deleteAuxLink(index)"
+                  @click="deleteChatBox(index)"
                 />
               </template>
               <template #append>
@@ -351,14 +428,31 @@
 </template>
 
 <script lang="ts">
-import { TL_LANGS } from "@/utils/consts";
+import { TL_LANGS, VIDEO_URL_REGEX } from "@/utils/consts";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { useSiteStore } from "@/stores";
-import { Profile } from "./types";
 import { getVideoThumbnails } from "@/utils/functions";
 import { useForceHideTopBarWhileActive } from "@/stores/frame";
+import { ProtoframePubsub } from "protoframe";
+import { tlsyncProtocol } from "./functions";
+import { useProfileStore } from "../new-editor/stores";
 
+type ProtoConnection = ProtoframePubsub<{
+  initiate: {
+    body: {
+      info?: string | undefined;
+    };
+    response: {
+      state: "ok" | "failed";
+    };
+  };
+  sendMessage: {
+    body: {
+      text: string;
+    };
+  };
+}>;
 export default defineComponent({
   name: "Tlclient",
   metaInfo() {
@@ -381,30 +475,25 @@ export default defineComponent({
     const activeChat: {
       id: string;
       iframeElement?: HTMLIFrameElement;
+      client?: ProtoConnection;
+      connected: boolean;
     }[] = reactive([]);
 
-    return { user: site.user, jwt: site.jwtToken, site, activeChat };
+    const profileStore = useProfileStore();
+
+    return {
+      user: site.user,
+      jwt: site.jwtToken,
+      site,
+      activeChat,
+      profileStore,
+    };
   },
   data() {
     return {
       TL_LANGS,
       TLSetting: true,
       firstLoad: true,
-      profile: [
-        {
-          Name: "Default",
-          Prefix: "",
-          Suffix: "",
-          useCC: false,
-          CC: "#000000",
-          useOC: false,
-          OC: "#000000",
-        },
-      ] as Profile[],
-      profileContainer: {},
-      profileIdx: 0,
-      profileDisplay: false,
-      profileDisplayTimer: undefined as undefined | number,
       inputString: "",
       localPrefix: `[${TL_LANGS[0].value}] `,
       // ------ MODAL --------
@@ -414,16 +503,8 @@ export default defineComponent({
       mainID: "",
       mainStreamLink: "",
       collabLinks: [""],
-      // ---- ACTIVE CHAT ----
-      // activeChat: [] as any[],
-      // activeURLStream: "",
-      // ---- ACTIVE VIDEO ----
-      // activeURLInput: "",
-      // vidType: "",
+      // ---- VISIBLILITY OF VIDEO ----
       showVideo: false,
-      // vidIframeEle: null as HTMLElement | null,
-      // player: null,
-      // IFOrigin: "",
       // ---- LAYOUT ----
       tlChatHeight: 200,
       videoWidth: 60,
@@ -443,16 +524,6 @@ export default defineComponent({
       }
       return "";
     },
-    activeChatGridRow() {
-      if (this.activeChat.length < 4) {
-        return {
-          width: 100 - this.videoWidth + "%",
-        };
-      }
-      return {
-        width: 100 - this.videoWidth + "%",
-      };
-    },
     collabLinkIDs() {
       return this.collabLinks.map((e) => getVideoIDFromUrl(e));
     },
@@ -463,6 +534,9 @@ export default defineComponent({
       if (this.$route.name === "tlclient" && this.$route.query.video) {
         this.init();
       }
+    },
+    "profileStore.activeProfileIdx": function (nw: any) {
+      document.getElementById("prf" + nw)?.scrollIntoView();
     },
   },
   mounted() {
@@ -489,135 +563,76 @@ export default defineComponent({
       this.unloadAll();
       this.checkLoginValidity();
     },
-    IFrameLoaded(event: Event, target: string) {
-      for (let i = 0; i < this.activeChat.length; i += 1) {
-        if (this.activeChat[i].id === target) {
-          this.activeChat[i].iframeElement = event.target as HTMLIFrameElement;
-          switch (target.slice(0, 3)) {
-            case "YT_": {
-              if ((event.target as HTMLIFrameElement).contentWindow) {
-                (event.target as HTMLIFrameElement).contentWindow.postMessage(
-                  {
-                    n: "HolodexSync",
-                    d: "Initiate",
-                  },
-                  "https://www.youtube.com"
-                );
-              } else {
-                let trial = 0;
-                const id = setInterval(() => {
-                  if ((event.target as HTMLIFrameElement).contentWindow) {
-                    (
-                      event.target as HTMLIFrameElement
-                    ).contentWindow?.postMessage(
-                      {
-                        n: "HolodexSync",
-                        d: "Initiate",
-                      },
-                      "https://www.youtube.com"
-                    );
-                    clearInterval(id);
-                    return;
-                  }
-                  trial += 1;
-                  if (trial === 10) {
-                    clearInterval(id);
-                  }
-                }, 1000);
-              }
-              break;
-            }
-
-            case "TW_": {
-              if ((event.target as HTMLIFrameElement).contentWindow) {
-                (event.target as HTMLIFrameElement).contentWindow.postMessage(
-                  {
-                    n: "HolodexSync",
-                    d: "Initiate",
-                  },
-                  "https://www.twitch.tv"
-                );
-              } else {
-                let trial = 0;
-                const id = setInterval(() => {
-                  if ((event.target as HTMLIFrameElement).contentWindow) {
-                    (
-                      event.target as HTMLIFrameElement
-                    ).contentWindow?.postMessage(
-                      {
-                        n: "HolodexSync",
-                        d: "Initiate",
-                      },
-                      "https://www.twitch.tv"
-                    );
-                    clearInterval(id);
-                    return;
-                  }
-                  trial += 1;
-                  if (trial === 10) {
-                    clearInterval(id);
-                  }
-                }, 1000);
-              }
-              break;
-            }
-
-            default:
-              break;
-          }
-        }
+    iframeHookup(event: Event, chatId: string) {
+      // find the chat:
+      const idx = this.activeChat.findIndex((c) => c.id === chatId);
+      if (idx < 0) {
+        console.log(`No active chat found for ${chatId}, kinda weird.`);
+        return; //weird but okay.
       }
+      this.activeChat[idx].iframeElement = event.target as HTMLIFrameElement;
+      const client: ProtoConnection = ProtoframePubsub.parent(
+        tlsyncProtocol,
+        event.target as HTMLIFrameElement
+      );
+      ProtoframePubsub.connect(client).then(
+        () => {
+          client
+            .ask(
+              "initiate",
+              { info: "TLclient requesting connect w/ Holodex+ TLSYNC Relay" },
+              1000
+            )
+            .then(
+              (res) => {
+                if (res.state === "ok") {
+                  this.activeChat[idx].connected = true;
+                  this.activeChat[idx].client = client;
+                } else {
+                  this.activeChat[idx].connected = false;
+                  this.activeChat[idx].client = client;
+                }
+              },
+              (reason) => {
+                console.error(
+                  "Connected to Protoframe within Youtube Chat Iframe, timed out waiting for INIT response.",
+                  reason
+                );
+                this.activeChat[idx].connected = false;
+                this.activeChat[idx].client = client;
+              }
+            );
+        },
+        (reason) => {
+          console.error(
+            "Failed to connect to Protoframe within Youtube Chat:",
+            reason
+          );
+        }
+      );
     },
     addEntry() {
+      if (!this.user || !this.jwt) {
+        console.error("you're not logged in");
+        return;
+      }
       // SEND TO HOLODEX +
+      const msg =
+        this.profileStore.activeProfile.prefix +
+        this.inputString +
+        this.profileStore.activeProfile.suffix;
       this.activeChat.forEach((e) => {
-        switch (e.id.slice(0, 3)) {
-          case "YT_":
-            e.iframeElement?.contentWindow?.postMessage(
-              {
-                n: "HolodexSync",
-                d:
-                  this.localPrefix +
-                  this.profile[this.profileIdx].Prefix +
-                  this.inputString +
-                  this.profile[this.profileIdx].Suffix,
-              },
-              "https://www.youtube.com"
-            );
-            break;
-
-          case "TW_":
-            e.iframeElement?.contentWindow?.postMessage(
-              {
-                n: "HolodexSync",
-                d:
-                  this.localPrefix +
-                  this.profile[this.profileIdx].Prefix +
-                  this.inputString +
-                  this.profile[this.profileIdx].Suffix,
-              },
-              "https://www.twitch.tv"
-            );
-            break;
-
-          default:
-            break;
+        if (e.connected) {
+          e.client?.tell("sendMessage", {
+            text: this.localPrefix + msg,
+          });
         }
       });
 
       const bodydt = {
-        name: this.userdata.user.username,
+        name: this.user.username,
         timestamp: Date.now(),
-        message:
-          this.profile[this.profileIdx].Prefix +
-          this.inputString +
-          this.profile[this.profileIdx].Suffix,
-        cc: this.profile[this.profileIdx].useCC
-          ? this.profile[this.profileIdx].CC
-          : "",
-        oc: this.profile[this.profileIdx].useOC
-          ? this.profile[this.profileIdx].OC
-          : "",
+        message: msg,
         source: "user",
       };
 
@@ -625,7 +640,7 @@ export default defineComponent({
       backendApi
         .postTL({
           videoId: this.video?.id || "custom",
-          jwt: this.userdata.jwt,
+          jwt: this.jwt,
           lang: this.TLLang.value,
           ...(!this.video?.id && { custom_video_id: this.mainStreamLink }),
           body: bodydt,
@@ -643,7 +658,7 @@ export default defineComponent({
         if (!link) return;
         // TODO: this doesn't make complete sense
         // Not all YT videos are able to be submitted normally
-        const ytVideoId = link.match(VIDEO_URL_REGEX)?.groups.id;
+        const ytVideoId = link.match(VIDEO_URL_REGEX)?.groups?.id;
         backendApi
           .postTL({
             videoId: ytVideoId || "custom",
@@ -668,7 +683,17 @@ export default defineComponent({
 
       this.inputString = "";
     },
-    deleteAuxLink(idx: number) {
+    addProfile() {
+      let profileName = prompt(
+        this.$t("views.tlClient.addProfilePanel.title"),
+        this.$t("views.tlClient.addProfilePanel.inputLabel")
+      )?.trim();
+      if (!profileName) {
+        profileName = `Profile ${this.profileStore.profiles.length}`;
+      }
+      this.profileStore.addProfile(profileName);
+    },
+    deleteChatBox(idx: number) {
       if (this.collabLinks.length !== 1) {
         this.collabLinks.splice(idx, 1);
       } else {
@@ -694,92 +719,6 @@ export default defineComponent({
         this.firstLoad = false;
       }
     },
-    // ------------------------ PROFILE CONTROLLER ------------------------
-    shiftProfileUp() {
-      if (this.profileIdx > 1) {
-        this.profileContainer = JSON.parse(
-          JSON.stringify(this.profile[this.profileIdx - 1])
-        );
-        this.profile[this.profileIdx - 1] = this.profile[this.profileIdx];
-        this.profile[this.profileIdx] = this.profileContainer;
-        this.profileIdx -= 1;
-        this.profileContainer = {};
-      }
-      this.showProfileList();
-    },
-    shiftProfileDown() {
-      if (this.profileIdx !== 0 && this.profileIdx < this.profile.length - 1) {
-        this.profileContainer = JSON.parse(
-          JSON.stringify(this.profile[this.profileIdx + 1])
-        );
-        this.profile[this.profileIdx + 1] = this.profile[this.profileIdx];
-        this.profile[this.profileIdx] = this.profileContainer;
-        this.profileIdx += 1;
-        this.profileContainer = {};
-      }
-      this.showProfileList();
-    },
-    profileUp() {
-      if (this.profileIdx === 0) {
-        this.profileIdx = this.profile.length - 1;
-      } else {
-        this.profileIdx -= 1;
-      }
-      this.showProfileList();
-    },
-    profileDown() {
-      if (this.profileIdx === this.profile.length - 1) {
-        this.profileIdx = 0;
-      } else {
-        this.profileIdx += 1;
-      }
-      this.showProfileList();
-    },
-    profileJump(idx: number) {
-      if (idx < this.profile.length) {
-        this.profileIdx = idx;
-      }
-      this.showProfileList();
-    },
-    profileJumpToDefault() {
-      this.profileIdx = 0;
-      this.showProfileList();
-    },
-    addProfile() {
-      let profileName = prompt(
-        this.$t("views.tlClient.addProfilePanel.title"),
-        this.$t("views.tlClient.addProfilePanel.inputLabel")
-      )?.trim();
-      if (!profileName) {
-        profileName = `Profile ${this.profile.length}`;
-      }
-
-      // TODO store.addProfile(profileName);
-    },
-    deleteProfile() {
-      if (this.profileIdx !== 0) {
-        this.profileIdx -= 1;
-        this.profile.splice(this.profileIdx + 1, 1);
-      }
-      this.modalNexus = false;
-      this.showProfileList();
-    },
-    showProfileList() {
-      if (!this.profileDisplay) {
-        this.profileDisplay = true;
-      }
-
-      if (this.profileDisplayTimer) {
-        clearInterval(this.profileDisplayTimer);
-      }
-
-      this.profileDisplayTimer = setInterval(() => {
-        this.profileDisplay = false;
-        clearInterval(this.profileDisplayTimer);
-      }, 3000);
-    },
-    //= ======================== PROFILE CONTROLLER ========================
-
     // ---------------------- ACTIVE CHAT CONTROLLER ----------------------
     unloadAll() {
       this.activeChat = [];
@@ -828,6 +767,8 @@ export default defineComponent({
             this.activeChat.push({
               id: `TW_${StreamURL.id}`,
               iframeElement: undefined,
+              client: undefined,
+              connected: false,
             });
             break;
           }
@@ -836,6 +777,8 @@ export default defineComponent({
             this.activeChat.push({
               id: `YT_${StreamURL.id}`,
               iframeElement: undefined,
+              client: undefined,
+              connected: false,
             });
             break;
           }
@@ -968,23 +911,28 @@ export default defineComponent({
   left: 0px;
   z-index: 1;
 }
+
 .ColourButton {
   margin-top: 19px;
   margin-left: 5px;
 }
+
 .ProfileListCard {
   position: absolute;
   bottom: 5px;
   right: 5px;
 }
+
 .ChatPanelContainer {
   display: grid;
   grid-auto-flow: column;
 }
+
 .activeChatIFrame {
   width: 100%;
   height: 100%;
 }
+
 .tl-topbar > * {
   text-transform: unset !important;
 }
@@ -994,6 +942,7 @@ export default defineComponent({
   min-height: 9px;
   background: var(--v-background-base);
 }
+
 .horizontal-resize-bar > .hr-resize-core {
   width: 10%;
   min-width: 40px;
@@ -1009,6 +958,7 @@ export default defineComponent({
   cursor: e-resize;
   width: 9px;
 }
+
 .vertical-resize-bar > .vr-resize-core {
   height: 10%;
   min-height: 40px;
@@ -1025,5 +975,11 @@ export default defineComponent({
 
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-template-rows: repeat(auto-fit, minmax(50px, 1fr));
+}
+.profile-element {
+  @apply border-transparent px-1;
+}
+.profile-element.active-profile {
+  @apply border-r-primary-300;
 }
 </style>

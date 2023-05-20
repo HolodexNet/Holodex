@@ -50,15 +50,22 @@ export const useProfileStore = defineStore("profiles", {
       ];
       this.activeProfileIdx = nextIndex;
     },
-    activeProfileDown() {
+    nextProfile() {
       this.activeProfileIdx =
         (this.activeProfileIdx + 1) % this.profiles.length;
     },
-    activeProfileUp() {
+    prevProfile() {
       this.activeProfileIdx =
-        (this.activeProfileIdx - 1) % this.profiles.length;
+        (this.activeProfileIdx - 1 + this.profiles.length) %
+        this.profiles.length;
+    },
+    goToProfile(id: number) {
+      if (id >= this.profiles.length)
+        this.activeProfileIdx = this.profiles.length - 1;
+      else this.activeProfileIdx = id;
     },
     deleteProfile(id: number) {
+      if (this.profiles.length == 1) return; //can't go below 1;
       this.profiles.splice(id, 1);
       if (this.activeProfileIdx >= this.profiles.length) {
         this.activeProfileIdx = this.profiles.length - 1;
