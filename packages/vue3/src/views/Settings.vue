@@ -34,27 +34,27 @@ export default defineComponent({
             : this.$route.path === "/settings" ||
               this.$route.path === "/settings/lang",
           name: "Language",
-          class: this.icons.about,
+          class: this.icons.settings_lang,
         },
         {
           path: `/settings/themes`,
           name: "Color Themes",
-          class: this.icons.changelog,
+          class: this.icons.settings_theme,
         },
         {
           path: `/settings/user`,
           name: "User & Account",
-          class: "i-wpf:faq",
+          class: this.icons.settings_user,
         },
         {
           path: `/settings/homepage`,
           name: "Homepage & Filters",
-          class: "i-carbon:request-quote",
+          class: this.icons.settings_filter,
         },
         {
           path: `/settings/blocked`,
           name: "Blocked Channels",
-          class: "i-carbon:event-schedule",
+          class: this.icons.settings_block,
         },
         // advanced (?
       ];

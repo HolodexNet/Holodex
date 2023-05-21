@@ -54,6 +54,12 @@ export const sidebar_manager = "i-mdi:file-arrow-up-down";
 export const sidebar_relaybot = "i-mdi:robot-industrial";
 
 export const changelog = "i-fluent:sparkle-20-regular";
+
+export const settings_lang = "i-ion:language-outline";
+export const settings_theme = "i-ion:moon-outline";
+export const settings_user = "i-ion:person-outline";
+export const settings_filter = "i-ion:filter-outline";
+export const settings_block = "i-ion:eye-off-outline";
 /**
  * Search specific dropdown icons
  *
