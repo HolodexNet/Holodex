@@ -178,7 +178,8 @@ function updateTab(tab: number, preservePage = true) {
           }
         : {},
     })
-    .catch(() => {
+    .catch((e) => {
+      console.debug("Expected navigation duplication error", e);
       // Navigation duplication error expected, catch it and move on
     });
 }

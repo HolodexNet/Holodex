@@ -114,26 +114,56 @@
             "
           />
           <div
-            v-for="(ChatURL, index) in activeChat"
-            :key="'chat' + ChatURL.id"
+            v-for="(currentChat, index) in activeChat"
+            :key="'_chat' + currentChat.id"
             class="flex flex-col"
             variant="outlined"
           >
-            <p class="text-center" style="margin-top: 5px">
-              {{ ChatURL.id }}
+            <div
+              class="flex h-6 items-center"
+              :class="{
+                'bg-success text-success-content': currentChat.connected,
+                'bg-error text-error-content': !currentChat.connected,
+              }"
+            >
+              <span
+                class="mx-auto text-sm"
+                :class="{ 'cursor-pointer': !currentChat.connected }"
+                @click="$router.push('/about/extensions')"
+              >
+                <kbd class="group badge-outline badge align-top">
+                  {{ currentChat.id }}
+                  <h-icon
+                    class="i-fluent:plug-connected-checkmark-20-filled inline-block"
+                    :class="currentChat.connected ? 'inline-block' : 'hidden'"
+                    style="font-size: 18px"
+                  />
+                  <h-icon
+                    :class="currentChat.connected ? 'hidden' : 'inline-block'"
+                    class="i-fluent:warning-20-filled inline-block"
+                    style="font-size: 18px"
+                  />
+                  <span
+                    v-show="!currentChat.connected"
+                    class="hidden group-hover:inline"
+                  >
+                    To relay TL, Holodex+ Extension is needed
+                  </span>
+                </kbd>
+              </span>
               <h-btn
-                class="btn-icon float-right"
+                class="btn-icon"
                 ghost
                 small
                 icon="i-mdi:close-circle"
                 @click="unloadChatAtIndex(index)"
               />
-            </p>
+            </div>
             <iframe
               class="activeChatIFrame"
-              :src="videoIDToChatEmbedURL(ChatURL.id)"
+              :src="videoIDToChatEmbedURL(currentChat.id)"
               frameborder="0"
-              @load="iframeHookup($event, ChatURL.id)"
+              @load="iframeHookup($event, currentChat.id)"
             />
           </div>
         </div>
@@ -472,12 +502,14 @@ export default defineComponent({
       router.push("/login");
     }
 
-    const activeChat: {
-      id: string;
-      iframeElement?: HTMLIFrameElement;
-      client?: ProtoConnection;
-      connected: boolean;
-    }[] = reactive([]);
+    const activeChat: Ref<
+      {
+        id: string;
+        iframeElement?: HTMLIFrameElement;
+        client?: ProtoConnection;
+        connected: boolean;
+      }[]
+    > = ref([]);
 
     const profileStore = useProfileStore();
 
@@ -537,6 +569,13 @@ export default defineComponent({
     },
     "profileStore.activeProfileIdx": function (nw: any) {
       document.getElementById("prf" + nw)?.scrollIntoView();
+    },
+    TLSetting() {
+      setTimeout(() => {
+        document
+          .getElementsByClassName("active-profile")?.[0]
+          ?.scrollIntoView();
+      }, 400);
     },
   },
   mounted() {
