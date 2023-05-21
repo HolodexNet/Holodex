@@ -26,6 +26,14 @@ const colorOpts = Object.keys(colors).reduce((prev, colorName) => {
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      xs: "10px",
+      sm: "550px",
+      md: "816px",
+      lg: "1120px",
+      xl: "1440px",
+      "2xl": "1600px",
+    },
     extend: {
       colors: colorOpts,
       backgroundImage: (theme) => ({
@@ -43,13 +51,13 @@ module.exports = {
         ".container": {
           maxWidth: "100%",
           "@screen sm": {
-            maxWidth: "640px",
+            maxWidth: "660px",
           },
           "@screen md": {
-            maxWidth: "768px",
+            maxWidth: "780px",
           },
           "@screen lg": {
-            maxWidth: "1000px",
+            maxWidth: "960px",
           },
           "@screen xl": {
             maxWidth: "1200px",

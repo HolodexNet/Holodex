@@ -34,7 +34,9 @@ const props = defineProps<{ modelValue: boolean; temporary?: boolean }>();
 const emit = defineEmits(["update:modelValue"]);
 
 const display = useDisplay();
-const isTemporary = computed(() => display.mobile.value || props.temporary);
+const isTemporary = computed(
+  () => display.smaller("md").value || props.temporary
+);
 
 const setShow = (val: boolean) => emit("update:modelValue", val);
 // When temporary changes, usually because the window was resized

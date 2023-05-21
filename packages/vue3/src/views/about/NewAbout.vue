@@ -8,16 +8,11 @@
       id="about-menu"
       class="rounded-md bg-bgColor"
       :class="{
-        'flex-grow': !minimizeSidebar,
-        'flex-shrink': minimizeSidebar,
+        'flex-grow': true,
         'max-w-full sm:max-w-[200px] md:max-w-[300px]': isDediAboutPage,
       }"
-      style="flex-basis: auto"
     >
-      <ul
-        class="menu w-full p-2"
-        :class="{ 'menu-horizontal sm:menu-vertical': isDediAboutPage }"
-      >
+      <ul class="menu w-full p-2" :class="{ 'menu-vertical': true }">
         <li
           v-if="!minimizeSidebar"
           class="mb-2 flex text-lg"
@@ -44,27 +39,33 @@
             <div class="i-carbon:logo-github m-auto" />
           </a>
         </li>
-        <li v-for="tab in tabs" :key="tab.path">
-          <router-link
-            :to="tab.path"
-            class="min-h-12 justify-start"
-            :title="tab.name"
-            :class="{ active: tab.active }"
-          >
-            <div :class="tab.class" class="mx-1 inline-block text-xl md:mr-2" />
-            <span v-if="!minimizeSidebar">{{ tab.name }}</span>
+        <template v-if="!minimizeSidebar">
+          <li v-for="tab in tabs" :key="tab.path">
+            <router-link
+              :to="tab.path"
+              class="min-h-12 justify-start"
+              :title="tab.name"
+              :class="{ active: tab.active }"
+            >
+              <div
+                :class="tab.class"
+                class="mx-1 inline-block text-xl md:mr-2"
+              />
+              <span>{{ tab.name }}</span>
+            </router-link>
+          </li>
+        </template>
+        <li v-if="minimizeSidebar">
+          <router-link :to="'/about'" class="min-h-12 w-full" :title="'Back'">
+            <div class="i-mdi:arrow-left mx-1 inline-block text-xl md:mr-2" />
+            <span>Back</span>
           </router-link>
         </li>
       </ul>
     </div>
     <div
-      v-if="!($route.path === '/about' && display.sm.value)"
-      class="xs:max-w-full flex-shrink flex-grow rounded-md bg-bgColor p-3 sm:w-80"
-      :style="
-        minimizeSidebar
-          ? 'flex-basis:100%'
-          : 'flex-basis: 60%; min-width: 300px'
-      "
+      v-if="!($route.path === '/about' && display.mobile.value)"
+      class="max-w-full flex-shrink flex-grow rounded-md bg-bgColor p-3 sm:w-80"
     >
       <h1 v-if="minimizeSidebar" class="mb-2 text-xl font-semibold">
         {{ tabs.find((x) => x.active)?.name }}
@@ -120,7 +121,7 @@ export default defineComponent({
         },
         {
           path: `/about/faq`,
-          name: "Frequently Asked Questions",
+          name: "F.A.Q",
           class: "i-wpf:faq",
         },
         {
@@ -155,7 +156,7 @@ export default defineComponent({
     },
     minimizeSidebar() {
       return (
-        this.display.smallerOrEqual("md").value && this.$route.path !== "/about"
+        this.display.smallerOrEqual("sm").value && this.$route.path !== "/about"
       );
     },
     isDediAboutPage() {
