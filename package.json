@@ -13,11 +13,6 @@
   "workspaces": [
     "src/external/vue-grid-layout"
   ],
-  "lint-staged": {
-    "*.{js,ts,vue}": [
-      "eslint --fix"
-    ]
-  },
   "dependencies": {
     "@interactjs/actions": "^1.10.11",
     "@interactjs/auto-start": "^1.10.11",
