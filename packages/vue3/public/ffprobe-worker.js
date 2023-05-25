@@ -36,14 +36,17 @@ onmessage = async (event) => {
       "-show_entries",
       "frame=pkt_pts_time:frame_tags=lavfi.astats.Overall.RMS_level",
       "-of",
-      "json",
+      "csv=p=0",
       "-i",
-      `amovie=${name}.${inType},astats=metadata=1:reset=1`
+      `amovie=${name}.${inType},aresample=48000,asetnsamples=2400,astats=metadata=1:reset=1`
     );
     // -f lavfi -i amovie=input.aac,astats=metadata=1:reset=1 -show_entries frame=pkt_pts_time:frame_tags=lavfi.astats.Overall.RMS_level,lavfi.astats.1.RMS_level,lavfi.astats.2.RMS_level -of
 
     // const data = await ffmpeg.FS("readFile", `out.json`);
-    const jsonResponse = stdoutBuffer.join("");
+    const jsonResponse = stdoutBuffer.map((x) => {
+      const [a, b] = x.split(",");
+      return [+a, +b || 0];
+    });
     console.log(jsonResponse);
     postMessage({ buffer: jsonResponse, type: "result" }, []);
 
