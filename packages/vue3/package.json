@@ -19,6 +19,7 @@
     ]
   },
   "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.11.6",
     "@floating-ui/vue": "^0.2.1",
     "@headlessui/tailwindcss": "^0.1.3",
     "@headlessui/vue": "^1.7.13",

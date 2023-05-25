@@ -6,3 +6,5 @@ dist-ssr
 components.d.ts
 gource/*
 gource
+public/*.js
+public/*.js.map

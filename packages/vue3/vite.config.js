@@ -27,6 +27,16 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  build: {
+    rollupOptions: {
+      external: [
+        "ffprobe-worker.js",
+        "ffprobe-core.js",
+        "ffprobe-core.wasm",
+        "ffmpeg.min.js",
+      ],
+    },
+  },
   plugins: [
     BuildInfo(),
     // visualizer({ template: "treemap", gzipSize: true, brotliSize: true }),
@@ -72,6 +82,16 @@ export default defineConfig({
     // filesize({
     //   showBeforeSizes: "build",
     // }),
+    // {
+    //   name: "configure-response-headers",
+    //   configureServer: (server) => {
+    //     server.middlewares.use((_req, res, next) => {
+    //       res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+    //       res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+    //       next();
+    //     });
+    //   },
+    // },
   ],
   server: {
     port: 8080,

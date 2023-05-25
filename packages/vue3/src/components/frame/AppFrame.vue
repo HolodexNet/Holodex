@@ -73,13 +73,14 @@ $header-height: 56px;
 }
 
 .temporary-sidebar-overlay {
+  @apply bg-black opacity-50;
+
   position: fixed;
   top: $header-height;
   width: 100vw;
   height: 100vh;
   content: "";
   z-index: 10;
-  @apply bg-black opacity-50;
 }
 
 /* Here we need to make assumption that the first sidebar */

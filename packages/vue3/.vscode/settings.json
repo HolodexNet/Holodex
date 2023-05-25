@@ -19,6 +19,9 @@
   "[vue]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
   "vue.codeActions.enabled": false,
   "workbench.colorCustomizations": {
     "activityBar.background": "#1F1A1D",

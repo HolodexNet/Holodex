@@ -83,6 +83,7 @@
       <video-card :video="video" />
     </template>
   </video-card-grid>
+  <waveform />
 </template>
 
 <script setup>
