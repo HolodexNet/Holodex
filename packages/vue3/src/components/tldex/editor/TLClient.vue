@@ -323,6 +323,9 @@
                   </div>
                 </h-tooltip>
               </div>
+              <h-row>
+                <Waveform :video-id="mainID" />
+              </h-row>
               <h-row class="gap-2">
                 <div class="grow basis-4/5">
                   <h-row class="max-w-xl gap-2">
@@ -463,7 +466,10 @@ import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { useSiteStore } from "@/stores";
 import { getVideoThumbnails } from "@/utils/functions";
-import { useForceHideTopBarWhileActive } from "@/stores/frame";
+import {
+  useForceHideTopBarWhileActive,
+  indicateShouldHideSideBar,
+} from "@/hooks/common/navbars";
 import { ProtoframePubsub } from "protoframe";
 import { tlsyncProtocol } from "./functions";
 import { useProfileStore } from "../new-editor/stores";
@@ -496,6 +502,7 @@ export default defineComponent({
   setup() {
     const site = useSiteStore();
     useForceHideTopBarWhileActive();
+    indicateShouldHideSideBar();
 
     const router = useRouter();
     if (!site.user || !site.jwtToken) {

@@ -47,7 +47,7 @@ onmessage = async (event) => {
       const [a, b] = x.split(",");
       return [+a, +b || 0];
     });
-    console.log(jsonResponse);
+    // console.log(jsonResponse);
     postMessage({ buffer: jsonResponse, type: "result" }, []);
 
     // delete files from memory

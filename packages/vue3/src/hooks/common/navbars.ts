@@ -32,5 +32,12 @@ export function indicateShouldHideSideBar() {
     shouldHideSidebar.value = false;
   });
 
+  onMounted(() => {
+    shouldHideSidebar.value = true;
+  });
+  onUnmounted(() => {
+    shouldHideSidebar.value = false;
+  });
+
   return shouldHideSidebar;
 }

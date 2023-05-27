@@ -1,7 +1,7 @@
 <template>
-  <app-frame v-model="showSidebar">
-    <template #header>
-      <main-nav @toggle-sidebar="showSidebar = !showSidebar" />
+  <app-frame>
+    <template #header="{ toggleSidebar }">
+      <main-nav @toggle-sidebar="toggleSidebar" />
     </template>
     <template #main>
       <router-view />
@@ -31,16 +31,13 @@ import { usePlaylist } from "./services/playlist";
 import { useMigrateFromHolodexV2 } from "./stores/util/useMigrateFromHolodexV2";
 import { CURRENT_PLAYLIST_PROVIDE_KEY } from "./utils/consts";
 import { usePages } from "./components/frame/usePages";
-import { useDisplay } from "./hooks/common/useDisplay";
-
-const display = useDisplay();
-const showSidebar = ref(display.greater("lg").value);
 const pages = usePages();
 
 const SelectionPanel = defineAsyncComponent(
   () => import("@/components/nav/SelectionControl.vue")
 );
 
+// a XOR variable defining whether or not user has toggled the sidebar
 // initializing setup for Holodex:
 // Steps:
 useMigrateFromHolodexV2();

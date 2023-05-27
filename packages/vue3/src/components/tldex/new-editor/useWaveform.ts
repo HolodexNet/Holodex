@@ -43,7 +43,7 @@ type ProtoConnection = ProtoframePubsub<{
   };
 }>;
 
-export function useWaveformGenerator(videoId: string) {
+export function useWaveformGenerator() {
   const worker = new Worker(new URL("//ffprobe-worker.js", import.meta.url));
 
   const client = ref<ProtoConnection>();
@@ -59,7 +59,7 @@ export function useWaveformGenerator(videoId: string) {
   const arr = ref<Uint8Array>();
   const waveform = ref<[number, number][]>();
 
-  function latchAndRun() {
+  function latchAndRun(videoId: string) {
     const iframe = document.getElementsByTagName("iframe")[0];
     const x = ProtoframePubsub.parent(
       ytAudioDLProtocol,
@@ -85,7 +85,7 @@ export function useWaveformGenerator(videoId: string) {
         x.handleTell("fetchAudioComplete", (res) => {
           arr.value = res.audio;
           format.value = res.format;
-
+          console.log(res.format);
           console.log("Done downloading...");
 
           processWaveform();
@@ -113,7 +113,7 @@ export function useWaveformGenerator(videoId: string) {
         return;
       }
       // clear buffer
-      arr.value = undefined;
+      // arr.value = undefined;
       const out: [number, number][] = data.buffer;
       waveform.value = out;
       stage.value = "done";

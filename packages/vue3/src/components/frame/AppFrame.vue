@@ -2,23 +2,25 @@
   <div
     class="grid-frame bg-bgColor-600"
     :class="{
-      'hide-sidebar': !$slots.sidebar?.() || !props.modelValue,
+      'hide-sidebar': !$slots.sidebar?.() || !sidebarVisibility,
       'hide-header': mustHideTopBar,
       'temporary-sidebar': isTemporary,
     }"
   >
-    <div class="header"><slot name="header" /></div>
+    <div class="header">
+      <slot name="header" :toggle-sidebar="toggle" />
+    </div>
     <Transition name="slide">
-      <div v-show="$slots.sidebar?.() && props.modelValue" class="sidebar">
+      <div v-show="$slots.sidebar?.() && sidebarVisibility" class="sidebar">
         <div class="sidebar-content bg-bgColor">
           <slot name="sidebar" />
         </div>
       </div>
     </Transition>
     <div
-      v-if="isTemporary && props.modelValue"
+      v-if="isTemporary && sidebarVisibility"
       class="temporary-sidebar-overlay"
-      @click="setShow(false)"
+      @click="toggle"
     />
     <div class="main"><slot name="main" /></div>
     <div class="footer"><slot name="footer" /></div>
@@ -27,29 +29,38 @@
 <script setup lang="ts">
 import { useDisplay } from "@/hooks/common/useDisplay";
 import router from "@/router";
-import { mustHideTopBar } from "@/stores/frame";
-
-// Show sidebar?
-const props = defineProps<{ modelValue: boolean; temporary?: boolean }>();
-const emit = defineEmits(["update:modelValue"]);
+import { mustHideTopBar, shouldHideSidebar } from "@/hooks/common/navbars";
 
 const display = useDisplay();
-const isTemporary = computed(
-  () => display.smaller("md").value || props.temporary
+const sidebarVisibility = ref(display.greater("lg").value);
+// on larger displays, upon first entering the site, the sidebar is shown.
+// on smaller displays, upon first entering the site, the sidebar is hidden.
+
+const isTemporary = computed(() =>
+  shouldHideSidebar.value ? true : display.smaller("md").value
 );
 
-const setShow = (val: boolean) => emit("update:modelValue", val);
+function toggle() {
+  sidebarVisibility.value = !sidebarVisibility.value;
+}
+
 // When temporary changes, usually because the window was resized
 watch(
   () => isTemporary.value,
   () => {
-    setShow(!isTemporary.value);
+    if (isTemporary.value) {
+      // sidebar is temporary, then we should definitely hide.
+      sidebarVisibility.value = false;
+    } else {
+      // sidebar is not temporary, we should show the sidebar.
+      sidebarVisibility.value = true;
+    }
   },
   { immediate: true }
 );
 
 router.afterEach(() => {
-  if (isTemporary.value) setShow(false);
+  if (isTemporary.value) sidebarVisibility.value = false;
 });
 </script>
 <style lang="scss" scoped>
