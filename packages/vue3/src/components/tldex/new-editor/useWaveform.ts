@@ -44,7 +44,9 @@ type ProtoConnection = ProtoframePubsub<{
 }>;
 
 export function useWaveformGenerator() {
-  const worker = new Worker(new URL("//ffprobe-worker.js", import.meta.url));
+  const worker = new Worker(
+    new URL("./support/ffprobe-worker.js", import.meta.url)
+  );
 
   const client = ref<ProtoConnection>();
 
@@ -61,15 +63,15 @@ export function useWaveformGenerator() {
 
   function latchAndRun(videoId: string) {
     const iframe = document.getElementsByTagName("iframe")[0];
-    const x = ProtoframePubsub.parent(
+    const iframeCommunicationBus = ProtoframePubsub.parent(
       ytAudioDLProtocol,
       iframe as HTMLIFrameElement
     );
-    ProtoframePubsub.connect(x).then(
+    ProtoframePubsub.connect(iframeCommunicationBus).then(
       () => {
-        client.value = x;
+        client.value = iframeCommunicationBus;
 
-        x.ask("fetchAudio", { videoId }).then(
+        iframeCommunicationBus.ask("fetchAudio", { videoId }).then(
           (res) => {
             console.log(res);
             stage.value = "downloading";
@@ -82,7 +84,7 @@ export function useWaveformGenerator() {
           }
         );
 
-        x.handleTell("fetchAudioComplete", (res) => {
+        iframeCommunicationBus.handleTell("fetchAudioComplete", (res) => {
           arr.value = res.audio;
           format.value = res.format;
           console.log(res.format);
@@ -91,12 +93,15 @@ export function useWaveformGenerator() {
           processWaveform();
         });
 
-        x.handleTell("progress", ({ percentage, total }) => {
-          stage.value = "downloading";
-          progress.value = percentage;
-          totalSize.value = total;
-          console.log(percentage, "% of", total);
-        });
+        iframeCommunicationBus.handleTell(
+          "progress",
+          ({ percentage, total }) => {
+            stage.value = "downloading";
+            progress.value = Math.round(percentage);
+            totalSize.value = total;
+            console.log(percentage, "% of", total);
+          }
+        );
       },
       () => {
         console.error("Failed to connect");
@@ -107,8 +112,20 @@ export function useWaveformGenerator() {
   async function processWaveform() {
     worker.onmessage = (event) => {
       const { data } = event;
+      const eventType: "result" | "error" | "progress" = data.type;
+
+      if (eventType == "error") {
+        stage.value = "error";
+        error_message.value = String(data.error);
+        return;
+      } else if (eventType == "progress") {
+        progress.value = data.ts as number;
+        return;
+      }
       console.log("Completed transcoding", data);
       if (!data.buffer) {
+        stage.value = "error";
+        error_message.value = "Undefined buffer, weird.";
         console.log("Returned Buffer is undefined?");
         return;
       }
@@ -136,6 +153,7 @@ export function useWaveformGenerator() {
     );
     console.log("Transcoding started");
     stage.value = "transcoding";
+    progress.value = 0;
   }
 
   return {

@@ -2,7 +2,7 @@
   <div class="mb-2 text-lg font-semibold">
     {{ $t("views.settings.languageSettings") }}
   </div>
-  <div class="lang-settings pl-8">
+  <div class="pl-8">
     <h-input
       :explanation="'» ' + langs.find((x) => x.val === langStore.lang)?.credit"
     >

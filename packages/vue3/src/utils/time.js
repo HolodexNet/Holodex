@@ -29,7 +29,12 @@ dayjs.extend(relativeTime, {
   thresholds,
 });
 
-export function formatDuration(millisecs) {
+/**
+ *
+ * @param {number} millisecs
+ * @param {number} decimals
+ */
+export function formatDuration(millisecs, decimals = 0) {
   const negate = millisecs < 0;
   const secs = millisecs / 1000;
   const h = Math.floor(secs / (60 * 60));
@@ -38,7 +43,15 @@ export function formatDuration(millisecs) {
   const hStr = h ? `${h}:` : "";
   const mStr = String(m).padStart(h ? 2 : 1, "0");
   const sStr = String(s).padStart(2, "0");
-  return `${negate ? "-" : ""}${hStr}${mStr}:${sStr}`;
+  let ms = "";
+  if (decimals) {
+    ms =
+      "." +
+      String(millisecs % 1000)
+        .padStart(3, "0")
+        .slice(0, decimals);
+  }
+  return `${negate ? "-" : ""}${hStr}${mStr}:${sStr}${ms}`;
 }
 
 // eslint-disable-next-line no-unused-vars

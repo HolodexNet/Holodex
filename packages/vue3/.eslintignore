@@ -8,3 +8,5 @@ gource/*
 gource
 public/*.js
 public/*.js.map
+
+src/components/tldex/new-editor/support

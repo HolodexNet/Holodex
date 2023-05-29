@@ -12,7 +12,7 @@
       :model-value="optionsShown"
       use-ref-width
       strategy="fixed"
-      :offset="5"
+      :offset="{ mainAxis: 7.5 }"
     >
       <template
         #activator="{ props: { ref: referenceEl, ariaExpanded, ariaHasPopup } }"

@@ -41,7 +41,7 @@ export function isMessageCurrent(
   elapsed?: number,
   absolute?: number
 ): boolean {
-  const duration = (message.duration || 4000) / 1000;
+  const duration = +(message.duration || 4000) / 1000;
   if (message.video_offset && elapsed) {
     console.debug(
       `[${message.video_offset}] [${
@@ -120,6 +120,12 @@ export class ChatDB {
   static ParsedMessageComparator(a: ParsedMessage, b: ParsedMessage) {
     if (a.timestamp > b.timestamp) return 1;
     if (a.timestamp < b.timestamp) return -1;
+    return 0;
+  }
+
+  static ParsedMessageOFFSETComparator(a: ParsedMessage, b: ParsedMessage) {
+    if (a.video_offset > b.video_offset) return 1;
+    if (a.video_offset < b.video_offset) return -1;
     return 0;
   }
 
@@ -221,6 +227,7 @@ export class ChatDB {
     };
 
     this.rooms.get(room)!.state.loading = true;
+
     backendApi
       .chatHistory(videoId, query)
       .then(({ data }: { data: TLDexMessage[] }) => {

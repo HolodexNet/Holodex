@@ -1,65 +1,59 @@
 <template>
-  <div class="w-full">
-    <h-btn v-if="!waveform" @click="init">Generate Waveform</h-btn>
-    <div v-if="stage != 'waiting' && !waveform">
-      {{ stage }}: {{ progress }} / {{ formatBytes(totalSize) }}
-      {{ error_message }}
-    </div>
-    <video-player v-if="videoId && testMode" :video="{ id: videoId }" />
-
-    <div class="w-10/12 max-w-5xl" style="height: 100px">
-      <div v-bind="containerProps" class="h-full">
-        <div v-bind="wrapperProps" class="items-center">
-          <div
-            v-for="item in list"
-            :key="item.index"
-            :style="{
-              width: '6px',
-              height: item.data[1] + 'px',
-              backgroundColor: 'white',
-            }"
-          />
-        </div>
+  <div class="flex w-full flex-col flex-nowrap" style="height: 200px">
+    <div ref="containerRef" class="grow-1 shrink-1 relative">
+      <canvas ref="canvasRef" class="w-full" style="height: 130" />
+      <div class="pointer-events-none absolute inset-0">
+        <waveform-subtitle
+          v-for="item in currentSubs"
+          :key="item.key"
+          :message="item"
+          style="top: 20px"
+          :style="{
+            transform:
+              'translateX(' +
+              ((item.video_offset - startTime) / (endTime - startTime)) *
+                containerSize.width.value +
+              'px)',
+            width:
+              ((item.duration ?? 1000) / 1000 / (endTime - startTime)) *
+                containerSize.width.value +
+              'px',
+          }"
+        />
       </div>
     </div>
-    <!-- <virtual-list
-      v-if="waveform"
-      ref="wvis"
-      direction="horizontal"
-      style="
-        overflow-x: auto;
-        width: 70vw;
-        scroll-behavior: smooth;
-        height: 100px;
-      "
-      wrap-class="flex"
-      :wrap-style="{
-        display: 'flex',
-        alignItems: 'center',
-      }"
-      :item-style="{
-        height: 'auto',
-        padding: 'none',
-        boxSizing: 'content-box',
-      }"
-      :keeps="400"
-      :data-key="
-        (i) => {
-          return i[0];
-        }
-      "
-      :data-sources="waveform"
-      :estimate-size="5"
-      :data-component="Bar"
-    /> -->
+    <div class="wf-status">
+      <span v-if="stage == 'waiting' && !waveform">
+        <a class="link" @click="init">
+          Click here to Fetch audio information from youtube, this will use up
+          20MB per hour of stream and take a minute or two depending on your
+          internet speed.
+        </a>
+      </span>
+      <span v-else-if="stage != 'done'">
+        {{ stage }}: {{ msg }}
+        {{ error_message ? "?ERROR?: " + error_message : "" }}
+      </span>
+    </div>
+    <div class="w-full">
+      <span>{{ startTime }}</span>
+      <span class="float-right">{{ endTime }}</span>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { useWaveformGenerator } from "./useWaveform";
 import Bar from "./Bar.vue";
 import { useVirtualList } from "@vueuse/core";
+import { useTimelineRendererBase } from "./useTimeline";
+import { ParsedMessage } from "@/stores/socket_types";
+import { formatDuration } from "@/utils/time";
 
-const props = defineProps<{ videoId: string; testMode?: boolean }>();
+const props = defineProps<{
+  videoId: string;
+  testMode?: boolean;
+  room: { messages: Array<ParsedMessage>; elapsed: number } | undefined;
+}>();
 
 const {
   error_message,
@@ -97,14 +91,51 @@ function formatBytes(bytes: number, decimals = 2): string {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
 
-const a = computed(
+const a = computed<typeof waveform.value>(
   () =>
     waveform.value?.map(([a, b]) => [
       a,
       Math.floor(Math.pow((Math.max(b, -56) + 56) / 56, 3) * 100),
     ]) || []
 );
-const { list, containerProps, wrapperProps } = useVirtualList(a, {
-  itemWidth: 6,
+
+const msg = computed(() => {
+  switch (stage.value) {
+    case "waiting":
+      return "waiting...";
+    case "downloading":
+      return (
+        Math.round(progress.value) + "% of " + formatBytes(totalSize.value)
+      );
+    case "transcoding":
+      return "In progress: " + formatDuration(progress.value * 1000, 1) + "...";
+    case "done":
+    case "error":
+      return "";
+  }
 });
+// const { list, containerProps, wrapperProps } = useVirtualList(a, {
+//   itemWidth: 6,
+// });
+const {
+  allSubs,
+  containerRef,
+  canvasRef,
+  containerSize,
+  currentSubs,
+  endTime,
+  startTime,
+} = useTimelineRendererBase(
+  computed(() => props.room?.messages || []),
+  a,
+  computed({
+    get() {
+      return props.room?.elapsed ?? 0;
+    },
+    set(v) {
+      // hmm
+      console.log(v);
+    },
+  })
+);
 </script>

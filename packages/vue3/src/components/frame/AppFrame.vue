@@ -23,7 +23,9 @@
       @click="toggle"
     />
     <div class="main"><slot name="main" /></div>
-    <div class="footer"><slot name="footer" /></div>
+    <div class="footer">
+      <slot name="footer" />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -128,7 +130,7 @@ $header-height: 56px;
     "sidebar footer footer footer footer footer";
   min-height: 100vh;
   /* grid-template-rows: 56px calc(100vh - 56px); */
-  grid-template-rows: $header-height auto;
+  grid-template-rows: $header-height auto min-content;
   grid-template-columns: var(--sidebar-width-px) auto;
   position: relative;
   @apply duration-300 ease-in-out;
@@ -148,7 +150,7 @@ $header-height: 56px;
 }
 
 .grid-frame.hide-header {
-  grid-template-rows: 0px auto;
+  grid-template-rows: 0px auto min-content;
   .header {
     top: -60px;
     position: absolute;

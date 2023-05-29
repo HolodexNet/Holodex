@@ -232,7 +232,7 @@ export const routes: RouteRecordRaw[] = [
     component: () => import("@/views/TranslationClient.vue"),
   },
   {
-    path: "/tlscripter",
+    path: "/scripteditor",
     name: "Translation Scripter",
     component: () => import("@/views/TranslationScripter.vue"),
   },

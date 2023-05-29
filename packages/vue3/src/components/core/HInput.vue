@@ -1,6 +1,6 @@
 <template>
   <div class="form-control w-full">
-    <label class="label">
+    <label v-if="title || subtitle" class="label">
       <span class="label-text">{{ title }}</span>
       <span v-if="subtitle" class="label-text-alt text-opacity-60">
         {{ subtitle }}

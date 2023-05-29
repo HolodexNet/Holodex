@@ -16,8 +16,11 @@ export function useMigrateFromHolodexV2() {
     if (!settingsString) return;
     const v2 = JSON.parse(settingsString);
 
-    if (v2?.migration?.version !== 11) {
-      console.error("Abandon Migration: old settings are not latest version.");
+    if (v2?.migration?.version !== 11 && v2?.migration?.version !== 9) {
+      console.error(
+        "Abandon Migration: old settings are not latest version.",
+        v2?.migration?.version
+      );
       // clearV2Settings();
       return;
     }

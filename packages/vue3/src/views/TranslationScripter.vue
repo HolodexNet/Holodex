@@ -1,3 +1,4 @@
 <template>
-  <tl-script-editor />
+  <!-- <tl-script-editor /> -->
+  <script-editor-frame />
 </template>

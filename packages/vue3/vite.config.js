@@ -56,7 +56,11 @@ export default defineConfig({
       include: ["src/locales/**/*.yml", "node_modules/dayjs/**/*.js"],
     }),
     // ViteAliases(),
-    vue(),
+    vue({
+      script: {
+        defineModel: true,
+      },
+    }),
     Unocss({
       presets: [presetIcons()],
       safelist: [
@@ -71,6 +75,7 @@ export default defineConfig({
       eslintrc: {
         enabled: true,
       },
+      exclude: [/ffmpeg.min.js/, /node_modules/, /\.git/],
     }),
     Components({
       dirs: ["src"],

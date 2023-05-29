@@ -49,7 +49,7 @@ export default defineComponent({
       default: false,
     },
     to: {
-      type: Object as PropType<RouteLocationRaw>,
+      type: [String, Object as PropType<RouteLocationRaw>],
       default: undefined,
     },
     noColor: {

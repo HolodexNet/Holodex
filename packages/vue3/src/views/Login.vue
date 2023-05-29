@@ -98,16 +98,17 @@
         </div>
         <h-divider class="my-2" />
 
-        <span class="text-subtitle-2 mb-1 inline-block">API Key</span>
+        <span class="text-subtitle-2 mb-1 inline-block" />
         <h-input
           v-model="site.user.api_key"
+          title="API Key"
           readonly
           placeholder="None on file"
         >
           <template #append>
             <h-btn
-              class="btn-secondary !h-12"
-              icon="i-mdi:clipboard-plus-outline"
+              class="btn-ghost !h-12"
+              icon="i-lucide:clipboard-copy"
               @click="copyToClipboard(site.user?.api_key || '')"
             />
           </template>
