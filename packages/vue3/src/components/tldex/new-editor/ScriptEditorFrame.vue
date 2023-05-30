@@ -87,7 +87,7 @@ import {
 import { useSocket } from "@/stores/socket";
 import { RoomIDString } from "@/stores/socket_types";
 import { TLLanguageCode } from "@/utils/consts";
-import { invoke, until, useDebouncedRefHistory } from "@vueuse/core";
+import { until, useDebouncedRefHistory } from "@vueuse/core";
 import { klona } from "klona";
 
 useForceHideTopBarWhileActive();

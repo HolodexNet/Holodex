@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full flex-col flex-nowrap" style="height: 200px">
     <div ref="containerRef" class="grow-1 shrink-1 relative">
-      <canvas ref="canvasRef" class="w-full" style="height: 130" />
+      <canvas ref="canvasRef" class="w-full" style="height: 130px" />
       <div class="pointer-events-none absolute inset-0">
         <waveform-subtitle
           v-for="item in currentSubs"
@@ -43,12 +43,10 @@
 </template>
 <script lang="ts" setup>
 import { useWaveformGenerator } from "./useWaveform";
-import Bar from "./Bar.vue";
-import { useVirtualList } from "@vueuse/core";
 import { useTimelineRendererBase } from "./useTimeline";
 import { ParsedMessage } from "@/stores/socket_types";
 import { formatDuration } from "@/utils/time";
-
+import { formatBytes } from "@/utils/functions";
 const props = defineProps<{
   videoId: string;
   testMode?: boolean;
@@ -67,28 +65,6 @@ const {
 
 function init() {
   setTimeout(() => latchAndRun(props.videoId), 5000);
-}
-
-function formatBytes(bytes: number, decimals = 2): string {
-  if (!+bytes) return "0 Bytes";
-
-  const k = 1024;
-  const dm: number = decimals < 0 ? 0 : decimals;
-  const sizes: string[] = [
-    "Bytes",
-    "KiB",
-    "MiB",
-    "GiB",
-    "TiB",
-    "PiB",
-    "EiB",
-    "ZiB",
-    "YiB",
-  ];
-
-  const i: number = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
 
 const a = computed<typeof waveform.value>(
