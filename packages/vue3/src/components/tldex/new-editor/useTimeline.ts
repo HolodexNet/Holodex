@@ -39,7 +39,7 @@ export function useTimelineRendererBase(
         maxZoom: 8,
         minZoom: 1,
         fill: true,
-        scaleSpacing: 40,
+        scaleSpacing: 80,
         textColor: "#eee",
         pointColor: "#0c9",
         pointWidth: 4,
@@ -47,14 +47,12 @@ export function useTimelineRendererBase(
 
       console.log(t);
 
-      t.on("drag", (s, e) => {
-        console.log(s, e);
+      t.on("drag", (s) => {
         startTime.value = s[0];
         endTime.value = s[1];
       });
 
       t.on("timeUpdate", (v: [number, number, number]) => {
-        console.log(v, s, e);
         startTime.value = v[1];
         endTime.value = v[2];
         currentTime.value = v[0];

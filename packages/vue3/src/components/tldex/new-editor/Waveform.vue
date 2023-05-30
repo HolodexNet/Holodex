@@ -47,10 +47,12 @@ import { useTimelineRendererBase } from "./useTimeline";
 import { ParsedMessage } from "@/stores/socket_types";
 import { formatDuration } from "@/utils/time";
 import { formatBytes } from "@/utils/functions";
+import { PlayerRef } from "@/components/player/usePlayer";
 const props = defineProps<{
   videoId: string;
   testMode?: boolean;
   room: { messages: Array<ParsedMessage>; elapsed: number } | undefined;
+  player: PlayerRef;
 }>();
 
 const {
@@ -111,6 +113,7 @@ const {
     set(v) {
       // hmm
       console.log(v);
+      props.player.player.seekTo(v);
     },
   })
 );

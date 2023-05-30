@@ -56,6 +56,7 @@
       <div class="content">
         <!-- Main content goes here -->
         <video-player
+          ref="player"
           :video="{ id: videoId }"
           :refresh-interval-ms="20"
           class="h-full overflow-hidden rounded-xl"
@@ -64,7 +65,7 @@
 
       <div class="sidebar">
         <!-- Sidebar content goes here -->
-        <editor-sidebar :room-id="roomId" />
+        <editor-sidebar :room-id="roomId" :player="player" />
       </div>
 
       <div class="tooling">
@@ -74,12 +75,13 @@
 
       <div class="waveform">
         <!-- waveform content goes here -->
-        <Waveform :video-id="videoId" :room="room" />
+        <Waveform :video-id="videoId" :room="room" :player="player" />
       </div>
     </div>
   </PageContainer>
 </template>
 <script lang="ts" setup>
+import { PlayerRef } from "@/components/player/usePlayer";
 import {
   useForceHideTopBarWhileActive,
   indicateShouldHideSideBar,
@@ -147,6 +149,8 @@ setTimeout(async () => {
   // console.log(messages.value, "is not undefined");
   clear(); // clear history once it has been loaded the first time.
 }, 100);
+
+const player = ref<PlayerRef>();
 </script>
 <style scoped>
 .highlight-border * {
