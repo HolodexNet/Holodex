@@ -29,6 +29,7 @@ const props = withDefaults(
     horizontal: true,
   }
 );
+const emit = defineEmits<{ change: [diffSeconds: number] }>();
 
 const dragStartPos = ref<number>();
 const dragInProgressValue = ref(modelValue.value);
@@ -66,7 +67,9 @@ function start(e: MouseEvent) {
   const mouseUpHandler = () => {
     document.removeEventListener("mousemove", mouseMoveHandler);
     document.removeEventListener("mouseup", mouseUpHandler);
-    modelValue.value = +dragInProgressValue.value.toFixed(props.precision);
+    const diff = +dragInProgressValue.value.toFixed(props.precision);
+    modelValue.value = diff;
+    emit("change", diff);
     dragStartPos.value = undefined;
     (e.target as HTMLElement).style.cursor = props.horizontal
       ? "col-resize"

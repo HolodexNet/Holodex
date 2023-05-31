@@ -48,13 +48,15 @@ export function useTimelineRendererBase(
       console.log(t);
 
       t.on("drag", (s) => {
+        // console.log("drag", s[0], s[1]);
         startTime.value = s[0];
         endTime.value = s[1];
       });
 
       t.on("timeUpdate", (v: [number, number, number]) => {
-        startTime.value = v[1];
-        endTime.value = v[2];
+        // console.log("timeUpdate", v[1], v[2]);
+        // startTime.value = v[1];
+        // endTime.value = v[2];
         currentTime.value = v[0];
       });
 
@@ -70,6 +72,7 @@ export function useTimelineRendererBase(
         waveform: waveform.value || [],
       });
       if (x) {
+        // console.log("draw:", x.startTime, x.endTime);
         startTime.value = x.startTime;
         endTime.value = x.endTime;
       }

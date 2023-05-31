@@ -36,7 +36,7 @@ dayjs.extend(relativeTime, {
  */
 export function formatDuration(millisecs, decimals = 0) {
   const negate = millisecs < 0;
-  const secs = millisecs / 1000;
+  const secs = Math.abs(millisecs / 1000);
   const h = Math.floor(secs / (60 * 60));
   const m = Math.floor((secs % (60 * 60)) / 60);
   const s = Math.floor((secs % (60 * 60)) % 60);
@@ -47,7 +47,7 @@ export function formatDuration(millisecs, decimals = 0) {
   if (decimals) {
     ms =
       "." +
-      String(millisecs % 1000)
+      String(Math.abs(millisecs) % 1000)
         .padStart(3, "0")
         .slice(0, decimals);
   }

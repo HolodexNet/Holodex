@@ -43,13 +43,13 @@ export function isMessageCurrent(
 ): boolean {
   const duration = +(message.duration || 4000) / 1000;
   if (message.video_offset && elapsed) {
-    console.debug(
-      `[${message.video_offset}] [${
-        message.video_offset < elapsed
-      }] [${elapsed}] [${elapsed <= message.video_offset + duration}] [${
-        message.video_offset + duration
-      }]`
-    );
+    // console.debug(
+    //   `[${message.video_offset}] [${
+    //     message.video_offset < elapsed
+    //   }] [${elapsed}] [${elapsed <= message.video_offset + duration}] [${
+    //     message.video_offset + duration
+    //   }]`
+    // );
 
     return (
       message.video_offset < elapsed &&
@@ -123,10 +123,26 @@ export class ChatDB {
     return 0;
   }
 
+  /**
+   * Compares two ParsedMessage objects based on their relative offsets.
+   *
+   * @param {ParsedMessage} a - The first ParsedMessage to compare.
+   * @param {ParsedMessage} b - The second ParsedMessage to compare.
+   * @return {number} Returns 1 if a is greater than b, -1 if a is less than b,
+   * and 0 if a and b are equal.
+   */
   static ParsedMessageOFFSETComparator(a: ParsedMessage, b: ParsedMessage) {
     if (a.video_offset > b.video_offset) return 1;
     if (a.video_offset < b.video_offset) return -1;
     return 0;
+  }
+
+  sortRoom(room: RoomIDString) {
+    this.createRoomStateIfNotExists(room);
+
+    (this.rooms.get(room)!.messages as ParsedMessage[]).sort(
+      ChatDB.ParsedMessageComparator
+    );
   }
 
   /**

@@ -36,8 +36,8 @@
       </span>
     </div>
     <div class="w-full">
-      <span>{{ startTime }}</span>
-      <span class="float-right">{{ endTime }}</span>
+      <span>{{ formatDuration(startTime * 1000, 1) }}</span>
+      <span class="float-right">{{ formatDuration(endTime * 1000, 1) }}</span>
     </div>
   </div>
 </template>
@@ -73,7 +73,7 @@ const a = computed<typeof waveform.value>(
   () =>
     waveform.value?.map(([a, b]) => [
       a,
-      Math.floor(Math.pow((Math.max(b, -56) + 56) / 56, 3) * 100),
+      Math.floor(Math.pow((Math.max(b, -60) + 60) / 60, 3) * 100),
     ]) || []
 );
 
@@ -112,7 +112,7 @@ const {
     },
     set(v) {
       // hmm
-      console.log(v);
+      console.log("New Timeline seek", v);
       props.player.player.seekTo(v);
     },
   })

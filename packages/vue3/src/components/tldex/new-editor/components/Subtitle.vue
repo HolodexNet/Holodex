@@ -1,6 +1,10 @@
 <template>
   <div
     class="flex h-16 flex-nowrap items-center gap-1 border-b border-b-bgColor-50 px-1"
+    :class="{
+      'current-shadow': props.current,
+      'bg-secondary-700 bg-opacity-50': props.focus,
+    }"
   >
     <div class="ops shrink-0 basis-4 text-sm">
       <div :class="icons.trash" class="" />
@@ -16,6 +20,10 @@
         :precision="2"
         :formatter="(n) => formatDuration(n * 1000.0, 1)"
         class="self-center text-xs"
+        @change="(diff: number) => {
+          modelValue.timestamp = (diff * 1000)
+          $emit('tsChanged');
+        }"
       >
         {{ formatDuration((modelValue?.video_offset || 0) * 1000) }}
       </DraggableNumber>
@@ -42,15 +50,21 @@ import { ParsedMessage } from "@/stores/socket_types";
 import { formatDuration } from "@/utils/time";
 
 const modelValue = defineModel<ParsedMessage>({ required: true });
+// const focusModel = defineModel<boolean>("focus");
+const props = defineProps<{ current?: boolean; focus?: boolean }>();
+
+type StateStart = true;
+type StateEnd = false;
+
+const emit = defineEmits<{
+  tsChanged: [];
+  edit: [state: StateStart | StateEnd];
+}>();
 </script>
 <style>
-.ops div {
-  @apply cursor-pointer hover:text-primary;
-}
-.ts {
-  @apply shrink-0 grow-0;
-}
-.subs {
-  @apply grow;
+.current-shadow {
+  box-shadow: inset 70px 0 40px -40px hsla(var(--s));
+
+  /*TODO an inner glow from the left hand side edge of tailwind color primary var to the right extending about 90px */
 }
 </style>

@@ -31,6 +31,8 @@ export interface TLDexMessage {
 }
 
 export interface ParsedMessage extends TLDexMessage {
+  // Parsing converts timestamp to number.
+  timestamp: number;
   /** parsed message if the message contains a link */
   parsed: string;
   key: string;
@@ -74,6 +76,7 @@ export function toParsedMessage(
   const parsed: ParsedMessage = {
     ...msg,
     // ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),
+    timestamp: +msg.timestamp,
     key: msg.name + msg.timestamp + msg.message,
     parsed: "",
     duration: +(msg.duration ?? msg.message.length * 65 + 1800),
