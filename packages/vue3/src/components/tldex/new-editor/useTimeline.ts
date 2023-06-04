@@ -55,8 +55,8 @@ export function useTimelineRendererBase(
 
       t.on("timeUpdate", (v: [number, number, number]) => {
         // console.log("timeUpdate", v[1], v[2]);
-        // startTime.value = v[1];
-        // endTime.value = v[2];
+        startTime.value = v[1];
+        endTime.value = v[2];
         currentTime.value = v[0];
       });
 

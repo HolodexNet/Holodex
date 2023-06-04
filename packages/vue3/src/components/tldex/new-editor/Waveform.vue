@@ -11,7 +11,7 @@
           :style="{
             transform:
               'translateX(' +
-              ((item.video_offset - startTime) / (endTime - startTime)) *
+              ((item.video_offset - startTime - 0.05) / (endTime - startTime)) *
                 containerSize.width.value +
               'px)',
             width:
