@@ -49,11 +49,12 @@ export function useChannel(
   );
 }
 
+export type ChannelActions = ReturnType<typeof useChannelActions>;
 /**
  * Unifies a bunch of logic to do with whether you've favorited or blocked a channel.
  * @param id
  */
-export function useChannelFunctions(id: Ref<undefined | string>) {
+export function useChannelActions(id: Ref<undefined | string>) {
   // const favList = useFavoritesIDSet();
   const favList = useFavoritesIDSet();
 
@@ -72,6 +73,7 @@ export function useChannelFunctions(id: Ref<undefined | string>) {
    * @param channelData provide a channel data optionally to avoid expensive Favorites Query refetch by 5s. If not provided, Favorites query will immediately refetch.
    */
   async function toggleFav(channelData?: ShortChannel) {
+    // the toggleFav should be used with the channel data.
     return (
       !!id.value &&
       canFav.value &&
@@ -84,6 +86,11 @@ export function useChannelFunctions(id: Ref<undefined | string>) {
       ])
     );
   }
+  const unblock = (channel: ShortChannel) => {
+    settings.blockedChannels = settings.blockedChannels.filter(
+      (x) => x.id !== channel.id
+    );
+  };
 
-  return { isFav, canFav, toggleFav, settings, isBlocked };
+  return { isFav, canFav, toggleFav, settings, isBlocked, unblock };
 }

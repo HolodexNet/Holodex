@@ -66,11 +66,16 @@
         </div>
       </div>
     </div>
-    <slot name="buttons" :is-fav="isFav" :toggle-fav="favChannel" />
+    <slot
+      name="buttons"
+      :channel-actions="channelActions"
+      :channel-data="channel"
+    />
   </component>
 </template>
 <script lang="ts">
 import { useChannelPreferredName } from "@/hooks/common/useChannelService";
+import { useChannelActions } from "@/services/channel";
 import { useFavoritesIDSet, useFavoritesPatcher } from "@/services/favorites";
 import { useLangStore } from "@/stores";
 import { formatCount, formatTopic } from "@/utils/functions";
@@ -92,11 +97,10 @@ export default defineComponent({
   setup(props) {
     const { preferredName } = useChannelPreferredName(props.channel);
     const lang = useLangStore();
-    const fav = useFavoritesIDSet();
 
-    const isFav = computed(() => fav.value?.has(props.channel.id));
-    const favPatcher = useFavoritesPatcher();
-    return { preferredName, lang, isFav, favPatcher };
+    const channelActions = useChannelActions(computed(() => props.channel.id));
+
+    return { preferredName, lang, channelActions };
   },
   computed: {
     subscribers() {
@@ -110,15 +114,6 @@ export default defineComponent({
   },
   methods: {
     formatTopic,
-    favChannel() {
-      this.favPatcher.mutateAsync([
-        {
-          op: this.isFav ? "remove" : "add",
-          channel_id: this.channel.id,
-          channelTemp: this.channel,
-        },
-      ]);
-    },
   },
 });
 </script>

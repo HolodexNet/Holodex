@@ -56,20 +56,24 @@
         :variant="cardView ? 'card' : 'list'"
         :grouping="currentSortValue.value"
       >
-        <template #default="{ channel, isFav, toggleFav }">
+        <template #default="{ channelData: channel, channelActions }">
           <!-- <div class="h-0 basis-full" /> -->
           <div
             class="col-span-2 flex w-full flex-row flex-nowrap gap-1 border-t border-solid border-t-bgColor-700 bg-bgColor-500"
           >
             <h-btn
               :title="
-                isFav
+                channelActions.isFav.value
                   ? $t('component.channelSocials.removeFromFavorites')
                   : $t('component.channelSocials.addToFavorites')
               "
               class="btn-ghost w-32 shrink"
-              :icon="isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'"
-              @click.prevent.stop="toggleFav"
+              :icon="
+                channelActions.isFav.value
+                  ? 'i-mdi:heart text-red-500'
+                  : 'i-mdi:heart-outline'
+              "
+              @click.prevent.stop="channelActions.toggleFav(channel)"
             />
             <h-btn
               title="Button"
@@ -313,7 +317,7 @@ export default defineComponent({
 }
 
 .dropdownLabelBtn {
-  @apply tab tab-bordered tab-sm;
+  @apply tab-bordered tab tab-sm;
 
   height: 2rem;
   font-size: 0.875rem;

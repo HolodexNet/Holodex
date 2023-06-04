@@ -5,11 +5,11 @@
     grouping="org"
     :slim="true"
   >
-    <template #default="{ channel }">
+    <template #default="{ channelData: channel, channelActions }">
       <button
         class="flex h-full w-9 flex-col justify-center hover:bg-red-500 hover:bg-opacity-50"
         :title="$t('component.channelSocials.unblock')"
-        @click.prevent.stop="unblock(channel)"
+        @click.prevent.stop="channelActions.unblock(channel)"
       >
         <div class="i-material-symbols:close mx-auto text-3xl text-red-500" />
       </button>
@@ -23,11 +23,5 @@
 import { useSettingsStore } from "@/stores/settings";
 
 const settings = useSettingsStore();
-
-const unblock = (channel: ShortChannel) => {
-  settings.blockedChannels = settings.blockedChannels.filter(
-    (x) => x.id !== channel.id
-  );
-};
 </script>
 <style></style>

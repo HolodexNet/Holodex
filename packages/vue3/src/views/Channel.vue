@@ -18,7 +18,7 @@
           no-link
           :slim="mobile"
         >
-          <template #buttons="{ isFav, toggleFav }">
+          <template #buttons="{ channelActions }">
             <div
               class="sm:w-30 col-span-2 row-start-2 w-40 grid-flow-row flex-row justify-end gap-1 self-start justify-self-end rounded sm:row-start-auto md:col-span-1 md:w-40 md:gap-2 md:bg-black md:bg-opacity-30"
             >
@@ -62,14 +62,16 @@
                 class="h-8 w-8 md:h-12 md:w-12"
                 ghost
                 :title="
-                  isFav
+                  channelActions.isFav.value
                     ? $t('component.channelSocials.removeFromFavorites')
                     : $t('component.channelSocials.addToFavorites')
                 "
                 :icon="
-                  isFav ? 'i-mdi:heart text-red-500' : 'i-mdi:heart-outline'
+                  channelActions.isFav.value
+                    ? 'i-mdi:heart text-red-500'
+                    : 'i-mdi:heart-outline'
                 "
-                @click="toggleFav"
+                @click="channelActions.toggleFav(channel)"
               />
               <h-btn
                 ghost
@@ -101,13 +103,7 @@
             class="max-h-[4rem] sm:min-h-[2.5rem]"
           >
             <div :class="tab.icon" class="mr-1 md:mr-2" />
-            <span
-              :class="
-                mobile && tab.path !== $router.currentRoute.value.path
-                  ? 'hidden'
-                  : ''
-              "
-            >
+            <span>
               {{ tab.name }}
             </span>
           </h-tab>
@@ -218,35 +214,35 @@ export default defineComponent({
     //             return 80;
     //     }
     // },
-    tabs(): { path: string; name: string; icon: string }[] {
+    tabs(): { path: string; name: string; icon?: string }[] {
       return [
         {
           path: `/channel/${this.id}`,
           name: `${this.$t("views.channel.video")}`,
-          icon: this.icons.videos,
+          // icon: this.icons.videos,
         },
         {
           path: `/channel/${this.id}/clips`,
           name: `${this.$t("views.channel.clips")}`,
           hide: this.channel?.type === "subber",
-          icon: this.icons.clips,
+          // icon: this.icons.clips,
         },
         {
           path: `/channel/${this.id}/collabs`,
           name: `${this.$t("views.channel.collabs")}`,
           hide: this.channel?.type === "subber",
-          icon: this.icons.collabs,
+          // icon: this.icons.collabs,
         },
         {
           path: `/channel/${this.id}/music`,
           name: `${this.$t("views.channel.music")}`,
           hide: this.channel?.type === "subber",
-          icon: this.icons.music,
+          // icon: this.icons.music,
         },
         {
           path: `/channel/${this.id}/about`,
           name: `${this.$t("views.channel.about")}`,
-          icon: this.icons.about,
+          // icon: this.icons.about,
         },
         // { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
       ].filter((t) => !t.hide);
