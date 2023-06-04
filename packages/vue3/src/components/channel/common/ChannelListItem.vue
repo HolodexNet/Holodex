@@ -2,7 +2,6 @@
   <component
     :is="noLink ? 'div' : 'router-link'"
     class="channel-card grid gap-0 overflow-hidden rounded-md"
-    :class="[slim ? '' : 'h-50 flex-wrap']"
     :to="`/channel/${channel.id}`"
   >
     <div class="indicator">
@@ -20,7 +19,7 @@
 
       <channel-img
         :channel="channel"
-        :size="slim ? 80 : 100"
+        :size="36"
         class="m-2"
         :class="{
           'opacity-40': channel.inactive,
@@ -30,7 +29,7 @@
     </div>
     <div
       class="justify-center pt-2"
-      :class="{ 'opacity-40': channel.inactive, 'ml-1': !slim }"
+      :class="{ 'opacity-40': channel.inactive }"
     >
       <span class="line-clamp-1 text-xs text-base-content opacity-75">
         {{
@@ -40,38 +39,14 @@
         }}
         {{ group ? "/ " + group : "" }}
       </span>
-      <span
-        class="line-clamp-1 font-medium"
-        :class="{ 'text-lg': !slim, 'text-sm': slim }"
-      >
+      <span class="-mt-1 line-clamp-1 text-sm font-medium">
         {{ preferredName }}
       </span>
-      <span class="line-clamp-1 text-sm text-base-content opacity-75">
-        {{ subscribers }} •
-        {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
-        {{
-          channel.clip_count &&
-          " • " +
-            $t("component.channelInfo.clipCount", { n: channel.clip_count })
-        }}
-      </span>
-      <div v-if="channel.top_topics" class="opacity-60 hover:opacity-100">
-        <div class="i-uil:award inline-block align-middle text-lg" />
-        <div
-          v-for="t in channel.top_topics"
-          :key="channel.id + 't' + t"
-          class="text-bold badge-outline badge badge-sm ml-1 inline-block h-[1.1rem] cursor-pointer rounded border-slate-600 align-middle font-bold leading-4 hover:badge-accent hover:badge-outline"
-        >
-          {{ formatTopic(t) }}
-        </div>
-      </div>
     </div>
-    <slot name="buttons" :is-fav="isFav" :toggle-fav="favChannel" />
   </component>
 </template>
 <script lang="ts">
 import { useChannelPreferredName } from "@/hooks/common/useChannelService";
-import { useFavoritesIDSet, useFavoritesPatcher } from "@/services/favorites";
 import { useLangStore } from "@/stores";
 import { formatCount, formatTopic } from "@/utils/functions";
 import { PropType } from "vue";
@@ -82,8 +57,7 @@ export default defineComponent({
       type: Object as PropType<FullChannel>,
       required: true,
     },
-    live: Boolean,
-    slim: Boolean,
+    live: { type: Boolean, default: false },
     noLink: {
       type: Boolean,
       default: false,
@@ -92,11 +66,8 @@ export default defineComponent({
   setup(props) {
     const { preferredName } = useChannelPreferredName(props.channel);
     const lang = useLangStore();
-    const fav = useFavoritesIDSet();
 
-    const isFav = computed(() => fav.value?.has(props.channel.id));
-    const favPatcher = useFavoritesPatcher();
-    return { preferredName, lang, isFav, favPatcher };
+    return { preferredName, lang };
   },
   computed: {
     subscribers() {
@@ -110,15 +81,6 @@ export default defineComponent({
   },
   methods: {
     formatTopic,
-    favChannel() {
-      this.favPatcher.mutateAsync([
-        {
-          op: this.isFav ? "remove" : "add",
-          channel_id: this.channel.id,
-          channelTemp: this.channel,
-        },
-      ]);
-    },
   },
 });
 </script>

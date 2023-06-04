@@ -8,7 +8,7 @@
           <h-lazy><video-card :video="v" /></h-lazy>
         </div>
         <template #activator="{ activatorProps }">
-          <channel-card
+          <channel-list-item
             :channel="v.channel"
             slim
             :live="v.status === 'live'"
@@ -37,7 +37,7 @@
                     <div class="i-clarity:grid-chart-solid"></div>
                   </router-link></div
             </template> -->
-          </channel-card>
+          </channel-list-item>
         </template>
       </h-tooltip>
     </div>
