@@ -29,7 +29,7 @@ import {
 } from "@floating-ui/vue";
 import { onClickOutside, useElementHover, useFocus } from "@vueuse/core";
 import type { Options as OffsetOptions } from "@floating-ui/core/src/middleware/offset";
-import { HTMLAttributes, TransitionProps, VNodeRef } from "vue";
+import { HTMLAttributes, ReservedProps, TransitionProps, VNodeRef } from "vue";
 
 import useTouchOutside from "@/hooks/common/useTouchOutside";
 
@@ -43,7 +43,7 @@ const showTooltip = computed(
 );
 
 // TODO: switch to HTMLAttributes & ReservedProps on version vue v3.3
-const activatorProps: HTMLAttributes & { ref: VNodeRef } = {
+const activatorProps: HTMLAttributes & ReservedProps = {
   onTouchend: onTouchEnd,
   ref: (r: any) => (activator.value = r),
 };

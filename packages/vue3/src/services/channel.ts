@@ -92,5 +92,9 @@ export function useChannelActions(id: Ref<undefined | string>) {
     );
   };
 
-  return { isFav, canFav, toggleFav, settings, isBlocked, unblock };
+  const block = (channel: ShortChannel) => {
+    if (!isBlocked.value) settings.blockedChannels.push(channel);
+  };
+
+  return { isFav, canFav, toggleFav, settings, isBlocked, unblock, block };
 }
