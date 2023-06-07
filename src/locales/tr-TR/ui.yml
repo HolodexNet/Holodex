@@ -457,6 +457,8 @@ views:
       headerStart: Başlangıç
       headerEnd: Bitiş
       headerText: Metin
+    importFile:
+      overwriteBtn: Üzerine Yaz
     editorModePanel:
       activateMode: Editör Modunu Etkinleştir
       deactivateMode: Editör Modunu Devre Dışı Bırak
