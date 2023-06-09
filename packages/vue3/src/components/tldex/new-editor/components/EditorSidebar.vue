@@ -15,7 +15,7 @@
         class="my-0 h-full w-0 overflow-clip border-l border-solid border-bgColor-50"
       />
       <div class="subs">
-        <b class="text-center text-sm">Text {{ currentMessageIndexes }}</b>
+        <b class="text-center text-sm">Text</b>
       </div>
     </div>
     <div class="h-full" v-bind="containerProps">
@@ -27,9 +27,21 @@
           :current="currentMessageIndexes.includes(item.index)"
           :focus="focused == item.data"
           @ts-changed="chatDB.sortRoom(roomId)"
-          @click="focus(item)"
+          @click="focused = item.data"
         />
       </div>
+    </div>
+    <div class="flex h-6 shrink-0 flex-row gap-2 p-1">
+      <label class="label cursor-pointer p-0">
+        <input
+          v-model="autoscroll"
+          type="checkbox"
+          class="toggle toggle-xs"
+          :indeterminate="!!focused"
+          @click="focused = undefined"
+        />
+        <span class="label-text ml-1 text-xs">Autoscroll</span>
+      </label>
     </div>
   </div>
 </template>
@@ -37,7 +49,11 @@
 import { useSocket } from "@/stores/socket";
 import { ParsedMessage, RoomIDString } from "@/stores/socket_types";
 import { mdiRoomService } from "@mdi/js";
-import { UseVirtualListItem, useVirtualList } from "@vueuse/core";
+import {
+  UseVirtualListItem,
+  onClickOutside,
+  useVirtualList,
+} from "@vueuse/core";
 import sorted from "sorted-array-functions";
 import { ChatDB, isMessageCurrent } from "../../core/ChatDB";
 
@@ -45,10 +61,7 @@ const props = defineProps<{ roomId: RoomIDString }>();
 const chatDB = useSocket().chatDB;
 const messages = computed(() => chatDB.rooms.get(props.roomId)?.messages ?? []);
 const focused = ref<ParsedMessage>();
-function focus(item: UseVirtualListItem<ParsedMessage>) {
-  if (focused.value == item.data) focused.value = undefined;
-  else focused.value = item.data;
-}
+const autoscroll = ref(true);
 
 const currentMessageIndexes = computed(() => {
   const room = props.roomId;
@@ -97,11 +110,15 @@ const { containerProps, wrapperProps, scrollTo, list } = useVirtualList(
   }
 );
 
+onClickOutside(containerProps.ref, () => (focused.value = undefined), {
+  capture: true,
+});
+
 watch(
   () => currentMessageIndexes,
   () => {
     if (focused.value) return;
-    if (currentMessageIndexes.value.length > 0) {
+    if (currentMessageIndexes.value.length > 0 && autoscroll.value) {
       scrollTo(currentMessageIndexes.value?.[0]);
     }
   },

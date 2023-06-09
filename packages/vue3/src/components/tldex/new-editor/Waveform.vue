@@ -1,5 +1,17 @@
 <template>
   <div class="flex w-full flex-col flex-nowrap" style="height: 200px">
+    <div ref="sliderContainer" class="slider-container">
+      <input
+        ref="slider"
+        type="range"
+        min="0"
+        :max="duration"
+        :value="room?.elapsed || 0"
+        class="timeline-slider"
+        step="0.01"
+        @input="(t) => t.target && player.player.seekTo(+(t.target as HTMLInputElement).value)"
+      />
+    </div>
     <div ref="containerRef" class="grow-1 shrink-1 relative">
       <canvas ref="canvasRef" class="w-full" style="height: 130px" />
       <div class="pointer-events-none absolute inset-0">
@@ -48,12 +60,18 @@ import { ParsedMessage } from "@/stores/socket_types";
 import { formatDuration } from "@/utils/time";
 import { formatBytes } from "@/utils/functions";
 import { PlayerRef } from "@/components/player/usePlayer";
+import { asyncComputed } from "@vueuse/core";
 const props = defineProps<{
   videoId: string;
   testMode?: boolean;
   room: { messages: Array<ParsedMessage>; elapsed: number } | undefined;
   player: PlayerRef;
 }>();
+
+const duration = asyncComputed(
+  async () => await props.player.player.getDuration(),
+  undefined
+);
 
 const {
   error_message,
@@ -68,14 +86,6 @@ const {
 function init() {
   setTimeout(() => latchAndRun(props.videoId), 5000);
 }
-
-const a = computed<typeof waveform.value>(
-  () =>
-    waveform.value?.map(([a, b]) => [
-      a,
-      Math.floor(Math.pow((Math.max(b, -60) + 60) / 60, 3) * 100),
-    ]) || []
-);
 
 const msg = computed(() => {
   switch (stage.value) {
@@ -92,9 +102,15 @@ const msg = computed(() => {
       return "";
   }
 });
-// const { list, containerProps, wrapperProps } = useVirtualList(a, {
-//   itemWidth: 6,
-// });
+
+const recomputedWave = computed<typeof waveform.value>(
+  () =>
+    waveform.value?.map(([a, b]) => [
+      a,
+      Math.floor(Math.pow((Math.max(b, -60) + 60) / 60, 3) * 100),
+    ]) || []
+);
+
 const {
   allSubs,
   containerRef,
@@ -105,7 +121,7 @@ const {
   startTime,
 } = useTimelineRendererBase(
   computed(() => props.room?.messages || []),
-  a,
+  recomputedWave,
   computed({
     get() {
       return props.room?.elapsed ?? 0;
@@ -118,3 +134,62 @@ const {
   })
 );
 </script>
+
+<style lang="scss">
+.slider-container {
+  margin: 0px;
+  padding: 0px;
+  line-height: 8px;
+}
+.timeline-slider {
+  display: inline-block;
+  width: 100%;
+  -webkit-appearance: none;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-slider-runnable-track {
+    @apply bg-bgColor-50;
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    box-shadow: none;
+    /* background: #ffffff; */
+    border-radius: 0px;
+    border: 1px solid #010101;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      @apply bg-bgColor-300;
+      height: 8px;
+    }
+  }
+
+  &:hover::-webkit-slider-thumb {
+    margin-top: 1px;
+  }
+  &::-webkit-slider-thumb {
+    @apply bg-primary-200;
+    box-shadow: none;
+    border: 0px solid #ffffff;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
+    height: 6px;
+    width: 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -1px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      @apply bg-primary-400;
+      height: 9px;
+      margin-top: -1px;
+    }
+  }
+
+  &::-moz-focus-outer {
+    border: 0;
+  }
+}
+</style>

@@ -126,6 +126,10 @@ export default defineComponent({
       if (!this.player) return;
       !playing ? this.player.pauseVideo() : this.player.playVideo();
     },
+    getDuration() {
+      if (!this.player) return Promise.resolve(undefined);
+      return this.player?.getDuration();
+    },
     async sendLikeEvent() {
       const iframe = await this.player?.getIframe();
       iframe?.contentWindow?.postMessage({ event: "likeVideo" }, "*");

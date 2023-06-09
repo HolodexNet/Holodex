@@ -5,23 +5,49 @@
       <div class="pointer-events-none w-full p-2 pb-1 text-xs font-bold">
         Quick Links:
       </div>
-      <a
+      <!-- <a
         class="btn-square p-0"
         title="Follow us on twitter"
         href="https://twitter.com/holodex"
       >
         <div class="i-carbon:logo-twitter m-auto" />
-      </a>
-      <a
+      </a> -->
+      <h-btn
+        class="btn-square !p-0"
+        no-color
+        ghost
+        icon="i-carbon:logo-twitter"
+        tooltip-text="Follow us on twitter"
+        tooltip="badge-ghost"
+      />
+
+      <!-- <a
         class="btn-square p-0"
         title="Support us on Ko-Fi"
         href="https://ko-fi.com/holodex"
       >
         <div class="i-cib:ko-fi m-auto" />
-      </a>
-      <a class="btn-square p-0" title="Issues / Source Code">
+      </a> -->
+      <h-btn
+        class="btn-square mx-1 !p-1"
+        no-color
+        ghost
+        icon="i-cib:ko-fi"
+        tooltip-text="Support us on Ko-Fi"
+        tooltip="badge-ghost"
+      />
+
+      <!-- <a class="btn-square p-0" title="Issues / Source Code">
         <div class="i-carbon:logo-github m-auto" />
-      </a>
+      </a> -->
+      <h-btn
+        class="btn-square !p-0"
+        no-color
+        ghost
+        icon="i-carbon:logo-github"
+        tooltip-text="Issues / Source Code"
+        tooltip="badge-ghost"
+      />
     </template>
   </sub-navigation>
 </template>

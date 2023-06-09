@@ -36,9 +36,11 @@
         <div
           v-show="showTooltip"
           ref="floating"
-          class="badge badge-sm opacity-50"
+          class="badge badge-sm"
           :class="
-            typeof tooltip == 'string' ? tooltip : 'bg-inherit text-inherit'
+            typeof tooltip == 'string'
+              ? tooltip
+              : 'bg-inherit text-inherit opacity-50'
           "
           :style="{ zIndex: 9999, ...floatingStyles }"
           role="tooltip"

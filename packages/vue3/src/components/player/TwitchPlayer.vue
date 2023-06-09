@@ -128,6 +128,10 @@ export default defineComponent({
     setMute(value: boolean) {
       this.player?.setMuted(value);
     },
+    getDuration() {
+      if (!this.player) return Promise.resolve(undefined);
+      return Promise.resolve(this.player?.getDuration());
+    },
     setPlaying(playing: boolean) {
       if (!this.player) return;
       !playing ? this.player.pause() : this.player.play();

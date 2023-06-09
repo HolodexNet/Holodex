@@ -6,6 +6,8 @@ export interface VideoPlayer {
   getCurrentTime: () => Promise<number>;
   getPlaybackRate: () => Promise<number>;
   getVolume: () => Promise<number>;
+  /** gets the duration in seconds */
+  getDuration: () => Promise<number>;
   setVolue: () => void;
   seekTo: (a: number) => void;
 
