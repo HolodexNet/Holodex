@@ -74,7 +74,7 @@ async function updatePlayerState() {
       t,
       props.video.available_at
         ? props.video.available_at.valueOf() / 1000 + t
-        : Date.now() / 1000
+        : undefined
     );
     muted.value = m;
     volume.value = v;
@@ -82,7 +82,7 @@ async function updatePlayerState() {
 }
 
 useEventListener(document, "click", (evt: MouseEvent) => {
-  console.log(evt);
+  console.debug(evt);
   if (
     (evt.target as HTMLElement)?.matches?.(".timestamp-link, .timestamp-link *")
   ) {

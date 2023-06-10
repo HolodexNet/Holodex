@@ -79,21 +79,21 @@ const currentMessageIndexes = computed(() => {
     // current =    15 ^
     // get the IDX of 16, rollback a couple messages and process linearly.
     let highIdx = sorted.gt(
-      chatDB.rooms.get(room)?.messages || [],
+      messages.value || [],
       { video_offset: elapsed } as any,
       ChatDB.ParsedMessageOFFSETComparator
     );
-    if (highIdx == -1) highIdx = chatDB.rooms.get(room)?.messages.length || -1;
+    if (highIdx == -1) highIdx = messages.value.length;
     const out: number[] = [];
     for (
       let idx = Math.max(0, highIdx - 4);
-      idx < Math.min(highIdx, chatDB.rooms.get(room)?.messages.length || 0);
+      idx < Math.min(highIdx, messages.value.length);
       idx++
     ) {
       if (
         isMessageCurrent(
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          chatDB.rooms.get(room)!.messages[idx],
+          messages.value[idx],
           elapsed,
           absolute
         )
@@ -125,7 +125,7 @@ watch(
   () => {
     if (focused.value) return;
     if (currentMessageIndexes.value.length > 0 && autoscroll.value) {
-      scrollTo(currentMessageIndexes.value?.[0]);
+      scrollTo(Math.max(0, currentMessageIndexes.value?.[0] - 1));
     }
   },
   { deep: true }

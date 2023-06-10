@@ -25,7 +25,7 @@ interface RoomInfo {
   /** playhead location */
   elapsed: number;
   /** absolute second epoch of video player @ location */
-  absolute: number;
+  absolute?: number;
 }
 
 /**
@@ -140,6 +140,8 @@ export class ChatDB {
   sortRoom(room: RoomIDString) {
     this.createRoomStateIfNotExists(room);
 
+    console.log("sorting...", room);
+
     (this.rooms.get(room)!.messages as ParsedMessage[]).sort(
       ChatDB.ParsedMessageComparator
     );
@@ -204,12 +206,18 @@ export class ChatDB {
    * @param elapsed elapsed time in seconds
    * @param absolute the elapsed time + available_at time
    */
-  updateRoomElapsed(video_id: string, elapsed: number, absolute: number) {
+  updateRoomElapsed(
+    video_id: string,
+    elapsed: number,
+    absolute: number | undefined
+  ) {
     // const now = { elapsed, absolute };
     this.videoToRoomMap.get(video_id)?.forEach((room) => {
       // console.log(room);
-      this.rooms.get(room)!.elapsed = elapsed;
-      this.rooms.get(room)!.absolute = absolute;
+      if (this.rooms.get(room)!.elapsed != elapsed)
+        this.rooms.get(room)!.elapsed = elapsed;
+      if (this.rooms.get(room)!.absolute != absolute)
+        this.rooms.get(room)!.absolute = absolute;
     });
   }
 

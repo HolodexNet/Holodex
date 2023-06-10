@@ -31,6 +31,11 @@
                 containerSize.width.value +
               'px',
           }"
+          @goto="(sec) => player.player.seekTo(sec)"
+          @drag-handle="
+            (isStartTime) => start(isStartTime ? 'start' : 'duration', item)
+          "
+          @drag-full="start('both', item)"
         />
       </div>
     </div>
@@ -67,6 +72,8 @@ const props = defineProps<{
   room: { messages: Array<ParsedMessage>; elapsed: number } | undefined;
   player: PlayerRef;
 }>();
+
+const emits = defineEmits<{ sortMessages: [] }>();
 
 const duration = asyncComputed(
   async () => await props.player.player.getDuration(),
@@ -133,6 +140,51 @@ const {
     },
   })
 );
+
+// Object dragging support for handlers:
+
+function start(handle: "start" | "duration" | "both", item: ParsedMessage) {
+  // console.log("start dragging?", event);
+  const initStart = item.video_offset || 0;
+  const initDuration = item.duration || 0;
+
+  const mouseMoveHandler = (moveEvent: MouseEvent) => {
+    // console.log(moveEvent.clientX);
+    // if ((moveEvent.target as any).tagName !== "CANVAS") return;
+    const offset = moveEvent.clientX - (containerRef.value?.offsetLeft ?? 0);
+    const newValue =
+      (offset / containerSize.width.value) * (endTime.value - startTime.value) +
+      startTime.value;
+    if (handle === "start" || handle === "both") {
+      // move the start:
+      item.video_offset = newValue;
+      if (handle === "start") {
+        // duration should stay unchanged, so:
+        item.duration = Math.max(
+          400,
+          initDuration - (newValue - initStart) * 1000
+        );
+      }
+    }
+    if (handle === "duration") {
+      // move ONLY the end.
+      item.duration = Math.max(400, (newValue - initStart) * 1000);
+    }
+  };
+  const mouseUpHandler = () => {
+    console.log(item.timestamp, initStart, item.video_offset);
+
+    item.timestamp = item.timestamp - (initStart - item.video_offset) * 1000;
+    console.log(item.timestamp);
+    console.log("mouse up?");
+    emits("sortMessages");
+    document.removeEventListener("mousemove", mouseMoveHandler);
+    document.removeEventListener("mouseup", mouseUpHandler);
+  };
+
+  document.addEventListener("mousemove", mouseMoveHandler);
+  document.addEventListener("mouseup", mouseUpHandler);
+}
 </script>
 
 <style lang="scss">

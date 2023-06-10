@@ -4,12 +4,13 @@
     @mousedown="start"
   >
     {{ rendered }}
+    <!-- <div
+      class="i-eva:edit-fill inline-block cursor-text"
+    /> -->
   </span>
 </template>
 
 <script lang="ts" setup>
-import xss from "xss";
-
 const modelValue = defineModel<number>({ required: true });
 const props = withDefaults(
   defineProps<{

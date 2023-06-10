@@ -75,7 +75,12 @@
 
       <div class="waveform">
         <!-- waveform content goes here -->
-        <Waveform :video-id="videoId" :room="room" :player="player" />
+        <Waveform
+          :video-id="videoId"
+          :room="room"
+          :player="player"
+          @sort-messages="chatDB.sortRoom(roomId)"
+        />
       </div>
     </div>
   </PageContainer>
@@ -132,7 +137,7 @@ const { history, undo, canUndo, redo, canRedo, clear } = useDebouncedRefHistory(
   {
     capacity: 50,
     deep: true,
-    debounce: 5000,
+    debounce: 2000,
     clone: klona,
   }
 );
