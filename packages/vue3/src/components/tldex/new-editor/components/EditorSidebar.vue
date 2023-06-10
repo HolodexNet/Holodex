@@ -53,12 +53,7 @@
 <script setup lang="ts">
 import { useSocket } from "@/stores/socket";
 import { ParsedMessage, RoomIDString } from "@/stores/socket_types";
-import { mdiRoomService } from "@mdi/js";
-import {
-  UseVirtualListItem,
-  onClickOutside,
-  useVirtualList,
-} from "@vueuse/core";
+import { onClickOutside, useVirtualList } from "@vueuse/core";
 import sorted from "sorted-array-functions";
 import { ChatDB, isMessageCurrent } from "../../core/ChatDB";
 import { VideoPlayer } from "@/components/player/usePlayer";

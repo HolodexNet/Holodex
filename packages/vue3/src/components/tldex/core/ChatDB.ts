@@ -24,7 +24,7 @@ interface RoomInfo {
   state: RoomState;
   /** playhead location */
   elapsed: number;
-  /** absolute second epoch of video player @ location */
+  /** absolute second epoch of video player @ location, only available if video contains start_at */
   absolute?: number;
 }
 
