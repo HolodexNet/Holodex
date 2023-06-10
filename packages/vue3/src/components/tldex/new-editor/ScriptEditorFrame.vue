@@ -65,7 +65,7 @@
 
       <div class="sidebar">
         <!-- Sidebar content goes here -->
-        <editor-sidebar :room-id="roomId" :player="player" />
+        <editor-sidebar :room-id="roomId" :player="player?.player" />
       </div>
 
       <div class="tooling">

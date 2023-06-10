@@ -2,8 +2,8 @@
   <div
     class="flex h-16 flex-nowrap items-center gap-1 border-b border-b-bgColor-50 px-1"
     :class="{
-      'current-shadow': props.current,
-      'bg-secondary-700 bg-opacity-50': props.focus,
+      'current-shadow': current,
+      'bg-secondary-700 bg-opacity-50': focus,
     }"
   >
     <div class="ops shrink-0 basis-4 text-sm">

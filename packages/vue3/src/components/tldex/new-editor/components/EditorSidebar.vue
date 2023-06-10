@@ -27,7 +27,12 @@
           :current="currentMessageIndexes.includes(item.index)"
           :focus="focused == item.data"
           @ts-changed="chatDB.sortRoom(roomId)"
-          @click="focused = item.data"
+          @click="
+            () => {
+              focused = item.data;
+              player?.seekTo(item.data.video_offset);
+            }
+          "
         />
       </div>
     </div>
@@ -56,8 +61,9 @@ import {
 } from "@vueuse/core";
 import sorted from "sorted-array-functions";
 import { ChatDB, isMessageCurrent } from "../../core/ChatDB";
+import { VideoPlayer } from "@/components/player/usePlayer";
 
-const props = defineProps<{ roomId: RoomIDString }>();
+const props = defineProps<{ roomId: RoomIDString; player?: VideoPlayer }>();
 const chatDB = useSocket().chatDB;
 const messages = computed(() => chatDB.rooms.get(props.roomId)?.messages ?? []);
 const focused = ref<ParsedMessage>();
