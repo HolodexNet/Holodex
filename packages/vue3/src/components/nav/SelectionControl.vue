@@ -12,8 +12,9 @@
         'md:w-16': selection.selectedVideos.length === 0,
         'btn-square': selection.selectedVideos.length,
       }"
+      @click="exit"
     >
-      <h-icon class="i-mdi:close-circle" @click="exit" />
+      <h-icon class="i-mdi:close-circle" />
     </div>
 
     <div class="carousel-vertical carousel">
@@ -205,6 +206,11 @@ export default defineComponent({
 <style lang="scss">
 .menu-group {
   --btn-text-case: "unset";
+
+  .btn {
+    text-align: start;
+    justify-content: start;
+  }
 }
 
 #selectionFooter {

@@ -292,6 +292,14 @@ export default {
       }
     );
   },
+  v3BulkEditMentions(opts: BulkMentionsRequest, jwt: string) {
+    return axiosInstance_v3.post<null>("mentions/change", opts, {
+      headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+    });
+  },
+  v3BulkGetMentions(opts: { ids: string[] }) {
+    return axiosInstance_v3.post<null>("mentions/get", opts);
+  },
   /**
    * Fetches song lists up to LIMIT count with offset. Always ordered by available_at date.
    * @param {{org?, channel_id?, video_id?, q?}} condition one of the conditions
@@ -526,3 +534,9 @@ export default {
   },
   //= ========= RELAY BOT DISCORD LOGIN ==========
 };
+
+export interface BulkMentionsRequest {
+  videoIds: string[];
+  mentions: (Partial<FullChannel> & { id: string })[];
+  delete: boolean;
+}

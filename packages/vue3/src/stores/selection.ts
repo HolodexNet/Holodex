@@ -3,7 +3,7 @@
  */
 
 interface SelectionState {
-  selectedVideos: VideoRef[];
+  selectedVideos: (VideoRef & Partial<Video>)[];
   selectionMode: boolean;
   context: {
     // contextual information donated by other pages.

@@ -39,6 +39,7 @@
           selection.context.pageVideo && selection.selectedVideos.length > 0
         "
         class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"
+        @click="dissociateVideo"
       >
         Disassociate w/ Current Video
       </div>
@@ -51,10 +52,13 @@
         Disassociate w/ Current Channel
       </div>
       <div
-        v-if="selection.selectedVideos.find((x) => x.type == 'clip')"
+        v-if="
+          selection.selectedVideos.length > 0 &&
+          selection.selectedVideos.find((x) => x.mentions?.length)
+        "
         class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"
       >
-        Hide Selected Clips
+        Remove all Mentions
       </div>
       <div
         class="btn-outline btn-disabled btn-secondary btn-xs btn hidden max-w-xs bg-bgColor-400 first:block"
@@ -73,9 +77,9 @@ const { open: toast } = useToast();
 
 function dissociateVideo() {
   const ok =
-    confirm(`Are you sure you want to disassociate with the current video?
+    confirm(`Are you sure you want to disassociate the selected video(s) with the current video?
 
-    [${selection.context.pageVideo?.title}] by [${selection.context.pageVideo?.channel.name}]
+    The current video is: [${selection.context.pageVideo?.title}] by [${selection.context.pageVideo?.channel.name}]
 
     The source would be removed, and mentioned vtubers will be recalculated/re-inferred. (Mentions added or removed by editors will not be changed.)`);
 
@@ -90,3 +94,10 @@ function dissociateVideo() {
   // TODO do stuff here
 }
 </script>
+
+<style>
+.menu-group .btn {
+  text-align: start;
+  justify-content: start;
+}
+</style>
