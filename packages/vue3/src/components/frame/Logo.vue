@@ -12,30 +12,6 @@
         fill="url(#b-iid-3)"
       />
     </g>
-    <defs>
-      <linearGradient
-        id="a-iid-3"
-        x1=".2"
-        y1="2.8"
-        x2="19.3"
-        y2="18.5"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stop-color="#F06292" />
-        <stop offset="1" stop-color="#FF3A81" />
-      </linearGradient>
-      <linearGradient
-        id="b-iid-3"
-        x1="-4.4"
-        y1="2.8"
-        x2="19.5"
-        y2="11.3"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stop-color="#5DA2F2" />
-        <stop offset="1" stop-color="#715BF7" stop-opacity=".8" />
-      </linearGradient>
-    </defs>
   </svg>
 </template>
 
