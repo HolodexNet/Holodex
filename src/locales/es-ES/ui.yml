@@ -117,6 +117,9 @@ component:
       - Dangerously Low Quality/Misleading Content
       - Violates the org's derivative work guidelines or inappropriate
       - Otros
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     neverShowAgain: No volver a mostrar la alerta
   playlist:
