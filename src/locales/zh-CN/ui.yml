@@ -59,8 +59,6 @@ component:
     uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
-  video:
-    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -132,6 +130,9 @@ component:
       - 视频品质过低/含有误导性内容
       - 违反所属团体的二次创作管理条例或不当内容
       - 其他
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     explanation: >-
       由于各家浏览器采用不同的运作方式，个别对<b>第三方Cookie</b>有严格限制的浏览器，或者是那些阻止<kbd>YouTube.com</kbd>Cookie的浏览器，都有可能会导致无法登录/无法使用Youtube聊天功能。<br /><br />你可以尝试将<kbd>YouTube.com</kbd>加入第三方Cookie拦截器的白名单，亦或者是降低<kbd>Holodex.net</kbd>的Cookie安全/隐私限制来解决这个问题。<br /><br />以下是一部分网站的教程。
