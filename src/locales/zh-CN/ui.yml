@@ -59,6 +59,8 @@ component:
     uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
+  video:
+    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -262,6 +264,7 @@ views:
     hideCollabStreamsLabel: 隐藏联动直播
     hideCollabStreamsMsg: 隐藏与目前团体成员相关的联动直播
     hidePlaceholderStreams: 隐藏直播活动资讯
+    hideMissingStreams: 隐藏缺失的直播
     ignoredTopicsLabel: 忽略以下标签
     ignoredTopicsMsg: 在主页和收藏夹页面中隐藏以下标签的视频
     theme: 主题
@@ -354,6 +357,10 @@ views:
       - 使用 Google 帐号登录
       - 使用 Discord 账号登录
       - 使用 Twitter 账号登录
+    twitterMsg:
+      - 由于Twitter API政策的改变，2月9日之后可能无法再通过Twitter登录
+      - 你目前仅绑定了Twitter用于登录，我们强烈建议尽快绑定其他的登录方式，以避免在不同的设备上或在浏览器清除资料后无法登录
+      - 如果你无法通过Twitter账户登录Holodex（并且没有绑定其他登录方式），请通过Twitter私信或Discord上联系我们寻求帮助
     username: 用户名
     usernameBtn:
       - 更改

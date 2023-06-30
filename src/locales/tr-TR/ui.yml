@@ -260,6 +260,7 @@ views:
     hideCollabStreamsLabel: Collab yayınları sakla
     hideCollabStreamsMsg: Collab yayınları favoriler sayfanızdan saklar
     hidePlaceholderStreams: Yer Tutucu Yayınları Gizle
+    hideMissingStreams: Kayıp Yayınları Gizle
     ignoredTopicsLabel: Yok Sayılan Konular
     ignoredTopicsMsg: Ana Sayfadan ve Favorilerden seçili konulara sahip videolar kaldırılır
     theme: Tema
@@ -352,6 +353,10 @@ views:
       - Google ile giriş yap
       - Discord ile giriş yap
       - Twitter ile giriş yap
+    twitterMsg:
+      - Twitter API politikası değişimi nedeniyle, 9 Şubat sonrası Twitter Girişi büyük ihtimalle çalışmayacaktır.
+      - Şu an sadece Twitter Girişi kullanıyorsunuz. Farklı bir cihazda veya tarayıcıyı sıfırlayınca hesabı kaybetmemeniz için başka bir giriş yöntemi bağlamanızı şiddetle tavsiye ederiz.
+      - Eğer Holodex'e Twitter hesabınız üzerinden giriş yapamıyorsanız (ve farklı bir giriş yönteni bağlamadıysanız) lütfen bize Twitter DM'lerinden veya Discorddan ulaşın.
     username: Kullanıcı Adı
     usernameBtn:
       - Değiştir
@@ -455,6 +460,7 @@ views:
     editorModePanel:
       activateMode: Editör Modunu Etkinleştir
       deactivateMode: Editör Modunu Devre Dışı Bırak
+      roleWarning: Yeterli ayrıcalığa sahip değilsiniz
       filterTranslator: Çevirmen filtrele
   tlManager:
     title: Senaryo yöneticisi
