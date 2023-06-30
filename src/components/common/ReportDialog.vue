@@ -30,7 +30,7 @@
             :value="reason.value"
             hide-details="true"
             class="shrink mt-2"
-            @click="reason.text.includes('mention') ? loadMentions() : null"
+            @click="reason.text.includes('mention') && suggestedMentions === null ? loadMentions() : null"
           />
           <br>
           <span v-if="selectedReasons.includes('Incorrect video topic')">
@@ -263,6 +263,7 @@ export default {
             suggestedTopic: false,
             search: "",
             searchResults: [],
+            originalMentions: [],
             suggestedMentions: null,
             deletionSet: new Set(),
             isSelectedAll: false,
@@ -354,7 +355,7 @@ export default {
                     this.searchResults = data.filter(
                         (d) => !(
                             this.video.channel.id === d.id
-                            || this.suggestedMentions.find((m) => m.id === d.id)
+                            || this.suggestedMentions?.find((m) => m.id === d.id)
                         ),
                     );
                 });
@@ -367,35 +368,45 @@ export default {
                 name: "Comments",
                 value: this.comments ? this.comments : "No comment",
             };
+            const reasonString = this.selectedReasons.join("\n");
+            const thisTopic = this.video.topic_id;
             const fieldBody = [
                 {
                     name: "Reason",
-                    value: this.selectedReasons.join("\n"),
+                    value: reasonString,
                 },
             ];
-            if (this.suggestedTopic !== false) {
+            if (this.suggestedTopic !== false || reasonString.includes("topic")) {
                 fieldBody.push(
                     {
                         name: "Original Topic",
-                        value: `${this.video.topic_id}` || "None",
-                    },
-                    {
-                        name: "Suggested Topic",
-                        value: this.suggestedTopic ? this.suggestedTopic.id : "None",
+                        value: thisTopic ? `\`${thisTopic}\`` : "None",
                     },
                 );
+                if (thisTopic !== this.suggestedTopic) {
+                    fieldBody.push(
+                        {
+                            name: "Suggested Topic",
+                            value: this.suggestedTopic ? `\`${this.suggestedTopic}\`` : "None",
+                        },
+                    );
+                }
             }
-            if (this.suggestedMentions !== null) {
+            if (this.suggestedMentions !== null || reasonString.includes("mentions")) {
                 fieldBody.push(
                     {
                         name: "Original Mentions",
-                        value: this.video.mentions.map((m) => m.id).join("\n"),
-                    },
-                    {
-                        name: "Suggested Mentions",
-                        value: this.suggestedMentions.map((m) => m.id).join("\n"),
+                        value: this.originalMentions && this.originalMentions.length > 0 ? this.originalMentions.map((m) => `\`${m.id}\``).join("\n") || "None" : "None",
                     },
                 );
+                if (this.suggestedMentions !== null && this.suggestedMentions !== this.originalMentions) {
+                    fieldBody.push(
+                        {
+                            name: "Suggested Mentions",
+                            value: this.suggestedMentions && this.suggestedMentions.length > 0 ? this.suggestedMentions.map((m) => `\`${m.id}\``).join("\n") || "None" : "None",
+                        },
+                    );
+                }
             }
             fieldBody.push(commentField);
             backendApi.reportVideo(this.video.id, fieldBody, this.$store.state.userdata?.jwt)
@@ -443,20 +454,20 @@ export default {
         },
         loadMentions() {
             if (this.suggestedMentions !== null) {
-                return this.suggestedMentions;
+                return this.originalMentions;
             }
             backendApi
                 .getMentions(this.video.id)
                 .then(({ data }) => {
                     // this.isLoading = false;
-                    this.video.mentions = data;
+                    this.originalMentions = data;
                     this.updateMentions(data);
                 })
                 .catch((e) => {
                     console.error(e);
                     // this.hasError = true;
                 });
-            return this.video.mentions;
+            return this.originalMentions;
         },
         async loadTopics() {
             if (this.topics.length > 0) return;
@@ -485,7 +496,9 @@ export default {
             this.updateMentions();
         },
         addMention(channel) {
-            this.suggestedMentions.push(channel);
+            if (!this.suggestedMentions.includes(channel)) {
+                this.suggestedMentions.push(channel);
+            }
             this.updateMentions();
         },
         applyDeleteMentions() {
