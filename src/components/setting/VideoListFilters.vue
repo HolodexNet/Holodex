@@ -2,6 +2,7 @@
   <div>
     <slot />
     <v-autocomplete
+      v-if="topicFilter"
       v-model="ignoredTopics"
       :items="topics"
       multiple
@@ -16,6 +17,7 @@
       @focus="fetchTopics"
     />
     <v-switch
+      v-if="collabFilter"
       v-model="hideCollabStreams"
       class="v-input--reverse v-input--expand"
       inset
@@ -24,6 +26,7 @@
       hide-details
     />
     <v-switch
+      v-if="placeholderFilter"
       v-model="hidePlaceholder"
       class="v-input--reverse v-input--expand"
       inset
@@ -52,6 +55,23 @@ import { syncState } from "@/utils/functions";
 
 export default {
     name: "VideoListFilters",
+    props: {
+        topicFilter: {
+            type: Boolean,
+            required: false,
+            default: true,
+        },
+        collabFilter: {
+            type: Boolean,
+            required: false,
+            default: true,
+        },
+        placeholderFilter: {
+            type: Boolean,
+            required: false,
+            default: true,
+        },
+    },
     data() {
         return {
             mdiFilterOutline,
