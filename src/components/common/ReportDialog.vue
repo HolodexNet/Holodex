@@ -169,7 +169,7 @@
               && video.type !== 'clip'"
           >
             <span class="secondary--text"> {{ $t('component.reportDialog.consider') }} </span>
-            <VideoListFilters :placeholder-filter="false" :topic-filter="false" />
+            <VideoListFilters :placeholder-filter="false" :topic-filter="false" :missing-filter="false" />
             <br>
           </span>
           <v-card-text v-if="video.channel.id === 'UCF4-I8ZQL6Aa-iHfdz-B9KQ'" class="red--text">

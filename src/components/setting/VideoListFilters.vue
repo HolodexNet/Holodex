@@ -35,6 +35,7 @@
       hide-details
     />
     <v-switch
+      v-if="missingFilter"
       v-model="hideMissing"
       class="v-input--reverse v-input--expand"
       inset
@@ -75,6 +76,11 @@ export default {
             default: true,
         },
         placeholderFilter: {
+            type: Boolean,
+            required: false,
+            default: true,
+        },
+        missingFilter: {
             type: Boolean,
             required: false,
             default: true,
