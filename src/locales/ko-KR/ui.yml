@@ -59,8 +59,6 @@ component:
     uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
-  video:
-    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -132,6 +130,9 @@ component:
       - 매우 낮은 화질/오해의 소지가 있는 콘텐츠
       - 소속의 2차 장작 가이드라인을 위반하거나 부적절함
       - 기타
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     explanation: >-
       인터넷 브라우저의 작동 방식으로 인해 엄격한 <b>타사 쿠키</b> 정책을 사용하는 일부 브라우저 또는 <kbd>YouTube.com</kbd> 쿠키를 차단하는 브라우저는 Youtube 채팅에 로그인하거나 사용하기 어려울 수 있습니다. <br /><br /> 타사 쿠키 차단에서 <kbd>Youtube.com</kbd>을 제외하거나 <kbd>Holodex.net</kbd>의 쿠키 보안 / 개인정보 수준을 낮추면 이 문제를 해결할 수 있습니다. <br /><br /> 이를 수행하는 방법에 대한 자세한 정보를 제공하는 일부 웹 사이트를 포함했습니다.
