@@ -128,11 +128,15 @@ component:
       You can disable this feature through the settings
     comments: What actions should Holodex take?
     success: Report sent, thank you!
+    consider: Consider using the filter and discarding this report instead.
     reasons:
       - Video tagged incorrectly
       - Dangerously Low Quality/Misleading Content
       - Violates the org's derivative work guidelines or inappropriate
       - Other
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     explanation: >-
       Because of how your internet browser works, some browsers with strict

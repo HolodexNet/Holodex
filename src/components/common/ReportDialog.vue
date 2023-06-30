@@ -22,14 +22,156 @@
           <br>
           {{ video.channel.name }}
           <br>
-          <v-radio-group v-model="selectedReason">
-            <v-radio
-              v-for="reason in reasons"
-              :key="reason.value"
-              :label="reason.text"
-              :value="reason.value"
+          <v-checkbox
+            v-for="reason in filteredReasons()"
+            :key="reason.value"
+            v-model="selectedReasons"
+            :label="reason.text"
+            :value="reason.value"
+            hide-details="true"
+            class="shrink mt-2"
+            @click="reason.text.includes('mention') && suggestedMentions === null ? loadMentions() : null"
+          />
+          <br>
+          <span v-if="selectedReasons.includes('Incorrect video topic')">
+            <span class="text-overline text--disabled">{{
+              $t("component.search.type.topic")
+            }}</span>
+            <span class="primary--text text-overline "> {{ video.topic_id || "None" }} </span>
+            <v-autocomplete
+              v-model="suggestedTopic"
+              :items="topics"
+              inline
+              hide-details
+              label="Suggest new topic (leave empty to unset)"
+              @click="loadTopics"
             />
-          </v-radio-group>
+            <br>
+          </span>
+          <span v-if="selectedReasons.includes('Incorrect channel mentions')">
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-avatar
+                  v-bind="attrs"
+                  rounded
+                  left
+                  size="40"
+                  v-on="on"
+                >
+                  <v-btn icon @click.stop.prevent="applyDeleteMentions()">
+                    <v-icon
+                      v-if="!isApplyingBulkEdit"
+                      size="25"
+                      color="grey darken-2"
+                    >
+                      {{ icons.mdiContentSaveEdit }}
+                    </v-icon>
+                    <v-progress-circular
+                      v-else
+                      :size="25"
+                      indeterminate
+                    />
+                  </v-btn>
+                </v-avatar>
+              </template>
+              <span>Apply Changes</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-avatar
+                  v-bind="attrs"
+                  rounded
+                  left
+                  size="40"
+                  v-on="on"
+                >
+                  <v-btn icon @click.stop.prevent="toggleMentionSelection()">
+                    <v-icon v-if="isSelectedAll" size="25" color="grey darken-2">
+                      {{ icons.mdiSelectOff }}
+                    </v-icon>
+                    <v-icon v-else size="25" color="grey darken-2">
+                      {{ icons.mdiSelectAll }}
+                    </v-icon>
+                  </v-btn>
+                </v-avatar>
+              </template>
+              <span v-if="isSelectedAll">Deselect All</span>
+              <span v-else>Select All</span>
+            </v-tooltip>
+            <template v-for="item in suggestedMentions">
+              <ChannelChip
+                :key="item.id + 'chip'"
+                :channel="item"
+                :size="60"
+                :close-delay="0"
+              >
+                <template #default>
+                  <v-overlay v-if="isAddedToDeletionSet(item.id)" absolute>
+                    <v-btn
+                      icon
+                      @click.stop.prevent="removeChannelFromDeletionSet(item.id)"
+                    >
+                      <v-icon>{{ icons.mdiDelete }}</v-icon>
+                    </v-btn>
+                  </v-overlay>
+                  <v-overlay v-else absolute :opacity="0">
+                    <v-btn
+                      icon
+                      @click.stop.prevent="addChannelToDeletionSet(item.id)"
+                    >
+                      <!-- <v-icon>{{ icons.mdiPinOutline }}</v-icon> -->
+                    </v-btn>
+                  </v-overlay>
+                </template>
+              </ChannelChip>
+            </template>
+            <v-autocomplete
+              v-model="suggestedMentions"
+              :search-input.sync="search"
+              :items="searchResults"
+              hide-no-data
+              multiple
+              hide-details
+              :rules="[]"
+              return-object
+              item-value="id"
+              label="Adjust Mentioned Channels"
+              no-filter
+              style="min-width: 300px"
+            >
+              <template #selection="selection">
+                <ChannelChip
+                  :key="selection.item.id + 'chip'"
+                  :channel="selection.item"
+                  :size="40"
+                >
+                  <v-btn icon @click.stop.prevent="deleteMention(selection.item)">
+                    <v-icon>{{ icons.mdiClose }}</v-icon>
+                  </v-btn>
+                </ChannelChip>
+              </template>
+              <template #item="dropdownItem">
+                <v-list-item-content
+                  class="py-1 pt-1"
+                  @click.stop="addMention(dropdownItem.item)"
+                >
+                  <v-list-item-subtitle class="text--primary">
+                    {{ getChannelName(dropdownItem.item) }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </template>
+            </v-autocomplete>
+            <br>
+          </span>
+          <span
+            v-if="selectedReasons.includes('This video does not belong to the org')
+              && !collabsAlreadyHidden
+              && video.type !== 'clip'"
+          >
+            <span class="secondary--text"> {{ $t('component.reportDialog.consider') }} </span>
+            <VideoListFilters :placeholder-filter="false" :topic-filter="false" :missing-filter="false" />
+            <br>
+          </span>
           <v-card-text v-if="video.channel.id === 'UCF4-I8ZQL6Aa-iHfdz-B9KQ'" class="red--text">
             <b>Note: Please don't report just because you disagree / dislike this subber.</b>
             <div v-if="readMore">
@@ -97,41 +239,77 @@
 
 <script>
 import backendApi from "@/utils/backend-api";
+import ChannelChip from "@/components/channel/ChannelChip.vue";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 import filterVideos from "@/mixins/filterVideos";
+import debounce from "lodash-es/debounce";
+import { CHANNEL_TYPES } from "@/utils/consts";
+import VideoListFilters from "@/components/setting/VideoListFilters.vue";
 
 export default {
     name: "ReportDialog",
-    components: { ChannelSocials },
+    components: { ChannelSocials, ChannelChip, VideoListFilters },
     mixins: [filterVideos],
     data() {
         return {
-            selectedReason: "Video tagged incorrectly",
+            selectedReason: "Incorrect video topic",
+            selectedReasons: [],
             comments: "",
             isLoading: false,
             showSnackbar: false,
             error: false,
             readMore: false,
+            topics: [],
+            suggestedTopic: false,
+            search: "",
+            searchResults: [],
+            originalMentions: [],
+            suggestedMentions: null,
+            deletionSet: new Set(),
+            isSelectedAll: false,
+            isApplyingBulkEdit: false,
+            collabsAlreadyHidden: this.$store.state.settings.hideCollabStreams,
         };
     },
     computed: {
         reasons() {
+            const vtype = this.video.type === "stream" ? "video" : this.video.type;
             return [
                 {
-                    text: this.$t("component.reportDialog.reasons[0]"),
-                    value: "Video tagged incorrectly",
+                    text: this.$t("component.reportDialog.reasons[4]"),
+                    value: "Incorrect video topic",
+                    types: ["stream", "placeholder"],
+                    orgRequired: false,
+                },
+                {
+                    text: this.$t("component.reportDialog.reasons[5]"),
+                    value: "Incorrect channel mentions",
+                    types: null,
+                    orgRequired: false,
+                },
+                {
+                    text: this.$t("component.reportDialog.reasons[6]", [vtype, this.currentOrg.name]),
+                    value: "This video does not belong to the org",
+                    types: null,
+                    orgRequired: true,
                 },
                 {
                     text: this.$t("component.reportDialog.reasons[1]"),
                     value: "Low Quality/Misleading Content",
+                    types: ["clip"],
+                    orgRequired: false,
                 },
                 {
                     text: this.$t("component.reportDialog.reasons[2]"),
                     value: "Violates the org's derivative work guidelines or inappropriate",
+                    types: ["clip"],
+                    orgRequired: false,
                 },
                 {
                     text: this.$t("component.reportDialog.reasons[3]"),
                     value: "Other",
+                    types: null,
+                    orgRequired: false,
                 },
             ];
         },
@@ -144,36 +322,98 @@ export default {
         user() {
             return this.$store.state.userdata.user;
         },
+        currentOrg() {
+            return this.$store.state.currentOrg;
+        },
         showReportDialog: {
             get() {
                 return this.$store.state.reportVideo;
             },
             set(val) {
                 if (!val) this.$store.commit("setReportVideo", null);
+                this.suggestedTopic = false;
+                this.suggestedMentions = null;
+                this.search = "";
+                this.searchResults = [];
+                this.selectedReasons = [];
             },
         },
     },
-    methods: {
-        sendReport() {
-            if (this.selectedReason === "Other" && !this.comments.length) {
-                this.error = true;
+    watch: {
+        // eslint-disable-next-line func-names
+        search: debounce(function () {
+            if (!this.search) {
+                this.searchResults = [];
                 return;
             }
+            backendApi
+                .searchChannel({
+                    type: CHANNEL_TYPES.VTUBER,
+                    queryText: this.search,
+                })
+                .then(({ data }) => {
+                    this.searchResults = data.filter(
+                        (d) => !(
+                            this.video.channel.id === d.id
+                            || this.suggestedMentions?.find((m) => m.id === d.id)
+                        ),
+                    );
+                });
+        }, 400),
+    },
+    methods: {
+        sendReport() {
             this.isLoading = true;
-            backendApi.reportVideo(this.video.id, [
+            const commentField = {
+                name: "Comments",
+                value: this.comments ? this.comments : "No comment",
+            };
+            const reasonString = this.selectedReasons.join("\n");
+            const thisTopic = this.video.topic_id;
+            const fieldBody = [
                 {
                     name: "Reason",
-                    value: this.selectedReason,
+                    value: reasonString,
                 },
-                {
-                    name: "Comments",
-                    value: this.comments ? this.comments : "No comment",
-                },
-            ], this.$store.state.userdata?.jwt)
+            ];
+            if (this.suggestedTopic !== false || reasonString.includes("topic")) {
+                fieldBody.push(
+                    {
+                        name: "Original Topic",
+                        value: thisTopic ? `\`${thisTopic}\`` : "None",
+                    },
+                );
+                if (thisTopic !== this.suggestedTopic) {
+                    fieldBody.push(
+                        {
+                            name: "Suggested Topic",
+                            value: this.suggestedTopic ? `\`${this.suggestedTopic}\`` : "None",
+                        },
+                    );
+                }
+            }
+            if (this.suggestedMentions !== null || reasonString.includes("mentions")) {
+                fieldBody.push(
+                    {
+                        name: "Original Mentions",
+                        value: this.originalMentions && this.originalMentions.length > 0 ? this.originalMentions.map((m) => `\`${m.id}\``).join("\n") || "None" : "None",
+                    },
+                );
+                if (this.suggestedMentions !== null && this.suggestedMentions !== this.originalMentions) {
+                    fieldBody.push(
+                        {
+                            name: "Suggested Mentions",
+                            value: this.suggestedMentions && this.suggestedMentions.length > 0 ? this.suggestedMentions.map((m) => `\`${m.id}\``).join("\n") || "None" : "None",
+                        },
+                    );
+                }
+            }
+            fieldBody.push(commentField);
+            backendApi.reportVideo(this.video.id, fieldBody, this.$store.state.userdata?.jwt)
                 .then(() => {
                     this.showReportDialog = false;
                     this.showSnackbar = true;
-                    this.erorr = false;
+                    this.error = false;
                 })
                 .catch((e) => {
                     console.error(e);
@@ -182,6 +422,98 @@ export default {
                 .finally(() => {
                     this.isLoading = false;
                 });
+        },
+        getChannelName(channel) {
+            const prop = this.$store.state.settings.nameProperty;
+            return channel[prop] || channel.name;
+        },
+        isAddedToDeletionSet(id) {
+            return this.deletionSet.has(id);
+        },
+        addChannelToDeletionSet(id) {
+            this.deletionSet.add(id);
+            if (this.deletionSet.size === this.suggestedMentions.length) {
+                this.isSelectedAll = true;
+            }
+            this.$forceUpdate();
+        },
+        removeChannelFromDeletionSet(id) {
+            this.deletionSet.delete(id);
+            if (this.deletionSet.size === 0) {
+                this.isSelectedAll = false;
+            }
+            this.$forceUpdate();
+        },
+        toggleMentionSelection() {
+            this.isSelectedAll = !this.isSelectedAll;
+            if (this.isSelectedAll) {
+                this.suggestedMentions.forEach((mention) => this.deletionSet.add(mention.id));
+            } else {
+                this.deletionSet.clear();
+            }
+        },
+        loadMentions() {
+            if (this.suggestedMentions !== null) {
+                return this.originalMentions;
+            }
+            backendApi
+                .getMentions(this.video.id)
+                .then(({ data }) => {
+                    // this.isLoading = false;
+                    this.originalMentions = data;
+                    this.updateMentions(data);
+                })
+                .catch((e) => {
+                    console.error(e);
+                    // this.hasError = true;
+                });
+            return this.originalMentions;
+        },
+        async loadTopics() {
+            if (this.topics.length > 0) return;
+            this.topics = (await backendApi.topics()).data.map((topic) => ({
+                value: topic.id,
+                text: `${topic.id} (${topic.count ?? 0})`,
+            }));
+        },
+        filteredReasons() {
+            return this.reasons.filter((reason) => {
+                if (reason.orgRequired && ((!this.currentOrg || this.currentOrg.name === "All Vtubers" || this.currentOrg.name === this.video.channel.org) || this.$route.name !== "home")) return false;
+                if (reason.types && !reason.types.includes(this.video.type)) return false;
+                return true;
+            });
+        },
+        updateMentions(data = null) {
+            if (data) {
+                this.suggestedMentions = data;
+            }
+            this.searchResults = [];
+            this.search = "";
+        },
+        deleteMention(channel) {
+            this.removeChannelFromDeletionSet(channel.id);
+            this.suggestedMentions = this.suggestedMentions.filter((mention) => mention.id !== channel.id);
+            this.updateMentions();
+        },
+        addMention(channel) {
+            if (!this.suggestedMentions.includes(channel)) {
+                this.suggestedMentions.push(channel);
+            }
+            this.updateMentions();
+        },
+        applyDeleteMentions() {
+            this.isApplyingBulkEdit = true;
+            const ids = Array.from(this.deletionSet);
+            if (ids.length === 0) {
+                this.isApplyingBulkEdit = false;
+                return;
+            }
+            this.suggestedMentions = this.suggestedMentions.filter((mention) => !ids.includes(mention.id));
+            this.deletionSet.clear();
+            this.isSelectedAll = false;
+            this.updateMentions();
+            this.isApplyingBulkEdit = false;
+            this.$forceUpdate();
         },
     },
 };
