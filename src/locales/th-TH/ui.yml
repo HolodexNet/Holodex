@@ -59,8 +59,6 @@ component:
     uploadScript: อัปโหลดสคริปต์การแปล
   videoDescription:
     description: คำอธิบาย
-  video:
-    comment: { }
   description:
     showLess: แสดงน้อยลง
     showMore: แสดงมากขึ้น
@@ -132,6 +130,9 @@ component:
       - เนื้อหาคุณภาพต่ำ/ทำให้เข้าใจผิด
       - ละเมิดสัญญาอนุญาตทำงานดัดแปลงของสังกัด หรือ ไม่เหมาะสม
       - อื่น ๆ
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     explanation: >-
       เนื่องจากการทำงานของอินเตอร์เน็ตเบราว์เซอร์ของคุณ เบราว์เซอร์บางตัวที่มีนโยบาย <b>คุกกี้ของบุคคลที่สาม</b> ที่เข้มงวดหรือมีการบล็อกคุกกี้จาก <kbd>YouTube.com</kbd> ทำให้การเข้า/ใช้งานแชทใน Youtube เป็นเรื่องยาก <br /><br /> คุณสามารถแก้ไขได้โดยอนุญาต(whitelist) <kbd>YouTube.com</kbd> ในการบล็อกคุกกี้ของบุคคลที่สาม หรือลดระดับความปลอดภัย/ความเป็นส่วนตัวของคุกกี้สำหรับ <kbd>Holodex.net</kbd> .<br /> เราจะแสดงรายการเว็บไซต์ต่างๆ ที่ให้ข้อมูลเพิ่มเติมเกี่ยวกับเรื่องนี้
