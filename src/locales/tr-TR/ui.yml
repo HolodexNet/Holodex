@@ -128,6 +128,9 @@ component:
       - Tehlikeli derecede Düşük Kaliteli/Yanıltıcı İçerik
       - Organizasyonun türemiş çalışma projelerini ihlal ediyor veya uygunsuz
       - Diğer
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     explanation: >-
       Tarayıcınızın çalışma şeklinden dolayı, katı <b>Üçüncü Taraf Çerezleri</b> politikalarına sahip veya <kbd>YouTube.com</kbd> çerezlerini engelleyen tarayıcılar Youtube sohbetinin erişimini/kullanımını zor bulabilirler. <br /><br /> Bu durumu <kbd>Youtube.com</kbd>''u Üçüncü Taraf Çerezi Engelleyicilerden kaldırarak veya <kbd>Holodex.net</kbd> için çerez güvenliği/ gizlilik seviyesini düşürerek düzeltebilirsiniz. <br /><br />Bunu nasıl yapacağınızı açıklayan bazı siteleri ekledik.
