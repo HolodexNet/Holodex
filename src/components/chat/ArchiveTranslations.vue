@@ -13,22 +13,37 @@
           x-small
           class="mr-1"
           title="-2s"
-          @click="timeOffset -= 2000"
+          @click="timeOffsetSeconds -= 2"
         >
           <v-icon>
-            {{ mdiTransferLeft }}
+            {{ mdiChevronLeft }}
           </v-icon>
         </v-btn>
-        <code class="mr-1">{{ `${timeOffset >= 0 ? "+" : ""}${timeOffset / 1000}s` }}</code>
+        <v-dialog v-model="dialog" width="250px">
+          <template #activator="{ on, attr }">
+            <code class="mr-1" v-bind="attr" v-on="on">{{ `${timeOffsetSeconds >= 0 ? "+" : ""}${timeOffsetSeconds}s` }}</code>
+          </template>
+          <v-card>
+            <v-card-text>
+              <v-container>
+                <v-text-field
+                  v-model.number="timeOffsetSeconds"
+                  type="number"
+                  suffix="s"
+                />
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
         <v-btn
           icon
           x-small
           class="mr-1"
           title="+2s"
-          @click="timeOffset += 2000"
+          @click="timeOffsetSeconds += 2"
         >
           <v-icon>
-            {{ mdiTransferRight }}
+            {{ mdiChevronRight }}
           </v-icon>
         </v-btn>
         <v-btn
@@ -38,7 +53,7 @@
           :title="$t('views.watch.chat.showSubtitle')"
           @click="showSubtitle = !showSubtitle"
         >
-          <v-icon :color="showSubtitle ? 'primary' :''">
+          <v-icon :color="showSubtitle ? 'primary' : ''">
             {{ mdiSubtitlesOutline }}
           </v-icon>
         </v-btn>
@@ -61,7 +76,9 @@
             <v-divider />
             <v-card-actions>
               <v-spacer />
-              <v-btn text color="red" @click="expanded = false">{{ $t("views.app.close_btn") }}</v-btn>
+              <v-btn text color="red" @click="expanded = false">{{
+                $t("views.app.close_btn")
+              }}</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -70,7 +87,7 @@
     </v-card-subtitle>
     <v-divider />
     <portal to="expandedMessage" :disabled="!expanded" slim>
-      <virtual-list
+      <!-- <virtual-list
         ref="tlBody"
         class="archive tl-body px-1 py-0 px-lg-3"
         :style="{
@@ -83,7 +100,23 @@
         :item-class-add="addClass"
         :keeps="50"
         @click.native="handleClick"
-      />
+      /> -->
+      <div
+        ref="tlBody"
+        class="archive tl-body px-1 py-0 px-lg-3"
+        :style="{
+          'font-size': liveTlFontSize + 'px',
+        }"
+      >
+        <ChatMessage
+          v-for="(e, idx) in dividedTLs"
+          :key="getKey(e)"
+          :class="addClass(e)"
+          :source="e"
+          :index="idx"
+          @click.native="handleClick"
+        />
+      </div>
     </portal>
     <portal v-if="showSubtitle" :to="`${video.id}-overlay`">
       <WatchSubtitleOverlay :messages="toDisplay" />
@@ -92,8 +125,12 @@
 </template>
 
 <script lang="ts">
-import VirtualList from "vue-virtual-scroll-list";
-import { mdiTransferRight, mdiTransferLeft } from "@mdi/js";
+import {
+    mdiChevronLeft,
+    mdiChevronDoubleLeft,
+    mdiChevronRight,
+    mdiChevronDoubleRight,
+} from "@mdi/js";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import ChatMessage from "./ChatMessage.vue";
 import chatMixin from "./chatMixin";
@@ -103,30 +140,37 @@ export default {
     name: "ArchiveTranslations",
     components: {
         WatchLiveTranslationsSetting,
-        VirtualList,
         WatchSubtitleOverlay,
+        ChatMessage,
     },
     mixins: [chatMixin],
     data() {
         return {
-            ChatMessage,
             curIndex: 0,
-            timeOffset: 0, // for offsetting archive TL
-            mdiTransferRight,
-            mdiTransferLeft };
+            timeOffsetSeconds: 0, // for offsetting archive TL
+            mdiChevronLeft,
+            mdiChevronDoubleLeft,
+            mdiChevronRight,
+            mdiChevronDoubleRight,
+        };
     },
     computed: {
         dividedTLs() {
             const self = this;
-            const filtered = this.tlHistory.filter((m) => !this.blockedNames.has(m.name));
+            const filtered = this.tlHistory.filter(
+                (m) => !this.blockedNames.has(m.name),
+            );
             return filtered.map((item, index, arr) => {
-                const shouldHideAuthor = index > 0 && (!(index === 0
-                    || index === arr.length - 1
-                    || item.name !== arr[index - 1].name
-                    || !!item.breakpoint));
+                const shouldHideAuthor = index > 0 && index % 10 !== 4
+                    && !(
+                        index === 0
+                        || index === arr.length - 1
+                        || item.name !== arr[index - 1].name
+                        || !!item.breakpoint
+                    );
                 // timestamp is in milliseconds.
-                const newtime = item.timestamp + self.timeOffset;
-                const relativeMs = item.relativeMs + self.timeOffset;
+                const newtime = item.timestamp + self.timeOffsetSeconds * 1000;
+                const relativeMs = item.relativeMs + self.timeOffsetSeconds * 1000;
                 return { ...item, shouldHideAuthor, relativeMs, timestamp: newtime };
             });
         },
@@ -136,8 +180,11 @@ export default {
             // Grab previous and current message
             const buffer = this.dividedTLs.slice(startIdx, startIdx + 2);
             return buffer.filter((m) => {
-                const displayTime = +m.duration || (m.message.length * 65 + 1800);
-                return this.currentTime * 1000 >= m.relativeMs && this.currentTime * 1000 < m.relativeMs + displayTime;
+                const displayTime = +m.duration || m.message.length * 65 + 1800;
+                return (
+                    this.currentTime * 1000 >= m.relativeMs
+                    && this.currentTime * 1000 < m.relativeMs + displayTime
+                );
             });
         },
     },
@@ -179,18 +226,24 @@ export default {
     methods: {
         addClass(index) {
             if (index === this.curIndex) {
-                return ("active-message");
-            } if (this.liveTlHideSpoiler && (index > this.curIndex)) {
-                return ("hide-spoiler");
+                return "active-message";
             }
-            return ("");
+            if (this.liveTlHideSpoiler && index > this.curIndex) {
+                return "hide-spoiler";
+            }
+            return "";
         },
         getKey(item) {
             return item.timestamp + item.message + item.name;
         },
         handleClick(e) {
             if (e.target.matches(".tl-message, .tl-message *")) {
-                this.$emit("timeJump", +e.target.parentElement.getAttribute("data-time"), true, true);
+                this.$emit(
+                    "timeJump",
+                    +e.target.parentElement.getAttribute("data-time"),
+                    true,
+                    true,
+                );
                 e.preventDefault();
             }
         },
@@ -203,7 +256,7 @@ export default {
             if (nearBottom) {
                 ref.scrollToBottom();
             } else {
-                ref.scrollToOffset(idxOffset - (ref.getClientSize() / 2) + idxSize);
+                ref.scrollToOffset(idxOffset - ref.getClientSize() / 2 + idxSize);
             }
         },
     },
@@ -212,36 +265,36 @@ export default {
 
 <style>
 .tl-body.archive {
-    overflow-y: auto;
-    position: relative;
-    overscroll-behavior: contain;
-    height: calc(100% - 32px);
-    display: flex;
-    flex-direction: column-reverse;
-    flex-direction: column;
-    line-height: 1.35;
-    letter-spacing: 0.0178571429em !important;
+  overflow-y: auto;
+  position: relative;
+  overscroll-behavior: contain;
+  height: calc(100% - 32px);
+  display: flex;
+  flex-direction: column-reverse;
+  flex-direction: column;
+  line-height: 1.35;
+  letter-spacing: 0.0178571429em !important;
 }
 
 .active-message {
-    position: relative;
+  position: relative;
 }
 .active-message {
-    z-index: 0;
+  z-index: 0;
 }
 .active-message .tl-message::before {
-    content: "";
-    background-color: var(--v-primary-base);
-    opacity: 0.25;
-    width: calc(100%);
-    height: calc(100%);
-    background-size: cover;
-    position: absolute;
-    top: -1px;
-    left: 0;
-    z-index: -1;
+  content: "";
+  background-color: var(--v-primary-base);
+  opacity: 0.25;
+  width: calc(100%);
+  height: calc(100%);
+  background-size: cover;
+  position: absolute;
+  top: -1px;
+  left: 0;
+  z-index: -1;
 }
 .hide-spoiler {
-    display: none;
+  display: none;
 }
 </style>

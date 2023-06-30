@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: ゴメナソーリー!
@@ -17,6 +16,7 @@ component:
     subscriberCount: 'チャンネル登録者数 {n} 人'
     subscriberNA: 登録者数は現在利用できません
     totalViews: 回視聴
+    inactiveChannel: このチャンネルはもうアクティブではありません。
   channelSocials:
     addToFavorites: お気に入りに追加
     removeFromFavorites: お気に入りから削除
@@ -48,17 +48,17 @@ component:
     premiere: プレミア公開
     googleCalendar: Googleカレンダーに追加
     totalTLs: ライブチャット翻訳の合計
-    tlPresence: 30分以内にアクティブな翻訳者
-    typeScheduledYT: 予定されている配信
+    tlPresence: 30分以内にアクティブだった翻訳者
+    uncertainPlaceholder: 開始時刻は確定していません。実際の開始時刻は異なる可能性があります。
+    typeScheduledYT: 予定された配信
     typeExternalStream: 外部配信
     typeEventPlaceholder: 予定されたイベント
-    openClient: ライブラリを開く
+    openClient: 翻訳クライアントを開く
     openScriptEditor: スクリプトエディターを開く
-    uploadScript: ライブラリスクリプトをアップロードする
+    popoutChat: YouTubeチャットをポップアップ
+    uploadScript: 翻訳スクリプトをアップロード
   videoDescription:
     description: 概要
-  video:
-    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -75,6 +75,8 @@ component:
       topic: 配信内容
       org: 所属
       titledesc: タイトル/動画概要
+      title: 曲名
+      description: 説明
       comments: コメント
       videourl: 動画のURL
   relatedVideo:
@@ -147,7 +149,7 @@ component:
   placeholderVideo:
     discordCredit: 'このイベントデータは {1} の {0} によって提供されました。'
     datasourceCredit: このイベントデータは {0} データソースから取得しました。
-    botCredit: このイベントデータは {0} が作成した {1} データソースを通じて提供されました。
+    botCredit: このイベントデータは {1} が作成し、{0} データソースを通じて提供されました。
     streamPageBtn: 配信ページ
     eventPageBtn: イベントページ
     scheduledEvent: スケジュール済み
@@ -269,8 +271,9 @@ views:
     update_btn: アップデート
     close_btn: 閉じる
     check_about_page: 案内ページで更新内容を確認できます
-    nowSupportsMultiOrg: Holodexで他箱のライバーを視聴可能になりました!
-    loginCallToAction: お気に入りを利用するにはログインしてください!
+    nowSupportsMultiOrg: >-
+      ヒント：ここでグループや事務所を変えることができます
+    loginCallToAction: 自分のお気に入りを設定するにはログインしてください。
   about:
     add_my_channel: チャンネルのリクエスト
   watch:
@@ -285,7 +288,7 @@ views:
       expandTL: TLdex を広げる
       tlStart: メッセージの始まり
       StickBottomSettingLabel: 下部に固定
-      StickBottomSettingsDesc: 翻訳を Youtube チャットの下に配置します
+      StickBottomSettingsDesc: 翻訳ボックスを Youtube チャットの下に配置します
       showVerifiedMessages: 確認済みのユーザーのメッセージを表示
       showModeratorMessages: モデレータによるメッセージを表示
       showVtuberMessages: Vtuberのメッセージを表示
@@ -301,7 +304,7 @@ views:
         connectedToChat: 接続されました
         disconnectedToChat: 切断しました
       archiveNeedExtension: >-
-        アーカイブチャットは {0} 拡張機能または他のサードパーティ拡張機能なしでは動作しません。
+        アーカイブのチャットは {0} 拡張機能または他のサードパーティ拡張機能なしには動作しません。
       hideSpoiler: ネタバレを隠す
     removeFromPlaylist: 現在のプレイリストから動画を削除
     saveToPlaylist: 現在のプレイリストに動画を保存
@@ -318,7 +321,7 @@ views:
       okBtn: 完了
       notifTextErr: ファイルの解析に失敗しました (ファイルが破損している?)
       notifTextParsing: ファイルを解析中...
-      notifTextErrExt: 開けない拡張子です。
+      notifTextErrExt: 認識できないファイル拡張子です。
   favorites:
     promptForAction: >-
       お気に入りのVtuberリストを作るとそのページでお気に入りしたVtuberの最新動画を確認できます。
@@ -351,6 +354,10 @@ views:
       - Googleでログイン
       - Discordでログイン
       - Twitterでログイン
+    twitterMsg:
+      - Twitter APIポリシーの変更により、2月9日以降、Twitterログインは機能しなくなる可能性があります。
+      - 現時点であなたはTwitterログインのみを使用しています。(異なるデバイスからログインする場合、またはブラウザのサイト情報を消去した後の) ロックアウトを防ぐため、今すぐ別のログイン方法をリンクすることを強くお勧めします。
+      - Twitterアカウント経由でHolodex ユーザーにログインできない場合 (また、他のログイン方法を紐付けていない場合) TwitterのDMまたはDiscordからお問い合わせください。
     username: ユーザー名
     usernameBtn:
       - 更新
@@ -411,7 +418,7 @@ views:
       MugenClipsへようこそ！このページでは全員がランダムに選択されたホロライブの英訳切り抜きを見ています。世界中のホロライブのファンと一緒に見て、チャットしましょう。 先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
   playlist:
     playlist-is-modified: 保存されていません
-    item-last-updated: '最終更新日時'
+    item-last-updated: '最終更新:'
     login-prompt: プレイリストを保存したり、複数のプレイリストを作成するにはログインが必要です。
     new-playlist-btn-label: 新しいプレイリストを作成
     page-heading: 'プレイリスト:'
@@ -432,8 +439,8 @@ views:
       setting: ライブラリの設定
       loadVideo: 動画を表示
       unloadVideo: 動画を隠す
-      loadChat: 配信ライブラリにチャットを追加する
-      unloadChat: チャットを切断
+      loadChat: 翻訳を送信するYTチャットを追加
+      unloadChat: YTチャットから切り離す
     tlControl:
       enterBtn: 観る
       prefix: 最初に挿入する
@@ -467,8 +474,8 @@ views:
       save: 保存
       continuousEnd: 終点の作成
       clearAll: スクリプトの消去
-      exportFile: エクスポート
-      importFile: インポート
+      exportFile: ファイルをエクスポート
+      importFile: ファイルをインポート
       editorMode: エディターモード
     table:
       headerStart: 開始
@@ -624,21 +631,21 @@ channelRequest:
     ModifyExistingInfo: 既存のチャンネル情報を修正したい
     DeleteChannel: 自分のチャンネルを削除したい
   DirectContactDisclaimer: >-
-    フィードバックが必要な場合、Discord ID、メールアドレス、Twitterアカウントをご自由にご記入ください (この情報は非公開です)、ご連絡させていただきます。この情報は、Holodexの管理者のみ閲覧可能となります。
-  DirectContactLabel: 連絡方法 (任意入力)
-  TwitterHandle: チャンネルのTwitterアカウント (任意入力)
+    Discord ID、メールアドレス、Twitterアカウントをご自由にご記入ください (この情報は非公開です)。フィードバックが必要な場合にご連絡させていただきます。この情報は、Holodexの管理者のみ閲覧可能となります。
+  DirectContactLabel: 連絡方法 (任意)
+  TwitterHandle: このチャンネルのTwitterアカウント (任意)
   VtuberGroupLabel: VTuberグループ (任意)
   VtuberGroupHint: このvtuberはどの組織/グループに所属していますか?
   ChannelLanguageLabel: チャンネルのメイン言語
   EnglishNameHint: >-
-    チャンネル名が英語でない場合は英語名を入力してください。 Vtuberの利用言語における名前の順序 (例: Natsuiro Matsuri)、または、推奨される英語名 (例; Elu the Elf, Emma★August) に従ってください。
+    チャンネル名が英語でない場合は英語名を入力してください。 Vtuberの利用言語における名前の順序 (例: Natsuiro Matsuri)、または、推奨されている英語表記 (例: Elu the Elf, Emma★August) に従ってください。
   EnglishNameLabel: 英語でのチャンネル名
   Comments: コメント
   CommentsHint: 私たちにお伝えしたいその他のコメント。
   VtuberRequirementText: >-
     個人勢は2万人以上のチャンネル登録者が必要です。既存の組織の一員であるvtuberは受け付けます。<br /><br />新しい組織は平均登録者数次第で作成されます。
   ClipperRequirementText: >-
-    切り抜きチャンネルの場合、少なくとも開設から2ヶ月以上経過していて定期的に投稿している、または1ヶ月に20以上の切り抜き動画を投稿している必要があります。短い切り抜きを毎日スパムのように投稿する、1分未満の短い切り抜きしか投稿しない、悪印象なサムネイルの使用などは、すべてチャンネルにとって不利になります。コンテンツの質も審査対象となる場合があります。<br /><br />切り抜きチャンネルについては、切り抜き元のソースについてチャンネルURLや@形式のチャンネルリンクを掲載することを推奨します。過剰なリンクの掲示 (例: にじさんじメンバーの全員にリンクする) はHolodexの編集者にとって負担となり、リンクが足りない場合には切り抜きが閲覧されづらくなります。<br /><br /> Holodexは過剰なリンクを検出し自動的に修正するアルゴリズムを備えていますが、常に正しく動作するとは限りません。こうした問題を防ぐため、過剰なリンクを行う切り抜き投稿者については登録を解消する場合があります。 
+    切り抜きチャンネルの場合、少なくとも開設から2ヶ月以上経過していて定期的に投稿している、または1ヶ月に20以上の切り抜き動画を投稿している必要があります。短い切り抜きを毎日スパムのように投稿する、1分未満の短い切り抜きしか投稿しない、悪印象なサムネイルの使用などは、すべてチャンネルにとって不利になります。コンテンツの質も審査対象となる場合があります。<br /><br />重要な点として、切り抜きチャンネルは切り抜き元を、チャンネルURLや@形式のチャンネルリンク、動画へのリンクを用いて明記する必要があります。過剰なリンクの掲示 (例: にじさんじメンバーの全員にリンクする) はHolodexの編集者にとって負担となり、リンクが足りない場合には切り抜きが閲覧されづらくなります。<br /><br />Holodexは過剰なリンクを検出し自動的に修正するアルゴリズムを備えていますが、常に正しく動作するとは限りません。こうしたノイズを減らすため、過剰なリンクを行う切り抜きチャンネルについては登録を解消する場合があります。
   DeletionRequirementText: >-
     削除は、あなたがチャンネルの所有者である場合にのみリクエストしてください。そのことを確認できるよう、連絡先をお知らせください。
   PageTitle: Holodexチャンネルリクエスト

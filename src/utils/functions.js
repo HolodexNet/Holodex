@@ -241,14 +241,14 @@ export function videoTemporalComparator(a, b) {
  * @returns {Object}
  */
  export function getVideoIDFromUrl(url) {
-    if (VIDEO_URL_REGEX.test(url)) {
+    {
         const match = url.match(VIDEO_URL_REGEX);
-        if (match && match[5] && match[5].length === 11) {
+        if (match) {
             return {
-                id: match[5],
+                id: match.groups.id,
                 custom: true,
                 channel: {
-                    name: match[5],
+                    name: match.groups.id,
                 },
             };
         }
@@ -265,15 +265,15 @@ export function videoTemporalComparator(a, b) {
         }
     }
     */
-    if (TWITCH_VIDEO_URL_REGEX.test(url)) {
+    {
         const match = url.match(TWITCH_VIDEO_URL_REGEX);
-        if (match && match[1]) {
+        if (match) {
             return {
-                id: match[1],
+                id: match.groups.id,
                 type: "twitch",
                 custom: true,
                 channel: {
-                    name: match[1],
+                    name: match.groups.id,
                 },
             };
         }
@@ -376,19 +376,26 @@ export function checkIOS() {
     );
 }
 
-export function waitForElement(selector) {
-    return new Promise((resolve) => {
-        if (document.querySelector(selector)) {
-            resolve(document.querySelector(selector));
-            return;
+export function waitForElement(selector, parent = document.body, waitTime = 90e3) {
+    return new Promise((resolve, reject) => {
+        const elem = parent.querySelector(selector);
+        if (elem) {
+            resolve(elem);
         }
+        let timeout;
         const observer = new MutationObserver(() => {
-            if (document.querySelector(selector)) {
-                resolve(document.querySelector(selector));
+            const elem2 = parent.querySelector(selector);
+            if (elem2 && timeout) {
+                clearTimeout(timeout);
                 observer.disconnect();
+                resolve(elem2);
             }
         });
-        observer.observe(document.body, {
+        timeout = setTimeout(() => {
+            observer.disconnect();
+            reject(new Error(`${selector} timed out`));
+        }, waitTime);
+        observer.observe(parent, {
             childList: true,
             subtree: true,
         });

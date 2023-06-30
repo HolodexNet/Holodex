@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomenasorry!
@@ -17,6 +16,7 @@ component:
     subscriberCount: '{n} Feliratkozó'
     subscriberNA: Feliratkozók száma nem elérhető
     totalViews: Megtekintések
+    inactiveChannel: Ez a csatorna már nem aktív.
   channelSocials:
     addToFavorites: Hozzáadás kedvencekhez
     removeFromFavorites: Eltávolítás kedvencek közül
@@ -49,16 +49,16 @@ component:
     googleCalendar: Hozzáadás a Google naptárhoz
     totalTLs: Összes élő chat fordítás
     tlPresence: Aktív fordító az utolsó 30 percben
+    uncertainPlaceholder: A kezdés időpontja nincs hivatalosan megerősítve, eltérhet a valóságtól.
     typeScheduledYT: Beütemezett stream
     typeExternalStream: Külső Stream
     typeEventPlaceholder: Beütemezett esemény
     openClient: Fordító kliens megnyitása
     openScriptEditor: Script szerkesztő megnyitása
+    popoutChat: Felugró ablak YouTube chat
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -75,6 +75,8 @@ component:
       topic: téma
       org: org
       titledesc: cím/leírás
+      title: cím
+      description: leírás
       comments: hozzászólások
       videourl: videó URL-címe
   relatedVideo:
@@ -269,8 +271,9 @@ views:
     update_btn: Frissítés
     close_btn: Bezárás
     check_about_page: Látogasd meg az Információ oldalt, hogy lásd a változásokat
-    nowSupportsMultiOrg: Holodex már több szervezetet is támogat.
-    loginCallToAction: Jelentkezz be, hogy kedvenceket válassz!
+    nowSupportsMultiOrg: >-
+      Tipp: Itt tudod megváltoztatni az ügynökséget!
+    loginCallToAction: Jelentkezz be, hogy kedvenceket állíts.
   about:
     add_my_channel: Csatorna igénylés
   watch:
@@ -351,6 +354,10 @@ views:
       - Bejelentkezés Google fiókkal
       - Bejelentkezés Discorddal
       - Bejelentkezés Twitter fiókkal
+    twitterMsg:
+      - A Twitter API irányelvek változások miatt a bejelentkezés Twitterrel előreláthatólag nem fog működni február 9.-e után.
+      - Jelenleg csak Twitter bejelentkezést használsz. Erősen ajánljuk, hogy más bejelentkezési módot is állíts, hogy megelőzzük a fiókból való kizárást. (Más eszközökön vagy böngésző törlés után)
+      - Ha nem tudsz belépni Holodex fiókodba Twitter felhasználóval (valamint nincs más bejelentkezési módot beállítva) kérlek keress minket Twitteren privát üzenetben vagy Discordon segítségért.
     username: Felhasználónév
     usernameBtn:
       - Megváltoztatás
@@ -541,7 +548,7 @@ about:
     videoLinkage: Hogyan bizonyosodom meg róla, hogy a videók és klipek biztosan hozzá vannak kapcsolva a vtuberekhez?
     videoLinkageContent: >-
       Minden információt a leírásból szedünk. Ha klipelsz egy streamet, kérlek ne felejtsd el linkelni az eredeti streamet a leírásban. Ha egy rajongói tartalmat klipelsz, (pl. bilibili-ről), csak linkeld be az eredeti hivatalos youtube csatornát a hozzátartozó vtuberhez. Ha nem linkeled a vtuber csatornáját, akkor nem fog megjelenni a videód Holodexen, mivel minden kliphez szükséges egy link a vtuberhez aki ismert Holodexen is.
-    quitHolodex: "Fordító vagyok és szeretném a tartalmaim eltávolítani Holodexről.\\r\n"
+    quitHolodex: "Fordító vagyok és szeretném a tartalmaim eltávolítani Holodexről.\r\n"
     quitHolodexContent: >-
       Sajnáljuk, hogy elmész :(, kérlek jelezd ha van bármi probléma amivel segíthetnénk. Ha mindenképp szeretnéd eltávolíttatni, kérlek üzenj nekünk Discordon.
     favorite:

@@ -13,7 +13,7 @@
       <v-card-text class="d-flex flex-column align-center">
         <div class="d-flex flex-column" style="max-width: 400px; width: 100%">
           <google-sign-in-button
-            v-if="!userdata.user || !userdata.user.discord_id"
+            v-if="!userdata.user || !userdata.user.google_id"
             @onCredentialResponse="loginGoogle"
           />
           <v-btn
@@ -40,6 +40,14 @@
 
             <span class="mr-auto">{{ $t("views.login.with.2") }}</span>
           </v-btn>
+          <v-alert type="warning">
+            <p>
+              <b>{{ $t("views.login.twitterMsg.0") }}</b>
+              <span v-if="onlyTwitter">{{ $t("views.login.twitterMsg.1") }}
+              </span>
+            </p>
+            <p>{{ $t("views.login.twitterMsg.2") }}</p>
+          </v-alert>
         </div>
       </v-card-text>
       <v-divider />
@@ -170,6 +178,7 @@ export default {
             editingUsername: false,
             editUsernameInput: "",
             initialQueryForCalendar: false,
+            onlyTwitter: false,
         };
     },
     computed: {
@@ -218,6 +227,12 @@ export default {
             this.$store.dispatch("favorites/resetFavorites");
         }
         if (this.$route.hash) setTimeout(() => this.scrollFix(this.$route.hash), 1);
+
+        if (this.$store.state.userdata?.user?.twitter_id
+            && !this.$store.state.userdata?.user?.discord_id
+            && !this.$store.state.userdata?.user?.google_id) {
+            this.onlyTwitter = true;
+        }
     },
     methods: {
         scrollFix(hashbang) {

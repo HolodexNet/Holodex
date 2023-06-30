@@ -58,11 +58,11 @@ export const ORGS_PREFIX = Object.freeze({
     "All Vtubers": "Vtuber",
 });
 
-export const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?:channel|c)\/([\w\-\_]*)/i;
+export const CHANNEL_URL_REGEX = /(?:(?:https?:|)\/\/|)(?:www\.|)(?:youtube\.com\/|\/?)channel\/(?<id>[\w-]+)/i;
 
-export const VIDEO_URL_REGEX = /((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be|holodex.net))(\/(?:[\w\-]+\?v=|embed\/|v\/|watch\/)?)([\w\-]+)(\S+)?/i;
+export const VIDEO_URL_REGEX = /(?:(?:https?:|)\/\/|)((?:www|m)\.|)(?<domain>youtube\.com|youtu\.be|holodex\.net)\/(?:[\w-]+\?v=|embed|v|watch|live|)\/?(?<id>[\w-]{11})/i;
 
-export const TWITCH_VIDEO_URL_REGEX = /(?:https:\/\/)?twitch\.tv\/([\w\-_]*)/i;
+export const TWITCH_VIDEO_URL_REGEX = /(?:(?:https?:|)\/\/|)twitch\.tv\/(?<id>[\w-]+)/i;
 
 export const TWITCH_UNLIVE_VIDEO_URL_REGEX = /(?:https:\/\/)?twitch\.tv\/videos\/([\w\-_]*)/i;
 
@@ -106,6 +106,10 @@ export const TL_LANGS = Object.freeze([
     {
         text: "한국어",
         value: "ko",
+    },
+    {
+        text: "TLDex-LIVE (test system)",
+        value: "tl",
     },
 ]);
 

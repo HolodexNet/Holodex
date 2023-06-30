@@ -173,6 +173,7 @@ import hideExtensionOnScroll from "@/mixins/hideExtensionOnScroll";
 import EditPlaylist from "@/components/playlist/EditPlaylist.vue";
 import ResponsiveMenu from "@/components/common/ResponsiveMenu.vue";
 import { musicdexURL } from "@/utils/consts";
+import querystring from "querystring";
 import NavDrawer from "./NavDrawer.vue";
 import BottomNav from "./BottomNav.vue";
 
@@ -228,6 +229,8 @@ export default {
             },
         },
         pages() {
+            const org_qs = querystring.stringify({ org: this.$store.state.currentOrg.name });
+
             return [
                 {
                     name: this.$t("component.mainNav.home"),
@@ -241,7 +244,7 @@ export default {
                 },
                 {
                     name: this.$t("component.mainNav.channels"),
-                    path: `/channel?org=${this.$store.state.currentOrg.name}`,
+                    path: `/channel?${org_qs}`,
                     icon: this.icons.mdiAccountBoxMultiple,
                 },
                 {
@@ -305,7 +308,7 @@ export default {
                 },
             ];
         },
-        ...mapState(["firstVisit"]),
+        ...mapState(["firstVisit", "showOrgTip"]),
     },
     watch: {
         // toggle navdrawer when navigating between watch pages on desktop
@@ -319,8 +322,13 @@ export default {
         },
     },
     created() {
+        const vm = this;
+        if (this.$store.state.showOrgTip) {
+            setTimeout(() => {
+                vm.$store.commit("setOrgTip");
+            }, 20000);
+        }
         if (this.$store.state.firstVisit) {
-            const vm = this;
             setTimeout(() => {
                 vm.$store.commit("setVisited");
             }, 30000);

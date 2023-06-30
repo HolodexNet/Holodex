@@ -89,9 +89,9 @@
                 <ChannelImg :channel="channel" size="55" />
               </v-list-item-avatar>
               <ChannelInfo :channel="channel" :include-video-count="includeVideoCount" style="width: 80px">
-                <ChannelSocials v-if="isXs" :channel="channel" class="pa-0 justify-start" />
+                <ChannelSocials v-if="isXs" :channel="channel" class="pa-0 justify-start" show-delete/>
               </ChannelInfo>
-              <ChannelSocials v-if="!isXs" :channel="channel" />
+              <ChannelSocials v-if="!isXs" :channel="channel" show-delete/>
             </v-list-item>
           </v-lazy>
         </template>
@@ -114,11 +114,11 @@
           </v-list-item-avatar>
           <ChannelInfo :channel="channel" :include-video-count="includeVideoCount">
             <slot v-if="isXs" name="action" :channel="channel">
-              <ChannelSocials :channel="channel" class="pa-0 justify-start" :show-delete="showDelete" />
+              <ChannelSocials :channel="channel" class="pa-0 justify-start" show-delete />
             </slot>
           </ChannelInfo>
           <slot v-if="!isXs" name="action" :channel="channel">
-            <ChannelSocials :channel="channel" />
+            <ChannelSocials :channel="channel" show-delete/>
           </slot>
         </v-list-item>
       </v-lazy>

@@ -172,7 +172,7 @@ import WatchComments from "@/components/watch/WatchComments.vue";
 import VideoEditSongs from "@/components/edit/VideoEditSongs.vue";
 import VideoEditMentions from "@/components/edit/VideoEditMentions.vue";
 import CommentSongParser from "@/components/media/CommentSongParser.vue";
-import { decodeHTMLEntities } from "@/utils/functions";
+import { decodeHTMLEntities, syncState } from "@/utils/functions";
 // import { dayjs } from "@/utils/time";
 import api from "@/utils/backend-api";
 
@@ -221,6 +221,22 @@ export default {
         };
     },
     computed: {
+        ...syncState("watch", ["showTL", "showLiveChat"]),
+        chatStatus: {
+            get() {
+                return {
+                    showTlChat: this.showTL,
+                    showYtChat: this.showLiveChat,
+                };
+            },
+            set(val: any) {
+                this.showTL = val.showTlChat;
+                this.showLiveChat = val.showYtChat;
+            },
+        },
+        isLive() {
+            return this.video && ["live", "upcoming"].includes(this.video.status);
+        },
         videoId() {
             return this.$route.params.id || this.$route.query.v;
         },
@@ -296,6 +312,12 @@ export default {
                     this.hasError = true;
                     console.error(e);
                 });
+        },
+        handleVideoUpdate(update) {
+            if (!update?.status || !update?.start_actual) return;
+            this.video.live_viewers = update.live_viewers;
+            this.video.status = update.status;
+            this.video.start_actual = update.start_actual;
         },
         async populateTopics() {
             this.topics = (await api.topics()).data.map((topic) => ({

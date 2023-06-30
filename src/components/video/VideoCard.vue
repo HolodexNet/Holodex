@@ -80,6 +80,9 @@
         <div v-else class="d-flex flex-column align-end">
           <!-- (👻✅) -->
           <div class="video-duration">
+            <span v-if="hasDuration" class="duration-placeholder">{{
+              formattedDuration
+            }}</span>
             <span
               v-if="data.placeholderType === 'scheduled-yt-stream'"
               class="hover-placeholder"
@@ -96,7 +99,9 @@
               {{
                 twitchPlaceholder
                   ? mdiTwitch
-                  : placeholderIconMap[data.placeholderType]
+                  : twitterPlaceholder
+                    ? mdiTwitter
+                    : placeholderIconMap[data.placeholderType]
               }}
             </v-icon>
           </div>
@@ -150,6 +155,26 @@
             'font-size': `${1 - $store.state.currentGridSize / 16}rem`,
           }"
         >
+          <v-tooltip v-if="!isCertain" bottom>
+            <template #activator="{ on, attrs }">
+              <v-btn
+                icon
+                :ripple="false"
+                width="17"
+                class="plain-button"
+                x-small
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon size="18" color="amber">
+                  {{ icons.mdiClockAlertOutline }}
+                </v-icon>
+              </v-btn>
+            </template>
+            <span>
+              {{ $tc("component.videoCard.uncertainPlaceholder") }}
+            </span>
+          </v-tooltip>
           {{ title }}
         </div>
         <!-- Channel -->
@@ -195,7 +220,10 @@
               }}
             </span>
           </template>
-          <template v-else-if="data.status === 'live' && data.live_viewers > 0">
+          <span
+            v-else-if="data.status === 'live' && data.live_viewers > 0"
+            class="live-viewers"
+          >
             •
             {{
               $tc(
@@ -204,7 +232,7 @@
                 [formatCount(data.live_viewers, lang)]
               )
             }}
-          </template>
+          </span>
         </div>
       </div>
       <!-- Vertical dots menu -->
@@ -276,7 +304,7 @@ import {
     dayjs,
     localizedDayjs,
 } from "@/utils/time";
-import { mdiBroadcast, mdiTwitch } from "@mdi/js";
+import { mdiBroadcast, mdiTwitch, mdiTwitter } from "@mdi/js";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */
 
@@ -357,6 +385,7 @@ export default {
             updatecycle: null,
             hasWatched: false,
             mdiTwitch,
+            mdiTwitter,
             placeholderIconMap: {
                 event: (this as any).icons.mdiCalendar,
                 "scheduled-yt-stream": (this as any).icons.mdiYoutube,
@@ -372,6 +401,9 @@ export default {
         },
         isPlaceholder() {
             return this.data.type === "placeholder";
+        },
+        isCertain() {
+            return !this.isPlaceholder || this.data.certainty === "certain";
         },
         title() {
             if (this.isPlaceholder) {
@@ -409,6 +441,12 @@ export default {
                         this.$t.bind(this),
                     );
             }
+        },
+        hasDuration() {
+            return (
+                (this.data.duration > 0 && this.data.status === "live")
+                || this.data.start_actual
+            );
         },
         absoluteTimeString() {
             const ts = localizedDayjs(this.data.available_at, this.lang);
@@ -506,6 +544,9 @@ export default {
         },
         twitchPlaceholder() {
             return this.data.link?.includes("twitch.tv");
+        },
+        twitterPlaceholder() {
+            return this.data.link?.includes("/i/spaces/");
         },
     },
     // created() {
@@ -724,6 +765,22 @@ export default {
   top: 1px;
 }
 
+.video-card .duration-placeholder {
+  visibility: visible;
+  display: inline-block;
+  line-height: 13px;
+  position: relative;
+  top: 1px;
+}
+
+.video-card:hover .duration-placeholder {
+  visibility: hidden;
+  display: none;
+  line-height: 13px;
+  position: relative;
+  top: 1px;
+}
+
 .video-card .hover-opacity {
   opacity: 0.6;
 }
@@ -845,5 +902,11 @@ export default {
   display: inline-block;
   top: 5px;
   z-index: 1;
+}
+.plain-button:before {
+  display: none;
+}
+.plain-button:hover:before {
+  background-color: transparent;
 }
 </style>

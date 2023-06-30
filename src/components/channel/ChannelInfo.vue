@@ -2,18 +2,45 @@
   <v-list-item-content>
     <v-list-item-title style="align-self: flex-start">
       <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
+        <v-tooltip v-if="channel.inactive" top>
+          <template #activator="{ on }">
+            <v-btn
+              icon
+              x-small
+              width="18"
+              class="plain-button"
+              :ripple="false"
+              v-on="on"
+            >
+              <v-icon size="20">
+                {{ icons.mdiSchool }}
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>
+            {{ $t("component.channelInfo.inactiveChannel") }}
+          </span>
+        </v-tooltip>
         {{ channelName }}
       </router-link> <br>
+      <template v-if="channel.yt_handle">
+        <a :href="`https://youtube.com/${channel.yt_handle[0]}`" target="__blank" class="no-decoration text--org">
+          {{ channel.yt_handle[0] }} •
+        </a>
+      </template>
       <span v-show="channel.org">
-        <router-link :to="`/channel?org=${channel.org}`" class="no-decoration text--org">
+        <router-link :to="{ path: '/channel', param: { org: channel.org } }" class="no-decoration text--org">
           {{ channel.org + ((!noGroup && group) ? " / " + group : '') }}
         </router-link>
       </span>
     </v-list-item-title>
     <v-list-item-subtitle>
-      <template v-if="!noSubscriberCount">
+      <span
+        v-if="!noSubscriberCount"
+        class="subscriber-count"
+      >
         {{ subscriberCount }}
-      </template>
+      </span>
       <template v-if="includeVideoCount">
         •
         {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
@@ -148,5 +175,11 @@ export default {
 }
 .text--org:hover {
   opacity: 1.0;
+}
+.plain-button:before {
+  display: none
+}
+.plain-button:hover:before {
+  backgroundColor: transparent
 }
 </style>

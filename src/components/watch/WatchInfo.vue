@@ -23,7 +23,10 @@
     </v-card-title>
     <v-card-subtitle>
       {{ formattedTime }}
-      <template v-if="video.status === 'live' && liveViewers">
+      <span
+        v-if="video.status === 'live' && liveViewers"
+        class="live-viewers"
+      >
         • {{ $t("component.videoCard.watching", [liveViewers]) }}
         <span
           v-if="liveViewerChange"
@@ -31,7 +34,7 @@
         >
           ({{ (liveViewerChange > 0 ? "+ " : "") + liveViewerChange }})
         </span>
-      </template>
+      </span>
       <span
         v-if="video.topic_id"
         class="mx-1"
@@ -44,6 +47,12 @@
           <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
           {{ video.topic_id }}
         </router-link>
+      </span>
+      <span 
+        v-if="video.type === 'placeholder' && !(video.certainty === 'certain')"
+        style="font-size:95%"
+      > <br>
+        {{ $t("component.videoCard.uncertainPlaceholder") }}
       </span>
       <slot name="rightTitleAction">
         <v-btn

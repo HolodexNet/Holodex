@@ -35,6 +35,7 @@ function defaultState() {
     return {
         // other
         firstVisit: true,
+        showOrgTip: true,
         showUpdateDetails: false,
         firstVisitMugen: true,
         lastShownInstallPrompt: 0,
@@ -84,9 +85,9 @@ function defaultState() {
  *     Configure Synchronized Modules & Mutations across tabs
  *------------------------* */
 const syncedModules = /^(?:playlist|settings|history)/;
-const syncedMutations = new Set(["resetState", "setUser", "setShowUpdatesDetail", "firstVisit", "firstVisitMugen", "favorites/setFavorites", "favorites/resetFavorites", "favorites/setLive", "multiview/addPresetLayout", "multiview/removePresetLayout", "multiview/togglePresetAutoLayout", "multiview/setAutoLayout"]);
+const syncedMutations = new Set(["resetState", "setUser", "setShowUpdatesDetail", "showOrgTip", "firstVisit", "firstVisitMugen", "favorites/setFavorites", "favorites/resetFavorites", "favorites/setLive", "multiview/addPresetLayout", "multiview/removePresetLayout", "multiview/togglePresetAutoLayout", "multiview/setAutoLayout"]);
 
-const persistedPaths = ["orgs", "playlist", "settings", "history", "migration", "multiview", "channels.cardView", "channels.sort", "currentOrg", "favorites.favorites", "lastShownInstallPrompt", "firstVisit", "firstVisitMugen", "orgFavorites", "showUpdateDetails", "userdata", "watch.showLiveChat", "watch.showTL", "watch.theaterMode", "currentGridSize"];
+const persistedPaths = ["orgs", "playlist", "settings", "history", "migration", "multiview", "channels.cardView", "channels.sort", "currentOrg", "favorites.favorites", "lastShownInstallPrompt", "showOrgTip", "firstVisit", "firstVisitMugen", "orgFavorites", "showUpdateDetails", "userdata", "watch.showLiveChat", "watch.showTL", "watch.theaterMode", "currentGridSize"];
 export default new Vuex.Store({
     plugins: [
         createPersistedState({
@@ -143,6 +144,9 @@ export default new Vuex.Store({
         },
         setVisited(state) {
             state.firstVisit = false;
+        },
+        setOrgTip(state) {
+            state.showOrgTip = false;
         },
         setVisitedMugen(state) {
             state.firstVisitMugen = false;

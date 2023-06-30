@@ -4,6 +4,39 @@
 
 - Development of Vue3 Holodex (release 3.0 ?!?!) is underway... If you like to influence how it looks, now is the best time to let us know.
 
+### 2.32 Holodex [*Feb 19th, 2023*]
+
+- TY Livia Medeiros for the following:
+  - Add Hide Missing Streams to settings
+  - respecting Hide Placeholder on channel pages
+  - Reine theme
+  -  Add ❤ mark for favorited channels in TLdex 
+- TY Nelo for these changes:
+  - Always show block/unblock in Channel list. (It might look a bit squished up on smaller resolutions... until Holodex 3 comes out or someone fixes that.)
+- Fixed a huge bug where Google Login won't show up if you already have discord binded. Oops.
+
+### 2.31 Holodex [*Feb 6th, 2023*]
+
+- Twitter Login may be at risk and we added a notification for that. Sorry if you find it annoying. It goes away after you link another login method.
+- Some minor changes have been added, such as wrapping Live Viewer / Subscriber Count info into id'd spans so you can hide it with adblockers. (Thanks Livia)
+
+### 2.30 Holodex [*January 19th, 2023*]
+
+This release puts out several community contributed changes.
+
+- Add graduated/inactive indicator to channels on the Channels page #657 (Thanks Nelo)
+- Adds Uncertainty indicator for Uncertain fan-contributed schedule events #658 (Thanks Nelo)
+- Add Twitch link to socials to Channel Page (Thanks Nelo)
+- Archived TLDex time offset more configurable #646 (Thanks FlippFuzz)
+- Add a tip for showing you can change the org. #642 (Thanks Nelo)
+- Allow opening a youtube chat popout from the video dropdown menu.
+- Placeholders can have durations (for Twitch External Stream & events) (Thanks Nelo)
+
+
+Bugfixes:
+
+- issues with text truncation on some rare comments.
+
 ### 2.29 Holodex [*October 10th, 2022*]
 
 This release puts out several community contributed changes.

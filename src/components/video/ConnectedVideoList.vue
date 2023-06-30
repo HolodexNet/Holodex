@@ -328,6 +328,7 @@ export default {
                 forOrg: this.isFavPage ? "none" : null,
                 hideCollabs: this.shouldHideCollabs,
                 hidePlaceholder: this.$store.state.settings.hidePlaceholder,
+                hideMissing: this.$store.state.settings.hideMissing,
             };
         },
 

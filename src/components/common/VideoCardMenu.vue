@@ -115,6 +115,18 @@
       {{ $t("component.videoCard.uploadScript") }}
     </v-list-item>
     <v-list-item
+      v-if="isLive"
+      @click="
+        openChatPopout();
+        closeMenu();
+      "
+    >
+      <v-icon left>
+        {{ icons.mdiOpenInNew }}
+      </v-icon>
+      {{ $t("component.videoCard.popoutChat") }}
+    </v-list-item>
+    <v-list-item
       @click="
         $store.commit('setReportVideo', video);
         closeMenu();
@@ -234,6 +246,10 @@ export default {
             } else {
                 this.$router.push({ path: "/login" });
             }
+        },
+        openChatPopout() {
+            const link = `https://youtube.com/live_chat?is_popout=1&v=${this.video.id}`;
+            window.open(link, "_blank", `width=400,height=${window.innerHeight * 0.6}`);
         },
         scriptUploadPanel() {
             if (this.$store.state.userdata?.user) {

@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Maafkeun
@@ -17,6 +16,7 @@ component:
     subscriberCount: '{n} Subscriber'
     subscriberNA: Jumlah Subscriber tidak tersedia
     totalViews: Jumlah Ditonton
+    inactiveChannel: Channel ini sudah tidak aktif.
   channelSocials:
     addToFavorites: Tambahkan ke Favorit
     removeFromFavorites: Hapus dari Favorit
@@ -49,16 +49,16 @@ component:
     googleCalendar: Tambahkan ke Kalender Google
     totalTLs: Jumlah Terjemahan Obrolan
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
+    uncertainPlaceholder: Waktu mulai tidak terkonfirmasi secara resmi, waktu mulai sebenarnya bisa saja berbeda.
     typeScheduledYT: Stream Terjadwal
     typeExternalStream: Stream Eksternal
     typeEventPlaceholder: Acara Terjadwal
     openClient: Buka Klien TL
     openScriptEditor: Buka Editor Naskah
+    popoutChat: Pindahkan YouTube Chat
     uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -75,6 +75,8 @@ component:
       topic: topik
       org: org
       titledesc: judul/desk
+      title: judul
+      description: deskripsi
       comments: Komen
       videourl: url video
   relatedVideo:
@@ -269,8 +271,9 @@ views:
     update_btn: Perbarui
     close_btn: Tutup
     check_about_page: Kunjungi halaman Tentang untuk melihat pembaharuan
-    nowSupportsMultiOrg: Holodex kini mendukung berbagai organisasi
-    loginCallToAction: Masuk untuk mengumpulkan favorit kamu!
+    nowSupportsMultiOrg: >-
+      Tip: Kamu dapat mengubah organisasi disini!
+    loginCallToAction: Masuk untuk mengatur favoritmu.
   about:
     add_my_channel: Mengajukan Channel
   watch:
@@ -351,6 +354,10 @@ views:
       - Masuk dengan Google
       - Masuk dengan Discord
       - Masuk dengan Twitter
+    twitterMsg:
+      - Karena perubahan kebijakan API Twitter, Masuk dengan Twitter kemungkinan tidak lagi berfungsi setelah 9 Februari.
+      - Kamu hanya memakai Twitter sebagai sarana masuk. Kami sarankan untuk mengkaitkan metode masuk lain sekarang untuk mencegah penguncian. (pada perangkat lain atau setelah penghapusan browser).
+      - Jika kamu gagal masuk ke dalam Holodex via akun Twitter (dan tidak mengkaitkan akun dengan metode masuk lainnya), mohon hubungi kami untuk mendapatkan bantuan melalui DM Twitter atau Discord.
     username: Nama Pengguna
     usernameBtn:
       - Ubah

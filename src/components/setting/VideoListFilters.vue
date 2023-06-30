@@ -34,6 +34,14 @@
       :messages="$t('views.settings.hideVideoThumbnailsMsg')"
       hide-details
     />
+    <v-switch
+      v-model="hideMissing"
+      class="v-input--reverse v-input--expand"
+      inset
+      :label="$t('views.settings.hideMissingStreams')"
+      :messages="$t('views.settings.hideVideoThumbnailsMsg')"
+      hide-details
+    />
     <!-- <v-switch
       v-model="hideThumbnail"
       class="v-input--reverse v-input--expand"
@@ -86,6 +94,7 @@ export default {
             "ignoredTopics",
             // "hideThumbnail",
             "hidePlaceholder",
+            "hideMissing",
         ]),
         ignoredTopics: {
             get() {
