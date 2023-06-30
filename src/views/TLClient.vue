@@ -932,7 +932,6 @@ export default {
 
             const bodydt = {
                 name: this.userdata.user.username,
-                timestamp: Date.now(),
                 message:
                     this.profile[this.profileIdx].Prefix
                     + this.inputString
