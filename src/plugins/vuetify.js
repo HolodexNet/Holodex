@@ -127,7 +127,6 @@ export const asyncLang = {
         return import("@/locales/th-TH/ui.yml");
     },
 };
-
 export const i18n = new VueI18n({
     locale: "en", // Set locale
     fallbackLocale: "en",

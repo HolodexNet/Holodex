@@ -9,7 +9,7 @@ export const API_BASE_URL = `${window.location.origin}/api`;
 export const SITE_BASE_URL = `${window.location.origin}`;
 
 export const axiosInstance = (() => {
-  const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
+  const instance = axios.create({ baseURL: `${API_BASE_URL}/v2`, timeout: 30000 });
   return instance;
 })();
 
@@ -35,7 +35,7 @@ export default {
   },
   live(query) {
     const q = querystring.stringify(query);
-    return axiosInstance.get(`/live?${q}`).then((res) => res.data
+    return axiosInstance.get(`/live?${q}`, { timeout: 10000 }).then((res) => res.data
         // .concat(res.data.upcoming)
         // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
         .filter(
@@ -159,6 +159,7 @@ export default {
     return axiosInstance
       .get(`/users/live?includePlaceholder=${includePlaceholder}`, {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        timeout: 20000,
       })
       .then((res) => res.data
           // .concat(res.data.upcoming)

@@ -10,6 +10,7 @@ const lang = getLang(userLanguage);
 const initialState = {
     // Language
     lang: getUILang(userLanguage), // UI lang
+    foolsLang: "",
     clipLangs: [lang],
 
     // Site

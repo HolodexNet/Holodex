@@ -385,19 +385,19 @@ export function waitForElement(selector, parent = document.body, waitTime = 90e3
         let timeout;
         const observer = new MutationObserver(() => {
             const elem2 = parent.querySelector(selector);
-            if (elem2 && timeout) {
+            if (elem2) {
                 clearTimeout(timeout);
                 observer.disconnect();
                 resolve(elem2);
             }
         });
-        timeout = setTimeout(() => {
-            observer.disconnect();
-            reject(new Error(`${selector} timed out`));
-        }, waitTime);
         observer.observe(parent, {
             childList: true,
             subtree: true,
         });
+        timeout = setTimeout(() => {
+            observer.disconnect();
+            return reject(new Error(`${selector} timed out`));
+        }, waitTime);
     });
 }

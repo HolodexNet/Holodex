@@ -90,7 +90,7 @@ export default {
                 if (video.id.length === 11 && video.channel.name) {
                     let v = video;
                     if (video.type === "placeholder") {
-                        const twitchChannel = video.link.match(TWITCH_VIDEO_URL_REGEX)?.[1];
+                        const twitchChannel = video.link.match(TWITCH_VIDEO_URL_REGEX)?.groups.id;
                         if (!twitchChannel) return;
                         v = {
                             ...video,
