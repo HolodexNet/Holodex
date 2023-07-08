@@ -134,10 +134,10 @@ export default {
         //     return Object.values(this.related).map(r => r.length).reduce((a, b) => a+b);
         // }
         related() {
-            const clips = (this.video.clips
-                && this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)))
-                || [];
-            clips.sort(videoTemporalComparator).reverse();
+            const clips = this.video.clips
+                ?.filter?.((x) => x.status !== "missing" && this.$store.state.settings.clipLangs.includes(x.lang))
+                .sort(videoTemporalComparator)
+                .reverse() || [];
             return {
                 simulcasts: this.video.simulcasts || [],
                 clips,
