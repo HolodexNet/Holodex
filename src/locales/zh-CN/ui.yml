@@ -59,6 +59,8 @@ component:
     uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
+  video:
+    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -125,14 +127,15 @@ component:
       该频道可能正在与{org}或收藏夹中的成员联动。您可以通过设置禁用此功能
     comments: Holodex应该采取什么行动？
     success: 举报已提交，谢谢！
+    consider: 考虑使用过滤器并且丢弃此报告
     reasons:
       - 视频的标签不正确
       - 视频品质过低/含有误导性内容
       - 违反所属团体的二次创作管理条例或不当内容
       - 其他
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - 视频主题不正确
+      - 频道提及不正确
+      - 这个 {0} 不属于 {1}
   thirdpartycookie:
     explanation: >-
       由于各家浏览器采用不同的运作方式，个别对<b>第三方Cookie</b>有严格限制的浏览器，或者是那些阻止<kbd>YouTube.com</kbd>Cookie的浏览器，都有可能会导致无法登录/无法使用Youtube聊天功能。<br /><br />你可以尝试将<kbd>YouTube.com</kbd>加入第三方Cookie拦截器的白名单，亦或者是降低<kbd>Holodex.net</kbd>的Cookie安全/隐私限制来解决这个问题。<br /><br />以下是一部分网站的教程。
