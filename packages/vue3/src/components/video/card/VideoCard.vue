@@ -68,7 +68,7 @@ import { useDisplay } from "@/hooks/common/useDisplay";
 import { getUpToDateMentions, useVideoSelection } from "@/stores/selection";
 import { useSettingsStore } from "@/stores/settings";
 import { PropType } from "vue";
-import { klona } from "klona";
+// import { klona } from "klona";
 
 export default defineComponent({
   name: "VideoCard",
@@ -116,9 +116,9 @@ export default defineComponent({
     });
 
     const mentions = getUpToDateMentions(props.video.id);
-    watch(mentions, () => {
-      if (mentions.value) console.log(klona(mentions.value));
-    });
+    // watch(mentions, () => {
+    //   if (mentions.value) console.log(klona(mentions.value));
+    // });
     const isMobile = display.mobile;
     return {
       settings,
