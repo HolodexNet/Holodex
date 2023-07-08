@@ -130,6 +130,9 @@ component:
       - Kualitas Rendah / Konten Menyesatkan
       - Melanggar Pedoman Kebijakan Karya yang ditetapkan organisasi atau tidak pantas
       - Lainnya
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     explanation: >-
       Karena cara kerja browser internetmu, beberapa browser dengan kebijakan ketat <b>Cookie Pihak Ketiga</b> atau pemblokiran cookies dari <kbd>YouTube.com</kbd> akan membuat sulit untuk masuk / menggunakan chat Youtube. <br /><br /> Kamu bisa memperbaiki hal ini dengan cara whitelist <kbd>Youtube.com</kbd> dalam pemblokiran Cookie Pihak Ketiga, atau menurunkan tingkatan keamanan / privasi cookie untuk situs <kbd>Holodex.net</kbd>. <br /><br /> Kami akan mencantumkan beberapa situs yang akan memberikan informasi lebih lanjut mengenai hal ini.

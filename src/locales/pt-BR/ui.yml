@@ -115,6 +115,9 @@ component:
       - Conteúdo Perigososamente de Baixa Qualidade ou Enganoso
       - Inapropriado ou Viola as diretrizes de trabalho derivado
       - Outros
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     explanation: >-
       Pode ser difícil acessar / usar o chat do Youtube devido às políticas de <b>Cookie de Terceiros</b> rígidas ou aos cookies do <kbd>Youtube.com</kbd> bloqueados. <br /><br /> Impedir <kbd>Youtube.com</kbd> de bloquear Cookies de Terceiros, ou reduzir o nível de segurança / privacidade de cookies para <kbd>Holodex.net</kbd> pode corrigir isso. <br /><br /> Incluímos alguns sites que explicam como fazer isso.
