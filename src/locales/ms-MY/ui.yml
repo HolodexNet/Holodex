@@ -59,8 +59,6 @@ component:
     uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -132,6 +130,9 @@ component:
       - Kandungan video tidak bermutu atau mengelirukan
       - Melanggar garis panduan pertubuhan terbabit atau memaparkan kandungan yang tidak bersesuaian
       - Lain-lain
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     explanation: >-
       Sesetengah penyemak imbas dengan dasar <b>cecikut pihak ketiga</b> yang ketat ataupun yang menyekat cecikut <kbd>YouTube.com</kbd> berkebarangkalian menghadapi kesukaran mengelog masuk mahupun menggunakan sembang langsung Youtube. <br /><br /> Masalah ini boleh diselesaikan dengan memasukkan <kbd>Youtube.com</kbd> ke dalam senarai putih penyekat cecikut pihak ketiga ataupun menggunakan tahap tetapan keselamatan cecikut yang rendah bagi <kbd>Holodex.net</kbd>. <br /><br /> Berikut disertakan sekali beberapa tapak sesawang yang boleh memberikan maklumat lanjut berkenaan langkah-langkah yang harus dilakukan.

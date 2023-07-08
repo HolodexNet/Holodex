@@ -123,6 +123,9 @@ component:
       - Chất lượng video quá kém/Nội dung dễ gây hiểu lầm
       - Vi phạm các nguyên tắc thực hiện tác phẩm phái sinh (Derivative Work Guidelines) của tổ chức hoặc nội dung không phù hợp
       - Khác
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     explanation: >-
       Dựa trên cách trình duyệt hoạt động, một số trình duyệt với khả năng giới hạn/chặn <b>cookies của bên thứ ba</b>, hoặc chặn cookies của <kbd>YouTube</kbd> sẽ gặp một chút khó khăn khi đăng nhập / sử dụng YouTube Chat. <br /><br /> Vấn đề này có thể được giải quyết bằng cách cho phép cookies của <kbd>YouTube</kbd> hoạt động trong trình duyệt, hoặc giảm giới hạn cookies / quyền riêng tư cho <kbd>Holodex.net</kbd>. <br /><br /> Chúng tôi có một số trang web giúp bạn có thêm thông tin và hướng dẫn chi tiết cho vấn đề này.

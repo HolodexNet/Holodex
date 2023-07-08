@@ -59,8 +59,6 @@ component:
     uploadScript: TL-Skript hochladen
   videoDescription:
     description: Beschreibung
-  video:
-    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -132,6 +130,9 @@ component:
       - Gefährlich niedrige Qualität/irreführende Inhalte
       - Verstößt gegen das Urheberrecht der Organisation oder ist unangemessen
       - Sonstiges
+      - Incorrect video topic
+      - Incorrect channel mentions
+      - This {0} does not belong to {1}
   thirdpartycookie:
     explanation: >-
       Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>youtube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Anmelden in / Verwenden des Youtube-Chats auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.

@@ -127,11 +127,15 @@ component:
       此頻道可能正與 {org} 成員或是您所收藏的VTuber連動。您可於設定頁面關閉此顯示功能。
     comments: 請於此處簡略描述您檢舉該影片的原因
     success: 檢舉已送出，謝謝您
+    consider: 推薦您啟用篩選器中的「隱藏連動實況」來解決此問題
     reasons:
       - 影片標籤錯誤
       - 影片品質過於低劣 / 含有誤導性內容
       - 違反了VTuber公司的二創條款或是不當內容
       - 其他原因
+      - 影片標籤錯誤
+      - 提及頻道錯誤
+      - 本{0}並非{1}的相關影片
   thirdpartycookie:
     explanation: >-
       因各家瀏覽器的運作原理不同，部分對於<b>第三方Cookie<b>擁有較多限制的瀏覽器，或是瀏覽器將 <kbd>YouTube.com<kbd> 的 Cookie 封鎖的情況下，可能會導致無法使用 / 無法登入YouTube聊天室。<br /><br /> 您可以透過將 <kbd>YouTube.com<kbd> 的第三方Cookie設置為白名單，或是降低您瀏覽器對 <kbd>Holodex.net</kbd> 的安全/隱私限制來解決此問題。<br /><br /> 以下列出幾個網站來讓您更加理解該如何執行此操作：
