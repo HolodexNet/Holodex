@@ -1,3 +1,5 @@
+import enTL from "@/locales/en/ui.yml";
+
 export const langs = [
   { val: "en", display: "English", credit: "@Holodex" },
   { val: "en-CA", display: "English (Canadian)", credit: "@Holodex" },
@@ -62,15 +64,15 @@ export const STATIC_HOLODEX_LOCALE_MAP: Record<SupportedLangCodes, string> = {
 export const asyncLang: Record<SupportedLangCodes, () => Promise<any>> = {
   async en() {
     await import("dayjs/locale/en");
-    return import("@/locales/en/ui.yml");
+    return enTL;
   },
   "en-GB": async () => {
     await import("dayjs/locale/en-gb");
-    return import("@/locales/en/ui.yml");
+    return enTL;
   },
   "en-CA": async () => {
     await import("dayjs/locale/en-ca");
-    return import("@/locales/en/ui.yml");
+    return enTL;
   },
   async ja() {
     await import("dayjs/locale/ja");

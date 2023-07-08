@@ -6,23 +6,23 @@
         onClick: toggle,
         ariaExpanded: isOpen,
         ariaHasPopup: true,
-        ref: (el: any) => activator = el,
+        ref: (el: any) => (activator = el),
       },
     }"
   />
   <Teleport to="#h-floating-container">
     <Transition
-      enter-active-class="transition duration-100 ease-out"
+      enter-active-class="transition-opacity transition-transform duration-100 ease-out"
       enter-from-class="transform scale-95 opacity-0"
       enter-to-class="transform scale-100 opacity-100"
-      leave-active-class="transition duration-75 ease-in"
+      leave-active-class="transition-opacity transition-transform duration-75 ease-in"
       leave-from-class="transform scale-100 opacity-100"
       leave-to-class="transform scale-95 opacity-0"
     >
       <div
-        v-show="isOpen"
+        v-if="isOpen"
         ref="floating"
-        :style="floatingStyle"
+        :style="[floatingStyles, { zIndex: zIndex }]"
         role="menu"
         @click="closeOnContentClick && (isOpen = false)"
       >
@@ -45,12 +45,12 @@ import {
 import {
   autoUpdate,
   useFloating,
-  shift,
-  autoPlacement,
-  hide,
-  offset,
+  shift as fShift,
+  autoPlacement as fAutoPlacement,
+  hide as fHide,
+  offset as fOffset,
   Middleware,
-  flip,
+  flip as fFlip,
   Placement,
   DetectOverflowOptions,
   Strategy,
@@ -140,22 +140,24 @@ function toggle() {
   isOpen.value = !isOpen.value;
 }
 
-const middleware = ref<Middleware[]>([]);
+const middlewareState = ref<Middleware[]>([]);
 
-const { x, y, strategy, middlewareData, update, isPositioned } = useFloating(
-  activator,
-  floating,
-  {
-    whileElementsMounted(...args) {
-      const cleanup = autoUpdate(...args, { animationFrame: true });
-      // Important! Always return the cleanup function.
-      return cleanup;
-    },
-    middleware: middleware,
-    placement: props.placement !== "auto" ? props.placement : "bottom-start",
-    strategy: props.strategy,
-  }
-);
+// Go Read Docs: https://floating-ui.com/docs/vue
+const {
+  /* x, y, strategy, middlewareData, update, isPositioned, */ floatingStyles,
+} = useFloating(activator, floating, {
+  whileElementsMounted(...args) {
+    const cleanup = autoUpdate(...args, {
+      animationFrame: true,
+    });
+    // Important! Always return the cleanup function.
+    return cleanup;
+  },
+  middleware: middlewareState,
+  placement: props.placement !== "auto" ? props.placement : "bottom-start",
+  strategy: props.strategy,
+  transform: false,
+});
 
 // Handles outside click closing them menu
 onClickOutside(
@@ -165,39 +167,8 @@ onClickOutside(
   },
   {
     ignore: [activator],
-  }
+  },
 );
-
-/**
- * TODO
- * BREAKING: Floating UI / VUE 1.0.0 has a floatingStyle generated from `useFloating`. Use that maybe?
- * see https://github.com/floating-ui/floating-ui/releases/tag/%40floating-ui%2Fvue%401.0.0
- */
-// Style object for floating piece
-const floatingStyle: any = computed(() => ({
-  ...(props.transform
-    ? {
-        position: strategy.value,
-        zIndex: props.zIndex,
-        top: "0",
-        left: "0",
-        right: "auto",
-        bottom: "auto",
-        transform: `translate(${Math.round(x.value || 0)}px,${Math.round(
-          y.value || 0
-        )}px)`,
-      }
-    : {
-        position: strategy.value,
-        zIndex: props.zIndex,
-        top: `${y.value || 0}px`,
-        left: `${x.value || 0}px`,
-      }),
-  // width:
-  //   props.adaptiveWidth && typeof referenceElWidth.value === "number"
-  //     ? `${referenceElWidth.value}px`
-  //     : "",
-}));
 
 // Modifies middleware list for useFloating based on props
 watch(
@@ -219,7 +190,7 @@ watch(
       typeof props.offset === "object" ||
       typeof props.offset === "function"
     ) {
-      _middleware.push(offset(props.offset));
+      _middleware.push(fOffset(props.offset));
     }
     if (
       props.flip === true ||
@@ -227,10 +198,10 @@ watch(
       typeof props.flip === "object"
     ) {
       _middleware.push(
-        flip({
+        fFlip({
           padding: typeof props.flip === "number" ? props.flip : undefined,
           ...(typeof props.flip === "object" ? props.flip : {}),
-        })
+        }),
       );
     }
     if (
@@ -239,10 +210,10 @@ watch(
       typeof props.shift === "object"
     ) {
       _middleware.push(
-        shift({
+        fShift({
           padding: typeof props.shift === "number" ? props.shift : undefined,
           ...(typeof props.shift === "object" ? props.shift : {}),
-        })
+        }),
       );
     }
     if (
@@ -251,11 +222,11 @@ watch(
       props.placement === "auto"
     ) {
       _middleware.push(
-        autoPlacement(
+        fAutoPlacement(
           typeof props.autoPlacement === "object"
             ? props.autoPlacement
-            : undefined
-        )
+            : undefined,
+        ),
       );
     }
     _middleware.push(
@@ -264,11 +235,11 @@ watch(
             referenceEl: activator,
             floatingEl: floating,
           })
-        : props.middleware)
+        : props.middleware),
     );
     if (props.hide === true || typeof props.hide === "object") {
       _middleware.push(
-        hide(typeof props.hide === "object" ? props.hide : undefined)
+        fHide(typeof props.hide === "object" ? props.hide : undefined),
       );
     }
     if (props.useRefWidth) {
@@ -281,11 +252,11 @@ watch(
               });
             }
           },
-        })
+        }),
       );
     }
-    middleware.value = _middleware;
+    middlewareState.value = _middleware;
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>

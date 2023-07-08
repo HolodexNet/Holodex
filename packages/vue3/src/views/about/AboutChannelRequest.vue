@@ -1,13 +1,4 @@
 <template>
-  <!-- <div class="text-xl">
-      {{ $t("channelRequest.PageTitle") }}
-    </div> -->
-  <!-- flex: 1 1 auto;
-font-size: 0.875rem;
-font-weight: 400;
-letter-spacing: 0.0178571429em;
-padding: 1rem;
-text-transform: none; -->
   <div class="p-2">
     <div class="text-lg font-bold" />
 

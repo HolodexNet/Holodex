@@ -30,7 +30,7 @@ export default {
   },
   channelStub(id: string) {
     return fetch(
-      `${SITE_BASE_URL}/statics/channel/${id}.json`
+      `${SITE_BASE_URL}/statics/channel/${id}.json`,
     ).then<ShortChannel>((r) => r.json());
   },
   stats() {
@@ -68,8 +68,8 @@ export default {
             !(
               !live.start_actual &&
               dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))
-            )
-        )
+            ),
+        ),
     );
   },
   channel(id: any) {
@@ -118,7 +118,7 @@ export default {
   searchV3Autocomplete(
     partial: string,
     t?: "vtuber" | "topic" | "any_channel",
-    n?: number
+    n?: number,
   ) {
     if (partial.length == 0) return { data: { vtuber: [], topic: [] } };
     const q = stringifyQuery({
@@ -131,7 +131,7 @@ export default {
   searchV3(queryObject: VideoQueryContainer) {
     return axiosInstance_v3.post<SearchResponse>(
       "/search/videoSearch",
-      queryObject
+      queryObject,
     );
   },
   searchVideo(queryObject: any) {
@@ -155,7 +155,7 @@ export default {
       { token: authToken, service },
       {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-      }
+      },
     );
   },
   loginIsValid(jwt: any): Promise<false | AxiosResponse<any>> {
@@ -202,7 +202,7 @@ export default {
               !(
                 !live.start_actual &&
                 dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))
-              )
+              ),
           )
           // get currently live and upcoming lives within the next 3 weeks
           .filter(
@@ -214,13 +214,13 @@ export default {
                 | dayjs.Dayjs
                 | null
                 | undefined;
-            }) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))
-          )
+            }) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w")),
+          ),
       );
   },
   patchFavorites(
     jwt: any,
-    operations: { op: "add" | "remove"; channel_id: string }[]
+    operations: { op: "add" | "remove"; channel_id: string }[],
   ) {
     return axiosInstance_v2.patch("/users/favorites", operations, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
@@ -239,7 +239,7 @@ export default {
       { videoId, topicId },
       {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-      }
+      },
     );
   },
   rotation() {
@@ -289,7 +289,7 @@ export default {
       },
       {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-      }
+      },
     );
   },
   v3BulkEditMentions(opts: BulkMentionsRequest, jwt: string) {
@@ -298,7 +298,10 @@ export default {
     });
   },
   v3BulkGetMentions(opts: { ids: string[] }) {
-    return axiosInstance_v3.post<null>("mentions/get", opts);
+    return axiosInstance_v3.post<Record<string, ShortChannel[]>>(
+      "mentions/get",
+      opts,
+    );
   },
   /**
    * Fetches song lists up to LIMIT count with offset. Always ordered by available_at date.
@@ -366,7 +369,7 @@ export default {
   },
   discordServerInfo(inviteLink: any) {
     return axiosInstance_v2.get(
-      `https://discord.com/api/v8/invites/${inviteLink}`
+      `https://discord.com/api/v8/invites/${inviteLink}`,
     );
   },
   addPlaceholderStream(body: any, jwt: any, token: any) {
@@ -375,7 +378,7 @@ export default {
       body,
       {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-      }
+      },
     );
   },
   deletePlaceholderStream(videoId: any, jwt: any) {
@@ -396,7 +399,7 @@ export default {
       null,
       {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-      }
+      },
     );
   },
   deleteVideoFromPlaylist(videoId: any, playlistId: any, jwt: any) {
@@ -451,7 +454,7 @@ export default {
     jwt: any,
     body: any,
     langCode: any,
-    override = false
+    override = false,
   ) {
     const head: any = {};
     if (jwt) {
@@ -465,7 +468,7 @@ export default {
       body,
       {
         headers: head,
-      }
+      },
     );
   },
   fetchMChadData(room: any, pass: any) {
@@ -489,7 +492,7 @@ export default {
       },
       {
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-      }
+      },
     );
   },
   requestChannel(obj: any) {

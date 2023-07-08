@@ -50,14 +50,14 @@
         <slot :video="video" />
       </template>
     </video-card-text>
-    <div v-if="selection.selectionMode && video.mentions && !horizontal">
-      <template v-for="mention in video.mentions" :key="mention.id + '_vc_men'">
+    <div v-if="selection.selectionMode && mentions && !horizontal">
+      <template v-for="mention in mentions" :key="mention.id + '_vc_men'">
         <channel-tag class="mx-0.5" no-link tile :channel="mention" />
       </template>
     </div>
   </a>
-  <div v-if="selection.selectionMode && video.mentions && horizontal">
-    <template v-for="mention in video.mentions" :key="mention.id + '_vc_men'">
+  <div v-if="selection.selectionMode && mentions && horizontal">
+    <template v-for="mention in mentions" :key="mention.id + '_vc_men'">
       <channel-tag class="mx-0.5" no-link tile :channel="mention" />
     </template>
   </div>
@@ -65,9 +65,10 @@
 
 <script lang="ts">
 import { useDisplay } from "@/hooks/common/useDisplay";
-import { useVideoSelection } from "@/stores/selection";
+import { getUpToDateMentions, useVideoSelection } from "@/stores/selection";
 import { useSettingsStore } from "@/stores/settings";
 import { PropType } from "vue";
+import { klona } from "klona";
 
 export default defineComponent({
   name: "VideoCard",
@@ -106,7 +107,7 @@ export default defineComponent({
           selection.selectedVideos.push(props.video);
         } else {
           const idx = selection.selectedVideos.findIndex(
-            ({ id }) => id === props.video.id
+            ({ id }) => id === props.video.id,
           );
           if (idx < 0) return;
           selection.selectedVideos.splice(idx, 1);
@@ -114,12 +115,17 @@ export default defineComponent({
       },
     });
 
+    const mentions = getUpToDateMentions(props.video.id);
+    watch(mentions, () => {
+      if (mentions.value) console.log(klona(mentions.value));
+    });
     const isMobile = display.mobile;
     return {
       settings,
       isMobile,
       selection,
       selected,
+      mentions,
     };
   },
   data() {
