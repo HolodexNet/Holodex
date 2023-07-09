@@ -1,7 +1,10 @@
 /**------------------------------------------------------------------------------------------------
  * *                                    Icons container
  *
- *   Importing the most commonly used mdi/js icons.
+ *   key unocss icons listed out in a single location
+ * if you want to find other icons in the codebase, search for `i-\w*:(?:\w|-)+(?=\s|")`
+ * this file is being exported into global namespace, and each key in here is being whitelisted directly
+ * into tailwind configs. Simply use it by invoking `icons` in any Template location.
  *------------------------------------------------------------------------------------------------* */
 // branding
 export const youtube = "i-carbon:logo-youtube";
