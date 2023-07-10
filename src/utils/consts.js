@@ -108,6 +108,10 @@ export const TL_LANGS = Object.freeze([
         value: "ko",
     },
     {
+        text: "Tiếng Việt",
+        value: "vi",
+    },
+    {
         text: "TLDex-LIVE (test system)",
         value: "tl",
     },
