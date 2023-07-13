@@ -15,7 +15,7 @@
       }} -->
       <!-- <v-list> -->
       <template
-        v-for="page in (pages.filter((e) => !e.extra) as any[])"
+        v-for="page in pages.filter((e) => !e.extra) as any[]"
         :key="page.name"
       >
         <li>
@@ -123,7 +123,7 @@ export default defineComponent({
   name: "NavDrawer",
   components: {
     SidebarFavoritesAsync: defineAsyncComponent(
-      () => import("@/components/frame/SidebarFavorites.vue")
+      () => import("@/components/frame/SidebarFavorites.vue"),
     ),
   },
   props: {
@@ -152,7 +152,7 @@ export default defineComponent({
       () => props.temporary,
       () => {
         if (props.temporary) ctx.emit("update:modelValue", false);
-      }
+      },
     );
 
     return { lang, display, isMobile, site };

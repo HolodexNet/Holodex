@@ -1,6 +1,9 @@
 /* eslint-disable no-prototype-builtins */
 
-import Color from "color";
+// import Color from "color";
+import { colord, extend, Colord, HslaColor } from "colord";
+import mixPlugin from "colord/plugins/mix";
+extend([mixPlugin]);
 import { DaisyColorConfig, DaisyColorShorthand } from "./daisy-types";
 
 const colorNames: Record<string, string> = {
@@ -37,30 +40,45 @@ const colorNames: Record<string, string> = {
   error: "--er",
   "error-content": "--erc",
 };
+
 function approx(n: number, precision = 5): string {
   return n.toPrecision(precision).replace(/\.?0+$/, "");
 }
-export function generateForegroundColorFrom(input: string, percentage = 0.8) {
-  if (Color(input).isDark()) {
-    const arr = Color(input)
-      .mix(Color("white"), percentage)
-      .saturate(10)
-      .hsl()
-      .array();
-    return (
-      approx(arr[0]) + " " + approx(arr[1]) + "%" + " " + approx(arr[2]) + "%"
-    );
-  } else {
-    const arr = Color(input)
-      .mix(Color("black"), percentage)
-      .saturate(10)
-      .hsl()
-      .array();
-    return (
-      approx(arr[0]) + " " + approx(arr[1]) + "%" + " " + approx(arr[2]) + "%"
-    );
-  }
+function formatHSL(hsl: HslaColor): string {
+  return `${approx(hsl.h)} ${approx(hsl.s)}% ${approx(hsl.l)}%`;
 }
+
+// export function generateForegroundColorFrom(input: string, percentage = 0.8) {
+//   if (Color(input).isDark()) {
+//     const arr = Color(input)
+//       .mix(Color("white"), percentage)
+//       .saturate(10)
+//       .hsl()
+//       .array();
+//     return (
+//       approx(arr[0]) + " " + approx(arr[1]) + "%" + " " + approx(arr[2]) + "%"
+//     );
+//   } else {
+//     const arr = Color(input)
+//       .mix(Color("black"), percentage)
+//       .saturate(10)
+//       .hsl()
+//       .array();
+//     return (
+//       approx(arr[0]) + " " + approx(arr[1]) + "%" + " " + approx(arr[2]) + "%"
+//     );
+//   }
+// }
+
+export function getForegroundColor(color: string | Colord, percentage = 0.8) {
+  const c = colord(color);
+  const hsl = c
+    .mix(c.isDark() ? "#fff" : "#000", percentage)
+    .saturate(0.1)
+    .toHsl();
+  return formatHSL(hsl);
+}
+
 // Feel free to change these values, idk what I'm doing
 const darken_variants: any = {
   // first value is lightness change from default (400), second value is saturation change from default.
@@ -92,17 +110,15 @@ const lighten_variants: any = {
 
 const generateVariants = function (
   prefix: string,
-  color: Color,
+  color: Colord,
   darkMode = true,
-  primaryColor?: Color
+  // primaryColor?: Color,
 ): Record<string, string> {
-  const toCol = (color2: Color, r1: number, s1: number) => {
+  const toCol = (color2: Colord, r1: number, s1: number) => {
     const c = color2[r1 > 0 ? "lighten" : "darken"](Math.abs(r1))
       .saturate(s1)
-      .hsl()
-      .round(2)
-      .array();
-    return approx(c[0]) + " " + approx(c[1]) + "%" + " " + approx(c[2]) + "%";
+      .toHsl();
+    return formatHSL(c);
   };
 
   const out: Record<string, string> = {};
@@ -120,21 +136,19 @@ const generateVariants = function (
 // https://github.com/saadeghi/daisyui/blob/66ee475b0297fe56c5cef5867e1c83ef9dc6d5cb/src/colors/functions.js#L19
 export const convertToDaisyHSLAndColor = (
   input: DaisyColorConfig,
-  darkMode = true
+  darkMode = true,
 ): [
   Record<DaisyColorShorthand, string>, // the first result is the compiled daisy colors.
-  Record<DaisyColorShorthand, Color> // the second result is a semi-processed color so we don't convert colors around all the time. it'll get consumed by vuetify color generators.
+  Record<DaisyColorShorthand, Colord>, // the second result is a semi-processed color so we don't convert colors around all the time. it'll get consumed by vuetify color generators.
 ] => {
   const resultObj: Record<string, string> = {};
-  const colorObj: Record<string, Color> = {};
+  const colorObj: Record<string, Colord> = {};
   if (typeof input === "object" && input !== null) {
     Object.entries(input).forEach(([rule, value]) => {
       if (colorNames.hasOwnProperty(rule)) {
-        const color = Color(value);
-        const hslArray = color.hsl().round(2).array();
+        const color = colord(value);
         colorObj[colorNames[rule]] = color;
-        resultObj[colorNames[rule]] =
-          hslArray[0] + " " + hslArray[1] + "%" + " " + hslArray[2] + "%";
+        resultObj[colorNames[rule]] = formatHSL(color.toHsl());
       } else {
         resultObj[rule] = value;
       }
@@ -142,67 +156,27 @@ export const convertToDaisyHSLAndColor = (
 
     // auto generate focus colors
     if (!input.hasOwnProperty("primary-focus")) {
-      const darkerHslArray = colorObj[colorNames["primary"]]
-        .darken(0.2)
-        .hsl()
-        .round(2)
-        .array();
-      resultObj["--pf"] =
-        darkerHslArray[0] +
-        " " +
-        darkerHslArray[1] +
-        "%" +
-        " " +
-        darkerHslArray[2] +
-        "%";
+      resultObj["--pf"] = formatHSL(
+        colorObj[colorNames["primary"]].darken(0.2).toHsl(),
+      );
     }
 
     if (!input.hasOwnProperty("secondary-focus")) {
-      const darkerHslArray = colorObj[colorNames["secondary"]]
-        .darken(0.2)
-        .hsl()
-        .round(2)
-        .array();
-      resultObj["--sf"] =
-        darkerHslArray[0] +
-        " " +
-        darkerHslArray[1] +
-        "%" +
-        " " +
-        darkerHslArray[2] +
-        "%";
+      resultObj["--sf"] = formatHSL(
+        colorObj[colorNames["secondary"]].darken(0.2).toHsl(),
+      );
     }
 
     if (!input.hasOwnProperty("accent-focus")) {
-      const darkerHslArray = colorObj[colorNames["accent"]]
-        .darken(0.2)
-        .hsl()
-        .round(2)
-        .array();
-      resultObj["--af"] =
-        darkerHslArray[0] +
-        " " +
-        darkerHslArray[1] +
-        "%" +
-        " " +
-        darkerHslArray[2] +
-        "%";
+      resultObj["--af"] = formatHSL(
+        colorObj[colorNames["accent"]].darken(0.2).toHsl(),
+      );
     }
 
     if (!input.hasOwnProperty("neutral-focus")) {
-      const darkerHslArray = colorObj[colorNames["neutral"]]
-        .darken(0.2)
-        .hsl()
-        .round(2)
-        .array();
-      resultObj["--nf"] =
-        darkerHslArray[0] +
-        " " +
-        darkerHslArray[1] +
-        "%" +
-        " " +
-        darkerHslArray[2] +
-        "%";
+      resultObj["--nf"] = formatHSL(
+        colorObj[colorNames["neutral"]].darken(0.2).toHsl(),
+      );
     }
 
     // auto generate base colors
@@ -211,76 +185,45 @@ export const convertToDaisyHSLAndColor = (
     }
 
     if (!input.hasOwnProperty("base-200")) {
-      const darkerHslArray = colorObj[colorNames["base-100"]]
-        .darken(0.1)
-        .hsl()
-        .round(2)
-        .array();
-      resultObj["--b2"] =
-        darkerHslArray[0] +
-        " " +
-        darkerHslArray[1] +
-        "%" +
-        " " +
-        darkerHslArray[2] +
-        "%";
+      resultObj["--b2"] = formatHSL(
+        colorObj[colorNames["base-100"]].darken(0.2).toHsl(),
+      );
     }
 
     Object.assign(
       resultObj,
-      generateVariants("--p", colorObj["--p"], darkMode)
+      generateVariants("--p", colorObj["--p"], darkMode),
     );
     Object.assign(
       resultObj,
-      generateVariants("--s", colorObj["--s"], darkMode)
+      generateVariants("--s", colorObj["--s"], darkMode),
     );
     Object.assign(
       resultObj,
-      generateVariants("--a", colorObj["--a"], darkMode)
+      generateVariants("--a", colorObj["--a"], darkMode),
     );
     Object.assign(
       resultObj,
-      generateVariants("--b1", colorObj["--b1"], darkMode)
+      generateVariants("--b1", colorObj["--b1"], darkMode),
     );
     Object.assign(
       resultObj,
       generateVariants(
         "--b2",
-        colorObj["--b2"] || Color(`hsl(${resultObj["--b2"]})`),
-        darkMode
-      )
+        colorObj["--b2"] || colord(`hsl(${resultObj["--b2"]})`),
+        darkMode,
+      ),
     );
 
     if (!input.hasOwnProperty("base-300")) {
       if (input.hasOwnProperty("base-200")) {
-        const darkerHslArray = colorObj[colorNames["base-200"]]
-          .darken(0.15)
-          .hsl()
-          .round(2)
-          .array();
-        resultObj["--b3"] =
-          darkerHslArray[0] +
-          " " +
-          darkerHslArray[1] +
-          "%" +
-          " " +
-          darkerHslArray[2] +
-          "%";
+        resultObj["--b3"] = formatHSL(
+          colorObj[colorNames["base-200"]].darken(0.1).toHsl(),
+        );
       } else {
-        const darkerHslArray = colorObj[colorNames["base-100"]]
-          .darken(0.15)
-          .darken(0.15)
-          .hsl()
-          .round(2)
-          .array();
-        resultObj["--b3"] =
-          darkerHslArray[0] +
-          " " +
-          darkerHslArray[1] +
-          "%" +
-          " " +
-          darkerHslArray[2] +
-          "%";
+        resultObj["--b3"] = formatHSL(
+          colorObj[colorNames["base-100"]].darken(0.21).toHsl(),
+        );
       }
     }
 
@@ -300,51 +243,58 @@ export const convertToDaisyHSLAndColor = (
 
     // auto generate content colors
     if (!input.hasOwnProperty("base-content")) {
-      resultObj["--bc"] = generateForegroundColorFrom(input["base-100"]);
+      console.log(colorObj[colorNames["base-100"]]);
+      console.log(getForegroundColor);
+
+      resultObj["--bc"] = getForegroundColor(colorObj[colorNames["base-100"]]);
     }
     if (!input.hasOwnProperty("primary-content")) {
-      resultObj["--pc"] = generateForegroundColorFrom(input["primary"]);
+      resultObj["--pc"] = getForegroundColor(colorObj[colorNames["primary"]]);
     }
 
     if (!input.hasOwnProperty("secondary-content")) {
-      resultObj["--sc"] = generateForegroundColorFrom(input["secondary"]);
+      resultObj["--sc"] = getForegroundColor(colorObj[colorNames["secondary"]]);
     }
 
     if (!input.hasOwnProperty("accent-content")) {
-      resultObj["--ac"] = generateForegroundColorFrom(input["accent"]);
+      resultObj["--ac"] = getForegroundColor(colorObj[colorNames["accent"]]);
     }
 
     if (!input.hasOwnProperty("neutral-content")) {
-      resultObj["--nc"] = generateForegroundColorFrom(input["neutral"]);
+      resultObj["--nc"] = getForegroundColor(colorObj[colorNames["neutral"]]);
     }
 
     if (!input.hasOwnProperty("info-content")) {
-      if (input.hasOwnProperty("info") && input["info"]) {
-        resultObj["--inc"] = generateForegroundColorFrom(input["info"]);
+      if (input.hasOwnProperty("info") && colorObj[colorNames["info"]]) {
+        resultObj["--inc"] = getForegroundColor(colorObj[colorNames["info"]]);
       } else {
         resultObj["--inc"] = 198 + " " + 100 + "%" + " " + 12 + "%";
       }
     }
 
     if (!input.hasOwnProperty("success-content")) {
-      if (input.hasOwnProperty("success") && input["success"]) {
-        resultObj["--suc"] = generateForegroundColorFrom(input["success"]);
+      if (input.hasOwnProperty("success") && colorObj[colorNames["success"]]) {
+        resultObj["--suc"] = getForegroundColor(
+          colorObj[colorNames["success"]],
+        );
       } else {
         resultObj["--suc"] = 158 + " " + 100 + "%" + " " + 10 + "%";
       }
     }
 
     if (!input.hasOwnProperty("warning-content")) {
-      if (input.hasOwnProperty("warning") && input["warning"]) {
-        resultObj["--wac"] = generateForegroundColorFrom(input["warning"]);
+      if (input.hasOwnProperty("warning") && colorObj[colorNames["warning"]]) {
+        resultObj["--wac"] = getForegroundColor(
+          colorObj[colorNames["warning"]],
+        );
       } else {
         resultObj["--wac"] = 43 + " " + 100 + "%" + " " + 11 + "%";
       }
     }
 
     if (!input.hasOwnProperty("error-content")) {
-      if (input.hasOwnProperty("error") && input["error"]) {
-        resultObj["--erc"] = generateForegroundColorFrom(input["error"]);
+      if (input.hasOwnProperty("error") && colorObj["error"]) {
+        resultObj["--erc"] = getForegroundColor(colorObj["error"]);
       } else {
         resultObj["--erc"] = 0 + " " + 100 + "%" + " " + 14 + "%";
       }

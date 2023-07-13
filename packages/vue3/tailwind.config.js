@@ -74,7 +74,7 @@ module.exports = {
     themes: [],
     base: true,
     utils: true,
-    logs: true,
+    logs: false,
     rtl: false,
     prefix: "",
   },

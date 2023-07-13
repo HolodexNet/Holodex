@@ -28,7 +28,7 @@
   </h-menu>
 </template>
 <script lang="ts">
-import { generateForegroundColorFrom } from "@/hooks/theme-changer/daisy-utils/daisy-color-fns";
+import { getForegroundColor } from "@/hooks/theme-changer/daisy-utils/daisy-color-fns";
 import {
   DaisyColorName,
   DaisyColorShorthand,
@@ -67,7 +67,7 @@ export default defineComponent({
       );
     },
     foreground() {
-      return "hsl(" + generateForegroundColorFrom(this.color) + ")";
+      return "hsl(" + getForegroundColor(this.color) + ")";
     },
     // overrideLanguage: {
     //   get() {
