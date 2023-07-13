@@ -81,44 +81,59 @@
   <div
     class="grid gap-2"
     :style="{
-      'grid-template-columns': 'repeat(auto-fill, minmax(250px, 1fr))',
+      'grid-template-columns': 'repeat(auto-fill, minmax(200px, 1fr))',
     }"
   >
-    <div class="btn-group">
-      <div class="btn-xs btn bg-primary-700">700</div>
-      <div class="btn-xs btn bg-primary-600" />
-      <div class="btn-xs btn bg-primary-500" />
-      <div class="btn-xs btn bg-primary" />
-      <div class="btn-xs btn bg-primary-300" />
-      <div class="btn-xs btn bg-primary-200" />
-      <div class="btn-xs btn bg-primary-100">100</div>
+    <div class="flex flex-row gap-1">
+      <div class="demobox bg-primary-900" title="900" />
+      <div class="demobox bg-primary-800" title="800" />
+      <div class="demobox bg-primary-700" title="700" />
+      <div class="demobox bg-primary-600" title="600" />
+      <div class="demobox bg-primary-500" title="500" />
+      <div class="demobox bg-primary !w-8" title="400 (default)" />
+      <div class="demobox bg-primary-300" title="300" />
+      <div class="demobox bg-primary-200" title="200" />
+      <div class="demobox bg-primary-100" title="100" />
+      <div class="demobox bg-primary-50" title="50" />
     </div>
-    <div class="btn-group">
-      <div class="btn-xs btn bg-secondary-700">700</div>
-      <div class="btn-xs btn bg-secondary-600" />
-      <div class="btn-xs btn bg-secondary-500" />
-      <div class="btn-xs btn bg-secondary" />
-      <div class="btn-xs btn bg-secondary-300" />
-      <div class="btn-xs btn bg-secondary-200" />
-      <div class="btn-xs btn bg-secondary-100">100</div>
+    <div class="flex flex-row gap-1">
+      <div class="demobox bg-secondary-900" title="900" />
+      <div class="demobox bg-secondary-800" title="800" />
+      <div class="demobox bg-secondary-700" title="700" />
+      <div class="demobox bg-secondary-600" title="600" />
+      <div class="demobox bg-secondary-500" title="500" />
+      <div class="demobox bg-secondary !w-8" title="400 (default)" />
+      <div class="demobox bg-secondary-300" title="300" />
+      <div class="demobox bg-secondary-200" title="200" />
+      <div class="demobox bg-secondary-100" title="100" />
+      <div class="demobox bg-secondary-50" title="50" />
     </div>
-    <div class="btn-group">
-      <div class="btn-xs btn bg-accent-700">700</div>
-      <div class="btn-xs btn bg-accent-600" />
-      <div class="btn-xs btn bg-accent-500" />
-      <div class="btn-xs btn bg-accent" />
-      <div class="btn-xs btn bg-accent-300" />
-      <div class="btn-xs btn bg-accent-200" />
-      <div class="btn-xs btn bg-accent-100">100</div>
+    <div class="flex flex-row gap-1">
+      <div class="demobox bg-accent-900" title="900" />
+      <div class="demobox bg-accent-800" title="800" />
+      <div class="demobox bg-accent-700" title="700" />
+      <div class="demobox bg-accent-600" title="600" />
+      <div class="demobox bg-accent-500" title="500" />
+      <div class="demobox bg-accent !w-8" title="400 (default)" />
+      <div class="demobox bg-accent-300" title="300" />
+      <div class="demobox bg-accent-200" title="200" />
+      <div class="demobox bg-accent-100" title="100" />
+      <div class="demobox bg-accent-50" title="50" />
     </div>
-    <div class="btn-group">
-      <div class="btn-xs btn bg-bgColor-700">700</div>
-      <div class="btn-xs btn bg-bgColor-600" />
-      <div class="btn-xs btn bg-bgColor-500" />
-      <div class="btn-xs btn bg-bgColor-400" />
-      <div class="btn-xs btn bg-bgColor-300" />
-      <div class="btn-xs btn bg-bgColor-200" />
-      <div class="btn-xs btn bg-bgColor-100">100</div>
+    <div class="flex flex-row gap-1">
+      <div class="demobox bg-neutral !w-full" title="400 (default)" />
+    </div>
+    <div class="flex flex-row gap-1">
+      <div class="demobox bg-bgColor-900" title="900" />
+      <div class="demobox bg-bgColor-800" title="800" />
+      <div class="demobox bg-bgColor-700" title="700" />
+      <div class="demobox bg-bgColor-600" title="600" />
+      <div class="demobox bg-bgColor-500" title="500" />
+      <div class="demobox bg-bgColor !w-8" title="400 (default)" />
+      <div class="demobox bg-bgColor-300" title="300" />
+      <div class="demobox bg-bgColor-200" title="200" />
+      <div class="demobox bg-bgColor-100" title="100" />
+      <div class="demobox bg-bgColor-50" title="50" />
     </div>
   </div>
 </template>
@@ -166,6 +181,7 @@ export default defineComponent({
     return {
       presets,
       colors,
+      gradients: ["primary", "secondary", "accent", "neutral", "bgColor"],
     };
   },
   computed: {
@@ -206,5 +222,9 @@ label.label {
 }
 label.label:nth-child(even) {
   @apply rounded bg-bgColor-500;
+}
+
+.demobox {
+  @apply h-4 w-4 rounded border border-gray-500;
 }
 </style>

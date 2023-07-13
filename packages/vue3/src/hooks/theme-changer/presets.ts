@@ -7,7 +7,7 @@ export const presets: Theme[] = [
     colors: {
       "base-100": "#222222",
       primary: "#F06292",
-      neutral: "#070a13",
+      neutral: "#dea7d3",
       secondary: "#3b88d5",
       accent: "#F03284",
       error: "#B00020",
@@ -22,7 +22,7 @@ export const presets: Theme[] = [
     colors: {
       "base-100": "#222222",
       primary: "#62B2F0",
-      neutral: "#758799",
+      neutral: "#00b0ff",
       secondary: "#3BD5C4",
       accent: "#082DB6",
       error: "#B00020",

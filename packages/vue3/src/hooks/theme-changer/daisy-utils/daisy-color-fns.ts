@@ -3,7 +3,9 @@
 // import Color from "color";
 import { colord, extend, Colord, HslaColor } from "colord";
 import mixPlugin from "colord/plugins/mix";
-extend([mixPlugin]);
+import harmonies from "colord/plugins/harmonies";
+
+extend([mixPlugin, harmonies]);
 import { DaisyColorConfig, DaisyColorShorthand } from "./daisy-types";
 
 const colorNames: Record<string, string> = {
@@ -82,8 +84,8 @@ export function getForegroundColor(color: string | Colord, percentage = 0.8) {
 // Feel free to change these values, idk what I'm doing
 const darken_variants: any = {
   // first value is lightness change from default (400), second value is saturation change from default.
-  "-950": [-0.8, -0.02], // darker
-  "-900": [-0.75, -0.06],
+  "-950": [-0.9, -0.02], // darker
+  "-900": [-0.8, -0.06],
   "-800": [-0.6, -0.12],
   "-700": [-0.45, -0.18],
   "-600": [-0.3, -0.24],
@@ -103,9 +105,9 @@ const lighten_variants: any = {
   "-500": [0.15, -0.3],
   "-400": [0, 0],
   "-300": [-0.15, -0.06],
-  "-200": [-0.3, -0.12],
-  "-100": [-0.45, -0.18],
-  "-50": [-0.6, -0.24], // darker
+  "-200": [-0.3, 0.12],
+  "-100": [-0.4, 0.18],
+  "-50": [-0.5, 0.24], // darker
 };
 
 const generateVariants = function (
@@ -114,21 +116,24 @@ const generateVariants = function (
   darkMode = true,
   // primaryColor?: Color,
 ): Record<string, string> {
+  console.log(color.brightness());
+  console.log("prefix", prefix);
   const toCol = (color2: Colord, r1: number, s1: number) => {
-    const c = color2[r1 > 0 ? "lighten" : "darken"](Math.abs(r1))
+    const c = color2
+      .mix(r1 > 0 ? "#fff" : "#000", Math.abs(r1))
       .saturate(s1)
       .toHsl();
     return formatHSL(c);
   };
 
+  // const shades = [...color.shades(5), color, ...color.tints(5)];
+  // console.log(shades);
   const out: Record<string, string> = {};
   const variants = darkMode ? darken_variants : lighten_variants;
   for (const i in variants) {
     // standard variation
     out[prefix + i] = toCol(color, variants[i][0], variants[i][1]);
-    // if(prefix == '--b1') {
-    //   out[prefix + i] =
-    // }
+    if (prefix == "--b1") out[prefix + i] = toCol(color, variants[i][0], 0);
   }
   return out;
 };
