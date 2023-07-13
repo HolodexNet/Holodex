@@ -1,54 +1,37 @@
 <template>
   <!-- <v-container class="channel-container" fluid> -->
   <sub-navigation :routes="tabs" base-route="/about">
-    <template #hotlinks>
-      <div class="pointer-events-none w-full p-2 pb-1 text-xs font-bold">
+    <!-- <template #hotlinks> -->
+    <!-- <span class="pointer-events-none w-full pb-1 !p-1 !text-xs font-bold">
         Quick Links:
-      </div>
-      <!-- <a
-        class="btn-square p-0"
-        title="Follow us on twitter"
-        href="https://twitter.com/holodex"
-      >
-        <div class="i-carbon:logo-twitter m-auto" />
-      </a> -->
+      </span>
       <h-btn
-        class="btn-square !p-0"
+        class="btn-square btn-sm !p-0"
         no-color
         ghost
-        icon="i-carbon:logo-twitter"
+        icon="i-simple-icons:twitter !text-sm"
         tooltip-text="Follow us on twitter"
         tooltip="badge-ghost"
       />
 
-      <!-- <a
-        class="btn-square p-0"
-        title="Support us on Ko-Fi"
-        href="https://ko-fi.com/holodex"
-      >
-        <div class="i-cib:ko-fi m-auto" />
-      </a> -->
       <h-btn
-        class="btn-square mx-1 !p-1"
+        class="btn-square btn-sm mx-1 !p-1"
         no-color
         ghost
-        icon="i-cib:ko-fi"
+        icon="i-simple-icons:ko-fi"
         tooltip-text="Support us on Ko-Fi"
         tooltip="badge-ghost"
       />
 
-      <!-- <a class="btn-square p-0" title="Issues / Source Code">
-        <div class="i-carbon:logo-github m-auto" />
-      </a> -->
       <h-btn
-        class="btn-square !p-0"
+        class="btn-square btn-sm !p-0"
         no-color
         ghost
-        icon="i-carbon:logo-github"
+        icon="i-simple-icons:github"
         tooltip-text="Issues / Source Code"
         tooltip="badge-ghost"
-      />
-    </template>
+      /> -->
+    <!-- </template> -->
   </sub-navigation>
 </template>
 

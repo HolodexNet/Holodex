@@ -1,6 +1,6 @@
 <template>
-  <article class="prose">
-    <h3 class="mb-2 text-lg">What we are?</h3>
+  <article class="prose max-w-3xl">
+    <h3 class="mb-2 text-lg lg:block hidden">What we are?</h3>
     <p>
       <b>Holodex</b>
       is a fan-built platform for watching VTubers. We are built by DD for DDs.
@@ -87,7 +87,8 @@
       </a>
     </div>
     <p class="mt-4 text-sm opacity-60">
-      Holodex V3 UI Build {{ abbreviatedSha }}, released {{ committerDate }}
+      Holodex V3 internal UI test build [{{ abbreviatedSha }}]: compiled
+      {{ committerDate }}.
     </p>
   </article>
 </template>

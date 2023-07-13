@@ -11,10 +11,10 @@
         'max-w-full sm:max-w-[200px] md:max-w-[300px]': isDediAboutPage,
       }"
     >
-      <ul class="menu menu-vertical w-full p-2">
+      <ul class="menu menu-vertical w-full p-2 menu-md lg:menu-lg lg:gap-2">
         <li
           v-if="!minimizeSidebar && $slots.hotlinks"
-          class="mb-2 flex text-lg"
+          class="mb-2 flex !text-lg"
           style="flex-direction: row"
         >
           <slot name="hotlinks" />
@@ -23,7 +23,7 @@
           <li v-for="tab in tabs" :key="tab.path">
             <router-link
               :to="tab.path"
-              class="min-h-12 justify-start"
+              class="justify-start !text-base"
               :title="tab.name"
               :class="{ active: tab.active }"
             >
@@ -36,7 +36,7 @@
           </li>
         </template>
         <li v-if="minimizeSidebar">
-          <router-link :to="baseRoute" class="min-h-12 w-full" :title="'Back'">
+          <router-link :to="baseRoute" class="w-full" :title="'Back'">
             <div class="i-mdi:arrow-left mx-1 inline-block text-xl md:mr-2" />
             <span>Back</span>
           </router-link>
