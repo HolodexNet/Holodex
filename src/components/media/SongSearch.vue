@@ -147,12 +147,13 @@ export default {
             const [md, res, resEn] = await Promise.all([this.searchMusicdex(query), this.searchAutocomplete(query, "ja_jp"), this.searchAutocomplete(query, "en_us")]);
             const lookupEn = resEn.results || [];
             console.log(lookupEn);
-            const fnLookupFn = (id, name) => {
+            const fnLookupFn = (id, name, altName) => {
                 const foundEn = lookupEn.find((x) => x.trackId === id);
-                if (foundEn && foundEn.trackName !== name && compareTwoStrings(foundEn.trackName, name) < 0.2) {
-                    return `${name} / ${foundEn.trackName}`;
+                const possibleNames = [foundEn.trackCensoredName?.toUpperCase(), foundEn.trackName.toUpperCase()]
+                if (foundEn && !possibleNames.includes(name.toUpperCase()) && compareTwoStrings(foundEn.trackName, name) < 0.2) {
+                    return `${name} / ${foundEn.trackCensoredName || foundEn.trackName}`;
                 }
-                return name;
+                return altName || name;
             };
             if (res && res.results) {
                 console.log(res.results);
@@ -163,6 +164,7 @@ export default {
                         releaseDate,
                         artistName,
                         trackName,
+                        trackCensoredName,
                         trackTimeMillis,
                         artworkUrl100,
                         trackViewUrl,
@@ -172,7 +174,7 @@ export default {
                         collectionName,
                         releaseDate,
                         artistName,
-                        trackName: fnLookupFn(trackId, trackName),
+                        trackName: fnLookupFn(trackId, trackName, trackCensoredName),
                         artworkUrl100,
                         trackViewUrl,
                         src: "iTunes",
