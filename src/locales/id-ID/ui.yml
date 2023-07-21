@@ -59,6 +59,8 @@ component:
     uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -125,14 +127,15 @@ component:
       Channel ini mungkin sedang berkolaborasi dengan salah satu anggota {org} atau salah satu vtuber favoritmu. Kamu dapat menonaktifkan fitur ini di pengaturan
     comments: Tindakan apa yang harus Holodex lakukan?
     success: Laporan telah dikirim, Terima Kasih!
+    consider: Sebaiknya gunakan filter dan batalkan laporan ini.
     reasons:
       - Tag Video salah
       - Kualitas Rendah / Konten Menyesatkan
       - Melanggar Pedoman Kebijakan Karya yang ditetapkan organisasi atau tidak pantas
       - Lainnya
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - Kesalahan topik video
+      - Kesalahan penyebutan nama channel
+      - '{0} ini tidak ada kaitannya dengan {1}'
   thirdpartycookie:
     explanation: >-
       Karena cara kerja browser internetmu, beberapa browser dengan kebijakan ketat <b>Cookie Pihak Ketiga</b> atau pemblokiran cookies dari <kbd>YouTube.com</kbd> akan membuat sulit untuk masuk / menggunakan chat Youtube. <br /><br /> Kamu bisa memperbaiki hal ini dengan cara whitelist <kbd>Youtube.com</kbd> dalam pemblokiran Cookie Pihak Ketiga, atau menurunkan tingkatan keamanan / privasi cookie untuk situs <kbd>Holodex.net</kbd>. <br /><br /> Kami akan mencantumkan beberapa situs yang akan memberikan informasi lebih lanjut mengenai hal ini.
@@ -265,6 +268,7 @@ views:
     hideCollabStreamsLabel: Sembunyikan Siaran Kolaborasi
     hideCollabStreamsMsg: Menyembunyikan siaran kolaborasi dari halaman favorit kamu
     hidePlaceholderStreams: Sembunyikan Jadwal Siaran Sementara
+    hideMissingStreams: Sembunyikan Siaran Hilang
     ignoredTopicsLabel: Topik yang Diabaikan
     ignoredTopicsMsg: Menyembunyikan video yang berkaitan dengan topik yang dipilih dari halaman Beranda dan Favorit
     theme: Tema
