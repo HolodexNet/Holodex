@@ -206,15 +206,28 @@ export default {
                 const updateNotice = this.$store.state.favorites.lastLiveUpdate;
                 console.debug(`Updating favs: ${updateNotice}`);
 
-                const existingChs = {};
-                lives.forEach((x) => {
-                    if (favoritesSet.has(x.channel.id) && !existingChs[x.channel.id]) {
-                        existingChs[x.channel.id] = x;
-                    }
-                });
+                const existingChs = new Map();
+                lives
+                    .filter((x) => favoritesSet.has(x.channel.id))
+                    .forEach((x) => {
+                        if (!existingChs.has(x.channel.id)) {
+                            existingChs.set(x.channel.id, x)
+                        }
+                    });
+
+                // streams featuring favorites who aren't streaming themselves
+                lives
+                    .filter((x) => x.mentions?.length && !existingChs.has(x.channel.id))
+                    .forEach((x) => {
+                        const cause = x.mentions.filter(({ id }) => favoritesSet.has(id) && !existingChs.has(id))
+                        if (cause.length) {
+                            existingChs.set(x.channel.id, { ...x, cause });
+                        }
+                    });
+
                 // remainder:
                 const extras = fav
-                    .filter((x) => !existingChs[x.id])
+                    .filter(({ id }) => !existingChs.has(id))
                     .map((ch) => ({
                         channel: ch,
                     }));
@@ -225,7 +238,7 @@ export default {
                     const name2 = b.channel[prop] || b.channel.name || "";
                     return name1.localeCompare(name2);
                 });
-                return [...Object.values(existingChs), ...extras];
+                return [...existingChs.values(), ...extras];
             } catch (e) {
                 console.error(e);
                 try {
