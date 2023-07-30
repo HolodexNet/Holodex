@@ -99,9 +99,12 @@
           </v-list-item-avatar>
           <ChannelInfo :channel="vid.channel" no-subscriber-count no-group />
           <v-list-item-action-text v-if="vid.id" :key="'liveclock' + vid.id + tick">
-            <span :class="isLive(vid) ? 'ch-live' : 'ch-upcoming'">
+            <div :class="isLive(vid) ? 'ch-live' : 'ch-upcoming'">
+              <v-avatar v-if="vid.host_channel" :size="20">
+                <ChannelImg :channel="vid.host_channel" :size="20" />
+              </v-avatar>
               {{ formatDurationUpcoming(vid.available_at) }}
-            </span>
+            </div>
           </v-list-item-action-text>
         </v-list-item>
       </template>
@@ -216,14 +219,10 @@ export default {
                     });
 
                 // streams featuring favorites who aren't streaming themselves
-                lives
-                    .filter((x) => x.mentions?.length && !existingChs.has(x.channel.id))
-                    .forEach((x) => {
-                        const cause = x.mentions.filter(({ id }) => favoritesSet.has(id) && !existingChs.has(id))
-                        if (cause.length) {
-                            existingChs.set(x.channel.id, { ...x, cause });
-                        }
-                    });
+                lives.forEach((x) => x.mentions
+                    ?.filter(({ id }) => favoritesSet.has(id) && !existingChs.has(id))
+                    .forEach((m) => existingChs.set(m.id, { ...x, channel: m, host_channel: x.channel }))
+                );
 
                 // remainder:
                 const extras = fav
