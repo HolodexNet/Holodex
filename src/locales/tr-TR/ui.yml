@@ -55,6 +55,7 @@ component:
     typeEventPlaceholder: Planlı Etkinlik
     openClient: Çeviri İstrmcisini Aç
     openScriptEditor: Senaryo Editörünü Aç
+    popoutChat: YouTube Sohbetini Ayrı Pencerede Aç
     uploadScript: Çeviri Senaryosu Yükle
   videoDescription:
     description: Açıklama
@@ -75,6 +76,7 @@ component:
       org: organizasyon
       titledesc: başlık/açıklama
       title: başlık
+      description: açıklama
       comments: yorumlar
       videourl: video bağlantısı
   relatedVideo:
@@ -123,6 +125,7 @@ component:
       Kanal, bir {org} üyesi veya favorilerinizden biri ile collab yapıyor olabilir. Bu özelliği ayarlardan kapatabilirsiniz
     comments: Holodex nasıl bir eylemde bulunmalı?
     success: Şikayer gönderildi, teşekkürler!
+    consider: Filtreyi kullanıp bu şikayeti bırakmayı göz önünde bulundurun.
     reasons:
       - Video yanlış işaretlendi
       - Tehlikeli derecede Düşük Kaliteli/Yanıltıcı İçerik
@@ -442,24 +445,49 @@ views:
       loadVideo: Videoyu Göster
       unloadVideo: Videoyu gizle
       loadChat: Yayın Çevirisine YT Chat'ini Ekle
+      unloadChat: YT Sohbetinden ayır
     tlControl:
+      enterBtn: Gir
       prefix: Önek
       suffix: Sonek
       fontColour: Yazı Rengi
       outlineColour: Anahat Rengi
+      addProfile: Profil Ekle
+      removeProfile: Profili Kaldır
+      shiftUp: Profili Yukarı Kayır
+      shiftDown: Profili Aşağı Kayır
+      hideSetting: Gizle
+    addProfilePanel:
+      title: Yeni Profil Ekle
+      inputLabel: Profil Adı
+    settingPanel:
+      mainStreamLink: Ana Yayın Bağlantısı
+      collabLink: Collab Bağlantıları
+    loadChatPanel:
+      title: Sohbeti Yükle
+      inputLabel: Akış Bağlantısı
+    unloadChatTitle: TÜM aktif sohbet kaldırılsın mı?
     pangram: Pijamalı hasta yağız şoföre çabucak güvendi.
     cancelBtn: İptal
     okBtn: Tamam
   scriptEditor:
     menu:
       save: Kaydet
+      clearAll: Senaryoyu Sil
       exportFile: Dosyayı Dışa Aktar
       importFile: Dosyayı İçe Aktar
       editorMode: Düzenleyici Kipi
     table:
       headerStart: Başlangıç
       headerEnd: Bitiş
+      headerProfile: Profil
       headerText: Metin
+      setAsStart: Başlangıç olarak ayarla
+      shiftCurrentTime: Geçerli zamana getir
+      deleteEntry: Girdiyi sil
+    loadVideoPanel:
+      title: Videoyu Yükle
+      inputLabel: Akış Bağlantısı
     importFile:
       overwriteBtn: Üzerine Yaz
     editorModePanel:
