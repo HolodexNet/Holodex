@@ -205,6 +205,7 @@ export default {
             const fav = this.$store.state.favorites.favorites || [];
             try {
                 const favoritesSet = this.$store.getters["favorites/favoriteChannelIDs"];
+                const blockedSet = this.$store.getters["settings/blockedChannelIDs"];
                 const lives: Array<any> = this.$store.state.favorites.live;
                 const updateNotice = this.$store.state.favorites.lastLiveUpdate;
                 console.debug(`Updating favs: ${updateNotice}`);
@@ -219,10 +220,12 @@ export default {
                     });
 
                 // streams featuring favorites who aren't streaming themselves
-                lives.forEach((x) => x.mentions
-                    ?.filter(({ id }) => favoritesSet.has(id) && !existingChs.has(id))
-                    .forEach((m) => existingChs.set(m.id, { ...x, channel: m, host_channel: x.channel }))
-                );
+                lives
+                    .filter((x) => x.mentions?.length && !blockedSet.has(x.channel.id))
+                    .forEach((x) => x.mentions
+                        .filter(({ id }) => favoritesSet.has(id) && !existingChs.has(id) && !blockedSet.has(id))
+                        .forEach((m) => existingChs.set(m.id, { ...x, channel: m, host_channel: x.channel }))
+                    );
 
                 // remainder:
                 const extras = fav
