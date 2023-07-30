@@ -55,9 +55,12 @@ component:
     typeEventPlaceholder: Scheduwed event
     openClient: Open tl cwient
     openScriptEditor: Open scwipt editow
+    popoutChat: Popout youtube chat
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -124,14 +127,15 @@ component:
       Dis channew may be cowwabing with a {org} membew ow with youw favowites. U can disabwe dis featuwe thwough da settings
     comments: Wat actions shouwd howodex take?
     success: Repowt sent, thankies!
+    consider: Considew using da fiwtew and discawding dis wepowt instead.
     reasons:
       - Bideo tagged incowwectwy
       - Dangewouswy low quawity/misweading content
       - Viowates da owg's dewivative wowk guidewines ow inappwopwiate
       - Othew
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - Incowwect bideo topic
+      - Incowwect channew mentions
+      - Dis {0} does not bewong to {1}
   thirdpartycookie:
     explanation: >-
       Because of how youw intewnet bwowsew wowks, some bwowsews with stwict <b>thiwd pawty cookie</b> powicies, ow those bwocking <kbd>youtube.com</kbd> cookies may find it difficuwt to wog into / use youtube chat. <br /><br /> u can fix dis by whitewisting <kbd>youtube.com</kbd> in thiwd pawty cookie bwockews, ow decweasing youw cookie secuwity / pwivacy wevew fow <kbd>howodex.net</kbd>. <br /><br /> we incwuded some websites that pwovide mowe infowmation on how to do dis.
