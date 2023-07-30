@@ -59,6 +59,8 @@ component:
     uploadScript: TL-Skript hochladen
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -125,14 +127,15 @@ component:
       Dieser Kanal kollaboriert möglicherweise mit einem {org} Mitglied oder mit deinen Favoriten. Du kannst diese Funktion in den Einstellungen deaktivieren
     comments: Welche Maßnahmen sollte Holodex ergreifen?
     success: Bericht gesendet, vielen Dank!
+    consider: Möglicherweise ist es besser, diese Meldung zu verwerfen und stattdessen den Filter zu verwenden.
     reasons:
       - Video falsch getaggt
       - Gefährlich niedrige Qualität/irreführende Inhalte
       - Verstößt gegen das Urheberrecht der Organisation oder ist unangemessen
       - Sonstiges
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - Falsches Videothema
+      - Falsche/r Kanal/Kanäle aufgeführt
+      - Diese/s/r {0} gehört nicht zu {1}
   thirdpartycookie:
     explanation: >-
       Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>youtube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Anmelden in / Verwenden des Youtube-Chats auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.
