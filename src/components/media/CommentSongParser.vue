@@ -139,7 +139,7 @@ export default {
             const fnLookupFn = (id, name, altName) => {
                 const foundEn = lookupEn.find((x) => x.trackId === id);
                 const possibleNames = [foundEn.trackCensoredName?.toUpperCase(), foundEn.trackName.toUpperCase()];
-                if (foundEn && !possibleNames.includes(name.toUpperCase()) && compareTwoStrings(foundEn.trackName, name) < 0.2) {
+                if (foundEn && !possibleNames.includes(name.toUpperCase()) && compareTwoStrings(foundEn.trackName, name) < 0.75) {
                     return `${name} / ${foundEn.trackCensoredName || foundEn.trackName}`;
                 }
                 return altName || name;

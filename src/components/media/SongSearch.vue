@@ -12,7 +12,7 @@
     :autofocus="autofocus"
     :loading="isLoading"
     :items="results"
-    :item-value="(x) => x.trackId"
+    :item-value="(x) => x.index"
     :search-input.sync="search"
     :label="$t('editor.music.itunesLookupPlaceholder')"
     :filter="(a, b) => true"
@@ -171,7 +171,7 @@ export default {
                 if (
                     foundEn
                     && !possibleNames.includes(name.toUpperCase())
-                    && compareTwoStrings(foundEn.trackName, name) < 0.2
+                    && compareTwoStrings(foundEn.trackName, name) < 0.75
                 ) {
                     return `${name} / ${foundEn.trackCensoredName || foundEn.trackName}`;
                 }
@@ -180,7 +180,7 @@ export default {
             if (res && res.results) {
                 console.log(res.results);
                 this.fromApi = [
-                    ...md.slice(3),
+                    ...md.slice(0, 3),
                     ...res.results.map(
                         ({
                             trackId,
@@ -202,6 +202,7 @@ export default {
                             artworkUrl100,
                             trackViewUrl,
                             src: "iTunes",
+                            index: `iTunes${trackId}`,
                         }),
                     ),
                 ];
@@ -280,6 +281,7 @@ export default {
                         trackViewUrl: _source.amUrl,
                         artworkUrl100: _source.art,
                         src: "Musicdex",
+                        index: `Musicdex${_source.itunesid || _source.name+_source.original_artist}`,
                     })) || []
                 );
             } catch (e) {
