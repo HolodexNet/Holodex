@@ -17,7 +17,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Vite + React + Tailwind + Typescript + Radix-UI/Themes</h1>
       <div className="card">
         <button
           onClick={() => setCount((count) => count + 1)}
@@ -30,8 +30,20 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        This class <code>read-the-docs</code> has been <code>@apply</code>'d to be <code>text-sm</code>
+        <div className="text-sm">This text is also small.</div>
       </p>
+      <p className="read-the-docs">
+        Tailwind CSS Testing is <code>tailwindcss</code>
+        <div className="text-lg">
+          Large text
+        </div>
+        <div className="text-sm">
+          Small text
+        </div>
+        <div className="mt-2 hover:text-sm border-2 border-black">Margin top 2 text that becomes smaller when hovered.</div>
+      </p>
+
       <RadioGroup.Root defaultValue="1">
         <Flex gap="1" direction="column">
           <label>
