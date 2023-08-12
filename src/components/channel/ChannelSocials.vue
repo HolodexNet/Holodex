@@ -4,19 +4,19 @@
     <v-btn
       v-if="channel.id && !hideYt"
       icon
-      sm
+      large
       :href="`https://www.youtube.com/channel/${channel.id}`"
       rel="noreferrer"
       target="_blank"
     >
-      <v-icon color="#C4302B">
+      <v-icon color="#FF0000" size="36px">
         {{ icons.mdiYoutube }}
       </v-icon>
     </v-btn>
     <v-btn
       v-if="channel.twitter && !hideTwitter"
       icon
-      sm
+      large
       :href="`https://twitter.com/${channel.twitter}`"
       rel="noreferrer"
       target="_blank"
@@ -28,7 +28,7 @@
     <v-btn
       v-if="channel.twitch && !hideTwitch"
       icon
-      sm
+      large
       :href="`https://twitch.tv/${channel.twitch}`"
       rel="noreferrer"
       target="_blank"
@@ -41,7 +41,7 @@
       <template #activator="{ on, attrs }">
         <v-btn
           icon
-          sm
+          large
           v-bind="attrs"
           @click.stop="toggleFavorite($event)"
           v-on="on"
@@ -122,7 +122,7 @@ export default {
         return {
             mdiAccountCancel,
             mdiHeartOutline,
-            mdiTwitch
+            mdiTwitch,
         };
     },
     computed: {

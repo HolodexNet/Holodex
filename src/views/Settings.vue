@@ -208,7 +208,7 @@
             <v-switch
               v-model="redirectMode"
               class="v-input--reverse v-input--expand mt-6"
-              :prepend-icon="icons.mdiYoutube"
+              :prepend-icon="icons.mdiOpenInNew"
               inset
               :label="$t('views.settings.redirectModeLabel')"
               :messages="$t('views.settings.redirectModeMsg')"
