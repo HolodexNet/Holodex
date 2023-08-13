@@ -115,9 +115,9 @@ component:
       - Conteúdo Perigososamente de Baixa Qualidade ou Enganoso
       - Inapropriado ou Viola as diretrizes de trabalho derivado
       - Outros
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - 
+      - 
+      - 
   thirdpartycookie:
     explanation: >-
       Pode ser difícil acessar / usar o chat do Youtube devido às políticas de <b>Cookie de Terceiros</b> rígidas ou aos cookies do <kbd>Youtube.com</kbd> bloqueados. <br /><br /> Impedir <kbd>Youtube.com</kbd> de bloquear Cookies de Terceiros, ou reduzir o nível de segurança / privacidade de cookies para <kbd>Holodex.net</kbd> pode corrigir isso. <br /><br /> Incluímos alguns sites que explicam como fazer isso.
@@ -308,9 +308,9 @@ views:
       - Entrar com Discord
       - Entrar com o Twitter
     usernameBtn:
-      - Change
+      - 
       - Confirmar
-      - Save
+      - 
   multiview:
     confirmOverwrite: Sobrescrever layout atual?
     confirmOverwriteYes: Confirmar
@@ -412,10 +412,10 @@ about:
       title: Sou um subber e não consigo encontrar meu canal ou clipes no Holodex
       contents:
         - >-
-          Please check on the Channels page to see if you are listed as a subber, if not please fill out
+
         - ', and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.'
         - >-
-          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+
     feedback:
       title: Eu tenho feedback/quero contribuir com o projeto
   gdpr: GDPR e meus dados
@@ -428,12 +428,12 @@ about:
   credits:
     title: Creditos
     contents:
-      - I would like to give big thanks to the
-      - team for their work on
+      - 
+      - 
       - >-
-        Also to all the subbers for helping the overseas bros! Please check them out!
+
       - >-
-        This is a fan made website and the content found on this website is owned by Cover corp and its partners. The site follows the guidelines set forth by Cover corp in their
+
       - Contrato de Licença de Obra Derivada
   changelog:
     title: Mudanças
