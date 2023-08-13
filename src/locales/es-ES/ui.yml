@@ -117,9 +117,9 @@ component:
       - Dangerously Low Quality/Misleading Content
       - Violates the org's derivative work guidelines or inappropriate
       - Otros
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - 
+      - 
+      - 
   thirdpartycookie:
     neverShowAgain: No volver a mostrar la alerta
   playlist:
@@ -295,9 +295,9 @@ views:
       - Iniciar sesión con Discord
       - Iniciar sesión con Twitter
     usernameBtn:
-      - Change
+      - 
       - Confirmar
-      - Save
+      - 
   multiview:
     confirmOverwrite: '¿Sobrescribir el diseño actual?'
     confirmOverwriteYes: Confirmar
@@ -394,10 +394,10 @@ about:
       title: Soy un traductor y no encuentro mi canal o clips en Holodex
       contents:
         - >-
-          Please check on the Channels page to see if you are listed as a subber, if not please fill out
+
         - ', and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.'
         - >-
-          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+
     feedback:
       title: Tengo una idea/quiero ayudar en el proyecto
   gdpr: GDPR y mis datos
