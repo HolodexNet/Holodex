@@ -262,7 +262,7 @@
     </v-row>
     <v-row dense>
       <v-col cols="12">
-        <v-list style="min-height: 30vh">
+        <v-list style="min-height: 30vh; max-height: 45vh; overflow-y:auto">
           <template v-for="song in songList">
             <song-item
               :key="song.name"

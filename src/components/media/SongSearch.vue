@@ -12,7 +12,7 @@
     :autofocus="autofocus"
     :loading="isLoading"
     :items="results"
-    :item-value="(x) => x.trackId"
+    :item-value="(x) => x.index"
     :search-input.sync="search"
     :label="$t('editor.music.itunesLookupPlaceholder')"
     :filter="(a, b) => true"
@@ -30,10 +30,15 @@
 
         <v-list-item-content class="py-1 pt-1">
           <v-list-item-subtitle class="text--primary">
-            🎵 {{ x.item.trackName }} [{{ formatDuration(x.item.trackTimeMillis) }}]
+            🎵 {{ x.item.trackName }} [{{
+              formatDuration(x.item.trackTimeMillis)
+            }}]
           </v-list-item-subtitle>
           <v-list-item-subtitle class="text--caption">
-            🎤 {{ x.item.artistName }} / {{ x.item.collectionName }} {{ x.item.releaseDate ? ' / '+x.item.releaseDate.slice(0, 7) : '' }}
+            🎤 {{ x.item.artistName }} / {{ x.item.collectionName }}
+            {{
+              x.item.releaseDate ? " / " + x.item.releaseDate.slice(0, 7) : ""
+            }}
           </v-list-item-subtitle>
         </v-list-item-content>
       </div>
@@ -48,16 +53,22 @@
 
         <v-list-item-content class="py-1 pt-1">
           <v-list-item-subtitle class="text--primary">
-            🎵 {{ x.item.trackName }} [{{ formatDuration(x.item.trackTimeMillis) }}]
+            🎵 {{ x.item.trackName }} [{{
+              formatDuration(x.item.trackTimeMillis)
+            }}]
           </v-list-item-subtitle>
           <v-list-item-subtitle class="text--caption">
-            🎤 {{ x.item.artistName }} {{ x.item.collectionName && (' / ' + x.item.collectionName) }} {{ x.item.releaseDate ? ' / '+x.item.releaseDate.slice(0, 7) : "" }}
+            🎤 {{ x.item.artistName }}
+            {{ x.item.collectionName && " / " + x.item.collectionName }}
+            {{
+              x.item.releaseDate ? " / " + x.item.releaseDate.slice(0, 7) : ""
+            }}
             <v-chip
               x-small
               outlined
               label
               class="ml-1 px-1"
-              style="opacity:0.5"
+              style="opacity: 0.5"
             >
               {{ x.item.src }}
             </v-chip>
@@ -144,40 +155,57 @@ export default {
         formatDuration,
         async getAutocomplete(query) {
             this.isLoading = true;
-            const [md, res, resEn] = await Promise.all([this.searchMusicdex(query), this.searchAutocomplete(query, "ja_jp"), this.searchAutocomplete(query, "en_us")]);
+            const [md, res, resEn] = await Promise.all([
+                this.searchMusicdex(query),
+                this.searchAutocomplete(query, "ja_jp"),
+                this.searchAutocomplete(query, "en_us"),
+            ]);
             const lookupEn = resEn.results || [];
             console.log(lookupEn);
-            const fnLookupFn = (id, name) => {
+            const fnLookupFn = (id, name, altName) => {
                 const foundEn = lookupEn.find((x) => x.trackId === id);
-                if (foundEn && foundEn.trackName !== name && compareTwoStrings(foundEn.trackName, name) < 0.2) {
-                    return `${name} / ${foundEn.trackName}`;
+                const possibleNames = [
+                    foundEn.trackCensoredName?.toUpperCase(),
+                    foundEn.trackName.toUpperCase(),
+                ];
+                if (
+                    foundEn
+                    && !possibleNames.includes(name.toUpperCase())
+                    && compareTwoStrings(foundEn.trackName, name) < 0.75
+                ) {
+                    return `${name} / ${foundEn.trackCensoredName || foundEn.trackName}`;
                 }
-                return name;
+                return altName || name;
             };
             if (res && res.results) {
                 console.log(res.results);
-                this.fromApi = [...md.slice(3), ...res.results.map(
-                    ({
-                        trackId,
-                        collectionName,
-                        releaseDate,
-                        artistName,
-                        trackName,
-                        trackTimeMillis,
-                        artworkUrl100,
-                        trackViewUrl,
-                    }) => ({
-                        trackId,
-                        trackTimeMillis,
-                        collectionName,
-                        releaseDate,
-                        artistName,
-                        trackName: fnLookupFn(trackId, trackName),
-                        artworkUrl100,
-                        trackViewUrl,
-                        src: "iTunes",
-                    }),
-                )];
+                this.fromApi = [
+                    ...md.slice(0, 3),
+                    ...res.results.map(
+                        ({
+                            trackId,
+                            collectionName,
+                            releaseDate,
+                            artistName,
+                            trackName,
+                            trackCensoredName,
+                            trackTimeMillis,
+                            artworkUrl100,
+                            trackViewUrl,
+                        }) => ({
+                            trackId,
+                            trackTimeMillis,
+                            collectionName,
+                            releaseDate,
+                            artistName,
+                            trackName: fnLookupFn(trackId, trackName, trackCensoredName),
+                            artworkUrl100,
+                            trackViewUrl,
+                            src: "iTunes",
+                            index: `iTunes${trackId}`,
+                        }),
+                    ),
+                ];
             }
             this.isLoading = false;
             // console.log(res);
@@ -194,16 +222,68 @@ export default {
         },
         async searchMusicdex(query) {
             try {
-                const resp = await axiosInstance({ url: "https://staging.holodex.net/api/v2/musicdex/search", method: "POST", data: { q: query } });
-                return resp?.data?.hits?.map(({ document }) => ({
-                    trackId: document.itunesid,
-                    artistName: document.original_artist,
-                    trackName: document.name,
-                    trackTimeMillis: (document.end - document.start) * 1000,
-                    trackViewUrl: document.amUrl,
-                    artworkUrl100: document.art,
-                    src: "Musicdex",
-                })) || [];
+                const resp = await axiosInstance({
+                    url: "/musicdex/elasticsearch/search",
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-ndjson",
+                        Accept: "application/json, text/plain, */*",
+                    },
+                    data:
+                        `{"preference":"results"}\n${
+                            JSON.stringify({
+                                query: {
+                                    bool: {
+                                        must: [
+                                            {
+                                                bool: {
+                                                    must: [
+                                                        {
+                                                            multi_match: {
+                                                                query,
+                                                                fields: [
+                                                                    "general^3",
+                                                                    "general.romaji^0.5",
+                                                                    "original_artist^2",
+                                                                    "original_artist.romaji^0.5",
+                                                                ],
+                                                                type: "most_fields",
+                                                            },
+                                                        },
+                                                        {
+                                                            multi_match: {
+                                                                query,
+                                                                fields: [
+                                                                    "name.ngram",
+                                                                    "name",
+                                                                ],
+                                                                type: "most_fields",
+                                                            },
+                                                        },
+                                                    ],
+                                                },
+                                            },
+                                        ],
+                                    },
+                                },
+                                size: 12,
+                                _source: { includes: ["*"], excludes: [] },
+                                from: 0,
+                                sort: [{ _score: { order: "desc" } }],
+                            })}\n`,
+                });
+                return (
+                    resp?.data?.responses?.[0]?.hits?.hits?.map(({ _source }) => ({
+                        trackId: _source.itunesid,
+                        artistName: _source.original_artist,
+                        trackName: _source.name,
+                        trackTimeMillis: (_source.end - _source.start) * 1000,
+                        trackViewUrl: _source.amUrl,
+                        artworkUrl100: _source.art,
+                        src: "Musicdex",
+                        index: `Musicdex${_source.itunesid || _source.name+_source.original_artist}`,
+                    })) || []
+                );
             } catch (e) {
                 console.error(e);
                 return [];

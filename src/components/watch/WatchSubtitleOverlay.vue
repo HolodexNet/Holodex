@@ -46,6 +46,7 @@ export default {
     box-shadow: 10px 0 0 rgba(0,0,0,0.75), -10px 0 0 rgba(0,0,0,0.75);
     background: rgba(0,0,0,0.75);
     white-space: pre-wrap;
+    color: rgba(255,255,255,1)
 }
 .subtitle-name {
   font-size: 16px;

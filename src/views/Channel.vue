@@ -18,7 +18,8 @@
           <v-tab
             v-for="tab in tabs.filter((t) => !t.hide)"
             :key="tab.path"
-            :to="tab.path"
+            :to="tab.path.includes('https') ? null : tab.path"
+            :href="tab.path.includes('https') ? tab.path : null"
             :exact="tab.exact"
           >
             {{ tab.name }}
@@ -94,7 +95,7 @@ export default {
                     hide: this.channel.type === "subber",
                 },
                 {
-                    path: `/channel/${this.id}/music`,
+                    path: `https://music.holodex.net/channel/${this.id}`,
                     name: `${this.$t("views.channel.music")}`,
                     hide: this.channel.type === "subber",
                 },

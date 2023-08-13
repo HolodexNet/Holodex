@@ -5,6 +5,12 @@
 - Development of Vue3-powered Holodex (release 3.0 ?!?!) is underway... If you like to influence how it looks, now is the best time to let us know.
 - If you are a UI engineer and would like to contribute to Holodex, drop by the discord!
 
+### 2.36 Holodex [*August 12th, 2023*]
+
+- We got audited, yay.
+- We updated our privacy policy on the About Page.
+- Youtube icon sizes have been adjusted to satisfy guidelines posted on [Youtube Brand Resources](https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors)
+
 ### 2.35 Holodex [*July 8th, 2023*]
 
 - I think twitter broke the timeline embed. This is entirely twitter's fault this time. Hmph!

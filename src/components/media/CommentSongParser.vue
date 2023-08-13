@@ -136,12 +136,13 @@ export default {
             const resEn = await this.searchAutocomplete(query, "en_us");
             const lookupEn = resEn.results || [];
             console.log(lookupEn);
-            const fnLookupFn = (id, name) => {
+            const fnLookupFn = (id, name, altName) => {
                 const foundEn = lookupEn.find((x) => x.trackId === id);
-                if (foundEn && foundEn.trackName !== name && compareTwoStrings(foundEn.trackName, name) < 0.2) {
-                    return `${name} / ${foundEn.trackName}`;
+                const possibleNames = [foundEn.trackCensoredName?.toUpperCase(), foundEn.trackName.toUpperCase()];
+                if (foundEn && !possibleNames.includes(name.toUpperCase()) && compareTwoStrings(foundEn.trackName, name) < 0.75) {
+                    return `${name} / ${foundEn.trackCensoredName || foundEn.trackName}`;
                 }
-                return name;
+                return altName || name;
             };
             if (res && res.results) {
                 // console.log(res.results);
@@ -152,6 +153,7 @@ export default {
                         releaseDate,
                         artistName,
                         trackName,
+                        trackCensoredName,
                         trackTimeMillis,
                         artworkUrl100,
                         trackViewUrl,
@@ -161,7 +163,7 @@ export default {
                         collectionName,
                         releaseDate,
                         artistName,
-                        trackName: fnLookupFn(trackId, trackName),
+                        trackName: fnLookupFn(trackId, trackName, trackCensoredName),
                         artworkUrl100,
                         trackViewUrl,
                     }),
@@ -174,15 +176,67 @@ export default {
 
         async searchMusicdex(query) {
             try {
-                const resp = await axiosInstance({ url: "https://staging.holodex.net/api/v2/musicdex/search", method: "POST", data: { q: query } });
-                return resp?.data?.hits?.map(({ document }) => ({
-                    trackId: document.itunesid,
-                    artistName: document.original_artist,
-                    trackName: document.name,
-                    trackTimeMillis: (document.end - document.start) * 1000,
-                    trackViewUrl: document.amUrl,
-                    artworkUrl100: document.art,
-                })) || [];
+                const resp = await axiosInstance({
+                    url: "/musicdex/elasticsearch/search",
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-ndjson",
+                        Accept: "application/json, text/plain, */*",
+                    },
+                    data:
+                        `{"preference":"results"}\n${
+                            JSON.stringify({
+                                query: {
+                                    bool: {
+                                        must: [
+                                            {
+                                                bool: {
+                                                    must: [
+                                                        {
+                                                            multi_match: {
+                                                                query,
+                                                                fields: [
+                                                                    "general^3",
+                                                                    "general.romaji^0.5",
+                                                                    "original_artist^2",
+                                                                    "original_artist.romaji^0.5",
+                                                                ],
+                                                                type: "most_fields",
+                                                            },
+                                                        },
+                                                        {
+                                                            multi_match: {
+                                                                query,
+                                                                fields: [
+                                                                    "name.ngram",
+                                                                    "name",
+                                                                ],
+                                                                type: "most_fields",
+                                                            },
+                                                        },
+                                                    ],
+                                                },
+                                            },
+                                        ],
+                                    },
+                                },
+                                size: 12,
+                                _source: { includes: ["*"], excludes: [] },
+                                from: 0,
+                                sort: [{ _score: { order: "desc" } }],
+                            })}\n`,
+                });
+                return (
+                    resp?.data?.responses?.[0]?.hits?.hits?.map(({ _source }) => ({
+                        trackId: _source.itunesid,
+                        artistName: _source.original_artist,
+                        trackName: _source.name,
+                        trackTimeMillis: (_source.end - _source.start) * 1000,
+                        trackViewUrl: _source.amUrl,
+                        artworkUrl100: _source.art,
+                        src: "Musicdex",
+                    })) || []
+                );
             } catch (e) {
                 console.error(e);
                 return [];
@@ -199,7 +253,7 @@ export default {
             });
         },
 
-        async tryLooking({ index, start_time, end_time, tokens }, token, idx) {
+        async tryLooking({ /* index, */ start_time, end_time, tokens }, token, idx) {
             console.log(tokens);
 
             // const nonSplit = tokens;

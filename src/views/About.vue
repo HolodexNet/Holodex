@@ -51,6 +51,11 @@
                 {{ $t("about.credits.contents[4]") }}
               </a>
             </p>
+            <br>
+            <p>
+              By using this site you are agreeing to be bound by the
+              <a href="https://www.youtube.com/t/terms">Youtube Terms of Service</a>
+            </p>
           </v-card-text>
         </v-card>
         <!-- LINKS -->
@@ -271,6 +276,137 @@
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <div v-html="$t('about.faq.support.contents.0')" />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                {{ $t("about.privacyPolicy") }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <p style="">
+                  This Privacy Policy governs the manner in which Holodex
+                  collects, uses, maintains, and discloses information collected
+                  from users (each, a "User") of the Holodex website ("Site").
+                  This privacy policy applies to the Site and all products and
+                  services offered by Holodex.
+                </p>
+
+                <h4>Holodex First Party Information collection and usage:</h4>
+
+                <p>
+                  We collect limited personal identification information from
+                  Users in a variety of ways, including, but not limited to,
+                  when Users visit our Site, register on the Site, fill out a
+                  form, and in connection with other activities, services,
+                  features or resources we make available on our Site.
+                </p>
+
+                <p>
+                  We will collect personal identification information from Users
+                  only if they voluntarily submit such information to us. Users
+                  can always refuse to supply personal identification
+                  information and use the Site without logging in.
+                </p>
+
+                <p>
+                  i) Information Access: When you log in using your social media
+                  account, we will only access the basic information required to
+                  facilitate your login. This typically includes your email
+                  address or social media handle. We will not retrieve or store
+                  any other personal data from your social media account. We
+                  will also store the minimum amount of ID or email handle used
+                  to distinctly link a Holodex account with a Social Media
+                  Account so we may facilitate future logins.
+                </p>
+
+                <p>
+                  ii) Limited Use: The information obtained from your social
+                  media account is solely for the purpose of allowing you to log
+                  into our service. We will not use this information for
+                  identification purposes outside of this function or share it
+                  with third parties without your explicit consent.
+                </p>
+
+                <p>
+                  iii) No Posting: We will not post any content to your social
+                  media accounts on your behalf or access your contacts,
+                  friends, or followers.
+                </p>
+
+                <p>
+                  iv) Revoking Access: You can revoke our access to your social
+                  media account at any time through your social media platform's
+                  settings. Revoking our access will not affect your account
+                  with us, but you may need to set up an alternative login
+                  method for our service.
+                </p>
+
+                <p>
+                  Changes to This Clause: Any changes to our social media login
+                  policy will be updated on this page. We recommend that you
+                  periodically review this clause for any changes.
+                </p>
+
+                <h4>Third Party Information collection and usage:</h4>
+
+                <h5>1. Google Analytics</h5>
+                <p>
+                  We use Google Analytics, a service provided by Google, Inc.,
+                  to analyze our website traffic. Google Analytics utilizes
+                  cookies to track visitor interactions and collects information
+                  about how visitors use our site. This data might include your
+                  IP address, browser type, browser version, the pages of our
+                  site that you visit, the time and date of your visit, the time
+                  spent on those pages, and other statistics.
+                </p>
+
+                <p>
+                  The data collected is primarily used to report on website
+                  usage to help us understand our visitors' preferences and to
+                  enhance the user experience. Please refer to Google's privacy
+                  policy.
+                </p>
+
+                <h5>2. YouTube & Twitch Embeds</h5>
+                <p>
+                  Our website may feature embedded videos from YouTube (owned by
+                  Google, Inc.) or Twitch (owned by Twitch Interactive, Inc.).
+                  When you watch these videos, these platforms may set cookies
+                  on your device and collect data such as your IP address, your
+                  browser type, and the page you visited on our site.
+                </p>
+
+                <p>
+                  We've added links below to their respective privacy policies.
+                </p>
+
+                <h5>Your Choices</h5>
+                <p>
+                  You can control and limit the data that third-party services
+                  collect by using the respective settings in your browser or
+                  device and by consulting the privacy settings specific to each
+                  third-party service.
+                </p>
+
+                <h4>Contact Us about Privacy</h4>
+
+                <p>
+                  If you have concerns about the data these third parties
+                  collect or wish to find out more about your data protection
+                  rights, we encourage you to visit their respective privacy
+                  policies.
+                </p>
+
+                <p>
+                  Your privacy is of paramount importance to us, and we are
+                  committed to ensuring the best standards are upheld. If you
+                  have any questions or concerns regarding our use of social
+                  media logins, please contact our team on discord.
+                </p>
+
+                <a href="https://policies.google.com/privacy">Google and Youtube Privacy Policy</a>
+                <br>
+                <a href="https://www.twitch.tv/p/en/legal/privacy-notice/">Twitch Privacy Policy</a>
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
