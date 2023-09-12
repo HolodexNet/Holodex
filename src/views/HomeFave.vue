@@ -212,7 +212,7 @@ export default {
                 3: "list",
             };
             this.$router
-                .replace({
+                .push({
                     // set page to 0 if on scroll mode
                     query: preservePage && {
                         ...this.$route.query,
