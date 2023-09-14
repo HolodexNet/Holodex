@@ -1,0 +1,44 @@
+$header-height: 40px;
+$sidebar-width: 300px;
+$responsive-breakpoint: 768px;
+
+.layout {
+  display: grid;
+  grid-template-rows: $header-height auto;
+  grid-template-columns: $sidebar-width auto;
+  grid-template-areas:
+    'sidebar header'
+    'sidebar content'
+  ;
+  height: 100vh;
+
+  >header {
+    grid-area: header;
+  }
+
+  >aside {
+    grid-area: sidebar;
+  }
+
+  >main {
+    grid-area: content;
+    overflow-y: auto;
+  }
+
+  @media (--sm) {
+    grid-template-areas:
+      'header header'
+      'content content'
+    ;
+
+    >aside {
+      grid-area: content;
+      position: relative;
+      left: 0;
+    }
+
+    >aside.collapsed {
+      left: -100%;
+    }
+  }
+}
