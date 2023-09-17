@@ -365,6 +365,23 @@ export default {
     created() {
         console.log("Created, so adding refresh timer to HomeFav");
         this.init(true); // try updating favorites if it's actually favorites page.
+        this.tabToQueryMap = Object.freeze({
+            [this.Tabs.ARCHIVE]: Object.freeze({
+                status: "past,missing",
+                type: "stream",
+                include: "mentions,clips",
+            }),
+            [this.Tabs.CLIPS]: Object.freeze({
+                status: "past",
+                type: "clip",
+                include: "mentions",
+            }),
+            [this.Tabs.COLLABS]: Object.freeze({
+                // status: "new,upcoming,live,past,missing", // Include all status
+                type: "stream",
+                include: "mentions",
+            }),
+        });
     },
     methods: {
         toggleDisplayMode() {
@@ -399,16 +416,8 @@ export default {
             this.init();
         },
         getLoadFn() {
-            const inclusion = {
-                [this.Tabs.ARCHIVE]: "mentions,clips",
-                [this.Tabs.LIVE_UPCOMING]: "mentions",
-                [this.Tabs.CLIPS]: "mentions",
-            }[this.tab] ?? "";
-
             const query = {
-                status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                include: inclusion,
+                ...(this.tabToQueryMap[this.tab] ?? {}),
                 lang: this.$store.state.settings.clipLangs.join(","),
                 paginated: !this.scrollMode,
                 ...(this.toDate && {
