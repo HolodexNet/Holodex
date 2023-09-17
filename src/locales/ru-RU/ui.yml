@@ -180,6 +180,7 @@ views:
       all: Все
       official: Архивы
       subber: Клипы
+      collabs: Коллабы
   library:
     savedVideosTitle: Сохраненные видео
     createYtPlaylistButton: Создать YouTube плейлист ({0})

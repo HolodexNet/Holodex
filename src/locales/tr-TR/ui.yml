@@ -189,6 +189,7 @@ views:
       all: Tümü
       official: Arşiv
       subber: Klipler
+      collabs: Collablar
   library:
     savedVideosTitle: Kaydedilen Videolar
     createYtPlaylistButton: YT Oynatma Listesi Oluştur ({0})

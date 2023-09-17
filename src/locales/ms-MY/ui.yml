@@ -188,6 +188,7 @@ views:
       all: Semua
       official: Arkib
       subber: Sedutan
+      collabs: Siarsama
   library:
     savedVideosTitle: Video yang Disimpan
     createYtPlaylistButton: Buat Senarai Main YouTube ({0})
