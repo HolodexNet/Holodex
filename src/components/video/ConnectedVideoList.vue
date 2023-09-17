@@ -429,7 +429,7 @@ export default {
             return async (offset: any, limit: any) => {
                 let res = null;
                 // Handle backend query depending on page
-            if (this.isFavPage) {
+                if (this.isFavPage) {
                     // Favourites Page
                     res = await backendApi
                         .favoritesVideos(this.$store.state.userdata.jwt, {
@@ -446,13 +446,19 @@ export default {
                     // Home Page
                     res = await backendApi
                         .videos({
-                    ...query,
-                    org: this.$store.state.currentOrg.name,
-                    limit,
-                    offset,
-                });
+                            ...query,
+                            org: this.$store.state.currentOrg.name,
+                            limit,
+                            offset,
+                        });
                 }
-
+                // Handle collab tab
+                if (this.tab === this.Tabs.COLLABS) {
+                    res.data.items = res.data.items.filter(
+                        // Filter only for videos with mentions (collabs)
+                        (obj) => (Array.isArray(obj.mentions) && obj.mentions.length > 0),
+                    );
+                }
                 return res?.data;
             };
         },
