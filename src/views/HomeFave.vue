@@ -109,6 +109,7 @@ export default {
                 ARCHIVE: 1,
                 CLIPS: 2,
                 COLLABS: 3,
+                LIST: 4,
             }),
             refreshTimer: null,
         };
@@ -213,6 +214,7 @@ export default {
                 1: "archive",
                 2: "clips",
                 3: "collabs",
+                4: "list",
             };
             this.$router
                 .replace({
