@@ -426,9 +426,12 @@ export default {
                 }),
                 max_upcoming_hours: 1,
             };
+            return async (offset: any, limit: any) => {
+                let res = null;
+                // Handle backend query depending on page
             if (this.isFavPage) {
-                return async (offset, limit) => {
-                    const res = await backendApi
+                    // Favourites Page
+                    res = await backendApi
                         .favoritesVideos(this.$store.state.userdata.jwt, {
                             ...query,
                             limit,
@@ -439,18 +442,18 @@ export default {
                             this.$store.dispatch("loginVerify", { bounceToLogin: true }); // check if the user is actually logged in.
                             throw err;
                         });
-                    return res.data;
-                };
-            }
-            // home page function
-            return async (offset, limit) => {
-                const res = await backendApi.videos({
+                } else {
+                    // Home Page
+                    res = await backendApi
+                        .videos({
                     ...query,
                     org: this.$store.state.currentOrg.name,
                     limit,
                     offset,
                 });
-                return res.data;
+                }
+
+                return res?.data;
             };
         },
     },
