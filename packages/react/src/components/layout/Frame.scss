@@ -1,0 +1,77 @@
+$header-height: 40px;
+$sidebar-width: 300px;
+$footer-height: 40px;
+$responsive-breakpoint: 768px;
+
+
+#layout {
+  --footer-height-clearance: 0px;
+  --sidebar-width: #{$sidebar-width};
+
+  &.sidebar-static {
+    --sidebar-width-clearance: calc(#{$sidebar-width} + env(safe-area-inset-left, 0px));
+  }
+
+  &.sidebar-floating {
+    --sidebar-width-clearance: 0;
+  }
+
+  &.mobile-footer {
+    --footer-height-clearance: calc(#{$footer-height} + env(safe-area-inset-bottom) / 2); // maybe add the iphone safety area here.
+  }
+
+  &.sidebar-open {
+    --sidebar-left: 0;
+  }
+
+  &.sidebar-closed {
+    --sidebar-left: calc(-1 * var(--sidebar-width) - env(safe-area-inset-left, 0px));
+
+    &.sidebar-static {
+      --sidebar-width-clearance: env(safe-area-inset-left);
+    }
+  }
+
+  &.sidebar-fullscreen {
+    --sidebar-width: 100vw;
+  }
+
+  display: grid;
+  grid-template-rows: $header-height auto var(--footer-height-clearance);
+  grid-template-columns: var(--sidebar-width-clearance) auto;
+  transition: grid-template-columns 0.3s;
+
+  min-height: 100vh;
+
+  grid-template-areas: 'sidebar header'
+  'sidebar content'
+  'appfooter appfooter';
+
+  >header {
+    grid-area: header;
+  }
+
+
+  >aside {
+    grid-area: sidebar;
+
+    >#sidebar {
+      width: var(--sidebar-width);
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: var(--sidebar-left);
+      z-index: 1;
+      transition: left 0.3s;
+    }
+  }
+
+  >main {
+    grid-area: content;
+    overflow-y: auto;
+  }
+
+  >footer {
+    grid-area: appfooter;
+  }
+}
