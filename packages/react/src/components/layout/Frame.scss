@@ -62,7 +62,7 @@ $responsive-breakpoint: 768px;
       bottom: 0;
       left: var(--sidebar-left);
       z-index: 1;
-      transition: left 0.3s;
+      transition: left 0.3s, width 0.3s;
     }
   }
 

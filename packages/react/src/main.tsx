@@ -9,8 +9,7 @@ import { Frame } from "./components/layout/Frame.tsx";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Theme accentColor="amber" appearance="dark">
-      <Frame>
-      </Frame>
+      <Frame />
     </Theme>
   </React.StrictMode>,
 );

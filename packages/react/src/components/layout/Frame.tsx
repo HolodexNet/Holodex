@@ -30,19 +30,20 @@ export function Frame() {
   return (
     <div className={mainClasses} id='layout'>
       <aside className="border border-red">
-        <div id="sidebar">
-          {JSON.stringify(fc)}
-
+        <div id="sidebar" className="border border-4 border-red-200">
+          <code><pre className='whitespace-pre-wrap'>{JSON.stringify(fc, null, 2)}</pre></code>
+          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => fc.toggle()}>Toggle Sidebar</button>
         </div>
       </aside>
-      <header className="border border-green">Header<button onClick={() => fc.toggle()}>Toggle Sidebar</button>
+      <header className="border border-green">Header
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => fc.toggle()}>Toggle Sidebar</button>
       </header>
       <main className="border border-green">
         <ScrollArea type="always" scrollbars="vertical" style={{ height: '100%' }}>
           <RouterProvider router={router}></RouterProvider>
         </ScrollArea>
       </main>
-      {fc.isMobile && <footer>Footer</footer>}
+      {fc.isMobile && <footer className="border border-purple">Footer</footer>}
     </div>
   )
 }

@@ -14,7 +14,7 @@ export const frameContext = proxy({
   },
 
   get isMobile() {
-    return frameContext.sidebarShouldBeFullscreen && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    return frameContext.sidebarShouldBeFullscreen //&& /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
   },
 
   // it's always open at init unless it's small.
