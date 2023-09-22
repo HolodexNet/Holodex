@@ -1,5 +1,16 @@
 # React + TypeScript + Vite
 
+## Holodex V3 React Rewrite
+
+### Design guidelines:
+
+**Simple UI Stack Breakdown:**
+- Shadcn/ui components. These are basically copy pasted in, but there's a shadcn setup CLI tool you can `npx shadcn ...` to add new components in.
+- Tailwind Utility CSS classes
+- Radix Colors applied to tailwind, with some semantic css colors
+- UNOCSS presets for icon provided via iconify. Please install iconify json libraries separately though as you use them
+
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
