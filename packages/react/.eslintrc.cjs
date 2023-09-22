@@ -7,9 +7,18 @@ module.exports = {
     'plugin:react-hooks/recommended',
     "@unocss",
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
+
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+
   rules: {
     'react-refresh/only-export-components': [
       'warn',
