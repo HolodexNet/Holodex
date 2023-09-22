@@ -7,6 +7,12 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+    },
     "module": "ESNext",
     "skipLibCheck": true,
     /* Plugins */
@@ -27,7 +33,7 @@
     "jsx": "react-jsx",
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
