@@ -265,6 +265,7 @@ views:
     hideCollabStreamsLabel: コラボ配信を表示しない
     hideCollabStreamsMsg: お気に入りページでコラボ配信を非表示にします
     hidePlaceholderStreams: プレースホルダーの配信を隠す
+    hideMissingStreams: 非公開の配信を隠す
     ignoredTopicsLabel: 除外するトピック
     ignoredTopicsMsg: これらのトピックの動画はホームとお気に入りに表示されなくなります
     theme: テーマ
