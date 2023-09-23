@@ -59,6 +59,8 @@ component:
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -603,6 +605,7 @@ about:
       contents:
         '0': >-
           Ouw sewf-hosted sewvew ish a 28-cowe 60gb ram machine that take about $60 usd / mo to wun, and we'we wooking to expanding mowe and mowe in ouw featuwe set, so we've stawted a <a href="https://ko-fi.com/holodex">ko-fi</a> to covew sewvew costs. (we awso have a <a href="https://www.patreon.com/holodex">patweon</a>, but we wike da ko-fi bettew.)<br /><br />you can awso suppowt howodex by giving us feedback and suppowtive messages on twittew, hewping us twanswate via <a href="https://crwd.in/holodex">cwowdin</a>, as weww as contwibuting to ouw data stowe of songs. Even timing a stweam fow funny pawts, and commenting that on da owiginaw stweam ish gweat hewp!
+  privacyPolicy: Pwyvacy powicy
   gdpr: Gdpr and my data
   gdprContent: >-
     A googwe anawytics cookie ish used to twack pageviews fow ouw anawyticaw puwposes. Aftew wogin, we associate youw sociaw media account usewname and id with youw favowites. Dis data may incwude youw emaiw (fow googwe), discowd id, ow twittew handwe wespectivewy.
