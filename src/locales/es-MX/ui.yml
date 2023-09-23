@@ -126,9 +126,9 @@ component:
       - Contenido peligrosamente de baja calidad/engañoso
       - Viola las pautas del trabajo derivado de las org o inapropiado
       - Otros
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - 
+      - 
+      - 
   thirdpartycookie:
     explanation: >-
       Debido a cómo funciona tu navegador de internet, algunos navegadores con <b>políticas estrictas de Cookies de terceros</b>, o aquellos bloqueando las cookies de <kbd>YouTube.com</kbd> pueden encontrar difícil iniciar sesion o usar el chat de Youtube. <br /><br /> Puedes arreglar esto al agregar a <kbd>Youtube.com</kbd> a la lista blanca en los bloqueadores de Cookies de terceros, o bajando tu nivel de seguridad / privacidad para <kbd>Holodex.net</kbd>. <br /><br />Incluimos algunas páginas web que proveen más información sobre como hacer esto.

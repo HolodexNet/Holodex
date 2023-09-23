@@ -112,9 +112,9 @@ component:
       - Contenu dangereux de faible qualité/trompeur
       - Viole les directives de travail de l'organisation ou inapproprié
       - Autre
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - 
+      - 
+      - 
   thirdpartycookie:
     explanation: >-
       En raison du fonctionnement de votre navigateur Internet, certains navigateurs avec des politiques strictes de <b>Cookie tiers</b> ou ceux qui bloquent les cookies de <kbd>YouTube.com</kbd> peuvent avoir du mal à se connecter / utiliser le chat YouTube. <br /><br /> Vous pouvez corriger cela en mettant sur la liste blanche <kbd>YouTube.com</kbd> dans les bloqueurs de cookies tiers, ou diminuant votre niveau de sécurité / confidentialité des cookies pour <kbd>Holodex.net</kbd>. <br /><br /> Nous avons inclus certains sites Web qui fournissent plus d'informations sur la façon de procéder.
@@ -302,9 +302,9 @@ views:
       - Se connecter avec Discord
       - Se connecter avec Twitter
     usernameBtn:
-      - Change
+      - 
       - Confirmer
-      - Save
+      - 
   multiview:
     confirmOverwrite: Remplacer la disposition actuelle ?
     confirmOverwriteYes: Confirmer
@@ -403,7 +403,7 @@ about:
         - >-
           Les favoris sont un moyen de voir vos vtubeurs préférés en priorité, vous pouvez ajouter vos chaînes en favoris en cliquant sur l'icône cœur sur le
         - >-
-          page. Please note that favoriting subbers is currently not supported, but you should still consider subscribing and supporting them in other ways!
+
       disappear:
         title: Mes favoris ont disparu / Je ne peux pas ajouter de favori
     mobile:
@@ -417,10 +417,10 @@ about:
       title: Je fais des clips et je ne trouve pas ma chaine ou mes clips sur Holodex
       contents:
         - >-
-          Please check on the Channels page to see if you are listed as a subber, if not please fill out
+
         - ', and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.'
         - >-
-          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+
     feedback:
       title: J'ai des retours/idées à donner pour le projet ou je veux aider
   gdpr: RGPD et mes données

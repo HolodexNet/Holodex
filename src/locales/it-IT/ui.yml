@@ -117,9 +117,9 @@ component:
       - Contenuti di estrema Bassa Qualità/Fuorvianti
       - Viola le linee guida di opere derivate o è inappropriato
       - Altro
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - 
+      - 
+      - 
   thirdpartycookie:
     explanation: >-
       A causa del modo in cui funziona il tuo internet browser, alcuni browser con rigide <b>politiche sui cookie di terze parti</b>, o quelli che bloccano <kbd>YouTube.com</kbd> i cookie potrebbero avere difficoltà ad accedere / usare la chat di Youtube. <br /><br /> È possibile risolvere questo problema inserendo <kbd>Youtube. om</kbd> nella whitelist del "blocca Cookie di terze parti", o diminuendo il livello di sicurezza dei cookie / della privacy per <kbd>Holodex. et</kbd>. <br /><br /> Abbiamo incluso alcuni siti web che forniscono ulteriori informazioni su come poterlo fare.
@@ -310,9 +310,9 @@ views:
       - Accedi con Discord
       - Accedi con Twitter
     usernameBtn:
-      - Change
+      - 
       - Conferma
-      - Save
+      - 
   multiview:
     confirmOverwrite: Sovrascrivere il layout attuale?
     confirmOverwriteYes: Conferma
