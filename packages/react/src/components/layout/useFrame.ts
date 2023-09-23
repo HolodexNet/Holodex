@@ -1,10 +1,9 @@
-import { proxy } from 'valtio';
-import { useSnapshot } from 'valtio';
+import { proxyWithPersist } from '@/valtio-persist';
 
 const MobileSizeBreak = 768;
 const FooterSizeBreak = 500;
 
-export const frameContext = proxy({
+export const frameContext = proxyWithPersist('page_pref', {
   pageIsFullscreen: false,
   siteIsSmall: window.innerWidth < MobileSizeBreak,
   sidebarShouldBeFullscreen: window.innerWidth < FooterSizeBreak,
@@ -18,7 +17,7 @@ export const frameContext = proxy({
   },
 
   // it's always open at init unless it's small.
-  sidebarOpen: window.innerWidth < MobileSizeBreak,
+  sidebarOpen: window.innerWidth > MobileSizeBreak,
   // sidebar would stay open if it could.
   sidebarPrefOpen: true,
 
@@ -58,5 +57,5 @@ export const frameContext = proxy({
     frameContext.sidebarOpen = true;
     frameContext.sidebarPrefOpen = frameContext.sidebarOpen;
   }
-})
+}, ['sidebarPrefOpen'])
 

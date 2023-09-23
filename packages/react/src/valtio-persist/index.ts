@@ -11,14 +11,14 @@ const pick = <T extends {}, K extends keyof T>(obj: T, ...keys: K[]) => (
 /**
  * Creates a proxy object with persistence, allowing you to store and retrieve data from local storage.
  */
-function proxyWithPersist<T extends object>(key: string, initialObject: T, persistFields: (keyof T)[]) {
+export function proxyWithPersist<T extends object>(key: string, initialObject: T, persistFields: (keyof T)[]): T {
   if (typeof window === "undefined") return proxy(initialObject);
   const storageItem = localStorage.getItem(key);
 
-  const state = proxy({
+  const state = proxy<T>({
     ...initialObject,
     ...(storageItem !== null ? JSON.parse(storageItem) : {})
-  });
+  } as T);
 
   subscribe(state, () => {
     const subobject = pick(initialObject, ...persistFields)
