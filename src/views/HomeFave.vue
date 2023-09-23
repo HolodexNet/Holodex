@@ -177,6 +177,7 @@ export default {
         console.log("Activated, so adding refresh timer to HomeFav");
         this.changeTab(true);
         this.setAutoRefresh();
+        window.onpopstate = () => { this.init(); };
     },
     deactivated() {
         if (this.refreshTimer) {
@@ -184,6 +185,7 @@ export default {
             clearInterval(this.refreshTimer);
             this.refreshTimer = null;
         }
+        window.onpopstate = () => { };
     },
     beforeDestroy() {
         console.log("Destroying, so deleting the refresh timer in HomeFav");
@@ -212,7 +214,7 @@ export default {
                 3: "list",
             };
             this.$router
-                .replace({
+                .push({
                     // set page to 0 if on scroll mode
                     query: preservePage && {
                         ...this.$route.query,
