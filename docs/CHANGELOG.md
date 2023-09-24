@@ -2,8 +2,16 @@
 
 ##### Unreleased
 
-- Development of Vue3-powered Holodex (release 3.0 ?!?!) is underway... If you like to influence how it looks, now is the best time to let us know.
-- If you are a UI engineer and would like to contribute to Holodex, drop by the discord!
+- **Development of Vue3-powered Holodex (release 3.0 ?!?!) is completely scrapped**. We're making it in **react** instead. If you like to influence how it looks, now is the best time to let us know.
+- If you are a **React UI engineer/designer** and would like to contribute to Holodex, drop by our discord!
+
+### 2.37 Holodex [*September 24th, 2023*]
+
+- Thanks LiviaMedeiros for showing favorites' collabs in the side drawer, it looks sick!
+- Thanks INCENDE for a navigation history fix, let us know on discord if you hate it, since this kind of changes might change back button behavior.
+- Thanks BonnetPonta for a small UI fix.
+- New TRANSLATIONS <3 As always thank so much to all of our UI translators.
+
 
 ### 2.36 Holodex [*August 12th, 2023*]
 
