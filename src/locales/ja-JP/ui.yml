@@ -130,9 +130,9 @@ component:
       - これはミスリードを引き起こす、または低クオリティなコンテンツです。
       - これは二次創作ガイドラインに違反している、もしくは不適切なコンテンツです
       - その他
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - 
+      - 
+      - 
   thirdpartycookie:
     explanation: >-
       ブラウザの<b>サードパーティー Cookie</b>ポリシーによる場合や<kbd>Youtube.com</kbd>でのCookieをブロックしている場合にはYoutubeライブチャットへのログインが難しい、もしくは不可能な場合があります。 <br /><br />これはサードパーティーCookieのホワイトリストに<kbd>Youtube.com</kbd>を追加するか、ブラウザの設定から<kbd>Holodex.net</kbd>でのプライバシー設定を低レベルのものに設定することにより解決可能な場合があります。<br /><br />それに関する詳しい情報を提供しているサイトをいくつか紹介しています。
@@ -265,6 +265,7 @@ views:
     hideCollabStreamsLabel: コラボ配信を表示しない
     hideCollabStreamsMsg: お気に入りページでコラボ配信を非表示にします
     hidePlaceholderStreams: プレースホルダーの配信を隠す
+    hideMissingStreams: 非公開の配信を隠す
     ignoredTopicsLabel: 除外するトピック
     ignoredTopicsMsg: これらのトピックの動画はホームとお気に入りに表示されなくなります
     theme: テーマ

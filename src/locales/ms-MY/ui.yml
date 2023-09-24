@@ -59,6 +59,8 @@ component:
     uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -125,14 +127,15 @@ component:
       Ada kemungkinan saluran ini bersiarsama dengan ahli {org} atau mana-mana penggiat YouTube kegemaranmu. Saluran ini boleh disembunyikan di laman tetapan
     comments: Apakah tindakan selanjutnya?
     success: Terima kasih! Laporan telah dikirim.
+    consider: Sebaiknya gunakan penapis dan batalkan laporan ini.
     reasons:
       - Video tidak ditandai dengan betul
       - Kandungan video tidak bermutu atau mengelirukan
       - Melanggar garis panduan pertubuhan terbabit atau memaparkan kandungan yang tidak bersesuaian
       - Lain-lain
-      - Incorrect video topic
-      - Incorrect channel mentions
-      - This {0} does not belong to {1}
+      - Kesalahan topik video
+      - Kesalahan penyebutan nama saluran
+      - '{0} ini tidak ada kaitannya dengan {1}'
   thirdpartycookie:
     explanation: >-
       Sesetengah penyemak imbas dengan dasar <b>cecikut pihak ketiga</b> yang ketat ataupun yang menyekat cecikut <kbd>YouTube.com</kbd> berkebarangkalian menghadapi kesukaran mengelog masuk mahupun menggunakan sembang langsung Youtube. <br /><br /> Masalah ini boleh diselesaikan dengan memasukkan <kbd>Youtube.com</kbd> ke dalam senarai putih penyekat cecikut pihak ketiga ataupun menggunakan tahap tetapan keselamatan cecikut yang rendah bagi <kbd>Holodex.net</kbd>. <br /><br /> Berikut disertakan sekali beberapa tapak sesawang yang boleh memberikan maklumat lanjut berkenaan langkah-langkah yang harus dilakukan.
@@ -602,6 +605,7 @@ about:
       contents:
         '0': >-
           Perkakas yang merumahkan laman kami secara sendiri ini mempunyai RAM sebanyak 60GB dengan 28 teras serta memakan belanja sebanyak 60 dolar AS (kira-kira RM250 / B$80 / S$80 / Rp 850.000) per bulan. Tambahan lagi, kami merancang mahu mengembangkan ciri-ciri yang disediakan. Oleh itu, kami sedang menerima sumbangan daripada para pengunjung melalui <a href="https://ko-fi.com/holodex">Ko-fi</a> demi menampung pembiayaan pelayan kami. (Sumbangan juga boleh diberikan melalui <a href="https://www.patreon.com/holodex">Patreon</a>, namun kami lebih menggemari Ko-fi.)<br /><br />Sumbangan lain yang diterima termasuklah maklum balas dan kata-kata semangat di Twitter, penerjemahan laman melalui <a href="https://crwd.in/holodex">Crowdin</a> dan juga sumbangan simpanan data lagu. Sekecil-kecil sumbangan pun amatlah dihargai! Contohnya, menghitung detik-detik yang menarik dan menghiburkan lalu meletakkan ulasan bercap masa di siaran asal.
+  privacyPolicy: Dasar Kebersendirian
   gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
     Sebuah cecikut Google Analitis digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
