@@ -99,9 +99,12 @@
           </v-list-item-avatar>
           <ChannelInfo :channel="vid.channel" no-subscriber-count no-group />
           <v-list-item-action-text v-if="vid.id" :key="'liveclock' + vid.id + tick">
-            <span :class="isLive(vid) ? 'ch-live' : 'ch-upcoming'">
+            <div :class="isLive(vid) ? 'ch-live' : 'ch-upcoming'">
+              <v-avatar v-if="vid.host_channel" :size="20">
+                <ChannelImg :channel="vid.host_channel" :size="20" />
+              </v-avatar>
               {{ formatDurationUpcoming(vid.available_at) }}
-            </span>
+            </div>
           </v-list-item-action-text>
         </v-list-item>
       </template>
@@ -202,19 +205,31 @@ export default {
             const fav = this.$store.state.favorites.favorites || [];
             try {
                 const favoritesSet = this.$store.getters["favorites/favoriteChannelIDs"];
+                const blockedSet = this.$store.getters["settings/blockedChannelIDs"];
                 const lives: Array<any> = this.$store.state.favorites.live;
                 const updateNotice = this.$store.state.favorites.lastLiveUpdate;
                 console.debug(`Updating favs: ${updateNotice}`);
 
-                const existingChs = {};
-                lives.forEach((x) => {
-                    if (favoritesSet.has(x.channel.id) && !existingChs[x.channel.id]) {
-                        existingChs[x.channel.id] = x;
-                    }
-                });
+                const existingChs = new Map();
+                lives
+                    .filter((x) => favoritesSet.has(x.channel.id))
+                    .forEach((x) => {
+                        if (!existingChs.has(x.channel.id)) {
+                            existingChs.set(x.channel.id, x)
+                        }
+                    });
+
+                // streams featuring favorites who aren't streaming themselves
+                lives
+                    .filter((x) => x.mentions?.length && !blockedSet.has(x.channel.id))
+                    .forEach((x) => x.mentions
+                        .filter(({ id }) => favoritesSet.has(id) && !existingChs.has(id) && !blockedSet.has(id))
+                        .forEach((m) => existingChs.set(m.id, { ...x, channel: m, host_channel: x.channel }))
+                    );
+
                 // remainder:
                 const extras = fav
-                    .filter((x) => !existingChs[x.id])
+                    .filter(({ id }) => !existingChs.has(id))
                     .map((ch) => ({
                         channel: ch,
                     }));
@@ -225,7 +240,7 @@ export default {
                     const name2 = b.channel[prop] || b.channel.name || "";
                     return name1.localeCompare(name2);
                 });
-                return [...Object.values(existingChs), ...extras];
+                return [...existingChs.values(), ...extras];
             } catch (e) {
                 console.error(e);
                 try {
