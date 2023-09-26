@@ -367,6 +367,10 @@ views:
       button: Save (May take 5 minutes to take effect)
     channelMentions:
       title: Channel Mentions
+      info: >-
+        All users can add mentions to videos, but only editors and admins can
+        remove and change mentions once set.
+      button: Add
     sources:
       title: Sources/Clips (in development)
   login:

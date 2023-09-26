@@ -19,10 +19,13 @@
     >
       {{ errorMessage }}
     </v-snackbar>
+    <p>
+      {{ $t("views.editor.channelMentions.info") }}
+    </p>
     <div class="d-flex flex-column my-2">
       <channel-autocomplete v-model="selectedChannel" />
       <v-btn @click="addMention(selectedChannel.id)">
-        Add
+        {{ $t("views.editor.channelMentions.button") }}
       </v-btn>
     </div>
     <channel-list :channels="mentions" :include-video-count="false">
