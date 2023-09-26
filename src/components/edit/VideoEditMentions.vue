@@ -28,6 +28,7 @@
     <channel-list :channels="mentions" :include-video-count="false">
       <template #action="{ channel }">
         <v-btn
+          v-if="isEditor"
           class="deleteBtn"
           icon
           x-large
@@ -77,6 +78,12 @@ export default {
     },
     created() {
         this.updateMentions();
+    },
+    computed: {
+        isEditor() {
+            const role = this.$store.state.userdata?.user?.role;
+            return ["editor", "admin"].includes(role);
+        },
     },
     methods: {
         updateMentions() {
