@@ -48,6 +48,7 @@ component:
     premiere: 首播
     googleCalendar: 新增至 Google 日曆
     totalTLs: 聊天室即時翻譯數
+    totalSongs: 已標記歌曲數
     tlPresence: 過去半小時內有即時翻譯
     uncertainPlaceholder: 尚未有正式的開始時間，實際的開始時間可能會有誤差。
     typeScheduledYT: 已排定實況
@@ -59,6 +60,8 @@ component:
     uploadScript: 上傳翻譯文本
   videoDescription:
     description: 說明
+  video:
+    comment: { }
   description:
     showLess: 只顯示部分資訊
     showMore: 顯示完整資訊
