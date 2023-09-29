@@ -48,6 +48,7 @@ component:
     premiere: PREMIERE
     googleCalendar: Add to googwe cawendaw
     totalTLs: Totaw wive chat tls
+    totalSongs: Totaw timestamped songs
     tlPresence: Active twanswatow in wast 30 mins
     uncertainPlaceholder: Stawt time is nyot officiawwy confiwmed, actuaw stawt time may vawy.
     typeScheduledYT: Scheduwed stweam
@@ -59,6 +60,8 @@ component:
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
