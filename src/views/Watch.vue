@@ -34,6 +34,7 @@
               ...(timeOffset && { start: timeOffset }),
               autoplay: isPlaylist ? 1 : 0,
               playsinline: 1,
+              cc_lang_pref: getLang,
             }"
             @ready="ready"
             @playing="playing"
@@ -175,6 +176,7 @@ import WatchHighlights from "@/components/watch/WatchHighlights.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import UploadScript from "@/components/tlscriptmanager/UploadScript.vue";
+import { langConversion } from "@/utils/consts";
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiDockLeft, mdiThumbUp } from "@mdi/js";
@@ -271,6 +273,10 @@ export default {
         },
         showUpload() {
             return this.$store.state.uploadPanel;
+        },
+        getLang() {
+            const lang = this.$store.state.settings.lang;
+            return langConversion[lang] || lang;
         },
     },
     watch: {

@@ -31,6 +31,7 @@
         :video-id="cellContent.id"
         :player-vars="{
           playsinline: 1,
+          cc_lang_pref: getLang,
         }"
         :mute="muted"
         manual-update
@@ -58,6 +59,7 @@
 
 <script>
 import { mapMutations } from "vuex";
+import { langConversion } from "@/utils/consts";
 import YoutubePlayer from "../player/YoutubePlayer.vue";
 import CellMixin from "./CellMixin";
 import CellControl from "./CellControl.vue";
@@ -122,6 +124,10 @@ export default {
         },
         isFastFoward() {
             return this.playbackRate !== 1;
+        },
+        getLang() {
+            const lang = this.$store.state.settings.lang;
+            return langConversion[lang] || lang;
         },
     },
     watch: {

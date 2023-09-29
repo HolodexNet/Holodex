@@ -16,6 +16,7 @@
                 ...(timeOffset && { start: timeOffset }),
                 autoplay: 1,
                 playsinline: 1,
+                cc_lang_pref: getLang,
               }"
               @ready="ready"
             />
@@ -248,6 +249,10 @@ export default {
         },
         role() {
             return this.$store.state.userdata?.user?.role;
+        },
+        getLang() {
+            const lang = this.$store.state.settings.lang;
+            return langConversion[lang] || lang;
         },
     },
     watch: {
