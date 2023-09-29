@@ -173,7 +173,7 @@ import WatchComments from "@/components/watch/WatchComments.vue";
 import VideoEditSongs from "@/components/edit/VideoEditSongs.vue";
 import VideoEditMentions from "@/components/edit/VideoEditMentions.vue";
 import CommentSongParser from "@/components/media/CommentSongParser.vue";
-import { decodeHTMLEntities, syncState } from "@/utils/functions";
+import { decodeHTMLEntities, syncState, getYTLangFromState } from "@/utils/functions";
 // import { dayjs } from "@/utils/time";
 import api from "@/utils/backend-api";
 
@@ -251,8 +251,7 @@ export default {
             return this.$store.state.userdata?.user?.role;
         },
         getLang() {
-            const lang = this.$store.state.settings.lang;
-            return langConversion[lang] || lang;
+            return getYTLangFromState(this.$store.state);
         },
     },
     watch: {

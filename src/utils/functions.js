@@ -1,6 +1,7 @@
 import { TL_LANGS,
     VIDEO_URL_REGEX,
     TWITCH_VIDEO_URL_REGEX,
+    langConversion,
     /*
     TWITCH_UNLIVE_VIDEO_URL_REGEX,
     TWITCAST_VIDEO_URL_REGEX,
@@ -73,6 +74,11 @@ export function getLang(weblang) {
         return String(weblang).split("-")[0].toLowerCase();
     }
     return "en";
+}
+
+export function getYTLangFromState(state) {
+    const lang = state.settings.lang;
+    return langConversion[lang] || lang.split("-")[0].toLowerCase();
 }
 
 export function getBannerImages(url) {

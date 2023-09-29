@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import Youtube from "@/components/player/YoutubePlayer.vue";
-import { langConversion } from "@/utils/consts";
+import { getYTLangFromState } from "@/utils/functions";
 
 export default {
     name: "SongFrame",
@@ -61,8 +61,7 @@ export default {
             return this.isBackground ? "song-player-container-background" : "song-player-container";
         },
         getLang() {
-            const lang = this.$store.state.settings.lang;
-            return langConversion[lang] || lang;
+            return getYTLangFromState(this.$store.state);
         },
     },
     watch: {

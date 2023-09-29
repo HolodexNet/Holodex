@@ -59,7 +59,7 @@
 
 <script>
 import { mapMutations } from "vuex";
-import { langConversion } from "@/utils/consts";
+import { getYTLangFromState } from "@/utils/functions";
 import YoutubePlayer from "../player/YoutubePlayer.vue";
 import CellMixin from "./CellMixin";
 import CellControl from "./CellControl.vue";
@@ -126,8 +126,7 @@ export default {
             return this.playbackRate !== 1;
         },
         getLang() {
-            const lang = this.$store.state.settings.lang;
-            return langConversion[lang] || lang;
+            return getYTLangFromState(this.$store.state);
         },
     },
     watch: {
