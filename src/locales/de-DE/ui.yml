@@ -48,6 +48,7 @@ component:
     premiere: PREMIERE
     googleCalendar: Zu Google Kalender hinzufügen
     totalTLs: Anzahl an Übersetzungen im Live-Chat
+    totalSongs: Songs mit Zeitstempeln
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
     uncertainPlaceholder: Diese Startzeit ist nicht offiziell bestätigt, die tatsächliche Startzeit kann variieren.
     typeScheduledYT: Geplanter Stream
@@ -59,6 +60,8 @@ component:
     uploadScript: TL-Skript hochladen
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
