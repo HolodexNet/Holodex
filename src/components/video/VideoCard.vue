@@ -55,10 +55,10 @@
 
         <!-- Video duration/music indicator (👻❌) -->
         <div v-if="!isPlaceholder" class="d-flex flex-column align-end">
-          <!-- Show music icon if songs exist -->
+          <!-- Show music icon if songs exist, and song count if there's multiple -->
           <div 
             v-if="data.songcount" 
-            class="video-duration"
+            class="video-duration d-flex align-center"
             :title="songIconTitle"
           >
             {{ songCount }}
