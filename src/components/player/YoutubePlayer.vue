@@ -5,6 +5,7 @@
 <script>
 import player from "youtube-player";
 import PlayerMixin from "./PlayerMixin";
+import langConversion from "@/utils/consts";
 
 const UNSTARTED = -1;
 const ENDED = 0;
@@ -64,6 +65,7 @@ export default {
             videoId: this.videoId,
             playerVars: this.playerVars,
             origin: window.origin,
+            "cc_lang_pref": this.getLang(),
         });
 
         this.player.on("ready", (e) => this.playerReady(e.target));
@@ -116,6 +118,10 @@ export default {
         },
         isMuted() {
             return this.player.isMuted();
+        },
+        getLang() {
+            const lang = this.$store.state.settings.lang;
+            return langConversion[lang] || lang;
         },
         seekTo(t) {
             this.player.seekTo(t);
