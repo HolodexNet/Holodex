@@ -1,9 +1,10 @@
 import { proxyWithPersist } from '@/valtio-persist';
+import { proxy } from 'valtio';
 
 const MobileSizeBreak = 768;
 const FooterSizeBreak = 500;
 
-export const frameContext = proxyWithPersist('page_pref', {
+export const frameContext = proxy({
   pageIsFullscreen: false,
   siteIsSmall: window.innerWidth < MobileSizeBreak,
   sidebarShouldBeFullscreen: window.innerWidth < FooterSizeBreak,
@@ -57,5 +58,5 @@ export const frameContext = proxyWithPersist('page_pref', {
     frameContext.sidebarOpen = true;
     frameContext.sidebarPrefOpen = frameContext.sidebarOpen;
   }
-}, ['sidebarPrefOpen'])
+})
 
