@@ -31,10 +31,7 @@ export function Frame() {
   return (
     <div className={mainClasses} id='layout'>
       <aside className="border border-red">
-        {/* <code><pre className='whitespace-pre-wrap'>{JSON.stringify(fc, null, 2)}</pre></code>
-          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => fc.toggle()}>Toggle Sidebar</button> */}
         <Sidebar id="sidebar" />
-
       </aside>
       <header className="border border-green">Header
         <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => fc.toggle()}>Toggle Sidebar</button>
