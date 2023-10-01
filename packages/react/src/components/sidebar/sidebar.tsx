@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/shadcn/ui/button"
 import { ScrollArea } from "@/shadcn/ui/scroll-area"
 import { HiOutlineHome, HiUserGroup } from "react-icons/hi"
-import { HiRectangleGroup, HiOutlineQueueList } from "react-icons/hi2"
+import { HiRectangleGroup, HiOutlineQueueList, HiOutlineMusicalNote } from "react-icons/hi2"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
