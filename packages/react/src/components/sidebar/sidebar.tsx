@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/shadcn/ui/button"
 import { ScrollArea } from "@/shadcn/ui/scroll-area"
 import { HiOutlineHome, HiUserGroup } from "react-icons/hi"
-import { HiRectangleGroup, HiOutlineQueueList, HiOutlineMusicalNote } from "react-icons/hi2"
+import { HiRectangleGroup, HiOutlineQueueList, HiOutlineMusicalNote, HiOutlineInformationCircle } from "react-icons/hi2"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
@@ -45,19 +45,7 @@ export function Sidebar({ className }: SidebarProps) {
               Music
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-4 w-4"
-              >
-                <path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12" />
-                <circle cx="17" cy="7" r="5" />
-              </svg>
+              <HiOutlineInformationCircle />
               Artists
             </Button>
             <Button variant="ghost" className="w-full justify-start">

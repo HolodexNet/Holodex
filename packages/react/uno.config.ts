@@ -1,10 +1,10 @@
 import {
   defineConfig, presetIcons,
-  presetTypography, presetWebFonts,
+  presetWebFonts,
   transformerDirectives, transformerVariantGroup,
-  presetWind,
 } from 'unocss'
-import presetAutoprefixer from 'unocss-preset-autoprefixer'
+
+// import presetAutoprefixer from 'unocss-preset-autoprefixer'
 export default defineConfig({
   shortcuts: [
     // ...
@@ -15,10 +15,7 @@ export default defineConfig({
     }
   },
   presets: [
-    // presetWind(),
     presetIcons(),
-    // presetShadcn(),
-    // presetTypography(),
     presetWebFonts({
       fonts: {
         sans: 'Roboto',
