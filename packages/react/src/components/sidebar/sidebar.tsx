@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/shadcn/ui/button"
-import { ScrollArea } from "@/shadcn/ui/scroll-area"
+// import { ScrollArea } from "@/shadcn/ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
@@ -55,9 +55,9 @@ export function Sidebar({ className, id }: SidebarProps) {
           <h2 className="relative px-7 text-lg font-semibold tracking-tight">
             Favorites
           </h2>
-          <ScrollArea className="h-[300px] px-1">
+          {/* <ScrollArea className="h-[300px] px-1">
             <div className="space-y-1 p-2">
-              {/* {playlists?.map((playlist, i) => (
+              {playlists?.map((playlist, i) => (
                 <Button
                   key={`${playlist}-${i}`}
                   variant="ghost"
@@ -81,9 +81,9 @@ export function Sidebar({ className, id }: SidebarProps) {
                   </svg>
                   {playlist}
                 </Button>
-              ))} */}
+              ))}
             </div>
-          </ScrollArea>
+          </ScrollArea> */}
         </div>
       </div>
     </div>

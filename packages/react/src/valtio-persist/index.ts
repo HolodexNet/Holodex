@@ -16,9 +16,11 @@ export function proxyWithPersist<T extends object>(key: string, initialObject: T
   const storageItem = localStorage.getItem(key);
 
   const state = proxy<T>({
-    ...initialObject,
-    ...(storageItem !== null ? JSON.parse(storageItem) : {})
+    initialObject,
+    // ...(storageItem !== null ? JSON.parse(storageItem) : {})
   } as T);
+
+  state
 
   subscribe(state, () => {
     const subobject = pick(initialObject, ...persistFields)

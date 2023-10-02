@@ -1,62 +1,73 @@
-import { proxyWithPersist } from '@/valtio-persist';
-import { proxy } from 'valtio';
+import { atom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
 const MobileSizeBreak = 768;
 const FooterSizeBreak = 500;
 
-export const frameContext = proxy({
-  pageIsFullscreen: false,
-  siteIsSmall: window.innerWidth < MobileSizeBreak,
-  sidebarShouldBeFullscreen: window.innerWidth < FooterSizeBreak,
+export const sidebarPrefOpenAtom = atomWithStorage('frames_sidebar_pref_open', true);
 
-  get isFloating() {
-    return frameContext.siteIsSmall || frameContext.pageIsFullscreen
-  },
+export const pageIsFullscreenAtom = atom(false);
 
-  get isMobile() {
-    return frameContext.sidebarShouldBeFullscreen //&& /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-  },
+export const siteIsSmallAtom = atom(window.innerWidth < MobileSizeBreak);
 
-  // it's always open at init unless it's small.
-  sidebarOpen: window.innerWidth > MobileSizeBreak,
-  // sidebar would stay open if it could.
-  sidebarPrefOpen: true,
+export const sidebarShouldBeFullscreenAtom = atom(window.innerWidth < FooterSizeBreak);
 
-  onResize: () => {
+export const isFloatingAtom = atom(
+  (get) => get(siteIsSmallAtom) || get(pageIsFullscreenAtom)
+);
+
+export const isMobileAtom = atom(
+  (get) => get(sidebarShouldBeFullscreenAtom) //&& /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+);
+
+export const sidebarOpenAtom = atom(window.innerWidth > MobileSizeBreak);
+
+export const onResizeAtom = atom(
+  null,
+  (_, set) => {
     const width = window.innerWidth;
-    frameContext.siteIsSmall = width < MobileSizeBreak
-    frameContext.sidebarShouldBeFullscreen = width < FooterSizeBreak
-  },
-
-  onNavigate: (pageIsFullscreen: boolean) => {
-    if (frameContext.pageIsFullscreen != pageIsFullscreen && pageIsFullscreen) {
-      // hide the sidebar if we are navigating from a non-fullscreen page to a fullscreen page
-      frameContext.sidebarOpen = false;
-    }
-    else if (frameContext.pageIsFullscreen != pageIsFullscreen && !pageIsFullscreen) {
-      // show the sidebar if we are navigating from a fullscreen page to a non-fullscreen page, but only if the preference is to be open.
-      // if a user has closed it then it'll prefer to stay closed.
-      // TODO maybe extract prefOpen into a separate stored state for long term?
-      frameContext.sidebarOpen = frameContext.sidebarPrefOpen
-    }
-    if (frameContext.pageIsFullscreen != pageIsFullscreen) {
-      frameContext.pageIsFullscreen = pageIsFullscreen
-    }
-  },
-
-  toggle: () => {
-    frameContext.sidebarOpen = !frameContext.sidebarOpen;
-    frameContext.sidebarPrefOpen = frameContext.sidebarOpen;
-  },
-
-  open: () => {
-    frameContext.sidebarOpen = true;
-    frameContext.sidebarPrefOpen = frameContext.sidebarOpen;
-  },
-
-  close: () => {
-    frameContext.sidebarOpen = true;
-    frameContext.sidebarPrefOpen = frameContext.sidebarOpen;
+    set(siteIsSmallAtom, width < MobileSizeBreak);
+    set(sidebarShouldBeFullscreenAtom, width < FooterSizeBreak);
   }
-})
+);
 
+export const onNavigateAtom = atom(
+  null,
+  (get, set, pageIsFullscreen: boolean) => {
+    const currentFullscreenStatus = get(pageIsFullscreenAtom);
+    if (currentFullscreenStatus !== pageIsFullscreen && pageIsFullscreen) {
+      set(sidebarOpenAtom, false);
+    }
+    else if (currentFullscreenStatus !== pageIsFullscreen && !pageIsFullscreen) {
+      set(sidebarOpenAtom, get(sidebarPrefOpenAtom));
+    }
+    if (currentFullscreenStatus !== pageIsFullscreen) {
+      set(pageIsFullscreenAtom, pageIsFullscreen);
+    }
+  }
+);
+
+export const toggleAtom = atom(
+  null,
+  (get, set) => {
+    const currentOpenStatus = get(sidebarOpenAtom);
+    set(sidebarOpenAtom, !currentOpenStatus);
+    set(sidebarPrefOpenAtom, !currentOpenStatus);
+  }
+);
+
+export const openAtom = atom(
+  null,
+  (_, set) => {
+    set(sidebarOpenAtom, true);
+    set(sidebarPrefOpenAtom, true);
+  }
+);
+
+export const closeAtom = atom(
+  null,
+  (_, set) => {
+    set(sidebarOpenAtom, false);
+    set(sidebarPrefOpenAtom, false);
+  }
+);
