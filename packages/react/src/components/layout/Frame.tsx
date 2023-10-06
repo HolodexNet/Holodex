@@ -5,6 +5,7 @@ import { useSnapshot } from 'valtio'
 import { useEffect } from 'react'
 import classNames from 'classnames'
 import { Sidebar } from '../sidebar/sidebar'
+import { Header } from '../header/header'
 import { isFloatingAtom, isMobileAtom, onResizeAtom, sidebarOpenAtom, sidebarShouldBeFullscreenAtom, toggleAtom } from './useFrame'
 import { useAtom } from 'jotai/react'
 
@@ -39,9 +40,10 @@ export function Frame() {
       <aside className="border border-red">
         <Sidebar id="sidebar" />
       </aside>
-      <header className="border border-green">Header
+      {/* <header className="border border-green">Header
         <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => toggle()}>Toggle Sidebar</button>
-      </header>
+      </header> */}
+      <Header onClick={toggle} id='header' />
       <main className="border border-green">
         <RouterProvider router={router}></RouterProvider>
       </main>
