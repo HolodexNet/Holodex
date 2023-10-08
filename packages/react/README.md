@@ -40,17 +40,17 @@ We welcome all contributors, but encourage participants to first register for a 
 
 The goals of the repository in the long term:
 
-[ ] Migrate all Holodex V2 features to Holodex V3
-  [ ] HomePage
-  [ ] Favorites Page
-  [ ] Search
-  [ ] Profile
-  [ ] Settings
-  [ ] About
-  [ ] TLDex
-  [ ] Editing Components
-[ ] Migrate components to our own Shadcn-Radix variant
-  [ ] Kitchensink Page
+- [ ] Migrate all Holodex V2 features to Holodex V3
+  - [ ] HomePage
+  - [ ] Favorites Page
+  - [ ] Search
+  - [ ] Profile
+  - [ ] Settings
+  - [ ] About
+  - [ ] TLDex
+  - [ ] Editing Components
+- [ ] Migrate components to our own Shadcn-Radix variant
+  - [ ] Kitchensink Page
 
 
 
