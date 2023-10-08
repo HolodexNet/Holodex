@@ -41,7 +41,6 @@ function App() {
         <Button size="icon-lg" variant="outline"><div className="i-heroicons:academic-cap"></div></Button>
         <Button size="icon-lg" variant="secondary"><div className="i-heroicons:academic-cap"></div></Button>
         <Button size="icon-lg" variant="link"><div className="i-heroicons:academic-cap"></div></Button>
-
       </div>
     </>
   );
