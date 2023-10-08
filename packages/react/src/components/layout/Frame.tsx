@@ -7,6 +7,7 @@ import { Sidebar } from '@/components/sidebar/Sidebar.tsx'
 import { isFloatingAtom, isMobileAtom, onResizeAtom, sidebarOpenAtom, sidebarShouldBeFullscreenAtom, toggleAtom } from '@/hooks/useFrame'
 import { useAtom } from 'jotai/react'
 import { darkAtom } from '@/hooks/useTheme'
+import { Header } from "@/components/header/header"
 
 export function Frame() {
 
@@ -41,10 +42,8 @@ export function Frame() {
       <aside className="border-r border-r-base">
         <Sidebar id="sidebar" />
       </aside>
-      <header className="">Header
-        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => toggle()}>Toggle Sidebar</button>
-      </header>
-      <main className="">
+      <Header onClick={toggle} id='header' />
+      <main className="border border-green">
         <RouterProvider router={router}></RouterProvider>
       </main>
       {isMobile && <footer className="">Footer</footer>}
