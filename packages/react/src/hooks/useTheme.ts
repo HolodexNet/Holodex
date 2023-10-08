@@ -7,12 +7,20 @@ export const primaryAtom = atomWithStorageBroadcast('theme-primary', 'blue');
 export const secondaryAtom = atomWithStorageBroadcast('theme-secondary', 'pink');
 export const darkAtom = atomWithStorageBroadcast('theme-dark', true);
 
+/**
+ * Configures CSS variables using the body tag for all 1-12 levels
+ * 
+ * @param property Sets the targeted semantic property (primary, secondary, base, etc)
+ * @param targetColor to be this target color
+ * @param alpha with optionally the alpha palette
+ */
+
 
 const setCssVariable = (property: string, targetColor: string, alpha: boolean = false) => {
   const A = alpha ? 'a' : ''
   for (let i = 1; i <= 12; i++) {
     const propertyLevel = `--${property}-${A}${i}`
-    document.documentElement.style.setProperty(propertyLevel, `var(--${targetColor}-${A}${i})`);
+    document.body.style.setProperty(propertyLevel, `var(--${targetColor}-${A}${i})`);
   }
 };
 

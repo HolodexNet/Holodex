@@ -13,17 +13,18 @@ function getColorSpace(name) {
   return colorspace
 }
 
-console.log(Object.keys(colors).filter(x => !(x.includes("P3") || x.includes("Dark"))).map(x => {
-  return [
-    x,
-    getColorSpace(x)
-  ]
-}).reduce((prev, cur) => ({ ...prev, [cur[0]]: cur[1] }), {}))
-
-console.log(getColorSpace('primaryA'))
+function configureDefaultColorSpace(level) {
+  return {
+    primary: { DEFAULT: `var(--primary-${level})` },
+    primaryA: { DEFAULT: `var(--primary-a${level})` },
+    secondary: { DEFAULT: `var(--secondary-${level})` },
+    secondaryA: { DEFAULT: `var(--secondary-a${level})` },
+    base: { DEFAULT: `var(--base-${level})` }
+  }
+}
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -40,12 +41,24 @@ module.exports = {
       },
     },
     extend: {
+      borderColor: configureDefaultColorSpace(6),
+      backgroundColor: configureDefaultColorSpace(3),
+      textColor: configureDefaultColorSpace(11),
+      accentColor: configureDefaultColorSpace(9),
+      outlineColor: configureDefaultColorSpace(7),
+      ringColor: configureDefaultColorSpace(8),
       colors: {
         base: getColorSpace("base"),
         primary: getColorSpace("primary"),
         "primaryA": getColorSpace("primaryA"),
         secondary: getColorSpace("secondary"),
         "secondaryA": getColorSpace("secondaryA"),
+        ...Object.keys(colors).filter(x => !(x.includes("P3") || x.includes("Dark"))).map(x => {
+          return [
+            x,
+            getColorSpace(x)
+          ]
+        }).reduce((prev, cur) => ({ ...prev, [cur[0]]: cur[1] }), {})
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -70,3 +83,5 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 }
+
+module.exports = config
