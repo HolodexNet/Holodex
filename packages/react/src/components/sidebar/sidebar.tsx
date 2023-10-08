@@ -1,11 +1,16 @@
+import { darkAtom } from "@/hooks/useTheme"
 import { cn } from "@/lib/utils"
 import { Button } from "@/shadcn/ui/button"
+import { useAtom } from "jotai"
 // import { ScrollArea } from "@/shadcn/ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function Sidebar({ className, id }: SidebarProps) {
+
+  const [dark, toggle] = useAtom(darkAtom);
+
   return (
     <div className={cn("pb-12", className)} id={id}>
       <div className="space-y-4 py-4">
@@ -84,6 +89,11 @@ export function Sidebar({ className, id }: SidebarProps) {
               ))}
             </div>
           </ScrollArea> */}
+        </div>
+        <div className="relative bottom-0">
+          <Button size="icon" className="w-20 h-20" onClick={() => toggle(!dark)}>
+            <div className="i-heroicons:sun-20-solid w-20 h-20 text-4xl" />
+          </Button>
         </div>
       </div>
     </div>

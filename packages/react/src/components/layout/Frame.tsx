@@ -1,10 +1,10 @@
 import './Frame.scss'
 import { RouterProvider } from 'react-router-dom'
-import router from '../../routes/router'
+import router from '@/routes/router'
 import { ReactPropTypes, useEffect } from 'react'
 import classNames from 'classnames'
 import { Sidebar } from '../sidebar/sidebar'
-import { isFloatingAtom, isMobileAtom, onResizeAtom, sidebarOpenAtom, sidebarShouldBeFullscreenAtom, toggleAtom } from './useFrame'
+import { isFloatingAtom, isMobileAtom, onResizeAtom, sidebarOpenAtom, sidebarShouldBeFullscreenAtom, toggleAtom } from '@/hooks/useFrame'
 import { useAtom } from 'jotai/react'
 import { darkAtom } from '@/hooks/useTheme'
 

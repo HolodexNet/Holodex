@@ -2,10 +2,14 @@ import { useEffect } from "react";
 import { atomWithStorageBroadcast } from "@/lib/atomWithStorageBroadcast";
 import { useAtom } from "jotai";
 
+
+/** STORE **/
 export const baseAtom = atomWithStorageBroadcast('theme-base', 'mauve');
 export const primaryAtom = atomWithStorageBroadcast('theme-primary', 'blue');
 export const secondaryAtom = atomWithStorageBroadcast('theme-secondary', 'pink');
 export const darkAtom = atomWithStorageBroadcast('theme-dark', true);
+/** END STORE **/
+
 
 /**
  * Configures CSS variables using the body tag for all 1-12 levels
@@ -14,8 +18,6 @@ export const darkAtom = atomWithStorageBroadcast('theme-dark', true);
  * @param targetColor to be this target color
  * @param alpha with optionally the alpha palette
  */
-
-
 const setCssVariable = (property: string, targetColor: string, alpha: boolean = false) => {
   const A = alpha ? 'a' : ''
   for (let i = 1; i <= 12; i++) {
@@ -25,6 +27,11 @@ const setCssVariable = (property: string, targetColor: string, alpha: boolean = 
 };
 
 
+/**
+ * Initializes the theme based on the current state. This function should only be called once
+ *
+ * @return {null} This function does not return any value.
+ */
 export function useThemeInit() {
 
   const [base] = useAtom(baseAtom)

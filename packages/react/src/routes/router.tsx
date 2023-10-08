@@ -1,3 +1,4 @@
+import Kitchensink from "@/Kitchensink";
 import { Outlet, createBrowserRouter, redirect } from "react-router-dom";
 
 const settings = {} as any; // TODO: replace with your actual settings store
@@ -13,7 +14,8 @@ const router = createBrowserRouter([
 
       if (orgInParam || settings.defaultOpen === "Home" || !site.jwtToken) {
         // Do the necessary redirect logic here
-        return redirect('/org/' + params.org)
+        // return redirect('/org/' + params.org)
+        return redirect('/kitchensink')
       } else {
         // Do the necessary redirect logic here
         return redirect('/favorites/')
@@ -95,7 +97,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/kitchensink",
-    element: <div>Kitchen Sink</div>,
+    element: <Kitchensink />,
   },
   {
     path: "/login",
