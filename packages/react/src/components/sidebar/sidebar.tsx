@@ -14,11 +14,11 @@ export function Sidebar({ className, id }: SidebarProps) {
             Hololive
           </h2>
           <div className="space-y-1">
-            <Button variant="default" className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" size='lg'>
               <div className="i-heroicons:home"></div>
               Home
             </Button>
-            <Button variant="ghost" className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" size='lg'>
               <span className="i-heroicons:user-group"></span>
               Channels
             </Button>
@@ -29,23 +29,23 @@ export function Sidebar({ className, id }: SidebarProps) {
             Holodex
           </h2>
           <div className="space-y-1">
-            <Button variant="ghost" className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" size='lg'>
               <span className="i-heroicons:rectangle-group"></span>
               Multiview
             </Button>
-            <Button variant="ghost" className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" size='lg'>
               <span className="i-heroicons:queue-list"></span>
               Playlist
             </Button>
-            <Button variant="ghost" className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" size='lg'>
               <span className="i-heroicons:musical-note"></span>
               Music
             </Button>
-            <Button variant="ghost" className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" size='lg'>
               <span className="i-heroicons:cog-6-tooth"></span>
               Settings
             </Button>
-            <Button variant="ghost" className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" size='lg'>
               <span className="i-heroicons:information-circle"></span>
               About
             </Button>

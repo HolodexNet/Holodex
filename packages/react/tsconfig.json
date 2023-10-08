@@ -17,12 +17,12 @@
     "skipLibCheck": true,
     /* Plugins */
     "plugins": [
-      {
-        "name": "typescript-plugin-css-modules",
-        "options": {
-          "classnameTransform": "camelCaseOnly",
-        }
-      }
+      // {
+      //   "name": "typescript-plugin-css-modules",
+      //   "options": {
+      //     "classnameTransform": "camelCaseOnly",
+      //   }
+      // }
     ],
     /* Bundler mode */
     "moduleResolution": "bundler",

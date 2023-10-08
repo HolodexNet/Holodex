@@ -3,11 +3,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import "uno.css";
 import { Frame } from "./components/layout/Frame.tsx";
-import { useThemeInit } from "./hooks/useTheme.ts";
+import { darkAtom, useThemeInit } from "./hooks/useTheme.ts";
+import { useAtom } from "jotai";
 
 function App() {
   useThemeInit();
-
   return <Frame />;
 }
 

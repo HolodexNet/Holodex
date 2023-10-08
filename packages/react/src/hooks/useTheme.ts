@@ -1,52 +1,48 @@
-import { proxyWithPersist } from "@/valtio-persist/index";
 import { useEffect } from "react";
-import { useSnapshot } from "valtio/react";
+import { atomWithStorageBroadcast } from "@/lib/atomWithStorageBroadcast";
+import { useAtom } from "jotai";
 
-export const cssVariablesStore = proxyWithPersist('page-theme', {
+export const baseAtom = atomWithStorageBroadcast('theme-base', 'mauve');
+export const primaryAtom = atomWithStorageBroadcast('theme-primary', 'blue');
+export const secondaryAtom = atomWithStorageBroadcast('theme-secondary', 'pink');
+export const darkAtom = atomWithStorageBroadcast('theme-dark', true);
 
-  '--background': '0 0% 100%',
-  '--foreground': '222.2 84% 4.9%',
-  '--primary': '111.2 47.4% 11.2%',
-  '--primary-foreground': '210 40% 98%',
-  '--secondary': '210 40% 96.1%',
-  '--secondary-foreground': '222.2 47.4% 11.2%',
-  '--muted': '210 40% 96.1%',
-  '--muted-foreground': '215.4 16.3% 46.9%',
-  '--accent': '210 40% 96.1%',
-  '--accent-foreground': '222.2 47.4% 11.2%',
-  '--destructive': '0 84.2% 60.2%',
-  '--destructive-foreground': '210 40% 98%',
-  '--border': '214.3 31.8% 91.4%',
-  '--input': '214.3 31.8% 91.4%',
-  '--ring': '222.2 84% 4.9%',
 
-}, ['--background', '--foreground', '--primary', '--primary-foreground', '--secondary', '--muted', '--accent', '--destructive', '--border', '--input', '--ring']);
+const setCssVariable = (property: string, targetColor: string, alpha: boolean = false) => {
+  const A = alpha ? 'A' : ''
+  for (let i = 1; i <= 12; i++) {
+    const propertyLevel = `--${property}-${A}${i}`
+    document.documentElement.style.setProperty(propertyLevel, `rgb(var(--${targetColor}${A}${i}))`);
+  }
+};
+
 
 
 export function useThemeInit() {
-  const snap = useSnapshot(cssVariablesStore);
+
+  const [base] = useAtom(baseAtom)
+  const [primary] = useAtom(primaryAtom)
+  const [secondary] = useAtom(secondaryAtom)
+  const [dark] = useAtom(darkAtom)
 
   useEffect(() => {
-    const setCssVariable = (property: string, value: string) => {
-      document.documentElement.style.setProperty(property, value);
-    };
+    setCssVariable('base', base);
+  }, [base]); // This effect runs whenever the snapshot (and thus the state) changes
 
-    setCssVariable('--background', snap['--background']);
-    setCssVariable('--foreground', snap['--foreground']);
-    setCssVariable('--primary', snap['--primary']);
-    setCssVariable('--primary-foreground', snap['--primary-foreground']);
-    setCssVariable('--secondary', snap['--secondary']);
-    setCssVariable('--secondary-foreground', snap['--secondary-foreground']);
-    setCssVariable('--muted', snap['--muted']);
-    setCssVariable('--muted-foreground', snap['--muted-foreground']);
-    setCssVariable('--accent', snap['--accent']);
-    setCssVariable('--accent-foreground', snap['--accent-foreground']);
-    setCssVariable('--destructive', snap['--destructive']);
-    setCssVariable('--destructive-foreground', snap['--destructive-foreground']);
-    setCssVariable('--border', snap['--border']);
-    setCssVariable('--input', snap['--input']);
-    setCssVariable('--ring', snap['--ring']);
-  }, [snap]); // This effect runs whenever the snapshot (and thus the state) changes
+  useEffect(() => {
+    setCssVariable('primary', primary);
+    setCssVariable('primary', primary, true);
+  }, [primary]);
+  useEffect(() => {
+    setCssVariable('secondary', secondary);
+    setCssVariable('secondary', secondary, true);
+  }, [secondary]);
+
+  useEffect(() => {
+    document.body.classList.remove("dark", "light")
+    document.body.classList.add(dark ? 'dark' : 'light');
+  }, [dark]);
+
 
   return null; // This component doesn't need to render anything visible
 };

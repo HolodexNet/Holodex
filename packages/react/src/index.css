@@ -13,10 +13,10 @@
 
 @layer base {
   * {
-    @apply border-border;
+    /* @apply border-border; */
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-base-1 text-base-11;
   }
 }
