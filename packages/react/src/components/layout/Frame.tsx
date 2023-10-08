@@ -43,7 +43,7 @@ export function Frame() {
         <Sidebar id="sidebar" />
       </aside>
       <Header onClick={toggle} id='header' />
-      <main className="border border-green">
+      <main className="">
         <RouterProvider router={router}></RouterProvider>
       </main>
       {isMobile && <footer className="">Footer</footer>}

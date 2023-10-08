@@ -13,7 +13,7 @@ export function Sidebar({ className, id }: SidebarProps) {
 
   return (
     <div className={cn("pb-12", className)} id={id}>
-      <div className="space-y-4 py-2">
+      <div className="space-y-2 py-2">
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 font-semibold tracking-tight">
             Hololive
@@ -29,11 +29,12 @@ export function Sidebar({ className, id }: SidebarProps) {
             </Button>
           </div>
         </div>
+        <hr className="border-base" />
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 font-semibold tracking-tight" >
             Holodex
           </h2>
-          <div className="space-y-1">
+          <div className="space-y-2">
             <Button className="w-full justify-start h-10" variant="ghost">
               <span className="i-heroicons:heart"></span>
               Favorites
@@ -42,6 +43,7 @@ export function Sidebar({ className, id }: SidebarProps) {
               <span className="i-heroicons:rectangle-group"></span>
               Multiview
             </Button>
+            <hr className="border-base" />
             <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:queue-list"></span>
               Playlist
