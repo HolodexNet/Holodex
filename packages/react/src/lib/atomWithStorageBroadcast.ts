@@ -4,6 +4,9 @@ import { atomWithStorage } from "jotai/utils"
 export function atomWithStorageBroadcast<Value>(key: string, initialValue: Value) {
   const baseAtom = atomWithStorage(key, initialValue)
   const listeners = new Set<(event: MessageEvent<any>) => void>()
+  if (!window.BroadcastChannel) {
+    return baseAtom;
+  }
   const channel = new BroadcastChannel(key)
   channel.onmessage = (event) => {
     listeners.forEach((l) => l(event))
@@ -28,9 +31,9 @@ export function atomWithStorageBroadcast<Value>(key: string, initialValue: Value
       listeners.delete(listener)
     }
   }
-  const returnedAtom = atom<Value, [Value], void>(
+  const returnedAtom = atom(
     (get) => get(broadcastAtom),
-    (_, set, update) => {
+    (_, set, update: Value) => {
       set(broadcastAtom, { isEvent: false, value: update })
     }
   )

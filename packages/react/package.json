@@ -32,7 +32,6 @@
     "react-helmet-async": "^1.3.0",
     "react-i18next": "^13.2.2",
     "react-player": "^2.13.0",
-    "react-query": "^3.39.3",
     "react-router-dom": "^6.16.0",
     "react-use": "^17.4.0",
     "tailwind-merge": "^1.14.0",
