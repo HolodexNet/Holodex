@@ -5,7 +5,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <>
+    <div className="p-4">
       This page is for testing components and styling.
 
       Regular spacing:
@@ -15,7 +15,7 @@ function App() {
       </div>
 
       Color and variants:
-      <div className="grid grid-cols-5 items-start justify-start gap-4">
+      <div className="flex flex-row max-w-5xl flex-wrap tems-start justify-start gap-4">
         <Button>Default button</Button>
         <Button variant="ghost">Ghost button</Button>
         <Button variant="outline">Outline button</Button>
@@ -42,7 +42,7 @@ function App() {
         <Button size="icon-lg" variant="secondary"><div className="i-heroicons:academic-cap"></div></Button>
         <Button size="icon-lg" variant="link"><div className="i-heroicons:academic-cap"></div></Button>
       </div>
-    </>
+    </div>
   );
 }
 

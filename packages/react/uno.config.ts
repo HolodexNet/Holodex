@@ -7,7 +7,10 @@ import {
 // import presetAutoprefixer from 'unocss-preset-autoprefixer'
 export default defineConfig({
   presets: [
-    presetIcons(),
+    presetIcons({
+      scale: 1.25,
+      unit: 'em',
+    }),
     // presetWebFonts({
     //   fonts: {
     //     sans: 'Roboto',

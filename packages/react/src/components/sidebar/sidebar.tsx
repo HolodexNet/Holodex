@@ -13,53 +13,57 @@ export function Sidebar({ className, id }: SidebarProps) {
 
   return (
     <div className={cn("pb-12", className)} id={id}>
-      <div className="space-y-4 py-4">
+      <div className="space-y-4 py-2">
         <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+          <h2 className="mb-2 px-4 font-semibold tracking-tight">
             Hololive
           </h2>
           <div className="space-y-1">
-            <Button className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start h-10" variant="default">
               <div className="i-heroicons:home"></div>
               Home
             </Button>
-            <Button className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start h-10" variant="ghost">
               <span className="i-heroicons:user-group"></span>
               Channels
             </Button>
           </div>
         </div>
         <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight" >
+          <h2 className="mb-2 px-4 font-semibold tracking-tight" >
             Holodex
           </h2>
           <div className="space-y-1">
-            <Button className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start h-10" variant="ghost">
+              <span className="i-heroicons:heart"></span>
+              Favorites
+            </Button>
+            <Button className="w-full justify-start h-10" variant="ghost">
               <span className="i-heroicons:rectangle-group"></span>
               Multiview
             </Button>
-            <Button className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:queue-list"></span>
               Playlist
             </Button>
-            <Button className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:musical-note"></span>
               Music
             </Button>
-            <Button className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:cog-6-tooth"></span>
               Settings
             </Button>
-            <Button className="w-full justify-start" size='lg'>
+            <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:information-circle"></span>
               About
             </Button>
           </div>
         </div>
         <div className="py-2">
-          <h2 className="relative px-7 text-lg font-semibold tracking-tight">
+          {/* <h2 className="relative px-7 text-lg font-semibold tracking-tight">
             Favorites
-          </h2>
+          </h2> */}
           {/* <ScrollArea className="h-[300px] px-1">
             <div className="space-y-1 p-2">
               {playlists?.map((playlist, i) => (

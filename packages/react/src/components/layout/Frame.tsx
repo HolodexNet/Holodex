@@ -3,7 +3,7 @@ import { RouterProvider } from 'react-router-dom'
 import router from '@/routes/router'
 import { ReactPropTypes, useEffect } from 'react'
 import classNames from 'classnames'
-import { Sidebar } from '../sidebar/sidebar'
+import { Sidebar } from '@/components/sidebar/Sidebar.tsx'
 import { isFloatingAtom, isMobileAtom, onResizeAtom, sidebarOpenAtom, sidebarShouldBeFullscreenAtom, toggleAtom } from '@/hooks/useFrame'
 import { useAtom } from 'jotai/react'
 import { darkAtom } from '@/hooks/useTheme'
@@ -38,7 +38,7 @@ export function Frame() {
 
   return (
     <div className={mainClasses} id='layout'>
-      <aside className="">
+      <aside className="border-r border-r-base">
         <Sidebar id="sidebar" />
       </aside>
       <header className="">Header

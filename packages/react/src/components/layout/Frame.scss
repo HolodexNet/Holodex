@@ -1,5 +1,5 @@
 $header-height: 40px;
-$sidebar-width: 300px;
+$sidebar-width: 200px + calc(100px * calc(100vw / 1920vw));
 $footer-height: 40px;
 $responsive-breakpoint: 768px;
 

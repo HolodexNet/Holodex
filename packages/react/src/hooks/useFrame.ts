@@ -24,10 +24,16 @@ export const sidebarOpenAtom = atom(window.innerWidth > MobileSizeBreak);
 
 export const onResizeAtom = atom(
   null,
-  (_, set) => {
+  (get, set) => {
     const width = window.innerWidth;
     set(siteIsSmallAtom, width < MobileSizeBreak);
     set(sidebarShouldBeFullscreenAtom, width < FooterSizeBreak);
+    if (width < MobileSizeBreak) {
+      console.log("closing")
+      set(sidebarOpenAtom, false)
+    } else {
+      set(sidebarOpenAtom, get(sidebarPrefOpenAtom))
+    }
   }
 );
 
