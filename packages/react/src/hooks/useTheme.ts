@@ -9,13 +9,12 @@ export const darkAtom = atomWithStorageBroadcast('theme-dark', true);
 
 
 const setCssVariable = (property: string, targetColor: string, alpha: boolean = false) => {
-  const A = alpha ? 'A' : ''
+  const A = alpha ? 'a' : ''
   for (let i = 1; i <= 12; i++) {
     const propertyLevel = `--${property}-${A}${i}`
-    document.documentElement.style.setProperty(propertyLevel, `rgb(var(--${targetColor}${A}${i}))`);
+    document.documentElement.style.setProperty(propertyLevel, `var(--${targetColor}-${A}${i})`);
   }
 };
-
 
 
 export function useThemeInit() {
@@ -33,6 +32,7 @@ export function useThemeInit() {
     setCssVariable('primary', primary);
     setCssVariable('primary', primary, true);
   }, [primary]);
+
   useEffect(() => {
     setCssVariable('secondary', secondary);
     setCssVariable('secondary', secondary, true);

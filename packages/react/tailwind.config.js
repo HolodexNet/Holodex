@@ -1,20 +1,26 @@
-import * as createPlugin from "windy-radix-palette";
+import * as colors from "@radix-ui/colors"
 
-
-console.log(createPlugin);
-const colors = createPlugin.default();
-
-function getColorSpace(name, alpha) {
-  const a = alpha ? 'A' : ''
-  var colorspace = { "DEFAULT": "var(--primary-9)" }
+function getColorSpace(name) {
+  let alpha = false
+  if (name.endsWith("A")) {
+    name = name.substring(0, name.length - 1)
+    alpha = true
+  }
+  var colorspace = { "DEFAULT": `var(--${name}-${alpha ? 'a' : ''}9)` }
   for (var i = 1; i <= 12; i++) {
-    const color = `--${name}-${a}${i}`;
-    colorspace[i] = `var(${color})`
+    colorspace[i] = `var(--${name}-${alpha ? 'a' : ''}${i})`
   }
   return colorspace
 }
 
-console.log(getColorSpace('primary'))
+console.log(Object.keys(colors).filter(x => !(x.includes("P3") || x.includes("Dark"))).map(x => {
+  return [
+    x,
+    getColorSpace(x)
+  ]
+}).reduce((prev, cur) => ({ ...prev, [cur[0]]: cur[1] }), {}))
+
+console.log(getColorSpace('primaryA'))
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -37,9 +43,9 @@ module.exports = {
       colors: {
         base: getColorSpace("base"),
         primary: getColorSpace("primary"),
-        "primaryA": getColorSpace("primary", true),
+        "primaryA": getColorSpace("primaryA"),
         secondary: getColorSpace("secondary"),
-        "secondaryA": getColorSpace("secondary", true),
+        "secondaryA": getColorSpace("secondaryA"),
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -62,5 +68,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), colors.handler],
+  plugins: [require("tailwindcss-animate")],
 }
