@@ -1,6 +1,6 @@
-# React + TypeScript + Vite
+# Holodex
 
-## Holodex V3 React Rewrite
+## Overview
 
 ### Design guidelines:
 
@@ -20,6 +20,8 @@
   - when upgrading iconify, make sure to bump: `@iconify/json`, `unocss`, all at the same time.
   - UNOCSS essentially extracts icons from class names as we use them and provides a css of only the icons we use.
 
+
+
 ## Getting Started
 
 This is a refresh of Holodex using React as the underlying mechanism. We want to use smaller components and be less dependent on external libraries this time around, especially taking in the lessons learned from depending on Vuetify too much in the Vue version.
@@ -31,6 +33,25 @@ npm install
 
 npm run dev
 ```
+
+## Contributing
+
+We welcome all contributors, but encourage participants to first register for a discord account and join us on the Holodex discord server. This way it will be easier to communicate about project status, feature ideas, and reduce overhead.
+
+The goals of the repository in the long term:
+
+[ ] Migrate all Holodex V2 features to Holodex V3
+  [ ] HomePage
+  [ ] Favorites Page
+  [ ] Search
+  [ ] Profile
+  [ ] Settings
+  [ ] About
+  [ ] TLDex
+  [ ] Editing Components
+[ ] Migrate components to our own Shadcn-Radix variant
+  [ ] Kitchensink Page
+
 
 
 ## Notes
