@@ -1,5 +1,7 @@
 import Kitchensink from "@/Kitchensink";
 import { Outlet, createBrowserRouter, redirect } from "react-router-dom";
+import { Home } from "./home";
+import { Login } from "./login";
 
 const settings = {} as any; // TODO: replace with your actual settings store
 const site = {} as any; // TODO: replace with your actual site store
@@ -33,7 +35,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/org/:org",
-    element: <div>Home_Org</div>,
+    element: <Home />,
   },
   {
     path: "/channels",
@@ -101,7 +103,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <div>Login</div>,
+    element: <Login />,
   },
   {
     path: "/tlclient",

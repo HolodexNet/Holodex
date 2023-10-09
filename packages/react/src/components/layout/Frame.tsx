@@ -8,6 +8,7 @@ import { isFloatingAtom, isMobileAtom, onResizeAtom, sidebarOpenAtom, sidebarSho
 import { useAtom } from 'jotai/react'
 import { darkAtom } from '@/hooks/useTheme'
 import { Header } from "@/components/header/header"
+import { Toaster } from '@/shadcn/ui/toaster'
 
 export function Frame() {
 
@@ -47,6 +48,7 @@ export function Frame() {
         <RouterProvider router={router}></RouterProvider>
       </main>
       {isMobile && <footer className="">Footer</footer>}
+      <Toaster />
     </div>
   )
 }
