@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Overpass:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
+
 @import-glob "../node_modules/@radix-ui/colors/*.css";
 
 @tailwind base;
@@ -15,11 +17,8 @@
 }
 
 @layer base {
-  * {
-    /* @apply border-border; */
-  }
-
   body {
-    @apply bg-base-2 text-base-11;
+    @apply bg-base-2 text-base-12;
+    font-family: 'Overpass', 'Noto Sans', sans-serif;
   }
 }
