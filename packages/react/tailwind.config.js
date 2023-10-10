@@ -48,6 +48,7 @@ const config = {
       outlineColor: configureDefaultColorSpace(7),
       ringColor: configureDefaultColorSpace(8),
       colors: {
+        muted: "var(--base-8)", // muted is the same as base-8
         base: getColorSpace("base"),
         primary: getColorSpace("primary"),
         "primaryA": getColorSpace("primaryA"),

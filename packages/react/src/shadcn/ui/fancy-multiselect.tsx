@@ -80,15 +80,15 @@ export function FancyMultiSelect() {
   return (
     <Command onKeyDown={handleKeyDown} className="overflow-visible bg-transparent">
       <div
-        className="group border border-base border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
+        className="group border border-base border-input px-3 py-2 text-sm ring-offset-base-2 rounded-md focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2"
       >
         <div className="flex gap-1 flex-wrap">
           {selected.map((framework) => {
             return (
-              <Badge key={framework.value} variant="secondary">
+              <Badge key={framework.value} variant="primary">
                 {framework.label}
                 <button
-                  className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  className="ml-1 ring-offset-base-2 rounded-full outline-none focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleUnselect(framework);
@@ -105,7 +105,7 @@ export function FancyMultiSelect() {
               </Badge>
             )
           })}
-          {/* Avoid having the "Search" Icon */}
+          {/* Avoid having the "Search" Icon */} 
           <CommandPrimitive.Input
             ref={inputRef}
             value={inputValue}
@@ -119,7 +119,7 @@ export function FancyMultiSelect() {
       </div>
       <div className="relative mt-2">
         {open && selectables.length > 0 ?
-          <div className="absolute w-full z-10 top-0 rounded-md border border-base bg-popover text-popover-foreground shadow-md outline-none animate-in">
+          <div className="absolute w-full z-10 top-0 rounded-md border border-base bg-base-1 text-base-11 shadow-md outline-none animate-in">
             <CommandGroup className="h-full overflow-auto">
               {selectables.map((framework) => {
                 return (
