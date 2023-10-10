@@ -1,12 +1,12 @@
-import { useLive } from "@/services/live.service"
+// import { useLive } from "@/services/live.service"
 
 
 export function Home () {
-	const { data } = useLive();
+	// const { data } = useLive();
 
 	return (
 		<div className="w-full h-full">
-			{JSON.stringify(data)}
+			{/* {JSON.stringify(data)} */}
 		</div>
 	)
 }
