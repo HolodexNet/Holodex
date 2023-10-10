@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "./shadcn/ui/button";
+import { FancyMultiSelect } from './shadcn/ui/fancy-multiselect';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -42,6 +43,10 @@ function App() {
         <Button size="icon-lg" variant="secondary"><div className="i-heroicons:academic-cap"></div></Button>
         <Button size="icon-lg" variant="link"><div className="i-heroicons:academic-cap"></div></Button>
       </div>
+
+      Some fancy Multiselect:
+
+      <FancyMultiSelect/>
     </div>
   );
 }

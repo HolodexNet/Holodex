@@ -19,44 +19,44 @@ export function Sidebar({ className, id }: SidebarProps) {
             Hololive
           </h2>
           <div className="space-y-1">
-            <Button className="w-full justify-start h-10" variant="default">
+            <Button className="w-full justify-start" variant="default">
               <div className="i-heroicons:home"></div>
               Home
             </Button>
-            <Button className="w-full justify-start h-10" variant="ghost">
+            <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:user-group"></span>
               Channels
             </Button>
           </div>
         </div>
-        <hr className="border-base" />
+        {/* <hr className="border-base" /> */}
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 font-semibold tracking-tight" >
             Holodex
           </h2>
           <div className="space-y-2">
-            <Button className="w-full justify-start h-10" variant="ghost">
+            <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:heart"></span>
               Favorites
             </Button>
-            <Button className="w-full justify-start h-10" variant="ghost">
+            <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:rectangle-group"></span>
               Multiview
-            </Button>
-            <hr className="border-base" />
-            <Button className="w-full justify-start" variant="ghost">
-              <span className="i-heroicons:queue-list"></span>
-              Playlist
             </Button>
             <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:musical-note"></span>
               Music
             </Button>
-            <Button className="w-full justify-start" variant="ghost">
+            <hr className="border-base" />
+            <Button className="w-full justify-start text-base-11" variant="ghost">
+              <span className="i-heroicons:queue-list"></span>
+              Playlist
+            </Button>
+            <Button className="w-full justify-start text-base-11" variant="ghost">
               <span className="i-heroicons:cog-6-tooth"></span>
               Settings
             </Button>
-            <Button className="w-full justify-start" variant="ghost">
+            <Button className="w-full justify-start text-base-11" variant="ghost">
               <span className="i-heroicons:information-circle"></span>
               About
             </Button>
