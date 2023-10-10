@@ -3,12 +3,13 @@ import { RouterProvider } from 'react-router-dom'
 import router from '@/routes/router'
 import { ReactPropTypes, useEffect } from 'react'
 import classNames from 'classnames'
-import { Sidebar } from '@/components/sidebar/Sidebar.tsx'
+import { Sidebar } from '@/components/sidebar/Sidebar'
 import { isFloatingAtom, isMobileAtom, onResizeAtom, sidebarOpenAtom, sidebarShouldBeFullscreenAtom, toggleAtom } from '@/hooks/useFrame'
 import { useAtom } from 'jotai/react'
 import { darkAtom } from '@/hooks/useTheme'
 import { Header } from "@/components/header/header"
 import { Toaster } from '@/shadcn/ui/toaster'
+import clsx from 'clsx'
 
 export function Frame() {
 
@@ -28,7 +29,7 @@ export function Frame() {
   const [fs] = useAtom(sidebarShouldBeFullscreenAtom)
   console.log(fs)
 
-  const mainClasses = classNames({
+  const mainClasses = clsx({
     'mobile-footer': isMobile,
     'sidebar-static': !floating,
     'sidebar-floating': floating,
