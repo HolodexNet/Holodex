@@ -1,23 +1,30 @@
-import { darkAtom } from "@/hooks/useTheme"
-import { cn } from "@/lib/utils"
-import { Button } from "@/shadcn/ui/button"
-import { useAtom } from "jotai"
+import { darkAtom } from "@/hooks/useTheme";
+import { cn } from "@/lib/utils";
+import { Button } from "@/shadcn/ui/button";
+import { useAtom } from "jotai";
 // import { ScrollArea } from "@/shadcn/ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
+  onClose: () => void;
 }
 
-export function Sidebar({ className, id }: SidebarProps) {
-
+export function Sidebar({ className, id, onClose }: SidebarProps) {
   const [dark, toggle] = useAtom(darkAtom);
 
   return (
     <div className={cn("pb-12", className)} id={id}>
-      <div className="space-y-2 py-2">
+      <div className="bg-base-2 min-h-[100dvh] space-y-2 py-2">
         <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 font-semibold tracking-tight">
-            Hololive
-          </h2>
+          <div className="w-full flex gap-4 items-center px-4 md:px-0 pt-4 pb-6">
+            <img src="/icons/uetchy_logo.png" className="w-8 h-8" />
+            <h2 className=" text-3xl font-semibold tracking-tight">Holodex</h2>
+            <div className="flex flex-grow" />
+            <Button
+              variant="ghost"
+              className="md:hidden i-heroicons:x-mark p-4"
+              onClick={onClose}
+            />
+          </div>
           <div className="space-y-1">
             <Button className="w-full justify-start h-10" variant="default">
               <div className="i-heroicons:home"></div>
@@ -31,9 +38,7 @@ export function Sidebar({ className, id }: SidebarProps) {
         </div>
         <hr className="border-base" />
         <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 font-semibold tracking-tight" >
-            Holodex
-          </h2>
+          <h2 className="mb-2 px-4 font-semibold tracking-tight">Holodex</h2>
           <div className="space-y-2">
             <Button className="w-full justify-start h-10" variant="ghost">
               <span className="i-heroicons:heart"></span>
@@ -96,12 +101,16 @@ export function Sidebar({ className, id }: SidebarProps) {
             </div>
           </ScrollArea> */}
         </div>
-        <div className="relative bottom-0">
-          <Button size="icon" className="w-20 h-20" onClick={() => toggle(!dark)}>
+        {/* <div className="relative bottom-0">
+          <Button
+            size="icon"
+            className="w-20 h-20"
+            onClick={() => toggle(!dark)}
+          >
             <div className="i-heroicons:sun-20-solid w-20 h-20 text-4xl" />
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
-  )
+  );
 }
