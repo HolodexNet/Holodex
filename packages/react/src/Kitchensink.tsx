@@ -3,6 +3,7 @@ import { Button } from "./shadcn/ui/button";
 import { FancyMultiSelect } from './shadcn/ui/fancy-multiselect';
 import { Switch } from "./shadcn/ui/switch";
 import { Label } from "./shadcn/ui/label";
+import { Checkbox } from "./shadcn/ui/checkbox";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -62,7 +63,7 @@ function App() {
         <Label htmlFor="airplane-mode">Airplane Mode</Label>
       </div>
       <div className="flex items-center space-x-2">
-        {/* <Checkbox id="terms" /> */}
+        <Checkbox id="terms" />
         <label
           htmlFor="terms"
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
