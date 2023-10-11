@@ -1,21 +1,27 @@
 import { useState } from "react";
 import { Button } from "./shadcn/ui/button";
 import { FancyMultiSelect } from './shadcn/ui/fancy-multiselect';
+import { Switch } from "./shadcn/ui/switch";
+import { Label } from "./shadcn/ui/label";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="p-4">
-      This page is for testing components and styling.
+    <div className="p-4 space-y-4">
+      <h3>This page is for testing components and styling.</h3>
 
-      Regular spacing:
+      <hr className="border-base" />
+
+      <h3>Regular spacing:</h3>
       <div className="space-x-2">
         <Button>OK</Button>
         <Button variant="outline" size="lg">Cancel</Button>
       </div>
 
-      Color and variants:
+      <hr className="border-base" />
+
+      <h3>Color and variants:</h3>
       <div className="flex flex-row max-w-5xl flex-wrap tems-start justify-start gap-4">
         <Button>Default button</Button>
         <Button variant="ghost">Ghost button</Button>
@@ -44,9 +50,26 @@ function App() {
         <Button size="icon-lg" variant="link"><div className="i-heroicons:academic-cap"></div></Button>
       </div>
 
-      Some fancy Multiselect:
+      <hr className="border-base" />
+      <h3>Some fancy Multiselect:</h3>
 
-      <FancyMultiSelect/>
+      <FancyMultiSelect />
+
+      <hr className="border-base" />
+      <h3>Toggles and Checkboxes</h3>
+      <div className="flex items-center space-x-2">
+        <Switch id="airplane-mode" />
+        <Label htmlFor="airplane-mode">Airplane Mode</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        {/* <Checkbox id="terms" /> */}
+        <label
+          htmlFor="terms"
+          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        >
+          Accept terms and conditions
+        </label>
+      </div>
     </div>
   );
 }
