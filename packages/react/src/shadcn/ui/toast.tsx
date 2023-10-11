@@ -27,9 +27,13 @@ const toastVariants = cva(
   {
     variants: {
       variant: {
-        default: "border bg-background text-foreground",
-        destructive:
-          "destructive group border-destructive bg-destructive text-destructive-foreground",
+        default: "border-base-7 bg-base-1 text-base-12",
+        destructive: "border-red-7 bg-red-9 text-red-12",
+        warning: "border-amber-7 bg-amber-9 text-amber-12",
+        info: "border-jade-7 bg-jade-9 text-jade-12",
+        secondary: "border-secondary-7 bg-secondary-9 text-secondary-12",
+        primary: "border-primary-7 bg-primary-9 text-primary-12",
+        error: "border-red-7 bg-red-9 text-red-12",
       },
     },
     defaultVariants: {
@@ -41,7 +45,7 @@ const toastVariants = cva(
 const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
-    VariantProps<typeof toastVariants>
+  VariantProps<typeof toastVariants>
 >(({ className, variant, ...props }, ref) => {
   return (
     <ToastPrimitives.Root
@@ -68,14 +72,25 @@ const ToastAction = React.forwardRef<
 ))
 ToastAction.displayName = ToastPrimitives.Action.displayName
 
+const toastCloseVariants = cva(
+  "absolute right-1 top-1 rounded-md p-1 transition-opacity focus:outline-none focus:ring-1 opacity-0 group-hover:opacity-100",
+  {
+    variants: {
+      variant: {
+        default: "text-base-11 hover:text-base-12 focus:opacity-100",
+        secondary: "text-secondary-9 hover:text-secondary-5 focus:ring-secondary-7 focus:ring-offset-secondary-8",
+      }
+    }
+  });
+
 const ToastClose = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Close>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Close> & VariantProps<typeof toastCloseVariants>
+>(({ className, variant, ...props }, ref) => (
   <ToastPrimitives.Close
     ref={ref}
     className={cn(
-      "absolute right-1 top-1 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-1 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600",
+      toastCloseVariants({ variant }),
       className
     )}
     toast-close=""
