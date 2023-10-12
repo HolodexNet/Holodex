@@ -58,13 +58,13 @@ export function Home() {
         <TabsTrigger className="text-lg" value="live">
           Live
           {live && (
-            <span className="mx-1 p-1 pb-0 bg-blue-6 rounded-sm text-sm">
+            <span className="mx-1 p-1 bg-secondary-5 rounded-sm text-sm">
               {live?.filter(({ status }) => status === "live").length}
             </span>
           )}
           / Upcoming
           {live && (
-            <span className="mx-1 p-1 pb-0 bg-blue-6 rounded-sm text-sm">
+            <span className="ml-1 p-1 bg-secondary-5 rounded-sm text-sm">
               {live?.filter(({ status }) => status === "upcoming").length}
             </span>
           )}
