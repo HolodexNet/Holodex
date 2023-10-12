@@ -14,17 +14,18 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
   return (
     <div className={cn("pb-12", className)} id={id}>
       <div className="bg-base-2 min-h-[100dvh] space-y-2 py-2">
+        <div className="flex gap-2 items-center px-4 pt-4 pb-2">
+          <img src="/icons/uetchy_logo.png" className="ml-1.5 w-6 h-6" />
+          <h2 className="text-2xl font-semibold tracking-tight">Holodex</h2>
+          <div className="flex flex-grow" />
+          <Button
+            variant="ghost"
+            className="md:hidden i-heroicons:x-mark p-4"
+            onClick={onClose}
+          />
+        </div>
         <div className="px-3 py-2">
-          <div className="w-full flex gap-4 items-center px-4 md:px-0 pt-4 pb-6">
-            <img src="/icons/uetchy_logo.png" className="w-8 h-8" />
-            <h2 className=" text-3xl font-semibold tracking-tight">Holodex</h2>
-            <div className="flex flex-grow" />
-            <Button
-              variant="ghost"
-              className="md:hidden i-heroicons:x-mark p-4"
-              onClick={onClose}
-            />
-          </div>
+          <h2 className="mb-2 px-4 font-semibold tracking-tight">Hololive</h2>
           <div className="space-y-1">
             <Button className="w-full justify-start" variant="default">
               <div className="i-heroicons:home"></div>
