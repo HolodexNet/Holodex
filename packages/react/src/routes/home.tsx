@@ -77,7 +77,7 @@ export function Home() {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="live">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-x-4 gap-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-6">
           {liveLoading
             ? Array.from({ length: 24 }).map(() => <SkeletonVideoCard />)
             : live?.map((stream) => <VideoCard size={cardSize} {...stream} />)}
@@ -86,7 +86,7 @@ export function Home() {
       <TabsContent value="archive">
         <VirtuosoGrid
           useWindowScroll
-          listClassName="w-full grid grid-cols-1 md:grid-cols-4 gap-x-4 gap-y-6"
+          listClassName="w-full grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-6"
           data={archives?.pages?.flat() ?? []}
           itemContent={(_, stream) => (
             <VideoCard key={stream.id} size={cardSize} {...stream} />
@@ -99,7 +99,7 @@ export function Home() {
       <TabsContent value="clips">
         <VirtuosoGrid
           useWindowScroll
-          listClassName="w-full grid grid-cols-1 md:grid-cols-4 gap-x-4 gap-y-6"
+          listClassName="w-full grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-6"
           data={clips?.pages?.flat() ?? []}
           itemContent={(_, stream) => (
             <VideoCard key={stream.id} size={cardSize} {...stream} />

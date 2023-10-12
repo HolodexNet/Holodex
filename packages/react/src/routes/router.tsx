@@ -1,7 +1,7 @@
 import Kitchensink from "@/Kitchensink";
 import { Outlet, createBrowserRouter, redirect } from "react-router-dom";
-import { Home } from "./home";
-import { Login } from "./login";
+import { Home } from "@/routes/home";
+import { Login } from "@/routes/login";
 
 const settings = {} as any; // TODO: replace with your actual settings store
 const site = {} as any; // TODO: replace with your actual site store

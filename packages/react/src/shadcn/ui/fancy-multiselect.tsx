@@ -105,7 +105,7 @@ export function FancyMultiSelect() {
               </Badge>
             )
           })}
-          {/* Avoid having the "Search" Icon */} 
+          {/* Avoid having the "Search" Icon */}
           <CommandPrimitive.Input
             ref={inputRef}
             value={inputValue}
@@ -129,7 +129,7 @@ export function FancyMultiSelect() {
                       e.preventDefault();
                       e.stopPropagation();
                     }}
-                    onSelect={(value) => {
+                    onSelect={(_) => {
                       setInputValue("")
                       setSelected(prev => [...prev, framework])
                     }}
