@@ -18,8 +18,10 @@
 
 ## Setup for Development
 
+### Important: the bulk of development is currently happening on the `next` branch!!! If you would like to participate in Holodex React development, please check out the `next` branch and PR against it! The contribution/development readme is in `/package/react/README.md`!
+
 ```
-git clone git@github.com:RiceCakess/Holodex.git
+git clone git@github.com:HolodexNet/Holodex.git
 npm install
 # By default the api is proxied to staging, copy, rename and edit the .env.placeholder to change API_BASE_URL
 npm run serve
