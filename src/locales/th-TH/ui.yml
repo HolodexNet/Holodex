@@ -48,6 +48,7 @@ component:
     premiere: พรีเมียร์
     googleCalendar: เพิ่มใน Google ปฏิทิน
     totalTLs: จำนวนการแปลแชท
+    totalSongs: เพลงที่ถูกบันทึกเวลาไว้ทั้งหมด
     tlPresence: นักแปลที่ใช้งานใน 30 นาทีที่ผ่านมา
     uncertainPlaceholder: เวลาเริ่มยังไม่ถูกยืนยันอย่างเป็นทางการ เวลาเริ่มจริงอาจแตกต่าง
     typeScheduledYT: สตรีมที่ถูกกำหนดเวลาไว้
@@ -59,6 +60,8 @@ component:
     uploadScript: อัปโหลดสคริปต์การแปล
   videoDescription:
     description: คำอธิบาย
+  video:
+    comment: { }
   description:
     showLess: แสดงน้อยลง
     showMore: แสดงมากขึ้น
