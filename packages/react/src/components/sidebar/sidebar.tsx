@@ -12,7 +12,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
   const [dark, toggle] = useAtom(darkAtom);
 
   return (
-    <div className={cn("pb-12", className)} id={id}>
+    <div className={cn("pb-12 border-r-base-5 border-r", className)} id={id}>
       <div className="bg-base-2 min-h-[100dvh] space-y-2 py-2">
         <div className="flex gap-2 items-center px-4 pt-4 pb-2">
           <img src="/icons/uetchy_logo.png" className="ml-1.5 w-6 h-6" />
@@ -51,7 +51,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
             </Button>
             <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:musical-note"></span>
-              Music
+              Musicdex
             </Button>
             <hr className="border-base" />
             <Button className="w-full justify-start text-base-11" variant="ghost">
