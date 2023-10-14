@@ -5,7 +5,7 @@ import { Button } from "@/shadcn/ui/button";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
-interface ChannelCardProps extends Channel {}
+interface ChannelCardProps extends Channel { }
 
 export function ChannelCard({
   id,
@@ -63,9 +63,10 @@ export function ChannelCard({
         {isInFavorite ? "Unfavorite" : "Favorite"}
       </Button>
       <div className="w-full flex gap-2">
-        <Button asChild className="w-full" variant="ghost" size="icon-lg">
+        <Button asChild className="w-full dark:text-white text-[#282828]" variant="ghost" size="icon-lg">
+          {/* Youtube Logo needs to conform with YT guidelines https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors */}
           <Link to={`https://www.youtube.com/channel/${id}`} target="_blank">
-            <div className="i-lucide:youtube" />
+            <div className="i-mdi:youtube" />
           </Link>
         </Button>
         {twitter && (
