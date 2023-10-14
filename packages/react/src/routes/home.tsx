@@ -1,11 +1,13 @@
 import { SkeletonVideoCard } from "@/components/video/SkeletonVideoCard";
 import { VideoCard } from "@/components/video/VideoCard";
+import { cn } from "@/lib/utils";
 import { useLive } from "@/services/live.service";
 import { useVideos } from "@/services/video.service";
+import { Button } from "@/shadcn/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { videoCardSizeAtom } from "@/store/video";
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { VirtuosoGrid } from "react-virtuoso";
 
@@ -16,7 +18,11 @@ export function Home() {
     { org, type: ["placeholder", "stream"], include: ["mentions"] },
     { enabled: tab === "live" },
   );
-  const { data: archives, fetchNextPage: fetchArchives } = useVideos(
+  const {
+    data: archives,
+    isLoading: archiveLoading,
+    fetchNextPage: fetchArchives,
+  } = useVideos(
     {
       org,
       type: ["stream"],
@@ -24,13 +30,17 @@ export function Home() {
       include: ["clips", "mentions"],
       max_upcoming_hours: 1,
       paginated: true,
-      limit: 24,
+      limit: 32,
     },
     {
       enabled: tab === "archive",
     },
   );
-  const { data: clips, fetchNextPage: fetchClips } = useVideos(
+  const {
+    data: clips,
+    isLoading: clipLoading,
+    fetchNextPage: fetchClips,
+  } = useVideos(
     {
       org,
       type: ["clip"],
@@ -38,13 +48,25 @@ export function Home() {
       include: ["mentions"],
       max_upcoming_hours: 1,
       paginated: true,
-      limit: 24,
+      limit: 32,
     },
     {
       enabled: tab === "clips",
     },
   );
   const [cardSize, setCardSize] = useAtom(videoCardSizeAtom);
+
+  const listCN = useMemo(
+    () =>
+      cn({
+        "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-x-4 gap-y-6":
+          cardSize === "lg",
+        "grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-x-2 gap-y-4":
+          cardSize === "md",
+        "flex flex-col max-w-screen-lg mx-auto": cardSize === "sm",
+      }),
+    [cardSize],
+  );
 
   if (!org) return <Navigate to="/org404" />;
 
@@ -75,39 +97,79 @@ export function Home() {
         <TabsTrigger className="text-lg" value="clips">
           Clips
         </TabsTrigger>
+        <div className="flex grow" />
+        <Button
+          className="shrink-0"
+          size="icon-lg"
+          variant="ghost"
+          onClick={() => {
+            setCardSize(
+              // lg -> md -> sm
+              cardSize === "sm" ? "lg" : cardSize === "md" ? "sm" : "md",
+            );
+          }}
+        >
+          <div
+            className={cn({
+              "i-lucide:layout-grid": cardSize === "sm",
+              "i-lucide:list": cardSize === "md",
+              "i-lucide:grid": cardSize === "lg",
+            })}
+          />
+        </Button>
       </TabsList>
       <TabsContent value="live">
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-6">
+        <div className={listCN}>
           {liveLoading
-            ? Array.from({ length: 24 }).map(() => <SkeletonVideoCard />)
-            : live?.map((stream) => <VideoCard size={cardSize} {...stream} />)}
+            ? Array.from({ length: 24 }).map((_, index) => (
+                <SkeletonVideoCard key={`placeholder-${index}`} />
+              ))
+            : live?.map((stream) => (
+                <VideoCard key={stream.id} size={cardSize} {...stream} />
+              ))}
         </div>
       </TabsContent>
       <TabsContent value="archive">
-        <VirtuosoGrid
-          useWindowScroll
-          listClassName="w-full grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-6"
-          data={archives?.pages?.flat() ?? []}
-          itemContent={(_, stream) => (
-            <VideoCard key={stream.id} size={cardSize} {...stream} />
-          )}
-          endReached={async () => {
-            await fetchArchives();
-          }}
-        />
+        {archiveLoading ? (
+          <div className={listCN}>
+            {Array.from({ length: 24 }).map((_, index) => (
+              <SkeletonVideoCard key={`placeholder-${index}`} />
+            ))}
+          </div>
+        ) : (
+          <VirtuosoGrid
+            useWindowScroll
+            listClassName={listCN}
+            data={archives?.pages?.flat() ?? []}
+            itemContent={(_, stream) => (
+              <VideoCard key={stream.id} size={cardSize} {...stream} />
+            )}
+            endReached={async () => {
+              await fetchArchives();
+            }}
+          />
+        )}
       </TabsContent>
       <TabsContent value="clips">
-        <VirtuosoGrid
-          useWindowScroll
-          listClassName="w-full grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-6"
-          data={clips?.pages?.flat() ?? []}
-          itemContent={(_, stream) => (
-            <VideoCard key={stream.id} size={cardSize} {...stream} />
-          )}
-          endReached={async () => {
-            await fetchClips();
-          }}
-        />
+        {clipLoading ? (
+          <div className={listCN}>
+            {Array.from({ length: 24 }).map((_, index) => (
+              <SkeletonVideoCard key={`placeholder-${index}`} />
+            ))}
+          </div>
+        ) : (
+          <VirtuosoGrid
+            useWindowScroll
+            listClassName={listCN}
+            data={clips?.pages?.flat() ?? []}
+            itemContent={(_, stream) => (
+              <VideoCard key={stream.id} size={cardSize} {...stream} />
+            )}
+            endReached={async () => {
+              await fetchClips();
+            }}
+          />
+        )}
       </TabsContent>
     </Tabs>
   );

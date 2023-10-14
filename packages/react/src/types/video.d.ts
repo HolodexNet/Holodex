@@ -29,7 +29,6 @@ interface VideoBase {
   end_actual: string | null;
   live_viewers: number | null;
   songcount: number;
-  thumbnail?: string;
 }
 
 interface Video extends VideoBase {
