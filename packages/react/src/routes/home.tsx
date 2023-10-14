@@ -16,7 +16,7 @@ export function Home() {
   const [tab, setTab] = useState("live");
   const { data: live, isLoading: liveLoading } = useLive(
     { org, type: ["placeholder", "stream"], include: ["mentions"] },
-    { enabled: tab === "live" },
+    { refetchInterval: 1000 * 60 * 5, enabled: tab === "live" },
   );
   const {
     data: archives,
@@ -33,6 +33,7 @@ export function Home() {
       limit: 32,
     },
     {
+      refetchInterval: 1000 * 60 * 5,
       enabled: tab === "archive",
     },
   );
@@ -51,6 +52,7 @@ export function Home() {
       limit: 32,
     },
     {
+      refetchInterval: 1000 * 60 * 5,
       enabled: tab === "clips",
     },
   );
