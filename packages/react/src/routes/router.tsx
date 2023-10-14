@@ -1,7 +1,10 @@
 import Kitchensink from "@/Kitchensink";
-import { Outlet, createBrowserRouter, redirect } from "react-router-dom";
+import { Navigate, Outlet, createBrowserRouter, redirect } from "react-router-dom";
 import { Home } from "@/routes/home";
 import { Login } from "@/routes/login";
+import { ChannelsOrg } from "./channelsOrg";
+import { useAtomValue } from "jotai";
+import { orgAtom } from "@/store/org";
 
 const settings = {} as any; // TODO: replace with your actual settings store
 const site = {} as any; // TODO: replace with your actual site store
@@ -47,7 +50,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/org/:org/channels",
-    element: <div>Channels_Org</div>,
+    element: <ChannelsOrg />,
   },
   {
     path: "/channel/:id",
@@ -130,8 +133,9 @@ const router = createBrowserRouter([
 export default router;
 
 function RedirectToChannelsOrg() {
+  const org = useAtomValue(orgAtom);
   // Replace with your logic
-  return <div>Redirecting to Channels_Org...</div>;
+  return <Navigate to={`/org/${org}/channels`} />;
 }
 
 function Channel() {
