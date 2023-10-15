@@ -13,7 +13,7 @@ export function ChannelsOrg() {
     <div className="w-full h-full p-4 md:p-8">
       <VirtuosoGrid
         useWindowScroll
-        listClassName="w-full grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-x-4 gap-y-6"
+        listClassName="w-full grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-x-4 gap-y-6"
         data={channels?.pages.flat() ?? []}
         itemContent={(_, channel) => <ChannelCard {...channel} />}
         endReached={async () => {
