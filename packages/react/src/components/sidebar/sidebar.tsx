@@ -1,9 +1,12 @@
-import { darkAtom } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { OrgSelectorCombobox } from "../org/OrgPicker";
 import { useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router-dom";
+import { orgAtom } from "@/store/org";
+import { HTMLAttributes } from "react";
+import { isMobileAtom } from "@/hooks/useFrame";
 // import { ScrollArea } from "@/shadcn/ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -12,7 +15,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function Sidebar({ className, id, onClose }: SidebarProps) {
   const { t } = useTranslation();
-  const [dark, toggle] = useAtom(darkAtom);
+  const org = useAtomValue(orgAtom);
 
   return (
     <div className={cn("pb-12 border-r-base-5 border-r", className)} id={id}>
@@ -31,54 +34,64 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
           <OrgSelectorCombobox />
           <h2 className="mb-2 px-4 font-semibold tracking-tight">Hololive</h2>
           <div className="space-y-1">
-            <Button className="w-full justify-start" variant="default">
-              <div className="i-heroicons:home"></div>
-              {t("Home")}
-            </Button>
-            <Button className="w-full justify-start" variant="ghost">
-              <span className="i-heroicons:user-group"></span>
-              {t("Channels")}
-            </Button>
+            <SidebarItem
+              onClose={onClose}
+              label="Home"
+              href={`/org/${org}`}
+              icon="i-heroicons:home"
+            />
+            <SidebarItem
+              onClose={onClose}
+              label="Channels"
+              href={`/org/${org}/channels`}
+              icon="i-heroicons:user-group"
+            />
           </div>
         </div>
         {/* <hr className="border-base" /> */}
         <div className="px-3 py-2">
           {/* <h2 className="mb-2 px-4 font-semibold tracking-tight">Holodex</h2> */}
           <div className="space-y-2">
-            <Button className="w-full justify-start" variant="ghost">
-              <span className="i-heroicons:heart"></span>
-              {t("Favorites")}
-            </Button>
-            <Button className="w-full justify-start" variant="ghost">
-              <span className="i-heroicons:rectangle-group"></span>
-              {t("Multiview")}
-            </Button>
-            <Button className="w-full justify-start" variant="ghost">
-              <span className="i-heroicons:musical-note"></span>
-              {t("Musicdex")}
-            </Button>
+            <SidebarItem
+              label="Favorites"
+              icon="i-heroicons:heart"
+              href="/favorites"
+              onClose={onClose}
+            />
+            <SidebarItem
+              label="Multiview"
+              icon="i-heroicons:rectangle-group"
+              href="/multiview"
+              onClose={onClose}
+            />
+            <SidebarItem
+              label="Musicdex"
+              icon="i-heroicons:musical-note"
+              href="https://music.holodex.net"
+              onClose={onClose}
+            />
             <hr className="border-base" />
-            <Button
-              className="w-full justify-start text-base-11"
-              variant="ghost"
-            >
-              <span className="i-heroicons:queue-list"></span>
-              {t("Playlist")}
-            </Button>
-            <Button
-              className="w-full justify-start text-base-11"
-              variant="ghost"
-            >
-              <span className="i-heroicons:cog-6-tooth"></span>
-              {t("Settings")}
-            </Button>
-            <Button
-              className="w-full justify-start text-base-11"
-              variant="ghost"
-            >
-              <span className="i-heroicons:information-circle"></span>
-              {t("About")}
-            </Button>
+            <SidebarItem
+              className="text-base-11"
+              label="Playlist"
+              icon="i-heroicons:queue-list"
+              href="/playlists"
+              onClose={onClose}
+            />
+            <SidebarItem
+              className="text-base-11"
+              label="Settings"
+              icon="i-heroicons:cog-6-tooth"
+              href="/settings"
+              onClose={onClose}
+            />
+            <SidebarItem
+              className="text-base-11"
+              label="About"
+              icon="i-heroicons:information-circle"
+              href="/about"
+              onClose={onClose}
+            />
           </div>
         </div>
         <div className="py-2">
@@ -126,5 +139,43 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
         </div> */}
       </div>
     </div>
+  );
+}
+
+function SidebarItem({
+  className,
+  onClose,
+  icon,
+  label,
+  href,
+}: {
+  className?: HTMLAttributes<HTMLButtonElement>["className"];
+  onClose: () => void;
+  icon: HTMLAttributes<HTMLSpanElement>["className"];
+  label: string;
+  href: string;
+}) {
+  const { t } = useTranslation();
+  const location = useLocation();
+  const isMobile = useAtomValue(isMobileAtom);
+
+  const isHere = href === location.pathname;
+
+  return (
+    <Button
+      asChild
+      className={cn(
+        "w-full justify-start",
+        { "text-white": isHere },
+        className,
+      )}
+      variant={isHere ? "default" : "ghost"}
+      onClick={isMobile ? onClose : undefined}
+    >
+      <Link to={href}>
+        <span className={icon}></span>
+        {t(label)}
+      </Link>
+    </Button>
   );
 }

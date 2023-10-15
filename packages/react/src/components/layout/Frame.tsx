@@ -1,19 +1,28 @@
-import './Frame.scss'
-import { RouterProvider } from 'react-router-dom'
-import router from '@/routes/router'
-import { ReactPropTypes, useEffect } from 'react'
-import { Sidebar } from '@/components/sidebar/sidebar'
-import { isFloatingAtom, isMobileAtom, onResizeAtom, sidebarOpenAtom, sidebarShouldBeFullscreenAtom, toggleAtom } from '@/hooks/useFrame'
+import "./Frame.scss";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { ReactPropTypes, useEffect } from "react";
+import { Sidebar } from "@/components/sidebar/sidebar";
+import {
+  isFloatingAtom,
+  isMobileAtom,
+  onResizeAtom,
+  sidebarOpenAtom,
+  sidebarShouldBeFullscreenAtom,
+  toggleAtom,
+} from "@/hooks/useFrame";
 import { useAtomValue, useSetAtom } from "jotai/react";
-import { darkAtom } from '@/hooks/useTheme'
-import { Header } from "@/components/header/header"
-import { Toaster } from '@/shadcn/ui/toaster'
-import clsx from 'clsx'
+import { darkAtom } from "@/hooks/useTheme";
+import { Header } from "@/components/header/header";
+import { Toaster } from "@/shadcn/ui/toaster";
+import clsx from "clsx";
+import { orgAtom } from "@/store/org";
 
 export function Frame() {
+  const location = useLocation();
   const toggle = useSetAtom(toggleAtom);
   const resize = useSetAtom(onResizeAtom);
   const dark = useAtomValue(darkAtom);
+  const org = useAtomValue(orgAtom);
 
   useEffect(() => {
     window.addEventListener("resize", resize);
@@ -26,15 +35,17 @@ export function Frame() {
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
   console.log(fs);
 
+  if (location.pathname === "/") return <Navigate to={`/org/${org}`} />;
+
   const mainClasses = clsx({
-    'mobile-footer': isMobile,
-    'sidebar-static': !floating,
-    'sidebar-floating': floating,
-    'sidebar-open': open,
-    'sidebar-closed': !open,
-    'sidebar-fullscreen': fs,
-    'dark': dark,
-  })
+    "mobile-footer": isMobile,
+    "sidebar-static": !floating,
+    "sidebar-floating": floating,
+    "sidebar-open": open,
+    "sidebar-closed": !open,
+    "sidebar-fullscreen": fs,
+    dark: dark,
+  });
 
   return (
     <div className={mainClasses} id="layout">
@@ -43,7 +54,7 @@ export function Frame() {
       </aside>
       <Header onClick={toggle} id="header" />
       <main className="">
-        <RouterProvider router={router}></RouterProvider>
+        <Outlet />
       </main>
       {isMobile && <footer className="">Footer</footer>}
       <Toaster />

@@ -3,7 +3,7 @@ import { Button } from "@/shadcn/ui/button";
 import { GoogleLogin } from "@react-oauth/google";
 import open from "oauth-open";
 
-export function Login() {
+export default function Login() {
   const {
     login: { mutate },
   } = useAuth();

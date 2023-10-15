@@ -1,159 +1,127 @@
 import Kitchensink from "@/Kitchensink";
-import { Navigate, Outlet, createBrowserRouter, redirect } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import { Home } from "@/routes/home";
-import { Login } from "@/routes/login";
 import { ChannelsOrg } from "./channelsOrg";
-import { useAtomValue } from "jotai";
+import { getDefaultStore } from "jotai";
 import { orgAtom } from "@/store/org";
+import { Frame } from "@/components/layout/Frame";
+// import { Login } from "./login";
+// import { Settings } from "./settings";
+// import { About } from "./about";
+// import { Channel } from "./channel";
+import { NavigateToMusicdex } from "@/components/channel/NavigateToMusicdex";
+import React from "react";
 
-const settings = {} as any; // TODO: replace with your actual settings store
-const site = {} as any; // TODO: replace with your actual site store
+const Login = React.lazy(() => import("./login"));
+const Settings = React.lazy(() => import("./settings"));
+const About = React.lazy(() => import("./about"));
+const Channel = React.lazy(() => import("./channel"));
+
+const store = getDefaultStore();
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div />,
-    loader: async ({ params }) => {
-      // Replace with your logic
-      const orgInParam = params.org; // TODO: Get the parameter from the current location
-
-      if (orgInParam || settings.defaultOpen === "Home" || !site.jwtToken) {
-        // Do the necessary redirect logic here
-        // return redirect('/org/' + params.org)
-        return redirect('/kitchensink')
-      } else {
-        // Do the necessary redirect logic here
-        return redirect('/favorites/')
-        // return <div>Redirecting to Favorites...</div>;
-      }
-    }
-  },
-  {
-    path: "/favorites",
-    element: <div>Favorites</div>,
-  },
-  {
-    path: "/search",
-    element: <div>Search</div>,
-  },
-  {
-    path: "/org/:org",
-    element: <Home />,
-  },
-  {
-    path: "/channels",
-    element: <RedirectToChannelsOrg />,
-  },
-  {
-    path: "/org404",
-    element: <div>OrgNotFound</div>,
-  },
-  {
-    path: "/org/:org/channels",
-    element: <ChannelsOrg />,
-  },
-  {
-    path: "/channel/:id",
-    element: <Channel />,
+    element: <Frame />,
     children: [
+      {
+        path: "favorites",
+        element: <div>Favorites</div>,
+      },
+      {
+        path: "search",
+        element: <div>Search</div>,
+      },
+      {
+        path: "org/:org",
+        element: <Home />,
+      },
+      {
+        path: "channels",
+        element: <Navigate to={`/org/${store.get(orgAtom)}/channels`} />,
+      },
+      {
+        path: "org404",
+        element: <div>OrgNotFound</div>,
+      },
+      {
+        path: "org/:org/channels",
+        element: <ChannelsOrg />,
+      },
+      {
+        path: "channel/:id",
+        element: <Channel />,
+        children: [
+          {
+            path: "about",
+            element: <div>Channel_About</div>,
+          },
+          {
+            path: "clips",
+            element: <div>Channel_Clips</div>,
+          },
+          {
+            path: "collabs",
+            element: <div>Channel_Collabs</div>,
+          },
+          {
+            path: "music",
+            element: <NavigateToMusicdex />,
+          },
+        ],
+      },
+      {
+        path: "profile",
+        element: <div>Profile</div>,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
+        children: [
+          // Add children routes similar to above pattern
+        ],
+      },
+      {
+        path: "playlists",
+        element: <div>Playlists</div>,
+      },
       {
         path: "about",
-        element: <div>Channel_About</div>,
+        element: <About />,
+        children: [
+          // Add children routes similar to above pattern
+        ],
       },
       {
-        path: "clips",
-        element: <div>Channel_Clips</div>,
+        path: "kitchensink",
+        element: <Kitchensink />,
       },
       {
-        path: "collabs",
-        element: <div>Channel_Collabs</div>,
+        path: "login",
+        element: <Login />,
       },
       {
-        path: "music",
-        element: <RedirectToMusicdex />,
+        path: "tlclient",
+        element: <div>Translation Client</div>,
       },
       {
-        path: "",
-        element: <div>Channel</div>,
+        path: "scripteditor",
+        element: <div>Translation Scripter</div>,
+      },
+      {
+        path: "watch/:id",
+        element: <div>Watch</div>,
+      },
+      {
+        path: "debug",
+        element: <div>Debug</div>,
+      },
+      {
+        path: "debug/run",
+        element: <div>Debug Run</div>,
       },
     ],
-  },
-  {
-    path: "/profile",
-    element: <div>Profile</div>,
-  },
-  {
-    path: "/settings",
-    element: <Settings />,
-    children: [
-      // Add children routes similar to above pattern
-    ],
-  },
-  {
-    path: "/playlists",
-    element: <div>Playlists</div>,
-  },
-  {
-    path: "/about",
-    element: <About />,
-    children: [
-      // Add children routes similar to above pattern
-    ],
-  },
-  {
-    path: "/kitchensink",
-    element: <Kitchensink />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/tlclient",
-    element: <div>Translation Client</div>,
-  },
-  {
-    path: "/scripteditor",
-    element: <div>Translation Scripter</div>,
-  },
-  {
-    path: "/watch/:id",
-    element: <div>Watch</div>,
-  },
-  {
-    path: "/debug",
-    element: <div>Debug</div>,
-  },
-  {
-    path: "/debug/run",
-    element: <div>Debug Run</div>,
   },
 ]);
 
 export default router;
-
-function RedirectToChannelsOrg() {
-  const org = useAtomValue(orgAtom);
-  // Replace with your logic
-  return <Navigate to={`/org/${org}/channels`} />;
-}
-
-function Channel() {
-  // Add logic if needed
-  return <div>Channel main page<Outlet /></div>;
-}
-
-function RedirectToMusicdex() {
-  // Add logic for redirection
-  return <div>Redirecting to Musicdex...</div>;
-}
-
-function Settings() {
-  // Add logic if needed
-  return <div>Settings main page<Outlet /></div>;
-}
-
-function About() {
-  // Add logic if needed
-  return <div>About main page<Outlet /></div>;
-}

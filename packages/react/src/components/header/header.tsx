@@ -2,6 +2,8 @@ import { darkAtom } from "@/hooks/useTheme";
 import { Button } from "@/shadcn/ui/button";
 import { userAtom } from "@/store/auth";
 import { useAtom, useAtomValue } from "jotai";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   onClick: () => void;
@@ -9,6 +11,7 @@ interface HeaderProps {
 }
 
 export function Header({ onClick, id }: HeaderProps) {
+  const { t } = useTranslation();
   const [dark, toggle] = useAtom(darkAtom);
   const user = useAtomValue(userAtom);
 
@@ -17,18 +20,15 @@ export function Header({ onClick, id }: HeaderProps) {
       id={id}
       className="bg-base-2 flex items-center px-8 py-auto gap-4 sticky top-0 z-40"
     >
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
-        onClick={onClick}
-      >
+      <Button size="icon-lg" variant="ghost" onClick={onClick}>
         <div className="i-heroicons:bars-3 rounded-md px-3 py-3 " />
-      </button>
+      </Button>
       <div className="justify-start py-1 pl-3 text-xl">Hololive</div>
       <div className="i-heroicons:chevron-down py-5" />
       <div className="flex flex-grow" />
       <Button
-        size='icon-lg'
-        variant='ghost'
+        size="icon-lg"
+        variant="ghost"
         className="p-2"
         onClick={() => toggle(!dark)}
       >
@@ -40,7 +40,9 @@ export function Header({ onClick, id }: HeaderProps) {
           src={`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`}
         />
       ) : (
-        <button>Login</button>
+        <Button asChild>
+          <Link to="/login">{t("Login")}</Link>
+        </Button>
       )}
     </header>
   );
