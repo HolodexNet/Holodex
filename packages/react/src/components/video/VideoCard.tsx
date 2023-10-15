@@ -6,6 +6,7 @@ import { format, formatDistanceToNowStrict } from "date-fns";
 import { VideoMenu } from "./VideoMenu";
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 type VideoCard = VideoBase &
   Partial<Video> &
@@ -40,6 +41,8 @@ export function VideoCard({
   onThumbnailClick,
   onChannelClick,
 }: VideoCardProps) {
+  const { t } = useTranslation();
+
   const videoHref = useMemo(
     () => (status === "live" && link ? link : `/watch/${id}`),
     [status, link, id],
@@ -111,11 +114,15 @@ export function VideoCard({
               </Link>
               {status === "live" && (
                 <div className="flex gap-1 text-base-11 text-xs md:text-sm">
-                  <span className="text-red-500">Live now</span>
+                  <span className="text-red-500">{t("Live now")}</span>
                   {!!live_viewers && (
                     <>
                       <span>/</span>
-                      <span>{formatCount(live_viewers)} watching</span>
+                      <span>
+                        {t("{{live_viewers}} watching", {
+                          live_viewers: formatCount(live_viewers),
+                        })}
+                      </span>
                     </>
                   )}
                 </div>
@@ -124,16 +131,19 @@ export function VideoCard({
                 status !== "live" &&
                 start_scheduled && (
                   <span className="text-base-11 text-xs md:text-sm line-clamp-1">
-                    Starts in{" "}
-                    {formatDistanceToNowStrict(new Date(start_scheduled))} (
-                    {format(new Date(start_scheduled), "hh:mm a")})
+                    {t("Starts in {{distance}} ({{time}})", {
+                      distance: formatDistanceToNowStrict(
+                        new Date(start_scheduled),
+                      ),
+                      time: format(new Date(start_scheduled), "hh:mm a"),
+                    })}
                   </span>
                 )}
               {status === "past" && available_at && (
                 <span className="text-base-11 text-xs md:text-sm line-clamp-1">
                   {formatDistanceToNowStrict(new Date(available_at), {
                     addSuffix: true,
-                  })}{" "}
+                  })}
                 </span>
               )}
             </div>
@@ -235,11 +245,15 @@ export function VideoCard({
                 <div className="flex text-xs md:text-sm">
                   {status === "live" && (
                     <div className="flex gap-1 text-base-11">
-                      <span className="text-red-500">Live now</span>
+                      <span className="text-red-500">{t("Live now")}</span>
                       {!!live_viewers && (
                         <>
                           <span>/</span>
-                          <span>{formatCount(live_viewers)} watching</span>
+                          <span>
+                            {t("{{live_viewers}} watching", {
+                              live_viewers: formatCount(live_viewers),
+                            })}
+                          </span>
                         </>
                       )}
                     </div>
@@ -248,16 +262,19 @@ export function VideoCard({
                     status !== "live" &&
                     start_scheduled && (
                       <span className="text-base-11">
-                        Starts in{" "}
-                        {formatDistanceToNowStrict(new Date(start_scheduled))} (
-                        {format(new Date(start_scheduled), "hh:mm a")})
+                        {t("Starts in {{distance}} ({{time}})", {
+                          distance: formatDistanceToNowStrict(
+                            new Date(start_scheduled),
+                          ),
+                          time: format(new Date(start_scheduled), "hh:mm a"),
+                        })}
                       </span>
                     )}
                   {status === "past" && available_at && (
                     <span className="text-base-11">
                       {formatDistanceToNowStrict(new Date(available_at), {
                         addSuffix: true,
-                      })}{" "}
+                      })}
                     </span>
                   )}
                 </div>

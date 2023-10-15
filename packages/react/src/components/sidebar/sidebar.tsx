@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
 import { useAtom } from "jotai";
 import { OrgSelectorCombobox } from "../org/OrgPicker";
+import { useTranslation } from "react-i18next";
 // import { ScrollArea } from "@/shadcn/ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -10,6 +11,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function Sidebar({ className, id, onClose }: SidebarProps) {
+  const { t } = useTranslation();
   const [dark, toggle] = useAtom(darkAtom);
 
   return (
@@ -31,11 +33,11 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
           <div className="space-y-1">
             <Button className="w-full justify-start" variant="default">
               <div className="i-heroicons:home"></div>
-              Home
+              {t("Home")}
             </Button>
             <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:user-group"></span>
-              Channels
+              {t("Channels")}
             </Button>
           </div>
         </div>
@@ -45,28 +47,37 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
           <div className="space-y-2">
             <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:heart"></span>
-              Favorites
+              {t("Favorites")}
             </Button>
             <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:rectangle-group"></span>
-              Multiview
+              {t("Multiview")}
             </Button>
             <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:musical-note"></span>
-              Musicdex
+              {t("Musicdex")}
             </Button>
             <hr className="border-base" />
-            <Button className="w-full justify-start text-base-11" variant="ghost">
+            <Button
+              className="w-full justify-start text-base-11"
+              variant="ghost"
+            >
               <span className="i-heroicons:queue-list"></span>
-              Playlist
+              {t("Playlist")}
             </Button>
-            <Button className="w-full justify-start text-base-11" variant="ghost">
+            <Button
+              className="w-full justify-start text-base-11"
+              variant="ghost"
+            >
               <span className="i-heroicons:cog-6-tooth"></span>
-              Settings
+              {t("Settings")}
             </Button>
-            <Button className="w-full justify-start text-base-11" variant="ghost">
+            <Button
+              className="w-full justify-start text-base-11"
+              variant="ghost"
+            >
               <span className="i-heroicons:information-circle"></span>
-              About
+              {t("About")}
             </Button>
           </div>
         </div>
