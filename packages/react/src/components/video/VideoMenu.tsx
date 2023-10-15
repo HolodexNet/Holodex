@@ -35,21 +35,38 @@ export function VideoMenu({
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
       <DropdownMenuContent onClick={(e) => e.stopPropagation()}>
         <DropdownMenuItem asChild>
-          <Link to={`https://youtu.be/${videoId}`} target="_blank">
+          <Link
+            className="flex gap-2"
+            to={`https://youtu.be/${videoId}`}
+            target="_blank"
+          >
+            <div className="i-lucide:youtube" />
             Open on YouTube
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to={`/watch/${videoId}/edit`}>Edit</Link>
+          <Link className="flex gap-2" to={`/watch/${videoId}/edit`}>
+            <div className="i-heroicons:pencil" />
+            Edit
+          </Link>
         </DropdownMenuItem>
         {type !== "clip" && (
           <DropdownMenuItem asChild>
-            <Link to={`/multiview/AAUY${videoId}%2cUAEYchat`}>MultiView</Link>
+            <Link
+              className="flex gap-2"
+              to={`/multiview/AAUY${videoId}%2cUAEYchat`}
+            >
+              <div className="i-heroicons:rectangle-group" />
+              MultiView
+            </Link>
           </DropdownMenuItem>
         )}
         <DropdownMenuGroup>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Playlist</DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger className="flex gap-2">
+              <div className="i-heroicons:queue-list" />
+              Playlist
+            </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 {data?.map(({ name, id }) => (
@@ -61,15 +78,30 @@ export function VideoMenu({
             </DropdownMenuPortal>
           </DropdownMenuSub>
         </DropdownMenuGroup>
-        <DropdownMenuItem>Copy Holodex link</DropdownMenuItem>
+        <DropdownMenuItem className="flex gap-2">
+          <div className="i-heroicons:link" />
+          Copy Holodex link
+        </DropdownMenuItem>
         {status === "upcoming" && (
-          <DropdownMenuItem>Add to Google calendar</DropdownMenuItem>
+          <DropdownMenuItem className="flex gap-2">
+            <div className="i-heroicons:calendar" />
+            Add to Google calendar
+          </DropdownMenuItem>
         )}
-        <DropdownMenuItem>Open TL client</DropdownMenuItem>
+        <DropdownMenuItem className="flex gap-2">
+          <div className="i-heroicons:newspaper" />
+          Open TL client
+        </DropdownMenuItem>
         {status === "past" && (
-          <DropdownMenuItem>Upload TL Script</DropdownMenuItem>
+          <DropdownMenuItem className="flex gap-2">
+            <div className="i-heroicons:document-arrow-up" />
+            Upload TL Script
+          </DropdownMenuItem>
         )}
-        <DropdownMenuItem>Report</DropdownMenuItem>
+        <DropdownMenuItem className="flex gap-2">
+          <div className="i-heroicons:flag" />
+          Report
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
