@@ -2,6 +2,7 @@ import { darkAtom } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
 import { useAtom } from "jotai";
+import { OrgSelectorCombobox } from "../org/OrgPicker";
 // import { ScrollArea } from "@/shadcn/ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -25,6 +26,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
           />
         </div>
         <div className="px-3 py-2">
+          <OrgSelectorCombobox />
           <h2 className="mb-2 px-4 font-semibold tracking-tight">Hololive</h2>
           <div className="space-y-1">
             <Button className="w-full justify-start" variant="default">
@@ -39,7 +41,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
         </div>
         {/* <hr className="border-base" /> */}
         <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 font-semibold tracking-tight">Holodex</h2>
+          {/* <h2 className="mb-2 px-4 font-semibold tracking-tight">Holodex</h2> */}
           <div className="space-y-2">
             <Button className="w-full justify-start" variant="ghost">
               <span className="i-heroicons:heart"></span>

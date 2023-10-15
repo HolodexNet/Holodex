@@ -15,7 +15,7 @@ export function useFavorites(
 
   return useQuery<FavoriteChannel[], AxiosError>(
     ["user", "favorites"],
-    async () => (await client<FavoriteChannel[]>("/users/favorites")).data,
+    async () => (client.loggedIn ? (await client<FavoriteChannel[]>("/users/favorites")).data : []),
     config,
   );
 }

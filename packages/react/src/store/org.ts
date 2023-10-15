@@ -1,3 +1,16 @@
+import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-export const orgAtom = atomWithStorage('org', 'Hololive');
+export const defaultOrgs = [
+  { name: "All Vtubers", short: "Vtuber" },
+  { name: "Hololive", short: "Holo" },
+  { name: "Nijisanji", short: "Niji" },
+  { name: "VSpo", short: "VSpo" },
+  { name: "Independents", short: "Indie" },
+];
+
+export const orgRankingAtom = atomWithStorage('orgRanking', defaultOrgs)
+
+export const coreOrgAtom = atomWithStorage('org', { name: "Hololive", short: "Holo" });
+
+export const orgAtom = atom((get) => get(coreOrgAtom).name);
