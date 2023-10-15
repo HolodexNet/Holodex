@@ -40,7 +40,7 @@ export function VideoMenu({
             to={`https://youtu.be/${videoId}`}
             target="_blank"
           >
-            <div className="i-lucide:youtube" />
+            <div className="i-mdi:youtube" />
             Open on YouTube
           </Link>
         </DropdownMenuItem>
