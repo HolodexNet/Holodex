@@ -68,7 +68,7 @@ export function VideoCard({
           to={videoHref}
           target={placeholderType === "external-stream" ? "_blank" : undefined}
         >
-          <div className="flex py-2 gap-4">
+          <div className="group flex relative py-2 gap-4">
             <div
               className="w-36 md:w-48 shrink-0 relative overflow-hidden"
               onClick={
@@ -100,7 +100,7 @@ export function VideoCard({
               />
             </div>
             <div className="flex flex-col gap-1">
-              <div className="text-sm md:text-lg font-bold line-clamp-2">
+              <div className="pr-4 text-sm md:text-lg font-bold line-clamp-2">
                 {title}
               </div>
               <Link
@@ -137,6 +137,18 @@ export function VideoCard({
                 </span>
               )}
             </div>
+            <VideoMenu id={id} type={type} status={status}>
+              <Button
+                variant="ghost"
+                size="icon-lg"
+                className="absolute right-0 top-2 rounded-full hidden group-hover:flex"
+                onClickCapture={(e) => {
+                  e.preventDefault();
+                }}
+              >
+                <div className="i-heroicons:ellipsis-vertical w-4 h-4" />
+              </Button>
+            </VideoMenu>
           </div>
         </Link>
       );
