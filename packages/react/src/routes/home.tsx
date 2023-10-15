@@ -8,10 +8,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { videoCardSizeAtom } from "@/store/video";
 import { useAtom } from "jotai";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Navigate, useParams } from "react-router-dom";
 import { VirtuosoGrid } from "react-virtuoso";
 
 export function Home() {
+  const { t } = useTranslation();
   const { org } = useParams();
   const [tab, setTab] = useState("live");
   const { data: live, isLoading: liveLoading } = useLive(
@@ -80,13 +82,13 @@ export function Home() {
     >
       <TabsList className="flex w-full bg-base-2 rounded-none justify-start overflow-x-auto overflow-y-hidden z-20">
         <TabsTrigger className="text-lg" value="live">
-          Live
+          {t("Live")}
           {live && (
             <span className="mx-1 p-1 bg-secondary-5 rounded-sm text-sm">
               {live?.filter(({ status }) => status === "live").length}
             </span>
           )}
-          / Upcoming
+          / {t("Upcoming")}
           {live && (
             <span className="ml-1 p-1 bg-secondary-5 rounded-sm text-sm">
               {live?.filter(({ status }) => status === "upcoming").length}
@@ -94,10 +96,10 @@ export function Home() {
           )}
         </TabsTrigger>
         <TabsTrigger className="text-lg" value="archive">
-          Archive
+          {t("Archive")}
         </TabsTrigger>
         <TabsTrigger className="text-lg" value="clips">
-          Clips
+          {t("Clips")}
         </TabsTrigger>
         <div className="flex grow" />
         <Button

@@ -11,6 +11,7 @@ import { Frame } from "@/components/layout/Frame";
 // import { Channel } from "./channel";
 import { NavigateToMusicdex } from "@/components/channel/NavigateToMusicdex";
 import React from "react";
+import { ErrorFallback } from "@/components/common/ErrorFallback";
 
 const Login = React.lazy(() => import("./login"));
 const Settings = React.lazy(() => import("./settings"));
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Frame />,
+    ErrorBoundary: ErrorFallback,
     children: [
       {
         path: "favorites",
@@ -119,6 +121,10 @@ const router = createBrowserRouter([
       {
         path: "debug/run",
         element: <div>Debug Run</div>,
+      },
+      {
+        path: "*",
+        element: <div>Not found</div>,
       },
     ],
   },

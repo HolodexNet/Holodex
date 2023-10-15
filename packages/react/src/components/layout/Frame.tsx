@@ -16,6 +16,8 @@ import { Header } from "@/components/header/header";
 import { Toaster } from "@/shadcn/ui/toaster";
 import clsx from "clsx";
 import { orgAtom } from "@/store/org";
+import { ErrorFallback } from "../common/ErrorFallback";
+import { ErrorBoundary } from "react-error-boundary";
 
 export function Frame() {
   const location = useLocation();
@@ -54,7 +56,9 @@ export function Frame() {
       </aside>
       <Header onClick={toggle} id="header" />
       <main className="">
-        <Outlet />
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Outlet />
+        </ErrorBoundary>
       </main>
       {isMobile && <footer className="">Footer</footer>}
       <Toaster />

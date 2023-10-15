@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { HelmetProvider } from "react-helmet-async";
+import { ErrorBoundary } from "react-error-boundary";
 import "./index.css";
 import "uno.css";
 import { useThemeInit } from "./hooks/useTheme";
@@ -10,6 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./lib/i18n";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/router";
+import { ErrorFallback } from "./components/common/ErrorFallback";
 
 const GOOGLE_CLIENT_ID =
   "275540829388-87s7f9v2ht3ih51ah0tjkqng8pd8bqo2.apps.googleusercontent.com";
@@ -34,7 +36,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools />
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          <App />
+          <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+            onReset={() => window.location.reload()}
+          >
+            <App />
+          </ErrorBoundary>
         </GoogleOAuthProvider>
       </QueryClientProvider>
     </HelmetProvider>
