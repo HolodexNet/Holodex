@@ -73,7 +73,7 @@ const ToastAction = React.forwardRef<
 ToastAction.displayName = ToastPrimitives.Action.displayName
 
 const toastCloseVariants = cva(
-  "absolute right-1 top-1 rounded-md p-1 transition-opacity focus:outline-none focus:ring-1 opacity-0 group-hover:opacity-100",
+  "absolute right-1 top-1 rounded-md p-1 opacity-0 transition-opacity focus:outline-none focus:ring-1 group-hover:opacity-100",
   {
     variants: {
       variant: {

@@ -5,7 +5,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
-    "@unocss",
+    'plugin:tailwindcss/recommended',
   ],
   plugins: ['react-refresh'],
 

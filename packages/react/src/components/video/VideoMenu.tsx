@@ -84,7 +84,7 @@ export function VideoMenu({
                 ))}
                 {isLoading && (
                   <DropdownMenuItem className="justify-center" disabled>
-                    <div className="leading-none i-lucide:loader-2 animate-spin" />
+                    <div className="i-lucide:loader-2 animate-spin leading-none" />
                   </DropdownMenuItem>
                 )}
               </DropdownMenuSubContent>

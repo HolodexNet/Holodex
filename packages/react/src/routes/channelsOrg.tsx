@@ -10,7 +10,7 @@ export function ChannelsOrg() {
   const { data: channels, fetchNextPage: fetchChannels } = useChannels({ org, sort: 'suborg' });
 
   return (
-    <div className="w-full h-full p-4 md:p-8">
+    <div className="h-full w-full p-4 md:p-8">
       <VirtuosoGrid
         useWindowScroll
         listClassName="w-full grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-x-4 gap-y-6"

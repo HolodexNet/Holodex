@@ -71,9 +71,9 @@ export function VideoCard({
           to={videoHref}
           target={placeholderType === "external-stream" ? "_blank" : undefined}
         >
-          <div className="group flex relative py-2 gap-4">
+          <div className="group relative flex gap-4 py-2">
             <div
-              className="w-36 md:w-48 shrink-0 relative overflow-hidden"
+              className="relative w-36 shrink-0 overflow-hidden md:w-48"
               onClick={
                 onThumbnailClick
                   ? (e) => {
@@ -85,10 +85,10 @@ export function VideoCard({
             >
               <img
                 src={thumbnailSrc}
-                className="w-full h-full aspect-video object-cover rounded-md"
+                className="aspect-video h-full w-full rounded-md object-cover"
               />
               {topic_id && (
-                <span className="bg-black/80 absolute top-1 left-1 px-1 rounded-sm text-sm text-white capitalize">
+                <span className="absolute left-1 top-1 rounded-sm bg-black/80 px-1 text-sm capitalize text-white">
                   {topic_id}
                 </span>
               )}
@@ -103,17 +103,17 @@ export function VideoCard({
               />
             </div>
             <div className="flex flex-col gap-1">
-              <div className="pr-4 text-sm md:text-lg font-bold line-clamp-2">
+              <div className="line-clamp-2 pr-4 text-sm font-bold md:text-lg">
                 {title}
               </div>
               <Link
                 to={`/channel/${channel?.id}`}
-                className="text-xs md:text-sm text-base-11 hover:text-base-12 line-clamp-1"
+                className="line-clamp-1 text-xs text-base-11 hover:text-base-12 md:text-sm"
               >
                 {channel?.name}
               </Link>
               {status === "live" && (
-                <div className="flex gap-1 text-base-11 text-xs md:text-sm">
+                <div className="flex gap-1 text-xs text-base-11 md:text-sm">
                   <span className="text-red-500">{t("Live now")}</span>
                   {!!live_viewers && (
                     <>
@@ -130,7 +130,7 @@ export function VideoCard({
               {(type === "placeholder" || status === "upcoming") &&
                 status !== "live" &&
                 start_scheduled && (
-                  <span className="text-base-11 text-xs md:text-sm line-clamp-1">
+                  <span className="line-clamp-1 text-xs text-base-11 md:text-sm">
                     {t("Starts in {{distance}} ({{time}})", {
                       distance: formatDistanceToNowStrict(
                         new Date(start_scheduled),
@@ -140,7 +140,7 @@ export function VideoCard({
                   </span>
                 )}
               {status === "past" && available_at && (
-                <span className="text-base-11 text-xs md:text-sm line-clamp-1">
+                <span className="line-clamp-1 text-xs text-base-11 md:text-sm">
                   {formatDistanceToNowStrict(new Date(available_at), {
                     addSuffix: true,
                   })}
@@ -151,12 +151,12 @@ export function VideoCard({
               <Button
                 variant="ghost"
                 size="icon-lg"
-                className="absolute right-0 top-2 rounded-full hidden group-hover:flex"
+                className="absolute right-0 top-2 hidden rounded-full group-hover:flex"
                 onClickCapture={(e) => {
                   e.preventDefault();
                 }}
               >
-                <div className="i-heroicons:ellipsis-vertical w-4 h-4" />
+                <div className="i-heroicons:ellipsis-vertical h-4 w-4" />
               </Button>
             </VideoMenu>
           </div>
@@ -170,9 +170,9 @@ export function VideoCard({
           to={videoHref}
           target={placeholderType === "external-stream" ? "_blank" : undefined}
         >
-          <div className="group w-full flex flex-col gap-4">
+          <div className="group flex w-full flex-col gap-4">
             <div
-              className="w-full relative"
+              className="relative w-full"
               onClick={
                 onThumbnailClick
                   ? (e) => {
@@ -184,10 +184,10 @@ export function VideoCard({
             >
               <img
                 src={thumbnailSrc}
-                className="w-full aspect-video object-cover rounded-md"
+                className="aspect-video w-full rounded-md object-cover"
               />
               {topic_id && (
-                <span className="bg-black/80 absolute top-1 left-1 px-1 rounded-sm text-sm text-white capitalize">
+                <span className="absolute left-1 top-1 rounded-sm bg-black/80 px-1 text-sm capitalize text-white">
                   {topic_id}
                 </span>
               )}
@@ -201,19 +201,19 @@ export function VideoCard({
                 placeholderType={placeholderType}
               />
             </div>
-            <div className="flex relative gap-2">
+            <div className="relative flex gap-2">
               {channel && (
                 <Link to={`/channel/${channel.id}`} className="shrink-0">
                   <img
                     src={channel.photo ?? ""}
-                    className="w-8 h-8 rounded-full"
+                    className="h-8 w-8 rounded-full"
                   />
                 </Link>
               )}
               {/* Set min-height because react-virtuoso will break if the height is not fixed */}
-              <div className="flex flex-col gap-0 min-h-[6rem]">
+              <div className="flex min-h-[6rem] flex-col gap-0">
                 <div
-                  className="pr-4 text-sm md:text-[1rem] md:leading-6 font-bold line-clamp-2"
+                  className="line-clamp-2 pr-4 text-sm font-bold md:text-[1rem] md:leading-6"
                   onClick={
                     onInfoClick
                       ? (e) => {
@@ -237,7 +237,7 @@ export function VideoCard({
                         : undefined
                     }
                   >
-                    <div className="text-xs md:text-sm text-base-11 hover:text-base-12 line-clamp-1">
+                    <div className="line-clamp-1 text-xs text-base-11 hover:text-base-12 md:text-sm">
                       {channel.name}
                     </div>
                   </Link>
@@ -283,12 +283,12 @@ export function VideoCard({
                 <Button
                   variant="ghost"
                   size="icon-lg"
-                  className="absolute -right-2 top-0 rounded-full hidden group-hover:flex"
+                  className="absolute -right-2 top-0 hidden rounded-full group-hover:flex"
                   onClickCapture={(e) => {
                     e.preventDefault();
                   }}
                 >
-                  <div className="i-heroicons:ellipsis-vertical w-4 h-4" />
+                  <div className="i-heroicons:ellipsis-vertical h-4 w-4" />
                 </Button>
               </VideoMenu>
             </div>
@@ -341,9 +341,9 @@ function VideoCardDuration({
         (link?.includes("twitch") ? (
           <div className="i-lucide:twitch" />
         ) : placeholderType === "external-stream" ? (
-          <div className="i-lucide:radio text-lg m-1" />
+          <div className="i-lucide:radio m-1 text-lg" />
         ) : (
-          <div className="i-lucide:youtube text-lg m-1" />
+          <div className="i-lucide:youtube m-1 text-lg" />
         ))}
       {isPremiere ? "PREMIERE" : durationMs && formatDuration(durationMs)}
     </span>

@@ -18,14 +18,14 @@ export function Header({ onClick, id }: HeaderProps) {
   return (
     <header
       id={id}
-      className="bg-base-2 flex items-center px-8 py-auto gap-4 sticky top-0 z-40"
+      className="py-auto sticky top-0 z-40 flex items-center gap-4 bg-base-2 px-8"
     >
       <Button size="icon-lg" variant="ghost" onClick={onClick}>
-        <div className="i-heroicons:bars-3 rounded-md px-3 py-3 " />
+        <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
       <div className="justify-start py-1 pl-3 text-xl">Hololive</div>
       <div className="i-heroicons:chevron-down py-5" />
-      <div className="flex flex-grow" />
+      <div className="flex grow" />
       <Button
         size="icon-lg"
         variant="ghost"
@@ -36,7 +36,7 @@ export function Header({ onClick, id }: HeaderProps) {
       </Button>
       {user ? (
         <img
-          className="w-auto h-full p-2 rounded-full"
+          className="h-full w-auto rounded-full p-2"
           src={`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`}
         />
       ) : (

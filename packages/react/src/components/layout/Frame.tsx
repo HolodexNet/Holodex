@@ -51,7 +51,7 @@ export function Frame() {
 
   return (
     <div className={mainClasses} id="layout">
-      <aside className="border-r border-r-base z-50">
+      <aside className="z-50 border-r border-r-base">
         <Sidebar id="sidebar" onClose={toggle} />
       </aside>
       <Header onClick={toggle} id="header" />

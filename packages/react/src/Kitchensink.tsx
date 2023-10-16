@@ -9,7 +9,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="space-y-4 p-4">
       <h3>This page is for testing components and styling.</h3>
 
       <hr className="border-base" />
@@ -23,7 +23,7 @@ function App() {
       <hr className="border-base" />
 
       <h3>Color and variants:</h3>
-      <div className="flex flex-row max-w-5xl flex-wrap tems-start justify-start gap-4">
+      <div className="tems-start flex max-w-5xl flex-row flex-wrap justify-start gap-4">
         <Button>Default button</Button>
         <Button variant="ghost">Ghost button</Button>
         <Button variant="outline">Outline button</Button>

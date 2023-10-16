@@ -80,15 +80,15 @@ export function FancyMultiSelect() {
   return (
     <Command onKeyDown={handleKeyDown} className="overflow-visible bg-transparent">
       <div
-        className="group border border-base border-input px-3 py-2 text-sm ring-offset-base-2 rounded-md focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2"
+        className="border-input group rounded-md border border-base px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2"
       >
-        <div className="flex gap-1 flex-wrap">
+        <div className="flex flex-wrap gap-1">
           {selected.map((framework) => {
             return (
               <Badge key={framework.value} variant="primary">
                 {framework.label}
                 <button
-                  className="ml-1 ring-offset-base-2 rounded-full outline-none focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
+                  className="ml-1 rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleUnselect(framework);
@@ -100,7 +100,7 @@ export function FancyMultiSelect() {
                   }}
                   onClick={() => handleUnselect(framework)}
                 >
-                  <X className="h-3 w-3 text-base-8 hover:text-foreground" />
+                  <X className="hover:text-foreground h-3 w-3 text-base-8" />
                 </button>
               </Badge>
             )
@@ -113,13 +113,13 @@ export function FancyMultiSelect() {
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
             placeholder="Select frameworks..."
-            className="ml-2 bg-transparent outline-none placeholder:text-base-8 flex-1"
+            className="ml-2 flex-1 bg-transparent outline-none placeholder:text-base-8"
           />
         </div>
       </div>
       <div className="relative mt-2">
         {open && selectables.length > 0 ?
-          <div className="absolute w-full z-10 top-0 rounded-md border border-base bg-base-1 text-base-11 shadow-md outline-none animate-in">
+          <div className="absolute top-0 z-10 w-full rounded-md border border-base bg-base-1 text-base-11 shadow-md outline-none animate-in">
             <CommandGroup className="h-full overflow-auto">
               {selectables.map((framework) => {
                 return (

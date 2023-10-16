@@ -9,7 +9,7 @@ export default function Login() {
   } = useAuth();
 
   return (
-    <div className="w-full h-full">
+    <div className="h-full w-full">
       <div className="flex-col gap-4">
         <GoogleLogin
           onSuccess={(credential) => mutate({ platform: "google", credential })}

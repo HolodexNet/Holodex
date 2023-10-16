@@ -45,7 +45,7 @@ export function OrgSelectorCombobox() {
           role="combobox"
           size="lg"
           aria-expanded={open}
-          className="px-4 justify-between w-full"
+          className="w-full justify-between px-4"
         >
           {orgs.find((org) => org.name === currentOrg.name)?.name
             || t("Select organization...")}

@@ -80,17 +80,17 @@ export function Home() {
       defaultValue={tab}
       onValueChange={setTab}
     >
-      <TabsList className="flex w-full bg-base-2 rounded-none justify-start overflow-x-auto overflow-y-hidden z-20">
+      <TabsList className="z-20 flex w-full justify-start overflow-x-auto overflow-y-hidden rounded-none bg-base-2">
         <TabsTrigger className="text-lg" value="live">
           {t("Live")}
           {live && (
-            <span className="mx-1 p-1 bg-secondary-5 rounded-sm text-sm">
+            <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
               {live?.filter(({ status }) => status === "live").length}
             </span>
           )}
           / {t("Upcoming")}
           {live && (
-            <span className="ml-1 p-1 bg-secondary-5 rounded-sm text-sm">
+            <span className="ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
               {live?.filter(({ status }) => status === "upcoming").length}
             </span>
           )}

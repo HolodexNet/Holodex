@@ -60,4 +60,4 @@ export function useThemeInit() {
 
 
   return null; // This component doesn't need to render anything visible
-};
+}

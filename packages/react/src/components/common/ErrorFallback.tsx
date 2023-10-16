@@ -14,18 +14,18 @@ export function ErrorFallback(props?: FallbackProps | {}) {
   const error = routeError ?? (props?.error as Error | null);
 
   return (
-    <div className=" w-full h-full p-8 overflow-y-auto">
-      <div className="mx-auto w-full h-full max-w-screen-lg flex flex-col items-center gap-4">
-        <h2 className="font-bold text-3xl">{t("Gomenasorry!")}</h2>
+    <div className=" h-full w-full overflow-y-auto p-8">
+      <div className="mx-auto flex h-full w-full max-w-screen-lg flex-col items-center gap-4">
+        <h2 className="text-3xl font-bold">{t("Gomenasorry!")}</h2>
         <p>
           <Trans>
             There was an error retrieving content, please check{" "}
-            <a className="underline text-blue-500" href="https://x.com/holodex">
+            <a className="text-blue-500 underline" href="https://x.com/holodex">
               Twitter
             </a>{" "}
             or report an error through the{" "}
             <a
-              className="underline text-blue-500"
+              className="text-blue-500 underline"
               href="https://discord.gg/jctkgHBt4b"
             >
               Discord
@@ -49,13 +49,13 @@ export function ErrorFallback(props?: FallbackProps | {}) {
             {t("Logout / Clear cache")}
           </Button>
         </div>
-        <code className="max-w-full px-2 py-0 shrink-0 bg-black/10 rounded-md text-sm whitespace-pre overflow-x-auto">
+        <code className="max-w-full shrink-0 overflow-x-auto whitespace-pre rounded-md bg-black/10 px-2 py-0 text-sm">
           {error?.message}
         </code>
-        <code className="max-w-full shrink-0 p-2 bg-black/10 rounded-md text-xs whitespace-pre overflow-x-auto">
+        <code className="max-w-full shrink-0 overflow-x-auto whitespace-pre rounded-md bg-black/10 p-2 text-xs">
           {error?.stack}
         </code>
-        <TwitterFeed className="flex justify-center w-[min(800px, calc(100vw - 40px))] h-[400px]" />
+        <TwitterFeed className="w-[min(800px, calc(100vw - 40px))] flex h-[400px] justify-center" />
       </div>
     </div>
   );

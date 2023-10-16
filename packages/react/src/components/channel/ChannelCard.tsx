@@ -27,11 +27,11 @@ export function ChannelCard({
 
   return (
     // Set min-height because react-virtuoso will break if the height is not fixed
-    <div className="w-full h-full min-h-[24rem] flex flex-col gap-2 items-center p-4 bg-base-3 rounded-md">
-      <img className="w-24 h-24 rounded-full" src={photo ?? ""} />
-      <div className="font-xl font-bold text-center line-clamp-2">{name}</div>
+    <div className="flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4">
+      <img className="h-24 w-24 rounded-full" src={photo ?? ""} />
+      <div className="font-xl line-clamp-2 text-center font-bold">{name}</div>
       <div className="flex flex-col items-center">
-        <div className="text-sm text-base-11 whitespace-nowrap">
+        <div className="whitespace-nowrap text-sm text-base-11">
           {formatCount(subscriber_count ?? 0)} subscribers
         </div>
         <div className="flex flex-wrap justify-center gap-x-1 gap-y-0 text-sm text-base-11">
@@ -62,8 +62,8 @@ export function ChannelCard({
         )}
         {isInFavorite ? "Unfavorite" : "Favorite"}
       </Button>
-      <div className="w-full flex gap-2">
-        <Button asChild className="w-full dark:text-white text-[#282828]" variant="ghost" size="icon-lg">
+      <div className="flex w-full gap-2">
+        <Button asChild className="w-full text-[#282828] dark:text-white" variant="ghost" size="icon-lg">
           {/* Youtube Logo needs to conform with YT guidelines https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors */}
           <Link to={`https://www.youtube.com/channel/${id}`} target="_blank">
             <div className="i-mdi:youtube" />
