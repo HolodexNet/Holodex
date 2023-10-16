@@ -1,6 +1,6 @@
 import "./Frame.scss";
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { ReactPropTypes, useEffect } from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import {
   isFloatingAtom,
