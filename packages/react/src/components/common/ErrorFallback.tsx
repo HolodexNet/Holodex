@@ -13,7 +13,7 @@ export function ErrorFallback(props?: FallbackProps) {
   const error = routeError ?? (props?.error as Error | null);
 
   return (
-    <div className=" h-full w-full overflow-y-auto p-8">
+    <div className="h-full w-full overflow-y-auto p-8">
       <div className="mx-auto flex h-full w-full max-w-screen-lg flex-col items-center gap-4">
         <h2 className="text-3xl font-bold">{t("Gomenasorry!")}</h2>
         <p>
@@ -54,7 +54,7 @@ export function ErrorFallback(props?: FallbackProps) {
         <code className="max-w-full shrink-0 overflow-x-auto whitespace-pre rounded-md bg-black/10 p-2 text-xs">
           {error?.stack}
         </code>
-        <TwitterFeed className="w-[min(800px, calc(100vw - 40px))] flex h-[400px] justify-center" />
+        <TwitterFeed className="w-[min(800px,calc(100vw-40px))] flex h-[400px] justify-center" />
       </div>
     </div>
   );

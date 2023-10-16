@@ -61,7 +61,7 @@ export function VideoCard({
             return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
         }
       })(),
-    [type, thumbnail, id],
+    [type, thumbnail, id, size],
   );
 
   switch (size) {
@@ -77,9 +77,9 @@ export function VideoCard({
               onClick={
                 onThumbnailClick
                   ? (e) => {
-                      e.preventDefault();
-                      onThumbnailClick(e);
-                    }
+                    e.preventDefault();
+                    onThumbnailClick(e);
+                  }
                   : undefined
               }
             >
@@ -176,9 +176,9 @@ export function VideoCard({
               onClick={
                 onThumbnailClick
                   ? (e) => {
-                      e.preventDefault();
-                      onThumbnailClick(e);
-                    }
+                    e.preventDefault();
+                    onThumbnailClick(e);
+                  }
                   : undefined
               }
             >
@@ -217,9 +217,9 @@ export function VideoCard({
                   onClick={
                     onInfoClick
                       ? (e) => {
-                          e.preventDefault();
-                          onInfoClick(e);
-                        }
+                        e.preventDefault();
+                        onInfoClick(e);
+                      }
                       : undefined
                   }
                 >
@@ -231,9 +231,9 @@ export function VideoCard({
                     onClick={
                       onChannelClick
                         ? (e) => {
-                            e.preventDefault();
-                            onChannelClick(e);
-                          }
+                          e.preventDefault();
+                          onChannelClick(e);
+                        }
                         : undefined
                     }
                   >
@@ -327,8 +327,8 @@ function VideoCardDuration({
     (end_actual && start_actual
       ? new Date(end_actual).valueOf() - new Date(start_actual).valueOf()
       : start_actual
-      ? date.valueOf() - new Date(start_actual).valueOf()
-      : null);
+        ? date.valueOf() - new Date(start_actual).valueOf()
+        : null);
 
   return durationMs ?? status === "upcoming" ? (
     <span

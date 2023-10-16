@@ -8,6 +8,14 @@ module.exports = {
     'plugin:tailwindcss/recommended',
   ],
   plugins: ['react-refresh'],
+  settings: {
+    tailwindcss: {
+      "whitelist": [
+        'i\\-.+:?.+',
+        // doesn't work see: [https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/284]
+      ],
+    },
+  },
 
   ignorePatterns: ['dist', '.eslintrc.cjs'],
 
@@ -25,5 +33,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     '@typescript-eslint/no-unused-vars': ['warn'],
+    "tailwindcss/no-custom-classname": ['warn']
   },
 }
