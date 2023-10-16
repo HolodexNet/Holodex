@@ -31,7 +31,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
           />
         </div>
         <div className="px-3 py-2">
-          <div class="mb-2">
+          <div className="mb-2">
             <OrgSelectorCombobox /></div>
           {/* <h2 className="mb-2 px-4 font-semibold tracking-tight">Hololive</h2> */}
           <div className="space-y-1">
