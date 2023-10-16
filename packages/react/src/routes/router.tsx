@@ -1,4 +1,3 @@
-import Kitchensink from "@/Kitchensink";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { Home } from "@/routes/home";
 import { ChannelsOrg } from "./channelsOrg";
@@ -17,6 +16,7 @@ const Login = React.lazy(() => import("./login"));
 const Settings = React.lazy(() => import("./settings"));
 const About = React.lazy(() => import("./about"));
 const Channel = React.lazy(() => import("./channel"));
+const Kitchensink = React.lazy(() => import("@/Kitchensink"));
 
 const store = getDefaultStore();
 
