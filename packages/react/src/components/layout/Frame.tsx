@@ -1,6 +1,6 @@
 import "./Frame.scss";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import {
   isFloatingAtom,
@@ -18,6 +18,7 @@ import clsx from "clsx";
 import { orgAtom } from "@/store/org";
 import { ErrorFallback } from "../common/ErrorFallback";
 import { ErrorBoundary } from "react-error-boundary";
+import { Loading } from "../common/Loading";
 
 export function Frame() {
   const location = useLocation();
@@ -57,7 +58,9 @@ export function Frame() {
       <Header onClick={toggle} id="header" />
       <main className="">
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Outlet />
+          <Suspense fallback={<Loading size="xl" />}>
+            <Outlet />
+          </Suspense>
         </ErrorBoundary>
       </main>
       {isMobile && <footer className="">Footer</footer>}

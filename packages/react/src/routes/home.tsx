@@ -5,17 +5,27 @@ import { useLive } from "@/services/live.service";
 import { useVideos } from "@/services/video.service";
 import { Button } from "@/shadcn/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
+import { orgAtom } from "@/store/org";
 import { videoCardSizeAtom } from "@/store/video";
-import { useAtom } from "jotai";
-import { useMemo, useState } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Navigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { VirtuosoGrid } from "react-virtuoso";
 
 export function Home() {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useTranslation();
   const { org } = useParams();
-  const [tab, setTab] = useState("live");
+  const [cardSize, setCardSize] = useAtom(videoCardSizeAtom);
+  const currentOrg = useAtomValue(orgAtom);
+  const [tab, setTab] = useState(searchParams.get("tab") ?? "live");
   const { data: live, isLoading: liveLoading } = useLive(
     { org, type: ["placeholder", "stream"], include: ["mentions"] },
     { refetchInterval: 1000 * 60 * 5, enabled: tab === "live" },
@@ -58,7 +68,6 @@ export function Home() {
       enabled: tab === "clips",
     },
   );
-  const [cardSize, setCardSize] = useAtom(videoCardSizeAtom);
 
   const listCN = useMemo(
     () =>
@@ -71,6 +80,16 @@ export function Home() {
       }),
     [cardSize],
   );
+
+  useEffect(() => {
+    navigate(`/org/${currentOrg}`);
+  }, [currentOrg]);
+
+  useEffect(() => {
+    console.log(`tab changed ${tab}`);
+    searchParams.set("tab", tab);
+    setSearchParams(searchParams);
+  }, [searchParams, tab]);
 
   if (!org) return <Navigate to="/org404" />;
 

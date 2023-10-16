@@ -1,13 +1,24 @@
 import { ChannelCard } from "@/components/channel/ChannelCard";
 import { useChannels } from "@/services/channel.service";
-import { useParams, useSearchParams } from "react-router-dom";
+import { orgAtom } from "@/store/org";
+import { useAtomValue } from "jotai";
+import { useEffect } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { VirtuosoGrid } from "react-virtuoso";
 
-export function ChannelsOrg() {
+export default function ChannelsOrg() {
+  const navigate = useNavigate();
   const { org } = useParams();
-  // const [org, setOrg] = useAtom(orgAtom);
+  const currentOrg = useAtomValue(orgAtom);
 
-  const { data: channels, fetchNextPage: fetchChannels } = useChannels({ org, sort: 'suborg' });
+  const { data: channels, fetchNextPage: fetchChannels } = useChannels({
+    org,
+    sort: "suborg",
+  });
+
+  useEffect(() => {
+    navigate(`/org/${currentOrg}/channels`);
+  }, [currentOrg]);
 
   return (
     <div className="h-full w-full p-4 md:p-8">
