@@ -12,7 +12,6 @@ const About = React.lazy(() => import("./about"));
 const ChannelsOrg = React.lazy(() => import('./channelsOrg'));
 const Channel = React.lazy(() => import("./channel"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
-const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 
 const store = getDefaultStore();
 
