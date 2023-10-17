@@ -83,19 +83,21 @@ export function Home() {
 
   useEffect(() => {
     navigate(`/org/${currentOrg}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOrg]);
 
   useEffect(() => {
     console.log(`tab changed ${tab}`);
     searchParams.set("tab", tab);
     setSearchParams(searchParams);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, tab]);
 
   if (!org) return <Navigate to="/org404" />;
 
   return (
     <Tabs
-      className="w-full p-4 md:p-8"
+      className="w-full p-4 md:px-8"
       defaultValue={tab}
       onValueChange={setTab}
     >

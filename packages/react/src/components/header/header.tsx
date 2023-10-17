@@ -1,6 +1,7 @@
 import { toggleSidebarAtom } from "@/hooks/useFrame";
 import { darkAtom } from "@/hooks/useTheme";
 import { Button } from "@/shadcn/ui/button";
+import { Input } from "@/shadcn/ui/input";
 import { userAtom } from "@/store/auth";
 import { useAtom, useAtomValue } from "jotai";
 import { useSetAtom } from "jotai/react";
@@ -20,21 +21,28 @@ export function Header({ id }: HeaderProps) {
   return (
     <header
       id={id}
-      className="sticky top-0 z-40 flex items-center gap-4 bg-base-2 px-8"
+      className="z-40 flex items-center gap-4 bg-base-2 pl-2"
     >
-      <Button size="icon-lg" variant="ghost" onClick={frameToggleSidebar}>
+      <Button size="icon" variant="ghost" className="h-12 w-12 p-4" onClick={frameToggleSidebar}>
         <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
-      <div className="justify-start py-1 pl-3 text-xl">Hololive</div>
-      <div className="i-heroicons:chevron-down py-5" />
       <div className="flex grow" />
+      <Input type="search" placeholder="Search" className="max-w-lg" />
       <Button
-        size="icon-lg"
+        size="icon"
         variant="ghost"
-        className="p-2"
+        className="-ml-3 p-0 text-base-9"
         onClick={() => toggle(!dark)}
       >
-        <div className="i-heroicons:sun-20-solid h-full text-4xl" />
+        <div className="i-heroicons:magnifying-glass h-full text-xl" />
+      </Button>
+      <Button
+        size="icon"
+        variant="ghost"
+        className="p-0 text-base-9"
+        onClick={() => toggle(!dark)}
+      >
+        <div className="i-heroicons:sun-20-solid h-full text-xl " />
       </Button>
       {user ? (
         <img
