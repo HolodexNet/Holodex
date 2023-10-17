@@ -9,7 +9,7 @@ import { orgAtom } from "@/store/org";
 import { videoCardSizeAtom } from "@/store/video";
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import {
   Navigate,
   useNavigate,
@@ -83,12 +83,14 @@ export function Home() {
 
   useEffect(() => {
     navigate(`/org/${currentOrg}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOrg]);
 
   useEffect(() => {
     console.log(`tab changed ${tab}`);
     searchParams.set("tab", tab);
     setSearchParams(searchParams);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, tab]);
 
   if (!org) return <Navigate to="/org404" />;
@@ -101,24 +103,27 @@ export function Home() {
     >
       <TabsList className="z-20 flex w-full justify-start overflow-x-auto overflow-y-hidden rounded-none bg-base-2">
         <TabsTrigger className="text-lg" value="live">
-          {t("Live")}
-          {live && (
-            <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
-              {live?.filter(({ status }) => status === "live").length}
-            </span>
-          )}
-          / {t("Upcoming")}
-          {live && (
-            <span className="ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
-              {live?.filter(({ status }) => status === "upcoming").length}
-            </span>
-          )}
+          <Trans
+            i18nKey="views.home.liveOrUpcomingHeading"
+            components={{
+              liveCount: (
+                <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
+                  {live?.filter(({ status }) => status === "live").length}
+                </span>
+              ),
+              upcomingCount: (
+                <span className="ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
+                  {live?.filter(({ status }) => status === "upcoming").length}
+                </span>
+              ),
+            }}
+          />
         </TabsTrigger>
         <TabsTrigger className="text-lg" value="archive">
-          {t("Archive")}
+          {t("views.home.recentVideoToggles.official")}
         </TabsTrigger>
         <TabsTrigger className="text-lg" value="clips">
-          {t("Clips")}
+          {t("views.home.recentVideoToggles.subber")}
         </TabsTrigger>
         <div className="flex grow" />
         <Button

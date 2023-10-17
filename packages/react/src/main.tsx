@@ -10,6 +10,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./lib/i18n";
 import { RouterProvider } from "react-router-dom";
+import dayjs from "dayjs";
+import calendar from "dayjs/plugin/calendar";
+import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import router from "./routes/router";
 import { ErrorFallback } from "./components/common/ErrorFallback";
 
@@ -24,6 +29,11 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+dayjs.extend(calendar);
+dayjs.extend(relativeTime);
+dayjs.extend(utc);
+dayjs.extend(timezone); // dependent on utc plugin
 
 function App() {
   useThemeInit();

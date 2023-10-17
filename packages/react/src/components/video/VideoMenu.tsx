@@ -46,13 +46,13 @@ export function VideoMenu({
             target="_blank"
           >
             <div className="i-mdi:youtube" />
-            {t("Open on YouTube")}
+            {t("views.settings.redirectModeLabel")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link className="flex gap-2" to={`/watch/${videoId}/edit`}>
             <div className="i-heroicons:pencil" />
-            {t("Edit")}
+            {t("component.videoCard.edit")}
           </Link>
         </DropdownMenuItem>
         {type !== "clip" && (
@@ -62,7 +62,7 @@ export function VideoMenu({
               to={`/multiview/AAUY${videoId}%2cUAEYchat`}
             >
               <div className="i-heroicons:rectangle-group" />
-              {t("MultiView")}
+              {t("component.mainNav.multiview")}
             </Link>
           </DropdownMenuItem>
         )}
@@ -70,7 +70,7 @@ export function VideoMenu({
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="flex gap-2">
               <div className="i-heroicons:queue-list" />
-              {t("Playlist")}
+              {t("component.mainNav.playlist")}
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
@@ -93,27 +93,27 @@ export function VideoMenu({
         </DropdownMenuGroup>
         <DropdownMenuItem className="flex gap-2">
           <div className="i-heroicons:link" />
-          {t("Copy Holodex link")}
+          {t("component.videoCard.copyLink")}
         </DropdownMenuItem>
         {status === "upcoming" && (
           <DropdownMenuItem className="flex gap-2">
             <div className="i-heroicons:calendar" />
-            {t("Add to Google calendar")}
+            {t("component.videoCard.googleCalendar")}
           </DropdownMenuItem>
         )}
         <DropdownMenuItem className="flex gap-2">
           <div className="i-heroicons:newspaper" />
-          {t("Open TL client")}
+          {t("component.videoCard.openClient")}
         </DropdownMenuItem>
         {status === "past" && (
           <DropdownMenuItem className="flex gap-2">
             <div className="i-heroicons:document-arrow-up" />
-            {t("Upload TL Script")}
+            {t("component.videoCard.uploadScript")}
           </DropdownMenuItem>
         )}
         <DropdownMenuItem className="flex gap-2">
           <div className="i-heroicons:flag" />
-          Report
+          {t("component.reportDialog.title")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

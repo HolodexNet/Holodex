@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 // Faster React using swc apparently
 import react from "@vitejs/plugin-react-swc";
+import yaml from '@rollup/plugin-yaml';
+import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import UnoCSS from "unocss/vite";
 import presetIcons from "@unocss/preset-icons";
 import { fileURLToPath, URL } from "url";
@@ -29,6 +31,11 @@ export default defineConfig({
     bundleAnalyzer({}),
     react({ plugins: [["@swc-jotai/debug-label", {}]] }),
     UnoCSS({ presets: [presetIcons()] }),
+    yaml(),
+    dynamicImportVars({
+      // for importing yml dynamically.
+      include: ["src/locales/**/*.yml", "node_modules/dayjs/**/*.js"],
+    }),
   ],
   resolve: {
     alias: {

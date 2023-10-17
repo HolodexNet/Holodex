@@ -1,0 +1,16 @@
+hello: world
+music:
+  title: '{{english_name}} Original and Cover Songs - Holodex'
+  description: >-
+    Listen to official music and karaoke streams tagged by our community through the Holodex music player.
+channel:
+  normal:
+    title: '{{english_name}} Clips, Streams, Music and Collabs - Holodex'
+    description: >-
+      Find over {{clip_count}} clips, {{video_count}} streams by {{english_name}}. Know when they are going live by adding them to your Holodex favorites.
+    descriptionWithTopic: >-
+      Find {{ topics }} streams by {{english_name}}. Catch up on {{clip_count}} clips, {{video_count}} streams and more on Holodex.
+  clip:
+    title: '{{english_name}} Overview - Holodex'
+    description: >-
+      Find over {{video_count}} clips of your favorite vtubers by {{english_name}}.

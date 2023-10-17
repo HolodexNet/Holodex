@@ -1,0 +1,17 @@
+---
+hello: world
+music:
+  title: '{{english_name}} Original- und Cover-Songs - Holodex'
+  description: >-
+    Hör dir offizielle Musik und Karaoke-Streams an, die von unserer Community im Holodex Musik-Player getaggt wurden.
+channel:
+  normal:
+    title: '{{english_name}} Clips, Streams, Musik und Collabs - Holodex'
+    description: >-
+      Finde über {{clip_count}} Clips und {{video_count}} Streams von {{english_name}}. Erfahre, wann sie livestreamen, indem du sie zu deinen Holodex-Favoriten hinzufügst.
+    descriptionWithTopic: >-
+      Finde {{ topics }} Streams von {{english_name}}. Sieh dir {{clip_count}} Clips, {{video_count}} Streams und mehr auf Holodex an.
+  clip:
+    title: '{{english_name}} Übersicht - Holodex'
+    description: >-
+      Finde über {{video_count}} Clips deiner Lieblings-VTuber von {{english_name}}.

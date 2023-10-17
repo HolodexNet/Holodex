@@ -41,7 +41,7 @@ export function Header({ onClick, id }: HeaderProps) {
         />
       ) : (
         <Button asChild>
-          <Link to="/login">{t("Login")}</Link>
+          <Link to="/login">{t("component.mainNav.login")}</Link>
         </Button>
       )}
     </header>

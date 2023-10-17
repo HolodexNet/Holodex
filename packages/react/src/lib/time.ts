@@ -1,3 +1,8 @@
+import { localeAtom } from "@/store/i18n";
+import { getDefaultStore } from "jotai";
+
+const store = getDefaultStore();
+
 export function formatDuration(millisecs: number) {
   const negate = millisecs < 0;
   const secs = millisecs / 1000;
@@ -15,8 +20,9 @@ const numberFormatAdjust: Record<string, string> = {
   "lol-PEKO": "en",
 };
 
-export function formatCount(n: number | string, lang = "en") {
-  const converted = numberFormatAdjust[lang] ?? lang;
+export function formatCount(n: number | string, lng = "en") {
+  const { lang } = store.get(localeAtom);
+  const converted = lang ?? numberFormatAdjust[lng] ?? lng;
 
   return new Intl.NumberFormat(converted, {
     compactDisplay: "short",

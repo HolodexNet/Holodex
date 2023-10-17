@@ -15,26 +15,33 @@ export function ErrorFallback(props?: FallbackProps) {
   return (
     <div className="h-full w-full overflow-y-auto p-8">
       <div className="mx-auto flex h-full w-full max-w-screen-lg flex-col items-center gap-4">
-        <h2 className="text-3xl font-bold">{t("Gomenasorry!")}</h2>
+        <h2 className="text-3xl font-bold">{t("component.apiError.title")}</h2>
         <p>
-          <Trans>
-            There was an error retrieving content, please check{" "}
-            <a className="text-blue-500 underline" href="https://x.com/holodex">
-              Twitter
-            </a>{" "}
-            or report an error through the{" "}
-            <a
-              className="text-blue-500 underline"
-              href="https://discord.gg/jctkgHBt4b"
-            >
-              Discord
-            </a>
-            .
-          </Trans>
+          <Trans
+            i18nKey="component.apiError.text"
+            components={{
+              twitter: (
+                <a
+                  className="text-blue-500 underline"
+                  href="https://x.com/holodex"
+                >
+                  Twitter
+                </a>
+              ),
+              discord: (
+                <a
+                  className="text-blue-500 underline"
+                  href="https://discord.gg/jctkgHBt4b"
+                >
+                  Discord
+                </a>
+              ),
+            }}
+          />
         </p>
         <div className="flex gap-4">
           <Button size="lg" onClick={() => window.location.reload()}>
-            {t("Reload")}
+            {t("component.apiError.reload")}
           </Button>
           <Button
             size="lg"
@@ -45,7 +52,7 @@ export function ErrorFallback(props?: FallbackProps) {
               window.location.assign("/");
             }}
           >
-            {t("Logout / Clear cache")}
+            {t("component.apiError.logoutAndClearCache")}
           </Button>
         </div>
         <code className="max-w-full shrink-0 overflow-x-auto whitespace-pre rounded-md bg-black/10 px-2 py-0 text-sm">

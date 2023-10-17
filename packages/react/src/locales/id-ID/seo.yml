@@ -1,0 +1,17 @@
+---
+hello: world
+music:
+  title: '{{english_name}} Lagu Orisinal dan Cover - Holodex'
+  description: >-
+    Mendengarkan musik resmi dan siaran karaoke yang bertanda oleh komunitas kami melalui pemutar musik Holodex.
+channel:
+  normal:
+    title: '{{english_name}} Klip, Siaran, Musik dan Kolaborasi - Holodex'
+    description: >-
+      Temukan {{clip_count}} klip, {{video_count}} siaran oleh {{english_name}}. Mengetahui mereka sedang siaran langsung dengan menambahkan mereka ke laman favorit Holodex kamu.
+    descriptionWithTopic: >-
+      Temukan siaran {{ topics }} oleh {{english_name}}. Lihat {{clip_count}} klip, {{video_count}} siaran dan masih banyak lagi di Holodex.
+  clip:
+    title: '{{english_name}} Gambaran - Holodex'
+    description: >-
+      Temukan {{video_count}} klip favorit vtuber kamu oleh {{english_name}}.

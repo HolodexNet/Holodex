@@ -3,9 +3,10 @@ import { useFavoriteMutation, useFavorites } from "@/services/user.service";
 import { Badge } from "@/shadcn/ui/badge";
 import { Button } from "@/shadcn/ui/button";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-interface ChannelCardProps extends Channel { }
+interface ChannelCardProps extends Channel {}
 
 export function ChannelCard({
   id,
@@ -18,6 +19,7 @@ export function ChannelCard({
   twitter,
   twitch,
 }: ChannelCardProps) {
+  const { t } = useTranslation();
   const { mutate, isLoading: mutateLoading } = useFavoriteMutation();
   const { data } = useFavorites();
   const isInFavorite = useMemo(
@@ -32,15 +34,25 @@ export function ChannelCard({
       <div className="font-xl line-clamp-2 text-center font-bold">{name}</div>
       <div className="flex flex-col items-center">
         <div className="whitespace-nowrap text-sm text-base-11">
-          {formatCount(subscriber_count ?? 0)} subscribers
+          {t("component.channelInfo.subscriberCount", {
+            n: formatCount(subscriber_count ?? "0"),
+          })}
         </div>
         <div className="flex flex-wrap justify-center gap-x-1 gap-y-0 text-sm text-base-11">
-          <span className="whitespace-nowrap">{video_count ?? "0"} videos</span>
+          <span className="whitespace-nowrap">
+            {t("component.channelInfo.videoCount", { 0: video_count ?? 0 })}
+          </span>
           <span>/</span>
-          <span className="whitespace-nowrap">{clip_count ?? "0"} clips</span>
+          <span className="whitespace-nowrap">
+            {t("component.channelInfo.clipCount", { n: clip_count ?? "0" })}
+          </span>
         </div>
       </div>
-      {top_topics && <Badge variant="outline" className="capitalize">{top_topics[0]}</Badge>}
+      {top_topics && (
+        <Badge variant="outline" className="capitalize">
+          {top_topics[0]}
+        </Badge>
+      )}
       <div className="flex grow" />
       <Button
         className="w-full"
@@ -60,10 +72,17 @@ export function ChannelCard({
         ) : (
           <div className="i-heroicons:heart" />
         )}
-        {isInFavorite ? "Unfavorite" : "Favorite"}
+        {isInFavorite
+          ? t("component.channelSocials.removeFromFavorites")
+          : t("component.channelSocials.addToFavorites")}
       </Button>
       <div className="flex w-full gap-2">
-        <Button asChild className="w-full text-[#282828] dark:text-white" variant="ghost" size="icon-lg">
+        <Button
+          asChild
+          className="w-full text-[#282828] dark:text-white"
+          variant="ghost"
+          size="icon-lg"
+        >
           {/* Youtube Logo needs to conform with YT guidelines https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors */}
           <Link to={`https://www.youtube.com/channel/${id}`} target="_blank">
             <div className="i-mdi:youtube" />

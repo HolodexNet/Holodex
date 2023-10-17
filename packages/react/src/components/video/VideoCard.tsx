@@ -2,11 +2,12 @@ import { formatCount, formatDuration } from "@/lib/time";
 import { Button } from "@/shadcn/ui/button";
 import { Link } from "react-router-dom";
 import { useSeconds } from "use-seconds";
-import { format, formatDistanceToNowStrict } from "date-fns";
 import { VideoMenu } from "./VideoMenu";
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useAtomValue } from "jotai";
+import { localeAtom } from "@/store/i18n";
 
 type VideoCard = VideoBase &
   Partial<Video> &
@@ -41,6 +42,7 @@ export function VideoCard({
   onThumbnailClick,
   onChannelClick,
 }: VideoCardProps) {
+  const { dayjs } = useAtomValue(localeAtom);
   const { t } = useTranslation();
 
   const videoHref = useMemo(
@@ -77,9 +79,9 @@ export function VideoCard({
               onClick={
                 onThumbnailClick
                   ? (e) => {
-                    e.preventDefault();
-                    onThumbnailClick(e);
-                  }
+                      e.preventDefault();
+                      onThumbnailClick(e);
+                    }
                   : undefined
               }
             >
@@ -114,13 +116,13 @@ export function VideoCard({
               </Link>
               {status === "live" && (
                 <div className="flex gap-1 text-xs text-base-11 md:text-sm">
-                  <span className="text-red-500">{t("Live now")}</span>
+                  <span className="text-red-500">{t("component.videoCard.liveNow")}</span>
                   {!!live_viewers && (
                     <>
                       <span>/</span>
                       <span>
-                        {t("{{live_viewers}} watching", {
-                          live_viewers: formatCount(live_viewers),
+                        {t("component.videoCard.watching", {
+                          0: formatCount(live_viewers),
                         })}
                       </span>
                     </>
@@ -131,18 +133,16 @@ export function VideoCard({
                 status !== "live" &&
                 start_scheduled && (
                   <span className="line-clamp-1 text-xs text-base-11 md:text-sm">
-                    {t("Starts in {{distance}} ({{time}})", {
-                      distance: formatDistanceToNowStrict(
-                        new Date(start_scheduled),
-                      ),
-                      time: format(new Date(start_scheduled), "hh:mm a"),
+                    {t("time.diff_future_date", {
+                      0: dayjs(start_scheduled).fromNow(false),
+                      1: dayjs(start_scheduled).format("hh:mm A"),
                     })}
                   </span>
                 )}
               {status === "past" && available_at && (
                 <span className="line-clamp-1 text-xs text-base-11 md:text-sm">
-                  {formatDistanceToNowStrict(new Date(available_at), {
-                    addSuffix: true,
+                  {t("time.distance_past_date", {
+                    0: dayjs(available_at).fromNow(false),
                   })}
                 </span>
               )}
@@ -176,9 +176,9 @@ export function VideoCard({
               onClick={
                 onThumbnailClick
                   ? (e) => {
-                    e.preventDefault();
-                    onThumbnailClick(e);
-                  }
+                      e.preventDefault();
+                      onThumbnailClick(e);
+                    }
                   : undefined
               }
             >
@@ -217,9 +217,9 @@ export function VideoCard({
                   onClick={
                     onInfoClick
                       ? (e) => {
-                        e.preventDefault();
-                        onInfoClick(e);
-                      }
+                          e.preventDefault();
+                          onInfoClick(e);
+                        }
                       : undefined
                   }
                 >
@@ -231,9 +231,9 @@ export function VideoCard({
                     onClick={
                       onChannelClick
                         ? (e) => {
-                          e.preventDefault();
-                          onChannelClick(e);
-                        }
+                            e.preventDefault();
+                            onChannelClick(e);
+                          }
                         : undefined
                     }
                   >
@@ -245,13 +245,15 @@ export function VideoCard({
                 <div className="flex text-xs md:text-sm">
                   {status === "live" && (
                     <div className="flex gap-1 text-base-11">
-                      <span className="text-red-500">{t("Live now")}</span>
+                      <span className="text-red-500">
+                        {t("component.videoCard.liveNow")}
+                      </span>
                       {!!live_viewers && (
                         <>
                           <span>/</span>
                           <span>
-                            {t("{{live_viewers}} watching", {
-                              live_viewers: formatCount(live_viewers),
+                            {t("component.videoCard.watching", {
+                              0: formatCount(live_viewers),
                             })}
                           </span>
                         </>
@@ -262,18 +264,16 @@ export function VideoCard({
                     status !== "live" &&
                     start_scheduled && (
                       <span className="text-base-11">
-                        {t("Starts in {{distance}} ({{time}})", {
-                          distance: formatDistanceToNowStrict(
-                            new Date(start_scheduled),
-                          ),
-                          time: format(new Date(start_scheduled), "hh:mm a"),
+                        {t("time.diff_future_date", {
+                          0: dayjs(start_scheduled).fromNow(false),
+                          1: dayjs(start_scheduled).format("hh:mm A"),
                         })}
                       </span>
                     )}
                   {status === "past" && available_at && (
                     <span className="text-base-11">
-                      {formatDistanceToNowStrict(new Date(available_at), {
-                        addSuffix: true,
+                      {t("time.distance_past_date", {
+                        0: dayjs(available_at).fromNow(false),
                       })}
                     </span>
                   )}
@@ -316,6 +316,7 @@ function VideoCardDuration({
   | "link"
   | "placeholderType"
 >) {
+  const { t } = useTranslation();
   const [date] = useSeconds();
 
   const isPremiere = type === "stream" && status === "upcoming" && duration;
@@ -327,8 +328,8 @@ function VideoCardDuration({
     (end_actual && start_actual
       ? new Date(end_actual).valueOf() - new Date(start_actual).valueOf()
       : start_actual
-        ? date.valueOf() - new Date(start_actual).valueOf()
-        : null);
+      ? date.valueOf() - new Date(start_actual).valueOf()
+      : null);
 
   return durationMs ?? status === "upcoming" ? (
     <span
@@ -345,7 +346,7 @@ function VideoCardDuration({
         ) : (
           <div className="i-lucide:youtube m-1 text-lg" />
         ))}
-      {isPremiere ? "PREMIERE" : durationMs && formatDuration(durationMs)}
+      {isPremiere ? t("component.videoCard.premiere") : durationMs && formatDuration(durationMs)}
     </span>
   ) : null;
 }

@@ -2,8 +2,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/shadcn/ui/button";
 import { GoogleLogin } from "@react-oauth/google";
 import open from "oauth-open";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
+  const {t} = useTranslation();
   const {
     login: { mutate },
   } = useAuth();
@@ -27,7 +29,7 @@ export default function Login() {
             )
           }
         >
-          Login with Discord
+          {t("views.login.with[1]")}
         </Button>
         {/* Twitter login is currently unavailable and is on hold */}
         {/* <Button

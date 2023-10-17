@@ -1,0 +1,17 @@
+---
+hello: wowwd
+music:
+  title: '{{english_name}} Owiginaw and covew songs - howodex'
+  description: >-
+    Listen to officiaw music and kawaoke stweams tagged by ouw community thwough da howodex music pwayew.
+channel:
+  normal:
+    title: '{{english_name}} Cwips, stweams, music and cowwabs - howodex'
+    description: >-
+      Find ovew {{clip_count}} cwips, {{video_count}} stweams by {{english_name}}. Know when dey awe going wive by adding them to youw howodex favowites.
+    descriptionWithTopic: >-
+      Find {{ topics }} stweams by {{english_name}}. Catch up on {{clip_count}} cwips, {{video_count}} stweams and mowe on howodex.
+  clip:
+    title: '{{english_name}} Ovewview - howodex'
+    description: >-
+      Find ovew {{video_count}} cwips of youw favowite vtubews by {{english_name}}.

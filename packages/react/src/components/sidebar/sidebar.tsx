@@ -32,18 +32,19 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
         </div>
         <div className="px-3 py-2">
           <div className="mb-2">
-            <OrgSelectorCombobox /></div>
+            <OrgSelectorCombobox />
+          </div>
           {/* <h2 className="mb-2 px-4 font-semibold tracking-tight">Hololive</h2> */}
           <div className="space-y-1">
             <SidebarItem
               onClose={onClose}
-              label="Home"
+              label={t("component.mainNav.home")}
               href={`/org/${org}`}
               icon="i-heroicons:home"
             />
             <SidebarItem
               onClose={onClose}
-              label="Channels"
+              label={t("component.mainNav.channels")}
               href={`/org/${org}/channels`}
               icon="i-heroicons:user-group"
             />
@@ -54,13 +55,13 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
           {/* <h2 className="mb-2 px-4 font-semibold tracking-tight">Holodex</h2> */}
           <div className="space-y-2">
             <SidebarItem
-              label="Favorites"
+              label={t("component.mainNav.favorites")}
               icon="i-heroicons:heart"
               href="/favorites"
               onClose={onClose}
             />
             <SidebarItem
-              label="Multiview"
+              label={t("component.mainNav.multiview")}
               icon="i-heroicons:rectangle-group"
               href="/multiview"
               onClose={onClose}
@@ -74,21 +75,21 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
             <hr className="border-base" />
             <SidebarItem
               className="text-base-11"
-              label="Playlist"
+              label={t("component.mainNav.playlist")}
               icon="i-heroicons:queue-list"
               href="/playlists"
               onClose={onClose}
             />
             <SidebarItem
               className="text-base-11"
-              label="Settings"
+              label={t("component.mainNav.settings")}
               icon="i-heroicons:cog-6-tooth"
               href="/settings"
               onClose={onClose}
             />
             <SidebarItem
               className="text-base-11"
-              label="About"
+              label={t("component.mainNav.about")}
               icon="i-heroicons:information-circle"
               href="/about"
               onClose={onClose}
@@ -156,7 +157,6 @@ function SidebarItem({
   label: string;
   href: string;
 }) {
-  const { t } = useTranslation();
   const location = useLocation();
   const isMobile = useAtomValue(isMobileAtom);
 
@@ -175,7 +175,7 @@ function SidebarItem({
     >
       <Link to={href}>
         <span className={icon}></span>
-        {t(label)}
+        {label}
       </Link>
     </Button>
   );
