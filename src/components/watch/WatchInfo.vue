@@ -22,7 +22,9 @@
       </router-link>
     </v-card-title>
     <v-card-subtitle>
-      {{ formattedTime }}
+      <span :class="'text-' + video.status" :title="absoluteTimeString">
+        {{ formattedTime }}
+      </span>
       <span
         v-if="video.status === 'live' && liveViewers"
         class="live-viewers"
@@ -198,6 +200,17 @@ export default {
     computed: {
         lang() {
             return this.$store.state.settings.lang;
+        },
+        absoluteTimeString() {
+            const ts = localizedDayjs(this.video.available_at, this.lang);
+            const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
+            const ts2 = ts
+                .tz("Asia/Tokyo")
+                .format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
+            if (ts1 === ts2) {
+                return ts1;
+            }
+            return `${ts1}\n${ts2}`;
         },
         formattedTime() {
             switch (this.video.status) {
