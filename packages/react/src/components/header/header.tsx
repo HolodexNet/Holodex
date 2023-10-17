@@ -1,26 +1,28 @@
+import { toggleSidebarAtom } from "@/hooks/useFrame";
 import { darkAtom } from "@/hooks/useTheme";
 import { Button } from "@/shadcn/ui/button";
 import { userAtom } from "@/store/auth";
 import { useAtom, useAtomValue } from "jotai";
+import { useSetAtom } from "jotai/react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-interface HeaderProps {
-  onClick: () => void;
+interface HeaderProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>{
   id: string;
 }
 
-export function Header({ onClick, id }: HeaderProps) {
+export function Header({ id }: HeaderProps) {
   const { t } = useTranslation();
   const [dark, toggle] = useAtom(darkAtom);
   const user = useAtomValue(userAtom);
+  const frameToggleSidebar = useSetAtom(toggleSidebarAtom);
 
   return (
     <header
       id={id}
       className="sticky top-0 z-40 flex items-center gap-4 bg-base-2 px-8"
     >
-      <Button size="icon-lg" variant="ghost" onClick={onClick}>
+      <Button size="icon-lg" variant="ghost" onClick={frameToggleSidebar}>
         <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
       <div className="justify-start py-1 pl-3 text-xl">Hololive</div>
