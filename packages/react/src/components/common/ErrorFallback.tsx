@@ -5,7 +5,7 @@ import { useRouteError } from "react-router-dom";
 import { Button } from "@/shadcn/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
-export function ErrorFallback(props?: FallbackProps) {
+export function ErrorFallback(props?: Partial<FallbackProps>) {
   const routeError = useRouteError() as Error | null;
   const { t } = useTranslation();
   const { logout } = useAuth();

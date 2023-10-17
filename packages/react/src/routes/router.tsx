@@ -1,13 +1,8 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { Home } from "@/routes/home";
-import { ChannelsOrg } from "./channelsOrg";
 import { getDefaultStore } from "jotai";
 import { orgAtom } from "@/store/org";
 import { Frame } from "@/components/layout/Frame";
-// import { Login } from "./login";
-// import { Settings } from "./settings";
-// import { About } from "./about";
-// import { Channel } from "./channel";
 import { NavigateToMusicdex } from "@/components/channel/NavigateToMusicdex";
 import React from "react";
 import { ErrorFallback } from "@/components/common/ErrorFallback";
@@ -17,6 +12,7 @@ const Settings = React.lazy(() => import("./settings"));
 const About = React.lazy(() => import("./about"));
 const Channel = React.lazy(() => import("./channel"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
+const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 
 const store = getDefaultStore();
 
