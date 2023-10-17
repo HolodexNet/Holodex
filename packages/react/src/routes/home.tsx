@@ -97,7 +97,7 @@ export function Home() {
 
   return (
     <Tabs
-      className="w-full p-4 md:p-8"
+      className="w-full p-4 md:px-8"
       defaultValue={tab}
       onValueChange={setTab}
     >

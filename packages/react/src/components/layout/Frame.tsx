@@ -6,9 +6,10 @@ import {
   isFloatingAtom,
   isMobileAtom,
   onResizeAtom,
-  sidebarOpenAtom,
+  toggleSidebarAtom,
   sidebarShouldBeFullscreenAtom,
-  toggleAtom,
+  openSidebarAtom,
+  isSidebarOpenAtom,
 } from "@/hooks/useFrame";
 import { useAtomValue, useSetAtom } from "jotai/react";
 import { darkAtom } from "@/hooks/useTheme";
@@ -22,7 +23,7 @@ import { Loading } from "../common/Loading";
 
 export function Frame() {
   const location = useLocation();
-  const toggle = useSetAtom(toggleAtom);
+  const toggle = useSetAtom(toggleSidebarAtom);
   const resize = useSetAtom(onResizeAtom);
   const dark = useAtomValue(darkAtom);
   const org = useAtomValue(orgAtom);
@@ -33,7 +34,7 @@ export function Frame() {
   }, []);
 
   const floating = useAtomValue(isFloatingAtom);
-  const open = useAtomValue(sidebarOpenAtom);
+  const open = useAtomValue(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
   console.log(fs);
@@ -55,7 +56,7 @@ export function Frame() {
       <aside className="z-50 border-r border-r-base">
         <Sidebar id="sidebar" onClose={toggle} />
       </aside>
-      <Header onClick={toggle} id="header" />
+      <Header id="header"/>
       <main className="">
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback={<Loading size="xl" />}>

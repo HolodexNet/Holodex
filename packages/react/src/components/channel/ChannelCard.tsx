@@ -31,7 +31,7 @@ export function ChannelCard({
     // Set min-height because react-virtuoso will break if the height is not fixed
     <div className="flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4">
       <img className="h-24 w-24 rounded-full" src={photo ?? ""} />
-      <div className="font-xl line-clamp-2 text-center font-bold">{name}</div>
+      <div className="line-clamp-2 text-center text-lg font-bold">{name}</div>
       <div className="flex flex-col items-center">
         <div className="whitespace-nowrap text-sm text-base-11">
           {t("component.channelInfo.subscriberCount", {

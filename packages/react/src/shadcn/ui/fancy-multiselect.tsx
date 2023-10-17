@@ -80,7 +80,7 @@ export function FancyMultiSelect() {
   return (
     <Command onKeyDown={handleKeyDown} className="overflow-visible bg-transparent">
       <div
-        className="border-input group rounded-md border border-base px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2"
+        className="group rounded-md border border-base px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2"
       >
         <div className="flex flex-wrap gap-1">
           {selected.map((framework) => {
@@ -100,7 +100,7 @@ export function FancyMultiSelect() {
                   }}
                   onClick={() => handleUnselect(framework)}
                 >
-                  <X className="hover:text-foreground h-3 w-3 text-base-8" />
+                  <X className="h-3 w-3 text-base-8 hover:text-base-11" />
                 </button>
               </Badge>
             )

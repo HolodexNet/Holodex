@@ -20,7 +20,7 @@ export const isMobileAtom = atom(
   (get) => get(sidebarShouldBeFullscreenAtom) //&& /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 );
 
-export const sidebarOpenAtom = atom(window.innerWidth > MobileSizeBreak);
+export const isSidebarOpenAtom = atom(window.innerWidth > MobileSizeBreak);
 
 export const onResizeAtom = atom(
   null,
@@ -30,9 +30,9 @@ export const onResizeAtom = atom(
     set(sidebarShouldBeFullscreenAtom, width < FooterSizeBreak);
     if (width < MobileSizeBreak) {
       console.log("closing")
-      set(sidebarOpenAtom, false)
+      set(isSidebarOpenAtom, false)
     } else {
-      set(sidebarOpenAtom, get(sidebarPrefOpenAtom))
+      set(isSidebarOpenAtom, get(sidebarPrefOpenAtom))
     }
   }
 );
@@ -42,10 +42,10 @@ export const onNavigateAtom = atom(
   (get, set, pageIsFullscreen: boolean) => {
     const currentFullscreenStatus = get(pageIsFullscreenAtom);
     if (currentFullscreenStatus !== pageIsFullscreen && pageIsFullscreen) {
-      set(sidebarOpenAtom, false);
+      set(isSidebarOpenAtom, false);
     }
     else if (currentFullscreenStatus !== pageIsFullscreen && !pageIsFullscreen) {
-      set(sidebarOpenAtom, get(sidebarPrefOpenAtom));
+      set(isSidebarOpenAtom, get(sidebarPrefOpenAtom));
     }
     if (currentFullscreenStatus !== pageIsFullscreen) {
       set(pageIsFullscreenAtom, pageIsFullscreen);
@@ -53,27 +53,27 @@ export const onNavigateAtom = atom(
   }
 );
 
-export const toggleAtom = atom(
+export const toggleSidebarAtom = atom(
   null,
   (get, set) => {
-    const currentOpenStatus = get(sidebarOpenAtom);
-    set(sidebarOpenAtom, !currentOpenStatus);
+    const currentOpenStatus = get(isSidebarOpenAtom);
+    set(isSidebarOpenAtom, !currentOpenStatus);
     set(sidebarPrefOpenAtom, !currentOpenStatus);
   }
 );
 
-export const openAtom = atom(
+export const openSidebarAtom = atom(
   null,
   (_, set) => {
-    set(sidebarOpenAtom, true);
+    set(isSidebarOpenAtom, true);
     set(sidebarPrefOpenAtom, true);
   }
 );
 
-export const closeAtom = atom(
+export const closeSidebarAtom = atom(
   null,
   (_, set) => {
-    set(sidebarOpenAtom, false);
+    set(isSidebarOpenAtom, false);
     set(sidebarPrefOpenAtom, false);
   }
 );

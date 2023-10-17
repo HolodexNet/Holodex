@@ -23,7 +23,7 @@ function App() {
       <hr className="border-base" />
 
       <h3>Color and variants:</h3>
-      <div className="tems-start flex max-w-5xl flex-row flex-wrap justify-start gap-4">
+      <div className="flex max-w-5xl flex-row flex-wrap items-start justify-start gap-4">
         <Button>Default button</Button>
         <Button variant="ghost">Ghost button</Button>
         <Button variant="outline">Outline button</Button>

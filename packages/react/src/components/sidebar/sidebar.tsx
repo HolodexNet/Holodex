@@ -167,8 +167,9 @@ function SidebarItem({
       asChild
       className={cn(
         "w-full justify-start",
-        { "text-white": isHere },
         className,
+        { "text-base-12 font-semibold": isHere },
+        { 'font-base-11 font-light': !isHere },
       )}
       variant={isHere ? "default" : "ghost"}
       onClick={isMobile ? onClose : undefined}
