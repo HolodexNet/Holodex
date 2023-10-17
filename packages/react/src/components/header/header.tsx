@@ -18,7 +18,7 @@ export function Header({ onClick, id }: HeaderProps) {
   return (
     <header
       id={id}
-      className="py-auto sticky top-0 z-40 flex items-center gap-4 bg-base-2 px-8"
+      className="sticky top-0 z-40 flex items-center gap-4 bg-base-2 px-8"
     >
       <Button size="icon-lg" variant="ghost" onClick={onClick}>
         <div className="i-heroicons:bars-3 rounded-md p-3" />
