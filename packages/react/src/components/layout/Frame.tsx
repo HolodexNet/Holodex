@@ -56,7 +56,7 @@ export function Frame() {
       <aside className="z-50 border-r border-r-base">
         <Sidebar id="sidebar" onClose={toggle} />
       </aside>
-      <Header "id="header/>
+      <Header id="header"/>
       <main className="">
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback={<Loading size="xl" />}>
