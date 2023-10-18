@@ -45,3 +45,22 @@ type FavoriteChannel = Pick<
   | "type"
   | "video_count"
 >;
+
+
+enum CHANNEL_TYPES {
+  VTUBER = "vtuber",
+  SUBBER = "subber",
+}
+
+interface ShortChannel extends ChannelBase {
+  id: string;
+  name: string;
+  type: CHANNEL_TYPES;
+  english_name?: string;
+  org?: string;
+  group?: string; //group is likely not existent.
+  lang?: string; // lang is sometimes missing.
+  photo?: string;
+}
+
+type PrivacyStatus = "public" | "private";

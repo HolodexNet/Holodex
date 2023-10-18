@@ -9,12 +9,12 @@ import { useTranslation } from "react-i18next";
 import { useAtomValue } from "jotai";
 import { localeAtom } from "@/store/i18n";
 
-type VideoCard = VideoBase &
+type VideoCardType = VideoBase &
   Partial<Video> &
   Partial<Live> &
   Partial<Placeholder>;
 
-interface VideoCardProps extends VideoCard {
+interface VideoCardProps extends VideoCardType {
   size: VideoCardSize;
   onInfoClick?: React.MouseEventHandler<HTMLDivElement>;
   onThumbnailClick?: React.MouseEventHandler<HTMLDivElement>;
@@ -307,7 +307,7 @@ function VideoCardDuration({
   link,
   placeholderType,
 }: Pick<
-  VideoCard,
+  VideoCardType,
   | "type"
   | "status"
   | "duration"

@@ -28,7 +28,7 @@ export function useLive(
 
   return useQuery<Live[], AxiosError>(
     ["live", params],
-    async () => (await client<Live[]>("/live", { params })).data,
+    async () => (await client<Live[]>("/api/v2/live", { params })),
     config,
   );
 }

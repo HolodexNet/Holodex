@@ -1,5 +1,5 @@
 interface Live extends VideoBase {
-  channel: ChannelBase;
+  channel: ShortChannel;
 }
 
 type PlaceholderType = "external-stream" | "scheduled-yt-stream";

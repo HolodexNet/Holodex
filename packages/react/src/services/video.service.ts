@@ -29,18 +29,18 @@ interface UseVideosParams {
 
 export function useVideos(
   params?: Omit<UseVideosParams, "offset">,
-  config?: UseInfiniteQueryOptions<Video[], AxiosError>,
+  config?: UseInfiniteQueryOptions<VideoBase[], AxiosError>,
 ) {
   const client = useClient();
 
-  return useInfiniteQuery<Video[], AxiosError>({
+  return useInfiniteQuery<VideoBase[], AxiosError>({
     queryKey: ["videos", params],
     queryFn: async ({ pageParam = 0 }) =>
       (
-        await client<{ items: Video[]; total: string }>("/videos", {
+        await client<{ items: VideoBase[]; total: string }>("/videos", {
           params: { ...params, pagenated: true, offset: pageParam },
         })
-      ).data.items,
+      ).items,
     getNextPageParam: (lastPage, allPages) =>
       lastPage.length ? allPages.flat().length : undefined,
     ...config,
@@ -55,7 +55,7 @@ export function useVideo(
 
   return useQuery<Video, AxiosError>(
     ["video", videoId],
-    async () => (await client<Video>(`/videos/${videoId}`)).data,
+    async () => (await client<Video>(`/videos/${videoId}`)),
     config,
   );
 }

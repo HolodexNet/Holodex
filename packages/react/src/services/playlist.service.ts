@@ -14,7 +14,7 @@ export function usePlaylists(
 
   return useQuery<PlaylistStub[], AxiosError>(
     ["playlists"],
-    async () => (await client<PlaylistStub[]>("/users/playlists")).data,
+    async () => (await client<PlaylistStub[]>("/api/v2/users/playlists")),
     options,
   );
 }
@@ -27,7 +27,7 @@ export function usePlaylist(
 
   return useQuery<Playlist, AxiosError>(
     ["playlist", id],
-    async () => (await client<Playlist>(`/playlist/${id}`)).data,
+    async () => (await client<Playlist>(`/api/v2/playlist/${id}`)),
     options,
   );
 }
@@ -41,7 +41,7 @@ export function usePlaylistInclude(
   return useQuery<PlaylistInclude[], AxiosError>(
     ["playlist", "include", videoId],
     async () =>
-      (await client<PlaylistInclude[]>(`/video-playlist/${videoId}`)).data,
+      (await client<PlaylistInclude[]>(`/api/v2/video-playlist/${videoId}`)),
     options,
   );
 }
@@ -58,10 +58,10 @@ export function usePlaylistVideoMutation(
   return useMutation<boolean, AxiosError, { id: number; videoId: string }>(
     async ({ id, videoId }) =>
       (
-        await client<boolean>(`/video-playlist/${id}/${videoId}`, {
+        await client<boolean>(`/api/v2/video-playlist/${id}/${videoId}`, {
           method: "PUT",
         })
-      ).data,
+      ),
     options,
   );
 }

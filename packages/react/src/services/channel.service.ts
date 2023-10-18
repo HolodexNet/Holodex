@@ -28,10 +28,10 @@ export function useChannels(
     queryKey: ["channels", params],
     queryFn: async ({ pageParam = 0 }) =>
       (
-        await client<Channel[]>("/channels", {
+        await client<Channel[]>("/api/v2/channels", {
           params: { ...params, offset: pageParam },
         })
-      ).data,
+      ),
     getNextPageParam: (lastPage, allPages) =>
       lastPage.length ? allPages.flat().length : undefined,
     ...config,
@@ -46,7 +46,7 @@ export function useChannel(
 
   return useQuery<Channel, AxiosError>(
     ["channel", channelId],
-    async () => (await client<Channel>(`/channels/${channelId}`)).data,
+    async () => (await client<Channel>(`/api/v2/channels/${channelId}`)),
     config,
   );
 }
