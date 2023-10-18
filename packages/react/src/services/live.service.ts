@@ -8,7 +8,7 @@ interface UseLiveParams {
   lang?: string[];
   type?: VideoType[];
   topic?: string;
-  include?:VideoIncludeParam[];
+  include?: VideoIncludeParam[];
   org?: string;
   mentioned_channel_id?: string;
   sort?: string;
@@ -20,6 +20,11 @@ interface UseLiveParams {
   id?: string;
 }
 
+function listToString(list: string[] | undefined) {
+  if (!list) return undefined
+  return list.join(",");
+}
+
 export function useLive(
   params?: UseLiveParams,
   config?: UseQueryOptions<Live[], AxiosError>,
@@ -28,7 +33,7 @@ export function useLive(
 
   return useQuery<Live[], AxiosError>(
     ["live", params],
-    async () => (await client<Live[]>("/api/v2/live", { params })),
+    async () => (await client<Live[]>("/api/v2/live", { params: { ...params, type: listToString(params?.type), lang: listToString(params?.lang), include: listToString(params?.include) } })),
     config,
   );
 }
