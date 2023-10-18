@@ -1,6 +1,5 @@
 import { createFetchClient } from "@/lib/fetch";
 import { tokenAtom } from "@/store/auth";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { atom, useAtomValue } from "jotai";
 
 export const clientAtom = atom((get) => {
