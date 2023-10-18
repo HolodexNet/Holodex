@@ -169,7 +169,7 @@ function SidebarItem({
         "w-full justify-start",
         className,
         { "text-base-12 font-semibold": isHere },
-        { 'font-base-11 font-light': !isHere },
+        { "font-base-11 font-light": !isHere },
       )}
       variant={isHere ? "default" : "ghost"}
       onClick={isMobile ? onClose : undefined}

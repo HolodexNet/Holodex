@@ -1,1 +1,1 @@
-declare module 'oauth-open'
+declare module "oauth-open";

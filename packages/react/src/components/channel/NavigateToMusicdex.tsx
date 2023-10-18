@@ -11,7 +11,7 @@ export function NavigateToMusicdex() {
           ? `https://music-staging.holodex.net/channel/${id}`
           : `https://music.holodex.net/channel/${id}`
       }
-			replace
+      replace
     />
   );
 }

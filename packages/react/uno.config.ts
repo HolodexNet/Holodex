@@ -1,15 +1,17 @@
 import {
-  defineConfig, presetIcons,
+  defineConfig,
+  presetIcons,
   presetWebFonts,
-  transformerDirectives, transformerVariantGroup,
-} from 'unocss'
+  transformerDirectives,
+  transformerVariantGroup,
+} from "unocss";
 
 // import presetAutoprefixer from 'unocss-preset-autoprefixer'
 export default defineConfig({
   presets: [
     presetIcons({
       scale: 1.25,
-      unit: 'em',
+      unit: "em",
     }),
     // presetWebFonts({
     //   fonts: {
@@ -19,4 +21,4 @@ export default defineConfig({
     // }),
     // presetAutoprefixer(),
   ],
-})
+});

@@ -116,7 +116,9 @@ export function VideoCard({
               </Link>
               {status === "live" && (
                 <div className="flex gap-1 text-xs text-base-11 md:text-sm">
-                  <span className="text-red-500">{t("component.videoCard.liveNow")}</span>
+                  <span className="text-red-500">
+                    {t("component.videoCard.liveNow")}
+                  </span>
                   {!!live_viewers && (
                     <>
                       <span>/</span>
@@ -346,7 +348,9 @@ function VideoCardDuration({
         ) : (
           <div className="i-lucide:youtube m-1 text-lg" />
         ))}
-      {isPremiere ? t("component.videoCard.premiere") : durationMs && formatDuration(durationMs)}
+      {isPremiere
+        ? t("component.videoCard.premiere")
+        : durationMs && formatDuration(durationMs)}
     </span>
   ) : null;
 }

@@ -5,22 +5,21 @@
 ### Design guidelines:
 
 **Business Logic Stack Breakdown:**
+
 - `jotai` is used for state management.
   - it is an atomic state management library for React, and supports both persisting to LocalStorage. We have our own version that also Broadcasts updates to other clients.
 - `@tanstack/react-query` is used for API calls.
 
-
 **UI Styling Stack Breakdown:**
+
 - [Shadcn/ui components](https://ui.shadcn.com/docs/components/accordion). There's a shadcn setup CLI tool you can `npx shadcn-ui <init | add | diff | help>...` to add new components in.
 - Tailwind Utility CSS classes.
 - [Radix Colors](https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale) applied to tailwind, with some semantic css colors for theme-control
 - the combination of the [Shadcn](https://ui.shadcn.com/docs/components/accordion) and [Radix Colors](https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale) requires **fixing of the imported Shadcn components**, esp about their colors!
-- UNOCSS presets for icon provided via [iconify](https://icon-sets.iconify.design/). 
+- UNOCSS presets for icon provided via [iconify](https://icon-sets.iconify.design/).
   - They are sized using line-height/font-size, so you need to adjust the line-height of the div element like so: `<div className="i-heroicons:sun-solid text-xl" />`
   - when upgrading iconify, make sure to bump: `@iconify/json`, `unocss`, all at the same time.
   - UNOCSS essentially extracts icons from class names as we use them and provides a css of only the icons we use.
-
-
 
 ## Getting Started
 
@@ -51,8 +50,6 @@ The goals of the repository in the long term:
   - [ ] Editing Components
 - [ ] Migrate components to our own Shadcn-Radix variant
   - [ ] Kitchensink Page
-
-
 
 ## Notes
 

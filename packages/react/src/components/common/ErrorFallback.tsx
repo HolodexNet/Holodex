@@ -61,7 +61,7 @@ export function ErrorFallback(props?: Partial<FallbackProps>) {
         <code className="max-w-full shrink-0 overflow-x-auto whitespace-pre rounded-md bg-black/10 p-2 text-xs">
           {error?.stack}
         </code>
-        <TwitterFeed className="w-[min(800px,calc(100vw-40px))] flex h-[400px] justify-center" />
+        <TwitterFeed className="flex h-[400px] w-[min(800px,calc(100vw-40px))] justify-center" />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ export default {
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
-    'postcss-import-ext-glob': {},
-    'postcss-import': {},
+    "postcss-import-ext-glob": {},
+    "postcss-import": {},
   },
-}
+};

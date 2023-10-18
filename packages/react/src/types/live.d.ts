@@ -3,11 +3,11 @@ interface Live extends VideoBase {
 }
 
 type PlaceholderType = "external-stream" | "scheduled-yt-stream";
-type PlaceholderCertainty ='certain' | 'likely';
+type PlaceholderCertainty = "certain" | "likely";
 
 interface Placeholder extends VideoBase {
-	jp_name?: string;
-	certainty: PlaceholderCertainty
+  jp_name?: string;
+  certainty: PlaceholderCertainty;
   link?: string;
   placeholderType?: PlaceholderType;
   thumbnail?: string;
@@ -16,10 +16,10 @@ interface Placeholder extends VideoBase {
       name: string;
       user: string;
     };
-		bot: {
-			link: string;
-			name: string;
-			user: string;
-		}
+    bot: {
+      link: string;
+      name: string;
+      user: string;
+    };
   };
 }

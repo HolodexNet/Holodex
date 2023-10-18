@@ -5,10 +5,14 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary-9 text-base-12 hover:bg-primaryA-5 focus-visible:ring-primary-7 active:bg-primaryA-7",
-        outline: "border border-primary-7 bg-transparent hover:border-primaryA-8 hover:bg-primaryA-5 focus-visible:ring-primary-7",
-        secondary: "bg-secondary-9 text-base-12 hover:bg-secondaryA-4 focus-visible:ring-secondary-7 ",
-        ghost: "hover:bg-primary-4 hover:text-base-12 focus-visible:ring-primary-7 active:bg-primaryA-7",
+        default:
+          "bg-primary-9 text-base-12 hover:bg-primaryA-5 focus-visible:ring-primary-7 active:bg-primaryA-7",
+        outline:
+          "border border-primary-7 bg-transparent hover:border-primaryA-8 hover:bg-primaryA-5 focus-visible:ring-primary-7",
+        secondary:
+          "bg-secondary-9 text-base-12 hover:bg-secondaryA-4 focus-visible:ring-secondary-7 ",
+        ghost:
+          "hover:bg-primary-4 hover:text-base-12 focus-visible:ring-primary-7 active:bg-primaryA-7",
         link: "text-primary underline-offset-4 hover:underline focus-visible:underline focus-visible:ring-secondary-7",
       },
       size: {
@@ -23,5 +27,5 @@ export const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );

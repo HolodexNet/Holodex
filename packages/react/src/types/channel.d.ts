@@ -46,7 +46,6 @@ type FavoriteChannel = Pick<
   | "video_count"
 >;
 
-
 enum CHANNEL_TYPES {
   VTUBER = "vtuber",
   SUBBER = "subber",

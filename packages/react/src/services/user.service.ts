@@ -15,7 +15,10 @@ export function useFavorites(
 
   return useQuery<FavoriteChannel[], AxiosError>(
     ["user", "favorites"],
-    async () => (client.loggedIn ? (await client<FavoriteChannel[]>("/api/v2/users/favorites")) : []),
+    async () =>
+      client.loggedIn
+        ? await client<FavoriteChannel[]>("/api/v2/users/favorites")
+        : [],
     config,
   );
 }
@@ -37,8 +40,9 @@ export function useFavoriteMutation(
 
   return useMutation<FavoriteChannel[], AxiosError, FavoriteMutationPayload[]>(
     async (payload) =>
-      (
-        await client.patch<FavoriteChannel[], FavoriteMutationPayload[]>("/api/v2/users/favorites", payload)
+      await client.patch<FavoriteChannel[], FavoriteMutationPayload[]>(
+        "/api/v2/users/favorites",
+        payload,
       ),
     {
       ...config,

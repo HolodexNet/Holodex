@@ -9,7 +9,7 @@ import React from "react";
 const Login = React.lazy(() => import("./login"));
 const Settings = React.lazy(() => import("./settings"));
 const About = React.lazy(() => import("./about"));
-const ChannelsOrg = React.lazy(() => import('./channelsOrg'));
+const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 const Channel = React.lazy(() => import("./channel"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
 

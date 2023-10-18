@@ -1,8 +1,7 @@
-
 export const Themes = {
-  "default": {
+  default: {
     primary: "blue",
     secondary: "crimson",
-    base: "base"
-  }
-}
+    base: "base",
+  },
+};

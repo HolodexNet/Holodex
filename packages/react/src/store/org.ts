@@ -9,8 +9,11 @@ export const defaultOrgs = [
   { name: "Independents", short: "Indie" },
 ];
 
-export const orgRankingAtom = atomWithStorage<Org[]>('orgRanking', defaultOrgs)
+export const orgRankingAtom = atomWithStorage<Org[]>("orgRanking", defaultOrgs);
 
-export const currentOrgAtom = atomWithStorage<Org>('org', { name: "Hololive", short: "Holo" });
+export const currentOrgAtom = atomWithStorage<Org>("org", {
+  name: "Hololive",
+  short: "Holo",
+});
 
 export const orgAtom = atom((get) => get(currentOrgAtom).name);

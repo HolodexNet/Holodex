@@ -10,5 +10,5 @@ export const dialogVariants = cva(
         secondary: "border-secondary-7 bg-secondary-1",
       },
     },
-  }
+  },
 );

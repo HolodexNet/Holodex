@@ -2,11 +2,7 @@ import * as React from "react";
 import { X } from "lucide-react";
 
 import { Badge } from "./badge";
-import {
-  Command,
-  CommandGroup,
-  CommandItem,
-} from "./command";
+import { Command, CommandGroup, CommandItem } from "./command";
 import { Command as CommandPrimitive } from "cmdk";
 
 type Framework = Record<"value" | "label", string>;
@@ -43,7 +39,7 @@ const FRAMEWORKS = [
   {
     value: "nest.js",
     label: "Nest.js",
-  }
+  },
 ] satisfies Framework[];
 
 export function FancyMultiSelect() {
@@ -53,35 +49,41 @@ export function FancyMultiSelect() {
   const [inputValue, setInputValue] = React.useState("");
 
   const handleUnselect = React.useCallback((framework: Framework) => {
-    setSelected(prev => prev.filter(s => s.value !== framework.value));
+    setSelected((prev) => prev.filter((s) => s.value !== framework.value));
   }, []);
 
-  const handleKeyDown = React.useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
-    const input = inputRef.current
-    if (input) {
-      if (e.key === "Delete" || e.key === "Backspace") {
-        if (input.value === "") {
-          setSelected(prev => {
-            const newSelected = [...prev];
-            newSelected.pop();
-            return newSelected;
-          })
+  const handleKeyDown = React.useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      const input = inputRef.current;
+      if (input) {
+        if (e.key === "Delete" || e.key === "Backspace") {
+          if (input.value === "") {
+            setSelected((prev) => {
+              const newSelected = [...prev];
+              newSelected.pop();
+              return newSelected;
+            });
+          }
+        }
+        // This is not a default behaviour of the <input /> field
+        if (e.key === "Escape") {
+          input.blur();
         }
       }
-      // This is not a default behaviour of the <input /> field
-      if (e.key === "Escape") {
-        input.blur();
-      }
-    }
-  }, []);
+    },
+    [],
+  );
 
-  const selectables = FRAMEWORKS.filter(framework => !selected.includes(framework));
+  const selectables = FRAMEWORKS.filter(
+    (framework) => !selected.includes(framework),
+  );
 
   return (
-    <Command onKeyDown={handleKeyDown} className="overflow-visible bg-transparent">
-      <div
-        className="group rounded-md border border-base px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2"
-      >
+    <Command
+      onKeyDown={handleKeyDown}
+      className="overflow-visible bg-transparent"
+    >
+      <div className="group rounded-md border border-base px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
         <div className="flex flex-wrap gap-1">
           {selected.map((framework) => {
             return (
@@ -103,7 +105,7 @@ export function FancyMultiSelect() {
                   <X className="h-3 w-3 text-base-8 hover:text-base-11" />
                 </button>
               </Badge>
-            )
+            );
           })}
           {/* Avoid having the "Search" Icon */}
           <CommandPrimitive.Input
@@ -118,7 +120,7 @@ export function FancyMultiSelect() {
         </div>
       </div>
       <div className="relative mt-2">
-        {open && selectables.length > 0 ?
+        {open && selectables.length > 0 ? (
           <div className="absolute top-0 z-10 w-full rounded-md border border-base bg-base-1 text-base-11 shadow-md outline-none animate-in">
             <CommandGroup className="h-full overflow-auto">
               {selectables.map((framework) => {
@@ -130,8 +132,8 @@ export function FancyMultiSelect() {
                       e.stopPropagation();
                     }}
                     onSelect={(_) => {
-                      setInputValue("")
-                      setSelected(prev => [...prev, framework])
+                      setInputValue("");
+                      setSelected((prev) => [...prev, framework]);
                     }}
                     className={"cursor-pointer"}
                   >
@@ -141,8 +143,8 @@ export function FancyMultiSelect() {
               })}
             </CommandGroup>
           </div>
-          : null}
+        ) : null}
       </div>
-    </Command >
-  )
+    </Command>
+  );
 }

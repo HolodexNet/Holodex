@@ -55,7 +55,7 @@ export function useVideo(
 
   return useQuery<Video, AxiosError>(
     ["video", videoId],
-    async () => (await client<Video>(`/videos/${videoId}`)),
+    async () => await client<Video>(`/videos/${videoId}`),
     config,
   );
 }

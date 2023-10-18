@@ -5,7 +5,7 @@ import open from "oauth-open";
 import { useTranslation } from "react-i18next";
 
 export default function Login() {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const {
     login: { mutate },
   } = useAuth();

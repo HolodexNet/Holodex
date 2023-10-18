@@ -12,8 +12,7 @@ export const ignoredTopicsAtom = atom<string[]>([]);
 export const blockedChannelsAtom = atom<ShortChannel[]>([]);
 
 // Derived atom (equivalent to getters in Pinia)
-export const blockedSetAtom = atom<Set<string>>(( get ) => {
-    const blockedChannels = get(blockedChannelsAtom);
-    return new Set(blockedChannels.map((x) => x.id));
-  },
-);
+export const blockedSetAtom = atom<Set<string>>((get) => {
+  const blockedChannels = get(blockedChannelsAtom);
+  return new Set(blockedChannels.map((x) => x.id));
+});

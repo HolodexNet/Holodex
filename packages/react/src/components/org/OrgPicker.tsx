@@ -47,8 +47,8 @@ export function OrgSelectorCombobox() {
           aria-expanded={open}
           className="w-full justify-between px-4"
         >
-          {orgs.find((org) => org.name === currentOrg.name)?.name
-            || t("Select organization...")}
+          {orgs.find((org) => org.name === currentOrg.name)?.name ||
+            t("Select organization...")}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

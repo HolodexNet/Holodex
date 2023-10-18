@@ -29,11 +29,10 @@ export function Loading(
   );
 }
 
-export function GlobalLoading () {
-
-	return (
-		<div className="fixed top-0 left-0 w-full h-full">
-			<Loading size='xl' />
-		</div>
-	)
+export function GlobalLoading() {
+  return (
+    <div className="fixed left-0 top-0 h-full w-full">
+      <Loading size="xl" />
+    </div>
+  );
 }

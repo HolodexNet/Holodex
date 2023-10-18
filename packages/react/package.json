@@ -10,6 +10,7 @@
     "lint": "eslint ./src",
     "lint:debug": "eslint ./src --debug",
     "lint:fix": "eslint ./src --fix",
+    "pretty:fix": "prettier --write ./src",
     "preview": "vite preview",
     "i18n": "rimraf dist/tmp && tsc --jsx preserve --noEmit false --target es2020 --outDir dist/tmp && i18next-scanner --config i18next-scanner.config.cjs"
   },
@@ -81,6 +82,7 @@
     "browserslist": "^4.22.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "eslint-plugin-tailwindcss": "3.13.0",

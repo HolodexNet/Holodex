@@ -2,37 +2,38 @@ module.exports = {
   root: true,
   env: { browser: true, es2020: true },
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:tailwindcss/recommended',
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:tailwindcss/recommended",
+    "prettier",
   ],
-  plugins: ['react-refresh'],
+  plugins: ["react-refresh"],
   settings: {
     tailwindcss: {
-      "whitelist": [
-        'i\\-.+:?.+',
+      whitelist: [
+        "i\\-.+:?.+",
         // doesn't work see: [https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/284]
       ],
     },
   },
 
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ["dist", ".eslintrc.cjs"],
 
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json", "./tsconfig.node.json"],
     tsconfigRootDir: __dirname,
   },
 
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
+    "react-refresh/only-export-components": [
+      "warn",
       { allowConstantExport: true },
     ],
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-    "tailwindcss/no-custom-classname": ['warn']
+    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "tailwindcss/no-custom-classname": ["warn"],
   },
-}
+};

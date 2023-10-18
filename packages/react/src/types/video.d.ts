@@ -1,6 +1,6 @@
 type VideoCardSize = "sm" | "md" | "lg";
 
-type VideoType = 'placeholder' | 'stream' | 'clip'
+type VideoType = "placeholder" | "stream" | "clip";
 type VideoStatus = "new" | "upcoming" | "live" | "past" | "missing";
 type VideoIncludeParam =
   | "clips"

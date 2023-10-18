@@ -8,7 +8,11 @@ import { useSetAtom } from "jotai/react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-interface HeaderProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>{
+interface HeaderProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLElement>,
+    HTMLElement
+  > {
   id: string;
 }
 
@@ -19,11 +23,13 @@ export function Header({ id }: HeaderProps) {
   const frameToggleSidebar = useSetAtom(toggleSidebarAtom);
 
   return (
-    <header
-      id={id}
-      className="z-40 flex items-center gap-4 bg-base-2 pl-2"
-    >
-      <Button size="icon" variant="ghost" className="h-12 w-12 p-4" onClick={frameToggleSidebar}>
+    <header id={id} className="z-40 flex items-center gap-4 bg-base-2 pl-2">
+      <Button
+        size="icon"
+        variant="ghost"
+        className="h-12 w-12 p-4"
+        onClick={frameToggleSidebar}
+      >
         <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
       <div className="flex grow" />
