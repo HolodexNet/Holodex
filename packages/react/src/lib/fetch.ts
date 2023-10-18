@@ -1,9 +1,19 @@
-import { stringify } from "querystringify";
 type RequestInitWithQuery<APIResponseBodyType> = RequestInit & { params?: object, handler?: (value: Response) => Promise<APIResponseBodyType> };
+
+function toStr(x: unknown): string {
+  return typeof x === "object" ? JSON.stringify(x) : String(x);
+}
+
+const stringify = (obj: object) => {
+  return (new URLSearchParams(Object.entries(obj).flatMap(([k, v]) => Array.isArray(v) ? v.map(x => ([k, toStr(x)])) : [[k, typeof v === "object" ? JSON.stringify(v) : String(v)]]))).toString()
+
+
+}
+
 
 export const createFetchClient = (token?: string | null) => {
   const fetchFn = function <APIResponseBodyType>(url: string, { params, headers, handler, ...opt }: RequestInitWithQuery<APIResponseBodyType> | undefined = {}): Promise<APIResponseBodyType> {
-    const urlWithQuery = params ? url + stringify(params, true) : url;
+    const urlWithQuery = params ? url + '?' + stringify(params) : url;
 
     const fetchOpt = {
       headers: {
