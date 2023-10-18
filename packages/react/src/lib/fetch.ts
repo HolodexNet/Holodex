@@ -47,7 +47,7 @@ function handleResponse<T>(response: Response): Promise<T> {
 
     if (!response.ok) {
       console.error("API Error", response);
-      const error = { data: data, statusText: response.statusText, statusCode: response.status };
+      const error = { data: data, statusText: response.statusText, statusCode: response.status, response, };
       return Promise.reject(error);
     }
 
