@@ -5,7 +5,6 @@ import {
   useInfiniteQuery,
   useQuery,
 } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 
 interface UseVideosParams {
   channel_id?: string;
@@ -29,12 +28,13 @@ interface UseVideosParams {
 
 export function useVideos(
   params?: Omit<UseVideosParams, "offset">,
-  config?: UseInfiniteQueryOptions<VideoBase[], AxiosError>,
+  config?: CommonQueryConfig,
 ) {
   const client = useClient();
 
-  return useInfiniteQuery<VideoBase[], AxiosError>({
+  return useInfiniteQuery({
     queryKey: ["videos", params],
+    initialPageParam: 0,
     queryFn: async ({ pageParam = 0 }) =>
       (
         await client<{ items: VideoBase[]; total: string }>("/videos", {
@@ -47,15 +47,12 @@ export function useVideos(
   });
 }
 
-export function useVideo(
-  videoId: string,
-  config?: UseQueryOptions<Video, AxiosError>,
-) {
+export function useVideo(videoId: string, config?: UseQueryOptions<Video>) {
   const client = useClient();
 
-  return useQuery<Video, AxiosError>(
-    ["video", videoId],
-    async () => await client<Video>(`/videos/${videoId}`),
-    config,
-  );
+  return useQuery({
+    queryKey: ["video", videoId],
+    queryFn: async () => await client<Video>(`/videos/${videoId}`),
+    ...config,
+  });
 }

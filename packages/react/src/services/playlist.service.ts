@@ -5,61 +5,52 @@ import {
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 
-export function usePlaylists(
-  options?: UseQueryOptions<PlaylistStub[], AxiosError>,
-) {
+export function usePlaylists(options?: UseQueryOptions<PlaylistStub[]>) {
   const client = useClient();
 
-  return useQuery<PlaylistStub[], AxiosError>(
-    ["playlists"],
-    async () => await client<PlaylistStub[]>("/api/v2/users/playlists"),
-    options,
-  );
+  return useQuery({
+    queryKey: ["playlists"],
+    queryFn: async () =>
+      await client<PlaylistStub[]>("/api/v2/users/playlists"),
+    ...options,
+  });
 }
 
-export function usePlaylist(
-  id: number,
-  options?: UseQueryOptions<Playlist, AxiosError>,
-) {
+export function usePlaylist(id: number, options?: UseQueryOptions<Playlist>) {
   const client = useClient();
 
-  return useQuery<Playlist, AxiosError>(
-    ["playlist", id],
-    async () => await client<Playlist>(`/api/v2/playlist/${id}`),
-    options,
-  );
+  return useQuery({
+    queryKey: ["playlist", id],
+    queryFn: async () => await client<Playlist>(`/api/v2/playlist/${id}`),
+    ...options,
+  });
 }
 
 export function usePlaylistInclude(
   videoId: string,
-  options?: UseQueryOptions<PlaylistInclude[], AxiosError>,
+  options?: UseQueryOptions<PlaylistInclude[]>,
 ) {
   const client = useClient();
 
-  return useQuery<PlaylistInclude[], AxiosError>(
-    ["playlist", "include", videoId],
-    async () =>
+  return useQuery({
+    queryKey: ["playlist", "include", videoId],
+    queryFn: async () =>
       await client<PlaylistInclude[]>(`/api/v2/video-playlist/${videoId}`),
-    options,
-  );
+    ...options,
+  });
 }
 
 export function usePlaylistVideoMutation(
-  options?: UseMutationOptions<
-    boolean,
-    AxiosError,
-    { id: number; videoId: string }
-  >,
+  options?: UseMutationOptions<boolean, Error, { id: number; videoId: string }>,
 ) {
   const client = useClient();
 
-  return useMutation<boolean, AxiosError, { id: number; videoId: string }>(
-    async ({ id, videoId }) =>
+  return useMutation({
+    mutationFn: async ({ id, videoId }) =>
       await client<boolean>(`/api/v2/video-playlist/${id}/${videoId}`, {
         method: "PUT",
       }),
-    options,
-  );
+    ...options,
+  });
 }

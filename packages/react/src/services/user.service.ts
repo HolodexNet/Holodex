@@ -2,25 +2,30 @@ import { useClient } from "@/hooks/useClient";
 import {
   UseMutationOptions,
   UseQueryOptions,
+  queryOptions,
   useMutation,
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
-export function useFavorites(
-  config?: UseQueryOptions<FavoriteChannel[], AxiosError>,
-) {
+// if you're curious: https://tanstack.com/query/latest/docs/react/typescript#typing-query-options
+const favoriteQuery = queryOptions<FavoriteChannel[]>({
+  queryKey: ["user", "favorites"],
+});
+
+export function useFavorites(config?: UseQueryOptions<FavoriteChannel[]>) {
   const client = useClient();
 
-  return useQuery<FavoriteChannel[], AxiosError>(
-    ["user", "favorites"],
-    async () =>
+  return useQuery({
+    queryKey: favoriteQuery.queryKey,
+    queryFn: async () =>
       client.loggedIn
         ? await client<FavoriteChannel[]>("/api/v2/users/favorites")
         : [],
-    config,
-  );
+
+    ...config,
+  });
 }
 
 interface FavoriteMutationPayload {
@@ -31,25 +36,24 @@ interface FavoriteMutationPayload {
 export function useFavoriteMutation(
   config?: UseMutationOptions<
     FavoriteChannel[],
-    AxiosError,
+    Error,
     FavoriteMutationPayload[]
   >,
 ) {
   const queryClient = useQueryClient();
   const client = useClient();
 
-  return useMutation<FavoriteChannel[], AxiosError, FavoriteMutationPayload[]>(
-    async (payload) =>
+  return useMutation({
+    mutationFn: async (payload) =>
       await client.patch<FavoriteChannel[], FavoriteMutationPayload[]>(
         "/api/v2/users/favorites",
         payload,
       ),
-    {
-      ...config,
-      onSuccess: (res, ...args) => {
-        queryClient.setQueryData(["user", "favorites"], res);
-        if (config?.onSuccess) config?.onSuccess(res, ...args);
-      },
+
+    ...config,
+    onSuccess: (res, ...args) => {
+      queryClient.setQueryData(favoriteQuery.queryKey, res);
+      if (config?.onSuccess) config?.onSuccess(res, ...args);
     },
-  );
+  });
 }
