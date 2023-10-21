@@ -33,13 +33,17 @@ export function useChannels(
       if (lastPage?.length === 0) {
         return undefined;
       }
-      return lastPageParam + 1;
+      return lastPageParam + lastPage.length;
     },
     getPreviousPageParam: (_firstPage, _allPages, firstPageParam) => {
       if (!firstPageParam) {
         return undefined;
       }
-      return firstPageParam - 1;
+
+      const prevPageParam =
+        firstPageParam - _allPages[_allPages.length - 1].length;
+
+      return prevPageParam >= 0 ? prevPageParam : 0;
     },
     // ...config,
   });
