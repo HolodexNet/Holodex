@@ -1,12 +1,12 @@
 import { toggleSidebarAtom } from "@/hooks/useFrame";
 import { darkAtom } from "@/hooks/useTheme";
 import { Button } from "@/shadcn/ui/button";
-import { Input } from "@/shadcn/ui/input";
 import { userAtom } from "@/store/auth";
 import { useAtom, useAtomValue } from "jotai";
 import { useSetAtom } from "jotai/react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { SearchBar } from "./searchbar/SearchBar";
 
 interface HeaderProps
   extends React.DetailedHTMLProps<
@@ -33,7 +33,7 @@ export function Header({ id }: HeaderProps) {
         <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
       <div className="flex grow" />
-      <Input type="search" placeholder="Search" className="max-w-lg" />
+      <SearchBar className="max-w-lg" />
       <Button
         size="icon"
         variant="ghost"

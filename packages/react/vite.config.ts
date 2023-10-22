@@ -16,6 +16,7 @@ export default defineConfig({
   },
   server: {
     port: 8080,
+    open: true,
     proxy: {
       "/api": {
         target: "https://staging.holodex.net",
@@ -23,33 +24,34 @@ export default defineConfig({
         headers: { origin: "https://staging.holodex.net" },
         secure: false,
         ws: true,
-        configure: (proxy, _options) => {
-          proxy.on("error", (err, _req, _res) => {
-            console.log("proxy error", err);
-          });
-          proxy.on("proxyReq", (proxyReq, req, _res) => {
-            console.log(
-              "Sending Request:\n\t",
-              req.method,
-              req.url,
-              "\n\t => TO THE TARGET => \n\t",
-              proxyReq.method,
-              proxyReq.protocol,
-              proxyReq.host,
-              proxyReq.path,
-              "\n",
-              JSON.stringify(proxyReq.getHeaders(), null, 2),
-            );
-          });
-          proxy.on("proxyRes", (proxyRes, req, _res) => {
-            console.log(
-              "Received Response from the Target:",
-              proxyRes.statusCode,
-              req.url,
-              JSON.stringify(proxyRes.headers),
-            );
-          });
-        },
+        // This configuration manages the logging behavior: turn on for debugging purposes.
+        // configure: (proxy, _options) => {
+        //   proxy.on("error", (err, _req, _res) => {
+        //     console.log("proxy error", err);
+        //   });
+        //   proxy.on("proxyReq", (proxyReq, req, _res) => {
+        //     console.log(
+        //       "Sending Request:\n\t",
+        //       req.method,
+        //       req.url,
+        //       "\n\t => TO THE TARGET => \n\t",
+        //       proxyReq.method,
+        //       proxyReq.protocol,
+        //       proxyReq.host,
+        //       proxyReq.path,
+        //       "\n",
+        //       JSON.stringify(proxyReq.getHeaders(), null, 2),
+        //     );
+        //   });
+        //   proxy.on("proxyRes", (proxyRes, req, _res) => {
+        //     console.log(
+        //       "Received Response from the Target:",
+        //       proxyRes.statusCode,
+        //       req.url,
+        //       JSON.stringify(proxyRes.headers),
+        //     );
+        //   });
+        // },
       },
       "^/(stats|orgs).json$": {
         target: "https://staging.holodex.net",
