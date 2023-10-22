@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 
 interface LoadingProps {
@@ -16,6 +17,9 @@ export function Loading(
     "text-4xl": props.size === "xl",
   });
 
+  // I can't use a UNOCSS icon here because it doesn't work in Firefox...
+  // shows a weird white border around the icon
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=1671784 wow it's fixed on firefox NEXT version...
   return (
     <div
       {...props}
@@ -24,7 +28,7 @@ export function Loading(
         props.className,
       )}
     >
-      <div className={cn("i-lucide:loader-2 animate-spin", sizeCN)} />
+      <Loader2 className="animate-spin" />
     </div>
   );
 }
