@@ -18,13 +18,14 @@ export function ChannelCard({
   top_topics,
   twitter,
   twitch,
+  inactive,
 }: ChannelCardProps) {
   const { t } = useTranslation();
-  const { mutate, isLoading: mutateLoading } = useFavoriteMutation();
+  const { mutate, isPending: mutateLoading } = useFavoriteMutation();
   const { data } = useFavorites();
   const isInFavorite = useMemo(
     () => data?.some((channel) => id === channel.id),
-    [data],
+    [data, id],
   );
 
   return (
