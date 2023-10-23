@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { atom, useSetAtom } from "jotai";
 import type { i18n } from "i18next";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export const localeAtom = atom({

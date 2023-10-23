@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, HTMLAttributes, Suspense, useState } from "react";
+import { DetailedHTMLProps, HTMLAttributes, Suspense } from "react";
 import { Loading } from "../common/Loading";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/shadcn/ui/button";

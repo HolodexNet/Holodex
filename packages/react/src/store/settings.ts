@@ -1,5 +1,7 @@
 import { atom } from "jotai";
 
+export const englishNameAtom = atom(false);
+export const clipLanguageAtom = atom<string[]>([]);
 export const redirectModeAtom = atom(false);
 export const hideThumbnailAtom = atom(false);
 export const hidePlaceholderAtom = atom(false);

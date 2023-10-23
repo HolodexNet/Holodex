@@ -331,6 +331,11 @@ views:
     ignoredTopicsMsg: Hide videos with these topics from the Home and Favorites pages
     theme: Theme
     moreSettings: More Settings
+    user: User & Account
+    homepage: Homepage & Filters
+    blockedChannels: Blocked Channels
+    languageSearch: Search language...
+    languageNotfound: No language found
   app:
     update_available: An update is available
     update_btn: Update
