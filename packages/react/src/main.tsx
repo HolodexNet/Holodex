@@ -15,6 +15,7 @@ import calendar from "dayjs/plugin/calendar";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import localizedFormat from 'dayjs/plugin/localizedFormat'
 import router from "./routes/router";
 import { ErrorFallback } from "./components/common/ErrorFallback";
 import { useSyncTFunction } from "./store/i18n";
@@ -36,6 +37,7 @@ dayjs.extend(calendar);
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(timezone); // dependent on utc plugin
+dayjs.extend(localizedFormat)
 
 function App() {
   useThemeInit();

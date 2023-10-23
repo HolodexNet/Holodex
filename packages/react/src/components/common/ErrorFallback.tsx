@@ -39,7 +39,7 @@ export function ErrorFallback(props?: Partial<FallbackProps>) {
             }}
           />
         </p>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap justify-center gap-4">
           <Button size="lg" onClick={() => window.location.reload()}>
             {t("component.apiError.reload")}
           </Button>
