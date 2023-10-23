@@ -40,8 +40,8 @@ export function useAuth() {
   const setUser = useSetAtom(userAtom);
   const setToken = useSetAtom(tokenAtom);
 
-  const login = useMutation(
-    async ({
+  const login = useMutation({
+    mutationFn: async ({
       platform,
       error,
       credential,
@@ -103,7 +103,7 @@ export function useAuth() {
           break;
       }
     },
-  );
+  });
 
   const logout = useCallback(() => {
     setToken(null);

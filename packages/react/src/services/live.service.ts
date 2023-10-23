@@ -1,6 +1,5 @@
 import { useClient } from "@/hooks/useClient";
 import { UseQueryOptions, useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 
 interface UseLiveParams {
   channel_id?: string;
@@ -25,15 +24,12 @@ function listToString(list: string[] | undefined) {
   return list.join(",");
 }
 
-export function useLive(
-  params?: UseLiveParams,
-  config?: UseQueryOptions<Live[], AxiosError>,
-) {
+export function useLive(params?: UseLiveParams, config?: CommonQueryConfig) {
   const client = useClient();
 
-  return useQuery<Live[], AxiosError>(
-    ["live", params],
-    async () =>
+  return useQuery<Live[]>({
+    queryKey: ["live", params],
+    queryFn: async () =>
       await client<Live[]>("/api/v2/live", {
         params: {
           ...params,
@@ -42,6 +38,6 @@ export function useLive(
           include: listToString(params?.include),
         },
       }),
-    config,
-  );
+    ...config,
+  });
 }

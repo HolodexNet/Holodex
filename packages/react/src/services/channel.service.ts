@@ -1,11 +1,9 @@
 import { useClient } from "@/hooks/useClient";
 import {
-  UseInfiniteQueryOptions,
   UseQueryOptions,
   useInfiniteQuery,
   useQuery,
 } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 
 interface UseChannelsParams {
   limit?: number;
@@ -20,31 +18,42 @@ interface UseChannelsParams {
 
 export function useChannels(
   params: UseChannelsParams,
-  config?: UseInfiniteQueryOptions<Channel[], AxiosError>,
+  // config: infer
 ) {
   const client = useClient();
 
-  return useInfiniteQuery<Channel[], AxiosError>({
+  return useInfiniteQuery({
     queryKey: ["channels", params],
-    queryFn: async ({ pageParam = 0 }) =>
+    queryFn: async ({ pageParam }) =>
       await client<Channel[]>("/api/v2/channels", {
         params: { ...params, offset: pageParam },
       }),
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length ? allPages.flat().length : undefined,
-    ...config,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+      if (lastPage?.length === 0) {
+        return undefined;
+      }
+      return lastPageParam + lastPage.length;
+    },
+    getPreviousPageParam: (_firstPage, _allPages, firstPageParam) => {
+      if (!firstPageParam) {
+        return undefined;
+      }
+      return firstPageParam - _firstPage.length;
+    },
+    // ...config,
   });
 }
 
 export function useChannel(
   channelId: string,
-  config?: UseQueryOptions<Channel, AxiosError>,
+  config?: UseQueryOptions<Channel, Error>,
 ) {
   const client = useClient();
 
-  return useQuery<Channel, AxiosError>(
-    ["channel", channelId],
-    async () => await client<Channel>(`/api/v2/channels/${channelId}`),
-    config,
-  );
+  return useQuery({
+    queryKey: ["channel", channelId],
+    queryFn: async () => await client<Channel>(`/api/v2/channels/${channelId}`),
+    ...config,
+  });
 }

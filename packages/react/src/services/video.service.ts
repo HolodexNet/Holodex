@@ -6,7 +6,6 @@ import {
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 
 interface UseVideosParams {
   channel_id?: string;
@@ -30,15 +29,16 @@ interface UseVideosParams {
 
 export function useVideos(
   params?: Omit<UseVideosParams, "offset">,
-  config?: UseInfiniteQueryOptions<VideoBase[], AxiosError>,
+  config?: CommonQueryConfig,
 ) {
   const client = useClient();
 
-  return useInfiniteQuery<VideoBase[], AxiosError>({
+  return useInfiniteQuery({
     queryKey: ["videos", params],
+    initialPageParam: 0,
     queryFn: async ({ pageParam = 0 }) =>
       (
-        await client<{ items: VideoBase[]; total: string }>("/videos", {
+        await client<{ items: VideoBase[]; total: string }>("/api/v2/videos", {
           params: { ...params, pagenated: true, offset: pageParam },
         })
       ).items,
@@ -50,15 +50,15 @@ export function useVideos(
 
 export function useVideo<T = Video>(
   videoId: string,
-  config?: UseQueryOptions<T, AxiosError>,
+  config?: UseQueryOptions<T>,
 ) {
   const client = useClient();
 
-  return useQuery<T, AxiosError>(
-    ["video", videoId],
-    async () => await client<T>(`/videos/${videoId}`),
-    config,
-  );
+  return useQuery<T>({
+    queryKey: ["video", videoId],
+    queryFn: async () => await client<T>(`/api/v2/videos/${videoId}`),
+    ...config,
+  });
 }
 
 export function usePlaceholderMutation() {

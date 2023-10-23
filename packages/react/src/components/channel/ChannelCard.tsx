@@ -18,20 +18,27 @@ export function ChannelCard({
   top_topics,
   twitter,
   twitch,
+  inactive,
 }: ChannelCardProps) {
   const { t } = useTranslation();
-  const { mutate, isLoading: mutateLoading } = useFavoriteMutation();
+  const { mutate, isPending: mutateLoading } = useFavoriteMutation();
   const { data } = useFavorites();
   const isInFavorite = useMemo(
     () => data?.some((channel) => id === channel.id),
-    [data],
+    [data, id],
   );
 
   return (
     // Set min-height because react-virtuoso will break if the height is not fixed
     <div className="flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4">
-      <img className="h-24 w-24 rounded-full" src={photo ?? ""} />
-      <div className="line-clamp-2 text-center text-lg font-bold">{name}</div>
+      <img
+        className="-z-0 -mb-36 mt-4 h-32 w-32 rounded-full opacity-20 blur-2xl saturate-150"
+        src={photo ?? ""}
+      />
+      <img className="z-10 h-24 w-24 rounded-full" src={photo ?? ""} />
+      <div className="z-10 line-clamp-2 text-center text-lg font-bold">
+        {name}
+      </div>
       <div className="flex flex-col items-center">
         <div className="whitespace-nowrap text-sm text-base-11">
           {t("component.channelInfo.subscriberCount", {

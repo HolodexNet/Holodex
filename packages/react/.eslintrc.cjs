@@ -8,7 +8,7 @@ module.exports = {
     "plugin:tailwindcss/recommended",
     "prettier",
   ],
-  plugins: ["react-refresh"],
+  plugins: ["react-refresh", "prettier"],
   settings: {
     tailwindcss: {
       whitelist: [
@@ -29,6 +29,7 @@ module.exports = {
   },
 
   rules: {
+    "prettier/prettier": 2, // Means error
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
