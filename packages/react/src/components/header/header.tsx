@@ -60,7 +60,7 @@ export function Header({ id }: HeaderProps) {
       </Button>
       {user ? (
         <DropdownMenu>
-          <DropdownMenuTrigger className="h-full">
+          <DropdownMenuTrigger className="self-stretch">
             <img
               className="h-full w-auto rounded-full p-2"
               src={`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`}
