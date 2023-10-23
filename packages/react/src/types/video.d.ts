@@ -87,6 +87,11 @@ enum PLACEHOLDER_TYPES {
   EVENT = "event",
 }
 
+enum PLACEHOLDER_CERTAINTY {
+  CERTAIN = "certain",
+  LIKELY = "likely",
+}
+
 interface PlaceholderCredit {
   //Removed Temporarily img?: string;
   link?: string; // for discord this is the invite code.
@@ -100,7 +105,7 @@ interface PlaceholderTitlePayload {
   link: string;
   thumbnail: string;
   placeholderType: PLACEHOLDER_TYPES;
-  certainty: "certain" | "likely";
+  certainty: PLACEHOLDER_CERTAINTY;
   credits: {
     discord?: PlaceholderCredit;
     datasource?: PlaceholderCredit;
@@ -109,4 +114,12 @@ interface PlaceholderTitlePayload {
   };
 }
 
-interface PlaceholderVideo extends Union<PlaceholderTitlePayload, Video> {}
+interface PlaceholderRequestBody {
+  id?: string; // for placeholder modification request
+  channel_id: string;
+  duration: number;
+  liveTime: string;
+  title: PlaceholderTitlePayload;
+}
+
+interface PlaceholderVideo extends PlaceholderTitlePayload, Video {}

@@ -40,7 +40,7 @@ export function Header({ id }: HeaderProps) {
       >
         <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
-      <div className="flex grow" />
+      <div className="hidden grow md:flex" />
       <SearchBar className="max-w-lg" />
       <Button
         size="icon"

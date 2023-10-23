@@ -12,7 +12,7 @@ import { localeAtom } from "@/store/i18n";
 type VideoCardType = VideoBase &
   Partial<Video> &
   Partial<Live> &
-  Partial<Placeholder>;
+  Partial<PlaceholderVideo>;
 
 interface VideoCardProps extends VideoCardType {
   size: VideoCardSize;

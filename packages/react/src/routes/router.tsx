@@ -9,6 +9,14 @@ import React from "react";
 const Login = React.lazy(() => import("./login"));
 const Settings = React.lazy(() => import("./settings"));
 const About = React.lazy(() => import("./about"));
+const AboutGeneral = React.lazy(() => import("./about/general"));
+const AboutChangelog = React.lazy(() => import("./about/changelog"));
+const AboutFaq = React.lazy(() => import("./about/faq"));
+const AboutRequest = React.lazy(() => import("./about/request"));
+const AboutPlaceholder = React.lazy(() => import("./about/placeholder"));
+const AboutExtensions = React.lazy(() => import("./about/extensions"));
+const AboutContact = React.lazy(() => import("./about/contact"));
+const AboutPrivacy = React.lazy(() => import("./about/privacy"));
 const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 const Channel = React.lazy(() => import("./channel"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
@@ -85,7 +93,32 @@ const router = createBrowserRouter([
         path: "about",
         element: <About />,
         children: [
-          // Add children routes similar to above pattern
+          {
+            path: "general",
+            element: <AboutGeneral />,
+          },
+          {
+            path: "changelog",
+            element: <AboutChangelog />,
+          },
+          { path: "faq", element: <AboutFaq /> },
+          { path: "request", element: <AboutRequest /> },
+          {
+            path: "placeholder",
+            element: <AboutPlaceholder />,
+          },
+          {
+            path: "extensions",
+            element: <AboutExtensions />,
+          },
+          {
+            path: "contact",
+            element: <AboutContact />,
+          },
+          {
+            path: "privacy",
+            element: <AboutPrivacy />,
+          },
         ],
       },
       {
