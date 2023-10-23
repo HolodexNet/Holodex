@@ -5,20 +5,17 @@ import { HelmetProvider } from "react-helmet-async";
 import { ErrorBoundary } from "react-error-boundary";
 import "./index.css";
 import "uno.css";
-import { useThemeInit } from "./hooks/useTheme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./lib/i18n";
-import { RouterProvider } from "react-router-dom";
 import dayjs from "dayjs";
 import calendar from "dayjs/plugin/calendar";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import localizedFormat from 'dayjs/plugin/localizedFormat'
-import router from "./routes/router";
+import localizedFormat from "dayjs/plugin/localizedFormat";
 import { ErrorFallback } from "./components/common/ErrorFallback";
-import { useSyncTFunction } from "./store/i18n";
+import { App } from "./App";
 
 const GOOGLE_CLIENT_ID =
   "275540829388-87s7f9v2ht3ih51ah0tjkqng8pd8bqo2.apps.googleusercontent.com";
@@ -37,13 +34,7 @@ dayjs.extend(calendar);
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(timezone); // dependent on utc plugin
-dayjs.extend(localizedFormat)
-
-function App() {
-  useThemeInit();
-  useSyncTFunction();
-  return <RouterProvider router={router} />;
-}
+dayjs.extend(localizedFormat);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
