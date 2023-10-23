@@ -23,7 +23,7 @@ export function Header({ id }: HeaderProps) {
   const frameToggleSidebar = useSetAtom(toggleSidebarAtom);
 
   return (
-    <header id={id} className="bg-base-2 z-40 flex items-center gap-4 pl-2">
+    <header id={id} className="z-40 flex items-center gap-4 bg-base-2 pl-2">
       <Button
         size="icon"
         variant="ghost"
@@ -37,7 +37,7 @@ export function Header({ id }: HeaderProps) {
       <Button
         size="icon"
         variant="ghost"
-        className="text-base-9 -ml-3 p-0"
+        className="-ml-3 p-0 text-base-9"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:magnifying-glass h-full text-xl" />
@@ -45,7 +45,7 @@ export function Header({ id }: HeaderProps) {
       <Button
         size="icon"
         variant="ghost"
-        className="text-base-9 p-0"
+        className="p-0 text-base-9"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:sun-20-solid h-full text-xl " />

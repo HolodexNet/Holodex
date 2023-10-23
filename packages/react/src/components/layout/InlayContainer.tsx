@@ -25,7 +25,7 @@ export function InlayContainer({ children }: InlayContainerProps) {
       <div
         className={cn(
           "bg-base-3 flex h-fit w-full md:w-80 shrink-0 flex-col gap-2 rounded-lg px-2 py-4",
-          { "hidden md:block": itemSelected },
+          { "hidden md:flex": itemSelected },
         )}
         onClick={() => setItemSelected(true)}
       >
