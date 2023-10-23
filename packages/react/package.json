@@ -11,7 +11,8 @@
     "lint:debug": "eslint ./src --debug",
     "lint:fix": "eslint ./src --fix",
     "pretty:fix": "prettier --write ./src",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "cd ..\\.. && husky install packages\\react\\.husky"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -89,7 +90,9 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "eslint-plugin-tailwindcss": "3.13.0",
+    "husky": "^6.0.0",
     "lightningcss": "^1.22.0",
+    "lint-staged": "^15.0.2",
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0",
     "postcss-import-ext-glob": "^2.1.1",
