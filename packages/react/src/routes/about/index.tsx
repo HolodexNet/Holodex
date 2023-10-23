@@ -1,13 +1,10 @@
-import {
-  InlayContainer,
-  InlayContainerTabItem,
-} from "@/components/layout/InlayContainer";
+import { InlayContainer } from "@/components/layout/InlayContainer";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 export default function About() {
   const { t } = useTranslation();
 
-  const items = useMemo(
+  const routes = useMemo(
     () => [
       {
         label: t("about.general.title"),
@@ -53,11 +50,5 @@ export default function About() {
     [t],
   );
 
-  return (
-    <InlayContainer>
-      {items.map((item) => (
-        <InlayContainerTabItem key={item.href} {...item} />
-      ))}
-    </InlayContainer>
-  );
+  return <InlayContainer routes={routes} />;
 }
