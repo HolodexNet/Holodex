@@ -24,10 +24,7 @@ function listToString(list: string[] | undefined) {
   return list.join(",");
 }
 
-export function useLive(
-  params?: UseLiveParams,
-  config?: UseQueryOptions<Live[]>,
-) {
+export function useLive(params?: UseLiveParams, config?: CommonQueryConfig) {
   const client = useClient();
 
   return useQuery<Live[]>({

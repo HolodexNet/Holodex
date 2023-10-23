@@ -29,7 +29,7 @@ export function usePlaylist(id: number, options?: UseQueryOptions<Playlist>) {
 
 export function usePlaylistInclude(
   videoId: string,
-  options?: UseQueryOptions<PlaylistInclude[]>,
+  options?: CommonQueryConfig,
 ) {
   const client = useClient();
 
