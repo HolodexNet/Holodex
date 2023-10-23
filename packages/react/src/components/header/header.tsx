@@ -7,6 +7,13 @@ import { useSetAtom } from "jotai/react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { SearchBar } from "./searchbar/SearchBar";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/shadcn/ui/dropdown-menu";
+import { useAuth } from "@/hooks/useAuth";
 
 interface HeaderProps
   extends React.DetailedHTMLProps<
@@ -21,6 +28,7 @@ export function Header({ id }: HeaderProps) {
   const [dark, toggle] = useAtom(darkAtom);
   const user = useAtomValue(userAtom);
   const frameToggleSidebar = useSetAtom(toggleSidebarAtom);
+  const { logout } = useAuth();
 
   return (
     <header id={id} className="z-40 flex items-center gap-4 bg-base-2 pl-2">
@@ -51,10 +59,17 @@ export function Header({ id }: HeaderProps) {
         <div className="i-heroicons:sun-20-solid h-full text-xl " />
       </Button>
       {user ? (
-        <img
-          className="h-full w-auto rounded-full p-2"
-          src={`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`}
-        />
+        <DropdownMenu>
+          <DropdownMenuTrigger className="h-full">
+            <img
+              className="h-full w-auto rounded-full p-2"
+              src={`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`}
+            />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ) : (
         <Button asChild>
           <Link to="/login">{t("component.mainNav.login")}</Link>
