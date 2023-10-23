@@ -1,6 +1,5 @@
 import { useClient } from "@/hooks/useClient";
 import {
-  UseInfiniteQueryOptions,
   UseQueryOptions,
   useInfiniteQuery,
   useMutation,
@@ -50,7 +49,7 @@ export function useVideos(
 
 export function useVideo<T = Video>(
   videoId: string,
-  config?: UseQueryOptions<T>,
+  config?: Omit<UseQueryOptions<T>, "queryKey" | "queryFn">,
 ) {
   const client = useClient();
 

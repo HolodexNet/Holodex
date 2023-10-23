@@ -43,7 +43,7 @@ export function ChannelPicker<
   const { t } = useTranslation();
   const currentValue = useAtomValue(currentValueAtom);
   const [debouncedValue, setDebouncedValue] = useAtom(debouncedValueAtom);
-  const { data, mutate, isLoading } = useSearchAutoCompleteMutation();
+  const { data, mutate, isPending } = useSearchAutoCompleteMutation();
 
   useEffect(() => {
     if (debouncedValue) mutate({ q: debouncedValue, n: 10, t: "vtuber" });
@@ -86,7 +86,7 @@ export function ChannelPicker<
                 {channel.name}
               </CommandItem>
             ))}
-            {isLoading && (
+            {isPending && (
               <CommandItem className="flex justify-center py-2" disabled>
                 <div className="i-lucide:loader-2 animate-spin" />
               </CommandItem>
