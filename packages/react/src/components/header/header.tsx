@@ -31,7 +31,7 @@ export function Header({ id }: HeaderProps) {
   const { logout } = useAuth();
 
   return (
-    <header id={id} className="z-40 flex items-center gap-4 bg-base-2 pl-2">
+    <header id={id} className="z-40 flex items-center gap-4 bg-base-2 px-2">
       <Button
         size="icon"
         variant="ghost"
@@ -60,9 +60,8 @@ export function Header({ id }: HeaderProps) {
       </Button>
       {user ? (
         <DropdownMenu>
-          <DropdownMenuTrigger className="self-stretch">
+          <DropdownMenuTrigger className="w-11 shrink-0 overflow-hidden rounded-full">
             <img
-              className="h-full w-auto rounded-full p-2"
               src={`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`}
             />
           </DropdownMenuTrigger>
