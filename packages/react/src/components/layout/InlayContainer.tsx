@@ -10,10 +10,10 @@ interface InlayContainerProps {
 export function InlayContainer({ children }: InlayContainerProps) {
   return (
     <div className="flex justify-center gap-4 p-4 md:p-8">
-      <div className="bg-base-3 flex h-fit w-80 shrink-0 flex-col gap-2 rounded-lg px-2 py-4">
+      <div className="flex h-fit w-80 shrink-0 flex-col gap-2 rounded-lg bg-base-3 px-2 py-4">
         {children}
       </div>
-      <div className="bg-base-3 w-full max-w-screen-lg rounded-lg p-2 md:p-4">
+      <div className="w-full max-w-screen-lg rounded-lg bg-base-3 p-2 md:p-4">
         <Suspense fallback={<Loading size="xl" />}>
           <Outlet />
         </Suspense>
@@ -36,9 +36,9 @@ export function InlayContainerTabItem({
   label,
   href,
 }: InlayContainerTabItemProps) {
-	const location = useLocation();
+  const location = useLocation();
 
-	return (
+  return (
     <Button
       asChild
       className="justify-start"

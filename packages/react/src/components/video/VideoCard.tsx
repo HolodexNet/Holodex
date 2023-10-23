@@ -110,12 +110,12 @@ export function VideoCard({
               </div>
               <Link
                 to={`/channel/${channel?.id}`}
-                className="text-base-11 hover:text-base-12 line-clamp-1 text-xs md:text-sm"
+                className="line-clamp-1 text-xs text-base-11 hover:text-base-12 md:text-sm"
               >
                 {channel?.name}
               </Link>
               {status === "live" && (
-                <div className="text-base-11 flex gap-1 text-xs md:text-sm">
+                <div className="flex gap-1 text-xs text-base-11 md:text-sm">
                   <span className="text-red-500">
                     {t("component.videoCard.liveNow")}
                   </span>
@@ -134,7 +134,7 @@ export function VideoCard({
               {(type === "placeholder" || status === "upcoming") &&
                 status !== "live" &&
                 start_scheduled && (
-                  <span className="text-base-11 line-clamp-1 text-xs md:text-sm">
+                  <span className="line-clamp-1 text-xs text-base-11 md:text-sm">
                     {t("time.diff_future_date", {
                       0: dayjs(start_scheduled).fromNow(false),
                       1: dayjs(start_scheduled).format("hh:mm A"),
@@ -142,7 +142,7 @@ export function VideoCard({
                   </span>
                 )}
               {status === "past" && available_at && (
-                <span className="text-base-11 line-clamp-1 text-xs md:text-sm">
+                <span className="line-clamp-1 text-xs text-base-11 md:text-sm">
                   {t("time.distance_past_date", {
                     0: dayjs(available_at).fromNow(false),
                   })}
@@ -239,14 +239,14 @@ export function VideoCard({
                         : undefined
                     }
                   >
-                    <div className="text-base-11 hover:text-base-12 line-clamp-1 text-xs md:text-sm">
+                    <div className="line-clamp-1 text-xs text-base-11 hover:text-base-12 md:text-sm">
                       {channel.name}
                     </div>
                   </Link>
                 )}
                 <div className="flex text-xs md:text-sm">
                   {status === "live" && (
-                    <div className="text-base-11 flex gap-1">
+                    <div className="flex gap-1 text-base-11">
                       <span className="text-red-500">
                         {t("component.videoCard.liveNow")}
                       </span>

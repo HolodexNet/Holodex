@@ -17,7 +17,7 @@ export interface QuickLinkProps {
 
 export function QuickLink({ className, icon, label, href }: QuickLinkProps) {
   return (
-    <Button className={className} size='lg' variant='outline' asChild>
+    <Button className={className} size="lg" variant="outline" asChild>
       <Link to={href} target="_blank">
         <div className={icon} />
         {label}

@@ -18,27 +18,15 @@ export default function Privacy() {
         })}
       </AboutDescription>
       <AboutHeading>{t("about.privacy.heading.1")}</AboutHeading>
-      <AboutDescription>
-        {t("about.privacy.text.1-1")}
-      </AboutDescription>
-      <AboutDescription>
-        {t("about.privacy.text.1-2")}
-      </AboutDescription>
+      <AboutDescription>{t("about.privacy.text.1-1")}</AboutDescription>
+      <AboutDescription>{t("about.privacy.text.1-2")}</AboutDescription>
       <AboutHeading>{t("about.privacy.heading.2")}</AboutHeading>
-      <AboutDescription>
-        {t("about.privacy.text.2-1")}
-      </AboutDescription>
-      <AboutDescription>
-        {t("about.privacy.text.2-2")}
-      </AboutDescription>
+      <AboutDescription>{t("about.privacy.text.2-1")}</AboutDescription>
+      <AboutDescription>{t("about.privacy.text.2-2")}</AboutDescription>
       <AboutHeading>{t("about.privacy.heading.3")}</AboutHeading>
-      <AboutDescription>
-        {t("about.privacy.text.3-1")}
-      </AboutDescription>
+      <AboutDescription>{t("about.privacy.text.3-1")}</AboutDescription>
       <AboutHeading>{t("about.privacy.heading.4")}</AboutHeading>
-      <AboutDescription>
-        {t("about.privacy.text.4-1")}
-      </AboutDescription>
+      <AboutDescription>{t("about.privacy.text.4-1")}</AboutDescription>
       <AboutHeading>{t("about.privacy.heading.5")}</AboutHeading>
       <AboutDescription>
         {t("about.privacy.text.5-1")}{" "}

@@ -73,9 +73,9 @@ export function LanguagePicker<
       defaultValue={field.value}
       {...form.register(name, {
         required: {
-					value: true,
-					message: t('channelRequest.required')
-				},
+          value: true,
+          message: t("channelRequest.required"),
+        },
       })}
     >
       <SelectTrigger>
@@ -83,7 +83,9 @@ export function LanguagePicker<
       </SelectTrigger>
       <SelectContent>
         {languages.map(({ text, value }) => (
-          <SelectItem key={value} value={value}>{text}</SelectItem>
+          <SelectItem key={value} value={value}>
+            {text}
+          </SelectItem>
         ))}
       </SelectContent>
     </Select>

@@ -15,7 +15,7 @@ export default function AboutRequest() {
 
   return (
     <div className="flex flex-col gap-2">
-			<AboutHeading>{t('channelRequest.RequestType')}</AboutHeading>
+      <AboutHeading>{t("channelRequest.RequestType")}</AboutHeading>
       <RadioGroup className="flex flex-col gap-2" onValueChange={setType}>
         <RadioGroupItem value="addVtuber" className="sr-only" id="addVtuber" />
         <Label htmlFor="addVtuber">
@@ -46,10 +46,10 @@ export default function AboutRequest() {
           </RequestTypeRadioButton>
         </Label>
       </RadioGroup>
-			{type === 'addVtuber' && <AddVtuberForm />}
-			{type === 'addSubber' && <AddSubberForm />}
-			{type === 'modifyInfo' && <ModifyInfoForm />}
-			{type === 'delete' && <DeleteChannelForm />}
+      {type === "addVtuber" && <AddVtuberForm />}
+      {type === "addSubber" && <AddSubberForm />}
+      {type === "modifyInfo" && <ModifyInfoForm />}
+      {type === "delete" && <DeleteChannelForm />}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 type HolodexReportType = "video" | "channel" | "contact";
 
-type HolodexReportBody<T> = T extends "video" | 'contact'
+type HolodexReportBody<T> = T extends "video" | "contact"
   ? DiscordEmbedField[]
   : DiscordRequestBody;
 
