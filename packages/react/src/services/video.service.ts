@@ -3,6 +3,7 @@ import {
   UseInfiniteQueryOptions,
   UseQueryOptions,
   useInfiniteQuery,
+  useMutation,
   useQuery,
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -47,15 +48,23 @@ export function useVideos(
   });
 }
 
-export function useVideo(
+export function useVideo<T = Video>(
   videoId: string,
-  config?: UseQueryOptions<Video, AxiosError>,
+  config?: UseQueryOptions<T, AxiosError>,
 ) {
   const client = useClient();
 
-  return useQuery<Video, AxiosError>(
+  return useQuery<T, AxiosError>(
     ["video", videoId],
-    async () => await client<Video>(`/videos/${videoId}`),
+    async () => await client<T>(`/videos/${videoId}`),
     config,
   );
+}
+
+export function usePlaceholderMutation() {
+  const client = useClient();
+
+  return useMutation<PlaceholderVideo[], Error, PlaceholderRequestBody>({
+    mutationFn: async (body) => client.post("/api/v2/videos/placeholder", body),
+  });
 }
