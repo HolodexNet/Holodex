@@ -17,6 +17,7 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import router from "./routes/router";
 import { ErrorFallback } from "./components/common/ErrorFallback";
+import { useSyncTFunction } from "./store/i18n";
 
 const GOOGLE_CLIENT_ID =
   "275540829388-87s7f9v2ht3ih51ah0tjkqng8pd8bqo2.apps.googleusercontent.com";
@@ -26,6 +27,7 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnMount: false,
       refetchOnWindowFocus: false,
+      retry: 0,
     },
   },
 });
@@ -37,6 +39,7 @@ dayjs.extend(timezone); // dependent on utc plugin
 
 function App() {
   useThemeInit();
+  useSyncTFunction();
   return <RouterProvider router={router} />;
 }
 
