@@ -23,7 +23,7 @@ export function Header({ id }: HeaderProps) {
   const frameToggleSidebar = useSetAtom(toggleSidebarAtom);
 
   return (
-    <header id={id} className="z-40 flex items-center gap-4 bg-base-2 pl-2">
+    <header id={id} className="bg-base-2 z-40 flex items-center gap-4 pl-2">
       <Button
         size="icon"
         variant="ghost"
@@ -32,12 +32,12 @@ export function Header({ id }: HeaderProps) {
       >
         <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
-      <div className="flex grow" />
+      <div className="hidden grow md:flex" />
       <SearchBar className="max-w-lg" />
       <Button
         size="icon"
         variant="ghost"
-        className="-ml-3 p-0 text-base-9"
+        className="text-base-9 -ml-3 p-0"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:magnifying-glass h-full text-xl" />
@@ -45,14 +45,14 @@ export function Header({ id }: HeaderProps) {
       <Button
         size="icon"
         variant="ghost"
-        className="p-0 text-base-9"
+        className="text-base-9 p-0"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:sun-20-solid h-full text-xl " />
       </Button>
       {user ? (
         <img
-          className="h-full w-auto rounded-full p-2"
+          className="h-14 w-14 shrink-0 rounded-full p-2"
           src={`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`}
         />
       ) : (

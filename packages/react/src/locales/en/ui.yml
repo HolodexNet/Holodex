@@ -42,6 +42,7 @@ component:
     multiview: MultiView
     points: pts
     playlist: Playlist
+    back: Back
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Watching'
