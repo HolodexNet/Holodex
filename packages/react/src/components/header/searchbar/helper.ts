@@ -37,11 +37,41 @@ export const AUTOCOMPLETE_OPTIONS = {
   },
 };
 
+/**
+ * Split a string with a RegExp separator an optionally limited number of times.
+ * @param {string} input
+ * @param {RegExp} separator
+ * @param {number} [limit] - If not included, splits the maximum times
+ * @returns {string[]}
+ */
+function split(input: Readonly<string>, separator: RegExp, limit: number = -1) {
+  // Ensure the separator is global
+  const _separator = new RegExp(separator, "g");
+  // Allow the limit argument to be excluded
+
+  const output = [];
+  let finalIndex = 0;
+
+  while (limit--) {
+    const lastIndex = _separator.lastIndex;
+    const search = _separator.exec(input);
+    if (search === null) {
+      break;
+    }
+    finalIndex = _separator.lastIndex;
+    output.push(input.slice(lastIndex, search.index));
+  }
+
+  output.push(input.slice(finalIndex));
+
+  return output;
+}
+
 export function splitSearchClassTerms(
   term: string,
   langCategoryReversemapClass: Record<string, keyof typeof JSON_SCHEMA>,
 ): [SearchableCategory | undefined, string] {
-  const [q_class, ...q_value] = term.split(":");
+  const [q_class, q_value] = split(term, /[:：]/, 1);
   const trimmed_class = q_class.trim();
   const system_class =
     langCategoryReversemapClass[trimmed_class] || trimmed_class;
@@ -49,7 +79,7 @@ export function splitSearchClassTerms(
     // q_class is a valid class, ergo:
     return [
       <SearchableCategory>langCategoryReversemapClass[trimmed_class],
-      q_value.join(":").trim(),
+      q_value.trim(),
     ];
   } else {
     return [undefined, term.trim()];

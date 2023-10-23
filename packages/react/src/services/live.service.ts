@@ -1,5 +1,5 @@
 import { useClient } from "@/hooks/useClient";
-import { UseQueryOptions, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface UseLiveParams {
   channel_id?: string;

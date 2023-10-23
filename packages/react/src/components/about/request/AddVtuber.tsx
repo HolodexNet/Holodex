@@ -28,13 +28,13 @@ const formValues = {
 };
 
 export function AddVtuberForm() {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useTranslation();
   const form = useForm({
     defaultValues: formValues,
   });
-  const { mutate, isLoading } = useReportMutation(
+  const { mutate, isPending } = useReportMutation(
     { type: "channel" },
     {
       onSuccess: () => {
@@ -68,7 +68,7 @@ export function AddVtuberForm() {
     const id = matches?.[0]?.[1];
 
     const res = await fetch(`/api/v2/channels/${id}`);
-		if (res.ok && (await res.json()).id) return navigate(`/channel/${id}`);
+    if (res.ok && (await res.json()).id) return navigate(`/channel/${id}`);
 
     mutate({
       content: "Look what the cat dragged in...",
@@ -164,9 +164,9 @@ export function AddVtuberForm() {
                   {...field}
                   {...form.register("link", {
                     required: {
-											value: true,
-											message: t("channelRequest.required")
-										},
+                      value: true,
+                      message: t("channelRequest.required"),
+                    },
                     pattern: {
                       value:
                         /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel)\/([\w\-_]*)/gi,
@@ -270,8 +270,12 @@ export function AddVtuberForm() {
             </FormItem>
           )}
         />
-        <Button disabled={isLoading} type="submit" className="w-full">
-          <div className={isLoading ? 'i-lucide:loader-2 animate-spin' : "i-heroicons:check"} />
+        <Button disabled={isPending} type="submit" className="w-full">
+          <div
+            className={
+              isPending ? "i-lucide:loader-2 animate-spin" : "i-heroicons:check"
+            }
+          />
           {t("channelRequest.sendRequest")}
         </Button>
       </form>

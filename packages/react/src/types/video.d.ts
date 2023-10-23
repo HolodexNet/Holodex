@@ -88,8 +88,8 @@ enum PLACEHOLDER_TYPES {
 }
 
 enum PLACEHOLDER_CERTAINTY {
-  CERTAIN = 'certain',
-  LIKELY = 'likely'
+  CERTAIN = "certain",
+  LIKELY = "likely",
 }
 
 interface PlaceholderCredit {

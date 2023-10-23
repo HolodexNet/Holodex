@@ -34,7 +34,7 @@ export function useReportMutation(
       break;
 
     default:
-      throw new Error('Report type is not specified');
+      throw new Error("Report type is not specified");
   }
 
   return useMutation<unknown, Error, HolodexReportBody<typeof type>>({

@@ -3,10 +3,10 @@ import { AboutHeading } from "@/components/about/Heading";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-export function ContactList () {
+export function ContactList() {
   const { t } = useTranslation();
 
-	return (
+  return (
     <div>
       <AboutHeading>{t("about.contact.discord")}</AboutHeading>
       <Link to="https://discord.gg/A24AbzgvRJ" target="_blank">

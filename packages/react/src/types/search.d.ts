@@ -1,11 +1,10 @@
-
 interface SearchAutoComplete {
-	vtuber?: SearchAutoCompleteChannel[]
+  vtuber?: SearchAutoCompleteChannel[];
 }
 
 interface SearchAutoCompleteChannel {
-	id: string;
-	name: string;
-	english_name?: string;
-	org?: string;
+  id: string;
+  name: string;
+  english_name?: string;
+  org?: string;
 }

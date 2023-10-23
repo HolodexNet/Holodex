@@ -10,17 +10,10 @@ interface SearchAutoCompleteParams {
 export function useSearchAutoCompleteMutation() {
   const client = useClient();
 
-  return useMutation<
-    SearchAutoComplete,
-    Error,
-    SearchAutoCompleteParams
-  >({
+  return useMutation<SearchAutoComplete, Error, SearchAutoCompleteParams>({
     mutationFn: async (params) =>
-      (
-        await client.get<SearchAutoComplete>(
-          "/api/v3/search/autocomplete",
-          { params },
-        )
-      ),
+      await client.get<SearchAutoComplete>("/api/v3/search/autocomplete", {
+        params,
+      }),
   });
 }
