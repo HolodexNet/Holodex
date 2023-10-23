@@ -41,7 +41,6 @@
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "css-vars-hook": "^0.6.18",
-    "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
     "i18next": "^23.6.0",
     "i18next-browser-languagedetector": "^7.1.0",

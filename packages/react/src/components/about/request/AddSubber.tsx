@@ -33,7 +33,7 @@ export function AddSubberForm() {
   const form = useForm({
     defaultValues: formValues,
   });
-  const { mutate, isLoading } = useReportMutation(
+  const { mutate, isPending } = useReportMutation(
     { type: "channel" },
     {
       onSuccess: () => {
@@ -154,9 +154,9 @@ export function AddSubberForm() {
                   {...field}
                   {...form.register("link", {
                     required: {
-											value: true,
-											message: t("channelRequest.required")
-										},
+                      value: true,
+                      message: t("channelRequest.required"),
+                    },
                     pattern: {
                       value:
                         /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel)\/([\w\-_]*)/gi,
@@ -228,10 +228,10 @@ export function AddSubberForm() {
             </FormItem>
           )}
         />
-        <Button disabled={isLoading} type="submit" className="w-full">
+        <Button disabled={isPending} type="submit" className="w-full">
           <div
             className={
-              isLoading ? "i-lucide:loader-2 animate-spin" : "i-heroicons:check"
+              isPending ? "i-lucide:loader-2 animate-spin" : "i-heroicons:check"
             }
           />
           {t("channelRequest.sendRequest")}

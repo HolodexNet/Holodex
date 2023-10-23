@@ -5,9 +5,7 @@ export default function atomWithDebounce<T>(
   delayMilliseconds = 500,
   shouldDebounceOnReset = false,
 ) {
-  const prevTimeoutAtom = atom<ReturnType<typeof setTimeout> | undefined>(
-    undefined,
-  );
+  const prevTimeoutAtom = atom<number | NodeJS.Timeout | undefined>(undefined);
 
   // DO NOT EXPORT currentValueAtom as using this atom to set state can cause
   // inconsistent state between currentValueAtom and debouncedValueAtom
@@ -17,7 +15,7 @@ export default function atomWithDebounce<T>(
   const debouncedValueAtom = atom(
     initialValue,
     (get, set, update: SetStateAction<T>) => {
-      clearTimeout(get(prevTimeoutAtom));
+      clearTimeout(get(prevTimeoutAtom) as number);
 
       const prevValue = get(_currentValueAtom);
       const nextValue =
@@ -53,7 +51,7 @@ export default function atomWithDebounce<T>(
 
   // exported atom setter to clear timeout if needed
   const clearTimeoutAtom = atom(null, (get, set, _arg) => {
-    clearTimeout(get(prevTimeoutAtom));
+    clearTimeout(get(prevTimeoutAtom) as number);
     set(isDebouncingAtom, false);
   });
 

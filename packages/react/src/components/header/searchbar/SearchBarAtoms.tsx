@@ -42,7 +42,7 @@ function useServerAutocomplete(
   return useQuery({
     queryKey: ["autocomplete", searchCategory, searchString],
     queryFn: async (
-      ctx,
+      _,
     ): Promise<Record<"vtuber" | "topic" | "org", QueryItem[]>> => {
       if (
         !searchCategory ||

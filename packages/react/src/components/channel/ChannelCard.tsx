@@ -17,8 +17,7 @@ export function ChannelCard({
   clip_count,
   top_topics,
   twitter,
-  twitch,
-  inactive,
+  twitch, // inactive,
 }: ChannelCardProps) {
   const { t } = useTranslation();
   const { mutate, isPending: mutateLoading } = useFavoriteMutation();
