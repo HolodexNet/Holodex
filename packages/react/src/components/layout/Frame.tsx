@@ -37,7 +37,7 @@ export function Frame() {
   const open = useAtomValue(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
-  console.log(fs);
+  // console.log(fs);
 
   if (location.pathname === "/") return <Navigate to={`/org/${org}`} />;
 

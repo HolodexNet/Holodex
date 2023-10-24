@@ -17,6 +17,8 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { VirtuosoGrid } from "react-virtuoso";
+import { currentLangAtom } from "@/store/i18n";
+import { LanguageSelector } from "@/components/languae/languagePicker";
 
 export function Home() {
   const navigate = useNavigate();
@@ -30,6 +32,8 @@ export function Home() {
     { org, type: ["placeholder", "stream"], include: ["mentions"] },
     { refetchInterval: 1000 * 60 * 5, enabled: tab === "live" },
   );
+  const [currentLang] = useAtom(currentLangAtom);
+
   const {
     data: archives,
     isLoading: archiveLoading,
@@ -43,12 +47,14 @@ export function Home() {
       max_upcoming_hours: 1,
       paginated: true,
       limit: 32,
+      lang: [`${currentLang.short}`],
     },
     {
       refetchInterval: 1000 * 60 * 5,
       enabled: tab === "archive",
     },
   );
+
   const {
     data: clips,
     isLoading: clipLoading,
@@ -62,6 +68,7 @@ export function Home() {
       max_upcoming_hours: 1,
       paginated: true,
       limit: 32,
+      lang: [`${currentLang.short}`],
     },
     {
       refetchInterval: 1000 * 60 * 5,
@@ -145,6 +152,7 @@ export function Home() {
             })}
           />
         </Button>
+        <LanguageSelector />
       </TabsList>
       <TabsContent value="live">
         <div className={listCN}>
