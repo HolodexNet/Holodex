@@ -21,6 +21,7 @@ const AboutPrivacy = React.lazy(() => import("./about/privacy"));
 const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 const Channel = React.lazy(() => import("./channel"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
+const Playlists = React.lazy(() => import("./playlists"));
 
 const store = getDefaultStore();
 
@@ -92,7 +93,7 @@ const router = createBrowserRouter([
       },
       {
         path: "playlists",
-        element: <div>Playlists</div>,
+        element: <Playlists />,
       },
       {
         path: "about",

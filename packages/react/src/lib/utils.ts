@@ -9,3 +9,15 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function makeYtThumbnailUrl(id: string, size: VideoCardSize) {
+  switch (size) {
+    case "sm":
+      return `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+    case "md":
+      return `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+    case "lg":
+    default:
+      return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  }
+}

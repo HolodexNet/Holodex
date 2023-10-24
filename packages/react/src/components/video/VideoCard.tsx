@@ -3,7 +3,7 @@ import { Button } from "@/shadcn/ui/button";
 import { Link } from "react-router-dom";
 import { useSeconds } from "use-seconds";
 import { VideoMenu } from "./VideoMenu";
-import { cn } from "@/lib/utils";
+import { cn, makeYtThumbnailUrl } from "@/lib/utils";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useAtomValue } from "jotai";
@@ -53,15 +53,7 @@ export function VideoCard({
     () =>
       (() => {
         if (type === "placeholder") return thumbnail;
-        switch (size) {
-          case "sm":
-            return `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
-          case "md":
-            return `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
-          case "lg":
-          default:
-            return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-        }
+        return makeYtThumbnailUrl(id, size);
       })(),
     [type, thumbnail, id, size],
   );
