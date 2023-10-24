@@ -12,7 +12,7 @@ export function QueryBadge({ item }: { item: PrimitiveAtom<QueryItem> }) {
     <Badge key={queryItem.value} variant="primary">
       {queryItem.text}
       <button
-        className="ring-offset-base-2 focus:ring-primary-9 ml-1 rounded-full outline-none focus:ring-2 focus:ring-offset-2"
+        className="ml-1 rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             querySplitItemAction({ type: "remove", atom: item });
@@ -24,7 +24,7 @@ export function QueryBadge({ item }: { item: PrimitiveAtom<QueryItem> }) {
         }}
         onClick={() => querySplitItemAction({ type: "remove", atom: item })}
       >
-        <X className="text-base-8 hover:text-base-11 h-3 w-3" />
+        <X className="h-3 w-3 text-base-8 hover:text-base-11" />
       </button>
     </Badge>
   );
