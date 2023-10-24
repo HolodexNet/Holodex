@@ -33,4 +33,3 @@ export function useSyncTFunction() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [t]);
 }
-

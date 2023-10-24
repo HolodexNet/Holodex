@@ -7,7 +7,7 @@ interface SettingsItemProps {
 
 export function SettingsItem({ label, children }: SettingsItemProps) {
   return (
-    <div className="border-base flex min-h-[6rem] flex-wrap justify-between gap-4 border-b-2 py-6 last:border-b-0">
+    <div className="flex min-h-[6rem] flex-wrap justify-between gap-4 border-b-2 border-base py-6 last:border-b-0">
       <h3 className="text-xl font-bold">{label}</h3>
       {Children.only(children)}
     </div>
