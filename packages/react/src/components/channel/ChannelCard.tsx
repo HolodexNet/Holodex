@@ -64,14 +64,15 @@ export function ChannelCard({
         className="w-full"
         variant={isInFavorite ? "outline" : "secondary"}
         disabled={mutateLoading}
-        onClick={() =>
+        onClick={() => {
           mutate([
             {
               op: isInFavorite ? "remove" : "add",
               channel_id: id,
             },
-          ])
-        }
+          ]);
+          console.log(isInFavorite);
+        }}
       >
         {isInFavorite ? (
           <div className="i-heroicons:heart-solid" />

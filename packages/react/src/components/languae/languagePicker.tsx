@@ -21,7 +21,6 @@ export const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useAtom(currentLangAtom);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-  console.log(currentLang);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

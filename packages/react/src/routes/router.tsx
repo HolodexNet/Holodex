@@ -21,6 +21,7 @@ const AboutPrivacy = React.lazy(() => import("./about/privacy"));
 const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 const Channel = React.lazy(() => import("./channel"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
+const Favourites = React.lazy(() => import("./favourites"));
 
 const store = getDefaultStore();
 
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "favorites",
-        element: <div>Favorites</div>,
+        element: <Favourites />,
       },
       {
         path: "search",
