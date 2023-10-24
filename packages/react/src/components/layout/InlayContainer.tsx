@@ -42,7 +42,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
           "flex flex-col gap-4": itemSelected,
         })}
       >
-        <div className="bg-base-3 block w-full rounded-lg p-2 md:hidden">
+        <div className="block w-full rounded-lg bg-base-3 p-2 md:hidden">
           <Button
             size="lg"
             variant="link"
@@ -53,7 +53,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
             {t("component.mainNav.back")}
           </Button>
         </div>
-        <div className="bg-base-3 w-full rounded-lg p-2 md:p-4">
+        <div className="w-full rounded-lg bg-base-3 p-2 md:p-4">
           <Suspense fallback={<Loading size="xl" />}>
             <Outlet />
           </Suspense>

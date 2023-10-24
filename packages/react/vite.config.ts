@@ -7,12 +7,12 @@ import UnoCSS from "unocss/vite";
 import presetIcons from "@unocss/preset-icons";
 import { fileURLToPath, URL } from "url";
 import bundleAnalyzer from "rollup-plugin-bundle-analyzer";
-// import react from '@vitejs/plugin-react'
+// import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    // sourcemap: true
+    sourcemap: true,
   },
   server: {
     port: 8080,

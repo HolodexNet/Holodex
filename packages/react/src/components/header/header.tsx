@@ -6,7 +6,6 @@ import { useAtom, useAtomValue } from "jotai";
 import { useSetAtom } from "jotai/react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { SearchBar } from "./searchbar/SearchBar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -14,6 +13,7 @@ import {
   DropdownMenuItem,
 } from "@/shadcn/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+import { SearchBar } from "./searchbar/SearchBar";
 
 interface HeaderProps
   extends React.DetailedHTMLProps<

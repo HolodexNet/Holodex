@@ -71,7 +71,7 @@ export function splitSearchClassTerms(
   term: string,
   langCategoryReversemapClass: Record<string, keyof typeof JSON_SCHEMA>,
 ): [SearchableCategory | undefined, string] {
-  const [q_class, q_value] = split(term, /[:：]/, 1);
+  const [q_class, q_value = ""] = split(term, /[:：]/, 1);
   const trimmed_class = q_class.trim();
   const system_class =
     langCategoryReversemapClass[trimmed_class] || trimmed_class;
