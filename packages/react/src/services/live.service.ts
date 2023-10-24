@@ -1,5 +1,5 @@
 import { useClient } from "@/hooks/useClient";
-import { UseQueryOptions, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface UseLiveParams {
   channel_id?: string;
@@ -24,10 +24,7 @@ function listToString(list: string[] | undefined) {
   return list.join(",");
 }
 
-export function useLive(
-  params?: UseLiveParams,
-  config?: UseQueryOptions<Live[]>,
-) {
+export function useLive(params?: UseLiveParams, config?: CommonQueryConfig) {
   const client = useClient();
 
   return useQuery<Live[]>({

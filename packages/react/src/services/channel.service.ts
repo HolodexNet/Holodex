@@ -24,7 +24,7 @@ export function useChannels(
 
   return useInfiniteQuery({
     queryKey: ["channels", params],
-    queryFn: async ({ pageParam = 0 }) =>
+    queryFn: async ({ pageParam }) =>
       await client<Channel[]>("/api/v2/channels", {
         params: { ...params, offset: pageParam },
       }),
@@ -33,13 +33,13 @@ export function useChannels(
       if (lastPage?.length === 0) {
         return undefined;
       }
-      return lastPageParam + 1;
+      return lastPageParam + lastPage.length;
     },
     getPreviousPageParam: (_firstPage, _allPages, firstPageParam) => {
       if (!firstPageParam) {
         return undefined;
       }
-      return firstPageParam - 1;
+      return firstPageParam - _firstPage.length;
     },
     // ...config,
   });

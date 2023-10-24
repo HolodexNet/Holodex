@@ -42,6 +42,7 @@ component:
     multiview: MultiView
     points: pts
     playlist: Playlist
+    back: Back
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Watching'
@@ -171,6 +172,44 @@ component:
     scheduledEvent: Scheduled
     editorCredit: Event setup by Holodex editor {0}.
     creditTitleText: 'Credits:'
+  channelPicker:
+    notFound: No channel found
+  addPlaceholder:
+    creditName: Editor Credit Name
+    channelLabel: 'Create Placeholder into Channel:'
+    titleLabel: Video / Event Title
+    titleHint: The title of placeholder
+    jpTitleLabel: Japanese Event Title
+    jpTitleHint: (Shown to users with 'Use EN Name' turned off)
+    linkLabel: Source URL
+    linkHint: >-
+      Link to more detail about the event. eg. URL to twitter schedule post or
+      twitch channel, or link to a concert page
+    thumbnailLabel: Thumbnail
+    eventType:
+      scheduledYTStream: Scheduled YT Stream
+      externalStream: External Stream (eg. Twitch / Twitcast)
+      label: Event Type
+      event: Event
+    certainty:
+      label: Certainty
+      certain: Certain
+      likely: Likely (This is an educated guess)
+    dateLabel: Scheduled event date
+    durationLabel: Duration
+    duration:
+      minutes: minutes
+    success: Created a placeholder successfully
+    error: An error occurred while creating a placeholder
+    createNew: Create New Placeholder
+    modifyExisting: Submit Placeholder Modification
+    idLabel: Existing Placeholder ID (11 characters)
+    idHint: Must be 11 characters
+    type:
+      existing: Existing
+      new: New
+  datePicker:
+    pickDate: Pick a date...
 views:
   channel:
     video: Videos
@@ -194,7 +233,7 @@ views:
     favoritesAreEmpty: You have no favorites!
     blockedAreEmpty: You have no blocked channels.
   home:
-    liveOrUpcomingHeading: Live / Upcoming
+    liveOrUpcomingHeading: Live <liveCount></liveCount> / Upcoming <upcomingCount></upcomingCount>
     recentVideosHeading: Recent Videos
     noStreams: No live or upcoming streams at the moment
     recentVideoToggles:
@@ -292,6 +331,11 @@ views:
     ignoredTopicsMsg: Hide videos with these topics from the Home and Favorites pages
     theme: Theme
     moreSettings: More Settings
+    user: User & Account
+    homepage: Homepage & Filters
+    blockedChannels: Blocked Channels
+    languageSearch: Search language...
+    languageNotfound: No language found
   app:
     update_available: An update is available
     update_btn: Update
@@ -470,6 +514,12 @@ views:
       four: >-
         Fixes experimental flags on Youtube player (Like disabling multiple
         streams, waiting room thumbnail not showing) and more!
+    raycast:
+      features:
+        '0': Show ongoing live streams
+        '1': Search archives
+        '2': Search clips
+        '3': Search channels
   tlClient:
     menu:
       title: Menu
@@ -708,6 +758,99 @@ about:
     description: >-
       Drag these bookmarklets to your bookmark bar to open YouTube watch page in
       Holodex easily:
+  general:
+    title: About Holodex
+    summary:
+      '0': >-
+        Holodex is a fan-built platform for watching VTubers. We are built by DD
+        for DDs.
+      '1': >-
+        We organize clips and collabs by talents included, tabulate songs sang
+        inside individual videos and as part of karaoke streams, compile
+        agencies and groups by generation and branch, provide ways to favorite
+        clips and streams, and allow you to watch livestreams with TLs (or
+        produce TLs live or in VODs with community-caption-alike features).
+      '2': >-
+        We comply with the Derivative Work Agreement of hololive production and
+        attempt to extend that to other orgs and agencies. We also operate
+        within the specifications of Youtube Data API and Embed Player Terms of
+        Service. Please reach out to us via Discord or Twitter DM for any
+        service inquiries.
+      title: What we are?
+    credits:
+      '0': >-
+        Big shout out to Jet/HoloTools for helping us with the API and inspiring
+        the Multiview.
+      '1': 'We''d like to thank our long list of contributors and over 100 editors:'
+      addRequest: >-
+        (If you'd like to add your name to this list, drop us a poke on
+        Discord!)
+  quicklink:
+    twitter: Follow us on twitter
+    ko-fi: Support us on Ko-Fi
+    github: Issues / Source Code
+    apiDocs: API Documentation
+  contact:
+    discord: 'Join Holodex Discord:'
+    twitter: DM us on Twitter
+    email: 'Email us:'
+    title: Contact
+  contactForm:
+    name: Name
+    email: Email
+    message: Message
+    sendButton: Send Message
+  placeholder:
+    title: Add a Placeholder
+  extensions:
+    title: Extensions
+  privacy:
+    title: Privacy Policy
+    heading:
+      '1': 1. Collection and Use of Personal Data
+      '2': 2. Third-Party Data Collection and Tracking
+      '3': 3. User Data Removal
+      '4': 4. Changes to this Privacy Policy
+      '5': 5. Contact Us
+      top: Holodex Privacy Policy
+    lastUpdated: 'Last updated: {date}'
+    text:
+      1-1: >-
+        When you use our platform, we collect your data solely for
+        authentication purposes, and occasionally to manually provide feedback
+        about user actions such as Reports on videos. Depending on your login
+        method, we may keep your email, Discord ID, or Twitter ID in our
+        database. This is the only information we fetch from these services.
+      1-2: >-
+        We do not use this personal data for any other purpose, and we do not
+        sell, trade, or otherwise transfer your personal data to any third
+        parties.
+      2-1: >-
+        Your actions on the Holodex website may be logged by YouTube through
+        third-party cookie tracking. This data collection is not managed or
+        controlled by Holodex and is unrelated to the data we collect. Please
+        refer to YouTube's privacy policy for more information on their data
+        collection and use practices.
+      2-2: >-
+        Furthermore, your actions on the website may also be sent to Google
+        Analytics. This is done to help us understand how our site is used and
+        to make improvements. Google Analytics collects data in a way that does
+        not directly identify anyone. For more information on how Google uses
+        this data, visit Google's privacy policy.
+      3-1: >-
+        If you wish to request the removal of your personal data from our
+        platform, please contact us directly at: [your contact information]. We
+        will respond to your request promptly and will make every effort to
+        respect your wishes where it is practical and consistent with legal
+        requirements.
+      4-1: >-
+        We reserve the right to update this privacy policy at any time. If we
+        make any substantial changes, we will notify you by posting a prominent
+        announcement on our site.
+      5-1: >-
+        If you have any questions about this privacy policy, or your dealings
+        with our website, you can contact us on Twitter DMs or Discord ModMail.
+      5-2: Links can be found here.
 channelRequest:
   RequestType: 'Request Type:'
   Types:
@@ -764,6 +907,13 @@ channelRequest:
     through private modmail on Discord or other contact methods.
   PageTitle: Holodex Channel Request
   ChannelURLErrorFeedback: Must be https://www.youtube.com/channel/UC_____
+  ChannelURL: Channel URL
+  sendRequest: Send request
+  sendSuccess: Request has been sent successfully
+  sendError: An error occurred
+  selectLanguage: Select a language...
+  ChannelPickerLabel: Pick channel...
+  required: Required
 search:
   class:
     search: search
@@ -801,3 +951,5 @@ search:
       many: More than one song
   guide_btn: Guide
   menu_header_text: Search Options
+channelPicker:
+  search: Search channel...

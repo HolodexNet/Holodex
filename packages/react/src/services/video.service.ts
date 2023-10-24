@@ -1,8 +1,8 @@
 import { useClient } from "@/hooks/useClient";
 import {
-  UseInfiniteQueryOptions,
   UseQueryOptions,
   useInfiniteQuery,
+  useMutation,
   useQuery,
 } from "@tanstack/react-query";
 
@@ -47,12 +47,23 @@ export function useVideos(
   });
 }
 
-export function useVideo(videoId: string, config?: UseQueryOptions<Video>) {
+export function useVideo<T = Video>(
+  videoId: string,
+  config?: Omit<UseQueryOptions<T>, "queryKey" | "queryFn">,
+) {
   const client = useClient();
 
-  return useQuery({
+  return useQuery<T>({
     queryKey: ["video", videoId],
-    queryFn: async () => await client<Video>(`/api/v2/videos/${videoId}`),
+    queryFn: async () => await client<T>(`/api/v2/videos/${videoId}`),
     ...config,
+  });
+}
+
+export function usePlaceholderMutation() {
+  const client = useClient();
+
+  return useMutation<PlaceholderVideo[], Error, PlaceholderRequestBody>({
+    mutationFn: async (body) => client.post("/api/v2/videos/placeholder", body),
   });
 }

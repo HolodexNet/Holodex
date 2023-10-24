@@ -7,7 +7,6 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 
 // if you're curious: https://tanstack.com/query/latest/docs/react/typescript#typing-query-options
 const favoriteQuery = queryOptions<FavoriteChannel[]>({
