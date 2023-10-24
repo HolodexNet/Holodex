@@ -1,19 +1,19 @@
 {
   "*.ts": [
     "prettier --write",
-    "eslint"
+    "eslint --fix"
   ],
   "*.tsx": [
     "prettier --write",
-    "eslint"
+    "eslint --fix"
   ],
   "*.js": [
     "prettier --write",
-    "eslint"
+    "eslint --fix"
   ],
   "*.jsx": [
     "prettier --write",
-    "eslint"
+    "eslint --fix"
   ],
   "*.html": [
     "eslint",

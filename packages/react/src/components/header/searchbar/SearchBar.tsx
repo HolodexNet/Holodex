@@ -1,6 +1,3 @@
-import * as React from "react";
-import { X } from "lucide-react";
-
 import { Command as CommandPrimitive } from "cmdk";
 import {
   Command,
@@ -9,63 +6,29 @@ import {
   CommandItem,
   CommandSeparator,
 } from "@/shadcn/ui/command";
-import { Badge } from "@/shadcn/ui/badge";
 import { cn } from "@/lib/utils";
+import { queryAtom, splitQueryAtom, useAutocomplete } from "./SearchBarAtoms";
+import { useAtom } from "jotai";
+import { JSON_SCHEMA, QueryItem } from "./types";
+import { QueryBadge } from "./QueryBadge";
+import { useTranslation } from "react-i18next";
+import { HTMLAttributes, useRef, useState, useCallback } from "react";
 
-type Framework = Record<"value" | "label", string>;
+export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useAtom(queryAtom);
+  const [queryPieces, setQueryPieces] = useAtom(splitQueryAtom);
+  const { search, updateSearch, queryState, autocomplete } = useAutocomplete();
 
-const FRAMEWORKS = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-  {
-    value: "wordpress",
-    label: "WordPress",
-  },
-  {
-    value: "express.js",
-    label: "Express.js",
-  },
-  {
-    value: "nest.js",
-    label: "Nest.js",
-  },
-] satisfies Framework[];
-
-export function SearchBar({ className }: React.HTMLAttributes<HTMLDivElement>) {
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const [open, setOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState<Framework[]>([FRAMEWORKS[4]]);
-  const [inputValue, setInputValue] = React.useState("");
-
-  const handleUnselect = React.useCallback((framework: Framework) => {
-    setSelected((prev) => prev.filter((s) => s.value !== framework.value));
-  }, []);
-
-  const handleKeyDown = React.useCallback(
+  const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       const input = inputRef.current;
       if (input) {
         if (e.key === "Delete" || e.key === "Backspace") {
           if (input.value === "") {
-            setSelected((prev) => {
+            setQuery((prev) => {
               const newSelected = [...prev];
               newSelected.pop();
               return newSelected;
@@ -78,11 +41,7 @@ export function SearchBar({ className }: React.HTMLAttributes<HTMLDivElement>) {
         }
       }
     },
-    [],
-  );
-
-  const selectables = FRAMEWORKS.filter(
-    (framework) => !selected.includes(framework),
+    [setQuery],
   );
 
   return (
@@ -90,65 +49,72 @@ export function SearchBar({ className }: React.HTMLAttributes<HTMLDivElement>) {
       onKeyDown={handleKeyDown}
       className={cn("overflow-visible bg-transparent", className)}
     >
-      <div className="group rounded-md border border-base px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
+      <div className="border-base ring-offset-base-2 focus-within:ring-primary group rounded-md border px-3 py-2 text-sm focus-within:ring-2 focus-within:ring-offset-2">
         <div className="flex flex-wrap gap-1">
-          {selected.map((framework) => {
-            return (
-              <Badge key={framework.value} variant="primary">
-                {framework.label}
-                <button
-                  className="ml-1 rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handleUnselect(framework);
-                    }
-                  }}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                  onClick={() => handleUnselect(framework)}
-                >
-                  <X className="h-3 w-3 text-base-8 hover:text-base-11" />
-                </button>
-              </Badge>
-            );
+          {queryPieces.map((queryItem, i) => {
+            return <QueryBadge item={queryItem} key={"badge" + i} />;
           })}
           {/* Avoid having the "Search" Icon */}
           <CommandPrimitive.Input
             ref={inputRef}
-            value={inputValue}
-            onValueChange={setInputValue}
+            value={search}
+            onValueChange={updateSearch}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
             placeholder="Select frameworks..."
-            className="ml-2 flex-1 bg-transparent outline-none placeholder:text-base-8"
+            className="placeholder:text-base-8 ml-2 flex-1 bg-transparent outline-none"
           />
         </div>
       </div>
       <div className="relative mt-2">
-        {open && selectables.length > 0 ? (
+        {open && autocomplete.length > 0 ? (
           <>
-            <div className="absolute top-0 z-10 w-full rounded-md border border-base bg-base-1 text-base-11 shadow-md outline-none animate-in">
+            <div className="border-base bg-base-1 text-base-11 animate-in absolute top-0 z-10 w-full rounded-md border shadow-md outline-none">
               <CommandGroup heading="Search Options" />
               <CommandSeparator />
               <CommandGroup className="h-full overflow-auto">
-                <CommandEmpty>Nothing to search?</CommandEmpty>
-                {selectables.map((framework) => {
+                {autocomplete.map((item) => {
                   return (
                     <CommandItem
-                      key={framework.value}
+                      key={item.type + item.value}
                       onMouseDown={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                       }}
+                      value={item.type + item.value}
                       onSelect={(_) => {
-                        setInputValue("");
-                        setSelected((prev) => [...prev, framework]);
+                        if (item.incomplete) {
+                          console.log("autocompleteItem - incomplete", item);
+                          updateSearch(
+                            t(`search.class.${item.type}`, item.type) + ":",
+                          );
+                          return;
+                        }
+
+                        if (
+                          JSON_SCHEMA[item.type].validation === undefined ||
+                          JSON_SCHEMA[item.type].validation?.(item, query)
+                        ) {
+                          console.log("autocompleteItem - trigger", item);
+                          if (item.replace) {
+                            setQuery((q) =>
+                              q
+                                .filter((i) => i.type !== item.type)
+                                .concat(item),
+                            );
+                          } else {
+                            setQueryPieces({
+                              type: "insert",
+                              value: item,
+                            });
+                          }
+
+                          updateSearch("");
+                        } // onClick?.(e);
                       }}
                       className={"cursor-pointer"}
                     >
-                      {framework.label}
+                      {item.type} : {item.text}
                     </CommandItem>
                   );
                 })}

@@ -10,11 +10,6 @@ export const localeAtom = atom({
   dayjs: (...args: Parameters<typeof dayjs>) => dayjs(...args),
 });
 
-export const localeAtom = atom({
-  lang: window.localStorage.getItem("i18nextLng") ?? navigator.language,
-  dayjs: (...args: Parameters<typeof dayjs>) => dayjs(...args),
-});
-
 export const currentLangAtom = atomWithStorage<Lang>("lang", {
   val: "en",
   display: "English",
