@@ -1,5 +1,4 @@
 interface Lang {
-  val: string;
-  display: string;
-  short?: string;
+  text: string;
+  value: string;
 }

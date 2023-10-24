@@ -11,9 +11,8 @@ export const localeAtom = atom({
 });
 
 export const currentLangAtom = atomWithStorage<Lang>("lang", {
-  val: "en",
-  display: "English",
-  short: "en",
+  text: "English",
+  value: "en",
 });
 
 export const tFunctionAtom = atom<i18n["t"] | undefined>(undefined);

@@ -47,7 +47,6 @@ export function Home() {
       max_upcoming_hours: 1,
       paginated: true,
       limit: 32,
-      lang: [`${currentLang.short}`],
     },
     {
       refetchInterval: 1000 * 60 * 5,
@@ -68,7 +67,7 @@ export function Home() {
       max_upcoming_hours: 1,
       paginated: true,
       limit: 32,
-      lang: [`${currentLang.short}`],
+      lang: [`${currentLang.value}`],
     },
     {
       refetchInterval: 1000 * 60 * 5,
