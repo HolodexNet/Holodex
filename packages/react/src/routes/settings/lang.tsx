@@ -28,7 +28,7 @@ export default function SettingsLang() {
   return (
     <div className="flex flex-col p-2 md:p-4">
       <SettingsItem label={t("views.settings.languageSettings")}>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col items-end ml-auto gap-2">
           <Popover open={langOpen} onOpenChange={setLangOpen}>
             <PopoverTrigger asChild>
               <Button

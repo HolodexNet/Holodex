@@ -210,6 +210,8 @@ component:
       new: New
   datePicker:
     pickDate: Pick a date...
+  toast:
+    copiedToClipboard: Copied to clipboard
 views:
   channel:
     video: Videos
@@ -336,6 +338,7 @@ views:
     blockedChannels: Blocked Channels
     languageSearch: Search language...
     languageNotfound: No language found
+    userNotLinked: Not linked
   app:
     update_available: An update is available
     update_btn: Update

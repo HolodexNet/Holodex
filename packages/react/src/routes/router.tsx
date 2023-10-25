@@ -9,6 +9,8 @@ import React from "react";
 const Login = React.lazy(() => import("./login"));
 const Settings = React.lazy(() => import("./settings"));
 const SettingsLang = React.lazy(() => import("./settings/lang"));
+const SettingsTheme = React.lazy(() => import("./settings/theme"));
+const SettingsUser = React.lazy(() => import("./settings/user"));
 const About = React.lazy(() => import("./about"));
 const AboutGeneral = React.lazy(() => import("./about/general"));
 const AboutChangelog = React.lazy(() => import("./about/changelog"));
@@ -86,6 +88,14 @@ const router = createBrowserRouter([
           {
             path: "lang",
             element: <SettingsLang />,
+          },
+          {
+            path: "themes",
+            element: <SettingsTheme />,
+          },
+          {
+            path: "user",
+            element: <SettingsUser />,
           },
           // Add children routes similar to above pattern
         ],
