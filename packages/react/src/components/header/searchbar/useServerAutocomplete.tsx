@@ -35,16 +35,18 @@ export function useServerAutocomplete(
           },
         );
 
+        console.log(acr);
+
         return {
           vtuber:
-            acr.vtuber?.map((x) => ({
+            acr.vtuber?.map<QueryItem>((x) => ({
               type: "vtuber",
               value: x.id,
               text: /*langPrefs.preferredLocaleFn(x.english_name, x.name) || */ x.name,
               _raw: x,
             })) || [],
           topic:
-            acr.topic?.map((x) => ({
+            acr.topic?.map<QueryItem>((x) => ({
               type: "topic",
               value: x.id,
               text: x.id,
@@ -57,5 +59,6 @@ export function useServerAutocomplete(
       };
     },
     staleTime: 30000,
+    enabled: !!searchString,
   });
 }

@@ -26,7 +26,10 @@ export function useClientAutocomplete(
       has_song: [],
       other: [],
     };
-    if (searchCategory === "org" || searchCategory === undefined) {
+    if (
+      searchCategory === "org" ||
+      (searchCategory === undefined && searchString)
+    ) {
       const _squery = searchString.toLowerCase();
       ac_opts.org =
         orgs

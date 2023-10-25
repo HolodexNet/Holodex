@@ -81,7 +81,7 @@ export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
                         e.preventDefault();
                         e.stopPropagation();
                       }}
-                      value={item.type + item.value}
+                      value={JSON.stringify(item)}
                       onSelect={(_) => {
                         if (item.incomplete) {
                           console.log("autocompleteItem - incomplete", item);

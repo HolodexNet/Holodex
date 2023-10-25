@@ -50,6 +50,8 @@ export function useAutocomplete() {
     // order them by category:
     const categoryOrder: Array<keyof typeof out> = [
       "org",
+      "vtuber",
+      "topic",
       "type",
       "lang",
       "from",
@@ -59,6 +61,8 @@ export function useAutocomplete() {
       "has_song",
       "other",
     ];
+
+    console.log(out);
 
     const autocompleteList = categoryOrder
       .flatMap((x) => out[x])
