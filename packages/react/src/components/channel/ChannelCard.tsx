@@ -6,7 +6,18 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-interface ChannelCardProps extends Channel {}
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
+  T,
+  NonOptionalKeys
+> &
+  Partial<Omit<T, NonOptionalKeys>>;
+type PartialChannel = WithNonOptional<
+  Channel,
+  "id" | "name" | "photo" | "subscriber_count" | "video_count"
+>;
+
+interface ChannelCardProps extends PartialChannel {}
 
 export function ChannelCard({
   id,
@@ -27,6 +38,7 @@ export function ChannelCard({
     [data, id],
   );
 
+  console.log(name, photo);
   return (
     // Set min-height because react-virtuoso will break if the height is not fixed
     <div className="flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4">
