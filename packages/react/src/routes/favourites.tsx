@@ -4,7 +4,6 @@ import { VirtuosoGrid } from "react-virtuoso";
 
 export default function Favorites() {
   const { data: favChannels } = useFavorites();
-  console.log(favChannels);
   return (
     <>
       <div className="h-full w-full p-4 md:p-8">

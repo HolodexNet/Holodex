@@ -37,8 +37,6 @@ export function ChannelCard({
     () => data?.some((channel) => id === channel.id),
     [data, id],
   );
-
-  console.log(name, photo);
   return (
     // Set min-height because react-virtuoso will break if the height is not fixed
     <div className="flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4">
