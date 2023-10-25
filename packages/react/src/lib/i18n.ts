@@ -11,7 +11,11 @@ import { loadDayJsLocale } from "./i18nUtils";
 
 const store = getDefaultStore();
 export const langs = [
-  { val: "en", display: "English", credit: "@Holodex" },
+  {
+    val: "en",
+    display: "English",
+    credit: "@Holodex",
+  },
   {
     val: "en-CA",
     display: "English (Canadian)",
@@ -42,7 +46,11 @@ export const langs = [
     display: "繁體中文",
     credit: "angel84326#7887",
   },
-  { val: "zh-CN", display: "简体中文", credit: "ttg#6038" },
+  {
+    val: "zh-CN",
+    display: "简体中文",
+    credit: "ttg#6038",
+  },
   {
     val: "ko-KR",
     display: "한국어",
@@ -108,7 +116,11 @@ export const langs = [
     display: "Magyar",
     credit: "kuroihikikomori#7216",
   },
-  { val: "th-TH", display: "ไทย", credit: "SnowNeko#0282" },
+  {
+    val: "th-TH",
+    display: "ไทย",
+    credit: "SnowNeko#0282",
+  },
 ] as const;
 
 export type SupportedLangCodes = (typeof langs)[number]["val"];

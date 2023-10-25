@@ -2,12 +2,35 @@ import dayjs from "dayjs";
 
 export type SearchableCategory = keyof VideoQueryModel;
 
+/**
+ * Datastructure describing an search filter autocomplete item or a selected search filter
+ */
 export type QueryItem = {
+  /** What kind of item this query badge is  */
   type: SearchableCategory;
+  /** What kind of value does it embody, used for the API query construction. */
   value: string;
+  /** how should we display this badge to the user? */
   text: string;
+  /** if an item is incomplete, when selecting it, we should just append the text content to the top.
+   *
+   *        if (item.incomplete) {
+   *          this.logWithContext("incomplete-item")(item);
+   *          this.search = this.categoryName(item) + ":";
+   *          this.tryFocusInput();
+   *          return;
+   *        }
+   *
+   */
   incomplete?: boolean;
-  _raw?: unknown;
+  /**
+   * if an item is marked replace, then when selecting it it should replace the existing item for that category.
+   */
+  replace?: boolean;
+  /**
+   * Used to store raw object properties, availability is dependent on 'type'.
+   */
+  _raw?: Partial<ShortChannel> | unknown;
 };
 
 /**

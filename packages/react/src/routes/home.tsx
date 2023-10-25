@@ -17,6 +17,8 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { VirtuosoGrid } from "react-virtuoso";
+import { currentLangAtom } from "@/store/i18n";
+import { LanguageSelector } from "@/components/languae/languagePicker";
 
 export function Home() {
   const navigate = useNavigate();
@@ -30,6 +32,8 @@ export function Home() {
     { org, type: ["placeholder", "stream"], include: ["mentions"] },
     { refetchInterval: 1000 * 60 * 5, enabled: tab === "live" },
   );
+  const [currentLang] = useAtom(currentLangAtom);
+
   const {
     data: archives,
     isLoading: archiveLoading,
@@ -49,6 +53,7 @@ export function Home() {
       enabled: tab === "archive",
     },
   );
+
   const {
     data: clips,
     isLoading: clipLoading,
@@ -62,6 +67,7 @@ export function Home() {
       max_upcoming_hours: 1,
       paginated: true,
       limit: 32,
+      lang: [`${currentLang.value}`],
     },
     {
       refetchInterval: 1000 * 60 * 5,
@@ -101,18 +107,18 @@ export function Home() {
       defaultValue={tab}
       onValueChange={setTab}
     >
-      <TabsList className="bg-base-2 z-20 flex w-full justify-start overflow-x-auto overflow-y-hidden rounded-none">
+      <TabsList className="z-20 flex w-full justify-start overflow-x-auto overflow-y-hidden rounded-none bg-base-2">
         <TabsTrigger className="text-lg" value="live">
           <Trans
             i18nKey="views.home.liveOrUpcomingHeading"
             components={{
               liveCount: (
-                <span className="bg-secondary-5 mx-1 rounded-sm p-1 text-sm">
+                <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
                   {live?.filter(({ status }) => status === "live").length}
                 </span>
               ),
               upcomingCount: (
-                <span className="bg-secondary-5 ml-1 rounded-sm p-1 text-sm">
+                <span className="ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
                   {live?.filter(({ status }) => status === "upcoming").length}
                 </span>
               ),
@@ -145,6 +151,7 @@ export function Home() {
             })}
           />
         </Button>
+        <LanguageSelector />
       </TabsList>
       <TabsContent value="live">
         <div className={listCN}>

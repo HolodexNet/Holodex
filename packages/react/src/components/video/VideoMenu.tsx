@@ -34,7 +34,9 @@ export function VideoMenu({
 
   return (
     <DropdownMenu onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
+        <div>{children}</div>
+      </DropdownMenuTrigger>
       <DropdownMenuContent
         sideOffset={-60}
         onClick={(e) => e.stopPropagation()}

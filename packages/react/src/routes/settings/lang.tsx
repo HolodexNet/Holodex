@@ -28,7 +28,7 @@ export default function SettingsLang() {
   return (
     <div className="flex flex-col p-2 md:p-4">
       <SettingsItem label={t("views.settings.languageSettings")}>
-        <div className="flex flex-col items-end ml-auto gap-2">
+        <div className="ml-auto flex flex-col items-end gap-2">
           <Popover open={langOpen} onOpenChange={setLangOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -36,7 +36,7 @@ export default function SettingsLang() {
                 variant="outline"
                 role="combobox"
                 aria-expanded={langOpen}
-                className="border-base w-fit min-w-[240px] justify-between px-4"
+                className="w-fit min-w-[240px] justify-between border-base px-4"
               >
                 {langs.find(({ val }) => i18n.language === val)?.display}
                 <div className="i-lucide:chevrons-up-down ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -72,7 +72,7 @@ export default function SettingsLang() {
               </Command>
             </PopoverContent>
           </Popover>
-          <div className="text-base-11 flex items-center gap-1 text-xs">
+          <div className="flex items-center gap-1 text-xs text-base-11">
             <div className="i-heroicons:heart" />
             {langs.find(({ val }) => i18n.language === val)?.credit}
           </div>
