@@ -4,7 +4,9 @@ import {
   UseQueryOptions,
   useMutation,
   useQuery,
+  useQueryClient,
 } from "@tanstack/react-query";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function usePlaylists(options?: UseQueryOptions<PlaylistStub[]>) {
   const client = useClient();
@@ -51,6 +53,46 @@ export function usePlaylistVideoMutation(
       await client<boolean>(`/api/v2/video-playlist/${id}/${videoId}`, {
         method: "PUT",
       }),
+    ...options,
+  });
+}
+
+export function usePlaylistDeleteMutation(
+  options?: UseMutationOptions<void, Error, { playlistId: number }>,
+) {
+  const client = useClient();
+  const queryClient = useQueryClient();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async ({ playlistId }) =>
+      await client.delete<void>(`/api/v2/playlist/${playlistId}`),
+    ...options,
+    onSuccess: async (_, { playlistId }) => {
+      const onPlaylistPage = location.pathname === `/playlist/${playlistId}`;
+
+      await queryClient.invalidateQueries({
+        queryKey: ["playlists"],
+        refetchType: onPlaylistPage ? "all" : "active",
+      });
+      if (onPlaylistPage) {
+        navigate("/playlists");
+      }
+    },
+  });
+}
+
+export function usePlaylistSaveMutation(
+  options?: UseMutationOptions<void, Error, { playlist: Playlist }>,
+) {
+  const client = useClient();
+
+  return useMutation({
+    mutationFn: async ({ playlist }) => {
+      await client.post<void, Playlist>("/api/v2/playlist/", playlist);
+    },
     ...options,
   });
 }
