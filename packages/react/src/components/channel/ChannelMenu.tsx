@@ -29,8 +29,10 @@ export function ChannelMenu({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>{Children.only(children)}</DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuTrigger asChild>
+        <div>{Children.only(children)}</div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent sideOffset={40}>
         <DropdownMenuItem
           className="flex gap-2"
           onClick={() => {

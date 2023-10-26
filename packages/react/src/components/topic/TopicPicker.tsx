@@ -46,7 +46,7 @@ export function TopicPicker({ onSelect }: TopicPickerProps) {
           role="combobox"
           size="lg"
           aria-expanded={open}
-          className="w-full justify-between px-4"
+          className="w-full justify-between border-base px-4"
         >
           {t("component.topicPicker.pickLabel")}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
