@@ -5,6 +5,7 @@ import { Button } from "@/shadcn/ui/button";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { ChannelMenu } from "./ChannelMenu";
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
@@ -14,7 +15,7 @@ type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
   Partial<Omit<T, NonOptionalKeys>>;
 type PartialChannel = WithNonOptional<
   Channel,
-  "id" | "name" | "photo" | "subscriber_count" | "video_count"
+  keyof ShortChannel | "subscriber_count" | "video_count"
 >;
 
 interface ChannelCardProps extends PartialChannel {}
@@ -22,6 +23,11 @@ interface ChannelCardProps extends PartialChannel {}
 export function ChannelCard({
   id,
   name,
+  english_name,
+  org,
+  group,
+  lang,
+  type,
   photo,
   subscriber_count,
   video_count,
@@ -39,7 +45,27 @@ export function ChannelCard({
   );
   return (
     // Set min-height because react-virtuoso will break if the height is not fixed
-    <div className="flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4">
+    <div className="group relative flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4">
+      <ChannelMenu
+        {...{
+          id,
+          name,
+          type,
+          english_name,
+          org,
+          group,
+          lang,
+          photo,
+        }}
+      >
+        <Button
+          size="icon-lg"
+          variant="ghost"
+          className="absolute right-4 top-4 hidden rounded-full group-hover:flex"
+        >
+          <div className="i-heroicons:ellipsis-vertical" />
+        </Button>
+      </ChannelMenu>
       <img
         className="-z-0 -mb-36 mt-4 h-32 w-32 rounded-full opacity-20 blur-2xl saturate-150"
         src={photo ?? ""}

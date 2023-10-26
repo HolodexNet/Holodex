@@ -25,7 +25,7 @@ component:
     addToFavorites: Add to Favorites
     removeFromFavorites: Remove from Favorites
     unblock: Unblock this channel
-    block: Block this channel's content across Holodex
+    block: Block channel
     blocked: Blocked
   mainNav:
     home: Home
