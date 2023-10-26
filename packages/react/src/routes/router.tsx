@@ -11,6 +11,8 @@ const Settings = React.lazy(() => import("./settings"));
 const SettingsLang = React.lazy(() => import("./settings/lang"));
 const SettingsTheme = React.lazy(() => import("./settings/theme"));
 const SettingsUser = React.lazy(() => import("./settings/user"));
+const SettingsHomepage = React.lazy(() => import("./settings/homepage"));
+const SettingsBlocked = React.lazy(() => import("./settings/blocked"));
 const About = React.lazy(() => import("./about"));
 const AboutGeneral = React.lazy(() => import("./about/general"));
 const AboutChangelog = React.lazy(() => import("./about/changelog"));
@@ -96,6 +98,14 @@ const router = createBrowserRouter([
           {
             path: "user",
             element: <SettingsUser />,
+          },
+          {
+            path: "homepage",
+            element: <SettingsHomepage />,
+          },
+          {
+            path: "blocked",
+            element: <SettingsBlocked />,
           },
           // Add children routes similar to above pattern
         ],

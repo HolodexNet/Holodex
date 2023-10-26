@@ -212,6 +212,10 @@ component:
     pickDate: Pick a date...
   toast:
     copiedToClipboard: Copied to clipboard
+  topicPicker:
+    searchLabel: Search topics...
+    notFound: No topic found
+    pickLabel: Pick topics...
 views:
   channel:
     video: Videos
@@ -323,9 +327,9 @@ views:
     gridSizeLabel: Thumbnail/Grid Size
     gridSizeMsg: Change thumbnail/video grid size on Home/Favorites page
     gridSize:
-      - Large
-      - Medium
-      - Small
+      - Grid
+      - List
+      - Dense List
     hideCollabStreamsLabel: Hide Collab Streams
     hideCollabStreamsMsg: Hide collab streams from your favorites feed
     hidePlaceholderStreams: Hide Placeholder Streams
@@ -339,6 +343,10 @@ views:
     languageSearch: Search language...
     languageNotfound: No language found
     userNotLinked: Not linked
+    defaultHomepage:
+      lastVisitedOrgHome: Last Visited Org Home
+      favoritesWhenLoggedIn: Favorites (When Logged In)
+    hideFeaturesLabel: Hide Features
   app:
     update_available: An update is available
     update_btn: Update
