@@ -92,11 +92,11 @@ export default function SettingsLang() {
         </div>
       </SettingsItem>
       <SettingsItem label={t("views.settings.clipLanguageSelection")}>
-        <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col rounded-lg border border-base">
           {TL_LANGS.map(({ text, value }, index) => (
             <Label
               className={cn(
-                "flex min-w-[18rem] w-full justify-between items-center gap-4 px-4 py-4",
+                "flex min-w-[18rem] w-full justify-between items-center gap-4 px-4 py-4 hover:cursor-pointer",
                 {
                   "bg-base-4": index % 2,
                 },
