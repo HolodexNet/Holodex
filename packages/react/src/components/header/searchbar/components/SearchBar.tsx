@@ -3,16 +3,20 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandItem,
   CommandSeparator,
 } from "@/shadcn/ui/command";
 import { cn } from "@/lib/utils";
-import { queryAtom, splitQueryAtom, useAutocomplete } from "./SearchBarAtoms";
+import {
+  queryAtom,
+  splitQueryAtom,
+  useAutocomplete,
+} from "../hooks/useAutocomplete";
 import { useAtom } from "jotai";
-import { JSON_SCHEMA, QueryItem } from "./types";
+import { JSON_SCHEMA, QueryItem } from "../types";
 import { QueryBadge } from "./QueryBadge";
 import { useTranslation } from "react-i18next";
 import { HTMLAttributes, useRef, useState, useCallback } from "react";
+import { AutocompleteDropdownItem } from "./AutocompleteDropdownItem";
 
 export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -44,10 +48,39 @@ export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
     [setQuery],
   );
 
+  const handleItemSelect = useCallback(
+    (item: QueryItem) => {
+      if (item.incomplete) {
+        console.log("autocompleteItem - incomplete", item);
+        updateSearch(t(`search.class.${item.type}`, item.type) + ":");
+        return;
+      }
+
+      if (
+        JSON_SCHEMA[item.type].validation === undefined ||
+        JSON_SCHEMA[item.type].validation?.(item, query)
+      ) {
+        console.log("autocompleteItem - trigger", item);
+        if (item.replace) {
+          setQuery((q) => q.filter((i) => i.type !== item.type).concat(item));
+        } else {
+          setQueryPieces({
+            type: "insert",
+            value: item,
+          });
+        }
+
+        updateSearch("");
+      } // onClick?.(e);
+    },
+    [query, updateSearch, t, setQuery, setQueryPieces],
+  );
+
   return (
     <Command
       onKeyDown={handleKeyDown}
       className={cn("overflow-visible bg-transparent", className)}
+      shouldFilter={false}
     >
       <div className="group rounded-md border border-base px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
         <div className="flex flex-wrap gap-1">
@@ -61,61 +94,26 @@ export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
             onValueChange={updateSearch}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
-            placeholder="Select frameworks..."
+            placeholder={t("component.search.searchLabel")}
             className="ml-2 flex-1 bg-transparent outline-none placeholder:text-base-8"
           />
         </div>
       </div>
-      <div className="relative mt-2">
+      <div className="relative">
         {open && autocomplete.length > 0 ? (
           <>
-            <div className="absolute top-0 z-10 w-full rounded-md border border-base bg-base-1 text-base-11 shadow-md outline-none animate-in">
-              <CommandGroup heading="Search Options" />
+            <div className="absolute top-2 z-10 w-full rounded-md border border-base bg-base-1 text-base-11 shadow-md outline-none animate-in">
+              <CommandGroup
+                heading={<div>{t("search.menu_header_text")}</div>}
+              />
               <CommandSeparator />
               <CommandGroup className="h-full overflow-auto">
                 {autocomplete.map((item) => {
                   return (
-                    <CommandItem
-                      key={item.type + item.value}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                      }}
-                      value={JSON.stringify(item)}
-                      onSelect={(_) => {
-                        if (item.incomplete) {
-                          console.log("autocompleteItem - incomplete", item);
-                          updateSearch(
-                            t(`search.class.${item.type}`, item.type) + ":",
-                          );
-                          return;
-                        }
-
-                        if (
-                          JSON_SCHEMA[item.type].validation === undefined ||
-                          JSON_SCHEMA[item.type].validation?.(item, query)
-                        ) {
-                          console.log("autocompleteItem - trigger", item);
-                          if (item.replace) {
-                            setQuery((q) =>
-                              q
-                                .filter((i) => i.type !== item.type)
-                                .concat(item),
-                            );
-                          } else {
-                            setQueryPieces({
-                              type: "insert",
-                              value: item,
-                            });
-                          }
-
-                          updateSearch("");
-                        } // onClick?.(e);
-                      }}
-                      className={"cursor-pointer"}
-                    >
-                      {item.type} : {item.text}
-                    </CommandItem>
+                    <AutocompleteDropdownItem
+                      item={item}
+                      onSelect={() => handleItemSelect(item)}
+                    />
                   );
                 })}
               </CommandGroup>

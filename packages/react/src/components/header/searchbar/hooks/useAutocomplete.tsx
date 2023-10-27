@@ -2,8 +2,8 @@ import { atom, useAtomValue } from "jotai";
 import { splitAtom } from "jotai/utils";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { splitSearchClassTerms } from "./helper";
-import { JSON_SCHEMA, QueryItem } from "./types";
+import { splitSearchClassTerms } from "../helper";
+import { JSON_SCHEMA, QueryItem } from "../types";
 import { useClientAutocomplete } from "./useClientAutocomplete";
 import { useServerAutocomplete } from "./useServerAutocomplete";
 

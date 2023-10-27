@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { JSON_SCHEMA, QueryItem, VideoQueryModel } from "./types";
+import { JSON_SCHEMA, QueryItem, VideoQueryModel } from "../types";
 import { useOrgs } from "@/services/orgs.service";
-import { FIRST_SEARCH } from "./helper";
+import { FIRST_SEARCH } from "../helper";
 import type { TFunction } from "i18next";
 import { CLIPPER_LANGS } from "@/lib/consts";
 
