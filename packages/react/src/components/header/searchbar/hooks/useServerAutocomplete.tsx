@@ -1,4 +1,4 @@
-import { AC_Response, QueryItem, VideoQueryModel } from "./types";
+import { AC_Response, QueryItem, VideoQueryModel } from "../types";
 import { useQuery } from "@tanstack/react-query";
 import { useClient } from "@/hooks/useClient";
 

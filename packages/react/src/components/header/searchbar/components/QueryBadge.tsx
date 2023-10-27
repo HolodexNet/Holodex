@@ -1,16 +1,43 @@
 import * as React from "react";
 import { X } from "lucide-react";
 import { Badge } from "@/shadcn/ui/badge";
-import { QueryItem } from "./types";
+import { QueryItem } from "../types";
 import { PrimitiveAtom, useAtomValue, useSetAtom } from "jotai";
-import { splitQueryAtom } from "./SearchBarAtoms";
+import { splitQueryAtom } from "../hooks/useAutocomplete";
+import { useTranslation } from "react-i18next";
 
 export function QueryBadge({ item }: { item: PrimitiveAtom<QueryItem> }) {
   const queryItem = useAtomValue(item);
   const querySplitItemAction = useSetAtom(splitQueryAtom);
+  const { t } = useTranslation();
+  const categoryName = React.useCallback(
+    (query: QueryItem) => {
+      return t(`search.class.${query.type}`, query.type);
+    },
+    [t],
+  );
+
+  // const categoryExplanation = React.useCallback(
+  //   (query: QueryItem) => {
+  //     return t(`search.class_explanation.${query.type}`, " ");
+  //   },
+  //   [t],
+  // );
+
+  const categoryValue = React.useCallback(
+    (query: QueryItem) => {
+      return query.text === "$t"
+        ? t(`search.class_values.${query.type}.${query.value}`, " ")
+        : query.text === "?"
+        ? query.value
+        : query.text;
+    },
+    [t],
+  );
+
   return (
-    <Badge key={queryItem.value} variant="primary">
-      {queryItem.text}
+    <Badge key={queryItem.type + queryItem.value} variant="primary">
+      {categoryName(queryItem)}: {categoryValue(queryItem)}
       <button
         className="ml-1 rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
         onKeyDown={(e) => {

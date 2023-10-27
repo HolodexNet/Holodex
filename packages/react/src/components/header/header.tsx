@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
 } from "@/shadcn/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
-import { SearchBar } from "./searchbar/SearchBar";
+import { SearchBar } from "./searchbar/components/SearchBar";
 
 interface HeaderProps
   extends React.DetailedHTMLProps<
@@ -41,7 +41,7 @@ export function Header({ id }: HeaderProps) {
         <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
       <div className="hidden grow md:flex" />
-      <SearchBar className="max-w-lg" />
+      <SearchBar className="mt-3 max-w-lg self-start" />
       <Button
         size="icon"
         variant="ghost"

@@ -65,7 +65,7 @@ export default function SettingsUser() {
         />
         <div className="flex flex-col gap-2">
           <div className="text-2xl font-bold md:text-4xl">{user.username}</div>
-          <div className="text-base-11 capitalize">
+          <div className="capitalize text-base-11">
             {user.role} : {user.contribution_count}
             {t("component.mainNav.points")}
           </div>
@@ -77,7 +77,7 @@ export default function SettingsUser() {
                     className={
                       user.discord_id
                         ? "border-secondary-8 text-secondary-11"
-                        : "text-base-11 border-base"
+                        : "border-base text-base-11"
                     }
                     variant="outline"
                   >
@@ -97,7 +97,7 @@ export default function SettingsUser() {
                     className={
                       user.google_id
                         ? "border-secondary-8 text-secondary-11"
-                        : "text-base-11 border-base"
+                        : "border-base text-base-11"
                     }
                     variant="outline"
                   >
@@ -117,7 +117,7 @@ export default function SettingsUser() {
                     className={
                       user.twitter_id
                         ? "border-secondary-6 text-secondary-11"
-                        : "text-base-11 border-base"
+                        : "border-base text-base-11"
                     }
                     variant="outline"
                   >
@@ -149,7 +149,7 @@ export default function SettingsUser() {
             </Button>
           )}
           <Button
-            className="text-red border-red"
+            className="border-red text-red"
             variant="outline"
             onClick={logout}
           >
@@ -172,7 +172,7 @@ export default function SettingsUser() {
       <SettingsItem label={t("views.login.ownedYtChannel")}>
         <div className="ml-auto flex max-w-md flex-col gap-2">
           <Input className="ml-auto max-w-md" value="None on file" disabled />
-          <span className="text-base-11 text-xs">
+          <span className="text-xs text-base-11">
             {t("views.login.futureYtcOwnerMessage")}
           </span>
         </div>
