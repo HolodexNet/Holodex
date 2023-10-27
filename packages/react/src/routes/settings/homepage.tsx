@@ -73,20 +73,27 @@ export default function SettingsHomepage() {
     <div className="flex flex-col p-2 md:p-4">
       <SettingsItem label={t("views.settings.defaultPage")}>
         <RadioGroup
-          className="flex w-full flex-col gap-0 rounded-lg border border-base"
+          className="flex w-full flex-col gap-0 overflow-hidden rounded-lg border border-base"
           value={defaultOpen}
           onValueChange={(val: "Home" | "Favorites") => setDefaultOpen(val)}
         >
           {defaultPages.map(({ label, value }, index) => (
-            <Label
-              className={cn(
-                "flex w-full min-w-[18rem] items-center justify-between gap-4 p-4 hover:cursor-pointer",
-                { "bg-base-4": index % 2 },
-              )}
+            <div
+              className={cn("flex items-center text-primary-12 space-x-2 p-4", {
+                "bg-primaryA-4": value === defaultOpen,
+                "text-base-11": value !== defaultOpen,
+              })}
             >
-              {label}
-              <RadioGroupItem value={value} />
-            </Label>
+              <Label
+                htmlFor={"defaultPage" + value}
+                className={cn(
+                  "flex w-full items-center justify-between hover:cursor-pointer",
+                )}
+              >
+                {label}
+              </Label>
+              <RadioGroupItem value={value} id={"defaultPage" + value} />
+            </div>
           ))}
         </RadioGroup>
       </SettingsItem>
