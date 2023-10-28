@@ -47,7 +47,7 @@ export function useChannels(
 
 export function useChannel(
   channelId: string,
-  config?: UseQueryOptions<Channel, Error>,
+  config?: Omit<UseQueryOptions<Channel, Error>, "queryFn" | "queryKey">,
 ) {
   const client = useClient();
 

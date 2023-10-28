@@ -34,13 +34,8 @@ export function VideoMenu({
 
   return (
     <DropdownMenu onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger asChild>
-        <div>{children}</div>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        sideOffset={-60}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
+      <DropdownMenuContent onClick={(e) => e.stopPropagation()}>
         <DropdownMenuItem asChild>
           <Link
             className="flex gap-2"

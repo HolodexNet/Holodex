@@ -22,6 +22,7 @@ const AboutPlaceholder = React.lazy(() => import("./about/placeholder"));
 const AboutExtensions = React.lazy(() => import("./about/extensions"));
 const AboutContact = React.lazy(() => import("./about/contact"));
 const AboutPrivacy = React.lazy(() => import("./about/privacy"));
+const Watch = React.lazy(() => import("./watch"));
 const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 const Channel = React.lazy(() => import("./channel"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
@@ -165,7 +166,7 @@ const router = createBrowserRouter([
       },
       {
         path: "watch/:id",
-        element: <div>Watch</div>,
+        element: <Watch />,
       },
       {
         path: "debug",

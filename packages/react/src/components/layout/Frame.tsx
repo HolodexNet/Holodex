@@ -1,6 +1,11 @@
 import "./Frame.scss";
+import {
+  HtmlPortalNode,
+  InPortal,
+  createHtmlPortalNode,
+} from "react-reverse-portal";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { Suspense, useEffect } from "react";
+import { Suspense, createContext, useEffect, useMemo } from "react";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import {
   isFloatingAtom,
@@ -8,7 +13,6 @@ import {
   onResizeAtom,
   toggleSidebarAtom,
   sidebarShouldBeFullscreenAtom,
-  openSidebarAtom,
   isSidebarOpenAtom,
 } from "@/hooks/useFrame";
 import { useAtomValue, useSetAtom } from "jotai/react";
@@ -20,8 +24,14 @@ import { orgAtom } from "@/store/org";
 import { ErrorFallback } from "../common/ErrorFallback";
 import { ErrorBoundary } from "react-error-boundary";
 import { Loading } from "../common/Loading";
+import ReactPlayer from "react-player";
+
+export const VideoPortalContext = createContext<HtmlPortalNode>(
+  createHtmlPortalNode(),
+);
 
 export function Frame() {
+  const VideoPortalNode = useMemo(() => createHtmlPortalNode(), []);
   const location = useLocation();
   const toggle = useSetAtom(toggleSidebarAtom);
   const resize = useSetAtom(onResizeAtom);
@@ -52,20 +62,25 @@ export function Frame() {
   });
 
   return (
-    <div className={mainClasses} id="layout">
-      <aside className="z-50 border-r border-r-base">
-        <Sidebar id="sidebar" onClose={toggle} />
-      </aside>
-      <Header id="header" />
-      <main className="">
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Suspense fallback={<Loading size="xl" />}>
-            <Outlet />
-          </Suspense>
-        </ErrorBoundary>
-      </main>
-      {isMobile && <footer className="">Footer</footer>}
-      <Toaster />
-    </div>
+    <VideoPortalContext.Provider value={VideoPortalNode}>
+      <div className={mainClasses} id="layout">
+        <aside className="z-50 border-r border-r-base">
+          <Sidebar id="sidebar" onClose={toggle} />
+        </aside>
+        <Header id="header" />
+        <main className="">
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<Loading size="xl" />}>
+              <Outlet />
+            </Suspense>
+          </ErrorBoundary>
+        </main>
+        {isMobile && <footer className="">Footer</footer>}
+        <InPortal node={VideoPortalNode}>
+          <ReactPlayer />
+        </InPortal>
+        <Toaster />
+      </div>
+    </VideoPortalContext.Provider>
   );
 }

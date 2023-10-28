@@ -8,6 +8,7 @@ import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useAtomValue } from "jotai";
 import { localeAtom } from "@/store/i18n";
+import { useDuration } from "@/hooks/useDuration";
 
 type VideoCardType = VideoBase &
   Partial<Video> &
@@ -62,9 +63,10 @@ export function VideoCard({
 
   const navigate = useNavigate();
 
+  const isTwitch = link?.includes("twitch");
   const videoHref = useMemo(
-    () => (status === "live" && link ? link : `/watch/${id}`),
-    [status, link, id],
+    () => (!isTwitch && status === "live" && link ? link : `/watch/${id}`),
+    [isTwitch, status, link, id],
   );
   const thumbnailSrc = useMemo(
     () =>
@@ -84,7 +86,7 @@ export function VideoCard({
   );
 
   const videoTarget =
-    placeholderType === "external-stream" ? "_blank" : undefined;
+    !isTwitch && placeholderType === "external-stream" ? "_blank" : undefined;
 
   const goToVideoClickHandler = useCallback(
     (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -385,13 +387,13 @@ function VideoCardDuration({
 
   // Duration in ms:
   // duration * 1000 (archive) or end_actual - start_actual (archive) or Date.now - start_actual (live)
-  const durationMs =
-    (type === "stream" && duration * 1000) ||
-    (end_actual && start_actual
-      ? new Date(end_actual).valueOf() - new Date(start_actual).valueOf()
-      : start_actual
-      ? date.valueOf() - new Date(start_actual).valueOf()
-      : null);
+  const durationMs = useDuration({
+    type,
+    status,
+    duration,
+    end_actual,
+    start_actual,
+  });
 
   return durationMs ?? status === "upcoming" ? (
     <span
