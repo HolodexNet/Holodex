@@ -70,13 +70,16 @@ export function usePlaylistDeleteMutation(
     mutationFn: async ({ playlistId }) =>
       await client.delete<void>(`/api/v2/playlist/${playlistId}`),
     ...options,
-    onSuccess: async (_, { playlistId }) => {
+    onSuccess: (_, { playlistId }) => {
       const onPlaylistPage = location.pathname === `/playlist/${playlistId}`;
 
-      await queryClient.invalidateQueries({
-        queryKey: ["playlists"],
-        refetchType: onPlaylistPage ? "all" : "active",
+      queryClient.setQueryData<PlaylistStub[]>(["playlists"], (oldData) => {
+        if (oldData) {
+          return oldData.filter((playlist) => playlist.id === playlistId);
+        }
+        return oldData;
       });
+
       if (onPlaylistPage) {
         navigate("/playlists");
       }
@@ -85,14 +88,23 @@ export function usePlaylistDeleteMutation(
 }
 
 export function usePlaylistSaveMutation(
-  options?: UseMutationOptions<void, Error, { playlist: Playlist }>,
+  options?: UseMutationOptions<void, Error, Partial<PlaylistStub>>,
 ) {
   const client = useClient();
+  const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ playlist }) => {
-      await client.post<void, Playlist>("/api/v2/playlist/", playlist);
+    mutationFn: async (playlist) => {
+      await client.post<void, Partial<PlaylistStub>>(
+        "/api/v2/playlist/",
+        playlist,
+      );
     },
     ...options,
+    onSuccess: (...args) => {
+      queryClient.invalidateQueries({ queryKey: ["playlists"] });
+
+      if (options?.onSuccess) options.onSuccess(...args);
+    },
   });
 }

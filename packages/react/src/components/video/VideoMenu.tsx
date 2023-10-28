@@ -16,6 +16,7 @@ import {
 import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import NewPlaylistDialog from "@/components/playlist/NewPlaylistDialog";
 
 interface VideoMenuProps extends Pick<VideoBase, "id" | "type" | "status"> {
   children: ReactNode;
@@ -87,6 +88,16 @@ export function VideoMenu({
                     <div className="i-lucide:loader-2 animate-spin leading-none" />
                   </DropdownMenuItem>
                 )}
+                <NewPlaylistDialog
+                  triggerElement={
+                    <DropdownMenuItem
+                      onSelect={(event) => event.preventDefault()}
+                    >
+                      {t("component.playlist.menu.new-playlist")}
+                    </DropdownMenuItem>
+                  }
+                  videoIds={[videoId]}
+                />
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
