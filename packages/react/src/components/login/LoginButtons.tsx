@@ -26,7 +26,7 @@ export function LoginButtons() {
       {!user?.discord_id && (
         <Button
           size="lg"
-          className="bg-iris-7 w-full"
+          className="w-full bg-iris-7"
           onClick={() =>
             open(
               `https://discord.com/api/oauth2/authorize?client_id=793619250115379262&redirect_uri=${encodeURIComponent(

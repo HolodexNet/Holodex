@@ -1,12 +1,13 @@
 import { ChannelCard } from "@/components/channel/ChannelCard";
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { blockedChannelsAtom } from "@/store/settings";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 
 export default function SettingsBlocked() {
   const { t } = useTranslation();
-  const [blockedChannels, setBlockedChannels] = useAtom(blockedChannelsAtom);
+  // const [blockedChannels, setBlockedChannels] = useAtom(blockedChannelsAtom);
+  const blockedChannels = useAtomValue(blockedChannelsAtom);
 
   return (
     <div className="flex flex-col gap-2 p-2 md:p-4">

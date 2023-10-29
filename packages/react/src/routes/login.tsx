@@ -9,7 +9,7 @@ export default function Login() {
   } = useAuth();
 
   return (
-    <div className="flex h-full w-full mx-auto max-w-2xl flex-col items-center gap-4">
+    <div className="mx-auto flex h-full w-full max-w-2xl flex-col items-center gap-4">
       <LoginButtons />
     </div>
   );
