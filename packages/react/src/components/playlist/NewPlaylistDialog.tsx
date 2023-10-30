@@ -22,6 +22,7 @@ import { usePlaylistSaveMutation } from "@/services/playlist.service";
 import { Button } from "@/shadcn/ui/button";
 import { useAtomValue } from "jotai";
 import { userAtom } from "@/store/auth";
+import { useToast } from "@/shadcn/ui/use-toast";
 
 interface Props {
   triggerElement: React.ReactNode;
@@ -32,6 +33,7 @@ export default function NewPlaylistDialog({ triggerElement, videoIds }: Props) {
   const [open, setOpen] = useState(false);
 
   const { t } = useTranslation();
+  const { toast } = useToast();
 
   const form = useForm({
     defaultValues: {
@@ -42,6 +44,10 @@ export default function NewPlaylistDialog({ triggerElement, videoIds }: Props) {
   const saveMutation = usePlaylistSaveMutation({
     onSuccess: () => {
       setOpen(false);
+      toast({
+        // todo: intl this
+        title: "Playlist created.",
+      });
     },
   });
 

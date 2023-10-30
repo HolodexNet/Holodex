@@ -4,7 +4,6 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 
 import { cn } from "@/lib/utils";
 import { type VariantProps } from "class-variance-authority";
-import { badgeVariants } from "./badge";
 import { dialogVariants } from "./dialog.variants";
 
 const Dialog = DialogPrimitive.Root;

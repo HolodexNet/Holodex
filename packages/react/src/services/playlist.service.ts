@@ -75,7 +75,7 @@ export function usePlaylistDeleteMutation(
 
       queryClient.setQueryData<PlaylistStub[]>(["playlists"], (oldData) => {
         if (oldData) {
-          return oldData.filter((playlist) => playlist.id === playlistId);
+          return oldData.filter((playlist) => playlist.id !== playlistId);
         }
         return oldData;
       });
@@ -88,23 +88,44 @@ export function usePlaylistDeleteMutation(
 }
 
 export function usePlaylistSaveMutation(
-  options?: UseMutationOptions<void, Error, Partial<PlaylistStub>>,
+  options?: UseMutationOptions<number, Error, Partial<PlaylistStub>>,
 ) {
   const client = useClient();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (playlist) => {
-      await client.post<void, Partial<PlaylistStub>>(
+      return client.post<number, Partial<PlaylistStub>>(
         "/api/v2/playlist/",
         playlist,
       );
     },
     ...options,
-    onSuccess: (...args) => {
-      queryClient.invalidateQueries({ queryKey: ["playlists"] });
+    onSuccess: (data, variables, context) => {
+      // new playlist
+      if (!variables.id) {
+        queryClient.setQueryData<PlaylistInclude[]>(
+          ["playlist", "include", variables.video_ids![0]],
+          (includesArr) => {
+            const includesElement = [
+              { id: data, name: variables.name!, contains: true },
+            ];
+            return includesArr
+              ? includesArr.concat(includesElement)
+              : includesElement;
+          },
+        );
+      }
 
-      if (options?.onSuccess) options.onSuccess(...args);
+      // grab new updated_at, video objects
+      queryClient.invalidateQueries({
+        queryKey: ["playlists"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["playlist", variables.id],
+      });
+
+      if (options?.onSuccess) options.onSuccess(data, variables, context);
     },
   });
 }

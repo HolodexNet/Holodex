@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-export interface H3Props extends React.ComponentPropsWithRef<"h3"> {}
+export interface H3Props extends React.ComponentPropsWithoutRef<"h3"> {}
 
 const TypographyH3 = React.forwardRef<HTMLHeadingElement, H3Props>(
   ({ className, ...props }, ref) => {
@@ -18,7 +18,7 @@ const TypographyH3 = React.forwardRef<HTMLHeadingElement, H3Props>(
   },
 );
 
-export interface H4Props extends React.ComponentPropsWithRef<"h4"> {}
+export interface H4Props extends React.ComponentPropsWithoutRef<"h4"> {}
 
 const TypographyH4 = React.forwardRef<HTMLHeadingElement, H4Props>(
   ({ className, ...props }, ref) => {
@@ -35,7 +35,7 @@ const TypographyH4 = React.forwardRef<HTMLHeadingElement, H4Props>(
   },
 );
 
-export interface LargeProps extends React.ComponentPropsWithRef<"div"> {}
+export interface LargeProps extends React.ComponentPropsWithoutRef<"div"> {}
 
 const TypographyLarge = React.forwardRef<HTMLDivElement, LargeProps>(
   ({ className, ...props }, ref) => {
@@ -49,7 +49,7 @@ const TypographyLarge = React.forwardRef<HTMLDivElement, LargeProps>(
   },
 );
 
-export interface ParagraphProps extends React.ComponentPropsWithRef<"p"> {}
+export interface ParagraphProps extends React.ComponentPropsWithoutRef<"p"> {}
 
 const TypographyP = React.forwardRef<HTMLParagraphElement, ParagraphProps>(
   ({ className, ...props }, ref) => {
