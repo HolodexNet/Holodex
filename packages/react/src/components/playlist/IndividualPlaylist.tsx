@@ -180,29 +180,31 @@ export default function IndividualPlaylist({ playlistId }: Props) {
       {playlistToRender.videos.map((video, index) => {
         return (
           <div className="flex gap-2" key={video.id}>
-            <div className="flex flex-col justify-between py-2">
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => shiftVideo(index, -1)}
-              >
-                <span className="i-heroicons:chevron-up-solid" />
-              </Button>
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => deleteVideo(index)}
-              >
-                <span className="i-heroicons:x-mark-solid" />
-              </Button>
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => shiftVideo(index, 1)}
-              >
-                <span className="i-heroicons:chevron-down-solid" />
-              </Button>
-            </div>
+            {userOwnsPlaylist ? (
+              <div className="flex flex-col justify-between py-2">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={() => shiftVideo(index, -1)}
+                >
+                  <span className="i-heroicons:chevron-up-solid" />
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={() => deleteVideo(index)}
+                >
+                  <span className="i-heroicons:x-mark-solid" />
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={() => shiftVideo(index, 1)}
+                >
+                  <span className="i-heroicons:chevron-down-solid" />
+                </Button>
+              </div>
+            ) : null}
             <div className="grow">
               <VideoCard
                 id={video.id}
