@@ -54,6 +54,14 @@ export default function NewPlaylistDialog({ triggerElement, videoIds }: Props) {
   const user = useAtomValue(userAtom);
 
   const onSubmit = (data: { name: string }) => {
+    if (!user) {
+      setOpen(false);
+      toast({
+        title: t("views.playlist.login-prompt"),
+      });
+      return;
+    }
+
     saveMutation.mutate({
       name: data.name,
       video_ids: videoIds,
