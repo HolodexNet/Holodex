@@ -108,7 +108,7 @@ export default function IndividualPlaylist({ playlistId }: Props) {
     <div className="container">
       <div className="sticky top-0 z-10 bg-mauve-2">
         <div className="flex items-center">
-          <span className="i-solar:playlist-bold text-9xl !text-base-7 hidden md:block" />
+          <span className="i-solar:playlist-bold hidden text-9xl !text-base-7 md:block" />
           <div className="ml-6">
             <div className="flex gap-3">
               {renaming ? (
@@ -158,7 +158,7 @@ export default function IndividualPlaylist({ playlistId }: Props) {
                       })
                     }
                   >
-                    {/* todo: intl */}
+                    {/* todo: intl this */}
                     <span className="i-lucide:save" /> Save Changes
                   </Button>
                   {editedPlaylist !== null ? (

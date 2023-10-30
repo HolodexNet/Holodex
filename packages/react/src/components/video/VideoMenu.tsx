@@ -8,6 +8,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuPortal,
+  DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -80,6 +81,7 @@ export function VideoMenu({
                     {name}
                   </DropdownMenuItem>
                 ))}
+                {data?.length ? <DropdownMenuSeparator /> : null}
                 {isLoading && (
                   <DropdownMenuItem className="justify-center" disabled>
                     <div className="i-lucide:loader-2 animate-spin leading-none" />
