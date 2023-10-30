@@ -12,6 +12,7 @@ import { useAtomValue } from "jotai";
 import { userAtom } from "@/store/auth";
 import { useState } from "react";
 import { useToast } from "@/shadcn/ui/use-toast";
+import { Input } from "@/shadcn/ui/input";
 
 interface Props {
   playlistId?: string;
@@ -37,6 +38,7 @@ export default function IndividualPlaylist({ playlistId }: Props) {
   });
 
   const [editedPlaylist, setEditedPlaylist] = useState<Playlist | null>(null);
+  const [renaming, setRenaming] = useState(false);
 
   if (status === "pending") {
     return <div>Loading...</div>;
@@ -86,15 +88,47 @@ export default function IndividualPlaylist({ playlistId }: Props) {
           };
     });
 
+  const rename = (newName: string) =>
+    setEditedPlaylist((prevState) => {
+      return prevState
+        ? {
+            ...prevState,
+            name: newName,
+          }
+        : {
+            ...playlist,
+            name: newName,
+          };
+    });
+
   const playlistToRender = editedPlaylist ? editedPlaylist : playlist;
+  const userOwnsPlaylist = playlist.user_id === user?.id;
 
   return (
     <div className="container">
       <div className="sticky top-0 z-10 bg-mauve-2">
         <div className="flex items-center">
-          <span className="i-solar:playlist-bold text-9xl !text-base-7" />
+          <span className="i-solar:playlist-bold text-9xl !text-base-7 hidden md:block" />
           <div className="ml-6">
-            <TypographyH3>{playlist.name}</TypographyH3>
+            <div className="flex gap-3">
+              {renaming ? (
+                <Input
+                  value={playlistToRender.name}
+                  onChange={(e) => rename(e.target.value)}
+                ></Input>
+              ) : (
+                <TypographyH3>{playlistToRender.name}</TypographyH3>
+              )}
+              {userOwnsPlaylist ? (
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={() => setRenaming((prev) => !prev)}
+                >
+                  <span className="i-heroicons:pencil-solid" />
+                </Button>
+              ) : null}
+            </div>
             <TypographyP className="!mt-1">
               {playlist.videos.length} Videos
             </TypographyP>
@@ -102,7 +136,7 @@ export default function IndividualPlaylist({ playlistId }: Props) {
               <Button size="icon" variant="secondary">
                 <span className="i-heroicons:play-solid" />
               </Button>
-              {user?.id === playlist.user_id ? (
+              {userOwnsPlaylist ? (
                 <>
                   <Button
                     size="icon"

@@ -120,6 +120,7 @@ export function usePlaylistSaveMutation(
       // grab new updated_at, video objects
       queryClient.invalidateQueries({
         queryKey: ["playlists"],
+        refetchType: "all",
       });
       queryClient.invalidateQueries({
         queryKey: ["playlist", variables.id],
