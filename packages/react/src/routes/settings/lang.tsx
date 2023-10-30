@@ -28,7 +28,7 @@ export default function SettingsLang() {
   return (
     <div className="flex flex-col p-2 md:p-4">
       <SettingsItem label={t("views.settings.languageSettings")}>
-        <div className="flex flex-col gap-2">
+        <div className="ml-auto flex flex-col items-end gap-2">
           <Popover open={langOpen} onOpenChange={setLangOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -92,11 +92,11 @@ export default function SettingsLang() {
         </div>
       </SettingsItem>
       <SettingsItem label={t("views.settings.clipLanguageSelection")}>
-        <div className="flex w-full flex-col">
+        <div className="border-base flex w-full flex-col rounded-lg border">
           {TL_LANGS.map(({ text, value }, index) => (
             <Label
               className={cn(
-                "flex min-w-[18rem] w-full justify-between items-center gap-4 px-4 py-4",
+                "flex min-w-[18rem] w-full justify-between items-center gap-4 px-4 py-4 hover:cursor-pointer",
                 {
                   "bg-base-4": index % 2,
                 },

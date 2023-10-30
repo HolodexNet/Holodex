@@ -1,7 +1,7 @@
 import { defaultOrgs } from "@/store/org";
-import { UseQueryOptions, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-export function useOrgs(config?: UseQueryOptions<Org[], Error>) {
+export function useOrgs(config?: CommonQueryConfig) {
   return useQuery<Org[], Error>({
     queryKey: ["orgs"],
     queryFn: async () =>

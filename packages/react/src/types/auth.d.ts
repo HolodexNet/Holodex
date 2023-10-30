@@ -11,3 +11,8 @@ interface User {
   yt_channel_key: string | null;
   jwt?: string;
 }
+
+interface RefreshUser {
+  user: User;
+  jwt: string;
+}

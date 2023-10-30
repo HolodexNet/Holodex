@@ -47,7 +47,6 @@ export function Home() {
       max_upcoming_hours: 1,
       paginated: true,
       limit: 32,
-      lang: [`${currentLang.short}`],
     },
     {
       refetchInterval: 1000 * 60 * 5,
@@ -68,7 +67,7 @@ export function Home() {
       max_upcoming_hours: 1,
       paginated: true,
       limit: 32,
-      lang: [`${currentLang.short}`],
+      lang: [`${currentLang.value}`],
     },
     {
       refetchInterval: 1000 * 60 * 5,
@@ -96,7 +95,7 @@ export function Home() {
   useEffect(() => {
     console.log(`tab changed ${tab}`);
     searchParams.set("tab", tab);
-    setSearchParams(searchParams);
+    setSearchParams(searchParams, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, tab]);
 
@@ -108,18 +107,18 @@ export function Home() {
       defaultValue={tab}
       onValueChange={setTab}
     >
-      <TabsList className="z-20 flex w-full justify-start overflow-x-auto overflow-y-hidden rounded-none bg-base-2">
+      <TabsList className="bg-base-2 z-20 flex w-full justify-start overflow-x-auto overflow-y-hidden rounded-none">
         <TabsTrigger className="text-lg" value="live">
           <Trans
             i18nKey="views.home.liveOrUpcomingHeading"
             components={{
               liveCount: (
-                <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
+                <span className="bg-secondary-5 mx-1 rounded-sm p-1 text-sm">
                   {live?.filter(({ status }) => status === "live").length}
                 </span>
               ),
               upcomingCount: (
-                <span className="ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
+                <span className="bg-secondary-5 ml-1 rounded-sm p-1 text-sm">
                   {live?.filter(({ status }) => status === "upcoming").length}
                 </span>
               ),

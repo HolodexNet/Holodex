@@ -6,7 +6,6 @@ import { useAtom, useAtomValue } from "jotai";
 import { useSetAtom } from "jotai/react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { SearchBar } from "./searchbar/SearchBar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -14,6 +13,7 @@ import {
   DropdownMenuItem,
 } from "@/shadcn/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+import { SearchBar } from "./searchbar/components/SearchBar";
 
 interface HeaderProps
   extends React.DetailedHTMLProps<
@@ -31,7 +31,7 @@ export function Header({ id }: HeaderProps) {
   const { logout } = useAuth();
 
   return (
-    <header id={id} className="z-40 flex items-center gap-4 bg-base-2 px-2">
+    <header id={id} className="bg-base-2 z-40 flex items-center gap-4 px-2">
       <Button
         size="icon"
         variant="ghost"
@@ -41,11 +41,11 @@ export function Header({ id }: HeaderProps) {
         <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
       <div className="hidden grow md:flex" />
-      <SearchBar className="max-w-lg" />
+      <SearchBar className="mt-3 max-w-lg self-start" />
       <Button
         size="icon"
         variant="ghost"
-        className="-ml-3 p-0 text-base-9"
+        className="text-base-9 -ml-3 p-0"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:magnifying-glass h-full text-xl" />
@@ -53,7 +53,7 @@ export function Header({ id }: HeaderProps) {
       <Button
         size="icon"
         variant="ghost"
-        className="p-0 text-base-9"
+        className="text-base-9 p-0"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:sun-20-solid h-full text-xl " />

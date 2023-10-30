@@ -5,12 +5,29 @@ import { Button } from "@/shadcn/ui/button";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { ChannelMenu } from "./ChannelMenu";
 
-interface ChannelCardProps extends Channel {}
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
+  T,
+  NonOptionalKeys
+> &
+  Partial<Omit<T, NonOptionalKeys>>;
+type PartialChannel = WithNonOptional<
+  Channel,
+  keyof ShortChannel | "subscriber_count" | "video_count"
+>;
+
+interface ChannelCardProps extends PartialChannel {}
 
 export function ChannelCard({
   id,
   name,
+  english_name,
+  org,
+  group,
+  lang,
+  type,
   photo,
   subscriber_count,
   video_count,
@@ -26,10 +43,29 @@ export function ChannelCard({
     () => data?.some((channel) => id === channel.id),
     [data, id],
   );
-
   return (
     // Set min-height because react-virtuoso will break if the height is not fixed
-    <div className="flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4">
+    <div className="bg-base-3 group relative flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md p-4">
+      <ChannelMenu
+        {...{
+          id,
+          name,
+          type,
+          english_name,
+          org,
+          group,
+          lang,
+          photo,
+        }}
+      >
+        <Button
+          size="icon-lg"
+          variant="ghost"
+          className="absolute right-4 top-4 hidden rounded-full group-hover:flex"
+        >
+          <div className="i-heroicons:ellipsis-vertical" />
+        </Button>
+      </ChannelMenu>
       <img
         className="-z-0 -mb-36 mt-4 h-32 w-32 rounded-full opacity-20 blur-2xl saturate-150"
         src={photo ?? ""}
@@ -39,12 +75,12 @@ export function ChannelCard({
         {name}
       </div>
       <div className="flex flex-col items-center">
-        <div className="whitespace-nowrap text-sm text-base-11">
+        <div className="text-base-11 whitespace-nowrap text-sm">
           {t("component.channelInfo.subscriberCount", {
             n: formatCount(subscriber_count ?? "0"),
           })}
         </div>
-        <div className="flex flex-wrap justify-center gap-x-1 gap-y-0 text-sm text-base-11">
+        <div className="text-base-11 flex flex-wrap justify-center gap-x-1 gap-y-0 text-sm">
           <span className="whitespace-nowrap">
             {t("component.channelInfo.videoCount", { 0: video_count ?? 0 })}
           </span>
@@ -64,14 +100,15 @@ export function ChannelCard({
         className="w-full"
         variant={isInFavorite ? "outline" : "secondary"}
         disabled={mutateLoading}
-        onClick={() =>
+        onClick={() => {
           mutate([
             {
               op: isInFavorite ? "remove" : "add",
               channel_id: id,
             },
-          ])
-        }
+          ]);
+          console.log(isInFavorite);
+        }}
       >
         {isInFavorite ? (
           <div className="i-heroicons:heart-solid" />

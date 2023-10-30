@@ -1,5 +1,5 @@
 import React from "react";
-import { langs } from "@/lib/i18n";
+import { CLIPPER_LANGS } from "@/lib/consts";
 import { currentLangAtom } from "@/store/i18n";
 import {
   Command,
@@ -21,6 +21,7 @@ export const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useAtom(currentLangAtom);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
+  console.log(currentLang);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -30,8 +31,8 @@ export const LanguageSelector = () => {
           size="lg"
           aria-expanded={open}
         >
-          {langs.find((lang) => lang.short === currentLang.short)?.display ||
-            t("Select Language...")}
+          {CLIPPER_LANGS.find((lang) => lang.value === currentLang.value)
+            ?.text || t("Select Language...")}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -41,9 +42,9 @@ export const LanguageSelector = () => {
           <CommandList>
             <CommandEmpty>{t("No organization found.")}</CommandEmpty>
             <CommandGroup>
-              {langs.map((lang) => (
+              {CLIPPER_LANGS.map((lang) => (
                 <CommandItem
-                  key={lang.val}
+                  key={lang.text}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
                     setCurrentLang(lang);
@@ -53,10 +54,10 @@ export const LanguageSelector = () => {
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === lang.short ? "opacity-100" : "opacity-0",
+                      value === lang.value ? "opacity-100" : "opacity-0",
                     )}
                   />
-                  {lang.display}
+                  {lang.text}
                 </CommandItem>
               ))}
             </CommandGroup>

@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 
 interface SearchAutoCompleteParams {
   q?: string;
-  t?: ChannelType;
+  t?: SearchAutoCompleteType[] | SearchAutoCompleteType;
   n?: number;
 }
 

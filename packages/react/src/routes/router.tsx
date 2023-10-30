@@ -9,6 +9,10 @@ import React from "react";
 const Login = React.lazy(() => import("./login"));
 const Settings = React.lazy(() => import("./settings"));
 const SettingsLang = React.lazy(() => import("./settings/lang"));
+const SettingsTheme = React.lazy(() => import("./settings/theme"));
+const SettingsUser = React.lazy(() => import("./settings/user"));
+const SettingsHomepage = React.lazy(() => import("./settings/homepage"));
+const SettingsBlocked = React.lazy(() => import("./settings/blocked"));
 const About = React.lazy(() => import("./about"));
 const AboutGeneral = React.lazy(() => import("./about/general"));
 const AboutChangelog = React.lazy(() => import("./about/changelog"));
@@ -18,11 +22,13 @@ const AboutPlaceholder = React.lazy(() => import("./about/placeholder"));
 const AboutExtensions = React.lazy(() => import("./about/extensions"));
 const AboutContact = React.lazy(() => import("./about/contact"));
 const AboutPrivacy = React.lazy(() => import("./about/privacy"));
+const Watch = React.lazy(() => import("./watch"));
 const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 const Channel = React.lazy(() => import("./channel"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
 const Playlists = React.lazy(() => import("./playlists"));
 const Playlist = React.lazy(() => import("./playlist"));
+const Favourites = React.lazy(() => import("./favourites"));
 
 const store = getDefaultStore();
 
@@ -33,7 +39,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "favorites",
-        element: <div>Favorites</div>,
+        element: <Favourites />,
       },
       {
         path: "search",
@@ -88,6 +94,22 @@ const router = createBrowserRouter([
           {
             path: "lang",
             element: <SettingsLang />,
+          },
+          {
+            path: "themes",
+            element: <SettingsTheme />,
+          },
+          {
+            path: "user",
+            element: <SettingsUser />,
+          },
+          {
+            path: "homepage",
+            element: <SettingsHomepage />,
+          },
+          {
+            path: "blocked",
+            element: <SettingsBlocked />,
           },
           // Add children routes similar to above pattern
         ],
@@ -150,7 +172,7 @@ const router = createBrowserRouter([
       },
       {
         path: "watch/:id",
-        element: <div>Watch</div>,
+        element: <Watch />,
       },
       {
         path: "debug",

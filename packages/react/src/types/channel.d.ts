@@ -3,31 +3,31 @@ type ChannelType = "vtuber" | "subber";
 interface ChannelBase {
   id: string;
   name: string;
-  english_name: string | null;
+  english_name?: string;
   type: ChannelType;
-  photo: string | null;
+  photo?: string;
 }
 
 interface Channel extends ChannelBase {
   description: string;
-  org: string | null;
-  suborg: string | null;
-  banner: string | null;
-  thumbnail: string | null;
-  twitter: string | null;
-  twitch: string | null;
-  video_count: string | null;
-  subscriber_count: string | null;
-  view_count: string | null;
-  clip_count: string | null;
-  lang: string | null;
+  org?: string;
+  suborg?: string;
+  banner?: string;
+  thumbnail?: string;
+  twitter?: string;
+  twitch?: string;
+  video_count?: string;
+  subscriber_count?: string;
+  view_count?: string;
+  clip_count?: string;
+  lang?: string;
   published_at: string;
   inactive: boolean;
-  yt_uploads_id: string | null;
-  top_topics: string[] | null;
-  yt_handle: string[] | null;
-  yt_name_history: string[] | null;
-  group: string | null;
+  yt_uploads_id?: string;
+  top_topics?: string[];
+  yt_handle?: string[];
+  yt_name_history?: string[];
+  group?: string;
 }
 
 type FavoriteChannel = Pick<
@@ -46,15 +46,10 @@ type FavoriteChannel = Pick<
   | "video_count"
 >;
 
-enum CHANNEL_TYPES {
-  VTUBER = "vtuber",
-  SUBBER = "subber",
-}
-
 interface ShortChannel extends ChannelBase {
   id: string;
   name: string;
-  type: CHANNEL_TYPES;
+  type: ChannelType;
   english_name?: string;
   org?: string;
   group?: string; //group is likely not existent.

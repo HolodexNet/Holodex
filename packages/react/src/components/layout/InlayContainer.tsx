@@ -19,12 +19,13 @@ export function InlayContainer({ routes }: InlayContainerProps) {
     <div className="flex justify-center gap-4 p-4 md:p-8">
       <div
         className={cn(
-          "bg-base-3 flex h-fit w-full md:w-80 shrink-0 flex-col gap-2 rounded-lg px-2 py-4",
+          "bg-base-3 flex h-fit w-full md:w-72 xl:w-80 shrink-0 flex-col gap-2 rounded-lg px-2 py-4",
           { "hidden md:flex": itemSelected },
         )}
       >
         {routes.map(({ href, icon, label }) => (
           <Button
+            key={href + label}
             asChild
             className="justify-start"
             size="lg"

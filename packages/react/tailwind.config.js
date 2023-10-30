@@ -80,9 +80,19 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      containers: {
+        "screen-sm": "640px",
+        "screen-md": "768px",
+        "screen-lg": "1024px",
+        "screen-xl": "1280px",
+        "screen-2xl": "1536px",
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/container-queries"),
+  ],
 };
 
 module.exports = config;

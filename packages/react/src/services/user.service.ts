@@ -1,4 +1,5 @@
 import { useClient } from "@/hooks/useClient";
+import { tokenAtom, userAtom } from "@/store/auth";
 import {
   UseMutationOptions,
   UseQueryOptions,
@@ -7,6 +8,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
 
 // if you're curious: https://tanstack.com/query/latest/docs/react/typescript#typing-query-options
 const favoriteQuery = queryOptions<FavoriteChannel[]>({
@@ -54,5 +56,23 @@ export function useFavoriteMutation(
       queryClient.setQueryData(favoriteQuery.queryKey, res);
       if (config?.onSuccess) config?.onSuccess(res, ...args);
     },
+  });
+}
+
+export function useUserRefreshMutation() {
+  const client = useClient();
+  const setUser = useSetAtom(userAtom);
+  const setToken = useSetAtom(tokenAtom);
+
+  return useMutation({
+    mutationFn: async () => client.get<RefreshUser>("/api/v2/user/refresh"),
+    onSuccess: ({ user, jwt }) => {
+      setUser(user);
+      setToken(jwt);
+    },
+    // TODO: define onError
+    // onError: (error) => {
+    //   if (error.)
+    // }
   });
 }
