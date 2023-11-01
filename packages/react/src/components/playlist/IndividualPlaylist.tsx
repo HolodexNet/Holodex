@@ -1,6 +1,5 @@
 import {
   usePlaylist,
-  usePlaylistDeleteMutation,
   usePlaylistSaveMutation,
 } from "@/services/playlist.service";
 import { VideoCard } from "@/components/video/VideoCard";
@@ -13,6 +12,7 @@ import { userAtom } from "@/store/auth";
 import { useState } from "react";
 import { useToast } from "@/shadcn/ui/use-toast";
 import { Input } from "@/shadcn/ui/input";
+import DeletePlaylistDialog from "@/components/playlist/DeletePlaylistDialog";
 
 interface Props {
   playlistId?: string;
@@ -27,7 +27,6 @@ export default function IndividualPlaylist({ playlistId }: Props) {
 
   const user = useAtomValue(userAtom);
 
-  const deleteMutation = usePlaylistDeleteMutation();
   const saveMutation = usePlaylistSaveMutation({
     onSuccess: () => {
       setEditedPlaylist(null);
@@ -138,15 +137,15 @@ export default function IndividualPlaylist({ playlistId }: Props) {
               </Button>
               {userOwnsPlaylist ? (
                 <>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={() =>
-                      deleteMutation.mutate({ playlistId: playlist.id })
+                  <DeletePlaylistDialog
+                    triggerElement={
+                      <Button size="icon" variant="ghost">
+                        <span className="i-heroicons:trash-solid" />
+                      </Button>
                     }
-                  >
-                    <span className="i-heroicons:trash-solid" />
-                  </Button>
+                    playlistId={playlist.id}
+                    playlistName={playlist.name}
+                  />
                   <Button
                     disabled={editedPlaylist === null}
                     onClick={() =>

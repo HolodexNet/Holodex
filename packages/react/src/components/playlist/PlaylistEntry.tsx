@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 import { buttonVariants } from "@/shadcn/ui/button.variants";
 import { Link } from "react-router-dom";
 import { Button } from "@/shadcn/ui/button";
-import { usePlaylistDeleteMutation } from "@/services/playlist.service";
 import { userAtom } from "@/store/auth";
+import DeletePlaylistDialog from "@/components/playlist/DeletePlaylistDialog";
 
 export default function PlaylistEntry({
   video_ids,
@@ -19,8 +19,6 @@ export default function PlaylistEntry({
   const { dayjs } = useAtomValue(localeAtom);
   const { t } = useTranslation();
   const user = useAtomValue(userAtom);
-
-  const deleteMutation = usePlaylistDeleteMutation();
 
   return (
     <div className="mt-5 flex gap-5">
@@ -43,13 +41,15 @@ export default function PlaylistEntry({
             <span className="i-heroicons:pencil-square-solid" />
           </Link>
           {user?.id === user_id ? (
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={() => deleteMutation.mutate({ playlistId: id })}
-            >
-              <span className="i-heroicons:trash-solid" />
-            </Button>
+            <DeletePlaylistDialog
+              triggerElement={
+                <Button size="icon" variant="ghost">
+                  <span className="i-heroicons:trash-solid" />
+                </Button>
+              }
+              playlistId={id}
+              playlistName={name}
+            />
           ) : null}
         </div>
       </div>

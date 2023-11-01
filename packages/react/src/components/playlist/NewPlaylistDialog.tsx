@@ -65,7 +65,7 @@ export default function NewPlaylistDialog({ triggerElement, videoIds }: Props) {
     saveMutation.mutate({
       name: data.name,
       video_ids: videoIds,
-      user_id: user?.id,
+      user_id: user.id,
     });
   };
 
