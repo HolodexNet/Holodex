@@ -11,7 +11,7 @@ const stringify = (obj: object) => {
   return new URLSearchParams(
     Object.entries(obj).flatMap(([k, v]) =>
       Array.isArray(v)
-        ? v.map((x) => [k, toStr(x)])
+        ? [[k, v.map(toStr).toString()]]
         : [[k, typeof v === "object" ? JSON.stringify(v) : String(v)]],
     ),
   ).toString();
