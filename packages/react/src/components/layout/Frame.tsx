@@ -64,7 +64,7 @@ export function Frame() {
   return (
     <VideoPortalContext.Provider value={VideoPortalNode}>
       <div className={mainClasses} id="layout">
-        <aside className="z-50 border-r border-r-base">
+        <aside className="border-r-base z-50 border-r">
           <Sidebar id="sidebar" onClose={toggle} />
         </aside>
         <Header id="header" />

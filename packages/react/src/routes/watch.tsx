@@ -19,10 +19,10 @@ export default function Watch() {
   const isTwitch = data?.link?.includes("twitch");
 
   return (
-    <div className="h-full w-full @container">
-      <div className="mx-auto flex w-full max-w-screen-2xl gap-8 p-4 @screen-lg:p-8">
+    <div className="@container h-full w-full">
+      <div className="@screen-lg:p-8 mx-auto flex w-full max-w-screen-2xl gap-8 p-4">
         <div className="flex w-full flex-col gap-4">
-          <div className="flex w-full flex-col overflow-hidden rounded-lg bg-base-4">
+          <div className="bg-base-4 flex w-full flex-col overflow-hidden rounded-lg">
             <OutPortal
               node={VideoPortalNode}
               style={{
@@ -43,7 +43,7 @@ export default function Watch() {
           </div>
           <PlayerChannelCard id={data?.channel.id} />
           {!isTwitch && (
-            <div className="rounded-lg bg-base-4 p-4">
+            <div className="bg-base-4 rounded-lg p-4">
               <div className="whitespace-pre-wrap text-sm">
                 {data?.description}
               </div>
@@ -51,8 +51,8 @@ export default function Watch() {
           )}
         </div>
         {data && (
-          <div className="hidden h-full w-96 shrink-0 @screen-lg:flex">
-            <div className="flex h-[80vh] w-full rounded-lg border border-base">
+          <div className="@screen-lg:flex hidden h-full w-96 shrink-0">
+            <div className="border-base flex h-[80vh] w-full rounded-lg border">
               <LiveChat
                 id={data.id}
                 status={data?.status}

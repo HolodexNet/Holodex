@@ -33,7 +33,7 @@ export function PlayerStats({
   });
 
   return (
-    <div className="flex items-center gap-1 text-base-11">
+    <div className="text-base-11 flex items-center gap-1">
       <Badge variant="outline" className="mr-2 capitalize">
         {topic_id}
       </Badge>

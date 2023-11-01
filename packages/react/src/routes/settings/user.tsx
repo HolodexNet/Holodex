@@ -65,7 +65,7 @@ export default function SettingsUser() {
         />
         <div className="flex flex-col gap-2">
           <div className="text-2xl font-bold md:text-4xl">{user.username}</div>
-          <div className="capitalize text-base-11">
+          <div className="text-base-11 capitalize">
             {user.role} : {user.contribution_count}
             {t("component.mainNav.points")}
           </div>
@@ -172,7 +172,7 @@ export default function SettingsUser() {
       <SettingsItem label={t("views.login.ownedYtChannel")}>
         <div className="ml-auto flex max-w-md flex-col gap-2">
           <Input className="ml-auto max-w-md" value="None on file" disabled />
-          <span className="text-xs text-base-11">
+          <span className="text-base-11 text-xs">
             {t("views.login.futureYtcOwnerMessage")}
           </span>
         </div>

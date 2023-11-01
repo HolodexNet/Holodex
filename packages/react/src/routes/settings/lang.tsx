@@ -36,7 +36,7 @@ export default function SettingsLang() {
                 variant="outline"
                 role="combobox"
                 aria-expanded={langOpen}
-                className="w-fit min-w-[240px] justify-between border-base px-4"
+                className="border-base w-fit min-w-[240px] justify-between px-4"
               >
                 {langs.find(({ val }) => i18n.language === val)?.display}
                 <div className="i-lucide:chevrons-up-down ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -72,7 +72,7 @@ export default function SettingsLang() {
               </Command>
             </PopoverContent>
           </Popover>
-          <div className="flex items-center gap-1 text-xs text-base-11">
+          <div className="text-base-11 flex items-center gap-1 text-xs">
             <div className="i-heroicons:heart" />
             {langs.find(({ val }) => i18n.language === val)?.credit}
           </div>
@@ -92,7 +92,7 @@ export default function SettingsLang() {
         </div>
       </SettingsItem>
       <SettingsItem label={t("views.settings.clipLanguageSelection")}>
-        <div className="flex w-full flex-col rounded-lg border border-base">
+        <div className="border-base flex w-full flex-col rounded-lg border">
           {TL_LANGS.map(({ text, value }, index) => (
             <Label
               className={cn(

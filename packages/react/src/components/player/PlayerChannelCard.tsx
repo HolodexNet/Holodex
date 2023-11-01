@@ -14,18 +14,18 @@ export function PlayerChannelCard({ id }: { id?: string }) {
   console.log(data);
 
   return (
-    <div className="flex w-full items-center gap-4 rounded-lg bg-base-4 px-4 py-2">
+    <div className="bg-base-4 flex w-full items-center gap-4 rounded-lg px-4 py-2">
       <Link className="flex grow gap-4" to={`/channel/${id}`}>
         <img className="h-12 w-12 rounded-full" src={data.photo} />
         <div className="flex flex-col">
           <span className="line-clamp-1 text-lg font-bold">{data?.name}</span>
           {data.org && data.group && (
-            <span className="line-clamp-1 text-sm text-base-11">
+            <span className="text-base-11 line-clamp-1 text-sm">
               {data.org} / {data.group}
             </span>
           )}
           {data.subscriber_count && (
-            <span className="line-clamp-1 text-sm text-base-11">
+            <span className="text-base-11 line-clamp-1 text-sm">
               {t("component.channelInfo.subscriberCount", {
                 n: formatCount(data.subscriber_count),
               })}

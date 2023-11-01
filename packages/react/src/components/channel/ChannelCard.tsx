@@ -45,7 +45,7 @@ export function ChannelCard({
   );
   return (
     // Set min-height because react-virtuoso will break if the height is not fixed
-    <div className="group relative flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4">
+    <div className="bg-base-3 group relative flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md p-4">
       <ChannelMenu
         {...{
           id,
@@ -75,12 +75,12 @@ export function ChannelCard({
         {name}
       </div>
       <div className="flex flex-col items-center">
-        <div className="whitespace-nowrap text-sm text-base-11">
+        <div className="text-base-11 whitespace-nowrap text-sm">
           {t("component.channelInfo.subscriberCount", {
             n: formatCount(subscriber_count ?? "0"),
           })}
         </div>
-        <div className="flex flex-wrap justify-center gap-x-1 gap-y-0 text-sm text-base-11">
+        <div className="text-base-11 flex flex-wrap justify-center gap-x-1 gap-y-0 text-sm">
           <span className="whitespace-nowrap">
             {t("component.channelInfo.videoCount", { 0: video_count ?? 0 })}
           </span>

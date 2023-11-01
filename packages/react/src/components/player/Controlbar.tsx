@@ -12,20 +12,20 @@ export function Controlbar({
   const { t } = useTranslation();
 
   return (
-    <div className="flex items-center gap-2 overflow-x-auto px-4 py-2 text-base-11">
+    <div className="text-base-11 flex items-center gap-2 overflow-x-auto px-4 py-2">
       <Button
-        className="flex shrink-0 @screen-md:hidden"
+        className="@screen-md:hidden flex shrink-0"
         size="icon"
         variant="ghost"
         onClick={() => navigate(-1)}
       >
         <div className="i-heroicons:arrow-left" />
       </Button>
-      <Button className="flex @screen-lg:hidden" variant="ghost">
+      <Button className="@screen-lg:hidden flex" variant="ghost">
         <div className="i-heroicons:chat-bubble-bottom-center-text" />
         TL
       </Button>
-      <Button className="flex @screen-lg:hidden" variant="ghost">
+      <Button className="@screen-lg:hidden flex" variant="ghost">
         <div className="i-heroicons:chat-bubble-left-right" />
         Chat
       </Button>

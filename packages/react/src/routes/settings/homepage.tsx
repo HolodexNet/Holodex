@@ -73,7 +73,7 @@ export default function SettingsHomepage() {
     <div className="flex flex-col p-2 md:p-4">
       <SettingsItem label={t("views.settings.defaultPage")}>
         <RadioGroup
-          className="flex w-full flex-col gap-0 overflow-hidden rounded-lg border border-base"
+          className="border-base flex w-full flex-col gap-0 overflow-hidden rounded-lg border"
           value={defaultOpen}
           onValueChange={(val: "Home" | "Favorites") => setDefaultOpen(val)}
         >
@@ -141,7 +141,7 @@ export default function SettingsHomepage() {
         </div>
       </SettingsItem>
       <SettingsItem label={t("views.settings.hideFeaturesLabel")}>
-        <div className="flex w-full flex-col rounded-lg border border-base">
+        <div className="border-base flex w-full flex-col rounded-lg border">
           {hideFeatures.map(({ label, value, onChange }, index) => (
             <Label
               className={cn(

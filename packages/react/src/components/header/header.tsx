@@ -31,7 +31,7 @@ export function Header({ id }: HeaderProps) {
   const { logout } = useAuth();
 
   return (
-    <header id={id} className="z-40 flex items-center gap-4 bg-base-2 px-2">
+    <header id={id} className="bg-base-2 z-40 flex items-center gap-4 px-2">
       <Button
         size="icon"
         variant="ghost"
@@ -45,7 +45,7 @@ export function Header({ id }: HeaderProps) {
       <Button
         size="icon"
         variant="ghost"
-        className="-ml-3 p-0 text-base-9"
+        className="text-base-9 -ml-3 p-0"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:magnifying-glass h-full text-xl" />
@@ -53,7 +53,7 @@ export function Header({ id }: HeaderProps) {
       <Button
         size="icon"
         variant="ghost"
-        className="p-0 text-base-9"
+        className="text-base-9 p-0"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:sun-20-solid h-full text-xl " />

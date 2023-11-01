@@ -3,7 +3,7 @@ import { Button } from "@/shadcn/ui/button";
 import { Link, useLinkClickHandler, useNavigate } from "react-router-dom";
 import { useSeconds } from "use-seconds";
 import { VideoMenu } from "./VideoMenu";
-import { cn } from "@/lib/utils";
+import { cn, makeYtThumbnailUrl } from "@/lib/utils";
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useAtomValue } from "jotai";
@@ -72,15 +72,7 @@ export function VideoCard({
     () =>
       (() => {
         if (type === "placeholder") return thumbnail;
-        switch (size) {
-          case "sm":
-            return `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
-          case "md":
-            return `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
-          case "lg":
-          default:
-            return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-        }
+        return makeYtThumbnailUrl(id, size);
       })(),
     [type, thumbnail, id, size],
   );
@@ -168,12 +160,12 @@ export function VideoCard({
               id="channelLink"
               onClick={(e) => e.stopPropagation()}
               to={`/channel/${channel?.id}`}
-              className="line-clamp-1 text-xs text-base-11 hover:text-base-12 md:text-sm"
+              className="text-base-11 hover:text-base-12 line-clamp-1 text-xs md:text-sm"
             >
               {channel?.name}
             </Link>
             {status === "live" && (
-              <div className="flex gap-1 text-xs text-base-11 md:text-sm">
+              <div className="text-base-11 flex gap-1 text-xs md:text-sm">
                 <span className="text-red-500">
                   {t("component.videoCard.liveNow")}
                 </span>
@@ -192,7 +184,7 @@ export function VideoCard({
             {(type === "placeholder" || status === "upcoming") &&
               status !== "live" &&
               start_scheduled && (
-                <span className="line-clamp-1 text-xs text-base-11 md:text-sm">
+                <span className="text-base-11 line-clamp-1 text-xs md:text-sm">
                   {t("time.diff_future_date", {
                     0: dayjs(start_scheduled).fromNow(false),
                     1: dayjs(start_scheduled).format("hh:mm A"),
@@ -200,7 +192,7 @@ export function VideoCard({
                 </span>
               )}
             {status === "past" && available_at && (
-              <span className="line-clamp-1 text-xs text-base-11 md:text-sm">
+              <span className="text-base-11 line-clamp-1 text-xs md:text-sm">
                 {t("time.distance_past_date", {
                   0: dayjs(available_at).fromNow(false),
                 })}
@@ -302,14 +294,14 @@ export function VideoCard({
                       : (e) => e.stopPropagation()
                   }
                 >
-                  <div className="line-clamp-1 text-xs text-base-11 hover:text-base-12 md:text-sm">
+                  <div className="text-base-11 hover:text-base-12 line-clamp-1 text-xs md:text-sm">
                     {channel.name}
                   </div>
                 </Link>
               )}
               <div className="flex text-xs md:text-sm">
                 {status === "live" && (
-                  <div className="flex gap-1 text-base-11">
+                  <div className="text-base-11 flex gap-1">
                     <span className="text-red-500">
                       {t("component.videoCard.liveNow")}
                     </span>
