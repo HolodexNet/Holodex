@@ -76,7 +76,8 @@ $responsive-breakpoint: 768px;
 
   > main {
     grid-area: content;
-    overflow-y: auto;
+    // disabling for now so we can use position sticky
+    // overflow-y: auto;
   }
 
   > footer {

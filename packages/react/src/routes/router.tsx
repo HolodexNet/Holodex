@@ -26,6 +26,8 @@ const Watch = React.lazy(() => import("./watch"));
 const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 const Channel = React.lazy(() => import("./channel"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
+const Playlists = React.lazy(() => import("./playlists"));
+const Playlist = React.lazy(() => import("./playlist"));
 const Favourites = React.lazy(() => import("./favourites"));
 
 const store = getDefaultStore();
@@ -114,7 +116,11 @@ const router = createBrowserRouter([
       },
       {
         path: "playlists",
-        element: <div>Playlists</div>,
+        element: <Playlists />,
+      },
+      {
+        path: "playlist/:id",
+        element: <Playlist />,
       },
       {
         path: "about",

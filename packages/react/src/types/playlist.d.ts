@@ -22,6 +22,7 @@ interface PlaylistVideo {
   type: VideoType;
   available_at: string;
   published_at: string;
+  channel: ShortChannel;
 }
 
 interface PlaylistInclude {
