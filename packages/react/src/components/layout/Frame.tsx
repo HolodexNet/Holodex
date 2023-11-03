@@ -5,7 +5,13 @@ import {
   createHtmlPortalNode,
 } from "react-reverse-portal";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { Suspense, createContext, useEffect, useMemo } from "react";
+import React, {
+  Suspense,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import {
   isFloatingAtom,
@@ -25,6 +31,8 @@ import { ErrorFallback } from "../common/ErrorFallback";
 import { ErrorBoundary } from "react-error-boundary";
 import { Loading } from "../common/Loading";
 import ReactPlayer from "react-player";
+import { MiniPlayer } from "../player/MiniPlayer";
+import { currentVideoAtom, miniPlayerAtom } from "@/store/player";
 
 export const VideoPortalContext = createContext<HtmlPortalNode>(
   createHtmlPortalNode(),
@@ -37,6 +45,7 @@ export function Frame() {
   const resize = useSetAtom(onResizeAtom);
   const dark = useAtomValue(darkAtom);
   const org = useAtomValue(orgAtom);
+  const miniPlayer = useAtomValue(miniPlayerAtom);
 
   useEffect(() => {
     window.addEventListener("resize", resize);
@@ -49,7 +58,7 @@ export function Frame() {
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
   // console.log(fs);
 
-  if (location.pathname === "/") return <Navigate to={`/org/${org}`} />;
+  if (location.pathname === "/") return <Navigate to={`/org/${org}`} replace />;
 
   const mainClasses = clsx({
     "mobile-footer": isMobile,
@@ -76,11 +85,42 @@ export function Frame() {
           </ErrorBoundary>
         </main>
         {isMobile && <footer className="">Footer</footer>}
-        <InPortal node={VideoPortalNode}>
-          <ReactPlayer />
-        </InPortal>
+        <VideoPortalContainer />
+        {miniPlayer && <MiniPlayer />}
         <Toaster />
       </div>
     </VideoPortalContext.Provider>
   );
 }
+
+const VideoPortalContainer = React.memo(() => {
+  const portalNode = useContext(VideoPortalContext);
+  const currentVideo = useAtomValue(currentVideoAtom);
+
+  // TODO: Find a way to move the player without reloading iframe
+  // Element.replaceChildren() without reloading iframe is currently not supported
+  // (https://github.com/whatwg/html/issues/5484)
+  // Shadow DOM and slots may help to resolve this (https://github.com/whatwg/html/issues/5484#issuecomment-620481794)
+  return (
+    <InPortal node={portalNode}>
+      <ReactPlayer
+        // pass `key` to prevent flicker issue https://github.com/CookPete/react-player/issues/413#issuecomment-395404630
+        key={currentVideo?.url}
+        style={{
+          aspectRatio: "16 / 9",
+        }}
+        width="100%"
+        height="fit-content"
+        url={currentVideo?.url}
+        controls
+        config={{
+          youtube: {
+            playerVars: {
+              origin: window.origin,
+            },
+          },
+        }}
+      />
+    </InPortal>
+  );
+});

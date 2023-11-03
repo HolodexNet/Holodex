@@ -15,10 +15,12 @@
     "prepare": "cd ..\\.. && husky install packages\\react\\.husky"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
     "@hookform/resolvers": "^3.3.2",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-context-menu": "^2.1.5",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -52,6 +54,7 @@
     "i18next-icu": "^2.3.0",
     "i18next-resources-to-backend": "^1.1.4",
     "jotai": "^2.4.3",
+    "jotai-devtools": "^0.7.0",
     "lucide-react": "^0.284.0",
     "oauth-open": "^1.0.4",
     "react": "^18.2.0",

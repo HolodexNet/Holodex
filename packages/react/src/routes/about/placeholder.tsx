@@ -75,9 +75,12 @@ export default function AboutPlaceholder() {
     },
   });
 
-  const { data } = useVideo<PlaceholderVideo>(id, {
-    enabled: type === "existing" && !!id,
-  });
+  const { data } = useVideo<PlaceholderVideo>(
+    { id },
+    {
+      enabled: type === "existing" && !!id,
+    },
+  );
 
   const { mutate } = usePlaceholderMutation();
 

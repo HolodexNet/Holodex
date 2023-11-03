@@ -16,11 +16,11 @@ type VideoIncludeParam =
 interface VideoRef {
   id: string;
   lang?: string;
-  type: VIDEO_TYPES;
+  type: VideoType;
   title: string;
-  status: VIDEO_STATUSES;
+  status: VideoStatus;
   channel: ShortChannel;
-  available_at?: Date | number;
+  available_at?: Date | number | string;
   duration?: number;
 }
 
@@ -44,20 +44,16 @@ interface VideoBase extends VideoRef {
 
 interface Video extends VideoBase {
   songs: number;
-  clips: Clip[];
-  sources: Clip[];
-  refers: Clip[];
-  simulcasts: Clip[];
-  mentions: ChannelBase[];
-  comments: CommentBase[];
-  recommendations: VideoBase[];
+  clips?: Clip[];
+  same_source_clips?: Clip[];
+  sources?: Clip[];
+  refers?: Clip[];
+  simulcasts?: Clip[];
+  mentions?: ChannelBase[];
+  comments?: CommentBase[];
+  recommendations?: VideoBase[];
 }
 
-enum VIDEO_TYPES {
-  CLIP = "clip",
-  STREAM = "stream",
-  PLACEHOLDER = "placeholder",
-}
 enum RELATIONSHIP_TYPES {
   REFER = "refer",
   SIMULCAST = "simulcast",
@@ -72,13 +68,6 @@ enum CHAT_SOURCES {
   YOUTUBE = "youtube",
   MCHAD = "MChad",
   USER = "user",
-}
-enum VIDEO_STATUSES {
-  NEW = "new",
-  LIVE = "live",
-  UPCOMING = "upcoming",
-  PAST = "past",
-  MISSING = "missing",
 }
 
 enum PLACEHOLDER_TYPES {

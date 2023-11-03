@@ -7,6 +7,7 @@ import "./index.css";
 import "uno.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { DevTools } from "jotai-devtools";
 import "./lib/i18n";
 import dayjs from "dayjs";
 import calendar from "dayjs/plugin/calendar";
@@ -41,6 +42,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools />
+        <DevTools />
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
           <ErrorBoundary
             FallbackComponent={ErrorFallback}

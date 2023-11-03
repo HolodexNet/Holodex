@@ -78,11 +78,11 @@ export function Home() {
   const listCN = useMemo(
     () =>
       cn({
-        "grid grid-cols-1 grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] gap-x-4 gap-y-6":
+        "@container grid grid-cols-1 grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] gap-x-4 gap-y-6":
           cardSize === "lg",
-        "grid grid-cols-2 grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-x-2 gap-y-4":
+        "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-x-2 gap-y-4":
           cardSize === "md",
-        "flex flex-col max-w-screen-lg mx-auto": cardSize === "sm",
+        "@container flex flex-col max-w-screen-lg mx-auto": cardSize === "sm",
       }),
     [cardSize],
   );

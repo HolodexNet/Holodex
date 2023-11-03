@@ -11,10 +11,8 @@ export function PlayerChannelCard({ id }: { id?: string }) {
 
   if (!data) return;
 
-  console.log(data);
-
   return (
-    <div className="flex w-full items-center gap-4 rounded-lg bg-base-4 px-4 py-2">
+    <div className="flex w-full items-center gap-4 rounded-lg bg-base-3 px-4 py-2">
       <Link className="flex grow gap-4" to={`/channel/${id}`}>
         <img className="h-12 w-12 rounded-full" src={data.photo} />
         <div className="flex flex-col">

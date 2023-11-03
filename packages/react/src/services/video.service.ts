@@ -47,15 +47,22 @@ export function useVideos(
   });
 }
 
+interface UseVideoParams {
+  id: string;
+  lang?: string | string[];
+  c?: "1" | "0";
+}
+
 export function useVideo<T = Video>(
-  videoId: string,
+  args: UseVideoParams,
   config?: Omit<UseQueryOptions<T>, "queryKey" | "queryFn">,
 ) {
+  const { id, ...params } = args;
   const client = useClient();
 
   return useQuery<T>({
-    queryKey: ["video", videoId],
-    queryFn: async () => await client<T>(`/api/v2/videos/${videoId}`),
+    queryKey: ["video", id],
+    queryFn: async () => await client<T>(`/api/v2/videos/${id}`, { params }),
     ...config,
   });
 }

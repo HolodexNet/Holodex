@@ -1,6 +1,6 @@
 import { formatCount, formatDuration } from "@/lib/time";
 import { Button } from "@/shadcn/ui/button";
-import { Link, useLinkClickHandler, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSeconds } from "use-seconds";
 import { VideoMenu } from "./VideoMenu";
 import { cn } from "@/lib/utils";
@@ -122,7 +122,7 @@ export function VideoCard({
           <Link
             to={videoHref}
             target={videoTarget}
-            className="relative w-36 shrink-0 overflow-hidden md:w-48"
+            className="relative w-36 shrink-0 overflow-hidden @lg:w-48"
             onClick={
               onThumbnailClick
                 ? (e) => {
@@ -160,7 +160,7 @@ export function VideoCard({
               to={videoHref}
               target={videoTarget}
               onClick={(e) => e.stopPropagation()}
-              className="line-clamp-2 pr-4 text-sm font-bold md:text-lg"
+              className="line-clamp-2 pr-4 text-sm font-bold @lg:text-lg"
             >
               {title}
             </Link>
@@ -168,12 +168,12 @@ export function VideoCard({
               id="channelLink"
               onClick={(e) => e.stopPropagation()}
               to={`/channel/${channel?.id}`}
-              className="line-clamp-1 text-xs text-base-11 hover:text-base-12 md:text-sm"
+              className="line-clamp-1 text-xs text-base-11 hover:text-base-12 @lg:text-sm"
             >
               {channel?.name}
             </Link>
             {status === "live" && (
-              <div className="flex gap-1 text-xs text-base-11 md:text-sm">
+              <div className="flex gap-1 text-xs text-base-11 @lg:text-sm">
                 <span className="text-red-500">
                   {t("component.videoCard.liveNow")}
                 </span>
@@ -192,7 +192,7 @@ export function VideoCard({
             {(type === "placeholder" || status === "upcoming") &&
               status !== "live" &&
               start_scheduled && (
-                <span className="line-clamp-1 text-xs text-base-11 md:text-sm">
+                <span className="line-clamp-1 text-xs text-base-11 @lg:text-sm">
                   {t("time.diff_future_date", {
                     0: dayjs(start_scheduled).fromNow(false),
                     1: dayjs(start_scheduled).format("hh:mm A"),
@@ -200,7 +200,7 @@ export function VideoCard({
                 </span>
               )}
             {status === "past" && available_at && (
-              <span className="line-clamp-1 text-xs text-base-11 md:text-sm">
+              <span className="line-clamp-1 text-xs text-base-11 @lg:text-sm">
                 {t("time.distance_past_date", {
                   0: dayjs(available_at).fromNow(false),
                 })}
