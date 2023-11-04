@@ -21,3 +21,19 @@ export function makeYtThumbnailUrl(id: string, size: VideoCardSize) {
       return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
   }
 }
+
+export function debounce<T extends (...args: unknown[]) => unknown>(
+  func: T,
+  wait?: number,
+  immediate?: boolean,
+) {
+  let timeout: NodeJS.Timeout | undefined;
+  return function (...args: unknown[]) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      timeout = undefined;
+      if (!immediate) func.apply({}, args);
+    }, wait);
+    if (immediate && !timeout) func.apply({}, args);
+  };
+}

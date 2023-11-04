@@ -14,7 +14,7 @@ export function PlayerDescription({
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
   return (
-    <div className="flex flex-col gap-2 rounded-lg bg-base-3 p-4">
+    <div className="align-start flex flex-col gap-2 rounded-lg bg-base-3 p-4">
       <div
         className={cn("whitespace-pre-wrap text-sm", {
           "line-clamp-3": !isExpanded,
@@ -23,11 +23,7 @@ export function PlayerDescription({
         {description}
       </div>
       {description.split(/\r\n|\r|\n/).length > lines && (
-        <Button
-          className="w-full"
-          variant="outline"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
+        <Button variant="ghost" onClick={() => setIsExpanded(!isExpanded)}>
           {isExpanded ? "Show Less" : "Show More"}
         </Button>
       )}

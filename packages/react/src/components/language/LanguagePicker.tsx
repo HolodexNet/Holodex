@@ -1,6 +1,6 @@
 import React from "react";
 import { CLIPPER_LANGS } from "@/lib/consts";
-import { currentLangAtom } from "@/store/i18n";
+import { clipLangAtom } from "@/store/i18n";
 import {
   Command,
   CommandInput,
@@ -18,10 +18,10 @@ import { t } from "i18next";
 import { cn } from "@/lib/utils";
 
 export const LanguageSelector = () => {
-  const [currentLang, setCurrentLang] = useAtom(currentLangAtom);
+  const [currentLang, setCurrentLang] = useAtom(clipLangAtom);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-  console.log(currentLang);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

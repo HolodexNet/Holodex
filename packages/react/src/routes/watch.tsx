@@ -6,6 +6,7 @@ import { PlayerChannelCard } from "@/components/player/PlayerChannelCard";
 import { PlayerDescription } from "@/components/player/PlayerDescription";
 import { PlayerRecommendations } from "@/components/player/PlayerRecommendations";
 import { PlayerStats } from "@/components/player/PlayerStats";
+import { TLChat } from "@/components/tldex/TLChat";
 import { cn } from "@/lib/utils";
 import { useVideo } from "@/services/video.service";
 import {
@@ -13,7 +14,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/shadcn/ui/collapsible";
-import { currentLangAtom } from "@/store/i18n";
+import { clipLangAtom } from "@/store/i18n";
 import { currentVideoAtom, miniPlayerAtom } from "@/store/player";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
@@ -23,9 +24,9 @@ import { useParams } from "react-router-dom";
 export default function Watch() {
   const VideoPortalNode = useContext(VideoPortalContext);
   const { id } = useParams();
-  const { value: currentLang } = useAtomValue(currentLangAtom);
+  const { value: clipLang } = useAtomValue(clipLangAtom);
   const { data, isSuccess } = useVideo<PlaceholderVideo>(
-    { id: id!, lang: currentLang, c: "1" },
+    { id: id!, lang: clipLang, c: "1" },
     {
       enabled: !!id,
       refetchInterval: 1000 * 60 * 3,
@@ -40,6 +41,10 @@ export default function Watch() {
 
   useLayoutEffect(() => {
     setMiniPlayer(false);
+    setCurrentVideo((curr) => ({
+      ...curr,
+      url: `https://youtu.be/${id}`,
+    }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -79,17 +84,19 @@ export default function Watch() {
             <PlayerRecommendations {...data} />
           </div>
         </div>
-        <div className="hidden h-full w-96 shrink-0 flex-col gap-4 @screen-lg:flex">
+        <div className="hidden w-96 shrink-0 flex-col gap-4 @screen-lg:flex">
           {(data?.type === "stream" || data?.status === "live") && (
             <div
               className={cn(
                 "bg-base-3 border-base flex w-full flex-col rounded-lg border",
-                { "h-[80vh]": chatOpen || tlOpen },
+                { "h-[80vh] max-h-[80vh]": chatOpen || tlOpen },
               )}
             >
               <Collapsible
                 open={chatOpen}
-                className="flex h-full w-full flex-col"
+                className={cn("flex flex-col", {
+                  grow: chatOpen,
+                })}
               >
                 <CollapsibleTrigger asChild>
                   <div
@@ -109,17 +116,26 @@ export default function Watch() {
                   />
                 </CollapsibleContent>
               </Collapsible>
-              <Collapsible>
+              <Collapsible
+                className={cn("flex flex-col", {
+                  grow: tlOpen,
+                })}
+              >
                 <CollapsibleTrigger asChild>
                   <div
                     role="button"
-                    className="flex w-full px-4 py-2"
+                    className="flex px-4 py-2"
                     onClick={() => setTLOpen(!tlOpen)}
                   >
                     {tlOpen ? "Close TL" : "Open TL"}
                   </div>
                 </CollapsibleTrigger>
-                <CollapsibleContent asChild></CollapsibleContent>
+                <CollapsibleContent asChild>
+                  <TLChat
+                    videoId={data.id}
+                    isArchive={data.status === "past"}
+                  />
+                </CollapsibleContent>
               </Collapsible>
             </div>
           )}

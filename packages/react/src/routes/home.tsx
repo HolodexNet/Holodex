@@ -17,8 +17,8 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { VirtuosoGrid } from "react-virtuoso";
-import { currentLangAtom } from "@/store/i18n";
-import { LanguageSelector } from "@/components/languae/languagePicker";
+import { clipLangAtom } from "@/store/i18n";
+import { LanguageSelector } from "@/components/language/LanguagePicker";
 
 export function Home() {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export function Home() {
     { org, type: ["placeholder", "stream"], include: ["mentions"] },
     { refetchInterval: 1000 * 60 * 5, enabled: tab === "live" },
   );
-  const [currentLang] = useAtom(currentLangAtom);
+  const clipLang = useAtomValue(clipLangAtom);
 
   const {
     data: archives,
@@ -67,7 +67,7 @@ export function Home() {
       max_upcoming_hours: 1,
       paginated: true,
       limit: 32,
-      lang: [`${currentLang.value}`],
+      lang: [`${clipLang.value}`],
     },
     {
       refetchInterval: 1000 * 60 * 5,
