@@ -4,8 +4,10 @@ import { tldexStateAtom } from "@/store/tldex";
 import { roomToLang, roomToVideoID, toParsedMessage } from "@/lib/socket";
 import { roomsAtom, videoToRoomAtom } from "@/store/chat";
 import { useEffect } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useChatDB(roomId: RoomIDString) {
+  const queryClient = useQueryClient();
   const client = useClient();
   const store = useStore();
   const tldexState = useAtomValue(tldexStateAtom);
@@ -13,6 +15,30 @@ export function useChatDB(roomId: RoomIDString) {
   const [videoToRoom, setVideoToRoom] = useAtom(
     videoToRoomAtom(roomToVideoID(roomId)),
   );
+  const videoId = roomToVideoID(roomId);
+  const queryKey = ["video", videoId, "TLChat"];
+
+  const { data: messages } = useQuery({
+    queryKey,
+    queryFn: async () => {
+      console.log("[Load message] room:", room, "partial:", 30);
+
+      return (
+        await client.get<TLDexMessage[]>(`/api/v2/videos/${videoId}/chats`, {
+          params: {
+            lang: roomToLang(roomId),
+            verified: tldexState.liveTlShowVerified,
+            moderator: tldexState.liveTlShowModerator,
+            vtuber: tldexState.liveTlShowVtuber,
+            limit: 30,
+            // ...(prior && {
+            //   before: prior,
+            // }),
+          },
+        })
+      ).map((message) => toParsedMessage(message, videoId));
+    },
+  });
 
   useEffect(() => {
     setVideoToRoom({
@@ -69,12 +95,9 @@ export function useChatDB(roomId: RoomIDString) {
    * @param message the message content.
    */
   function addMessage(message: ParsedMessage) {
-    setRoom((currentRoom) => ({
-      ...currentRoom,
-      messages: [...currentRoom.messages, message].sort(
-        ParsedMessageComparator,
-      ),
-    }));
+    queryClient.setQueryData<ParsedMessage[]>(queryKey, (prev) =>
+      [...(prev ?? []), message].sort(ParsedMessageComparator),
+    );
     // if (!ChatDB.checkArrayIsUnique(this.room as ParsedMessage[])) {
     //   this.rooms.set(
     //     room,
@@ -88,12 +111,9 @@ export function useChatDB(roomId: RoomIDString) {
    * @param messages the messages to add.
    */
   function addMessages(messages: ParsedMessage[]) {
-    setRoom((currentRoom) => ({
-      ...currentRoom,
-      messages: [...currentRoom.messages, ...messages].sort(
-        ParsedMessageComparator,
-      ),
-    }));
+    queryClient.setQueryData<ParsedMessage[]>(queryKey, (prev) =>
+      [...(prev ?? []), ...messages].sort(ParsedMessageComparator),
+    );
     // if (!ChatDB.checkArrayIsUnique(this.room as ParsedMessage[])) {
     //   this.rooms.set(
     //     room,
@@ -117,56 +137,37 @@ export function useChatDB(roomId: RoomIDString) {
     });
   }
 
-  /**
-   *
-   * @param partial how many to load if partially loading.
-   */
-  function loadMessages(partial?: number) {
-    console.log("[Load message] room:", room, "partial:", partial);
-    if (room.state.loading) return;
-    const prior = room?.messages?.[0]?.timestamp;
-
-    const videoId = roomToVideoID(roomId);
-
-    const params = {
-      lang: roomToLang(roomId),
-      verified: tldexState.liveTlShowVerified,
-      moderator: tldexState.liveTlShowModerator,
-      vtuber: tldexState.liveTlShowVtuber,
-      limit: partial,
-      ...(prior && { before: prior }),
-    };
-
-    setRoom((currentRoom) => ({
-      ...currentRoom,
-      state: { loading: true, completed: false },
-    }));
-
-    client
-      .get<TLDexMessage[]>(`/api/v2/videos/${videoId}/chats`, { params })
-      .then((data) => {
-        addMessages(data.map((x) => toParsedMessage(x, videoId)));
-        setRoom((currentRoom) => ({
-          ...currentRoom,
-          state: {
-            completed: data.length !== partial,
-            loading: false,
-          },
-        }));
-      })
-      .catch((e) => {
-        console.error(e);
-        setRoom((currentRoom) => ({
-          ...currentRoom,
-          state: {
-            completed: false,
-            loading: false,
-          },
-        }));
+  const { mutate: loadMessages, isPending } = useMutation<
+    TLDexMessage[],
+    Error,
+    { partial?: number }
+  >({
+    mutationFn: async ({ partial }) => {
+      console.log("[Load message] room:", room, "partial:", partial);
+      const prior = messages?.[0].timestamp;
+      return client.get<TLDexMessage[]>(`/api/v2/videos/${videoId}/chats`, {
+        params: {
+          lang: roomToLang(roomId),
+          verified: tldexState.liveTlShowVerified,
+          moderator: tldexState.liveTlShowModerator,
+          vtuber: tldexState.liveTlShowVtuber,
+          limit: partial,
+          ...(prior && {
+            before: prior,
+          }),
+        },
       });
-  }
+    },
+    onSuccess: (data) => {
+      addMessages(data.map((message) => toParsedMessage(message, videoId)));
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 
   return {
+    messages,
     ParsedMessageComparator,
     ParsedMessageOFFSETComparator,
     sortRoom,
@@ -174,5 +175,6 @@ export function useChatDB(roomId: RoomIDString) {
     addMessages,
     updateRoomElapsed,
     loadMessages,
+    isPending,
   };
 }

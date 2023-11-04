@@ -9,6 +9,7 @@ import { PlayerStats } from "@/components/player/PlayerStats";
 import { TLChat } from "@/components/tldex/TLChat";
 import { cn } from "@/lib/utils";
 import { useVideo } from "@/services/video.service";
+import { Button } from "@/shadcn/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -88,7 +89,7 @@ export default function Watch() {
           {(data?.type === "stream" || data?.status === "live") && (
             <div
               className={cn(
-                "bg-base-3 border-base flex w-full flex-col rounded-lg border",
+                "bg-base-3 border-base flex w-full flex-col rounded-lg border overflow-hidden",
                 { "h-[80vh] max-h-[80vh]": chatOpen || tlOpen },
               )}
             >
@@ -99,13 +100,19 @@ export default function Watch() {
                 })}
               >
                 <CollapsibleTrigger asChild>
-                  <div
-                    role="button"
-                    className="flex w-full px-4 py-2"
+                  <Button
+                    size="lg"
+                    variant="ghost"
+                    className="flex w-full justify-start rounded-none px-4 py-2"
                     onClick={() => setChatOpen(!chatOpen)}
                   >
+                    <div
+                      className={
+                        chatOpen ? "i-heroicons:minus" : "i-heroicons:plus"
+                      }
+                    />
                     {chatOpen ? "Close chat" : "Open chat"}
-                  </div>
+                  </Button>
                 </CollapsibleTrigger>
                 <CollapsibleContent asChild>
                   <LiveChat
@@ -122,19 +129,22 @@ export default function Watch() {
                 })}
               >
                 <CollapsibleTrigger asChild>
-                  <div
-                    role="button"
-                    className="flex px-4 py-2"
+                  <Button
+                    size="lg"
+                    variant="ghost"
+                    className="flex w-full justify-start rounded-none px-4 py-2"
                     onClick={() => setTLOpen(!tlOpen)}
                   >
+                    <div
+                      className={
+                        tlOpen ? "i-heroicons:minus" : "i-heroicons:plus"
+                      }
+                    />
                     {tlOpen ? "Close TL" : "Open TL"}
-                  </div>
+                  </Button>
                 </CollapsibleTrigger>
                 <CollapsibleContent asChild>
-                  <TLChat
-                    videoId={data.id}
-                    isArchive={data.status === "past"}
-                  />
+                  <TLChat videoId={data.id} />
                 </CollapsibleContent>
               </Collapsible>
             </div>

@@ -101,7 +101,7 @@ function RecommendationCollapsible({
         <Button
           size="lg"
           variant="ghost"
-          className="flex w-full cursor-pointer px-2 text-lg font-bold"
+          className="flex w-full cursor-pointer px-4 text-lg font-bold"
           onClick={() => setOpen(!open)}
         >
           <div className={open ? "i-heroicons:minus" : "i-heroicons:plus"} />

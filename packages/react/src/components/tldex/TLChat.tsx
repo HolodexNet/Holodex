@@ -1,41 +1,30 @@
 import { useSocket } from "@/hooks/useSocket";
 import { formatDuration } from "@/lib/time";
 import { cn } from "@/lib/utils";
-import { roomsAtom } from "@/store/chat";
 import { tldexStateAtom } from "@/store/tldex";
 import { useAtomValue } from "jotai";
-import {
-  DetailedHTMLProps,
-  HTMLAttributes,
-  forwardRef,
-  useEffect,
-} from "react";
+import { DetailedHTMLProps, HTMLAttributes, forwardRef } from "react";
 import { Virtuoso } from "react-virtuoso";
 
 interface TLChatProps {
   videoId: string;
-  isArchive: boolean;
 }
 
-export function TLChat({ videoId, isArchive }: TLChatProps) {
+export function TLChat({ videoId }: TLChatProps) {
   const tldexState = useAtomValue(tldexStateAtom);
   const roomID: RoomIDString = `${videoId}/${tldexState.liveTlLang}`;
   const { chatDB } = useSocket(roomID);
-  const { messages } = useAtomValue(roomsAtom(roomID));
-
-  useEffect(() => {
-    chatDB.loadMessages(isArchive ? 0 : 30);
-  }, []);
 
   return (
     <Virtuoso
       components={{ Item: TLChatItem }}
-      className="h-full w-full py-2"
+      className="h-full w-full bg-base-2 py-2"
       initialTopMostItemIndex={{ index: "LAST", align: "end" }}
+      // firstItemIndex={chatDB.messages?.length ? 30 : 0}
       alignToBottom
-      followOutput
-      startReached={() => chatDB.loadMessages(30)}
-      data={messages}
+      followOutput="smooth"
+      startReached={() => chatDB.loadMessages({ partial: 30 })}
+      data={chatDB.messages}
       itemContent={(_, { message, name, video_offset }) => (
         <div className="flex flex-col p-1 px-2">
           <span className="line-clamp-1 whitespace-nowrap text-sm text-base-11">
@@ -59,7 +48,7 @@ const TLChatItem = forwardRef<
 >((props, ref) => (
   <div
     {...props}
-    className={cn(props.className, "border-base-4 border-b-2 last:border-b-0")}
+    className={cn(props.className, "border-base-4 border-b-0 last:border-b-0")}
     ref={ref}
   />
 ));

@@ -25,7 +25,7 @@ export function YTChat({ id, status, channelId, currentTime }: YTChatProps) {
 
   return (
     <iframe
-      className="flex grow rounded-lg"
+      className="flex grow"
       key={src} // prevent push history
       ref={ref}
       src={src}
