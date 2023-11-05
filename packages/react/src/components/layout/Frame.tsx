@@ -32,7 +32,11 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Loading } from "../common/Loading";
 import ReactPlayer from "react-player";
 import { MiniPlayer } from "../player/MiniPlayer";
-import { currentVideoAtom, miniPlayerAtom } from "@/store/player";
+import {
+  currentVideoAtom,
+  miniPlayerAtom,
+  playerRefAtom,
+} from "@/store/player";
 
 export const VideoPortalContext = createContext<HtmlPortalNode>(
   createHtmlPortalNode(),
@@ -94,6 +98,7 @@ export function Frame() {
 }
 
 const VideoPortalContainer = React.memo(() => {
+  const setPlayerRef = useSetAtom(playerRefAtom);
   const portalNode = useContext(VideoPortalContext);
   const currentVideo = useAtomValue(currentVideoAtom);
 
@@ -104,6 +109,7 @@ const VideoPortalContainer = React.memo(() => {
   return (
     <InPortal node={portalNode}>
       <ReactPlayer
+        ref={setPlayerRef}
         // pass `key` to prevent flicker issue https://github.com/CookPete/react-player/issues/413#issuecomment-395404630
         key={currentVideo?.url}
         style={{

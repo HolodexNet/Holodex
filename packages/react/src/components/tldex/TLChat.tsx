@@ -4,6 +4,7 @@ import { cn, getChannelPhoto } from "@/lib/utils";
 import { Badge } from "@/shadcn/ui/badge";
 import { Button } from "@/shadcn/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
+import { playerRefAtom } from "@/store/player";
 import { tldexBlockedAtom, tldexStateAtom } from "@/store/tldex";
 import { useAtom, useAtomValue } from "jotai";
 import { DetailedHTMLProps, HTMLAttributes, forwardRef } from "react";
@@ -56,13 +57,17 @@ function TLChatMessage({
   is_moderator,
   channel_id,
 }: ParsedMessage) {
+  const playerRef = useAtomValue(playerRefAtom);
   const [blocked, setBlocked] = useAtom(tldexBlockedAtom);
   const isBlocked = blocked.includes(name);
 
   return (
-    <div className="flex flex-col p-1 px-2 hover:bg-base-4">
+    <div
+      className="flex flex-col p-1 px-2 hover:cursor-pointer hover:bg-base-4"
+      onClick={() => playerRef?.seekTo(video_offset, "seconds")}
+    >
       <Popover>
-        <PopoverTrigger>
+        <PopoverTrigger onClick={(e) => e.stopPropagation()}>
           <div
             className={cn("group flex items-center gap-2 text-base-11", {
               "text-primary": is_owner,
