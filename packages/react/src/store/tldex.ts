@@ -1,6 +1,9 @@
 import { TLLanguageCode } from "@/lib/consts";
-import { atom } from "jotai";
 import { clipLangAtom } from "./i18n";
+import { atomWithStorage } from "jotai/utils";
+import { atom, getDefaultStore } from "jotai";
+
+const store = getDefaultStore();
 
 export interface TLDexStoreState {
   // whether live TL sticks to the bottom or not
@@ -23,14 +26,11 @@ export interface TLDexStoreState {
   liveTlShowSubtitle: boolean; // Show subtitles on videos
   // hide spoilers or not?
   liveTlHideSpoiler: boolean; // Hide message past current video time
-
-  // blocked liveTL users.
-  liveTlBlocked: string[];
 }
 
-export const tldexStateAtom = atom<TLDexStoreState>((get) => ({
+export const tldexSettngsAtom = atomWithStorage("tldex", {
   liveTlStickBottom: false,
-  liveTlLang: "en" ?? get(clipLangAtom).value,
+  liveTlLang: store.get(clipLangAtom).value,
   liveTlFontSize: 13,
   liveTlShowVerified: true, // show verified messages
   liveTlShowModerator: true, // show moderator messages
@@ -39,5 +39,19 @@ export const tldexStateAtom = atom<TLDexStoreState>((get) => ({
   liveTlWindowSize: 0.3, // Default size, otherwise percentage height
   liveTlShowSubtitle: true, // Show subtitles on videos
   liveTlHideSpoiler: false, // Hide message past current video time
-  liveTlBlocked: [],
+});
+
+export const tldexStateAtom = atom<TLDexStoreState>((get) => ({
+  liveTlStickBottom: false,
+  liveTlLang: get(clipLangAtom).value,
+  liveTlFontSize: 13,
+  liveTlShowVerified: true, // show verified messages
+  liveTlShowModerator: true, // show moderator messages
+  liveTlShowVtuber: true, // show vtuber messages
+  liveTlShowLocalTime: false, // show client local time
+  liveTlWindowSize: 0.3, // Default size, otherwise percentage height
+  liveTlShowSubtitle: true, // Show subtitles on videos
+  liveTlHideSpoiler: false, // Hide message past current video time
 }));
+
+export const tldexBlockedAtom = atomWithStorage<string[]>("tldex-blocked", []);

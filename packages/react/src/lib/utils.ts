@@ -22,6 +22,22 @@ export function makeYtThumbnailUrl(id: string, size: VideoCardSize) {
   }
 }
 
+export function resizeChannelPhoto(photoUrl: string, size: number) {
+  const deviceSize = size; /* * window.devicePixelRatio */
+  const split = photoUrl.split("=s");
+  // try to hit cache by using a common size
+  let adjSize = 48;
+  if (deviceSize < 88 && deviceSize > 55) adjSize = 88;
+  else if (deviceSize <= 55) adjSize = 48;
+  else adjSize = 176;
+  return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
+}
+
+export function getChannelPhoto(channelId: string, size = 100) {
+  const nearest = Math.min(Math.max(Math.ceil(size / 50) * 50, 50), 150);
+  return `/statics/channelImg/${channelId}/${nearest}.png`;
+}
+
 export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait?: number,
