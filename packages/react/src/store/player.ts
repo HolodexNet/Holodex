@@ -14,3 +14,11 @@ export const currentVideoAtom = atomWithStorage<CurrentVideo | null>(
 );
 
 export const miniPlayerAtom = atom(false);
+export const theaterModeAtom = atomWithStorage("theater-mode", false);
+
+export const chatOpenAtom = atomWithStorage("chat-open", true);
+export const tlOpenAtom = atomWithStorage("tl-open", false);
+export const chatPosAtom = atomWithStorage<"left" | "right">(
+  "chat-pos",
+  "right",
+);

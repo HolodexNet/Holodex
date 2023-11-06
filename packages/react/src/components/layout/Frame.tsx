@@ -43,7 +43,13 @@ export const VideoPortalContext = createContext<HtmlPortalNode>(
 );
 
 export function Frame() {
-  const VideoPortalNode = useMemo(() => createHtmlPortalNode(), []);
+  const VideoPortalNode = useMemo(
+    () =>
+      createHtmlPortalNode({
+        attributes: { class: "w-full h-full" },
+      }),
+    [],
+  );
   const location = useLocation();
   const toggle = useSetAtom(toggleSidebarAtom);
   const resize = useSetAtom(onResizeAtom);

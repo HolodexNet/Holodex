@@ -404,6 +404,7 @@ views:
       notifTextErr: UNABLE TO PARSE THE FILE (FILE CORRUPTED?)
       notifTextParsing: Parsing file...
       notifTextErrExt: Unrecognized file extension.
+    addToQueue: Add to queue
   favorites:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on

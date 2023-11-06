@@ -15,7 +15,7 @@ export function TwitchChat({ link }: TwitchChatProps) {
   return (
     <iframe
       key={q}
-      className="flex grow rounded-lg"
+      className="flex grow"
       src={`https://www.twitch.tv/embed/${link.match(
         /twitch.tv\/(.*?)$/,
       )?.[1]}/chat?${q}`}
