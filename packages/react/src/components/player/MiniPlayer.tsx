@@ -20,10 +20,10 @@ export function MiniPlayer() {
           {currentVideo?.title}
         </Link>
         <Link
-          to={`/channel/${currentVideo?.channel.id}`}
+          to={`/channel/${currentVideo?.channel?.id}`}
           className="text-sm text-base-11"
         >
-          {currentVideo?.channel.name}
+          {currentVideo?.channel?.name}
         </Link>
       </div>
     </div>

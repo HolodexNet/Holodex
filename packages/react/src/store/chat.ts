@@ -18,7 +18,7 @@ interface RoomInfo {
   absolute?: number;
 }
 
-export const roomsAtom = atomFamily((roomId) =>
+export const roomsAtom = atomFamily(() =>
   atom<RoomInfo>({
     messages: [],
     state: { completed: false, loading: false },
@@ -27,7 +27,7 @@ export const roomsAtom = atomFamily((roomId) =>
   }),
 );
 
-export const videoToRoomAtom = atomFamily((videoId) =>
+export const videoToRoomAtom = atomFamily(() =>
   atomWithReducer<
     Set<RoomIDString>,
     | { type: "add" | "del"; value: RoomIDString }

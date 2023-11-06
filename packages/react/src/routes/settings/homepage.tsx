@@ -77,7 +77,7 @@ export default function SettingsHomepage() {
           value={defaultOpen}
           onValueChange={(val: "Home" | "Favorites") => setDefaultOpen(val)}
         >
-          {defaultPages.map(({ label, value }, index) => (
+          {defaultPages.map(({ label, value }) => (
             <div
               className={cn("flex items-center text-primary-12 space-x-2 p-4", {
                 "bg-primaryA-4": value === defaultOpen,
