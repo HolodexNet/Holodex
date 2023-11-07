@@ -1,6 +1,5 @@
 import * as React from "react";
 import { DialogProps } from "@radix-ui/react-dialog";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Command as CommandPrimitive } from "cmdk";
 
 import { cn } from "@/lib/utils";
@@ -43,7 +42,8 @@ const CommandInput = React.forwardRef<
     className="flex items-center border-b border-base px-3"
     cmdk-input-wrapper=""
   >
-    <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+    {/* <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" /> */}
+    <div className="i-heroicons:magnifying-glass mr-2 shrink-0 opacity-50" />
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
