@@ -36,12 +36,14 @@ export function ChatCard({ id, status, channel, link }: PlaceholderVideo) {
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent asChild>
-          <LiveChat
-            id={id}
-            status={status}
-            channelId={channel.id}
-            link={link}
-          />
+          <div className="flex grow">
+            <LiveChat
+              id={id}
+              status={status}
+              channelId={channel.id}
+              link={link}
+            />
+          </div>
         </CollapsibleContent>
       </Collapsible>
       <Collapsible
@@ -64,7 +66,9 @@ export function ChatCard({ id, status, channel, link }: PlaceholderVideo) {
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent asChild>
-          <TLChat videoId={id} />
+          <div className="flex grow">
+            <TLChat videoId={id} />
+          </div>
         </CollapsibleContent>
       </Collapsible>
     </div>
