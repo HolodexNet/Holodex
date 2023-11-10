@@ -36,7 +36,7 @@ export function QueueList() {
       </CollapsibleTrigger>
       <CollapsibleContent>
         <div className="flex flex-col py-2">
-          <div className="flex justify-between px-4">
+          <div className="flex justify-between px-4 pb-2">
             <NewPlaylistDialog
               triggerElement={
                 <Button variant="ghost">

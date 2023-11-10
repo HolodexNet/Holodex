@@ -3,6 +3,7 @@ import {
   InlayContainerRoutes,
 } from "@/components/layout/InlayContainer";
 import { useMemo } from "react";
+import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 
 export default function Settings() {
@@ -39,5 +40,12 @@ export default function Settings() {
     [t],
   );
 
-  return <InlayContainer routes={routes} />;
+  return (
+    <>
+      <Helmet>
+        <title>{t("component.mainNav.settings")} - Holodex</title>
+      </Helmet>
+      <InlayContainer routes={routes} />
+    </>
+  );
 }

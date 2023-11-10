@@ -1,11 +1,17 @@
 import { useFavorites } from "@/services/user.service";
 import { ChannelCard } from "@/components/channel/ChannelCard";
 import { VirtuosoGrid } from "react-virtuoso";
+import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 export default function Favorites() {
+  const { t } = useTranslation();
   const { data: favChannels } = useFavorites();
   return (
     <>
+      <Helmet>
+        <title>{t("component.mainNav.favorites")} - Holodex</title>
+      </Helmet>
       <div className="h-full w-full p-4 md:p-8">
         <VirtuosoGrid
           useWindowScroll

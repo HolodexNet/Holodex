@@ -1,5 +1,6 @@
 import { InlayContainer } from "@/components/layout/InlayContainer";
 import { useMemo } from "react";
+import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 export default function About() {
   const { t } = useTranslation();
@@ -50,5 +51,12 @@ export default function About() {
     [t],
   );
 
-  return <InlayContainer routes={routes} />;
+  return (
+    <>
+      <Helmet>
+        <title>{t("component.mainNav.about")} - Holodex</title>
+      </Helmet>
+      <InlayContainer routes={routes} />
+    </>
+  );
 }

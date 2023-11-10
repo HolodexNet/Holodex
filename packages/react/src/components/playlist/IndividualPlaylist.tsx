@@ -15,14 +15,10 @@ import { Input } from "@/shadcn/ui/input";
 import DeletePlaylistDialog from "@/components/playlist/DeletePlaylistDialog";
 
 interface Props {
-  playlistId?: string;
+  playlist: Playlist;
 }
 
-export default function IndividualPlaylist({ playlistId }: Props) {
-  const { data: playlist, status } = usePlaylist(parseInt(playlistId!));
-
-  const { t } = useTranslation();
-
+export default function IndividualPlaylist({ playlist }: Props) {
   const { toast } = useToast();
 
   const user = useAtomValue(userAtom);
@@ -38,14 +34,6 @@ export default function IndividualPlaylist({ playlistId }: Props) {
 
   const [editedPlaylist, setEditedPlaylist] = useState<Playlist | null>(null);
   const [renaming, setRenaming] = useState(false);
-
-  if (status === "pending") {
-    return <div>Loading...</div>;
-  }
-
-  if (status === "error") {
-    return <div>{t("component.apiError.title")}</div>;
-  }
 
   const shiftVideo = (origIdx: number, shift: number) =>
     setEditedPlaylist((prevState) => {
