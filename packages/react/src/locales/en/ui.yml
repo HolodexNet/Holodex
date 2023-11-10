@@ -216,6 +216,8 @@ component:
     searchLabel: Search topics...
     notFound: No topic found
     pickLabel: Pick topics...
+  queue:
+    title: Queue
 views:
   channel:
     video: Videos
@@ -405,6 +407,8 @@ views:
       notifTextParsing: Parsing file...
       notifTextErrExt: Unrecognized file extension.
     addToQueue: Add to queue
+    removeFromQueue: Remove from queue
+    openOnTwitch: Open on Twitch
   favorites:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on

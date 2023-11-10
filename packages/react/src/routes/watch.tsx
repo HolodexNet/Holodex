@@ -6,24 +6,28 @@ import { PlayerChannelCard } from "@/components/player/PlayerChannelCard";
 import { PlayerDescription } from "@/components/player/PlayerDescription";
 import { PlayerRecommendations } from "@/components/player/PlayerRecommendations";
 import { PlayerStats } from "@/components/player/PlayerStats";
+import { QueueList } from "@/components/player/QueueList";
 import { cn } from "@/lib/utils";
 import { useVideo } from "@/services/video.service";
 import { clipLangAtom } from "@/store/i18n";
 import {
   chatOpenAtom,
   chatPosAtom,
-  currentVideoAtom,
+  queueAtom,
   miniPlayerAtom,
   theaterModeAtom,
   tlOpenAtom,
+  currentVideoAtom,
+  QueueVideo,
 } from "@/store/player";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useContext, useEffect, useLayoutEffect } from "react";
 import { OutPortal } from "react-reverse-portal";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 export default function Watch() {
   const VideoPortalNode = useContext(VideoPortalContext);
+  const location = useLocation();
   const { id } = useParams();
   const { value: clipLang } = useAtomValue(clipLangAtom);
   const { data, isSuccess } = useVideo<PlaceholderVideo>(
@@ -33,21 +37,52 @@ export default function Watch() {
       refetchInterval: 1000 * 60 * 3,
     },
   );
-  const setCurrentVideo = useSetAtom(currentVideoAtom);
+  const [currentVideo, setCurrentVideo] = useAtom(currentVideoAtom);
+  const [queue, setQueue] = useAtom(queueAtom);
   const [miniPlayer, setMiniPlayer] = useAtom(miniPlayerAtom);
   const theaterMode = useAtomValue(theaterModeAtom);
   const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
   const [tlOpen, setTLOpen] = useAtom(tlOpenAtom);
   const chatPos = useAtomValue(chatPosAtom);
 
-  const isTwitch = data?.link?.includes("twitch");
+  const isTwitch = location.state?.isTwitch ?? data?.link?.includes("twitch");
 
+  // Preload video frames for better experience
   useLayoutEffect(() => {
-    setMiniPlayer(false);
-    setCurrentVideo((curr) => ({
-      ...curr,
+    const videoPlaceholder: QueueVideo = {
+      id: id!,
       url: `https://youtu.be/${id}`,
-    }));
+      channel_id: "",
+      title: "",
+      description: "",
+      type: "stream",
+      topic_id: null,
+      published_at: null,
+      duration: 0,
+      status: "live",
+      start_scheduled: null,
+      start_actual: null,
+      end_actual: null,
+      live_viewers: null,
+      songcount: 0,
+      channel: {
+        id: "",
+        name: "",
+        type: "vtuber",
+      },
+    };
+    setMiniPlayer(false);
+    setCurrentVideo(videoPlaceholder);
+    if (queue.length)
+      setQueue((q) =>
+        q.some((v) => v.id === id)
+          ? q
+          : q.toSpliced(
+              q.findIndex((q) => q.id === currentVideo?.id),
+              0,
+              videoPlaceholder,
+            ),
+      );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -57,9 +92,17 @@ export default function Watch() {
         ...data,
         url: isTwitch ? data.link : `https://youtu.be/${id}`,
       });
+      if (queue.length)
+        setQueue((q) =>
+          q.toSpliced(
+            q.findIndex((q) => q.id === id),
+            1,
+            { ...data, url: isTwitch ? data.link : `https://youtu.be/${id}` },
+          ),
+        );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess]);
+  }, [isSuccess, id]);
 
   return (
     <div className="flex h-full w-full @container">
@@ -73,7 +116,7 @@ export default function Watch() {
             className={cn("bg-base-3 flex w-full flex-col", [
               theaterMode
                 ? "aspect-video @screen-lg:h-[calc(100dvh_-_var(--header-height))]"
-                : "rounded-lg",
+                : "rounded-lg overflow-hidden",
             ])}
           >
             {!miniPlayer && (
@@ -129,6 +172,7 @@ export default function Watch() {
             "@screen-lg:flex": !theaterMode,
           })}
         >
+          {!!queue.length && <QueueList />}
           {(data?.type === "stream" || data?.status === "live") && (
             <div
               className={cn("border-base rounded-lg border overflow-hidden", {

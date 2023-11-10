@@ -4,7 +4,7 @@ import {
   InPortal,
   createHtmlPortalNode,
 } from "react-reverse-portal";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import React, {
   Suspense,
   createContext,
@@ -21,7 +21,7 @@ import {
   sidebarShouldBeFullscreenAtom,
   isSidebarOpenAtom,
 } from "@/hooks/useFrame";
-import { useAtomValue, useSetAtom } from "jotai/react";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { darkAtom } from "@/hooks/useTheme";
 import { Header } from "@/components/header/header";
 import { Toaster } from "@/shadcn/ui/toaster";
@@ -36,6 +36,7 @@ import {
   currentVideoAtom,
   miniPlayerAtom,
   playerRefAtom,
+  queueAtom,
 } from "@/store/player";
 
 export const VideoPortalContext = createContext<HtmlPortalNode>(
@@ -104,9 +105,12 @@ export function Frame() {
 }
 
 const VideoPortalContainer = React.memo(() => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const setPlayerRef = useSetAtom(playerRefAtom);
   const portalNode = useContext(VideoPortalContext);
-  const currentVideo = useAtomValue(currentVideoAtom);
+  const [currentVideo, setCurrentVideo] = useAtom(currentVideoAtom);
+  const queue = useAtomValue(queueAtom);
 
   // TODO: Find a way to move the player without reloading iframe
   // Element.replaceChildren() without reloading iframe is currently not supported
@@ -129,8 +133,19 @@ const VideoPortalContainer = React.memo(() => {
           youtube: {
             playerVars: {
               origin: window.origin,
+              autoplay: 1,
             },
           },
+        }}
+        onEnded={() => {
+          const nextVideo =
+            queue[queue.findIndex(({ id }) => currentVideo?.id === id) + 1] ??
+            currentVideo;
+          setCurrentVideo(nextVideo);
+          if (location.pathname.startsWith("/watch"))
+            navigate(`/watch/${nextVideo.id}`, {
+              state: { isMinimizable: false },
+            });
         }}
       />
     </InPortal>

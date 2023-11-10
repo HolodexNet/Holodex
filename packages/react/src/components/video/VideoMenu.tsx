@@ -18,9 +18,14 @@ import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import NewPlaylistDialog from "@/components/playlist/NewPlaylistDialog";
+import { useCopyToClipboard } from "usehooks-ts";
+import { useToast } from "@/shadcn/ui/use-toast";
+import { useAtom } from "jotai";
+import { queueAtom } from "@/store/player";
 
-interface VideoMenuProps extends Pick<VideoBase, "id" | "type" | "status"> {
+interface VideoMenuProps extends VideoBase {
   children: ReactNode;
+  url?: string;
 }
 
 export function VideoMenu({
@@ -28,32 +33,59 @@ export function VideoMenu({
   id: videoId,
   type,
   status,
+  url,
+  ...rest
 }: VideoMenuProps) {
+  const { toast } = useToast();
+  const [, copy] = useCopyToClipboard();
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
   const { data, isLoading } = usePlaylistInclude(videoId, { enabled: isOpen });
   const { mutate } = usePlaylistVideoMutation();
+  const [queue, setQueue] = useAtom(queueAtom);
+
+  const isQueued = queue.some(({ id }) => videoId === id);
+  const isTwitch = url?.includes("twitch");
 
   return (
     <DropdownMenu onOpenChange={setIsOpen}>
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
       <DropdownMenuContent onClick={(e) => e.stopPropagation()}>
-        <DropdownMenuItem asChild>
-          <Link
-            className="flex gap-2"
-            to={`https://youtu.be/${videoId}`}
-            target="_blank"
-          >
-            <div className="i-mdi:youtube" />
-            {t("views.settings.redirectModeLabel")}
-          </Link>
+        <DropdownMenuItem
+          className="flex gap-2"
+          onClick={() =>
+            setQueue((q) =>
+              isQueued
+                ? q.filter(({ id }) => videoId !== id)
+                : [...q, { id: videoId, type, status, url, ...rest }],
+            )
+          }
+        >
+          <div
+            className={isQueued ? "i-lucide:list-x" : "i-lucide:list-plus"}
+          />
+          {isQueued
+            ? t("views.watch.removeFromQueue")
+            : t("views.watch.addToQueue")}
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link className="flex gap-2" to={`/watch/${videoId}/edit`}>
-            <div className="i-heroicons:pencil" />
-            {t("component.videoCard.edit")}
-          </Link>
-        </DropdownMenuItem>
+        {url && (
+          <DropdownMenuItem asChild>
+            <Link className="flex gap-2" to={url} target="_blank">
+              <div className={isTwitch ? "i-lucide:twitch" : "i-mdi:youtube"} />
+              {isTwitch
+                ? t("views.watch.openOnTwitch")
+                : t("views.settings.redirectModeLabel")}
+            </Link>
+          </DropdownMenuItem>
+        )}
+        {!isTwitch && (
+          <DropdownMenuItem asChild>
+            <Link className="flex gap-2" to={`/watch/${videoId}/edit`}>
+              <div className="i-heroicons:pencil" />
+              {t("component.videoCard.edit")}
+            </Link>
+          </DropdownMenuItem>
+        )}
         {type !== "clip" && (
           <DropdownMenuItem asChild>
             <Link
@@ -101,7 +133,13 @@ export function VideoMenu({
             </DropdownMenuPortal>
           </DropdownMenuSub>
         </DropdownMenuGroup>
-        <DropdownMenuItem className="flex gap-2">
+        <DropdownMenuItem
+          className="flex gap-2"
+          onClick={() => {
+            copy(`${window.origin}/watch/${videoId}`);
+            toast({ title: t("component.toast.copiedToClipboard") });
+          }}
+        >
           <div className="i-heroicons:link" />
           {t("component.videoCard.copyLink")}
         </DropdownMenuItem>

@@ -1,7 +1,6 @@
 import { formatCount, formatDuration } from "@/lib/time";
 import { Button } from "@/shadcn/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { useSeconds } from "use-seconds";
 import { VideoMenu } from "./VideoMenu";
 import { cn, makeYtThumbnailUrl } from "@/lib/utils";
 import { useCallback, useMemo } from "react";
@@ -57,6 +56,7 @@ export function VideoCard({
   onInfoClick,
   onThumbnailClick,
   onChannelClick,
+  ...rest
 }: VideoCardProps) {
   const { dayjs } = useAtomValue(localeAtom);
   const { t } = useTranslation();
@@ -69,12 +69,12 @@ export function VideoCard({
     [isTwitch, status, link, id],
   );
   const thumbnailSrc = useMemo(
-    () =>
-      (() => {
-        if (type === "placeholder") return thumbnail;
-        return makeYtThumbnailUrl(id, size);
-      })(),
+    () => (type === "placeholder" ? thumbnail : makeYtThumbnailUrl(id, size)),
     [type, thumbnail, id, size],
+  );
+  const externalLink = useMemo(
+    () => (type === "placeholder" ? link : `https://youtu.be/${id}`),
+    [type, link, id],
   );
 
   const videoTarget =
@@ -108,6 +108,95 @@ export function VideoCard({
   );
 
   switch (size) {
+    case "xs":
+      return (
+        <div className="group relative flex gap-4 py-2">
+          <Link
+            to={videoHref}
+            target={videoTarget}
+            className="relative w-28 shrink-0 overflow-hidden @lg:w-36"
+            onClick={
+              onThumbnailClick
+                ? (e) => {
+                    e.preventDefault();
+                    onThumbnailClick(e);
+                  }
+                : undefined
+            }
+          >
+            <img
+              src={thumbnailSrc}
+              className="aspect-video h-full w-full rounded-md object-cover"
+            />
+            {topic_id && (
+              <span className="absolute left-1 top-1 rounded-sm bg-black/80 px-1 text-sm capitalize text-white">
+                {topic_id}
+              </span>
+            )}
+            <VideoCardDuration
+              type={type}
+              status={status}
+              duration={duration}
+              start_actual={start_actual}
+              end_actual={end_actual}
+              link={link}
+              placeholderType={placeholderType}
+            />
+          </Link>
+          <div
+            className="flex flex-col gap-1"
+            onClick={goToVideoClickHandler}
+            onAuxClick={goToVideoAuxClickHandler}
+          >
+            <Link
+              to={videoHref}
+              target={videoTarget}
+              onClick={(e) => e.stopPropagation()}
+              className="line-clamp-2 pr-4 text-sm font-bold @lg:text-lg"
+            >
+              {title}
+            </Link>
+            <Link
+              id="channelLink"
+              onClick={(e) => e.stopPropagation()}
+              to={`/channel/${channel?.id}`}
+              className="line-clamp-1 text-xs text-base-11 hover:text-base-12 @lg:text-sm"
+            >
+              {channel?.name}
+            </Link>
+          </div>
+          <VideoMenu
+            {...{
+              id,
+              type,
+              status,
+              title,
+              topic_id,
+              available_at,
+              duration,
+              start_scheduled,
+              start_actual,
+              end_actual,
+              live_viewers,
+              channel,
+              url: externalLink,
+              ...rest,
+            }}
+          >
+            <Button
+              variant="ghost"
+              size="icon-lg"
+              className="absolute right-0 top-2 hidden rounded-full group-hover:flex"
+              onClickCapture={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <div className="i-heroicons:ellipsis-vertical h-4 w-4" />
+            </Button>
+          </VideoMenu>
+        </div>
+      );
+
     case "sm":
       return (
         <div className="group relative flex gap-4 py-2">
@@ -199,7 +288,24 @@ export function VideoCard({
               </span>
             )}
           </div>
-          <VideoMenu id={id} type={type} status={status}>
+          <VideoMenu
+            {...{
+              id,
+              type,
+              status,
+              title,
+              topic_id,
+              available_at,
+              duration,
+              start_scheduled,
+              start_actual,
+              end_actual,
+              live_viewers,
+              channel,
+              url: externalLink,
+              ...rest,
+            }}
+          >
             <Button
               variant="ghost"
               size="icon-lg"
@@ -336,7 +442,24 @@ export function VideoCard({
                 )}
               </div>
             </div>
-            <VideoMenu id={id} type={type} status={status}>
+            <VideoMenu
+              {...{
+                id,
+                type,
+                status,
+                title,
+                topic_id,
+                available_at,
+                duration,
+                start_scheduled,
+                start_actual,
+                end_actual,
+                live_viewers,
+                channel,
+                url: externalLink,
+                ...rest,
+              }}
+            >
               <Button
                 variant="ghost"
                 size="icon-lg"
@@ -373,7 +496,6 @@ function VideoCardDuration({
   | "placeholderType"
 >) {
   const { t } = useTranslation();
-  const [date] = useSeconds();
 
   const isPremiere = type === "stream" && status === "upcoming" && duration;
 
