@@ -375,17 +375,7 @@ export default {
             // show the dialog
             this.overwriteDialog = true;
         },
-        handleToolbarClick(v) {
-            let video = v;
-            if (video.type === "placeholder") {
-                const twitchChannel = video.link.match(TWITCH_VIDEO_URL_REGEX)?.groups.id;
-                if (!twitchChannel) return;
-                video = {
-                    ...video,
-                    id: twitchChannel,
-                    type: "twitch",
-                };
-            }
+        handleToolbarClick(video) {
             const hasEmptyCell = this.findEmptyCell();
             // more cells needed, increment to next preset with space
             if (!hasEmptyCell) {
@@ -406,7 +396,17 @@ export default {
                 this.tryFillVideo(video);
             }
         },
-        handleVideoClicked(video) {
+        handleVideoClicked(v) {
+            let video = v;
+            if (video.type === "placeholder") {
+                const twitchChannel = video.link.match(TWITCH_VIDEO_URL_REGEX)?.groups.id;
+                if (!twitchChannel) return;
+                video = {
+                    ...video,
+                    id: twitchChannel,
+                    type: "twitch",
+                };
+            }
             if (this.showSelectorForId < -1) {
                 this.handleToolbarClick(video);
                 this.showSelectorForId = -1;
