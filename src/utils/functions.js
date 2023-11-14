@@ -77,7 +77,7 @@ export function getLang(weblang) {
 }
 
 export function getYTLangFromState(state) {
-    const lang = state.settings.lang;
+    const { lang } = state.settings;
     return langConversion[lang] || lang.split("-")[0].toLowerCase();
 }
 
