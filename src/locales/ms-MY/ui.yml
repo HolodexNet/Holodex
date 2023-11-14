@@ -48,6 +48,7 @@ component:
     premiere: TAYANGAN PERDANA
     googleCalendar: Tambahkan ke Kalendar Google
     totalTLs: Jumlah terjemahan sembang langsung
+    totalSongs: Bilangan lagu yang bercap masa
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
     uncertainPlaceholder: Masa mula tidak disahkan. Percanggahan masa mula sebenar mungkin ada.
     typeScheduledYT: Siaran Terancang
@@ -59,6 +60,8 @@ component:
     uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
