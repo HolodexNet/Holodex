@@ -5,6 +5,15 @@
 - **Development of Vue3-powered Holodex (release 3.0 ?!?!) is completely scrapped**. We're making it in **react** instead. If you like to influence how it looks, now is the best time to let us know.
 - If you are a **React UI engineer/designer** and would like to contribute to Holodex, drop by our discord!
 
+### 2.38 Holodex [*November 14th, 2023*]
+- TY Livia for:
+  - Hovering over a currently live stream's time will show its start time.
+- And TY Nelo for:
+  - Song count now shows on thumbnail.
+  - YouTube caption language will attempt to default to your site language, if available.
+  - Fixed loading Twitch streams on specific MultiView cells
+- Reverted previous navigation history change.
+
 ### 2.37 Holodex & Musicdex [*September 24th, 2023*]
 
 #### Holodex
