@@ -141,7 +141,7 @@ export const langConversion = Object.freeze({
     "lol-PEKO": "en",
     "lol-UWU": "en",
     "zh": "zh-Hant",
-    "zh-CN": "zh-Hans"
+    "zh-CN": "zh-Hans",
 });
 
 export const companionExtensionId = "jkdnofimdhpbhdjbcdlgnccfjjkidlgp";
