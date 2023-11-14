@@ -25,7 +25,7 @@ component:
     blocked: บล็อก
   mainNav:
     home: หน้าแรก
-    favorites: การติดตาม
+    favorites: รายการโปรด
     channels: ช่อง
     about: เกี่ยวกับ
     library: ของสะสม
@@ -46,7 +46,7 @@ component:
     copiedToClipboard: คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว
     copyLink: คัดลอกลิงก์ Holodex
     premiere: พรีเมียร์
-    googleCalendar: เพิ่มใน Google ปฏิทิน
+    googleCalendar: เพิ่มไปยัง Google ปฏิทิน
     totalTLs: จำนวนการแปลแชท
     totalSongs: เพลงที่ถูกบันทึกเวลาไว้ทั้งหมด
     tlPresence: นักแปลที่ใช้งานใน 30 นาทีที่ผ่านมา
@@ -66,7 +66,7 @@ component:
     showLess: แสดงน้อยลง
     showMore: แสดงมากขึ้น
   watch:
-    streamingFor: ถ่ายทอดสดมาแล้ว {0}
+    streamingFor: สตรีมมาแล้ว {0}
     nextUpInMugen: ถัดไป
     Comments:
       title: ความคิดเห็น
@@ -156,11 +156,11 @@ component:
   placeholderVideo:
     discordCredit: 'ข้อมูลกิจกรรมโดย {0} จาก: {1}'
     datasourceCredit: ข้อมูลกิจกรรมจาก {0} แหล่งข้อมูล
-    botCredit: ข้อมูลกิจกรรมจาก {0} แหล่งข้อมูล โดย {1}.
+    botCredit: ข้อมูลกิจกรรมจาก {0} แหล่งข้อมูล โดย {1}
     streamPageBtn: หน้าสตรีม
     eventPageBtn: หน้ากิจกรรม
     scheduledEvent: ถูกกำหนดเวลาไว้
-    editorCredit: เตรียมกิจกรรมโดย Holodex editor {0}.
+    editorCredit: เตรียมกิจกรรมโดย Holodex editor {0}
     creditTitleText: 'เครดิต:'
 views:
   channel:
@@ -190,7 +190,7 @@ views:
     noStreams: ไม่มีการถ่ายทอดสดหรือสตรีมที่กำลังจะมีขึ้นในขณะนี้
     recentVideoToggles:
       all: ทั้งหมด
-      official: การถ่ายทอดสดในอดีต
+      official: สตรีมที่ผ่านมาแล้ว
       subber: คลิป
   library:
     savedVideosTitle: วิดีโอที่บันทึกไว้
@@ -308,7 +308,7 @@ views:
         reconnecting: กำลังเชื่อมต่อใหม่อัตโนมัติ...
         reconnectFailed: ไม่สามารถเชื่อมต่อใหม่ได้
         notLive: >-
-          สตรีมยังไม่ถ่ายทอดสด โปรดลองอีกครั้งเมื่อสตรีมอยู่ภายใน 15 นาทีหลังจากถ่ายทอดสด
+          สตรีมยังไม่ถ่ายทอดสด โปรดลองอีกครั้งเมื่อสตรีมอยู่ภายใน 15 นาทีหลังจากเริ่มถ่ายทอดสด
         connectedToChat: เชื่อมต่อแล้ว
         disconnectedToChat: ตัดการเชื่อมต่อ
       archiveNeedExtension: >-
@@ -384,7 +384,7 @@ views:
     autoLayoutTip: คลิกที่ช่องเพื่อเริ่มรับชมโดยใช้โหมดการจัดวางอัตโนมัติ
     createLayoutTip: สร้างเลย์เอาต์ของคุณเองด้วยการเพิ่มเซลล์หรือใช้ค่าที่ตั้งไว้
     openToolbarTip: เปิดแถบเครื่องมือเพื่อเริ่มใช้ multiview
-    archiveSync: ซิงค์บันทึก
+    archiveSync: ซิงค์เวลา
     preset:
       shareOnDiscord: >-
         มีเลย์เอาต์เจ๋งๆ มาแชร์ไหม ใช้ปุ่มแชร์และแจ้งให้เราทราบใน <a href="https://discord.gg/jctkgHBt4b">เซิร์ฟเวอร์ Discord</a> ของเรา!
@@ -399,10 +399,10 @@ views:
       name: ชื่อ
       autoLayout: ใช้เลย์เอาต์ในโหมดอัตโนมัติ
     video:
-      selectLive: เลือกถ่ายทอดสด
+      selectLive: เลือกสตรีม
       addCustomVideo: เพิ่มวิดีโอที่กำหนดเอง
     fullScreen: เต็มจอ
-    mediaControls: การควบคุมสื่อ
+    mediaControls: ตัวควบคุมสื่อ
     mediaControlsEmpty: วิดีโอที่กำลังเล่นจะปรากฏที่นี่
     editAutoLayout: แก้ไขเลย์เอาต์อัตโนมัติ
     changeLayout: เปลี่ยนเลย์เอาต์
@@ -565,7 +565,7 @@ about:
         - >-
           รายการโปรดเป็นวิธีหนึ่งในการจับตามอง vtubers ที่คุณชื่นชอบ คุณสามารถเพิ่มช่องโปรดของคุณโดยคลิกที่ไอคอนรูปหัวใจบน
         - >-
-          เพจ. โปรดทราบว่าขณะนี้ยังไม่รองรับนักแปลที่ชื่นชอบ แต่คุณควรพิจารณาสมัครรับข้อมูลและสนับสนุนพวกเขาด้วยวิธีอื่น
+          เพจ โปรดทราบว่าขณะนี้ยังไม่รองรับเพิ่มนักแปลไปยังรายการโปรด แต่คุณสามารถสมัครติดตามและสนับสนุนพวกเขาด้วยวิธีอื่นได้
       disappear:
         title: รายการโปรดของฉันหายไป / ฉันไม่สามารถทำรายการโปรดได้
       contents:
