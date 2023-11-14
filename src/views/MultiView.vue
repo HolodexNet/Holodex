@@ -375,7 +375,9 @@ export default {
             // show the dialog
             this.overwriteDialog = true;
         },
-        handleToolbarClick(video) {
+        handleToolbarClick(v) {
+            const video = this.checkStreamType(v);
+            if (!video) return;
             const hasEmptyCell = this.findEmptyCell();
             // more cells needed, increment to next preset with space
             if (!hasEmptyCell) {
@@ -397,21 +399,13 @@ export default {
             }
         },
         handleVideoClicked(v) {
-            let video = v;
-            if (video.type === "placeholder") {
-                const twitchChannel = video.link.match(TWITCH_VIDEO_URL_REGEX)?.groups.id;
-                if (!twitchChannel) return;
-                video = {
-                    ...video,
-                    id: twitchChannel,
-                    type: "twitch",
-                };
-            }
             if (this.showSelectorForId < -1) {
-                this.handleToolbarClick(video);
+                this.handleToolbarClick(v);
                 this.showSelectorForId = -1;
                 return;
             }
+            const video = this.checkStreamType(v);
+            if (!video) return;
             this.addVideoWithId(video, this.showSelectorForId);
             this.showSelectorForId = -1;
         },
@@ -442,6 +436,19 @@ export default {
         toggleSyncBar() {
             this.showSyncBar = !this.showSyncBar;
         },
+        checkStreamType(v) {
+            let video = v;
+            if (video.type === "placeholder") {
+                const twitchChannel = video.link.match(TWITCH_VIDEO_URL_REGEX)?.groups.id;
+                if (!twitchChannel) return;
+                video = {
+                    ...video,
+                    id: twitchChannel,
+                    type: "twitch",
+                };
+            }
+            return video;
+        }
     },
 };
 </script>
