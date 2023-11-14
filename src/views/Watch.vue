@@ -176,7 +176,7 @@ import WatchHighlights from "@/components/watch/WatchHighlights.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import UploadScript from "@/components/tlscriptmanager/UploadScript.vue";
-import { decodeHTMLEntities, syncState, getYTLangFromState} from "@/utils/functions";
+import { decodeHTMLEntities, syncState, getYTLangFromState } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiDockLeft, mdiThumbUp } from "@mdi/js";
 
