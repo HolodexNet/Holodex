@@ -60,8 +60,6 @@ component:
     uploadScript: อัปโหลดสคริปต์การแปล
   videoDescription:
     description: คำอธิบาย
-  video:
-    comment: { }
   description:
     showLess: แสดงน้อยลง
     showMore: แสดงมากขึ้น
