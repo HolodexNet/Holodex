@@ -127,6 +127,7 @@ export default {
                 ignoreBlock: false,
                 hideCollabs: false,
                 hideIgnoredTopics: true,
+                hideGroups: true,
                 forOrg: "",
                 ...this.filterConfig,
             };

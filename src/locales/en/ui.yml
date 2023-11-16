@@ -9,6 +9,8 @@ component:
     signInToFavorite: Sign in to favorite
     unfavoriteAllInGroup: Unfavorite all in group
     favoriteAllInGroup: Favorite all in group
+    enableGroupDisplay: Show channels from this group on the Home page
+    disableGroupDisplay: Hide channels from this group from the Home page
   channelInfo:
     stats: Stats
     videoCount: '{0} Videos'
