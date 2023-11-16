@@ -9,6 +9,8 @@ component:
     signInToFavorite: Sign in to favowite
     unfavoriteAllInGroup: Unfavowite aww in gwoup
     favoriteAllInGroup: Favowite aww in gwoup
+    enableGroupDisplay: Show channews fwom dis gwoup on da home page
+    disableGroupDisplay: Hide channews fwom dis gwoup fwom da home page
   channelInfo:
     stats: Stats
     videoCount: '{0} Bideos'
@@ -60,6 +62,8 @@ component:
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
