@@ -78,7 +78,7 @@ export function Home() {
 
   const listCN = useMemo(
     () =>
-      cn({
+      cn("px-4 py-2 md:px-8", {
         "@container grid grid-cols-1 grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] gap-x-4 gap-y-6":
           cardSize === "lg",
         "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-x-2 gap-y-4":
@@ -107,12 +107,8 @@ export function Home() {
       <Helmet>
         <title>{currentOrg} - Holodex</title>
       </Helmet>
-      <Tabs
-        className="w-full p-4 md:px-8"
-        defaultValue={tab}
-        onValueChange={setTab}
-      >
-        <TabsList className="z-20 flex w-full justify-start overflow-x-auto overflow-y-hidden rounded-none bg-base-2">
+      <Tabs defaultValue={tab} onValueChange={setTab}>
+        <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start gap-2 overflow-x-auto bg-base-2 px-4 py-2 md:px-8">
           <TabsTrigger className="text-lg" value="live">
             <Trans
               i18nKey="views.home.liveOrUpcomingHeading"

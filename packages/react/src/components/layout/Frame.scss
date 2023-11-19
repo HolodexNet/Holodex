@@ -76,6 +76,7 @@ $responsive-breakpoint: 768px;
 
   > main {
     grid-area: content;
+    max-width: 100dvw;
     // disabling for now so we can use position sticky
     // overflow-y: auto;
   }

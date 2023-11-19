@@ -26,6 +26,7 @@ export const LanguageSelector = () => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          className="whitespace-nowrap"
           variant="outline"
           role="combobox"
           size="lg"

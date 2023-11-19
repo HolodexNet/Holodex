@@ -41,11 +41,11 @@ export function Header({ id }: HeaderProps) {
         <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
       <div className="hidden grow md:flex" />
-      <SearchBar className="mt-3 max-w-lg self-start" />
+      <SearchBar className="max-w-lg" />
       <Button
         size="icon"
         variant="ghost"
-        className="-ml-3 p-0 text-base-9"
+        className="p-0 text-base-9"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:magnifying-glass h-full text-xl" />
@@ -53,7 +53,7 @@ export function Header({ id }: HeaderProps) {
       <Button
         size="icon"
         variant="ghost"
-        className="p-0 text-base-9"
+        className="hidden p-0 text-base-9 md:flex"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:sun-20-solid h-full text-xl " />

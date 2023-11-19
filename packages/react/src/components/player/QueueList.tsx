@@ -32,10 +32,14 @@ export function QueueList() {
         >
           <div className={open ? "i-heroicons:minus" : "i-heroicons:plus"} />
           {t("component.queue.title")}
+          <span className="ml-auto text-sm text-base-11">
+            {queue.findIndex(({ id }) => currentVideo?.id === id) + 1} /{" "}
+            {queue.length}
+          </span>
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="flex flex-col py-2">
+        <div className="flex max-h-[70vh] flex-col overflow-y-auto py-2 ">
           <div className="flex justify-between px-4 pb-2">
             <NewPlaylistDialog
               triggerElement={

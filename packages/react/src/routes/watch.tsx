@@ -79,7 +79,7 @@ export default function Watch() {
         q.some((v) => v.id === id)
           ? q
           : q.toSpliced(
-              q.findIndex((q) => q.id === currentVideo?.id),
+              q.findIndex((q) => q.id === currentVideo?.id) + 1,
               0,
               videoPlaceholder,
             ),

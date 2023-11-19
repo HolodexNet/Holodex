@@ -14,12 +14,19 @@ module.exports = {
       whitelist: [
         "i\\-.+:?.+",
         // doesn't work see: [https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/284]
-        "@.+:?.+"
+        "@.+:?.+",
       ],
     },
   },
 
-  ignorePatterns: ["dist", ".eslintrc.cjs", "tailwind.config.js"],
+  ignorePatterns: [
+    "dist",
+    ".eslintrc.cjs",
+    "index.html",
+    "tailwind.config.js",
+    "postcss.config.js",
+    "uno.config.ts",
+  ],
 
   parser: "@typescript-eslint/parser",
   parserOptions: {

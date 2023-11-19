@@ -16,7 +16,7 @@ export function ChatModal({ tlOpen, chatOpen, ...data }: ChatModalProps) {
   return (
     <div
       className={cn(
-        "flex @screen-lg:hidden w-full bg-base rounded-t-lg",
+        "flex @screen-lg:hidden w-full bg-base rounded-t-lg will-change-transform",
         // use top-[...] and h-[...] for fixed chat modal
         // since container query disables fixed element on screen (cannot use bottom-0)
         // Top position: top padding (1rem) + video height ((100cqw - x padding) * 0.5625) + controlbar height (4rem?)
