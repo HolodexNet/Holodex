@@ -9,6 +9,8 @@ component:
     signInToFavorite: ลงชื่อเข้าใช้เพื่อเพิ่มรายการโปรด
     unfavoriteAllInGroup: ยกเลิกรายการโปรดทั้งหมดในกลุ่ม
     favoriteAllInGroup: เพิ่มรายการโปรดทั้งหมดในกลุ่ม
+    enableGroupDisplay: แสดงช่องจากกลุ่มนี้บนหน้าแรก
+    disableGroupDisplay: ซ่อนช่องจากกลุ่มนี้จากหน้าแรก
   channelInfo:
     stats: สถิติ
     videoCount: '{0} วิดีโอ'
@@ -60,6 +62,8 @@ component:
     uploadScript: อัปโหลดสคริปต์การแปล
   videoDescription:
     description: คำอธิบาย
+  video:
+    comment: { }
   description:
     showLess: แสดงน้อยลง
     showMore: แสดงมากขึ้น
