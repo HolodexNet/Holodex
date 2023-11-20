@@ -252,6 +252,7 @@ export default {
                 hideIgnoredTopics: true,
                 hidePlaceholder: this.hidePlaceholder,
                 hideMissing: this.hideMissing,
+                hideGroups: true,
             };
             const isTwitchPlaceholder = (v) => (v.type === "placeholder" && v.link?.includes("twitch.tv"));
             const isPlayable = (v) => (v.type === "stream" || isTwitchPlaceholder(v));

@@ -18,6 +18,7 @@
           modestbranding: 1,
           rel: 0,
           cc_load_policy: 0,
+          cc_lang_pref: getLang,
           iv_load_policy: 3,
         }"
         v-on="$listeners"
@@ -30,6 +31,7 @@
 
 <script lang="ts">
 import Youtube from "@/components/player/YoutubePlayer.vue";
+import { getYTLangFromState } from "@/utils/functions";
 
 export default {
     name: "SongFrame",
@@ -57,6 +59,9 @@ export default {
     computed: {
         containerClass() {
             return this.isBackground ? "song-player-container-background" : "song-player-container";
+        },
+        getLang() {
+            return getYTLangFromState(this.$store.state);
         },
     },
     watch: {

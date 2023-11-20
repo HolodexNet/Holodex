@@ -136,6 +136,14 @@ export const TL_LANGS = Object.freeze([
 //     MISSING: "missing",
 // };
 
+// Language code conversion for YouTube frame
+export const langConversion = Object.freeze({
+    "lol-PEKO": "en",
+    "lol-UWU": "en",
+    "zh": "zh-Hant",
+    "zh-CN": "zh-Hans",
+});
+
 export const companionExtensionId = "jkdnofimdhpbhdjbcdlgnccfjjkidlgp";
 
 export const MESSAGE_TYPES = Object.freeze({

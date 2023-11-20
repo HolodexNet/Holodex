@@ -16,6 +16,7 @@
                 ...(timeOffset && { start: timeOffset }),
                 autoplay: 1,
                 playsinline: 1,
+                cc_lang_pref: getLang,
               }"
               @ready="ready"
             />
@@ -172,7 +173,7 @@ import WatchComments from "@/components/watch/WatchComments.vue";
 import VideoEditSongs from "@/components/edit/VideoEditSongs.vue";
 import VideoEditMentions from "@/components/edit/VideoEditMentions.vue";
 import CommentSongParser from "@/components/media/CommentSongParser.vue";
-import { decodeHTMLEntities, syncState } from "@/utils/functions";
+import { decodeHTMLEntities, syncState, getYTLangFromState } from "@/utils/functions";
 // import { dayjs } from "@/utils/time";
 import api from "@/utils/backend-api";
 
@@ -248,6 +249,9 @@ export default {
         },
         role() {
             return this.$store.state.userdata?.user?.role;
+        },
+        getLang() {
+            return getYTLangFromState(this.$store.state);
         },
     },
     watch: {

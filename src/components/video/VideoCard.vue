@@ -55,8 +55,13 @@
 
         <!-- Video duration/music indicator (👻❌) -->
         <div v-if="!isPlaceholder" class="d-flex flex-column align-end">
-          <!-- Show music icon if songs exist -->
-          <div v-if="data.songcount" class="video-duration">
+          <!-- Show music icon if songs exist, and song count if there's multiple -->
+          <div 
+            v-if="data.songcount" 
+            class="video-duration d-flex align-center"
+            :title="songIconTitle"
+          >
+            {{ songCount }}
             <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
           </div>
           <!-- Show TL chat icon if recently active or has archive tl exist -->
@@ -535,6 +540,12 @@ export default {
             return this.data.status === "past"
                 ? this.$t("component.videoCard.totalTLs")
                 : this.$t("component.videoCard.tlPresence");
+        },
+        songIconTitle() {
+            return this.$t("component.videoCard.totalSongs");
+        },
+        songCount() {
+            return this.data.songcount > 1 ? this.data.songcount : "";
         },
         href() {
             if (this.isPlaceholder) return undefined;

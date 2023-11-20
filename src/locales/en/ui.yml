@@ -9,6 +9,8 @@ component:
     signInToFavorite: Sign in to favorite
     unfavoriteAllInGroup: Unfavorite all in group
     favoriteAllInGroup: Favorite all in group
+    enableGroupDisplay: Show channels from this group on the Home page
+    disableGroupDisplay: Hide channels from this group from the Home page
   channelInfo:
     stats: Stats
     videoCount: '{0} Videos'
@@ -48,6 +50,7 @@ component:
     premiere: PREMIERE
     googleCalendar: Add to Google Calendar
     totalTLs: Total live chat TLs
+    totalSongs: Total timestamped songs
     tlPresence: Active translator in last 30 mins
     uncertainPlaceholder: Start time is not officially confirmed, actual start time may vary.
     typeScheduledYT: Scheduled Stream

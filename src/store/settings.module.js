@@ -26,6 +26,7 @@ const initialState = {
     hideMissing: false,
     nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
     hideCollabStreams: false,
+    hiddenGroups: {},
     ignoredTopics: [],
     // Valid values: "grid" | "list" | "denseList"
     homeViewMode: "grid",
@@ -139,6 +140,22 @@ const mutations = {
             );
         } else {
             state.blockedChannels.push(channel);
+        }
+    },
+    toggleGroupDisplay(state, group) {
+        const groupName = `${group.title}`.toLowerCase();
+        const orgName = `${group.org}`;
+        if (!state.hiddenGroups) Vue.set(state, "hiddenGroups", {});
+        if (!state.hiddenGroups[orgName]) Vue.set(state.hiddenGroups, `${orgName}`, [])
+
+        // determine to add or subtract:
+        if (state.hiddenGroups[orgName].includes(groupName)) {
+            Vue.delete(
+                state.hiddenGroups[orgName],
+                state.hiddenGroups[orgName].findIndex((x) => x.toLowerCase() === groupName),
+            );
+        } else {
+            state.hiddenGroups[orgName].push(groupName);
         }
     },
     toggleLiveTlBlocked(state, name) {

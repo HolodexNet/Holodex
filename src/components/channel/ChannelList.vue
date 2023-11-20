@@ -52,6 +52,26 @@
             <!-- TODO ADD CONFIRMATION DIALOG -->
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
+                <v-btn icon large @click.stop="toggleGroupDisplay(group)">
+                  <v-icon
+                    :color="group.hide ? 'red' : 'grey'"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    {{ group.hide ? mdiEyeOffOutline : mdiEyeOutline }}
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>
+                {{
+                  group.hide
+                    ? $t("component.channelList.enableGroupDisplay")
+                    : $t("component.channelList.disableGroupDisplay")
+                }}
+              </span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
                 <v-btn sm outlined @click.stop="toggleFavoriteAll(index)">
                   <v-icon
                     :color="group.allFavorited && isLoggedIn ? 'red' : 'grey'"
@@ -130,6 +150,7 @@
 import ChannelImg from "./ChannelImg.vue";
 import ChannelInfo from "./ChannelInfo.vue";
 import ChannelSocials from "./ChannelSocials.vue";
+import { mdiEyeOffOutline, mdiEyeOutline } from "@mdi/js";
 
 export default {
     name: "ChannelList",
@@ -165,6 +186,12 @@ export default {
             default: false,
         },
     },
+    data() {
+        return {
+            mdiEyeOffOutline,
+            mdiEyeOutline,
+        };
+    },
     computed: {
         isXs() {
             return this.$vuetify.breakpoint.width <= 420;
@@ -179,6 +206,8 @@ export default {
                         title: group,
                         items: [],
                         allFavorited: true,
+                        hide: this.isHidden(group),
+                        org: this.$store.state.currentOrg.name,
                     });
                     lastGroup = group;
                 }
@@ -197,6 +226,14 @@ export default {
         isFavorited(id) {
             return this.$store.getters["favorites/isFavorited"](id);
         },
+        isHidden(groupName){
+            const org = this.$store.state.currentOrg.name;
+            const hiding = this.$store.state.settings.hiddenGroups;
+            console.log(hiding);
+            if (!hiding) return false;
+            if (!Object.keys(hiding).includes(org)) return false;
+            return this.$store.state.settings.hiddenGroups[org].includes(groupName.toLowerCase())
+        },
         toggleFavoriteAll(index) {
             if (!this.isLoggedIn) return;
             const allFav = this.channelsByGroup[index].allFavorited;
@@ -210,6 +247,9 @@ export default {
             if (Object.keys(this.$store.state.favorites.stagedFavorites).length > 0) {
                 this.$store.dispatch("favorites/updateFavorites");
             }
+        },
+        toggleGroupDisplay(group) {
+            this.$store.commit("settings/toggleGroupDisplay", group);
         },
     },
 };
