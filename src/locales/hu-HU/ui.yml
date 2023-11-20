@@ -9,6 +9,8 @@ component:
     signInToFavorite: Jelentkezz be, hogy hozzáadj kedvenceket
     unfavoriteAllInGroup: Minden csoport eltávolítása kedvencek közül
     favoriteAllInGroup: Minden csoport kedvencek közé helyezése
+    enableGroupDisplay: Csatornák megjelenítése ezen csoportból a kezdőlapon
+    disableGroupDisplay: Csatornák elrejtése ezen csoportból a kezdőlapon
   channelInfo:
     stats: Statisztikák
     videoCount: '{0} Videó'
@@ -48,6 +50,7 @@ component:
     premiere: Bemutató
     googleCalendar: Hozzáadás a Google naptárhoz
     totalTLs: Összes élő chat fordítás
+    totalSongs: Időbélyegzett dalok száma
     tlPresence: Aktív fordító az utolsó 30 percben
     uncertainPlaceholder: A kezdés időpontja nincs hivatalosan megerősítve, eltérhet a valóságtól.
     typeScheduledYT: Beütemezett stream
@@ -59,6 +62,8 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -603,6 +608,7 @@ about:
       contents:
         '0': >-
           Az általunk hosztolt szerver egy 28 magos, 60 GB RAM-os gépezet, ami havonta kb. $60 USD (19000 HUF) költséggel jár, valamint szeretnénk további funkciókkal bővíteni az oldalt, ezért indítottunk egy <a href="https://ko-fi.com/holodex">Ko-fi-t</a> a szerver költségeinek fedezése érdekében. (<a href="https://www.patreon.com/holodex">Patreonunk</a> is van, de a Ko-fi-t jobban szeretjük.)<br /><br />A támogatásod kifejezheted visszajelzésekkel és biztató üzenetekkel Twitteren, hozzájárulással a fordítócsapat munkáihoz <a href="https://crwd.in/holodex">Crowdin-on</a>, valamint hozzátéve a dal adatbázisunk bővítésével. (Streamekből kiszerkesztve egy-egy időintervallumot) Akár csak egy stream alá kommentelve megjelölni a vicces jeleneteket is egy nagy segítség!
+  privacyPolicy: Adatvédelmi irányelvek
   gdpr: GDPR és az adataim
   gdprContent: >-
     Egy Google Analytics cookiet használunk, hogy nyomon tartsuk az oldal látogatóit, kizárólag elemzési célokkal. Bejelentkezés után társítjuk a közösségi fiókod felhasználónevét és ID-jét a kedvenceiddel. Ez az adat lehet az e-mail címed (Google), Discord ID vagy a Twittered illően kezelve.
