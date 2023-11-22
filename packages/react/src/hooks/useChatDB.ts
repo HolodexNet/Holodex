@@ -5,6 +5,7 @@ import { roomToLang, roomToVideoID, toParsedMessage } from "@/lib/socket";
 import { roomsAtom, videoToRoomAtom } from "@/store/chat";
 import { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { HTTPError } from "@/lib/fetch";
 
 export function useChatDB(roomId: RoomIDString) {
   const queryClient = useQueryClient();
@@ -139,7 +140,7 @@ export function useChatDB(roomId: RoomIDString) {
 
   const { mutate: loadMessages, isPending } = useMutation<
     TLDexMessage[],
-    Error,
+    HTTPError,
     { partial?: number }
   >({
     mutationFn: async ({ partial }) => {

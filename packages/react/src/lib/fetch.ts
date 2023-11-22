@@ -90,21 +90,38 @@ export const createFetchClient = (token?: string | null) => {
   return fetchFn;
 };
 
-function handleResponse<T>(response: Response): Promise<T> {
+async function handleResponse<T>(response: Response) {
   return response.json().then((obj) => {
     const data = obj as T;
 
     if (!response.ok) {
       console.error("API Error", response);
-      const error = {
-        data: data,
-        statusText: response.statusText,
-        statusCode: response.status,
-        response,
-      };
-      return Promise.reject(error);
+      return Promise.reject(new HTTPError({ data, res: response }));
     }
 
     return data;
   });
+}
+
+export class HTTPError<T = unknown> extends Error {
+  readonly data: T;
+  readonly res: Response;
+  readonly statusText: string;
+  readonly statusCode: number;
+
+  constructor({
+    data,
+    res,
+    message,
+  }: {
+    data: T;
+    res: Response;
+    message?: string;
+  }) {
+    super(message ?? `Oops, request failed with status ${res.status}`);
+    this.data = data;
+    this.statusText = res.statusText;
+    this.statusCode = res.status;
+    this.res = res;
+  }
 }

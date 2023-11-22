@@ -1,4 +1,5 @@
 import { useClient } from "@/hooks/useClient";
+import { HTTPError } from "@/lib/fetch";
 import {
   UseQueryOptions,
   useInfiniteQuery,
@@ -47,7 +48,7 @@ export function useChannels(
 
 export function useChannel(
   channelId: string,
-  config?: Omit<UseQueryOptions<Channel, Error>, "queryFn" | "queryKey">,
+  config?: Omit<UseQueryOptions<Channel, HTTPError>, "queryFn" | "queryKey">,
 ) {
   const client = useClient();
 

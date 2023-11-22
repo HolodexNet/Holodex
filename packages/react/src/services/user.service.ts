@@ -1,4 +1,5 @@
 import { useClient } from "@/hooks/useClient";
+import { HTTPError } from "@/lib/fetch";
 import { tokenAtom, userAtom } from "@/store/auth";
 import {
   UseMutationOptions,
@@ -37,7 +38,7 @@ interface FavoriteMutationPayload {
 export function useFavoriteMutation(
   config?: UseMutationOptions<
     FavoriteChannel[],
-    Error,
+    HTTPError,
     FavoriteMutationPayload[]
   >,
 ) {

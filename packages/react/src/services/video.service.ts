@@ -1,4 +1,5 @@
 import { useClient } from "@/hooks/useClient";
+import { HTTPError } from "@/lib/fetch";
 import {
   UseQueryOptions,
   useInfiniteQuery,
@@ -55,12 +56,12 @@ interface UseVideoParams {
 
 export function useVideo<T = Video>(
   args: UseVideoParams,
-  config?: Omit<UseQueryOptions<T>, "queryKey" | "queryFn">,
+  config?: Omit<UseQueryOptions<T, HTTPError>, "queryKey" | "queryFn">,
 ) {
   const { id, ...params } = args;
   const client = useClient();
 
-  return useQuery<T>({
+  return useQuery<T, HTTPError>({
     queryKey: ["video", id],
     queryFn: async () => await client<T>(`/api/v2/videos/${id}`, { params }),
     ...config,
@@ -72,5 +73,21 @@ export function usePlaceholderMutation() {
 
   return useMutation<PlaceholderVideo[], Error, PlaceholderRequestBody>({
     mutationFn: async (body) => client.post("/api/v2/videos/placeholder", body),
+  });
+}
+
+export function useVideoTopicMutation() {
+  const client = useClient();
+
+  return useMutation<
+    unknown,
+    HTTPError,
+    {
+      topicId: string;
+      videoId: string;
+    }
+  >({
+    mutationFn: async ({ topicId, videoId }) =>
+      client.post("/api/v2/topics/video", { topicId, videoId }),
   });
 }
