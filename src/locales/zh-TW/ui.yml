@@ -9,6 +9,8 @@ component:
     signInToFavorite: 請登入以使用收藏功能
     unfavoriteAllInGroup: 取消收藏本群組所有頻道
     favoriteAllInGroup: 收藏本群組所有頻道
+    enableGroupDisplay: 於首頁顯示屬於此團體的 Vtuber 頻道
+    disableGroupDisplay: 於首頁隱藏屬於此團體的 Vtuber 頻道
   channelInfo:
     stats: 統計資料
     videoCount: '{0} 部影片'
@@ -48,6 +50,7 @@ component:
     premiere: 首播
     googleCalendar: 新增至 Google 日曆
     totalTLs: 聊天室即時翻譯數
+    totalSongs: 已標記歌曲數
     tlPresence: 過去半小時內有即時翻譯
     uncertainPlaceholder: 尚未有正式的開始時間，實際的開始時間可能會有誤差。
     typeScheduledYT: 已排定實況

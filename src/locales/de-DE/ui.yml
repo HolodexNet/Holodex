@@ -9,6 +9,8 @@ component:
     signInToFavorite: Log dich ein um zu favorisieren
     unfavoriteAllInGroup: Alle in Gruppe entfavorisieren
     favoriteAllInGroup: Alle in Gruppe favorisieren
+    enableGroupDisplay: Kanäle dieser Gruppe auf der Startseite anzeigen
+    disableGroupDisplay: Kanäle dieser Gruppe von Startseite ausblenden
   channelInfo:
     stats: Statistik
     videoCount: '{0} Videos'
@@ -48,6 +50,7 @@ component:
     premiere: PREMIERE
     googleCalendar: Zu Google Kalender hinzufügen
     totalTLs: Anzahl an Übersetzungen im Live-Chat
+    totalSongs: Songs mit Zeitstempeln
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
     uncertainPlaceholder: Diese Startzeit ist nicht offiziell bestätigt, die tatsächliche Startzeit kann variieren.
     typeScheduledYT: Geplanter Stream
