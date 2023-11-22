@@ -9,6 +9,8 @@ component:
     signInToFavorite: 登录后以启用收藏夹功能
     unfavoriteAllInGroup: 全部移出收藏夹
     favoriteAllInGroup: 全部加入收藏夹
+    enableGroupDisplay: 在首页显示该Vtuber团体的频道
+    disableGroupDisplay: 在首页隐藏该Vtuber团体的频道
   channelInfo:
     stats: 统计信息
     videoCount: '{0}个视频'
@@ -48,6 +50,7 @@ component:
     premiere: 首映
     googleCalendar: 添加到Google日历
     totalTLs: 聊天窗口中实时翻译数量
+    totalSongs: 已标时间戳的歌曲
     tlPresence: 过去30分钟内有实时翻译
     uncertainPlaceholder: 开始时间未正式说明，实际开始时间可能有所不同。
     typeScheduledYT: 直播预约
