@@ -80,7 +80,7 @@ export function VideoMenu({
         )}
         {!isTwitch && (
           <DropdownMenuItem asChild>
-            <Link className="flex gap-2" to={`/watch/${videoId}/edit`}>
+            <Link className="flex gap-2" to={`/edit/video/${videoId}`}>
               <div className="i-heroicons:pencil" />
               {t("component.videoCard.edit")}
             </Link>

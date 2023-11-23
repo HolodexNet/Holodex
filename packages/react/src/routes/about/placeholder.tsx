@@ -1,4 +1,4 @@
-import { ChannelPicker } from "@/components/about/request/ChannelPicker";
+import { ChannelPicker } from "@/components/channel/ChannelPicker";
 import { DatePicker } from "@/components/common/DatePicker";
 import {
   Form,
@@ -226,14 +226,16 @@ export default function AboutPlaceholder() {
                 <FormLabel>
                   {t("component.addPlaceholder.channelLabel")}
                 </FormLabel>
-                <ChannelPicker
-                  name="channel_id"
-                  form={form}
-                  field={field}
-                  onSelect={({ id }) => {
-                    form.setValue("channel_id", id);
-                  }}
-                />
+                <FormControl>
+                  <ChannelPicker
+                    name="channel_id"
+                    form={form}
+                    value={field.value}
+                    onSelect={({ id }) => {
+                      form.setValue("channel_id", id);
+                    }}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

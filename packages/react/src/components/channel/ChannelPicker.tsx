@@ -8,13 +8,12 @@ import {
   CommandInput,
   CommandItem,
 } from "@/shadcn/ui/command";
-import { FormControl } from "@/shadcn/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect } from "react";
 import {
-  ControllerRenderProps,
   FieldPath,
+  FieldPathValue,
   FieldValues,
   UseFormReturn,
 } from "react-hook-form";
@@ -24,9 +23,9 @@ interface VtuberPickerProps<
   T extends FieldValues,
   FieldName extends FieldPath<T>,
 > {
-  name: FieldPath<T>;
-  form: UseFormReturn<T>;
-  field: ControllerRenderProps<T, FieldName>;
+  name?: FieldPath<T>;
+  form?: UseFormReturn<T>;
+  value: FieldPathValue<T, FieldName>;
   onSelect: (value: SearchAutoCompleteChannel) => void;
 }
 
@@ -39,7 +38,7 @@ const { currentValueAtom, debouncedValueAtom } = atomWithDebounce(
 export function ChannelPicker<
   T extends FieldValues,
   FieldName extends FieldPath<T>,
->({ name, form, field, onSelect }: VtuberPickerProps<T, FieldName>) {
+>({ name, form, value, onSelect }: VtuberPickerProps<T, FieldName>) {
   const { t } = useTranslation();
   const currentValue = useAtomValue(currentValueAtom);
   const [debouncedValue, setDebouncedValue] = useAtom(debouncedValueAtom);
@@ -53,17 +52,15 @@ export function ChannelPicker<
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <FormControl>
-          <Button
-            className="justify-between border-base-6 px-4 focus:border-blue-6"
-            size="lg"
-            variant="outline"
-            role="combobox"
-          >
-            {field.value || t("channelRequest.ChannelPickerLabel")}
-            <div className="i-lucide:chevrons-up-down text-sm opacity-50" />
-          </Button>
-        </FormControl>
+        <Button
+          className="justify-between border-base-6 px-4 focus:border-blue-6"
+          size="lg"
+          variant="outline"
+          role="combobox"
+        >
+          {value || t("channelRequest.ChannelPickerLabel")}
+          <div className="i-lucide:chevrons-up-down text-sm opacity-50" />
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0">
         <Command>
@@ -71,8 +68,13 @@ export function ChannelPicker<
             placeholder={t("channelPicker.search")}
             value={currentValue}
             onValueChange={setDebouncedValue}
-            {...form.register(name, {
-              required: { value: true, message: t("channelRequest.required") },
+            {...(name && {
+              ...form?.register(name, {
+                required: {
+                  value: true,
+                  message: t("channelRequest.required"),
+                },
+              }),
             })}
           />
           <CommandEmpty>{t("component.channelPicker.notFound")}</CommandEmpty>

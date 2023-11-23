@@ -17,7 +17,7 @@ export default function Favorites() {
           useWindowScroll
           listClassName="w-full grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-x-4 gap-y-6"
           data={favChannels?.flat() ?? []}
-          itemContent={(_, channel) => <ChannelCard {...channel} />}
+          itemContent={(_, channel) => <ChannelCard size="lg" {...channel} />}
         />
       </div>
     </>

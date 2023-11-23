@@ -14,7 +14,7 @@ import { Textarea } from "@/shadcn/ui/textarea";
 import { useToast } from "@/shadcn/ui/use-toast";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ChannelPicker } from "./ChannelPicker";
+import { ChannelPicker } from "../../channel/ChannelPicker";
 import { LanguagePicker } from "./LanguagePicker";
 
 const formValues = {
@@ -134,18 +134,20 @@ export function ModifyInfoForm() {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Channel</FormLabel>
-              <ChannelPicker
-                form={form}
-                field={field}
-                name="channel.name"
-                onSelect={({ name, id }) => {
-                  form.setValue("channel.name", name);
-                  form.setValue(
-                    "channel.link",
-                    `https://www.youtube.com/channel/${id}`,
-                  );
-                }}
-              />
+              <FormControl>
+                <ChannelPicker
+                  form={form}
+                  value={field.value}
+                  name="channel.name"
+                  onSelect={({ name, id }) => {
+                    form.setValue("channel.name", name);
+                    form.setValue(
+                      "channel.link",
+                      `https://www.youtube.com/channel/${id}`,
+                    );
+                  }}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

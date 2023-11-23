@@ -1,9 +1,12 @@
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
+import { ApiError } from "./ApiError";
+import { HTTPError } from "@/lib/fetch";
 
 interface LoadingProps {
   size: "sm" | "md" | "lg" | "xl";
+  error?: HTTPError | null;
 }
 
 export function Loading(
@@ -16,6 +19,8 @@ export function Loading(
     "text-2xl": props.size === "lg",
     "text-4xl": props.size === "xl",
   });
+
+  if (props.error) return <ApiError error={props.error} />;
 
   // I can't use a UNOCSS icon here because it doesn't work in Firefox...
   // shows a weird white border around the icon

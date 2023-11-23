@@ -1,13 +1,14 @@
+import { ChannelCard } from "@/components/channel/ChannelCard";
 import { ChatModal } from "@/components/chat/ChatModal";
 import { VideoPortalContext } from "@/components/layout/Frame";
 import { ChatCard } from "@/components/player/ChatCard";
 import { Controlbar } from "@/components/player/Controlbar";
-import { PlayerChannelCard } from "@/components/player/PlayerChannelCard";
 import { PlayerDescription } from "@/components/player/PlayerDescription";
 import { PlayerRecommendations } from "@/components/player/PlayerRecommendations";
 import { PlayerStats } from "@/components/player/PlayerStats";
 import { QueueList } from "@/components/player/QueueList";
 import { cn } from "@/lib/utils";
+import { useChannel } from "@/services/channel.service";
 import { useVideo } from "@/services/video.service";
 import { clipLangAtom } from "@/store/i18n";
 import {
@@ -38,6 +39,9 @@ export default function Watch() {
       refetchInterval: 1000 * 60 * 3,
     },
   );
+  const { data: channel } = useChannel(data?.channel.id ?? "", {
+    enabled: !!data,
+  });
   const [currentVideo, setCurrentVideo] = useAtom(currentVideoAtom);
   const [queue, setQueue] = useAtom(queueAtom);
   const [miniPlayer, setMiniPlayer] = useAtom(miniPlayerAtom);
@@ -164,7 +168,7 @@ export default function Watch() {
                 "px-4 @screen-lg:px-8 pb-8": theaterMode,
               })}
             >
-              <PlayerChannelCard id={data?.channel.id} />
+              {channel && <ChannelCard size="xs" {...channel} />}
               {!isTwitch && data?.description && (
                 <PlayerDescription description={data.description} />
               )}

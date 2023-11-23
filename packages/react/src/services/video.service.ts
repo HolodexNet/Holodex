@@ -5,6 +5,7 @@ import {
   useInfiniteQuery,
   useMutation,
   useQuery,
+  useQueryClient,
 } from "@tanstack/react-query";
 
 interface UseVideosParams {
@@ -89,5 +90,38 @@ export function useVideoTopicMutation() {
   >({
     mutationFn: async ({ topicId, videoId }) =>
       client.post("/api/v2/topics/video", { topicId, videoId }),
+  });
+}
+
+export function useVideoMentionsMutation(videoId: string) {
+  const queryClient = useQueryClient();
+  const client = useClient();
+
+  return useMutation<
+    unknown,
+    HTTPError,
+    | { action: "add"; channelId: string; channelIds?: never }
+    | { action: "del"; channelId?: never; channelIds: string[] }
+  >({
+    mutationFn: async ({ action, channelId, channelIds }) =>
+      client(`/api/v2/videos/${videoId}/mentions`, {
+        method: action === "add" ? "POST" : "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          channel_id: channelId,
+          channel_ids: channelIds,
+        }),
+      }),
+    onSuccess: async () => {
+      const newMentions = await client.get<ChannelBase[]>(
+        `/api/v2/videos/${videoId}/mentions`,
+      );
+      queryClient.setQueryData<Partial<Video>>(["video", videoId], (data) => ({
+        ...data,
+        mentions: newMentions,
+      }));
+    },
   });
 }

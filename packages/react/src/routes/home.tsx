@@ -108,8 +108,8 @@ export function Home() {
         <title>{currentOrg} - Holodex</title>
       </Helmet>
       <Tabs defaultValue={tab} onValueChange={setTab}>
-        <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start gap-2 overflow-x-auto bg-base-2 px-4 py-2 md:px-8">
-          <TabsTrigger className="text-lg" value="live">
+        <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-2 md:px-8">
+          <TabsTrigger value="live">
             <Trans
               i18nKey="views.home.liveOrUpcomingHeading"
               components={{
@@ -126,10 +126,10 @@ export function Home() {
               }}
             />
           </TabsTrigger>
-          <TabsTrigger className="text-lg" value="archive">
+          <TabsTrigger value="archive">
             {t("views.home.recentVideoToggles.official")}
           </TabsTrigger>
-          <TabsTrigger className="text-lg" value="clips">
+          <TabsTrigger value="clips">
             {t("views.home.recentVideoToggles.subber")}
           </TabsTrigger>
           <div className="flex grow" />

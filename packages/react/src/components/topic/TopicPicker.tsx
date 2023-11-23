@@ -18,11 +18,12 @@ import atomWithDebounce from "@/lib/atomWithDebounce";
 const { debouncedValueAtom, currentValueAtom } = atomWithDebounce("", 300);
 
 interface TopicPickerProps {
+  value?: string;
   onSelect: (topicId: string) => void;
 }
 
-export function TopicPicker({ onSelect }: TopicPickerProps) {
-  const [deboundcedValue, setDebouncedValue] = useAtom(debouncedValueAtom);
+export function TopicPicker({ value, onSelect }: TopicPickerProps) {
+  const [debouncedValue, setDebouncedValue] = useAtom(debouncedValueAtom);
   const currentValue = useAtomValue(currentValueAtom);
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -31,12 +32,12 @@ export function TopicPicker({ onSelect }: TopicPickerProps) {
 
   useEffect(() => {
     mutate({
-      q: deboundcedValue,
+      q: debouncedValue,
       t: "topic",
       n: 10,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deboundcedValue]);
+  }, [debouncedValue]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -48,7 +49,7 @@ export function TopicPicker({ onSelect }: TopicPickerProps) {
           aria-expanded={open}
           className="w-full justify-between border-base px-4"
         >
-          {t("component.topicPicker.pickLabel")}
+          {value ?? t("component.topicPicker.pickLabel")}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
