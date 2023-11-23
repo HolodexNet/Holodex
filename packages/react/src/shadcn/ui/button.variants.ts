@@ -13,6 +13,8 @@ export const buttonVariants = cva(
           "bg-secondary-9 text-base-12 hover:bg-secondaryA-4 focus-visible:ring-secondary-7 ",
         ghost:
           "hover:bg-primary-4 hover:text-base-12 focus-visible:ring-primary-7 active:bg-primaryA-7",
+        "ghost-secondary":
+          "hover:bg-secondary-4 hover:text-base-12 focus-visible:ring-secondary-7 active:bg-secondaryA-7",
         link: "text-primary underline-offset-4 hover:underline focus-visible:underline focus-visible:ring-secondary-7",
       },
       size: {

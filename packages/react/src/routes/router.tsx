@@ -59,6 +59,14 @@ const router = createBrowserRouter([
         element: <div>OrgNotFound</div>,
       },
       {
+        path: "add_placeholder",
+        element: <Navigate to="/about/placeholder" />,
+      },
+      {
+        path: "add_placeholders",
+        element: <Navigate to="/about/placeholder" />,
+      },
+      {
         path: "org/:org/channels",
         element: <ChannelsOrg />,
       },

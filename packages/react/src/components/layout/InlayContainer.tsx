@@ -29,7 +29,9 @@ export function InlayContainer({ routes }: InlayContainerProps) {
             asChild
             className="justify-start"
             size="lg"
-            variant={href === location.pathname ? "secondary" : "ghost"}
+            variant={
+              href === location.pathname ? "secondary" : "ghost-secondary"
+            }
           >
             <Link to={href}>
               <div className={icon} />
