@@ -107,6 +107,38 @@ export function VideoCard({
     [videoHref],
   );
 
+  const videoMenu = (
+    <VideoMenu
+      {...{
+        id,
+        type,
+        status,
+        title,
+        topic_id,
+        available_at,
+        duration,
+        start_scheduled,
+        start_actual,
+        end_actual,
+        live_viewers,
+        channel,
+        url: externalLink,
+        ...rest,
+      }}
+    >
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute right-0 top-0 h-8 w-6 rounded-sm opacity-0 group-hover:opacity-100"
+        onClickCapture={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <div className="i-heroicons:ellipsis-vertical h-4 w-4" />
+      </Button>
+    </VideoMenu>
+  );
+
   switch (size) {
     case "xs":
       return (
@@ -165,35 +197,7 @@ export function VideoCard({
               {channel?.name}
             </Link>
           </div>
-          <VideoMenu
-            {...{
-              id,
-              type,
-              status,
-              title,
-              topic_id,
-              available_at,
-              duration,
-              start_scheduled,
-              start_actual,
-              end_actual,
-              live_viewers,
-              channel,
-              url: externalLink,
-              ...rest,
-            }}
-          >
-            <Button
-              variant="ghost"
-              size="icon-lg"
-              className="absolute right-0 top-2 hidden rounded-full group-hover:flex"
-              onClickCapture={(e) => {
-                e.preventDefault();
-              }}
-            >
-              <div className="i-heroicons:ellipsis-vertical h-4 w-4" />
-            </Button>
-          </VideoMenu>
+          {videoMenu}
         </div>
       );
 
@@ -288,35 +292,7 @@ export function VideoCard({
               </span>
             )}
           </div>
-          <VideoMenu
-            {...{
-              id,
-              type,
-              status,
-              title,
-              topic_id,
-              available_at,
-              duration,
-              start_scheduled,
-              start_actual,
-              end_actual,
-              live_viewers,
-              channel,
-              url: externalLink,
-              ...rest,
-            }}
-          >
-            <Button
-              variant="ghost"
-              size="icon-lg"
-              className="absolute right-0 top-2 hidden rounded-full group-hover:flex"
-              onClickCapture={(e) => {
-                e.preventDefault();
-              }}
-            >
-              <div className="i-heroicons:ellipsis-vertical h-4 w-4" />
-            </Button>
-          </VideoMenu>
+          {videoMenu}
         </div>
       );
 
@@ -442,35 +418,7 @@ export function VideoCard({
                 )}
               </div>
             </div>
-            <VideoMenu
-              {...{
-                id,
-                type,
-                status,
-                title,
-                topic_id,
-                available_at,
-                duration,
-                start_scheduled,
-                start_actual,
-                end_actual,
-                live_viewers,
-                channel,
-                url: externalLink,
-                ...rest,
-              }}
-            >
-              <Button
-                variant="ghost"
-                size="icon-lg"
-                className="absolute -right-2 top-0 hidden rounded-full group-hover:flex"
-                onClickCapture={(e) => {
-                  e.preventDefault();
-                }}
-              >
-                <div className="i-heroicons:ellipsis-vertical h-4 w-4" />
-              </Button>
-            </VideoMenu>
+            {videoMenu}
           </div>
         </div>
       );
