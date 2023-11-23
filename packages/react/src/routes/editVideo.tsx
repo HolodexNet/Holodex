@@ -1,6 +1,6 @@
 import { Loading } from "@/components/common/Loading";
 import { VideoEditTopic } from "@/components/edit/VideoEditTopic";
-import { VideoPortalContext } from "@/components/layout/Frame";
+import { VideoPortalContext } from "@/components/layout/VideoPortalContext";
 import { useVideo } from "@/services/video.service";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { currentVideoAtom } from "@/store/player";

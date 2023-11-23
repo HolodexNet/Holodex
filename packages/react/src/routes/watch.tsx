@@ -1,6 +1,6 @@
 import { ChannelCard } from "@/components/channel/ChannelCard";
 import { ChatModal } from "@/components/chat/ChatModal";
-import { VideoPortalContext } from "@/components/layout/Frame";
+import { VideoPortalContext } from "@/components/layout/VideoPortalContext";
 import { ChatCard } from "@/components/player/ChatCard";
 import { Controlbar } from "@/components/player/Controlbar";
 import { PlayerDescription } from "@/components/player/PlayerDescription";

@@ -2,7 +2,7 @@ import { currentVideoAtom } from "@/store/player";
 import { useAtomValue } from "jotai";
 import { useContext } from "react";
 import { OutPortal } from "react-reverse-portal";
-import { VideoPortalContext } from "../layout/Frame";
+import { VideoPortalContext } from "../layout/VideoPortalContext";
 import { Link } from "react-router-dom";
 
 export function MiniPlayer() {

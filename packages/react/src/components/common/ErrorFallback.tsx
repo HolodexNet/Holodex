@@ -55,10 +55,10 @@ export function ErrorFallback(props?: Partial<FallbackProps>) {
             {t("component.apiError.logoutAndClearCache")}
           </Button>
         </div>
-        <code className="max-w-full shrink-0 overflow-x-auto whitespace-pre rounded-md bg-black/10 px-2 py-0 text-sm">
+        <code className="max-w-full shrink-0 overflow-x-auto whitespace-pre-wrap rounded-md bg-black/10 px-2 py-0 text-sm">
           {error?.message}
         </code>
-        <code className="max-w-full shrink-0 overflow-x-auto whitespace-pre rounded-md bg-black/10 p-2 text-xs">
+        <code className="max-w-full shrink-0 overflow-x-auto whitespace-pre-wrap rounded-md bg-black/10 p-2 text-xs">
           {error?.stack}
         </code>
         <TwitterFeed className="flex h-[400px] w-[min(800px,calc(100vw-40px))] justify-center" />

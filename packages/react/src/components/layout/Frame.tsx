@@ -1,17 +1,7 @@
 import "./Frame.scss";
-import {
-  HtmlPortalNode,
-  InPortal,
-  createHtmlPortalNode,
-} from "react-reverse-portal";
+import { InPortal, createHtmlPortalNode } from "react-reverse-portal";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
-import React, {
-  Suspense,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-} from "react";
+import React, { Suspense, useContext, useEffect, useMemo } from "react";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import {
   isFloatingAtom,
@@ -38,10 +28,7 @@ import {
   playerRefAtom,
   queueAtom,
 } from "@/store/player";
-
-export const VideoPortalContext = createContext<HtmlPortalNode>(
-  createHtmlPortalNode(),
-);
+import { VideoPortalContext } from "./VideoPortalContext";
 
 export function Frame() {
   const VideoPortalNode = useMemo(
@@ -138,6 +125,7 @@ const VideoPortalContainer = React.memo(() => {
           },
         }}
         onEnded={() => {
+          // advance to the next video?
           const nextVideo =
             queue[queue.findIndex(({ id }) => currentVideo?.id === id) + 1] ??
             currentVideo;
