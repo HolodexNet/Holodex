@@ -128,13 +128,13 @@ export function VideoCard({
     >
       <Button
         variant="ghost"
-        size="icon"
+        size="icon-lg"
         className="absolute right-0 top-0 h-8 w-6 rounded-sm opacity-0 group-hover:opacity-100"
         onClickCapture={(e) => {
           e.preventDefault();
         }}
       >
-        <div className="i-heroicons:ellipsis-vertical h-4 w-4" />
+        <div className="i-heroicons:ellipsis-vertical h-6 w-6" />
       </Button>
     </VideoMenu>
   );

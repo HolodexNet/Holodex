@@ -6,7 +6,7 @@ import { useVideos } from "@/services/video.service";
 import { Button } from "@/shadcn/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { orgAtom } from "@/store/org";
-import { videoCardSizeAtom } from "@/store/video";
+import { useVideoCardSizes, videoCardSizeAtom } from "@/store/video";
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useMemo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -26,7 +26,12 @@ export function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useTranslation();
   const { org } = useParams();
-  const [cardSize, setCardSize] = useAtom(videoCardSizeAtom);
+  const {
+    size: cardSize,
+    setSize,
+    nextSize,
+    setNextSize,
+  } = useVideoCardSizes(["sm", "md", "lg"]);
   const currentOrg = useAtomValue(orgAtom);
   const [tab, setTab] = useState(searchParams.get("tab") ?? "live");
   const { data: live, isLoading: liveLoading } = useLive(
@@ -79,11 +84,11 @@ export function Home() {
   const listCN = useMemo(
     () =>
       cn("px-4 py-2 md:px-8", {
-        "@container grid grid-cols-1 grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] gap-x-4 gap-y-6":
+        "@container grid grid-cols-1 grid-cols-[repeat(auto-fill,_minmax(360px,_1fr))] gap-x-4 gap-y-6":
           cardSize === "lg",
-        "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-x-2 gap-y-4":
+        "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-x-2 gap-y-4":
           cardSize === "md",
-        "@container flex flex-col max-w-screen-lg mx-auto": cardSize === "sm",
+        "@container flex flex-col max-w-screen mx-auto": cardSize === "sm",
       }),
     [cardSize],
   );
@@ -138,18 +143,19 @@ export function Home() {
             size="icon-lg"
             variant="ghost"
             onClick={() => {
-              setCardSize(
-                // lg -> md -> sm
-                cardSize === "sm" ? "lg" : cardSize === "md" ? "sm" : "md",
-              );
+              setNextSize();
+              console.log("new card size", nextSize);
             }}
           >
             <div
-              className={cn({
-                "i-lucide:layout-grid": cardSize === "sm",
-                "i-lucide:list": cardSize === "md",
-                "i-lucide:grid": cardSize === "lg",
-              })}
+              className={cn(
+                {
+                  md: "i-lucide:grid-3x3",
+                  lg: "i-lucide:layout-grid",
+                  sm: "i-lucide:list",
+                  xs: "", // not used
+                }[nextSize],
+              )}
             />
           </Button>
           <LanguageSelector />
