@@ -25,6 +25,7 @@ const AboutPrivacy = React.lazy(() => import("./about/privacy"));
 const Watch = React.lazy(() => import("./watch"));
 const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 const Channel = React.lazy(() => import("./channel"));
+const EditVideo = React.lazy(() => import("./editVideo"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
 const Playlists = React.lazy(() => import("./playlists"));
 const Playlist = React.lazy(() => import("./playlist"));
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
             element: <NavigateToMusicdex />,
           },
         ],
+      },
+      {
+        path: "edit/video/:id",
+        element: <EditVideo />,
       },
       {
         path: "profile",

@@ -15,7 +15,7 @@ import { Textarea } from "@/shadcn/ui/textarea";
 import { useToast } from "@/shadcn/ui/use-toast";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ChannelPicker } from "./ChannelPicker";
+import { ChannelPicker } from "../../channel/ChannelPicker";
 
 const formValues = {
   channel: {
@@ -122,18 +122,20 @@ export function DeleteChannelForm() {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Channel</FormLabel>
-              <ChannelPicker
-                name="channel.name"
-                form={form}
-                field={field}
-                onSelect={({ name, id }) => {
-                  form.setValue("channel.name", name);
-                  form.setValue(
-                    "channel.link",
-                    `https://www.youtube.com/channel/${id}`,
-                  );
-                }}
-              />
+              <FormControl>
+                <ChannelPicker
+                  name="channel.name"
+                  form={form}
+                  value={field.value}
+                  onSelect={({ name, id }) => {
+                    form.setValue("channel.name", name);
+                    form.setValue(
+                      "channel.link",
+                      `https://www.youtube.com/channel/${id}`,
+                    );
+                  }}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

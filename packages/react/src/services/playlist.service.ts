@@ -1,4 +1,5 @@
 import { useClient } from "@/hooks/useClient";
+import { HTTPError } from "@/lib/fetch";
 import {
   UseMutationOptions,
   UseQueryOptions,
@@ -44,7 +45,11 @@ export function usePlaylistInclude(
 }
 
 export function usePlaylistVideoMutation(
-  options?: UseMutationOptions<boolean, Error, { id: number; videoId: string }>,
+  options?: UseMutationOptions<
+    boolean,
+    HTTPError,
+    { id: number; videoId: string }
+  >,
 ) {
   const client = useClient();
 
@@ -58,7 +63,7 @@ export function usePlaylistVideoMutation(
 }
 
 export function usePlaylistDeleteMutation(
-  options?: UseMutationOptions<void, Error, { playlistId: number }>,
+  options?: UseMutationOptions<void, HTTPError, { playlistId: number }>,
 ) {
   const client = useClient();
   const queryClient = useQueryClient();
@@ -88,7 +93,7 @@ export function usePlaylistDeleteMutation(
 }
 
 export function usePlaylistSaveMutation(
-  options?: UseMutationOptions<number, Error, Partial<PlaylistStub>>,
+  options?: UseMutationOptions<number, HTTPError, Partial<PlaylistStub>>,
 ) {
   const client = useClient();
   const queryClient = useQueryClient();

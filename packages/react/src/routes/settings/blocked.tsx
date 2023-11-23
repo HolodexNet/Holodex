@@ -1,7 +1,7 @@
 import { ChannelCard } from "@/components/channel/ChannelCard";
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { blockedChannelsAtom } from "@/store/settings";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 
 export default function SettingsBlocked() {
@@ -16,7 +16,7 @@ export default function SettingsBlocked() {
           {blockedChannels.length ? (
             <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] ">
               {blockedChannels.map((channel) => (
-                <ChannelCard {...channel} />
+                <ChannelCard size="lg" {...channel} />
               ))}
             </div>
           ) : (

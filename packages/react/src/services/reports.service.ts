@@ -1,3 +1,4 @@
+import { HTTPError } from "@/lib/fetch";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 
 type ReportOptions =
@@ -16,7 +17,11 @@ type ReportOptions =
 
 export function useReportMutation(
   { type, videoId }: ReportOptions,
-  options?: UseMutationOptions<unknown, Error, HolodexReportBody<typeof type>>,
+  options?: UseMutationOptions<
+    unknown,
+    HTTPError,
+    HolodexReportBody<typeof type>
+  >,
 ) {
   let endpoint: string;
 
@@ -37,7 +42,7 @@ export function useReportMutation(
       throw new Error("Report type is not specified");
   }
 
-  return useMutation<unknown, Error, HolodexReportBody<typeof type>>({
+  return useMutation<unknown, HTTPError, HolodexReportBody<typeof type>>({
     mutationFn: async (body) =>
       // use plain fetch cuz response is not json
       {
