@@ -25,13 +25,14 @@ import { useAtomValue, useSetAtom } from "jotai";
 import React, { Suspense, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import ReactPlayer from "react-player";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ErrorFallback } from "../common/ErrorFallback";
 import { Loading } from "../common/Loading";
 import { MiniPlayer } from "../player/MiniPlayer";
 
 export function Frame() {
   const location = useLocation();
+  const navigate = useNavigate();
   const toggle = useSetAtom(toggleSidebarAtom);
   const resize = useSetAtom(onResizeAtom);
   const dark = useAtomValue(darkAtom);
@@ -49,7 +50,7 @@ export function Frame() {
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
   // console.log(fs);
 
-  if (location.pathname === "/") return <Navigate to={`/org/${org}`} replace />;
+  if (location.pathname === "/") navigate(`/org/${org}`, { replace: true });
 
   const mainClasses = clsx({
     "mobile-footer": isMobile,
