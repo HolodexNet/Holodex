@@ -24,14 +24,15 @@ export function ChannelSocials({
     case "sm":
       return (
         <div className="flex gap-2">
+          {/* Youtube Logo needs to conform with YT guidelines https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors */}
           <Button
-            className="hidden md:flex"
+            className="hidden text-[#282828] dark:text-white md:flex"
             size="icon-lg"
-            variant="ghost"
+            variant="ghost-yt"
             asChild
           >
             <Link to={`https://www.youtube.com/channel/${id}`}>
-              <div className="i-mdi:youtube" />
+              <div className="i-mdi:youtube text-3xl" />
             </Link>
           </Button>
           {twitter && (
@@ -105,7 +106,7 @@ export function ChannelSocials({
             <Button
               asChild
               className="w-full text-[#282828] dark:text-white"
-              variant="ghost"
+              variant="ghost-yt"
               size="icon-lg"
             >
               {/* Youtube Logo needs to conform with YT guidelines https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors */}
@@ -113,7 +114,7 @@ export function ChannelSocials({
                 to={`https://www.youtube.com/channel/${id}`}
                 target="_blank"
               >
-                <div className="i-mdi:youtube" />
+                <div className="i-mdi:youtube text-3xl" />
               </Link>
             </Button>
             {twitter && (
