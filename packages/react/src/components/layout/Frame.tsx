@@ -93,7 +93,9 @@ const DefaultPlayerContainer = React.memo(() => {
     <div
       className={clsx([
         "fixed",
-        page.pathname.startsWith("/watch") || miniPlayer ? "z-10" : "-z-10",
+        page.pathname.startsWith("/watch") || miniPlayer
+          ? "z-10"
+          : "-z-10 hidden",
       ])}
       style={locations}
     >
