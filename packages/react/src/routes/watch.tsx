@@ -3,6 +3,7 @@ import { ChatModal } from "@/components/chat/ChatModal";
 import { VideoPortalContext } from "@/components/layout/VideoPortalContext";
 import { ChatCard } from "@/components/player/ChatCard";
 import { Controlbar } from "@/components/player/Controlbar";
+import { DefaultPlayerFrame } from "@/components/player/DefaultPlayerFrame";
 import { PlayerDescription } from "@/components/player/PlayerDescription";
 import { PlayerRecommendations } from "@/components/player/PlayerRecommendations";
 import { PlayerStats } from "@/components/player/PlayerStats";
@@ -20,15 +21,14 @@ import {
   tlOpenAtom,
   currentVideoAtom,
   QueueVideo,
+  playerLocationAtom,
 } from "@/store/player";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useContext, useEffect, useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { OutPortal } from "react-reverse-portal";
 import { useLocation, useParams } from "react-router-dom";
 
 export default function Watch() {
-  const VideoPortalNode = useContext(VideoPortalContext);
   const location = useLocation();
   const { id } = useParams();
   const { value: clipLang } = useAtomValue(clipLangAtom);
@@ -135,10 +135,9 @@ export default function Watch() {
                     "flex-row-reverse": chatPos === "left",
                   })}
                 >
-                  <OutPortal
+                  <DefaultPlayerFrame
+                    className="h-full w-full"
                     style={{ aspectRatio: theaterMode ? "" : "16 / 9" }}
-                    height="100%"
-                    node={VideoPortalNode}
                   />
                   {theaterMode && data && (chatOpen || tlOpen) && (
                     <div className="hidden min-w-[24rem] @screen-lg:flex">
