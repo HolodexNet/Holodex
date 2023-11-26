@@ -101,7 +101,7 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
-    "eslint-plugin-tailwindcss": "3.13.0",
+    "eslint-plugin-tailwindcss": "github:HolodexNet/eslint-plugin-tailwindcss",
     "husky": "^6.0.0",
     "lightningcss": "^1.22.1",
     "lint-staged": "^15.1.0",
