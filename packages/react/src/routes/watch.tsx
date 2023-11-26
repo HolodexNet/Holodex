@@ -3,7 +3,7 @@ import { ChatModal } from "@/components/chat/ChatModal";
 import { VideoPortalContext } from "@/components/layout/VideoPortalContext";
 import { ChatCard } from "@/components/player/ChatCard";
 import { Controlbar } from "@/components/player/Controlbar";
-import { DefaultPlayerFrame } from "@/components/player/DefaultPlayerFrame";
+import { DefaultPlayerPositionAnchor } from "@/components/player/DefaultPlayerPositionAnchor";
 import { PlayerDescription } from "@/components/player/PlayerDescription";
 import { PlayerRecommendations } from "@/components/player/PlayerRecommendations";
 import { PlayerStats } from "@/components/player/PlayerStats";
@@ -135,7 +135,7 @@ export default function Watch() {
                     "flex-row-reverse": chatPos === "left",
                   })}
                 >
-                  <DefaultPlayerFrame
+                  <DefaultPlayerPositionAnchor
                     className="h-full w-full"
                     style={{ aspectRatio: theaterMode ? "" : "16 / 9" }}
                   />
