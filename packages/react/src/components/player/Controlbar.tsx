@@ -12,8 +12,8 @@ import {
 
 interface ControlbarProps extends VideoBase {
   link?: string;
-  onChatClick: () => void;
-  onTLClick: () => void;
+  // onChatClick: () => void;
+  // onTLClick: () => void;
 }
 
 export function Controlbar({
@@ -21,8 +21,8 @@ export function Controlbar({
   type,
   status,
   link,
-  onChatClick,
-  onTLClick,
+  // onChatClick,
+  // onTLClick,
   ...rest
 }: ControlbarProps) {
   const location = useLocation();
@@ -36,7 +36,7 @@ export function Controlbar({
   const url = link?.includes("twitch") ? link : `https://youtu.be/${id}`;
 
   return (
-    <div className="flex shrink-0 items-center gap-2 overflow-x-auto border-t-[1px] border-base px-4 py-2 text-base-11">
+    <div className="flex shrink-0 items-center gap-0 overflow-x-auto border-t-[1px] border-base px-4 py-2 text-base-11 @screen-lg:gap-2">
       <Button
         className="flex shrink-0 @screen-md:hidden"
         size="icon"
@@ -49,18 +49,22 @@ export function Controlbar({
         title={t("views.watch.chat.showTLBtn")}
         className="flex @screen-lg:hidden"
         variant="ghost"
-        onClick={onTLClick}
+        onClick={() => {
+          setTlOpen((v) => !v);
+        }}
       >
         <div className="i-heroicons:chat-bubble-bottom-center-text" />
-        TL
+        <span>TL</span>
       </Button>
       <Button
         className="flex @screen-lg:hidden"
         variant="ghost"
-        onClick={onChatClick}
+        onClick={() => {
+          setChatOpen((v) => !v);
+        }}
       >
         <div className="i-heroicons:chat-bubble-left-right" />
-        Chat
+        <span>Chat</span>
       </Button>
       {theaterMode && (
         <Button
@@ -72,7 +76,7 @@ export function Controlbar({
           }}
         >
           <div className="i-heroicons:chat-bubble-left-right" />
-          Chat / TL
+          <span>Chat / TL</span>
         </Button>
       )}
       <Button
@@ -87,7 +91,9 @@ export function Controlbar({
               : "i-tabler:panorama-horizontal"
           }
         />
-        {t("views.watch.theaterMode")}
+        <span className="hidden @screen-lg:block">
+          {t("views.watch.theaterMode")}
+        </span>
       </Button>
       <Button
         className="whitespace-nowrap"
@@ -98,11 +104,13 @@ export function Controlbar({
         }}
       >
         <div className="i-lucide:arrow-down-right-square" />
-        Mini Player
+        <span className="hidden @screen-lg:block">Mini Player</span>
       </Button>
       <Button variant="ghost">
         <div className="i-heroicons:arrow-path" />
-        {t("component.apiError.reload")}
+        <span className="hidden @screen-lg:block">
+          {t("component.apiError.reload")}
+        </span>
       </Button>
       <VideoMenu id={id} type={type} status={status} {...rest} url={url}>
         <Button className="shrink-0" size="icon" variant="ghost">

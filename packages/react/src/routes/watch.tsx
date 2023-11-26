@@ -146,13 +146,7 @@ export default function Watch() {
                   )}
                 </div>
               )}
-              {data && (
-                <Controlbar
-                  {...data}
-                  onChatClick={() => setChatOpen((v) => !v)}
-                  onTLClick={() => setTLOpen((v) => !v)}
-                />
-              )}
+              {data && <Controlbar {...data} />}
             </div>
             <div
               className={cn("flex flex-col gap-1", {
