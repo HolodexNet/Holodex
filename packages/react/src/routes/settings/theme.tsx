@@ -77,10 +77,10 @@ interface ColorPickerProps {
 function ColorPicker({ options, ...rest }: ColorPickerProps & SelectProps) {
   return (
     <Select {...rest}>
-      <SelectTrigger className="w-[280px]">
+      <SelectTrigger className="max-w-sm">
         <SelectValue placeholder="Select a Color" />
       </SelectTrigger>
-      <SelectContent className="max-h-60">
+      <SelectContent className="max-h-48">
         <SelectGroup>
           <SelectLabel>Colors</SelectLabel>
           {options.map((x) => {
