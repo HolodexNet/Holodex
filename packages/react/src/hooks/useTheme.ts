@@ -2,6 +2,43 @@ import { useEffect } from "react";
 import { atomWithStorageBroadcast } from "@/lib/atomWithStorageBroadcast";
 import { useAtom } from "jotai";
 
+export const THEME_COLORS = [
+  "tomato",
+  "red",
+  "ruby",
+  "crimson",
+  "pink",
+  "plum",
+  "purple",
+  "violet",
+  "iris",
+  "indigo",
+  "blue",
+  "cyan",
+  "teal",
+  "jade",
+  "green",
+  "grass",
+  "brown",
+  "bronze",
+  "gold",
+  "orange",
+  "sky",
+  "mint",
+  "lime",
+  "yellow",
+  "amber",
+];
+
+export const THEME_BASE_COLORS = [
+  "gray",
+  "mauve",
+  "slate",
+  "sage",
+  "olive",
+  "sand",
+];
+
 /** STORE **/
 export const baseAtom = atomWithStorageBroadcast("theme-base", "mauve");
 export const primaryAtom = atomWithStorageBroadcast("theme-primary", "blue");
