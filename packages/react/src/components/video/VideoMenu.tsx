@@ -122,7 +122,11 @@ export function VideoMenu({
                     <div className="i-lucide:loader-2 animate-spin leading-none" />
                   </DropdownMenuItem>
                 )}
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense
+                  fallback={
+                    <div className="i-lucide:loader-2 animate-spin leading-none" />
+                  }
+                >
                   <LazyNewPlaylistDialog
                     triggerElement={
                       <DropdownMenuItem
