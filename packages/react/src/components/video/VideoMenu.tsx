@@ -14,14 +14,17 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu";
-import { ReactNode, useState } from "react";
+import { ReactNode, Suspense, lazy, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import NewPlaylistDialog from "@/components/playlist/NewPlaylistDialog";
 import { useCopyToClipboard } from "usehooks-ts";
 import { useToast } from "@/shadcn/ui/use-toast";
 import { useAtom } from "jotai";
 import { queueAtom } from "@/store/player";
+
+const LazyNewPlaylistDialog = lazy(
+  () => import("@/components/playlist/NewPlaylistDialog"),
+);
 
 interface VideoMenuProps extends VideoBase {
   children: ReactNode;
@@ -119,16 +122,18 @@ export function VideoMenu({
                     <div className="i-lucide:loader-2 animate-spin leading-none" />
                   </DropdownMenuItem>
                 )}
-                <NewPlaylistDialog
-                  triggerElement={
-                    <DropdownMenuItem
-                      onSelect={(event) => event.preventDefault()}
-                    >
-                      {t("component.playlist.menu.new-playlist")}
-                    </DropdownMenuItem>
-                  }
-                  videoIds={[videoId]}
-                />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <LazyNewPlaylistDialog
+                    triggerElement={
+                      <DropdownMenuItem
+                        onSelect={(event) => event.preventDefault()}
+                      >
+                        {t("component.playlist.menu.new-playlist")}
+                      </DropdownMenuItem>
+                    }
+                    videoIds={[videoId]}
+                  />
+                </Suspense>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>

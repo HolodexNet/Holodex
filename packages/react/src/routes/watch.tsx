@@ -1,6 +1,5 @@
 import { ChannelCard } from "@/components/channel/ChannelCard";
 import { ChatModal } from "@/components/chat/ChatModal";
-import { VideoPortalContext } from "@/components/layout/VideoPortalContext";
 import { ChatCard } from "@/components/player/ChatCard";
 import { Controlbar } from "@/components/player/Controlbar";
 import { DefaultPlayerPositionAnchor } from "@/components/player/DefaultPlayerPositionAnchor";
@@ -13,18 +12,17 @@ import { useChannel } from "@/services/channel.service";
 import { useVideo } from "@/services/video.service";
 import { clipLangAtom } from "@/store/i18n";
 import {
+  QueueVideo,
   chatOpenAtom,
   chatPosAtom,
-  queueAtom,
+  currentVideoAtom,
   miniPlayerAtom,
+  queueAtom,
   theaterModeAtom,
   tlOpenAtom,
-  currentVideoAtom,
-  QueueVideo,
-  playerLocationAtom,
 } from "@/store/player";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { useContext, useEffect, useLayoutEffect } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { useEffect, useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
 

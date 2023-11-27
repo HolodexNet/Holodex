@@ -8,5 +8,5 @@ export const tokenAtom = atomWithStorage<string | null>(
   // we need this atom to be populated from localStorage before first use, or
   // tasks like `createFetchClient` will fail from receiving a null token
   // see: https://github.com/pmndrs/jotai/discussions/1999
-  { unstable_getOnInit: true },
+  { getOnInit: true },
 );

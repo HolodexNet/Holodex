@@ -46,10 +46,10 @@ export function eventbus<E extends EventMap>(
     on(key, handleOnce as typeof handler);
   };
 
-  const emit: EventBus<E>["emit"] = (key, payload) => {
+  const emit: EventBus<E>["emit"] = (key, ...payload) => {
     bus[key]?.forEach((fn) => {
       try {
-        fn(payload);
+        fn(...payload);
       } catch (e) {
         config?.onError(e);
       }
