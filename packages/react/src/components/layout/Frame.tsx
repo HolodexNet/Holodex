@@ -1,5 +1,4 @@
 import "./Frame.scss";
-// import { InPortal, createHtmlPortalNode } from "react-reverse-portal";
 import { Header } from "@/components/header/header";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import {
@@ -94,7 +93,9 @@ const DefaultPlayerContainer = React.memo(() => {
     <div
       className={clsx([
         "fixed",
-        page.pathname.startsWith("/watch") || miniPlayer
+        page.pathname.startsWith("/watch") ||
+        page.pathname.startsWith("/edit") ||
+        miniPlayer
           ? "z-10"
           : "-z-10 hidden",
       ])}
