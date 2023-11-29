@@ -12,13 +12,9 @@ export const playerRefAtom = atom<ReactPlayer | null>(null);
 
 export const miniPlayerAtom = atom(false);
 export const playerLocationAtom = atom({
-  x: 0,
-  y: 0,
   width: 100,
   height: 100,
   top: 0,
-  right: 0,
-  bottom: 0,
   left: 0,
 });
 export const theaterModeAtom = atomWithStorage("theater-mode", false);

@@ -1,6 +1,11 @@
 import { playerLocationAtom } from "@/store/player";
 import { useSetAtom } from "jotai/react";
-import { DetailedHTMLProps, HTMLAttributes, useEffect } from "react";
+import {
+  DetailedHTMLProps,
+  HTMLAttributes,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 
 import useMeasure from "react-use-measure";
 
@@ -16,12 +21,15 @@ export function DefaultPlayerPositionAnchor(
     "ref"
   >,
 ) {
-  const [ref, bounds] = useMeasure({ scroll: true });
+  const [ref, { top, left, width, height }] = useMeasure({
+    scroll: true,
+  });
   const setPlayerLocation = useSetAtom(playerLocationAtom);
 
-  useEffect(() => {
-    setPlayerLocation(bounds);
-  }, [bounds, setPlayerLocation]);
+  useLayoutEffect(() => {
+    // console.log(b);
+    setPlayerLocation({ top, left, width, height });
+  }, [height, left, setPlayerLocation, top, width]);
 
   return <div {...props} ref={ref}></div>;
 }

@@ -21,7 +21,7 @@ import {
   theaterModeAtom,
   tlOpenAtom,
 } from "@/store/player";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect, useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
@@ -115,7 +115,7 @@ export default function Watch() {
         <title>{data?.title}</title>
         <meta name="description" content={data?.description} />
       </Helmet>
-      <div className="flex h-full w-full @container" ref={ref}>
+      <div className="flex h-full w-full  @container" ref={ref}>
         <div
           className={cn("mx-auto flex w-full gap-8", {
             "@screen-lg:p-8 p-4 max-w-screen-2xl": !theaterMode,
