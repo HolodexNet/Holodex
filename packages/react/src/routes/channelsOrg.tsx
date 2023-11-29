@@ -1,16 +1,16 @@
 import { ChannelCard } from "@/components/channel/ChannelCard";
+import { VirtuosoLoadingFooter } from "@/components/common/Loading";
 import { cn } from "@/lib/utils";
 import { useChannels } from "@/services/channel.service";
 import { Label } from "@/shadcn/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/shadcn/ui/radio-group";
-import { Switch } from "@/shadcn/ui/switch";
 import { orgAtom } from "@/store/org";
 import { useAtomValue } from "jotai";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { VirtuosoGrid } from "react-virtuoso";
+import { useNavigate, useParams } from "react-router-dom";
+import { Virtuoso, VirtuosoGrid } from "react-virtuoso";
 
 export default function ChannelsOrg() {
   const { t } = useTranslation();
@@ -21,7 +21,8 @@ export default function ChannelsOrg() {
   const {
     data: channels,
     fetchNextPage: fetchChannels,
-    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
   } = useChannels({
     org,
     sort: "suborg",
@@ -45,7 +46,7 @@ export default function ChannelsOrg() {
           {currentOrg} {t("component.mainNav.channels")} - Holodex
         </title>
       </Helmet>
-      <div className="container h-full w-full px-4 md:p-8">
+      <div className=" h-full w-full px-4 md:p-8">
         <div className="flex flex-row">
           <RadioGroup
             className="ml-auto flex gap-0 rounded-lg"
@@ -71,25 +72,60 @@ export default function ChannelsOrg() {
             </Label>
           </RadioGroup>
         </div>
-        <VirtuosoGrid
-          useWindowScroll
-          listClassName={
-            displayStyle == "grid"
-              ? "w-full grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-x-4 gap-y-6"
-              : "w-full flex flex-col gap-y-2"
-          }
-          data={channelList}
-          itemContent={(_, channel) => (
-            <ChannelCard
-              size={displayStyle == "grid" ? "lg" : "sm"}
-              {...channel}
-              key={"channel-" + channel.id}
-            />
-          )}
-          endReached={async () => {
-            await fetchChannels();
-          }}
-        />
+        {displayStyle === "grid" ? (
+          <VirtuosoGrid
+            useWindowScroll
+            listClassName="w-full grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-x-4 gap-y-6"
+            data={channelList}
+            itemContent={(_, channel) => (
+              <ChannelCard
+                size={displayStyle == "grid" ? "lg" : "sm"}
+                {...channel}
+                key={"channel-" + channel.id}
+              />
+            )}
+            endReached={async () => {
+              await fetchChannels();
+            }}
+            context={{
+              size: "sm",
+              className: "py-4",
+              isLoading: isFetchingNextPage,
+              hasNextPage,
+              loadMore: fetchChannels,
+            }}
+            components={{
+              Footer: VirtuosoLoadingFooter,
+            }}
+          />
+        ) : (
+          <Virtuoso
+            useWindowScroll
+            data={channelList}
+            itemContent={(_, channel) => (
+              <div className="py-1">
+                <ChannelCard
+                  size="sm"
+                  {...channel}
+                  key={"channel-" + channel.id}
+                />
+              </div>
+            )}
+            context={{
+              size: "sm",
+              className: "py-4",
+              isLoading: isFetchingNextPage,
+              hasNextPage,
+              loadMore: fetchChannels,
+            }}
+            components={{
+              Footer: VirtuosoLoadingFooter,
+            }}
+            endReached={async () => {
+              await fetchChannels();
+            }}
+          />
+        )}
       </div>
     </>
   );

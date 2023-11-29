@@ -3,6 +3,8 @@ import { Loader2 } from "lucide-react";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { ApiError } from "./ApiError";
 import { HTTPError } from "@/lib/fetch";
+import { Button } from "@/shadcn/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface LoadingProps {
   size: "sm" | "md" | "lg" | "xl";
@@ -36,6 +38,31 @@ export function Loading(
       <Loader2 className="animate-spin" />
     </div>
   );
+}
+
+export function VirtuosoLoadingFooter({
+  context,
+}: {
+  context?: {
+    size: "sm" | "md" | "lg" | "xl";
+    isLoading: boolean;
+    hasNextPage: boolean;
+    loadMore?: () => void;
+  } & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+}) {
+  const { t } = useTranslation();
+
+  return context?.isLoading ? (
+    <Loading {...context} />
+  ) : context?.hasNextPage ? (
+    <Button
+      variant="outline"
+      className="mt-4 w-full"
+      onClick={context.loadMore}
+    >
+      {t("component.channelList.loadMore")}
+    </Button>
+  ) : undefined;
 }
 
 export function GlobalLoading() {

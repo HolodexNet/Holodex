@@ -1,8 +1,8 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: "There was an error retrieving content, please check twitter "
-    textAfterTwitter: " or report an error through the"
+    textBeforeTwitter: 'There was an error retrieving content, please check twitter '
+    textAfterTwitter: ' or report an error through the'
     aboutPage: About page
     afterAboutPageHyperlink: .
     text: >-
@@ -14,11 +14,12 @@ component:
     signInToFavorite: Sign in to favorite
     unfavoriteAllInGroup: Unfavorite all in group
     favoriteAllInGroup: Favorite all in group
+    loadMore: Load More
   channelInfo:
     stats: Stats
-    videoCount: "{0} Videos"
-    clipCount: "{n} Clips"
-    subscriberCount: "{n} Subscribers"
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} Subscribers'
     subscriberNA: Subscriber count unavailable
     totalViews: Total Views
   channelSocials:
@@ -44,8 +45,8 @@ component:
     playlist: Playlist
     back: Back
   videoCard:
-    clips: "{n} Clips"
-    watching: "{0} Watching"
+    clips: '{n} Clips'
+    watching: '{0} Watching'
     liveNow: Live Now
     edit: Edit
     copiedToClipboard: Link copied to clipboard.
@@ -164,19 +165,19 @@ component:
       clear-playlist: Clear playlist
     save-error-not-logged-in: You need to be logged in to save playlists
   placeholderVideo:
-    discordCredit: "Event data provided by {0} from: {1}"
+    discordCredit: 'Event data provided by {0} from: {1}'
     datasourceCredit: Event data fetched from {0} datasource.
     botCredit: Event data provided via {0} datasource, created by {1}.
     streamPageBtn: Stream Page
     eventPageBtn: Event Page
     scheduledEvent: Scheduled
     editorCredit: Event setup by Holodex editor {0}.
-    creditTitleText: "Credits:"
+    creditTitleText: 'Credits:'
   channelPicker:
     notFound: No channel found
   addPlaceholder:
     creditName: Editor Credit Name
-    channelLabel: "Create Placeholder into Channel:"
+    channelLabel: 'Create Placeholder into Channel:'
     titleLabel: Video / Event Title
     titleHint: The title of placeholder
     jpTitleLabel: Japanese Event Title
@@ -317,7 +318,7 @@ views:
     scrollModeMsg: Use scroll/tap to turn pages
     resetAllSettings: Reset All Settings/Data
     resetAllSettingsWarning: You will lose all data. Continue?
-    clipLanguageSelection: "See Clips in these Languages:"
+    clipLanguageSelection: 'See Clips in these Languages:'
     tlLanguageSelection: See live-chat TL in these languages
     defaultPage: Default Page
     defaultPageMsg: >-
@@ -515,10 +516,10 @@ views:
       everyone, please refresh the page.
   playlist:
     playlist-is-modified: Not saved
-    item-last-updated: "Last Updated:"
+    item-last-updated: 'Last Updated:'
     login-prompt: Login to save playlists and have more than one playlist
     new-playlist-btn-label: Create a new Playlist
-    page-heading: "Your Playlists:"
+    page-heading: 'Your Playlists:'
     page-instruction: Click a playlist to set it as active.
     change-loss-warning: You will lose unsaved changes. Continue?
   extension:
@@ -533,10 +534,10 @@ views:
         streams, waiting room thumbnail not showing) and more!
     raycast:
       features:
-        "0": Show ongoing live streams
-        "1": Search archives
-        "2": Search clips
-        "3": Search channels
+        '0': Show ongoing live streams
+        '1': Search archives
+        '2': Search clips
+        '3': Search channels
   tlClient:
     menu:
       title: Menu
@@ -611,7 +612,7 @@ views:
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
 editor:
   music:
     add: Add
@@ -622,8 +623,8 @@ editor:
       href='/about'>discord</a> to notify editors of issues / abuse, or apply to
       become an editor.
     titles:
-      addSong: "Song Metadata: Add a new Song"
-      songList: "Song List : {0}"
+      addSong: 'Song Metadata: Add a new Song'
+      songList: 'Song List : {0}'
       help: Guide
     itunesLookupPlaceholder: (Optional) Lookup on iTunes
     moveRight2s: Move right 2s
@@ -634,8 +635,8 @@ editor:
     originalArtistInput: Original Artist
     testStart: Test the start
     startInput: Start
-    endInput: "Duration in seconds: (end @ {0})"
-    inheritItunesMusic: "Set Duration via iTunes: {0}"
+    endInput: 'Duration in seconds: (end @ {0})'
+    inheritItunesMusic: 'Set Duration via iTunes: {0}'
   exitMode: Exit Edit Mode
   enterMode: Edit Video
 about:
@@ -693,7 +694,7 @@ about:
           We are working on it! In the mean time, please use the "Add to Home"
           feature on your browser. We have tuned it a lot to behave like an app
         android:
-          - "Android Chrome: Navigate to the site, click the three dots"
+          - 'Android Chrome: Navigate to the site, click the three dots'
           - on the top right and find "Add to Home Screen".
         ios:
           - >-
@@ -729,7 +730,7 @@ about:
     support:
       title: How do I support Holodex?
       contents:
-        "0": >-
+        '0': >-
           Our self-hosted server is a 28-core 60GB RAM machine that take about
           $60 USD / mo to run, and we're looking to expanding more and more in
           our feature set, so we've started a <a
@@ -778,16 +779,16 @@ about:
   general:
     title: About Holodex
     summary:
-      "0": >-
+      '0': >-
         Holodex is a fan-built platform for watching VTubers. We are built by DD
         for DDs.
-      "1": >-
+      '1': >-
         We organize clips and collabs by talents included, tabulate songs sang
         inside individual videos and as part of karaoke streams, compile
         agencies and groups by generation and branch, provide ways to favorite
         clips and streams, and allow you to watch livestreams with TLs (or
         produce TLs live or in VODs with community-caption-alike features).
-      "2": >-
+      '2': >-
         We comply with the Derivative Work Agreement of hololive production and
         attempt to extend that to other orgs and agencies. We also operate
         within the specifications of Youtube Data API and Embed Player Terms of
@@ -795,10 +796,10 @@ about:
         service inquiries.
       title: What we are?
     credits:
-      "0": >-
+      '0': >-
         Big shout out to Jet/HoloTools for helping us with the API and inspiring
         the Multiview.
-      "1": "We'd like to thank our long list of contributors and over 100 editors:"
+      '1': 'We''d like to thank our long list of contributors and over 100 editors:'
       addRequest: >-
         (If you'd like to add your name to this list, drop us a poke on
         Discord!)
@@ -808,9 +809,9 @@ about:
     github: Issues / Source Code
     apiDocs: API Documentation
   contact:
-    discord: "Join Holodex Discord:"
+    discord: 'Join Holodex Discord:'
     twitter: DM us on Twitter
-    email: "Email us:"
+    email: 'Email us:'
     title: Contact
   contactForm:
     name: Name
@@ -824,13 +825,13 @@ about:
   privacy:
     title: Privacy Policy
     heading:
-      "1": 1. Collection and Use of Personal Data
-      "2": 2. Third-Party Data Collection and Tracking
-      "3": 3. User Data Removal
-      "4": 4. Changes to this Privacy Policy
-      "5": 5. Contact Us
+      '1': 1. Collection and Use of Personal Data
+      '2': 2. Third-Party Data Collection and Tracking
+      '3': 3. User Data Removal
+      '4': 4. Changes to this Privacy Policy
+      '5': 5. Contact Us
       top: Holodex Privacy Policy
-    lastUpdated: "Last updated: {date}"
+    lastUpdated: 'Last updated: {date}'
     text:
       1-1: >-
         When you use our platform, we collect your data solely for
@@ -856,10 +857,10 @@ about:
         this data, visit Google's privacy policy.
       3-1: >-
         If you wish to request the removal of your personal data from our
-        platform, please contact us directly on discord in a ticket or via Email. We
-        will respond to your request promptly and will make every effort to
-        respect your wishes where it is practical and consistent with legal
-        requirements.
+        platform, please contact us directly on discord in a ticket or via
+        Email. We will respond to your request promptly and will make every
+        effort to respect your wishes where it is practical and consistent with
+        legal requirements.
       4-1: >-
         We reserve the right to update this privacy policy at any time. If we
         make any substantial changes, we will notify you by posting a prominent
@@ -869,7 +870,7 @@ about:
         with our website, you can contact us on Twitter DMs or Discord ModMail.
       5-2: Links can be found here.
 channelRequest:
-  RequestType: "Request Type:"
+  RequestType: 'Request Type:'
   Types:
     AddVtuber: Add a Vtuber ▶️ for Holodex to track the channel and clips.
     AddClipper: Add a clipping/subbing channel to Holodex

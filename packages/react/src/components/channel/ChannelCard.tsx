@@ -54,7 +54,7 @@ export function ChannelCard({
       return (
         <div className="flex items-center gap-4 rounded-lg bg-base-3 p-4">
           <ChannelImg className="h-12 w-12" channelId={id} />
-          <div className="flex flex-col">
+          <div className="flex flex-col overflow-hidden">
             <div className="text-xs text-base-11">
               {org}
               {group && ` / ${group}`}
@@ -75,8 +75,10 @@ export function ChannelCard({
                 })}`}
             </div>
             {size === "sm" && (
-              <div className="flex gap-1">
-                {top_topics?.map((topic) => <TopicBadge topic={topic} />)}
+              <div className="mt-1 flex max-w-full gap-1 overflow-x-auto">
+                {top_topics?.map((topic) => (
+                  <TopicBadge size="sm" topic={topic} />
+                ))}
               </div>
             )}
           </div>
