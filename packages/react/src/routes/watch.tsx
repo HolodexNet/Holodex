@@ -25,6 +25,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
+import useMeasure from "react-use-measure";
 
 export default function Watch() {
   const location = useLocation();
@@ -47,6 +48,7 @@ export default function Watch() {
   const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
   const [tlOpen, setTLOpen] = useAtom(tlOpenAtom);
   const chatPos = useAtomValue(chatPosAtom);
+  const [ref, bounds] = useMeasure({ debounce: 50, scroll: false });
 
   const isTwitch = location.state?.isTwitch ?? data?.link?.includes("twitch");
 
@@ -113,7 +115,7 @@ export default function Watch() {
         <title>{data?.title}</title>
         <meta name="description" content={data?.description} />
       </Helmet>
-      <div className="flex h-full w-full @container">
+      <div className="flex h-full w-full @container" ref={ref}>
         <div
           className={cn("mx-auto flex w-full gap-8", {
             "@screen-lg:p-8 p-4 max-w-screen-2xl": !theaterMode,
@@ -168,25 +170,26 @@ export default function Watch() {
               </div>
             </div>
           </div>
-          <div
-            className={cn("hidden w-96 shrink-0 flex-col gap-4", {
-              "@screen-lg:flex": !theaterMode,
-            })}
-          >
-            {!!queue.length && <QueueList />}
-            {(data?.type === "stream" || data?.status === "live") && (
-              <div
-                className={cn("border-base rounded-lg border overflow-hidden", {
-                  "h-[80vh] max-h-[80vh]": chatOpen || tlOpen,
-                })}
-              >
-                <ChatCard {...data} />
-              </div>
-            )}
-            <PlayerRecommendations {...data} />
-          </div>
+          {!theaterMode && (
+            <div className="hidden w-96 shrink-0 flex-col gap-4 @screen-lg:flex">
+              {!!queue.length && <QueueList />}
+              {(data?.type === "stream" || data?.status === "live") && (
+                <div
+                  className={cn(
+                    "border-base rounded-lg border overflow-hidden",
+                    {
+                      "h-[80vh] max-h-[80vh]": chatOpen || tlOpen,
+                    },
+                  )}
+                >
+                  <ChatCard {...data} />
+                </div>
+              )}
+              <PlayerRecommendations {...data} />
+            </div>
+          )}
         </div>
-        {data && (
+        {data && bounds.width < 1023 && (
           <ChatModal
             tlOpen={tlOpen}
             chatOpen={chatOpen}
