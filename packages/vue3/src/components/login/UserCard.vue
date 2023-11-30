@@ -24,7 +24,7 @@
       <div class="flex items-center justify-center p-2 pr-4">
         <img
           class="h-10 w-10"
-          :src="`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`"
+          :src="`https://api.dicebear.com/7.x/shapes/svg?seed=${user.id}`"
         />
       </div>
       <div class="flex flex-col gap-1">
