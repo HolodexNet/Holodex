@@ -61,7 +61,7 @@ export default function SettingsUser() {
       <div className="flex items-center gap-6">
         <img
           className="h-24 w-24 rounded-full"
-          src={`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`}
+          src={`https://api.dicebear.com/7.x/shapes/svg?seed=${user.id}`}
         />
         <div className="flex flex-col gap-2">
           <div className="text-2xl font-bold md:text-4xl">{user.username}</div>
