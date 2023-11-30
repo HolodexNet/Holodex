@@ -90,7 +90,7 @@
       <template v-for="vid in collapsedFavorites">
         <v-list-item
           v-if="vid"
-          :key="vid.id"
+          :key="vid.key"
           :class="{ 'v-list-item--active': $route.path.startsWith(`/channel/${vid.channel.id}`) }"
           @click="$router.push(`/channel/${vid.channel.id}`).catch(() => {})"
         >
@@ -98,7 +98,7 @@
             <ChannelImg :channel="vid.channel" :size="30" />
           </v-list-item-avatar>
           <ChannelInfo :channel="vid.channel" no-subscriber-count no-group />
-          <v-list-item-action-text v-if="vid.id" :key="'liveclock' + vid.id + tick">
+          <v-list-item-action-text v-if="vid.id" :key="'liveclock' + vid.key + tick">
             <div :class="isLive(vid) ? 'ch-live' : 'ch-upcoming'">
               <v-avatar v-if="vid.host_channel" :size="20">
                 <ChannelImg :channel="vid.host_channel" :size="20" />
@@ -215,7 +215,7 @@ export default {
                     .filter((x) => favoritesSet.has(x.channel.id))
                     .forEach((x) => {
                         if (!existingChs.has(x.channel.id)) {
-                            existingChs.set(x.channel.id, x)
+                            existingChs.set(x.channel.id, { ...x, key: `${x.channel.id}${x.id}` });
                         }
                     });
 
@@ -224,7 +224,12 @@ export default {
                     .filter((x) => x.mentions?.length && !blockedSet.has(x.channel.id))
                     .forEach((x) => x.mentions
                         .filter(({ id }) => favoritesSet.has(id) && !existingChs.has(id) && !blockedSet.has(id))
-                        .forEach((m) => existingChs.set(m.id, { ...x, channel: m, host_channel: x.channel }))
+                        .forEach((m) => existingChs.set(m.id, {
+                            ...x,
+                            channel: m,
+                            host_channel: x.channel,
+                            key: `${m.id}${x.id}`,
+                        }))
                     );
 
                 // remainder:
