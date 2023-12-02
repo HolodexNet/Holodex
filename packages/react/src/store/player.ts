@@ -11,12 +11,7 @@ export interface QueueVideo extends VideoBase {
 export const playerRefAtom = atom<ReactPlayer | null>(null);
 
 export const miniPlayerAtom = atom(false);
-export const playerLocationAtom = atom({
-  width: 100,
-  height: 100,
-  top: 0,
-  left: 0,
-});
+export const playerLocationRefAtom = atom<HTMLElement | null>(null);
 export const theaterModeAtom = atomWithStorage("theater-mode", false);
 
 export const chatOpenAtom = atomWithStorage("chat-open", true);

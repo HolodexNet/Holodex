@@ -2,7 +2,7 @@ import {
   currentVideoAtom,
   defaultPlayerEventBus,
   miniPlayerAtom,
-  playerLocationAtom,
+  playerLocationRefAtom,
   playerRefAtom,
 } from "@/store/player";
 import clsx from "clsx";
@@ -11,15 +11,40 @@ import React, { Suspense } from "react";
 // import ReactPlayer from "react-player";
 import { useLocation } from "react-router-dom";
 import { Loading } from "../common/Loading";
+import type { OnProgressProps } from "react-player/base";
+import { useFloating, autoUpdate } from "@floating-ui/react-dom";
+import { size, offset } from "@floating-ui/react-dom";
 
 const LazyReactPlayer = React.lazy(() => import("react-player"));
 
 export const DefaultPlayerContainer = React.memo(() => {
   const setPlayerRef = useSetAtom(playerRefAtom);
   const currentVideo = useAtomValue(currentVideoAtom);
-  const locations = useAtomValue(playerLocationAtom);
+  const anchor = useAtomValue(playerLocationRefAtom);
   const page = useLocation();
   const miniPlayer = useAtomValue(miniPlayerAtom);
+
+  const { refs, floatingStyles } = useFloating({
+    strategy: "fixed",
+    placement: "bottom",
+    elements: {
+      reference: anchor,
+    },
+    middleware: [
+      size({
+        apply({ rects, elements }) {
+          Object.assign(elements.floating.style, {
+            width: `${rects.reference.width}px`,
+            height: `${rects.reference.height}px`,
+          });
+        },
+      }),
+      offset(({ rects }) => {
+        return -rects.reference.height / 2 - rects.floating.height / 2;
+      }),
+    ],
+    whileElementsMounted: autoUpdate,
+  });
 
   if (
     page.pathname.startsWith("/watch") ||
@@ -36,12 +61,8 @@ export const DefaultPlayerContainer = React.memo(() => {
             ? "z-10"
             : "-z-10 hidden",
         ])}
-        style={{
-          top: locations.top,
-          left: locations.left,
-          width: locations.width,
-          height: locations.height,
-        }}
+        ref={refs.setFloating}
+        style={floatingStyles}
       >
         <Suspense fallback={<Loading size="xl" />}>
           <LazyReactPlayer
@@ -78,14 +99,14 @@ export const DefaultPlayerContainer = React.memo(() => {
             onBufferEnd={() =>
               defaultPlayerEventBus.emit("onBufferEnd", currentVideo?.id || "")
             }
-            onClickPreview={(e) =>
+            onClickPreview={(e: unknown) =>
               defaultPlayerEventBus.emit(
                 "onClickPreview",
                 currentVideo?.id || "",
                 e,
               )
             }
-            onError={(a, b, c, d) =>
+            onError={(a: unknown, b: unknown, c: unknown, d: unknown) =>
               defaultPlayerEventBus.emit(
                 "onError",
                 currentVideo?.id || "",
@@ -101,21 +122,21 @@ export const DefaultPlayerContainer = React.memo(() => {
             onDisablePIP={() =>
               defaultPlayerEventBus.emit("onDisablePIP", currentVideo?.id || "")
             }
-            onProgress={(state) =>
+            onProgress={(state: OnProgressProps) =>
               defaultPlayerEventBus.emit(
                 "onProgress",
                 currentVideo?.id || "",
                 state,
               )
             }
-            onDuration={(dur) =>
+            onDuration={(dur: number) =>
               defaultPlayerEventBus.emit(
                 "onDuration",
                 currentVideo?.id || "",
                 dur,
               )
             }
-            onSeek={(s) =>
+            onSeek={(s: number) =>
               defaultPlayerEventBus.emit("onSeek", currentVideo?.id || "", s)
             }
             onEnded={() => {

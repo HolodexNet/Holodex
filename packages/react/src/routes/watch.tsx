@@ -21,7 +21,7 @@ import {
   theaterModeAtom,
   tlOpenAtom,
 } from "@/store/player";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";

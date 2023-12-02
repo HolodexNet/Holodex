@@ -1,13 +1,6 @@
-import { playerLocationAtom } from "@/store/player";
+import { playerLocationRefAtom } from "@/store/player";
 import { useSetAtom } from "jotai/react";
-import {
-  DetailedHTMLProps,
-  HTMLAttributes,
-  useEffect,
-  useLayoutEffect,
-} from "react";
-
-import useMeasure from "react-use-measure";
+import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
 /**
  * Renders a box that anchors to the hovering iframe to atop its location. Normally just a empty div without styling.
@@ -21,15 +14,7 @@ export function DefaultPlayerPositionAnchor(
     "ref"
   >,
 ) {
-  const [ref, { top, left, width, height }] = useMeasure({
-    scroll: true,
-  });
-  const setPlayerLocation = useSetAtom(playerLocationAtom);
+  const setRef = useSetAtom(playerLocationRefAtom);
 
-  useLayoutEffect(() => {
-    // console.log(b);
-    setPlayerLocation({ top, left, width, height });
-  }, [height, left, setPlayerLocation, top, width]);
-
-  return <div {...props} ref={ref}></div>;
+  return <div {...props} ref={setRef}></div>;
 }
