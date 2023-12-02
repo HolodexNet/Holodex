@@ -80,27 +80,73 @@ export function VideoCard({
   const videoTarget =
     !isTwitch && placeholderType === "external-stream" ? "_blank" : undefined;
 
+  const videoObject = useMemo(
+    () => ({
+      id,
+      topic_id,
+      status,
+      type,
+      duration,
+      start_actual,
+      start_scheduled,
+      end_actual,
+      available_at,
+      title,
+      channel,
+      thumbnail,
+      live_viewers,
+      link,
+      placeholderType,
+      size,
+      ...rest,
+    }),
+    [
+      id,
+      topic_id,
+      status,
+      type,
+      duration,
+      start_actual,
+      start_scheduled,
+      end_actual,
+      available_at,
+      title,
+      channel,
+      thumbnail,
+      live_viewers,
+      link,
+      placeholderType,
+      size,
+      rest,
+    ],
+  );
+
   const goToVideoClickHandler = useCallback(
     (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
       console.info("goToVideoClickHandler", evt);
       if ((evt.target as HTMLAnchorElement).closest("#channelLink")) {
+        console.info("no action b/c closest element is a channel link.", evt);
         return;
       }
       if (evt.ctrlKey) {
         window.open(videoHref, "_blank");
       } else {
-        navigate(videoHref);
+        navigate(videoHref, {
+          state: { video: videoObject },
+        });
+        evt.preventDefault();
+        evt.stopPropagation();
       }
     },
-    [navigate, videoHref],
+    [navigate, videoHref, videoObject],
   );
   const goToVideoAuxClickHandler = useCallback(
     (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      console.info("goToVideoAuxClickHandler", evt);
       if (
         evt.button === 1 &&
         !(evt.target as HTMLAnchorElement).closest("#channelLink")
       ) {
+        console.info("goToVideoAuxClickHandler", evt);
         window.open(videoHref, "_blank");
       }
     },
@@ -108,24 +154,7 @@ export function VideoCard({
   );
 
   const videoMenu = (
-    <VideoMenu
-      {...{
-        id,
-        type,
-        status,
-        title,
-        topic_id,
-        available_at,
-        duration,
-        start_scheduled,
-        start_actual,
-        end_actual,
-        live_viewers,
-        channel,
-        url: externalLink,
-        ...rest,
-      }}
-    >
+    <VideoMenu url={externalLink} {...videoObject}>
       <Button
         variant="ghost"
         size="icon-lg"
@@ -183,7 +212,15 @@ export function VideoCard({
             <Link
               to={videoHref}
               target={videoTarget}
-              onClick={(e) => e.stopPropagation()}
+              onClick={
+                onInfoClick
+                  ? (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onInfoClick(e);
+                    }
+                  : undefined
+              }
               className="line-clamp-2 pr-4 text-sm font-bold @lg:text-lg"
             >
               {title}
@@ -244,7 +281,17 @@ export function VideoCard({
             <Link
               to={videoHref}
               target={videoTarget}
-              onClick={(e) => e.stopPropagation()}
+              onClick={
+                onInfoClick
+                  ? (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onInfoClick(e);
+                    }
+                  : (e) => {
+                      e.stopPropagation();
+                    }
+              }
               className="line-clamp-2 pr-4 text-sm font-bold @lg:text-lg"
             >
               {title}
@@ -334,7 +381,11 @@ export function VideoCard({
           </Link>
           <div className="relative flex gap-2">
             {channel && (
-              <Link to={`/channel/${channel.id}`} className="shrink-0">
+              <Link
+                to={`/channel/${channel.id}`}
+                className="shrink-0"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <img
                   src={channel.photo ?? ""}
                   className="h-8 w-8 rounded-full"
@@ -358,7 +409,9 @@ export function VideoCard({
                         e.stopPropagation();
                         onInfoClick(e);
                       }
-                    : undefined
+                    : (e) => {
+                        e.stopPropagation();
+                      }
                 }
               >
                 {title}
