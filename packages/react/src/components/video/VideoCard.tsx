@@ -280,6 +280,7 @@ export function VideoCard({
           >
             <Link
               to={videoHref}
+              state={{ video: videoObject }}
               target={videoTarget}
               onClick={
                 onInfoClick
@@ -350,6 +351,7 @@ export function VideoCard({
           <Link
             to={videoHref}
             target={videoTarget}
+            state={{ video: videoObject }}
             className="relative w-full"
             onClick={
               onThumbnailClick
@@ -401,6 +403,7 @@ export function VideoCard({
               <Link
                 className="line-clamp-2 pr-4 text-sm font-bold md:text-[1rem] md:leading-6"
                 to={videoHref}
+                state={{ video: videoObject }}
                 target={videoTarget}
                 onClick={
                   onInfoClick

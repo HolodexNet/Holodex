@@ -50,11 +50,9 @@ export default function Watch() {
   const chatPos = useAtomValue(chatPosAtom);
   const [ref, bounds] = useMeasure({ debounce: 50, scroll: false });
 
-  const isTwitch = location.state?.isTwitch ?? data?.link?.includes("twitch");
-
   // Preload video frames for better experience
   useLayoutEffect(() => {
-    const videoPlaceholder: QueueVideo = {
+    const videoPlaceholder: QueueVideo = location.state.video ?? {
       id: id!,
       url: `https://youtu.be/${id}`,
       channel_id: "",
@@ -76,6 +74,11 @@ export default function Watch() {
         type: "vtuber",
       },
     };
+    videoPlaceholder.url =
+      location.state?.video?.link?.includes("twitch") ??
+      data?.link?.includes("twitch")
+        ? location.state.video?.link
+        : `https://youtu.be/${id}`;
     setMiniPlayer(false);
     setCurrentVideo(videoPlaceholder);
     if (queue.length)
@@ -95,14 +98,25 @@ export default function Watch() {
     if (isSuccess) {
       setCurrentVideo({
         ...data,
-        url: isTwitch ? data.link : `https://youtu.be/${id}`,
+        url:
+          location.state?.video?.link?.includes("twitch") ??
+          data?.link?.includes("twitch")
+            ? data.link
+            : `https://youtu.be/${id}`,
       });
       if (queue.length)
         setQueue((q) =>
           q.toSpliced(
             q.findIndex((q) => q.id === id),
             1,
-            { ...data, url: isTwitch ? data.link : `https://youtu.be/${id}` },
+            {
+              ...data,
+              url:
+                location.state?.video?.link?.includes("twitch") ??
+                data?.link?.includes("twitch")
+                  ? data.link
+                  : `https://youtu.be/${id}`,
+            },
           ),
         );
     }
@@ -146,7 +160,7 @@ export default function Watch() {
                   )}
                 </div>
               )}
-              {data && <Controlbar {...data} />}
+              {currentVideo && <Controlbar {...(data ?? currentVideo)} />}
             </div>
             <div
               className={cn("flex flex-col gap-1", {
@@ -154,7 +168,7 @@ export default function Watch() {
               })}
             >
               <h2 className="text-xl font-bold">{data?.title}</h2>
-              {data && <PlayerStats {...data} />}
+              {currentVideo && <PlayerStats {...(data ?? currentVideo)} />}
             </div>
             <div
               className={cn("flex flex-col gap-4", {
@@ -162,7 +176,7 @@ export default function Watch() {
               })}
             >
               {channel && <ChannelCard size="xs" {...channel} />}
-              {!isTwitch && data?.description && (
+              {!data?.link?.includes("twitch") && data?.description && (
                 <PlayerDescription description={data.description} />
               )}
               <div className="flex @screen-lg:hidden">
