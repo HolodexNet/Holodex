@@ -39,7 +39,7 @@ export const onResizeAtom = atom(null, (get, set) => {
   }
 });
 
-export const onNavigateAtom = atom(
+export const indicatePageFullscreenAtom = atom(
   null,
   (get, set, pageIsFullscreen: boolean) => {
     const currentFullscreenStatus = get(pageIsFullscreenAtom);
@@ -53,6 +53,7 @@ export const onNavigateAtom = atom(
     }
     if (currentFullscreenStatus !== pageIsFullscreen) {
       set(pageIsFullscreenAtom, pageIsFullscreen);
+      if (!pageIsFullscreen) set(isSidebarOpenAtom, get(sidebarPrefOpenAtom));
     }
   },
 );
