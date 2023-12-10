@@ -3,6 +3,10 @@ $sidebar-width: 200px + calc(100px * calc(100vw / 1920vw));
 $footer-height: 40px;
 $responsive-breakpoint: 768px;
 
+html {
+  scrollbar-gutter: stable;
+}
+
 #layout {
   --header-height: #{$header-height};
   --footer-height-clearance: 0px;
@@ -77,6 +81,7 @@ $responsive-breakpoint: 768px;
   > main {
     grid-area: content;
     max-width: 100dvw;
+
     // disabling for now so we can use position sticky
     // overflow-y: auto;
   }
