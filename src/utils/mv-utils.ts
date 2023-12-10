@@ -176,6 +176,9 @@ export const desktopPresets = Object.freeze([
     { layout: "AAMM,MMGG,AMGG,GMGG,MGGG,SSGG,MSGG,MAGG,SMGG,SGGG,SAGG,ASGG,GSGG", name: "13🎞️", default: 13 },
     { layout: "AMJM,OMFG,OGFG,TGFG,JMFG,AAJM,OAFG,TMFG,JAFG,TSFG,OSFG,JGFG,TAFG,JSFG", name: "14🎞️", default: 14 },
     { layout: "AGGG,MMGG,MGGG,SGGG,GMGG,AAGG,MAGG,SMGG,GAGG,SSGG,MSGG,GGGG,SAGG,GSGG,AMGG,ASGG", name: "4x4", default: 16 },
+    { layout: "AAHY,HAHY,OAFYchat,TAFYchat", name: "2📱 2💬" },
+    { layout: "AAGY,GAGY,MAGY,SAGYchat", name: "3📱 1💬" },
+    { layout: "AAMM,AMMM,MAHY,TAFYchat2", name: "2🎞️ 1📱 1💬" },
 ]);
 
 export const mobilePresets = Object.freeze([
