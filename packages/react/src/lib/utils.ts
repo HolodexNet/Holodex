@@ -22,6 +22,18 @@ export function makeYtThumbnailUrl(id: string, size: VideoCardSize) {
   }
 }
 
+export function makeTwitchThumbnailUrl(id: string, size: VideoCardSize) {
+  switch (size) {
+    case "sm":
+      return `https://static-cdn.jtvnw.net/previews-ttv/live_user_${id}-640x360.jpg`;
+    case "md":
+      return `https://static-cdn.jtvnw.net/previews-ttv/live_user_${id}-1280x720.jpg`;
+    case "lg":
+    default:
+      return `https://static-cdn.jtvnw.net/previews-ttv/live_user_${id}-1920x1080.jpg`;
+  }
+}
+
 export function resizeChannelPhoto(photoUrl: string, size: number) {
   const deviceSize = size; /* * window.devicePixelRatio */
   const split = photoUrl.split("=s");

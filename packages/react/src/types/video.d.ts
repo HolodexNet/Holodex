@@ -22,6 +22,7 @@ interface VideoRef {
   channel: ShortChannel;
   available_at?: Date | number | string;
   duration?: number;
+  platform: "youtube" | "twitch";
 }
 
 interface VideoBase extends VideoRef {
@@ -43,7 +44,7 @@ interface VideoBase extends VideoRef {
 }
 
 interface Video extends VideoBase {
-  songs: number;
+  songs: VideoRef[]; // lol
   clips?: Clip[];
   same_source_clips?: Clip[];
   sources?: Clip[];

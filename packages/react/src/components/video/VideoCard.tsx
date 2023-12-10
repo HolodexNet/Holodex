@@ -64,14 +64,17 @@ export function VideoCard({
   const navigate = useNavigate();
 
   const isTwitch = link?.includes("twitch");
+
   const videoHref = useMemo(
     () => (!isTwitch && status === "live" && link ? link : `/watch/${id}`),
     [isTwitch, status, link, id],
   );
+
   const thumbnailSrc = useMemo(
     () => (type === "placeholder" ? thumbnail : makeYtThumbnailUrl(id, size)),
     [type, thumbnail, id, size],
   );
+
   const externalLink = useMemo(
     () => (type === "placeholder" ? link : `https://youtu.be/${id}`),
     [type, link, id],

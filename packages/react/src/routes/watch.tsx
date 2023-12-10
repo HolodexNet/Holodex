@@ -21,6 +21,7 @@ import {
   theaterModeAtom,
   tlOpenAtom,
 } from "@/store/player";
+import { VideoContext } from "@/store/videoContext";
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
@@ -124,7 +125,7 @@ export default function Watch() {
   }, [isSuccess, id]);
 
   return (
-    <>
+    <VideoContext.Provider value={null}>
       <Helmet>
         <title>{data?.title}</title>
         <meta name="description" content={data?.description} />
@@ -213,6 +214,6 @@ export default function Watch() {
           />
         )}
       </div>
-    </>
+    </VideoContext.Provider>
   );
 }
