@@ -39,7 +39,7 @@ export function useVideos(
     initialPageParam: 0,
     queryFn: async ({ pageParam = 0 }) =>
       (
-        await client<{ items: VideoBase[]; total: string }>("/api/v2/videos", {
+        await client<{ items: VideoBase[]; total: string }>("/api/v3/videos", {
           params: { ...params, pagenated: true, offset: pageParam },
         })
       ).items,
@@ -64,7 +64,7 @@ export function useVideo<T = Video>(
 
   return useQuery<T, HTTPError>({
     queryKey: ["video", id],
-    queryFn: async () => await client<T>(`/api/v2/videos/${id}`, { params }),
+    queryFn: async () => await client<T>(`/api/v3/videos/${id}`, { params }),
     ...config,
   });
 }

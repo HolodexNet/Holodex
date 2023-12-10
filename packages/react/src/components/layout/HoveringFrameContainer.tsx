@@ -4,10 +4,11 @@ import {
   miniPlayerAtom,
   playerLocationRefAtom,
   playerRefAtom,
+  useCurrentVideoAtom,
 } from "@/store/player";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
-import React, { Suspense } from "react";
+import React, { Suspense, useMemo } from "react";
 // import ReactPlayer from "react-player";
 import { useLocation } from "react-router-dom";
 import { Loading } from "../common/Loading";
@@ -17,12 +18,24 @@ import { size, offset } from "@floating-ui/react-dom";
 
 const LazyReactPlayer = React.lazy(() => import("react-player"));
 
-export const DefaultPlayerContainer = React.memo(() => {
+export const HoveringPlayerContainer = React.memo(() => {
   const setPlayerRef = useSetAtom(playerRefAtom);
-  const currentVideo = useAtomValue(currentVideoAtom);
-  const anchor = useAtomValue(playerLocationRefAtom);
   const page = useLocation();
+  const [currentVideo, _] = useCurrentVideoAtom(page);
+  const anchor = useAtomValue(playerLocationRefAtom);
   const miniPlayer = useAtomValue(miniPlayerAtom);
+
+  const externalLink = useMemo(() => {
+    if (currentVideo?.link) return currentVideo.link;
+    switch (currentVideo?.platform) {
+      case "youtube":
+        return `https://www.youtube.com/watch?v=${currentVideo.id}`;
+      case "twitch":
+        return `https://www.twitch.tv/${currentVideo.id.split(":")[1]}`;
+      default:
+        return "";
+    }
+  }, [currentVideo?.link, currentVideo?.platform, currentVideo?.id]);
 
   const { refs, floatingStyles } = useFloating({
     strategy: "fixed",
@@ -68,13 +81,13 @@ export const DefaultPlayerContainer = React.memo(() => {
           <LazyReactPlayer
             ref={setPlayerRef}
             // pass `key` to prevent flicker issue https://github.com/CookPete/react-player/issues/413#issuecomment-395404630
-            key={currentVideo?.url}
+            key={"react-player-" + externalLink}
             style={{
               aspectRatio: "16 / 9",
             }}
             width="100%"
             height="100%"
-            url={currentVideo?.url}
+            url={externalLink}
             controls
             config={{
               youtube: {

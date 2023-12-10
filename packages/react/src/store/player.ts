@@ -1,12 +1,13 @@
 import { eventbus } from "@/lib/eventbus";
-import { atom } from "jotai";
+import { atom, useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import type ReactPlayer from "react-player";
 import type { OnProgressProps } from "react-player/base";
+import { Location } from "react-router-dom";
 
-export interface QueueVideo extends VideoBase {
-  url?: string;
-}
+// export interface QueueVideo extends VideoBase {
+//   url?: string;
+// }
 
 export const playerRefAtom = atom<ReactPlayer | null>(null);
 
@@ -21,8 +22,31 @@ export const chatPosAtom = atomWithStorage<"left" | "right">(
   "right",
 );
 
-export const currentVideoAtom = atom<QueueVideo | null>(null);
-export const queueAtom = atomWithStorage<QueueVideo[]>("queue", []);
+export const currentVideoAtom = atom<PlaceholderVideo | null>(null);
+
+const VALID_CURRENT_VIDEO_PAGES_REGEX = new RegExp("^(/watch)|(/edit/video)");
+
+/**
+ * currentVideoAtom is only relevant when the watch page, edit page, or MiniPlayer is Open.
+ *
+ * its purpose is to keep track of the active video. Currently, Miniplayer and Queue uses this to keep track of the active video.
+ *
+ * Other on screen elements should not be using this, but instead use the videoContext.
+ * @param location - The current location
+ */
+export function useCurrentVideoAtom(location: Location) {
+  const [currentVideo, setCurrentVideo] = useAtom(currentVideoAtom);
+  const miniPlayer = useAtomValue(miniPlayerAtom);
+
+  const validCurrentVideo =
+    VALID_CURRENT_VIDEO_PAGES_REGEX.test(location.pathname) || miniPlayer
+      ? currentVideo
+      : null;
+
+  return [validCurrentVideo, setCurrentVideo] as const;
+}
+
+export const queueAtom = atomWithStorage<PlaceholderVideo[]>("queue", []);
 
 export const defaultPlayerEventBus = eventbus<{
   onStart?: (videoId: string) => void;

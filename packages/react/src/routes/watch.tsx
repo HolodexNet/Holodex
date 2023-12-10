@@ -12,14 +12,13 @@ import { useChannel } from "@/services/channel.service";
 import { useVideo } from "@/services/video.service";
 import { clipLangAtom } from "@/store/i18n";
 import {
-  QueueVideo,
   chatOpenAtom,
   chatPosAtom,
-  currentVideoAtom,
   miniPlayerAtom,
   queueAtom,
   theaterModeAtom,
   tlOpenAtom,
+  useCurrentVideoAtom,
 } from "@/store/player";
 import { VideoContext } from "@/store/videoContext";
 import { useAtom, useAtomValue } from "jotai";
@@ -37,12 +36,14 @@ export default function Watch() {
     {
       enabled: !!id,
       refetchInterval: 1000 * 60 * 3,
+      placeholderData: () =>
+        location?.state?.video?.id ? location.state.video : null,
     },
   );
   const { data: channel } = useChannel(data?.channel.id ?? "", {
     enabled: !!data,
   });
-  const [currentVideo, setCurrentVideo] = useAtom(currentVideoAtom);
+  const [currentVideo, setCurrentVideo] = useCurrentVideoAtom(location);
   const [queue, setQueue] = useAtom(queueAtom);
   const [miniPlayer, setMiniPlayer] = useAtom(miniPlayerAtom);
   const theaterMode = useAtomValue(theaterModeAtom);
@@ -53,76 +54,17 @@ export default function Watch() {
 
   // Preload video frames for better experience
   useLayoutEffect(() => {
-    const videoPlaceholder: QueueVideo = location.state.video ?? {
-      id: id!,
-      url: `https://youtu.be/${id}`,
-      channel_id: "",
-      title: "",
-      description: "",
-      type: "stream",
-      topic_id: null,
-      published_at: null,
-      duration: 0,
-      status: "live",
-      start_scheduled: null,
-      start_actual: null,
-      end_actual: null,
-      live_viewers: null,
-      songcount: 0,
-      channel: {
-        id: "",
-        name: "",
-        type: "vtuber",
-      },
-    };
-    videoPlaceholder.url =
-      location.state?.video?.link?.includes("twitch") ??
-      data?.link?.includes("twitch")
-        ? location.state.video?.link
-        : `https://youtu.be/${id}`;
     setMiniPlayer(false);
-    setCurrentVideo(videoPlaceholder);
-    if (queue.length)
-      setQueue((q) =>
-        q.some((v) => v.id === id)
-          ? q
-          : q.toSpliced(
-              q.findIndex((q) => q.id === currentVideo?.id) + 1,
-              0,
-              videoPlaceholder,
-            ),
-      );
+    if (data) setCurrentVideo(data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (isSuccess) {
-      setCurrentVideo({
-        ...data,
-        url:
-          location.state?.video?.link?.includes("twitch") ??
-          data?.link?.includes("twitch")
-            ? data.link
-            : `https://youtu.be/${id}`,
-      });
-      if (queue.length)
-        setQueue((q) =>
-          q.toSpliced(
-            q.findIndex((q) => q.id === id),
-            1,
-            {
-              ...data,
-              url:
-                location.state?.video?.link?.includes("twitch") ??
-                data?.link?.includes("twitch")
-                  ? data.link
-                  : `https://youtu.be/${id}`,
-            },
-          ),
-        );
+    if (data) {
+      setCurrentVideo(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess, id]);
+  }, [data, isSuccess, id]);
 
   return (
     <VideoContext.Provider value={null}>

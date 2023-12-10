@@ -22,8 +22,9 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ErrorFallback } from "../common/ErrorFallback";
 import { Loading } from "../common/Loading";
 import { MiniPlayer } from "../player/MiniPlayer";
-import { DefaultPlayerContainer } from "./DefaultPlayerContainer";
+import { HoveringPlayerContainer } from "./HoveringFrameContainer";
 import { useOnClickOutside } from "usehooks-ts";
+import { ScrollArea } from "@/shadcn/ui/scroll-area";
 
 export function Frame() {
   const location = useLocation();
@@ -82,14 +83,16 @@ export function Frame() {
       </aside>
       <Header id="header" />
       <main className="">
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Suspense fallback={<Loading size="xl" />}>
-            <Outlet />
-          </Suspense>
-        </ErrorBoundary>
+        <ScrollArea>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<Loading size="xl" />}>
+              <Outlet />
+            </Suspense>
+          </ErrorBoundary>
+        </ScrollArea>
       </main>
       {isMobile && <footer className="">Footer</footer>}
-      <DefaultPlayerContainer />
+      <HoveringPlayerContainer />
       {miniPlayer && <MiniPlayer />}
       <Toaster />
     </div>
