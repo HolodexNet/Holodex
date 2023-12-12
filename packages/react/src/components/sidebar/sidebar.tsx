@@ -5,8 +5,9 @@ import { OrgSelectorCombobox } from "../org/OrgPicker";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { orgAtom } from "@/store/org";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useRef } from "react";
 import { isMobileAtom } from "@/hooks/useFrame";
+import { useOnClickOutside } from "usehooks-ts";
 // import { ScrollArea } from "@/shadcn/ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,8 +18,16 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
   const { t } = useTranslation();
   const org = useAtomValue(orgAtom);
 
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, () => onClose());
+
   return (
-    <div className={cn("pb-12 border-r-base-5 border-r", className)} id={id}>
+    <div
+      className={cn("pb-12 border-r-base-5 border-r", className)}
+      id={id}
+      ref={ref}
+    >
       <div className="min-h-[100dvh] space-y-2 bg-base-2 py-2">
         <div className="flex items-center gap-2 px-4 pb-2 pt-4">
           <img src="/icons/uetchy_logo.png" className="ml-1.5 h-6 w-6" />

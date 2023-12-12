@@ -1,4 +1,4 @@
-import { toggleSidebarAtom } from "@/hooks/useFrame";
+import { isFloatingAtom, toggleSidebarAtom } from "@/hooks/useFrame";
 import { darkAtom } from "@/hooks/useTheme";
 import { Button } from "@/shadcn/ui/button";
 import { userAtom } from "@/store/auth";
@@ -28,18 +28,22 @@ export function Header({ id }: HeaderProps) {
   const [dark, toggle] = useAtom(darkAtom);
   const user = useAtomValue(userAtom);
   const frameToggleSidebar = useSetAtom(toggleSidebarAtom);
+  const floating = useAtomValue(isFloatingAtom);
+
   const { logout } = useAuth();
 
   return (
     <header id={id} className="z-40 flex items-center gap-4 bg-base-2 px-2">
-      <Button
-        size="icon"
-        variant="ghost"
-        className="h-12 w-12 p-4"
-        onClick={frameToggleSidebar}
-      >
-        <div className="i-heroicons:bars-3 rounded-md p-3" />
-      </Button>
+      {floating && (
+        <Button
+          size="icon"
+          variant="ghost"
+          className="h-12 w-12 p-4"
+          onClick={frameToggleSidebar}
+        >
+          <div className="i-heroicons:bars-3 rounded-md p-3" />
+        </Button>
+      )}
       <div className="hidden grow md:flex" />
       <SearchBar className="max-w-lg" />
       <Button

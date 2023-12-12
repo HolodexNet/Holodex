@@ -4,9 +4,9 @@ import { atomWithStorage } from "jotai/utils";
 import type ReactPlayer from "react-player";
 import type { OnProgressProps } from "react-player/base";
 
-export interface QueueVideo extends VideoBase {
-  url?: string;
-}
+// export interface QueueVideo extends VideoBase {
+//   url?: string;
+// }
 
 export const playerRefAtom = atom<ReactPlayer | null>(null);
 
@@ -21,8 +21,8 @@ export const chatPosAtom = atomWithStorage<"left" | "right">(
   "right",
 );
 
-export const currentVideoAtom = atom<QueueVideo | null>(null);
-export const queueAtom = atomWithStorage<QueueVideo[]>("queue", []);
+export const miniPlayerVideoAtom = atom<VideoBase | null>(null);
+export const queueAtom = atomWithStorage<VideoBase[]>("queue", []);
 
 export const defaultPlayerEventBus = eventbus<{
   onStart?: (videoId: string) => void;

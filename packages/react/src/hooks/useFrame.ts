@@ -1,75 +1,39 @@
 import { atom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
+import { BREAKPOINTS } from "./useBreakpoint";
 
-const MobileSizeBreak = 768;
-const FooterSizeBreak = 500;
+const MobileSizeBreak = BREAKPOINTS.md;
 
-export const sidebarPrefOpenAtom = atomWithStorage(
-  "frames_sidebar_pref_open",
-  true,
+const _pageIsFullscreenAtom = atom(false);
+const _sidebarStateAtom = atom(false);
+const _siteLessThanMobileBreakPoint = atom(window.innerWidth < MobileSizeBreak);
+
+export const isSidebarOpenAtom = atom(
+  (get) => !get(isFloatingAtom) || get(_sidebarStateAtom),
+  (_get, set, val: boolean) => set(_sidebarStateAtom, val),
 );
 
-export const pageIsFullscreenAtom = atom(false);
-
-export const siteIsSmallAtom = atom(window.innerWidth < MobileSizeBreak);
-
-export const sidebarShouldBeFullscreenAtom = atom(
-  window.innerWidth < FooterSizeBreak,
-);
-
-export const isFloatingAtom = atom(
-  (get) => get(siteIsSmallAtom) || get(pageIsFullscreenAtom),
-);
-
-export const isMobileAtom = atom(
-  (get) => get(sidebarShouldBeFullscreenAtom), //&& /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-);
-
-export const isSidebarOpenAtom = atom(window.innerWidth > MobileSizeBreak);
-
-export const onResizeAtom = atom(null, (get, set) => {
+export const onResizeAtom = atom(null, (_get, set) => {
   const width = window.innerWidth;
-  set(siteIsSmallAtom, width < MobileSizeBreak);
-  set(sidebarShouldBeFullscreenAtom, width < FooterSizeBreak);
-  if (width < MobileSizeBreak) {
-    console.log("closing");
-    set(isSidebarOpenAtom, false);
-  } else {
-    set(isSidebarOpenAtom, get(sidebarPrefOpenAtom));
-  }
+  set(_siteLessThanMobileBreakPoint, width < MobileSizeBreak);
 });
 
 export const indicatePageFullscreenAtom = atom(
   null,
-  (get, set, pageIsFullscreen: boolean) => {
-    const currentFullscreenStatus = get(pageIsFullscreenAtom);
-    if (currentFullscreenStatus !== pageIsFullscreen && pageIsFullscreen) {
-      set(isSidebarOpenAtom, false);
-    } else if (
-      currentFullscreenStatus !== pageIsFullscreen &&
-      !pageIsFullscreen
-    ) {
-      set(isSidebarOpenAtom, get(sidebarPrefOpenAtom));
-    }
-    if (currentFullscreenStatus !== pageIsFullscreen) {
-      set(pageIsFullscreenAtom, pageIsFullscreen);
-      if (!pageIsFullscreen) set(isSidebarOpenAtom, get(sidebarPrefOpenAtom));
-    }
+  (_, set, pageIsFullscreen: boolean) => {
+    set(isSidebarOpenAtom, false);
+    set(_pageIsFullscreenAtom, pageIsFullscreen);
   },
 );
 
 export const toggleSidebarAtom = atom(null, (get, set) => {
   const currentOpenStatus = get(isSidebarOpenAtom);
   set(isSidebarOpenAtom, !currentOpenStatus);
-  set(sidebarPrefOpenAtom, !currentOpenStatus);
 });
 
-export const openSidebarAtom = atom(null, (_, set) => {
-  set(isSidebarOpenAtom, true);
-  set(sidebarPrefOpenAtom, true);
-});
+export const isFloatingAtom = atom(
+  (get) => get(_siteLessThanMobileBreakPoint) || get(_pageIsFullscreenAtom),
+);
 
-export const closeSidebarAtom = atom(null, (_, set) => {
-  set(isSidebarOpenAtom, false);
-  set(sidebarPrefOpenAtom, false);
-});
+export const isMobileAtom = atom(
+  (get) => get(_siteLessThanMobileBreakPoint), //&& /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+);
