@@ -34,7 +34,7 @@ export const onResizeAtom = atom(null, (get, set) => {
   if (width < MobileSizeBreak) {
     console.log("closing");
     set(isSidebarOpenAtom, false);
-  } else {
+  } else if (width >= MobileSizeBreak && !get(isFloatingAtom)) {
     set(isSidebarOpenAtom, get(sidebarPrefOpenAtom));
   }
 });

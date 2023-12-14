@@ -67,18 +67,19 @@ export default function Watch() {
   }, [data, isSuccess, id]);
 
   return (
-    <VideoContext.Provider value={null}>
+    <VideoContext.Provider value={data ?? null}>
       <Helmet>
         <title>{data?.title}</title>
         <meta name="description" content={data?.description} />
       </Helmet>
-      <div className="flex h-full w-full  @container" ref={ref}>
+      <div className="flex h-full w-full @container" ref={ref}>
         <div
           className={cn("mx-auto flex w-full gap-8", {
             "@screen-lg:p-8 p-4 max-w-screen-2xl": !theaterMode,
           })}
         >
           <div className={cn("flex w-full flex-col gap-4")}>
+            {/* Player: & Control Bar. */}
             <div
               className={cn("bg-base-3 flex w-full flex-col", [
                 theaterMode
@@ -98,13 +99,14 @@ export default function Watch() {
                   />
                   {theaterMode && data && (chatOpen || tlOpen) && (
                     <div className="hidden min-w-[24rem] @screen-lg:flex">
-                      <ChatCard {...data} />
+                      <ChatCard />
                     </div>
                   )}
                 </div>
               )}
               {currentVideo && <Controlbar {...(data ?? currentVideo)} />}
             </div>
+            {/* Stats Bar: */}
             <div
               className={cn("flex flex-col gap-1", {
                 "px-4 @screen-lg:px-8 py-4": theaterMode,
@@ -128,20 +130,21 @@ export default function Watch() {
             </div>
           </div>
           {!theaterMode && (
-            <div className="hidden w-96 shrink-0 flex-col gap-4 @screen-lg:flex">
+            <div className="w-96 shrink-0 flex-col gap-4">
+              {(data?.type === "stream" || data?.status === "live") &&
+                bounds.width > 1023 && (
+                  <div
+                    className={cn(
+                      "border-base rounded-lg border overflow-hidden",
+                      {
+                        "h-[80vh] max-h-[80vh]": chatOpen || tlOpen,
+                      },
+                    )}
+                  >
+                    <ChatCard />
+                  </div>
+                )}
               {!!queue.length && <QueueList />}
-              {(data?.type === "stream" || data?.status === "live") && (
-                <div
-                  className={cn(
-                    "border-base rounded-lg border overflow-hidden",
-                    {
-                      "h-[80vh] max-h-[80vh]": chatOpen || tlOpen,
-                    },
-                  )}
-                >
-                  <ChatCard {...data} />
-                </div>
-              )}
               <PlayerRecommendations {...data} />
             </div>
           )}

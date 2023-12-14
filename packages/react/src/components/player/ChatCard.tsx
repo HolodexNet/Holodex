@@ -10,10 +10,14 @@ import { TLChat } from "../tldex/TLChat";
 import { useAtom } from "jotai";
 import { chatOpenAtom, tlOpenAtom } from "@/store/player";
 import { useStateList } from "react-use";
+import { useVideoContext } from "@/store/videoContext";
 
 const CHAT_SIZES_ITER = [1, 1.6, 2, 2.5, 0.3, 0.6, 0.8];
 
-export function ChatCard({ id, status, channel, link }: PlaceholderVideo) {
+export function ChatCard() {
+  const {
+    video: { id, status, channel, link },
+  } = useVideoContext("md");
   const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
   const [tlOpen, setTlOpen] = useAtom(tlOpenAtom);
   const { state: chatBasis, next: nextChatBasis } =
@@ -55,8 +59,8 @@ export function ChatCard({ id, status, channel, link }: PlaceholderVideo) {
           <div className="flex grow">
             <LiveChat
               id={id}
-              status={status}
-              channelId={channel.id}
+              status={status ?? "live"}
+              channelId={channel?.id || "unknown"}
               link={link}
             />
           </div>
