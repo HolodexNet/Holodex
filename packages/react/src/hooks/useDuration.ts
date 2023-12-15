@@ -25,8 +25,8 @@ export function useDuration({
     (end_actual && start_actual
       ? new Date(end_actual).valueOf() - new Date(start_actual).valueOf()
       : start_actual
-      ? date.valueOf() - new Date(start_actual).valueOf()
-      : null);
+        ? date.valueOf() - new Date(start_actual).valueOf()
+        : null);
 
   return durationMs;
 }

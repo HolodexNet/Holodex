@@ -13,6 +13,14 @@ import bundleAnalyzer from "rollup-plugin-bundle-analyzer";
 export default defineConfig({
   build: {
     sourcemap: true,
+    rollupOptions: {
+      external: [
+        "ffprobe-worker.js",
+        "ffprobe-core.js",
+        "ffprobe-core.wasm",
+        "ffmpeg.min.js",
+      ],
+    },
   },
   server: {
     port: 8080,

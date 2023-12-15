@@ -26,6 +26,17 @@ module.exports = {
     "tailwind.config.js",
     "postcss.config.js",
     "uno.config.ts",
+    "src/components/tldex/new-editor/support",
+    "node_modules",
+    ".DS_Store",
+    "dist",
+    "dist-ssr",
+    "*.local",
+    "components.d.ts",
+    "gource/*",
+    "gource",
+    "public/*.js",
+    "public/*.js.map"
   ],
 
   parser: "@typescript-eslint/parser",
