@@ -30,6 +30,7 @@ const Kitchensink = React.lazy(() => import("@/Kitchensink"));
 const Playlists = React.lazy(() => import("./playlists"));
 const Playlist = React.lazy(() => import("./playlist"));
 const Favourites = React.lazy(() => import("./favourites"));
+const TLEditorFrame = React.lazy(() => import("./tleditor"));
 
 const store = getDefaultStore();
 
@@ -181,7 +182,7 @@ const router = createBrowserRouter([
       },
       {
         path: "scripteditor",
-        element: <div>Translation Scripter</div>,
+        element: <TLEditorFrame />,
       },
       {
         path: "watch/:id",

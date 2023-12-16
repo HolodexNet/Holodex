@@ -1,9 +1,10 @@
 import { Button } from "@/shadcn/ui/button";
-import "./frame.scss";
+import "./frame.css";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { ContextMenuShortcut } from "@/shadcn/ui/context-menu";
 
-function TLEditorFrame() {
+export function TLEditorFrame() {
   const { t } = useTranslation();
 
   return (
@@ -13,19 +14,13 @@ function TLEditorFrame() {
           <div className="tl-topbar">
             <Button size="sm">{t("component.mainNav.home")}</Button>
             <div className="h-6 w-2 bg-primary opacity-60" />
-            <Button no-color className="btn-secondary" size="sm">
+            <Button variant="secondary" size="sm">
               {t("views.tlClient.menu.setting")}
             </Button>
             <div className="h-6 w-2 bg-primary opacity-60" />
-            <Button
-              size="sm"
-              color="secondary"
-              // onClick="console.log('save')"
-            >
+            <Button size="sm" variant="secondary">
               {t("views.scriptEditor.menu.save")}
-              <kbd className="kbd kbd-xs ml-1 bg-transparent opacity-60">
-                Ctrl+S
-              </kbd>
+              <ContextMenuShortcut>Ctrl+S</ContextMenuShortcut>
             </Button>
 
             {/* <!-- <Button size="sm" onClick="console.log('show')">

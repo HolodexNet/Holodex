@@ -52,7 +52,8 @@ export function Frame() {
   useEffect(() => {
     if (
       location.pathname.startsWith("/watch") ||
-      location.pathname.startsWith("/edit")
+      location.pathname.startsWith("/edit") ||
+      location.pathname.startsWith("/scripteditor")
     ) {
       indicatePageFullscreen(true);
     } else {
