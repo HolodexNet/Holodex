@@ -43,7 +43,7 @@ component:
   videoCard:
     clips: '{n} คลิป'
     watching: '{0} กำลังรับชม'
-    liveNow: กำลังถ่ายทอดสด
+    liveNow: สด
     edit: แก้ไข
     copiedToClipboard: คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว
     copyLink: คัดลอกลิงก์ Holodex
@@ -270,7 +270,7 @@ views:
       - เล็ก
     hideCollabStreamsLabel: ซ่อนสตรีมโคแลป
     hideCollabStreamsMsg: ซ่อนการสตรีมโคแลปจากฟีดรายการโปรดของคุณ
-    hidePlaceholderStreams: ซ่อนสตรีม Placeholder
+    hidePlaceholderStreams: ซ่อนสตรีมที่ยังไม่ถูกสร้าง
     hideMissingStreams: ซ่อนสตรีมที่หายไป
     ignoredTopicsLabel: หัวข้อที่ถูกละเว้น
     ignoredTopicsMsg: ซ่อนวิดีโอที่มีหัวข้อเหล่านี้จากหน้าแรกและหน้ารายการโปรด
