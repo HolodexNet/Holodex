@@ -305,9 +305,7 @@ export default {
                                     name: "Channel Link",
                                     value:
                                         this.link
-                                        || handle 
-                                        ? `https://www.youtube.com/${id}`
-                                        : `https://www.youtube.com/channel/${this.channel.id}`,
+                                        || `https://www.youtube.com/channel/${this.channel.id}`,
                                     inline: false,
                                 },
                                 ...ifValid(this.english_name, {
