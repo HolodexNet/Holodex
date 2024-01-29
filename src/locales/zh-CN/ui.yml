@@ -516,7 +516,7 @@ views:
     langPick: 语言
 time:
   soon: 即将开始
-  diff_future_date: 将在{0}开始直播({1})
+  diff_future_date: 将在 {0}开播（{1}）
   distance_past_date: '{0}'
 editor:
   music:
