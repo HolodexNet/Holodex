@@ -243,7 +243,7 @@ export default {
             return (
                 (cid
                     && !cid[0].includes("/c/")
-                    && (cid[1].length > 12 || cid[0].endsWith('@'))
+                    && (cid[1].length > 12 || cid[0].includes('@'))
                     && cid[0].startsWith("ht"))
                 || this.$t("channelRequest.ChannelURLErrorFeedback")
             );
@@ -270,7 +270,7 @@ export default {
                 const regex = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel\/|@)([\w\-_]*)/gi;
                 const matches = [...this.link.matchAll(regex)];
                 let id = matches?.[0]?.[1];
-                handle = matches[0][0].endsWith('@')
+                handle = this.link.includes('@')
                 id = handle ? '@' + id : id;
 
                 try {
