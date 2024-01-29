@@ -9,6 +9,8 @@ component:
     signInToFavorite: Pendaftaran diperlukan
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
+    enableGroupDisplay: Paparkan saluran pecahan ini di Laman Utama
+    disableGroupDisplay: Sembunyikan saluran pecahan ini di Laman Utama
   channelInfo:
     stats: Statistik
     videoCount: '{0} Buah Video'
@@ -60,6 +62,8 @@ component:
     uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
