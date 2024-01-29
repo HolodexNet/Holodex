@@ -62,8 +62,6 @@ component:
     uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -653,11 +651,8 @@ channelRequest:
   EnglishNameLabel: Nama Inggeris Saluran
   Comments: Ulasan
   CommentsHint: Ulasan tambahan yang mahu disampaikan.
-  VtuberRequirementText: >-
-    Saluran bebas/persendirian memerlukan sekurang-kurangnya 20 ribu langganan. Penggiyut maya yang sebahagian kumpulan sedia ada boleh diterima. <br /><br />Kumpulan baharu dibuat mengikut bilangan langganan purata anggotanya.
   ClipperRequirementText: >-
     Syarat pembuat sedutan adalah sama ada membuka akaunnya melebihi dua bulan yang lalu ataupun memuat naik sekurang-kurangnya 20 buah sedutan dalam tempoh sebulan. Saluran ini berkemungkinan ditolak sekiranya kegiatannya merangkumi memuat naik sedutan pendek secara bertubi-tubi setiap hari, membuat sedutan bertempoh &lt;1minit sahaja atau menggunakan gambar kenit yang tidak senonoh. Mutu bahan kandungannya juga boleh diambil kira. <br /><br />Saluran sedutan juga seharusnya meletakkan sumber video melalui pautan saluran, sebutan @saluran YouTube dan pautan video. Pautan yang berlebihan (cth. memautkan keseluruhan anggota Nijisanji) hanya menambah beban para penyunting Holodex manakala pautan yang kurang (atau tiada langsung) hanya menyukarkan sedutan dipaparkan. <br /><br /> Holodex mempunyai sebuah algoritma yang secara sendiri mampu mengesan lalu membetulkan pemautan berlebihan, namun keberhasilannya masih terbatas. Saluran video sedutan yang membuat pautan secara berlebihan berkemungkinan dialih keluar daripada laman ini bagi mengurangkan masalah.
   DeletionRequirementText: >-
     Permintaan pengalihkeluaran saluran hanya boleh dilakukan oleh empunya saluran. Harap disediakan maklumat perhubungan agar kami dapat mengesahkan permintaan ini.
   PageTitle: Permintaan Saluran Holodex
-  ChannelURLErrorFeedback: Berikan dalam bentuk https://www.youtube.com/channel/UC_____
