@@ -743,7 +743,8 @@ channelRequest:
   VtuberRequirementText: >-
     A minimum of 20K subscribers is required for independents. Vtubers as part
     of existing orgs will be accepted. <br /><br />New Orgs will be created
-    depending on the average subscriber count.
+    depending on the average subscriber count.<br /><br />Twitch streamers must
+    have an official YouTube channel to be indexed.
   ClipperRequirementText: >-
     For clippers, it must be at least 2 months old and post regularly, or post
     more than 20 clips in one month. Spamming of short clips every day, posting
@@ -760,4 +761,4 @@ channelRequest:
     Deletion should only be requested if you are the channel owner(s), please
     provide contact information so we can verify this.
   PageTitle: Holodex Channel Request
-  ChannelURLErrorFeedback: Must be https://www.youtube.com/channel/UC_____
+  ChannelURLErrorFeedback: Must be https://www.youtube.com/channel/UC_____ or https://www.youtube.com/@_____
