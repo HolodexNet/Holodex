@@ -243,7 +243,7 @@ export default {
             return (
                 (cid
                     && !cid[0].includes("/c/")
-                    && (cid[1].length > 12 or cid[0].endsWith('@'))
+                    && (cid[1].length > 12 || cid[0].endsWith('@'))
                     && cid[0].startsWith("ht"))
                 || this.$t("channelRequest.ChannelURLErrorFeedback")
             );
