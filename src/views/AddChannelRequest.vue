@@ -41,8 +41,8 @@
                 v-else
                 v-model="link"
                 label="Channel URL"
-                placeholder="https://www.youtube.com/channel/UC_____"
-                hint="https://www.youtube.com/channel/UC_____"
+                placeholder="https://www.youtube.com/channel/UC_____  or https://www.youtube.com/@_____"
+                hint="https://www.youtube.com/channel/UC_____ or https://www.youtube.com/@_____"
                 :rules="[channelURLRule]"
               />
               <v-text-field
@@ -236,14 +236,14 @@ export default {
         linkRule: (v) => !!v.match(/^https?:\/\/[\w-]+(\.[\w-]+)+\.?(\/\S*)?/) || "Invalid url",
         twitterRule: (v) => !v || !!v.match(/^@.*$/) || "@ABC",
         channelURLRule(v) {
-            const REGEX = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel)\/([\w-_]*)$/i;
+            const REGEX = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel\/|@)([\w-_]*)$/i;
 
             const cid = v.match(REGEX);
             console.log(cid);
             return (
                 (cid
                     && !cid[0].includes("/c/")
-                    && cid[1].length > 12
+                    && (cid[1].length > 12 or cid[0].endsWith('@'))
                     && cid[0].startsWith("ht"))
                 || this.$t("channelRequest.ChannelURLErrorFeedback")
             );
@@ -264,16 +264,19 @@ export default {
         },
 
         async onSubmit() {
+            let handle = null;
             if (this.type === ADD_VTUBER || this.type === ADD_CLIPPER) {
                 // validate it's not added already:
-                const regex = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel)\/([\w\-_]*)/gi;
+                const regex = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel\/|@)([\w\-_]*)/gi;
                 const matches = [...this.link.matchAll(regex)];
-                const id = matches?.[0]?.[1];
+                let id = matches?.[0]?.[1];
+                handle = matches[0][0].endsWith('@')
+                id = handle ? '@' + id : id;
 
                 try {
                     const exists = id && (await backendApi.channel(id));
                     if (exists && exists.data && exists.data.id) {
-                        this.$router.push({ path: `/channel/${id}` });
+                        this.$router.push({ path: `/channel/${exists.data.id}` });
                         return;
                     }
                 } catch (e) {
@@ -302,7 +305,9 @@ export default {
                                     name: "Channel Link",
                                     value:
                                         this.link
-                                        || `https://www.youtube.com/channel/${this.channel.id}`,
+                                        || handle 
+                                        ? `https://www.youtube.com/@${id}`
+                                        : `https://www.youtube.com/channel/${this.channel.id}`,
                                     inline: false,
                                 },
                                 ...ifValid(this.english_name, {
