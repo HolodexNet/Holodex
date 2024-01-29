@@ -9,6 +9,8 @@ component:
     signInToFavorite: 즐겨찾기하려면 로그인
     unfavoriteAllInGroup: 소속된 모두를 즐겨찾기 해제
     favoriteAllInGroup: 소속된 모두를 즐겨찾기
+    enableGroupDisplay: 이 그룹을 홈 화면에 표시
+    disableGroupDisplay: 이 그룹을 홈 화면에서 숨기기
   channelInfo:
     stats: 통계
     videoCount: '동영상 {0}개'
@@ -48,6 +50,7 @@ component:
     premiere: 최초 공개
     googleCalendar: Google Calendar에 추가
     totalTLs: 전체 실시간 채팅 번역
+    totalSongs: 타임스탬프가 있는 노래
     tlPresence: 최근 30분간 활동 중인 번역가
     uncertainPlaceholder: 시작 시간은 아직 공식적으로 확인되지 않았으며, 실제로는 다를 수 있습니다.
     typeScheduledYT: 예정된 방송
@@ -59,6 +62,8 @@ component:
     uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
