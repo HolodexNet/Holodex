@@ -9,6 +9,8 @@ component:
     signInToFavorite: Veuillez-vous connecter pour ajouter à vos favoris
     unfavoriteAllInGroup: Supprimer tout les favoris du groupe
     favoriteAllInGroup: Ajouter tout le groupe aux favoris
+    enableGroupDisplay: Afficher les chaines de ce groupe sur la page d'accueil
+    disableGroupDisplay: Masquer les chaines de ce groupe sur la page d'accueil
   channelInfo:
     stats: Statistiques
     videoCount: '{0} Vidéos'
@@ -16,6 +18,7 @@ component:
     subscriberCount: '{n} Abonnés'
     subscriberNA: Nombre d'abonnés indisponible
     totalViews: Vues
+    inactiveChannel: Cette chaine n'est plus active.
   channelSocials:
     addToFavorites: Ajouter aux favoris
     removeFromFavorites: Supprimer des favoris
@@ -65,6 +68,7 @@ component:
       org: org
       titledesc: titre/description
       title: titre
+      description: description
       comments: commentaires
       videourl: url de la vidéo
   relatedVideo:
@@ -112,8 +116,8 @@ component:
       - Contenu dangereux de faible qualité/trompeur
       - Viole les directives de travail de l'organisation ou inapproprié
       - Autre
-      - 
-      - 
+      - Sujet de vidéo incorrect
+      - Mentions de chaine incorrectes
       - 
   thirdpartycookie:
     explanation: >-
@@ -194,6 +198,7 @@ views:
     sort:
       newest: Plus récent
       oldest: Plus ancien
+      longest: Plus long
     type:
       all: Tout
       official: Officiel
@@ -221,6 +226,7 @@ views:
     scrollModeLabel: Mode défilement
     scrollModeMsg: Utilisez défiler ou toucher pour tourner les pages
     resetAllSettings: Réinitialiser tous les paramètres/toutes les données
+    resetAllSettingsWarning: Vous perdrez toutes vos données. Continuer ?
     clipLanguageSelection: 'Voir des clips dans ces langues :'
     tlLanguageSelection: Voir la traduction en direct dans ces langues
     defaultPage: Page par défaut
@@ -240,18 +246,23 @@ views:
     ignoredTopicsLabel: Sujets ignorés
     ignoredTopicsMsg: Cacher les vidéos avec ces sujets de la page d'accueil et des favoris
     theme: Thème
+    moreSettings: Plus de paramètres
   app:
     update_available: Une mise à jour est disponible
     update_btn: Mettre à jour
     close_btn: Fermer
     check_about_page: Visitez la page À Propos pour voir les changements
+    loginCallToAction: Connectez-vous pour définir vos propres favoris.
   watch:
+    theaterMode: Mode cinéma (alt + t)
     mentionIconLabel: MENTIONS
     chat:
       loading: Chargement du chat...
       hideTLBtn: Cacher les traductions
       showTLBtn: Afficher les traductions
       TLSettingsTitle: Paramètres des traductions
+      showSubtitle: Afficher les sous-titres
+      tlStart: Début des messages
       showVerifiedMessages: Afficher les messages vérifiés
       showModeratorMessages: Afficher les messages des modérateurs
       tlFontSize: Taille de la police
@@ -269,6 +280,8 @@ views:
     uploadPanel:
       headerStart: Début
       cancelBtn: Voulez-vous vraiment supprimer {0} vidéos ?
+      okBtn: Ok
+      notifTextErrExt: Extension de fichier non reconnue.
   favorites:
     promptForAction: >-
       Créez une liste de vtubers favoris et retrouvez leurs derniers clips et leurs dernières diffusions sur cette page
@@ -301,6 +314,11 @@ views:
       - Se connecter avec Google
       - Se connecter avec Discord
       - Se connecter avec Twitter
+    twitterMsg:
+      - En raison du changement de politique de l'API Twitter, la connexion Twitter ne fonctionnera probablement plus après le 9 février.
+      - Vous n'utilisez pour l'instant que la connexion Twitter. Nous recommandons fortement de lier une méthode de connexion différente pour éviter un blocage (sur un appareil différent ou après un nettoyage du navigateur).
+      - Si vous ne parvenez pas à vous connecter à Holodex via un compte Twitter (et n'avez lié aucune autre méthode de connexion), veuillez nous contacter par message privé sur Twitter ou Discord pour obtenir de l'aide.
+    username: Nom d'utilisateur
     usernameBtn:
       - 
       - Confirmer
@@ -345,8 +363,14 @@ views:
     page-heading: 'Vos Playlists:'
     page-instruction: Cliquez sur une playlist pour la définir comme active.
     change-loss-warning: Vous perdrez les modifications non enregistrées. Continuer ?
+  extension:
+    title: Extension Holodex Plus
+    features: Fonctionnalités
   tlClient:
+    menu:
+      title: Menu
     cancelBtn: Voulez-vous vraiment supprimer {0} vidéos ?
+    okBtn: Ok
   scriptEditor:
     table:
       headerStart: Début
@@ -391,6 +415,8 @@ about:
     autoplayHeader: La lecture automatique ne fonctionne pas !
     autoplayContent: Veuillez chercher comment activer la lecture automatique pour votre navigateur.
     musicPlayer: Le lecteur de musique ne fonctionne pas correctement sur mobile !
+    musicPlayerContent: >-
+      Sur la plupart des appareils iOS, vous ne pouvez pas éteindre l'écran ou fermer Safari lorsque vous jouez de la musique Holodex. Cette restriction peut ou non s'appliquer aux appareils Android (dépend de l'appareil). Veuillez nous faire part de vos commentaires sur Discord si vous avez une idée pour créer un meilleur système de lecture.
     videoLinkage: Comment puis-je être sûr que mes vidéos sont bien affichés pour ce Vtuber ?
     videoLinkageContent: >-
       Toutes les informations sont analysées depuis la description de la vidéo. Si vous faites un clip d'un stream, n'oubliez pas de donner le lien du stream. Si vous faites un clip provenant d'une vidéo faites par un autre clipper, donnez le lien des chaines de Vtuber en question. Si vous ne donnez aucun lien, le clip ne pourra pas s'afficher sur Holodex, tout les clips ont besoin d'un lien vers la chaine du Vtuber en question.
@@ -401,16 +427,26 @@ about:
       title: Que sont les favoris ?
       Contents:
         - >-
-          Les favoris sont un moyen de voir vos vtubeurs préférés en priorité, vous pouvez ajouter vos chaînes en favoris en cliquant sur l'icône cœur sur le
+          Les favoris sont un moyen de voir vos vtubers préférés en priorité, vous pouvez ajouter vos chaines en favoris en cliquant sur l'icône cœur sur la
         - >-
 
       disappear:
         title: Mes favoris ont disparu / Je ne peux pas ajouter de favori
+      contents:
+        - >-
+          Veuillez vous assurer que vous êtes bien connecté et visitez l'onglet des chaines favorites pour forcer un rafraîchissement.
     mobile:
       title: Y a-t-il une application Android/iOS pour Holodex?
       content:
         summary: >-
           Nous y travaillons ! En attendant, vous pouvez ajoutez Holodex à votre écran d'accueil. Nous avons ajustez pas mal de choses pour que cela ressemble le plus possible à une application
+        android:
+          - 'Android Chrome : Accédez au site, cliquez sur les trois points'
+          - en haut à droite et trouvez "Ajouter à l'écran d'accueil".
+        ios:
+          - >-
+            iOS Safari : Accédez au site, cliquez sur le carré avec une flèche pointant vers le haut
+          - en bas de Safari, et cliquez sur "Sur l'écran d'accueil"
     MugenClips:
       title: Qu'est-ce que MugenClips ?
     subber:
@@ -418,11 +454,17 @@ about:
       contents:
         - >-
 
-        - ', and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.'
+        - ce formulaire
         - >-
-
+          , et nous vous ajouterons manuellement. Si vous êtes déjà sur la liste, assurez-vous que vos descriptions de vidéos ont les bons liens vers la source/chaine youtube.
     feedback:
       title: J'ai des retours/idées à donner pour le projet ou je veux aider
+    support:
+      title: Comment puis-je soutenir Holodex ?
+      contents:
+        '0': >-
+          Notre serveur autohébergé est une machine à 28 cœurs et 60 Go de RAM qui coûte environ 60 $ par mois et nous cherchons à étendre de plus en plus nos fonctionnalités, donc nous avons ouvert un <a href="https://ko-fi.com/holodex">Ko-fi</a> pour couvrir les coûts du serveur. (Nous avons aussi un <a href="https://www.patreon.com/holodex">Patreon</a>, mais nous préférons Ko-fi)<br /><br />Vous pouvez également soutenir Holodex en nous donnant des commentaires et des messages de soutien sur Twitter, en nous aidant à traduire via <a href="https://crwd.in/holodex">Crowdin</a>, ainsi qu'en contribuant à notre base de données de chansons. Même le fait de chronométrer un stream pour en extraire les passages amusants et de les commenter sur le stream original est une aide précieuse !
+  privacyPolicy: Politique de confidentialité (anglais)
   gdpr: RGPD et mes données
   gdprContent: >-
     Un cookie de Google Analytics est utilisé pour suivre les pages vues à des fins d'analyse. Après votre connexion, nous associons votre nom d'utilisateur et votre ID de compte à vos favoris. Ces données peuvent inclure votre adresse e-mail pour Google, votre identifiant Discord ou votre identifiant pour Twitter.
@@ -432,6 +474,14 @@ about:
     Vous pouvez créer un ticket dans le <a href="https://github.com/RiceCakess/Holodex/issues"> Github </a> (Anglais) ou contacter une personne s'occupant d'Holodex sur le Discord<br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Crédits
+    contents:
+      - Je voudrais remercier chaleureusement l'équipe de
+      - pour leur travail sur
+      - >-
+
+      - >-
+        Il s'agit d'un site web fait par des fans et le contenu de ce site est la propriété de Cover Corp et de ses partenaires. Le site suit les directives établies par Cover Corp dans leur
+      - Accord de licence sur les œuvres dérivées
   changelog:
     title: Notes de mise à jour
   news:
