@@ -271,7 +271,7 @@ export default {
                 const matches = [...this.link.matchAll(regex)];
                 let id = matches?.[0]?.[1];
                 handle = this.link.includes('@')
-                id = handle ? '@' + id : id;
+                id = handle ? '@' + id.toLowerCase() : id;
 
                 try {
                     const exists = id && (await backendApi.channel(id));
@@ -306,7 +306,7 @@ export default {
                                     value:
                                         this.link
                                         || handle 
-                                        ? `https://www.youtube.com/@${id}`
+                                        ? `https://www.youtube.com/${id}`
                                         : `https://www.youtube.com/channel/${this.channel.id}`,
                                     inline: false,
                                 },
