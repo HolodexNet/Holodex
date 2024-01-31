@@ -202,7 +202,7 @@ export default {
     return axiosInstance.post(`/songs/latest?c=${dt}`, {
       channel_id: channelId,
       video_id: videoId,
-      limit: 100,
+      limit: 1000,
     });
   },
   tryCreateSong(songObj, jwt) {
