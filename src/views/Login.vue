@@ -150,7 +150,7 @@
 </template>
 
 <script lang="ts">
-import open from "oauth-open";
+// import open from "oauth-open";
 import api from "@/utils/backend-api";
 import UserCard from "@/components/user/UserCard.vue";
 import copyToClipboard from "@/mixins/copyToClipboard";
@@ -213,7 +213,29 @@ export default {
         const params = new URL(window.location.href).searchParams;
         const service = params.get("service");
         const jwt = params.get("jwt");
-        if (service === "twitter" && jwt) {
+        if (service === "discord" && window.location.hash) {
+            // the hash is #token_type=Bearer&access_token=yG7BNWhnqcQmXaOQEJEzw2nu7IgeIK&expires_in=604800&scope=identify
+            // parse the hash
+            console.log("analyzing hash", window.location.hash);
+            const hash = window.location.hash.substring(1);
+            const discordAuthParams = new URLSearchParams(hash);
+            // const tokenType = discordAuthParams.get('token_type');
+            const accessToken = discordAuthParams.get("access_token");
+            // const expiresIn = discordAuthParams.get('expires_in');
+            // const scope = discordAuthParams.get('scope');
+            const resp = await api.login(
+                this.$store.state.userdata.jwt,
+                accessToken,
+                "discord",
+            );
+            // console.log(resp);
+            this.$store.commit("setUser", resp.data);
+            this.$gtag.event("login", {
+                event_label: "discord",
+            });
+
+            this.$store.dispatch("favorites/resetFavorites");
+        } else if (service === "twitter" && jwt) {
             const twitterTempJWT = jwt;
             const resp = await api.login(
                 this.$store.state.userdata.jwt,
@@ -253,29 +275,35 @@ export default {
         },
         async loginDiscord() {
             // redirect location:
-            const redirectUri = `${window.location.protocol}//${window.location.host}/discord`;
+            const redirectUri = `${window.location.protocol}//${window.location.host}/login?service=discord`;
+
+            // redirect to url
+            window.open(`https://discord.com/api/oauth2/authorize?client_id=793619250115379262&redirect_uri=${encodeURIComponent(
+                redirectUri,
+            )}&response_type=token&scope=identify`);
 
             // out:
             // {token_type: "Bearer", access_token: "<SOMEACCESSTOKEN>", expires_in: "604800", scope: "identify"}
-            open(
-                `https://discord.com/api/oauth2/authorize?client_id=793619250115379262&redirect_uri=${encodeURIComponent(
-                    redirectUri,
-                )}&response_type=token&scope=identify`,
-                async (err, out) => {
-                    const resp = await api.login(
-                        this.$store.state.userdata.jwt,
-                        out.access_token,
-                        "discord",
-                    );
-                    // console.log(resp);
-                    this.$store.commit("setUser", resp.data);
-                    this.$gtag.event("login", {
-                        event_label: "discord",
-                    });
+            // open(
+            //     `https://discord.com/api/oauth2/authorize?client_id=793619250115379262&redirect_uri=${encodeURIComponent(
+            //         redirectUri,
+            //     )}&response_type=token&scope=identify`,
+            //     async (err, out) => {
+            //       console.log(err, out)
+            //       const resp = await api.login(
+            //           this.$store.state.userdata.jwt,
+            //           out.access_token,
+            //           "discord",
+            //       );
+            //       // console.log(resp);
+            //       this.$store.commit("setUser", resp.data);
+            //       this.$gtag.event("login", {
+            //           event_label: "discord",
+            //       });
 
-                    this.$store.dispatch("favorites/resetFavorites");
-                },
-            );
+            //       this.$store.dispatch("favorites/resetFavorites");
+            //     },
+            // );
         },
         async loginTwitter() {
             window.location.href = `${apiURI}/v2/user/login/twitter`;
