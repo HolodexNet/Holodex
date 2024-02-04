@@ -77,7 +77,12 @@ export default defineConfig({
   },
   plugins: [
     bundleAnalyzer({}),
-    react({ plugins: [["@swc-jotai/debug-label", {}]] }),
+    react({
+      plugins: [
+        /* ["@swc-jotai/debug-label", {}] 
+          sadly broken due to https://github.com/pmndrs/swc-jotai/issues/22 */
+      ],
+    }),
     UnoCSS({ presets: [presetIcons()] }),
     yaml(),
     dynamicImportVars({

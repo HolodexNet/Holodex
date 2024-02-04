@@ -12,7 +12,7 @@
     "lint:fix": "eslint ./src --fix",
     "pretty:fix": "prettier --write ./src",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "cd ..\\.. && husky install packages\\react\\.husky"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -52,7 +52,7 @@
     "i18next-icu": "^2.3.0",
     "i18next-resources-to-backend": "^1.2.0",
     "jotai": "^2.6.4",
-    "jotai-devtools": "^0.7.1",
+    "jotai-devtools": "^0.7.0",
     "lucide-react": "^0.294.0",
     "oauth-open": "^1.0.4",
     "react": "^18.2.0",
