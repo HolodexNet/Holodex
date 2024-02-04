@@ -242,7 +242,7 @@ views:
     favoritesAreEmpty: You have no favorites!
     blockedAreEmpty: You have no blocked channels.
   home:
-    liveOrUpcomingHeading: Live <liveCount></liveCount> / Upcoming <upcomingCount></upcomingCount>
+    liveOrUpcomingHeading: Live <liveCount/> / Upcoming <upcomingCount/>
     recentVideosHeading: Recent Videos
     noStreams: No live or upcoming streams at the moment
     recentVideoToggles:

@@ -118,15 +118,19 @@ export function Home() {
             <Trans
               i18nKey="views.home.liveOrUpcomingHeading"
               components={{
-                liveCount: (
+                liveCount: live ? (
                   <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
-                    {live?.filter(({ status }) => status === "live").length}
+                    {live.filter(({ status }) => status === "live").length}
                   </span>
+                ) : (
+                  <span className="w-1" />
                 ),
-                upcomingCount: (
+                upcomingCount: live ? (
                   <span className="ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
-                    {live?.filter(({ status }) => status === "upcoming").length}
+                    {live.filter(({ status }) => status === "upcoming").length}
                   </span>
+                ) : (
+                  <span className="w-1" />
                 ),
               }}
             />
