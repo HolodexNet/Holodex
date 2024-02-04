@@ -5,7 +5,6 @@ export const clipLanguageAtom = atom<string[]>([]);
 export const redirectModeAtom = atom(false);
 export const hideThumbnailAtom = atom(false);
 export const hidePlaceholderAtom = atom(false);
-export const homeViewModeAtom = atom<"grid" | "list" | "denseList">("grid");
 export const gridDensityAtom = atom(0);
 export const defaultOpenAtom = atom<"Favorites" | "Home">("Home");
 export const hideCollabStreamsAtom = atom(false);

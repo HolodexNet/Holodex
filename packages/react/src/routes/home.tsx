@@ -120,14 +120,16 @@ export function Home() {
               components={{
                 liveCount: live ? (
                   <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
-                    {live.filter(({ status }) => status === "live").length}
+                    {live.filter(({ status }) => status === "live").length ||
+                      "0"}
                   </span>
                 ) : (
                   <span className="w-1" />
                 ),
                 upcomingCount: live ? (
                   <span className="ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
-                    {live.filter(({ status }) => status === "upcoming").length}
+                    {live.filter(({ status }) => status === "upcoming")
+                      .length || "0"}
                   </span>
                 ) : (
                   <span className="w-1" />
