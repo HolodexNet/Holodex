@@ -84,9 +84,9 @@ export function Home() {
   const listCN = useMemo(
     () =>
       cn("px-4 py-2 md:px-8", {
-        "@container grid grid-cols-1 grid-cols-[repeat(auto-fill,_minmax(360px,_1fr))] gap-x-4 gap-y-6":
+        "@container grid grid-cols-1 grid-cols-[repeat(auto-fill,minmax(360px,1fr))] gap-x-4 gap-y-4":
           cardSize === "lg",
-        "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-x-2 gap-y-4":
+        "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-2 gap-y-2":
           cardSize === "md",
         "@container flex flex-col max-w-screen mx-auto": cardSize === "sm",
       }),
