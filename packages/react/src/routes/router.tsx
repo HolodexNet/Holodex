@@ -105,6 +105,10 @@ const router = createBrowserRouter([
         element: <Settings />,
         children: [
           {
+            path: "",
+            element: <SettingsLang />,
+          },
+          {
             path: "lang",
             element: <SettingsLang />,
           },
@@ -139,6 +143,10 @@ const router = createBrowserRouter([
         path: "about",
         element: <About />,
         children: [
+          {
+            path: "",
+            element: <AboutGeneral />,
+          },
           {
             path: "general",
             element: <AboutGeneral />,
