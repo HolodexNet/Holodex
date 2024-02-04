@@ -114,7 +114,7 @@ export function Home() {
       </Helmet>
       <Tabs defaultValue={tab} onValueChange={setTab}>
         <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-2 md:px-8">
-          <TabsTrigger value="live">
+          <TabsTrigger value="live" className="px-2">
             <Trans
               i18nKey="views.home.liveOrUpcomingHeading"
               components={{
@@ -127,7 +127,7 @@ export function Home() {
                   <span className="w-1" />
                 ),
                 upcomingCount: live ? (
-                  <span className="ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
+                  <span className="-mr-1 ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
                     {live.filter(({ status }) => status === "upcoming")
                       .length || "0"}
                   </span>
