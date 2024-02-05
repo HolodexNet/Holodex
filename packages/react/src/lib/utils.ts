@@ -12,11 +12,38 @@ export function cn(...inputs: ClassValue[]) {
 
 export function makeYtThumbnailUrl(id: string, size: VideoCardSize) {
   switch (size) {
+    case "xs":
+      return [
+        `https://i.ytimg.com/vi_webp/${id}/default.webp`,
+        `https://i.ytimg.com/vi/${id}/default.jpg`,
+        `https://i.ytimg.com/vi_webp/${id}/mqdefault.webp`,
+        `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
+        `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+      ];
+    case "list": // same as `sm` behavior.
     case "sm":
-      return `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+      return [
+        `https://i.ytimg.com/vi_webp/${id}/mqdefault.webp`,
+        `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
+        `https://i.ytimg.com/vi_webp/${id}/hqdefault.webp`,
+        `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+        `https://i.ytimg.com/vi/${id}/sddefault.jpg`,
+      ];
     case "md":
-      return `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+      return [
+        `https://i.ytimg.com/vi_webp/${id}/hqdefault.webp`,
+        `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+        `https://i.ytimg.com/vi_webp/${id}/sddefault.webp`,
+        `https://i.ytimg.com/vi/${id}/sddefault.jpg`,
+        `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+      ];
     case "lg":
+      return [
+        `https://i.ytimg.com/vi_webp/${id}/sddefault.webp`,
+        `https://i.ytimg.com/vi/${id}/sddefault.jpg`,
+        `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+        `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+      ];
     default:
       return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
   }

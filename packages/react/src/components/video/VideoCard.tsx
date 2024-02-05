@@ -9,6 +9,7 @@ import { useAtomValue } from "jotai";
 import { localeAtom } from "@/store/i18n";
 import { useDuration } from "@/hooks/useDuration";
 import { clsx } from "clsx";
+import { VideoThumbnail } from "../image";
 
 type VideoCardType = VideoBase &
   Partial<Video> &
@@ -214,7 +215,7 @@ export function VideoCard({
             : undefined
         }
       >
-        <img
+        <VideoThumbnail
           src={thumbnailSrc}
           className="aspect-video h-full w-full rounded-md object-cover"
         />

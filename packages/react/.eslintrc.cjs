@@ -54,6 +54,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "tailwindcss/no-custom-classname": ["warn", { whitelist: ['i-[a-zA-Z]+:[a-zA-Z0-9-]+'] }],
+    "tailwindcss/no-custom-classname": ["warn", { whitelist: ['i-[a-zA-Z-]+:[a-zA-Z0-9-]+'] }],
   },
 };

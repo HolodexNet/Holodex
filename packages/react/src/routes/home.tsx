@@ -24,16 +24,12 @@ import { Helmet } from "react-helmet-async";
 export function Home() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const { org } = useParams();
-  const {
-    size: cardSize,
-    setSize,
-    nextSize,
-    setNextSize,
-  } = useVideoCardSizes(["sm", "md", "lg"]);
+  const { size: cardSize } = useVideoCardSizes(["list", "md", "lg"]);
   const currentOrg = useAtomValue(orgAtom);
   const [tab, setTab] = useState(searchParams.get("tab") ?? "live");
+
   const { data: live, isLoading: liveLoading } = useLive(
     { org, type: ["placeholder", "stream"], include: ["mentions"] },
     { refetchInterval: 1000 * 60 * 5, enabled: tab === "live" },
@@ -86,7 +82,7 @@ export function Home() {
           cardSize === "lg",
         "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-2 gap-y-2":
           cardSize === "md",
-        "@container flex flex-col max-w-screen mx-auto": cardSize === "sm",
+        "@container flex flex-col max-w-screen mx-auto": cardSize === "list",
       }),
     [cardSize],
   );
@@ -171,7 +167,7 @@ export function Home() {
 }
 function TabListWrapper({ live }: { live: Live[] | undefined }) {
   const { t } = useTranslation();
-  const { nextSize, setNextSize } = useVideoCardSizes(["sm", "md", "lg"]);
+  const { nextSize, setNextSize } = useVideoCardSizes(["list", "md", "lg"]);
 
   return (
     <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-2 md:px-8">
@@ -218,8 +214,9 @@ function TabListWrapper({ live }: { live: Live[] | undefined }) {
             {
               md: "i-lucide:grid-3x3",
               lg: "i-lucide:layout-grid",
-              sm: "i-lucide:list",
+              list: "i-lucide:list",
               xs: "", // not used
+              sm: "",
             }[nextSize],
           )}
         />
