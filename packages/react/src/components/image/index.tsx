@@ -12,7 +12,11 @@ export function VideoThumbnail({
   return (
     <Img
       src={src || ""}
-      loader={<div className="i-eos-icons:bubble-loading"></div>}
+      loader={
+        <div className="flex aspect-video h-full w-full items-center justify-center ">
+          <div className="i-eos-icons:bubble-loading"></div>
+        </div>
+      }
       {...rest}
     />
   );
