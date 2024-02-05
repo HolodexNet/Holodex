@@ -88,7 +88,7 @@ export function useVideosV3(
           nextPage: pageParam,
         }),
       }),
-    getNextPageParam: (lastPage, allPages) => lastPage.nextPage,
+    getNextPageParam: (lastPage, _) => lastPage.nextPage,
     ...config,
   });
 }
