@@ -2,7 +2,7 @@ import { SkeletonVideoCard } from "@/components/video/SkeletonVideoCard";
 import { VideoCard } from "@/components/video/VideoCard";
 import { cn } from "@/lib/utils";
 import { useLive } from "@/services/live.service";
-import { useVideos } from "@/services/video.service";
+import { useVideos, useVideosV3 } from "@/services/video.service";
 import { Button } from "@/shadcn/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { orgAtom } from "@/store/org";
@@ -44,14 +44,13 @@ export function Home() {
     data: archives,
     isLoading: archiveLoading,
     fetchNextPage: fetchArchives,
-  } = useVideos(
+  } = useVideosV3(
     {
       org,
       type: ["stream"],
       status: ["past", "missing"],
       include: ["clips", "mentions"],
       max_upcoming_hours: 1,
-      paginated: true,
       limit: 32,
     },
     {
@@ -64,14 +63,13 @@ export function Home() {
     data: clips,
     isLoading: clipLoading,
     fetchNextPage: fetchClips,
-  } = useVideos(
+  } = useVideosV3(
     {
       org,
       type: ["clip"],
       status: ["past"],
       include: ["mentions"],
       max_upcoming_hours: 1,
-      paginated: true,
       limit: 32,
       lang: [`${clipLang.value}`],
     },
@@ -81,7 +79,7 @@ export function Home() {
     },
   );
 
-  const listCN = useMemo(
+  const listClassName = useMemo(
     () =>
       cn("px-4 py-2 md:px-8", {
         "@container grid grid-cols-1 grid-cols-[repeat(auto-fill,minmax(360px,1fr))] gap-x-4 gap-y-4":
@@ -113,61 +111,9 @@ export function Home() {
         <title>{currentOrg} - Holodex</title>
       </Helmet>
       <Tabs defaultValue={tab} onValueChange={setTab}>
-        <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-2 md:px-8">
-          <TabsTrigger value="live" className="px-2">
-            <Trans
-              i18nKey="views.home.liveOrUpcomingHeading"
-              components={{
-                liveCount: live ? (
-                  <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
-                    {live.filter(({ status }) => status === "live").length ||
-                      "0"}
-                  </span>
-                ) : (
-                  <span className="w-1" />
-                ),
-                upcomingCount: live ? (
-                  <span className="-mr-1 ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
-                    {live.filter(({ status }) => status === "upcoming")
-                      .length || "0"}
-                  </span>
-                ) : (
-                  <span className="w-1" />
-                ),
-              }}
-            />
-          </TabsTrigger>
-          <TabsTrigger value="archive">
-            {t("views.home.recentVideoToggles.official")}
-          </TabsTrigger>
-          <TabsTrigger value="clips">
-            {t("views.home.recentVideoToggles.subber")}
-          </TabsTrigger>
-          <div className="flex grow" />
-          <Button
-            className="shrink-0"
-            size="icon-lg"
-            variant="ghost"
-            onClick={() => {
-              setNextSize();
-              console.log("new card size", nextSize);
-            }}
-          >
-            <div
-              className={cn(
-                {
-                  md: "i-lucide:grid-3x3",
-                  lg: "i-lucide:layout-grid",
-                  sm: "i-lucide:list",
-                  xs: "", // not used
-                }[nextSize],
-              )}
-            />
-          </Button>
-          <LanguageSelector />
-        </TabsList>
+        <TabListWrapper live={live} />
         <TabsContent value="live">
-          <div className={listCN}>
+          <div className={listClassName}>
             {liveLoading
               ? Array.from({ length: 24 }).map((_, index) => (
                   <SkeletonVideoCard key={`placeholder-${index}`} />
@@ -179,7 +125,7 @@ export function Home() {
         </TabsContent>
         <TabsContent value="archive">
           {archiveLoading ? (
-            <div className={listCN}>
+            <div className={listClassName}>
               {Array.from({ length: 24 }).map((_, index) => (
                 <SkeletonVideoCard key={`placeholder-${index}`} />
               ))}
@@ -187,8 +133,8 @@ export function Home() {
           ) : (
             <VirtuosoGrid
               useWindowScroll
-              listClassName={listCN}
-              data={archives?.pages?.flat() ?? []}
+              listClassName={listClassName}
+              data={archives?.pages?.flatMap((x) => x.items) ?? []}
               itemContent={(_, stream) => (
                 <VideoCard key={stream.id} size={cardSize} {...stream} />
               )}
@@ -200,7 +146,7 @@ export function Home() {
         </TabsContent>
         <TabsContent value="clips">
           {clipLoading ? (
-            <div className={listCN}>
+            <div className={listClassName}>
               {Array.from({ length: 24 }).map((_, index) => (
                 <SkeletonVideoCard key={`placeholder-${index}`} />
               ))}
@@ -208,8 +154,8 @@ export function Home() {
           ) : (
             <VirtuosoGrid
               useWindowScroll
-              listClassName={listCN}
-              data={clips?.pages?.flat() ?? []}
+              listClassName={listClassName}
+              data={clips?.pages?.flatMap((x) => x.items) ?? []}
               itemContent={(_, stream) => (
                 <VideoCard key={stream.id} size={cardSize} {...stream} />
               )}
@@ -221,5 +167,64 @@ export function Home() {
         </TabsContent>
       </Tabs>
     </>
+  );
+}
+function TabListWrapper({ live }: { live: Live[] | undefined }) {
+  const { t } = useTranslation();
+  const { nextSize, setNextSize } = useVideoCardSizes(["sm", "md", "lg"]);
+
+  return (
+    <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-2 md:px-8">
+      <TabsTrigger value="live" className="px-2">
+        <Trans
+          i18nKey="views.home.liveOrUpcomingHeading"
+          components={{
+            liveCount: live ? (
+              <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
+                {live.filter(({ status }) => status === "live").length || "0"}
+              </span>
+            ) : (
+              <span className="w-1" />
+            ),
+            upcomingCount: live ? (
+              <span className="-mr-1 ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
+                {live.filter(({ status }) => status === "upcoming").length ||
+                  "0"}
+              </span>
+            ) : (
+              <span className="w-1" />
+            ),
+          }}
+        />
+      </TabsTrigger>
+      <TabsTrigger value="archive">
+        {t("views.home.recentVideoToggles.official")}
+      </TabsTrigger>
+      <TabsTrigger value="clips">
+        {t("views.home.recentVideoToggles.subber")}
+      </TabsTrigger>
+      <div className="flex grow" />
+      <Button
+        className="shrink-0"
+        size="icon-lg"
+        variant="ghost"
+        onClick={() => {
+          setNextSize();
+          console.log("new card size", nextSize);
+        }}
+      >
+        <div
+          className={cn(
+            {
+              md: "i-lucide:grid-3x3",
+              lg: "i-lucide:layout-grid",
+              sm: "i-lucide:list",
+              xs: "", // not used
+            }[nextSize],
+          )}
+        />
+      </Button>
+      <LanguageSelector />
+    </TabsList>
   );
 }
