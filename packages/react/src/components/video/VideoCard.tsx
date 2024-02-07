@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import { useAtomValue } from "jotai";
 import { localeAtom } from "@/store/i18n";
 import { useDuration } from "@/hooks/useDuration";
+import { clsx } from "clsx";
+import { VideoThumbnail } from "../image";
 
 type VideoCardType = VideoBase &
   Partial<Video> &
@@ -168,317 +170,165 @@ export function VideoCard({
     </VideoMenu>
   );
 
-  switch (size) {
-    case "xs":
-      return (
-        <div className="group relative flex gap-4 py-2">
-          <Link
-            to={videoHref}
-            target={videoTarget}
-            className="relative w-28 shrink-0 overflow-hidden @lg:w-36"
-            onClick={
-              onThumbnailClick
-                ? (e) => {
-                    e.preventDefault();
-                    onThumbnailClick(e);
-                  }
-                : undefined
-            }
-          >
-            <img
-              src={thumbnailSrc}
-              className="aspect-video h-full w-full rounded-md object-cover"
-            />
-            {topic_id && (
-              <span className="absolute left-1 top-1 rounded-sm bg-black/80 px-1 text-sm capitalize text-white">
-                {topic_id}
-              </span>
-            )}
-            <VideoCardDuration
-              type={type}
-              status={status}
-              duration={duration}
-              start_actual={start_actual}
-              end_actual={end_actual}
-              link={link}
-              placeholderType={placeholderType}
-            />
-          </Link>
-          <div
-            className="flex flex-col gap-1"
-            onClick={goToVideoClickHandler}
-            onAuxClick={goToVideoAuxClickHandler}
-          >
-            <Link
-              to={videoHref}
-              target={videoTarget}
-              onClick={
-                onInfoClick
-                  ? (e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      onInfoClick(e);
-                    }
-                  : undefined
-              }
-              className="line-clamp-2 pr-4 text-sm font-bold @lg:text-lg"
-            >
-              {title}
-            </Link>
-            <Link
-              id="channelLink"
-              onClick={(e) => e.stopPropagation()}
-              to={`/channel/${channel?.id}`}
-              className="line-clamp-1 text-xs text-base-11 hover:text-base-12 @lg:text-sm"
-            >
-              {channel?.name}
-            </Link>
-          </div>
-          {videoMenu}
-        </div>
-      );
+  const videoCardClasses = useMemo(
+    () => ({
+      outerLayer: clsx([
+        (size == "xs" || size == "sm") && "group relative flex gap-4 py-2",
+        (size == "md" || size == "lg") && "group flex w-full flex-col gap-4",
+      ]),
+      thumbnailLink: clsx([
+        size == "xs" && "relative w-28 shrink-0 overflow-hidden @lg:w-36",
+        size == "sm" && "relative w-36 shrink-0 overflow-hidden @lg:w-48",
+        (size == "md" || size == "lg") && "relative w-full",
+      ]),
+      videoTextInfo: clsx([
+        (size == "xs" || size == "sm") && "flex flex-col gap-1",
+        (size == "md" || size == "lg") &&
+          "flex min-h-[6rem] cursor-pointer flex-col gap-0",
+      ]),
+      titleLink: clsx([
+        (size == "xs" || size == "sm") &&
+          "line-clamp-2 pr-4 text-sm font-bold @lg:text-lg",
+        (size == "md" || size == "lg") &&
+          "line-clamp-2 pr-4 text-sm font-bold md:text-[1rem] md:leading-6",
+      ]),
+      channelLink:
+        "line-clamp-1 text-xs text-base-11 hover:text-base-12 @lg:text-sm",
+      scheduleText: "text-xs @lg:text-sm text-base-11",
+    }),
+    [size],
+  );
 
-    case "sm":
-      return (
-        <div className="group relative flex gap-4 py-2">
-          <Link
-            to={videoHref}
-            target={videoTarget}
-            className="relative w-36 shrink-0 overflow-hidden @lg:w-48"
-            onClick={
-              onThumbnailClick
-                ? (e) => {
-                    e.preventDefault();
-                    onThumbnailClick(e);
-                  }
-                : undefined
-            }
-          >
-            <img
-              src={thumbnailSrc}
-              className="aspect-video h-full w-full rounded-md object-cover"
-            />
-            {topic_id && (
-              <span className="absolute left-1 top-1 rounded-sm bg-black/80 px-1 text-sm capitalize text-white">
-                {topic_id}
-              </span>
-            )}
-            <VideoCardDuration
-              type={type}
-              status={status}
-              duration={duration}
-              start_actual={start_actual}
-              end_actual={end_actual}
-              link={link}
-              placeholderType={placeholderType}
-            />
-          </Link>
-          <div
-            className="flex flex-col gap-1"
-            onClick={goToVideoClickHandler}
-            onAuxClick={goToVideoAuxClickHandler}
-          >
-            <Link
-              to={videoHref}
-              state={{ video: videoObject }}
-              target={videoTarget}
-              onClick={
-                onInfoClick
-                  ? (e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      onInfoClick(e);
-                    }
-                  : (e) => {
-                      e.stopPropagation();
-                    }
+  return (
+    <div className={videoCardClasses.outerLayer}>
+      <Link
+        to={videoHref}
+        target={videoTarget}
+        state={{ video: videoObject }}
+        className={videoCardClasses.thumbnailLink}
+        onClick={
+          onThumbnailClick
+            ? (e) => {
+                e.preventDefault();
+                onThumbnailClick(e);
               }
-              className="line-clamp-2 pr-4 text-sm font-bold @lg:text-lg"
-            >
-              {title}
-            </Link>
-            <Link
-              id="channelLink"
-              onClick={(e) => e.stopPropagation()}
-              to={`/channel/${channel?.id}`}
-              className="line-clamp-1 text-xs text-base-11 hover:text-base-12 @lg:text-sm"
-            >
-              {channel?.name}
-            </Link>
-            {status === "live" && (
-              <div className="flex gap-1 text-xs text-base-11 @lg:text-sm">
-                <span className="text-red-500">
-                  {t("component.videoCard.liveNow")}
-                </span>
-                {!!live_viewers && (
-                  <>
-                    <span>/</span>
-                    <span>
-                      {t("component.videoCard.watching", {
-                        0: formatCount(live_viewers),
-                      })}
-                    </span>
-                  </>
-                )}
-              </div>
-            )}
-            {(type === "placeholder" || status === "upcoming") &&
-              status !== "live" &&
-              start_scheduled && (
-                <span className="line-clamp-1 text-xs text-base-11 @lg:text-sm">
-                  {t("time.diff_future_date", {
-                    0: dayjs(start_scheduled).fromNow(false),
-                    1: dayjs(start_scheduled).format("hh:mm A"),
-                  })}
-                </span>
-              )}
-            {status === "past" && available_at && (
-              <span className="line-clamp-1 text-xs text-base-11 @lg:text-sm">
-                {t("time.distance_past_date", {
-                  0: dayjs(available_at).fromNow(false),
-                })}
-              </span>
-            )}
-          </div>
-          {videoMenu}
-        </div>
-      );
-
-    case "md":
-    case "lg":
-      return (
-        <div className="group flex w-full flex-col gap-4">
+            : undefined
+        }
+      >
+        <VideoThumbnail
+          src={thumbnailSrc}
+          className="aspect-video h-full w-full rounded-md object-cover"
+        />
+        {topic_id && (
+          <span className="absolute left-1 top-1 rounded-sm bg-black/80 px-1 text-sm capitalize text-white">
+            {topic_id}
+          </span>
+        )}
+        <VideoCardDuration
+          type={type}
+          status={status}
+          duration={duration}
+          start_actual={start_actual}
+          end_actual={end_actual}
+          link={link}
+          placeholderType={placeholderType}
+        />
+      </Link>
+      <div className="relative flex gap-2 @sm:gap-1">
+        {(size == "lg" || size == "md") && channel && (
           <Link
+            to={`/channel/${channel.id}`}
+            className="shrink-0"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img src={channel.photo ?? ""} className="h-8 w-8 rounded-full" />
+          </Link>
+        )}
+        {/* Set min-height because react-virtuoso will break if the height is not fixed */}
+        <div
+          className={videoCardClasses.videoTextInfo}
+          onClick={goToVideoClickHandler}
+          onMouseDown={goToVideoAuxClickHandler}
+        >
+          <Link
+            className={videoCardClasses.titleLink}
             to={videoHref}
-            target={videoTarget}
             state={{ video: videoObject }}
-            className="relative w-full"
+            target={videoTarget}
             onClick={
-              onThumbnailClick
+              onInfoClick
                 ? (e) => {
                     e.preventDefault();
-                    onThumbnailClick(e);
+                    e.stopPropagation();
+                    onInfoClick(e);
                   }
-                : undefined
+                : (e) => {
+                    e.stopPropagation();
+                  }
             }
           >
-            <img
-              src={thumbnailSrc}
-              className="aspect-video w-full rounded-md object-cover"
-            />
-            {topic_id && (
-              <span className="absolute left-1 top-1 rounded-sm bg-black/80 px-1 text-sm capitalize text-white">
-                {topic_id}
-              </span>
-            )}
-            <VideoCardDuration
-              type={type}
-              status={status}
-              duration={duration}
-              start_actual={start_actual}
-              end_actual={end_actual}
-              link={link}
-              placeholderType={placeholderType}
-            />
+            {title}
           </Link>
-          <div className="relative flex gap-2">
-            {channel && (
-              <Link
-                to={`/channel/${channel.id}`}
-                className="shrink-0"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <img
-                  src={channel.photo ?? ""}
-                  className="h-8 w-8 rounded-full"
-                />
-              </Link>
-            )}
-            {/* Set min-height because react-virtuoso will break if the height is not fixed */}
-            <div
-              className="flex min-h-[6rem] cursor-pointer flex-col gap-0"
-              onClick={goToVideoClickHandler}
-              onMouseDown={goToVideoAuxClickHandler}
+          {channel && (
+            <Link
+              className={videoCardClasses.channelLink}
+              id="channelLink"
+              to={`/channel/${channel.id}`}
+              onClick={
+                onChannelClick
+                  ? (e) => {
+                      e.preventDefault();
+                      onChannelClick(e);
+                    }
+                  : (e) => e.stopPropagation()
+              }
             >
-              <Link
-                className="line-clamp-2 pr-4 text-sm font-bold md:text-[1rem] md:leading-6"
-                to={videoHref}
-                state={{ video: videoObject }}
-                target={videoTarget}
-                onClick={
-                  onInfoClick
-                    ? (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        onInfoClick(e);
-                      }
-                    : (e) => {
-                        e.stopPropagation();
-                      }
-                }
-              >
-                {title}
-              </Link>
-              {channel && (
-                <Link
-                  id="channelLink"
-                  to={`/channel/${channel.id}`}
-                  onClick={
-                    onChannelClick
-                      ? (e) => {
-                          e.preventDefault();
-                          onChannelClick(e);
-                        }
-                      : (e) => e.stopPropagation()
-                  }
-                >
-                  <div className="line-clamp-1 text-xs text-base-11 hover:text-base-12 md:text-sm">
-                    {channel.name}
-                  </div>
-                </Link>
-              )}
-              <div className="flex text-xs md:text-sm">
-                {status === "live" && (
-                  <div className="flex gap-1 text-base-11">
-                    <span className="text-red-500">
-                      {t("component.videoCard.liveNow")}
-                    </span>
-                    {!!live_viewers && (
-                      <>
-                        <span>/</span>
-                        <span>
-                          {t("component.videoCard.watching", {
-                            0: formatCount(live_viewers),
-                          })}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                )}
-                {(type === "placeholder" || status === "upcoming") &&
-                  status !== "live" &&
-                  start_scheduled && (
-                    <span className="text-base-11">
-                      {t("time.diff_future_date", {
-                        0: dayjs(start_scheduled).fromNow(false),
-                        1: dayjs(start_scheduled).format("hh:mm A"),
-                      })}
-                    </span>
+              {channel.name}
+            </Link>
+          )}
+          {size != "xs" && (
+            <div className={videoCardClasses.scheduleText}>
+              {status === "live" && (
+                <div className="flex gap-1 text-base-11">
+                  <span className="text-red-500">
+                    {t("component.videoCard.liveNow")}
+                  </span>
+                  {!!live_viewers && (
+                    <>
+                      <span>/</span>
+                      <span>
+                        {t("component.videoCard.watching", {
+                          0: formatCount(live_viewers),
+                        })}
+                      </span>
+                    </>
                   )}
-                {status === "past" && available_at && (
+                </div>
+              )}
+              {(type === "placeholder" || status === "upcoming") &&
+                status !== "live" &&
+                start_scheduled && (
                   <span className="text-base-11">
-                    {t("time.distance_past_date", {
-                      0: dayjs(available_at).fromNow(false),
+                    {t("time.diff_future_date", {
+                      0: dayjs(start_scheduled).fromNow(false),
+                      1: dayjs(start_scheduled).format("hh:mm A"),
                     })}
                   </span>
                 )}
-              </div>
+              {status === "past" && available_at && (
+                <span className="text-base-11">
+                  {t("time.distance_past_date", {
+                    0: dayjs(available_at).fromNow(false),
+                  })}
+                </span>
+              )}
             </div>
-            {videoMenu}
-          </div>
+          )}
         </div>
-      );
-  }
+        {videoMenu}
+      </div>
+    </div>
+  );
 }
 
 function VideoCardDuration({

@@ -10,16 +10,16 @@ import {
   hideCollabStreamsAtom,
   hidePlaceholderAtom,
   hideThumbnailAtom,
-  homeViewModeAtom,
   ignoredTopicsAtom,
 } from "@/store/settings";
+import { useVideoCardSizes } from "@/store/video";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 
 export default function SettingsHomepage() {
   const { t } = useTranslation();
   const [defaultOpen, setDefaultOpen] = useAtom(defaultOpenAtom);
-  const [homeViewMode, setHomeViewMode] = useAtom(homeViewModeAtom);
+  const { size, setSize } = useVideoCardSizes(["lg", "md", "sm"]);
   const [ignoredTopics, setIgnoredTopics] = useAtom(ignoredTopicsAtom);
   const [hideThumbnail, setHideThumbnail] = useAtom(hideThumbnailAtom);
   const [hideCollab, setHideCollab] = useAtom(hideCollabStreamsAtom);
@@ -38,16 +38,19 @@ export default function SettingsHomepage() {
 
   const gridSizes = [
     {
-      value: "grid",
+      value: "lg",
       label: t("views.settings.gridSize.0"),
+      icon: "i-lucide:layout-grid",
     },
     {
-      value: "list",
+      value: "md",
+      label: t("views.settings.gridSize.0"),
+      icon: "i-lucide:grid-3x3",
+    },
+    {
+      value: "sm",
       label: t("views.settings.gridSize.1"),
-    },
-    {
-      value: "denseList",
-      label: t("views.settings.gridSize.2"),
+      icon: "i-lucide:list",
     },
   ];
 
@@ -100,18 +103,19 @@ export default function SettingsHomepage() {
       <SettingsItem label={t("views.settings.gridSizeLabel")}>
         <RadioGroup
           className="ml-auto flex gap-0 rounded-lg"
-          onValueChange={(val: "grid" | "list" | "denseList") =>
-            setHomeViewMode(val)
-          }
+          onValueChange={(val: "lg" | "md" | "sm") => setSize(val)}
         >
-          {gridSizes.map(({ label, value }) => (
+          {gridSizes.map(({ label, value, icon }) => (
             <Label
               className={cn(
                 "bg-base-4 border-base border-r-2 px-4 py-2 text-lg first:rounded-l-lg last:rounded-r-lg last:border-r-0 hover:cursor-pointer",
-                { "bg-secondary-9": value === homeViewMode },
+                { "bg-secondary-9": value === size },
               )}
             >
-              {label}
+              <div className="flex flex-row items-center gap-1">
+                <div className={icon}></div>
+                <span>{label}</span>
+              </div>
               <RadioGroupItem value={value} className="sr-only" />
             </Label>
           ))}

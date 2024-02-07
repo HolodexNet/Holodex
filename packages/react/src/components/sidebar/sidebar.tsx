@@ -160,7 +160,10 @@ function SidebarItem({
   const location = useLocation();
   const isMobile = useAtomValue(isMobileAtom);
 
-  const isHere = href === location.pathname;
+  const isHere =
+    href === location.pathname ||
+    ((href.startsWith("/settings") || href.startsWith("/about")) &&
+      location.pathname.startsWith(href));
 
   return (
     <Button

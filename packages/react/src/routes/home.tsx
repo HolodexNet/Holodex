@@ -1,13 +1,11 @@
-import { SkeletonVideoCard } from "@/components/video/SkeletonVideoCard";
-import { VideoCard } from "@/components/video/VideoCard";
 import { cn } from "@/lib/utils";
 import { useLive } from "@/services/live.service";
-import { useVideos } from "@/services/video.service";
+import { useVideosV3 } from "@/services/video.service";
 import { Button } from "@/shadcn/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { orgAtom } from "@/store/org";
-import { useVideoCardSizes, videoCardSizeAtom } from "@/store/video";
-import { useAtom, useAtomValue } from "jotai";
+import { useVideoCardSizes } from "@/store/video";
+import { useAtomValue } from "jotai";
 import { useEffect, useMemo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import {
@@ -16,10 +14,11 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { VirtuosoGrid } from "react-virtuoso";
 import { clipLangAtom } from "@/store/i18n";
 import { LanguageSelector } from "@/components/language/LanguagePicker";
 import { Helmet } from "react-helmet-async";
+import { MainVideoListing } from "./../components/video/MainVideoListing";
+import useMeasure from "react-use-measure";
 
 export function Home() {
   const navigate = useNavigate();
@@ -28,12 +27,12 @@ export function Home() {
   const { org } = useParams();
   const {
     size: cardSize,
-    setSize,
-    nextSize,
     setNextSize,
-  } = useVideoCardSizes(["sm", "md", "lg"]);
+    nextSize,
+  } = useVideoCardSizes(["list", "md", "lg"]);
   const currentOrg = useAtomValue(orgAtom);
   const [tab, setTab] = useState(searchParams.get("tab") ?? "live");
+
   const { data: live, isLoading: liveLoading } = useLive(
     { org, type: ["placeholder", "stream"], include: ["mentions"] },
     { refetchInterval: 1000 * 60 * 5, enabled: tab === "live" },
@@ -44,14 +43,15 @@ export function Home() {
     data: archives,
     isLoading: archiveLoading,
     fetchNextPage: fetchArchives,
-  } = useVideos(
+    hasNextPage: hasArchiveNextPage,
+    isFetchingNextPage: isFetchingArchiveNextPage,
+  } = useVideosV3(
     {
       org,
       type: ["stream"],
       status: ["past", "missing"],
       include: ["clips", "mentions"],
       max_upcoming_hours: 1,
-      paginated: true,
       limit: 32,
     },
     {
@@ -64,14 +64,15 @@ export function Home() {
     data: clips,
     isLoading: clipLoading,
     fetchNextPage: fetchClips,
-  } = useVideos(
+    hasNextPage: hasClipsNextPage,
+    isFetchingNextPage: isFetchingClipsNextPage,
+  } = useVideosV3(
     {
       org,
       type: ["clip"],
       status: ["past"],
       include: ["mentions"],
       max_upcoming_hours: 1,
-      paginated: true,
       limit: 32,
       lang: [`${clipLang.value}`],
     },
@@ -81,14 +82,14 @@ export function Home() {
     },
   );
 
-  const listCN = useMemo(
+  const listClassName = useMemo(
     () =>
       cn("px-4 py-2 md:px-8", {
-        "@container grid grid-cols-1 grid-cols-[repeat(auto-fill,_minmax(360px,_1fr))] gap-x-4 gap-y-6":
+        "@container grid grid-cols-1 grid-cols-[repeat(auto-fill,minmax(360px,1fr))] gap-x-4 gap-y-4":
           cardSize === "lg",
-        "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-x-2 gap-y-4":
+        "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-2 gap-y-2":
           cardSize === "md",
-        "@container flex flex-col max-w-screen mx-auto": cardSize === "sm",
+        "@container flex flex-col max-w-screen mx-auto": cardSize === "list",
       }),
     [cardSize],
   );
@@ -105,6 +106,8 @@ export function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, tab]);
 
+  const [ref, bounds] = useMeasure({ scroll: false });
+
   if (!org) return <Navigate to="/org404" />;
 
   return (
@@ -112,21 +115,27 @@ export function Home() {
       <Helmet>
         <title>{currentOrg} - Holodex</title>
       </Helmet>
-      <Tabs defaultValue={tab} onValueChange={setTab}>
+      <Tabs defaultValue={tab} onValueChange={setTab} ref={ref}>
         <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-2 md:px-8">
-          <TabsTrigger value="live">
+          <TabsTrigger value="live" className="px-2">
             <Trans
               i18nKey="views.home.liveOrUpcomingHeading"
               components={{
-                liveCount: (
+                liveCount: live ? (
                   <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
-                    {live?.filter(({ status }) => status === "live").length}
+                    {live.filter(({ status }) => status === "live").length ||
+                      "0"}
                   </span>
+                ) : (
+                  <span className="w-1" />
                 ),
-                upcomingCount: (
-                  <span className="ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
-                    {live?.filter(({ status }) => status === "upcoming").length}
+                upcomingCount: live ? (
+                  <span className="-mr-1 ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
+                    {live.filter(({ status }) => status === "upcoming")
+                      .length || "0"}
                   </span>
+                ) : (
+                  <span className="w-1" />
                 ),
               }}
             />
@@ -152,8 +161,9 @@ export function Home() {
                 {
                   md: "i-lucide:grid-3x3",
                   lg: "i-lucide:layout-grid",
-                  sm: "i-lucide:list",
+                  list: "i-lucide:list",
                   xs: "", // not used
+                  sm: "",
                 }[nextSize],
               )}
             />
@@ -161,57 +171,43 @@ export function Home() {
           <LanguageSelector />
         </TabsList>
         <TabsContent value="live">
-          <div className={listCN}>
-            {liveLoading
-              ? Array.from({ length: 24 }).map((_, index) => (
-                  <SkeletonVideoCard key={`placeholder-${index}`} />
-                ))
-              : live?.map((stream) => (
-                  <VideoCard key={stream.id} size={cardSize} {...stream} />
-                ))}
-          </div>
+          {
+            <MainVideoListing
+              isLoading={liveLoading}
+              videos={live ?? []}
+              size={cardSize}
+              className={listClassName}
+              containerWidth={bounds.width}
+            />
+          }
         </TabsContent>
         <TabsContent value="archive">
-          {archiveLoading ? (
-            <div className={listCN}>
-              {Array.from({ length: 24 }).map((_, index) => (
-                <SkeletonVideoCard key={`placeholder-${index}`} />
-              ))}
-            </div>
-          ) : (
-            <VirtuosoGrid
-              useWindowScroll
-              listClassName={listCN}
-              data={archives?.pages?.flat() ?? []}
-              itemContent={(_, stream) => (
-                <VideoCard key={stream.id} size={cardSize} {...stream} />
-              )}
-              endReached={async () => {
-                await fetchArchives();
-              }}
-            />
-          )}
+          {
+            <MainVideoListing
+              isLoading={archiveLoading}
+              className={listClassName}
+              size={cardSize}
+              videos={archives?.pages?.flatMap((x) => x.items) ?? []}
+              fetchNextPage={fetchArchives}
+              hasNextPage={hasArchiveNextPage}
+              isFetchingNextPage={isFetchingArchiveNextPage}
+              containerWidth={bounds.width}
+            ></MainVideoListing>
+          }
         </TabsContent>
         <TabsContent value="clips">
-          {clipLoading ? (
-            <div className={listCN}>
-              {Array.from({ length: 24 }).map((_, index) => (
-                <SkeletonVideoCard key={`placeholder-${index}`} />
-              ))}
-            </div>
-          ) : (
-            <VirtuosoGrid
-              useWindowScroll
-              listClassName={listCN}
-              data={clips?.pages?.flat() ?? []}
-              itemContent={(_, stream) => (
-                <VideoCard key={stream.id} size={cardSize} {...stream} />
-              )}
-              endReached={async () => {
-                await fetchClips();
-              }}
-            />
-          )}
+          {
+            <MainVideoListing
+              isLoading={clipLoading}
+              className={listClassName}
+              size={cardSize}
+              videos={clips?.pages?.flatMap((x) => x.items) ?? []}
+              fetchNextPage={fetchClips}
+              hasNextPage={hasClipsNextPage}
+              isFetchingNextPage={isFetchingClipsNextPage}
+              containerWidth={bounds.width}
+            ></MainVideoListing>
+          }
         </TabsContent>
       </Tabs>
     </>

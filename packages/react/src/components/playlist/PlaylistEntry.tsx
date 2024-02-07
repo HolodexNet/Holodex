@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/shadcn/ui/button";
 import { userAtom } from "@/store/auth";
 import DeletePlaylistDialog from "@/components/playlist/DeletePlaylistDialog";
+import { VideoThumbnail } from "../image";
 
 export default function PlaylistEntry({
   video_ids,
@@ -22,7 +23,10 @@ export default function PlaylistEntry({
 
   return (
     <div className="mt-5 flex gap-5">
-      <img className="h-28" src={makeYtThumbnailUrl(video_ids[0], "sm")} />
+      <VideoThumbnail
+        className="h-28"
+        src={makeYtThumbnailUrl(video_ids[0], "sm")}
+      />
       <div>
         <TypographyLarge>{name}</TypographyLarge>
         <TypographyP className="!mt-0">
