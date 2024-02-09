@@ -173,21 +173,22 @@ export function VideoCard({
   const videoCardClasses = useMemo(
     () => ({
       outerLayer: clsx([
-        (size == "xs" || size == "sm") && "group relative flex gap-4 py-2",
+        (size == "list" || size == "sm") && "group relative flex gap-4 py-2",
         (size == "md" || size == "lg") && "group flex w-full flex-col gap-4",
       ]),
       thumbnailLink: clsx([
-        size == "xs" && "relative w-28 shrink-0 overflow-hidden @lg:w-36",
+        size == "list" &&
+          "relative aspect-video w-28 shrink-0 overflow-hidden @lg:w-36",
         size == "sm" && "relative w-36 shrink-0 overflow-hidden @lg:w-48",
         (size == "md" || size == "lg") && "relative w-full",
       ]),
       videoTextInfo: clsx([
-        (size == "xs" || size == "sm") && "flex flex-col gap-1",
+        (size == "list" || size == "sm") && "flex flex-col gap-1",
         (size == "md" || size == "lg") &&
           "flex min-h-[6rem] cursor-pointer flex-col gap-0",
       ]),
       titleLink: clsx([
-        (size == "xs" || size == "sm") &&
+        (size == "list" || size == "sm") &&
           "line-clamp-2 pr-4 text-sm font-bold @lg:text-lg",
         (size == "md" || size == "lg") &&
           "line-clamp-2 pr-4 text-sm font-bold md:text-[1rem] md:leading-6",
