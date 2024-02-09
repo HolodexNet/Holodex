@@ -3,51 +3,70 @@ import "./frame.css";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { ContextMenuShortcut } from "@/shadcn/ui/context-menu";
+import { useSetAtom } from "jotai";
+import { headerHiddenAtom } from "@/hooks/useFrame";
+import { useEffect } from "react";
 
 export function TLEditorFrame() {
   const { t } = useTranslation();
+  const setHeaderHidden = useSetAtom(headerHiddenAtom);
+  useEffect(() => {
+    setHeaderHidden(true);
+    return () => setHeaderHidden(false);
+  });
 
   return (
-    <div className="tl-frame inset-0 pt-4">
+    <div className="tl-frame inset-0 p-4">
       <div className="">
         <div className="mb-4">
           <div className="tl-topbar">
-            <Button size="sm">{t("component.mainNav.home")}</Button>
-            <div className="h-6 w-2 bg-primary opacity-60" />
-            <Button variant="secondary" size="sm">
+            <Button size="sm" className="min-w-16 px-2">
+              {t("component.mainNav.home")}
+            </Button>
+            {/* <div className="h-6 w-2 bg-primary opacity-60" /> */}
+            <Button variant="secondary" size="sm" className="px-2">
               {t("views.tlClient.menu.setting")}
             </Button>
-            <div className="h-6 w-2 bg-primary opacity-60" />
-            <Button size="sm" variant="secondary">
+            {/* <div className="h-6 w-2 bg-primary opacity-60" /> */}
+            <Button size="sm" variant="secondary" className="px-2">
               {t("views.scriptEditor.menu.save")}
-              <ContextMenuShortcut>Ctrl+S</ContextMenuShortcut>
+              <ContextMenuShortcut className="text-secondaryA-11">
+                Ctrl+S
+              </ContextMenuShortcut>
             </Button>
 
-            {/* <!-- <Button size="sm" onClick="console.log('show')">
-          { t("views.tlClient.menu.loadVideo") }
-        </Button>
-        <Button size="sm" onClick="console.log('hide')">
-          { t("views.tlClient.menu.unloadVideo") }
-        </Button> --> */}
-            <div className="h-6 w-2 bg-primary opacity-60" />
-            <Button size="sm">{t("views.scriptEditor.menu.importFile")}</Button>
-            <Button size="sm">{t("views.scriptEditor.menu.exportFile")}</Button>
-            <div className="h-6 w-2 bg-primary opacity-60" />
+            {/* 
+            <!-- <Button size="sm" onClick="console.log('show')">
+              { t("views.tlClient.menu.loadVideo") }
+            </Button>
+            <Button size="sm" onClick="console.log('hide')">
+              { t("views.tlClient.menu.unloadVideo") }
+            </Button> --> */}
+            {/* <div className="h-6 w-2 bg-primary opacity-60" /> */}
+            <Button size="sm" className="min-w-16 px-2">
+              {t("views.scriptEditor.menu.importFile")}
+            </Button>
+            <Button size="sm" className="min-w-16 px-2">
+              {t("views.scriptEditor.menu.exportFile")}
+            </Button>
+            {/* <div className="h-6 w-2 bg-primary opacity-60" /> */}
 
-            {/* <Button
+            <Button
               size="sm"
-              className={cn({ "btn-disabled disabled": !canUndo })}
-              onClick="undo"
+              variant="outline"
+              className={cn({ "btn-disabled disabled": !false })}
+              // onClick="undo"
             >
               Undo
             </Button>
             <Button
               size="sm"
-              className={cn({ "btn-disabled disabled": !canRedo })}
-              onClick="redo"
+              variant="outline"
+              className={cn({ "btn-disabled disabled": !false })}
+              // onClick="redo"
             >
               Redo
-            </Button> */}
+            </Button>
           </div>
         </div>
 

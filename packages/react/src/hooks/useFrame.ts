@@ -75,3 +75,5 @@ export const closeSidebarAtom = atom(null, (_, set) => {
   set(isSidebarOpenAtom, false);
   set(sidebarPrefOpenAtom, false);
 });
+
+export const headerHiddenAtom = atom(false);

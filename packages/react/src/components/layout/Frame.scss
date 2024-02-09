@@ -43,6 +43,17 @@ $responsive-breakpoint: 768px;
     --sidebar-width: 100vw;
   }
 
+  &.header-hidden {
+    --header-height-clearance: 0px;
+    grid-template-areas: "sidebar content"
+      "sidebar content"
+      "appfooter appfooter";
+
+    >header {
+      display: none;
+    }
+  }
+
   display: grid;
   grid-template-rows: var(--header-height-clearance) auto var(--footer-height-clearance);
   grid-template-columns: var(--sidebar-width-clearance) auto;

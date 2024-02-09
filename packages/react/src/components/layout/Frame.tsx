@@ -2,6 +2,7 @@ import "./Frame.scss";
 import { Header } from "@/components/header/header";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import {
+  headerHiddenAtom,
   indicatePageFullscreenAtom,
   isFloatingAtom,
   isMobileAtom,
@@ -33,6 +34,7 @@ export function Frame() {
   const dark = useAtomValue(darkAtom);
   const org = useAtomValue(orgAtom);
   const miniPlayer = useAtomValue(miniPlayerAtom);
+  const headerHidden = useAtomValue(headerHiddenAtom);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -68,6 +70,7 @@ export function Frame() {
     "sidebar-open": open,
     "sidebar-closed": !open,
     "sidebar-fullscreen": fs,
+    "header-hidden": headerHidden,
     dark: dark,
   });
 

@@ -14,6 +14,7 @@ import {
 } from "@/shadcn/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { SearchBar } from "./searchbar/components/SearchBar";
+import clsx from "clsx";
 
 interface HeaderProps
   extends React.DetailedHTMLProps<

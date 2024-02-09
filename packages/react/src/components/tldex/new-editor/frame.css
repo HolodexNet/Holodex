@@ -3,6 +3,7 @@
 }
 
 .tl-frame .tl-topbar {
+  @apply gap-2;
   top: 0px;
   z-index: 1006;
   transform: translateY(0%);
