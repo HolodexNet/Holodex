@@ -5,13 +5,12 @@ $responsive-breakpoint: 768px;
 
 #layout {
   --header-height: #{$header-height};
+  --header-height-clearance: calc(var(--header-height) + env(safe-area-inset-top, 0px));
   --footer-height-clearance: 0px;
   --sidebar-width: #{$sidebar-width};
 
   &.sidebar-static {
-    --sidebar-width-clearance: calc(
-      #{$sidebar-width} + env(safe-area-inset-left, 0px)
-    );
+    --sidebar-width-clearance: calc(#{$sidebar-width} + env(safe-area-inset-left, 0px));
   }
 
   &.sidebar-floating {
@@ -19,9 +18,13 @@ $responsive-breakpoint: 768px;
   }
 
   &.mobile-footer {
-    --footer-height-clearance: calc(
-      #{$footer-height} + env(safe-area-inset-bottom) / 2
-    ); // maybe add the iphone safety area here.
+    --footer-height-clearance: calc(#{$footer-height} + env(safe-area-inset-bottom) / 2); // maybe add the iphone safety area here.
+    grid-template-rows: var(--header-height-clearance) auto var(--footer-height-clearance);
+    height: 100vh;
+
+    >main {
+      overflow-y: auto;
+    }
   }
 
   &.sidebar-open {
@@ -29,9 +32,7 @@ $responsive-breakpoint: 768px;
   }
 
   &.sidebar-closed {
-    --sidebar-left: calc(
-      -1 * var(--sidebar-width) - env(safe-area-inset-left, 0px)
-    );
+    --sidebar-left: calc(-1 * var(--sidebar-width) - env(safe-area-inset-left, 0px));
 
     &.sidebar-static {
       --sidebar-width-clearance: env(safe-area-inset-left);
@@ -43,25 +44,24 @@ $responsive-breakpoint: 768px;
   }
 
   display: grid;
-  grid-template-rows: $header-height auto var(--footer-height-clearance);
+  grid-template-rows: var(--header-height-clearance) auto var(--footer-height-clearance);
   grid-template-columns: var(--sidebar-width-clearance) auto;
   // transition: grid-template-columns 0.3s;
 
   min-height: 100vh;
 
-  grid-template-areas:
-    "sidebar header"
-    "sidebar content"
-    "appfooter appfooter";
+  grid-template-areas: "sidebar header"
+  "sidebar content"
+  "appfooter appfooter";
 
-  > header {
+  >header {
     grid-area: header;
   }
 
-  > aside {
+  >aside {
     grid-area: sidebar;
 
-    > #sidebar {
+    >#sidebar {
       width: var(--sidebar-width);
       position: fixed;
       top: 0;
@@ -74,14 +74,14 @@ $responsive-breakpoint: 768px;
     }
   }
 
-  > main {
+  >main {
     grid-area: content;
     max-width: 100dvw;
     // disabling for now so we can use position sticky
     // overflow-y: auto;
   }
 
-  > footer {
+  >footer {
     grid-area: appfooter;
   }
 }
