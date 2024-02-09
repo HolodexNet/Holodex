@@ -8,7 +8,7 @@ export function TLEditorFrame() {
   const { t } = useTranslation();
 
   return (
-    <div className="tl-frame absolute inset-0 pt-4">
+    <div className="tl-frame inset-0 pt-4">
       <div className="">
         <div className="mb-4">
           <div className="tl-topbar">
