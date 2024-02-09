@@ -1,6 +1,10 @@
 import { defineConfig } from "vite";
-// Faster React using swc apparently
-import react from "@vitejs/plugin-react-swc";
+
+// Faster React using swc apparently, but can't use it atm.
+import react from "@vitejs/plugin-react";
+// import react from "@vitejs/plugin-react-swc"; //currently borked.
+/* sadly broken due to https://github.com/pmndrs/swc-jotai/issues/22 */
+
 import yaml from "@rollup/plugin-yaml";
 import dynamicImportVars from "@rollup/plugin-dynamic-import-vars";
 import UnoCSS from "unocss/vite";
@@ -11,6 +15,9 @@ import bundleAnalyzer from "rollup-plugin-bundle-analyzer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  css: {
+    preprocessorMaxWorkers: true,
+  },
   build: {
     sourcemap: true,
     rollupOptions: {
@@ -78,10 +85,13 @@ export default defineConfig({
   plugins: [
     bundleAnalyzer({}),
     react({
-      plugins: [
-        /* ["@swc-jotai/debug-label", {}] 
-          sadly broken due to https://github.com/pmndrs/swc-jotai/issues/22 */
-      ],
+      babel: {
+        presets: ["jotai/babel/preset"],
+      },
+      // plugins: [
+      //   /* ["@swc-jotai/debug-label", {}]
+      //     sadly broken due to https://github.com/pmndrs/swc-jotai/issues/22 */
+      // ],
     }),
     UnoCSS({ presets: [presetIcons()] }),
     yaml(),
