@@ -5,7 +5,6 @@
 .tl-frame .tl-topbar {
   @apply gap-2;
   top: 0px;
-  z-index: 1006;
   transform: translateY(0%);
   width: calc(100% + 0px);
   --v-theme-overlay-multiplier: var(--v-theme-secondary-overlay-multiplier);
@@ -34,11 +33,11 @@
   text-transform: unset !important;
 }
 
-.tl-frame .parent {
+.tl-frame {
   @apply gap-2;
   display: grid;
   height: 100%;
-  grid-template-columns: 3fr minmax(600px, 2fr);
+  grid-template-columns: 3fr minmax(400px, 2fr);
   grid-template-rows: max-content 1fr 60px 200px;
   grid-template-areas:
     "header header"
