@@ -1,73 +1,90 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Timeline from "@losting/timeline";
 import { gte } from "sorted-array-functions";
 import { useMeasure } from "react-use";
-import { useSubtitles } from "./subtitles";
+import {
+  ParsedMessageOFFSETComparator,
+  subtitlesAtom,
+  useSubtitles,
+} from "./subtitles";
+import { useAtomValue } from "jotai";
 
-const useTimelineRendererBase = (list, waveform, currentTime) => {
-  const canvasRef = useRef(null);
+/**
+ * waveform should be a [ second, value ] sorted array where the second value is between 0-100
+ */
+export const useTimelineRendererBase = (waveform: [number, number][]) => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [currentTime, setCurrentTime] = useState(0);
   // const containerRef = useRef(null);
   const [containerRef, containerSize] = useMeasure();
+  const listOfSubs = useAtomValue(subtitlesAtom);
   const { subtitles: allSubs } = useSubtitles(); // Use Jotai atom for subtitles
   const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(1);
+  const [endTime, setEndTime] = useState(50);
+  const timelineRef = useRef<Timeline | null>(null);
 
-  useEffect(() => {
-    if (!canvasRef.current) return;
+  // Initialize Timeline once the component has mounted and canvasRef.current is available
 
-    const t = new Timeline(canvasRef.current, {
-      fps: 120,
-      maxZoom: 8,
-      minZoom: 1,
-      fill: true,
-      scaleSpacing: 80,
-      textColor: "#eee",
-      pointColor: "#0c9",
-      pointWidth: 4,
-    });
-
-    t.on("drag", (s) => {
-      setStartTime(s[0]);
-      setEndTime(s[1]);
-    });
-
-    t.on("timeUpdate", (v) => {
-      currentTime(v[0]);
-    });
-
-    const draw = () => {
-      const x = t.draw({
-        currentTime: currentTime,
-        waveform: waveform || [],
+  const canvasCbRef = useCallback((node: HTMLCanvasElement | null) => {
+    canvasRef.current = node;
+    if (node !== null) {
+      const t = new Timeline(node, {
+        // Timeline configuration...\
+        fps: 120,
+        maxZoom: 8,
+        minZoom: 1,
+        fill: true,
+        scaleSpacing: 80,
+        textColor: "#eee",
+        pointColor: "#0c9",
+        pointWidth: 4,
       });
-      if (x) {
-        setStartTime(x.startTime);
-        setEndTime(x.endTime);
-      }
-    };
 
-    draw();
+      t.on("drag", (s) => {
+        setStartTime(s[0]);
+        setEndTime(s[1]);
+      });
 
-    return () => {
-      // Cleanup if necessary, e.g., removing event listeners
-    };
-  }, [canvasRef, currentTime, waveform]);
+      t.on("timeUpdate", (v) => {
+        setCurrentTime(v[0]);
+      });
 
-  const currentSubs = useMemo(() => {
-    const lower = gte(
-      allSubs,
-      { video_offset: startTime - 10 },
-      ChatDB.ParsedMessageOFFSETComparator,
-    );
-    const upper = gte(
-      allSubs,
-      { video_offset: endTime + 10 },
-      ChatDB.ParsedMessageOFFSETComparator,
-    );
-    return allSubs.slice(lower, upper < 0 ? undefined : upper);
-  }, [allSubs, startTime, endTime]);
+      timelineRef.current = t;
+    } else {
+      timelineRef.current = null;
+    }
+  }, []);
+
+  // Effect for handling currentTime updates
+  useEffect(() => {
+    if (!timelineRef.current) return;
+
+    const x = timelineRef.current.draw({
+      currentTime,
+      waveform,
+    });
+    if (x) {
+      setStartTime(x.startTime);
+      setEndTime(x.endTime);
+    }
+  }, [currentTime, waveform]);
+
+  // const currentSubs = () => {
+  const lower = gte(
+    listOfSubs,
+    { video_offset: startTime - 10 } as unknown as ParsedMessage,
+    ParsedMessageOFFSETComparator,
+  );
+  const upper = gte(
+    listOfSubs,
+    { video_offset: endTime + 10 } as unknown as ParsedMessage,
+    ParsedMessageOFFSETComparator,
+  );
+  const currentSubs = listOfSubs.slice(lower, upper < 0 ? undefined : upper);
+  // }, [listOfSubs, startTime, endTime]);
 
   return {
+    canvasCbRef,
     containerRef,
     canvasRef,
     containerSize,
