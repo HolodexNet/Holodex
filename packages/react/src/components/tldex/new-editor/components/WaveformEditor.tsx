@@ -1,24 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useTimelineRendererBase } from "../hooks/timeline";
 import { formatDuration } from "@/lib/time";
+import { useWaveformGenerator } from "../hooks/waveform_generator";
+
+import "./WaveformEditor.css";
+import { formatBytes } from "@/lib/utils";
 // import { useWaveformGenerator } from "./useWaveform"; // Placeholder, adjust according to actual implementation
 
 // Assuming the useTimelineRendererBase hook has been correctly migrated and imported
-
 const WaveformEditor = ({ videoId, testMode, room, player }) => {
-  const [duration, setDuration] = useState(undefined);
-  const [errorMessage, setErrorMessage] = useState("");
+  const {
+    waveform,
+    stage,
+    progress,
+    latchAndRun,
+    format,
+    totalSize,
+    errorMessage,
+  } = useWaveformGenerator();
   const { canvasRef, containerRef, currentSubs, startTime, endTime } =
-    useTimelineRendererBase();
-
-  useEffect(() => {
-    // Simulating asyncComputed for duration
-    const fetchDuration = async () => {
-      const dur = await player.getDuration(); // Adjust according to actual player method
-      setDuration(dur);
-    };
-    fetchDuration();
-  }, [player]);
+    useTimelineRendererBase(waveform);
 
   const init = () => {
     setTimeout(() => {
@@ -27,6 +28,19 @@ const WaveformEditor = ({ videoId, testMode, room, player }) => {
     }, 5000);
   };
 
+  const message = useMemo(() => {
+    switch (stage) {
+      case "waiting":
+        return "waiting...";
+      case "downloading":
+        return Math.round(progress) + "% of " + formatBytes(totalSize);
+      case "transcoding":
+        return "In progress: " + formatDuration(progress * 1000) + "...";
+      case "done":
+      case "error":
+        return "";
+    }
+  }, [stage, progress, totalSize]);
   // Assuming msg and stage logic is handled internally or through props
   // const { msg, stage } = useWaveformGenerator(); // Placeholder for actual hook/logic
 
@@ -64,7 +78,7 @@ const WaveformEditor = ({ videoId, testMode, room, player }) => {
         )}
         {stage !== "done" && (
           <span>
-            {stage}: {msg} {errorMessage ? "?ERROR?: " + errorMessage : ""}
+            {stage}: {message} {errorMessage ? "?ERROR?: " + errorMessage : ""}
           </span>
         )}
       </div>

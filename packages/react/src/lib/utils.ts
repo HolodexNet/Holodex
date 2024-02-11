@@ -80,3 +80,34 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
     if (immediate && !timeout) func.apply({}, args);
   };
 }
+
+export function formatBytes(bytes: number, decimals = 2): string {
+  if (!+bytes) return "0 Bytes";
+
+  const k = 1024;
+  const dm: number = decimals < 0 ? 0 : decimals;
+  const sizes: string[] = [
+    "Bytes",
+    "KiB",
+    "MiB",
+    "GiB",
+    "TiB",
+    "PiB",
+    "EiB",
+    "ZiB",
+    "YiB",
+  ];
+
+  const i: number = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+}
+
+export function idToVideoURL(id: string, link?: string) {
+  if (id.startsWith("tw:")) {
+    // `tw:${event.broadcaster_user_login}:${event.id}`
+    return `https://twitch.tv/${id.split(":")[1]}`;
+  }
+  const url = link?.includes("twitch") ? link : `https://youtu.be/${id}`;
+  return url;
+}

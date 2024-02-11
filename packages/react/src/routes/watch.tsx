@@ -7,7 +7,7 @@ import { PlayerDescription } from "@/components/player/PlayerDescription";
 import { PlayerRecommendations } from "@/components/player/PlayerRecommendations";
 import { PlayerStats } from "@/components/player/PlayerStats";
 import { QueueList } from "@/components/player/QueueList";
-import { cn } from "@/lib/utils";
+import { cn, idToVideoURL } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
 import { useVideo } from "@/services/video.service";
 import { clipLangAtom } from "@/store/i18n";
@@ -54,19 +54,13 @@ export default function Watch() {
   useLayoutEffect(() => {
     const videoPlaceholder: QueueVideo = location.state.video ?? {
       id: id!,
-      url: `https://youtu.be/${id}`,
+      url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
       channel_id: "",
       title: "",
       description: "",
       type: "stream",
-      topic_id: null,
-      published_at: null,
       duration: 0,
       status: "live",
-      start_scheduled: null,
-      start_actual: null,
-      end_actual: null,
-      live_viewers: null,
       songcount: 0,
       channel: {
         id: "",
@@ -74,11 +68,6 @@ export default function Watch() {
         type: "vtuber",
       },
     };
-    videoPlaceholder.url =
-      location.state?.video?.link?.includes("twitch") ??
-      data?.link?.includes("twitch")
-        ? location.state.video?.link
-        : `https://youtu.be/${id}`;
     setMiniPlayer(false);
     setCurrentVideo(videoPlaceholder);
     if (queue.length)
@@ -98,11 +87,7 @@ export default function Watch() {
     if (isSuccess) {
       setCurrentVideo({
         ...data,
-        url:
-          location.state?.video?.link?.includes("twitch") ??
-          data?.link?.includes("twitch")
-            ? data.link
-            : `https://youtu.be/${id}`,
+        url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
       });
       if (queue.length)
         setQueue((q) =>
@@ -111,11 +96,7 @@ export default function Watch() {
             1,
             {
               ...data,
-              url:
-                location.state?.video?.link?.includes("twitch") ??
-                data?.link?.includes("twitch")
-                  ? data.link
-                  : `https://youtu.be/${id}`,
+              url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
             },
           ),
         );

@@ -51,7 +51,7 @@ type WaveformGenerationStage =
   | "done"
   | "error";
 
-function useWaveformGenerator() {
+export function useWaveformGenerator() {
   const [ffmpegClient, setClient] = useState<ProtoConnection | null>(null);
   const [stage, setStage] = useState<WaveformGenerationStage>("waiting");
   const [errorMessage, setErrorMessage] = useState("");
@@ -64,7 +64,7 @@ function useWaveformGenerator() {
   // Initialize WebWorker once the component has mounted
   useEffect(() => {
     workerRef.current = new Worker(
-      new URL("./support/ffprobe-worker.js", import.meta.url),
+      new URL("../support/ffprobe-worker.js", import.meta.url),
     );
 
     workerRef.current.onmessage = (event) => {
