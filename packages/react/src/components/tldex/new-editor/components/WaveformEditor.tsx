@@ -3,12 +3,17 @@ import { useTimelineRendererBase } from "../hooks/timeline";
 import { formatDuration } from "@/lib/time";
 import { useWaveformGenerator } from "../hooks/waveform_generator";
 
-import "./WaveformEditor.css";
 import { formatBytes } from "@/lib/utils";
+import { playerRefAtom, videoStatusAtomFamily } from "@/store/player";
+import { useAtomValue } from "jotai";
+
+import "./WaveformEditor.scss";
+
 // import { useWaveformGenerator } from "./useWaveform"; // Placeholder, adjust according to actual implementation
 
 // Assuming the useTimelineRendererBase hook has been correctly migrated and imported
-const WaveformEditor = ({ videoId, testMode, room, player }) => {
+const WaveformEditor = ({ videoId }: { videoId: string }) => {
+  const player = useAtomValue(playerRefAtom);
   const {
     waveform,
     stage,
@@ -18,14 +23,24 @@ const WaveformEditor = ({ videoId, testMode, room, player }) => {
     totalSize,
     errorMessage,
   } = useWaveformGenerator();
-  const { canvasRef, containerRef, currentSubs, startTime, endTime } =
-    useTimelineRendererBase(waveform);
+  const videoStatusAtom = videoStatusAtomFamily(videoId || "x");
+  const videoStatus = useAtomValue(videoStatusAtom);
+  console.log(videoStatus);
+  const {
+    canvasCbRef,
+    canvasRef,
+    containerRef,
+    currentSubs,
+    startTime,
+    endTime,
+  } = useTimelineRendererBase(waveform, videoStatus);
 
   const init = () => {
     setTimeout(() => {
+      latchAndRun(videoId);
       // Placeholder for actual init functionality
       console.log("Initializing with videoId:", videoId);
-    }, 5000);
+    }, 1000);
   };
 
   const message = useMemo(() => {
@@ -53,23 +68,28 @@ const WaveformEditor = ({ videoId, testMode, room, player }) => {
         <input
           type="range"
           min="0"
-          max={duration}
-          value={room?.elapsed || 0}
+          max={videoStatus.duration}
+          value={videoStatus.progress || 0}
           className="timeline-slider"
           step="0.01"
-          onChange={(t) => player.seekTo(+t.target.value)} // Adjust according to actual player method
+          onChange={
+            (t) => {
+              console.log("changing to", t.target.value);
+              player?.seekTo(+t.target.value);
+            } // Adjust according to actual player method
+          }
         />
       </div>
       <div className="relative shrink grow" ref={containerRef}>
         <canvas
           className="w-full"
           style={{ height: "130px" }}
-          ref={canvasRef}
+          ref={canvasCbRef}
         />
         {/* Waveform subtitles and interactions would be handled here */}
       </div>
       <div className="wf-status">
-        {stage === "waiting" && !waveform && (
+        {stage === "waiting" && (
           <a className="link" onClick={init}>
             Click here to Fetch audio information from youtube, this will use up
             20MB per hour of stream and take a minute or two depending on your

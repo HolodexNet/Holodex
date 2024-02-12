@@ -8,15 +8,20 @@ import {
   useSubtitles,
 } from "./subtitles";
 import { useAtomValue } from "jotai";
+import { PlayingVideoState } from "@/store/player";
+import { useInterval } from "usehooks-ts";
 
 /**
  * waveform should be a [ second, value ] sorted array where the second value is between 0-100
  */
-export const useTimelineRendererBase = (waveform: [number, number][]) => {
+export const useTimelineRendererBase = (
+  waveform: [number, number][],
+  videoStatus: PlayingVideoState | undefined,
+) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [currentTime, setCurrentTime] = useState(0);
+  // const [currentTime, setCurrentTime] = useState(0);
   // const containerRef = useRef(null);
-  const [containerRef, containerSize] = useMeasure();
+  const [containerRef, containerSize] = useMeasure<HTMLDivElement>();
   const listOfSubs = useAtomValue(subtitlesAtom);
   const { subtitles: allSubs } = useSubtitles(); // Use Jotai atom for subtitles
   const [startTime, setStartTime] = useState(0);
@@ -43,10 +48,12 @@ export const useTimelineRendererBase = (waveform: [number, number][]) => {
       t.on("drag", (s) => {
         setStartTime(s[0]);
         setEndTime(s[1]);
+        console.log("drag", s);
       });
 
       t.on("timeUpdate", (v) => {
-        setCurrentTime(v[0]);
+        // setCurrentTime(v[0]);
+        console.log("timeUpdate", v);
       });
 
       timelineRef.current = t;
@@ -55,19 +62,29 @@ export const useTimelineRendererBase = (waveform: [number, number][]) => {
     }
   }, []);
 
-  // Effect for handling currentTime updates
-  useEffect(() => {
-    if (!timelineRef.current) return;
-
-    const x = timelineRef.current.draw({
-      currentTime,
-      waveform,
-    });
-    if (x) {
-      setStartTime(x.startTime);
-      setEndTime(x.endTime);
-    }
-  }, [currentTime, waveform]);
+  useInterval(
+    () => {
+      if (!timelineRef.current) return;
+      const x = timelineRef.current.draw({
+        currentTime: videoStatus
+          ? videoStatus.progress +
+            (Date.now() - videoStatus.progressRecordedAt ?? 0) / 1000
+          : 0,
+        waveform,
+      });
+      if (x) {
+        setStartTime(x.startTime);
+        setEndTime(x.endTime);
+      }
+    },
+    timelineRef.current
+      ? videoStatus?.status == "playing"
+        ? 60
+        : videoStatus?.status == "paused" || videoStatus?.status == "stopped"
+          ? null
+          : 500
+      : null,
+  );
 
   // const currentSubs = () => {
   const lower = gte(

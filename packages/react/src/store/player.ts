@@ -1,6 +1,6 @@
 import { eventbus } from "@/lib/eventbus";
 import { atom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
+import { atomFamily, atomWithStorage } from "jotai/utils";
 import type ReactPlayer from "react-player";
 import type { OnProgressProps } from "react-player/base";
 
@@ -21,8 +21,38 @@ export const chatPosAtom = atomWithStorage<"left" | "right">(
   "right",
 );
 
+/**
+ * The current video being played, which is used for global single-player modes
+ * such as the Watch page and edit page.
+ *
+ * If we are on a page where multiple videos can be played, this will not be used.
+ */
 export const currentVideoAtom = atom<QueueVideo | null>(null);
 export const queueAtom = atomWithStorage<QueueVideo[]>("queue", []);
+
+export type PlayingVideoState = {
+  videoId: string;
+  duration: number;
+  progress: number; // in seconds
+  progressRecordedAt: number; // The time (milliseconds) at which the progress was recorded
+  status: "playing" | "paused" | "stopped" | "buffering" | "ended";
+  error?: unknown; // You could refine this to a more specific error type
+};
+
+const initialVideoStatus = (videoId: string) =>
+  atom<PlayingVideoState>({
+    videoId: videoId,
+    duration: 100,
+    progress: 0,
+    progressRecordedAt: 0, // milliseconds
+    status: "stopped", // Default status
+  });
+
+// Atom family for videos by their ID
+export const videoStatusAtomFamily = atomFamily(
+  initialVideoStatus,
+  (a, b) => a === b,
+);
 
 export const defaultPlayerEventBus = eventbus<{
   onStart?: (videoId: string) => void;

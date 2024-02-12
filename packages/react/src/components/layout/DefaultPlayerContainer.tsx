@@ -1,10 +1,12 @@
 import {
+  PlayingVideoState,
   QueueVideo,
   currentVideoAtom,
   defaultPlayerEventBus,
   miniPlayerAtom,
   playerLocationRefAtom,
   playerRefAtom,
+  videoStatusAtomFamily,
 } from "@/store/player";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -20,8 +22,6 @@ import ReactPlayer from "react-player";
 const LazyReactPlayer = React.lazy(() => import("react-player"));
 
 export const DefaultPlayerContainer = React.memo(() => {
-  const setPlayerRef = useSetAtom(playerRefAtom);
-  const currentVideo = useAtomValue(currentVideoAtom);
   const anchor = useAtomValue(playerLocationRefAtom);
   const page = useLocation();
   const miniPlayer = useAtomValue(miniPlayerAtom);
@@ -67,21 +67,33 @@ export const DefaultPlayerContainer = React.memo(() => {
         style={floatingStyles}
       >
         <Suspense fallback={<Loading size="xl" />}>
-          <PlayerWrapper
-            ref={setPlayerRef}
-            currentVideo={currentVideo}
-          ></PlayerWrapper>
+          <PlayerWrapper></PlayerWrapper>
         </Suspense>
       </div>
     );
 });
-export const PlayerWrapper = React.forwardRef<
-  ReactPlayer,
-  { currentVideo: QueueVideo | null }
->(({ currentVideo }, ref) => {
+export const PlayerWrapper = ({
+  currentVideo,
+  customSetPlayerRef,
+}: {
+  currentVideo?: QueueVideo;
+  customSetPlayerRef?: React.Ref<ReactPlayer>;
+}) => {
+  const setPlayerRef = useSetAtom(playerRefAtom);
+  const currentVideo2 = useAtomValue(currentVideoAtom);
+
+  const video = currentVideo ?? currentVideo2;
+
+  const videoStatusAtom = videoStatusAtomFamily(video?.id || "x");
+  const playingVideoStateSetter = useSetAtom(videoStatusAtom);
+  // Assuming you have a way to access `set` for updating the atom
+  const updateState = (update: Partial<PlayingVideoState>) => {
+    playingVideoStateSetter((prev) => ({ ...prev, ...update }));
+  };
+
   return (
     <LazyReactPlayer
-      ref={ref}
+      ref={customSetPlayerRef ?? setPlayerRef}
       // pass `key` to prevent flicker issue https://github.com/CookPete/react-player/issues/413#issuecomment-395404630
       key={currentVideo?.url}
       style={
@@ -92,7 +104,7 @@ export const PlayerWrapper = React.forwardRef<
       // width="100%"
       width="auto"
       height="100%"
-      url={currentVideo?.url}
+      url={video?.url}
       controls
       config={{
         youtube: {
@@ -102,52 +114,59 @@ export const PlayerWrapper = React.forwardRef<
           },
         },
       }}
-      onStart={() =>
-        defaultPlayerEventBus.emit("onStart", currentVideo?.id || "")
-      }
-      onPlay={() =>
-        defaultPlayerEventBus.emit("onPlay", currentVideo?.id || "")
-      }
-      onPause={() =>
-        defaultPlayerEventBus.emit("onPause", currentVideo?.id || "")
-      }
-      onBuffer={() =>
-        defaultPlayerEventBus.emit("onBuffer", currentVideo?.id || "")
-      }
-      onBufferEnd={() =>
-        defaultPlayerEventBus.emit("onBufferEnd", currentVideo?.id || "")
-      }
-      onClickPreview={(e: unknown) =>
-        defaultPlayerEventBus.emit("onClickPreview", currentVideo?.id || "", e)
-      }
-      onError={(a: unknown, b: unknown, c: unknown, d: unknown) =>
-        defaultPlayerEventBus.emit(
-          "onError",
-          currentVideo?.id || "",
-          a,
-          b,
-          c,
-          d,
-        )
-      }
-      onEnablePIP={() =>
-        defaultPlayerEventBus.emit("onEnablePIP", currentVideo?.id || "")
-      }
-      onDisablePIP={() =>
-        defaultPlayerEventBus.emit("onDisablePIP", currentVideo?.id || "")
-      }
-      onProgress={(state: OnProgressProps) =>
-        defaultPlayerEventBus.emit("onProgress", currentVideo?.id || "", state)
-      }
-      onDuration={(dur: number) =>
-        defaultPlayerEventBus.emit("onDuration", currentVideo?.id || "", dur)
-      }
-      onSeek={(s: number) =>
-        defaultPlayerEventBus.emit("onSeek", currentVideo?.id || "", s)
-      }
+      onStart={() => {
+        defaultPlayerEventBus.emit("onStart", video?.id || "");
+        updateState({ status: "playing" });
+      }}
+      onPlay={() => {
+        defaultPlayerEventBus.emit("onPlay", video?.id || "");
+        updateState({ status: "playing" });
+      }}
+      onPause={() => {
+        defaultPlayerEventBus.emit("onPause", video?.id || "");
+        updateState({ status: "paused" });
+      }}
+      onBuffer={() => {
+        defaultPlayerEventBus.emit("onBuffer", video?.id || "");
+        updateState({ status: "buffering" });
+      }}
+      onBufferEnd={() => {
+        defaultPlayerEventBus.emit("onBufferEnd", video?.id || "");
+      }}
+      onClickPreview={(e: unknown) => {
+        defaultPlayerEventBus.emit("onClickPreview", video?.id || "", e);
+      }}
+      onError={(a: unknown, b: unknown, c: unknown, d: unknown) => {
+        defaultPlayerEventBus.emit("onError", video?.id || "", a, b, c, d);
+        console.error("VIDEO PLAYER ERROR", video?.id, a, b, c, d);
+        updateState({ error: { a, b, c, d } });
+      }}
+      onEnablePIP={() => {
+        defaultPlayerEventBus.emit("onEnablePIP", video?.id || "");
+        console.log("onEnablePIP", video?.id);
+      }}
+      onDisablePIP={() => {
+        defaultPlayerEventBus.emit("onDisablePIP", video?.id || "");
+        console.log("onDisablePIP", video?.id);
+      }}
+      onProgress={(state: OnProgressProps) => {
+        defaultPlayerEventBus.emit("onProgress", video?.id || "", state);
+        updateState({
+          progress: state.playedSeconds,
+          progressRecordedAt: Date.now(),
+        });
+      }}
+      onDuration={(dur: number) => {
+        defaultPlayerEventBus.emit("onDuration", video?.id || "", dur);
+        updateState({ duration: dur });
+      }}
+      onSeek={(s: number) => {
+        defaultPlayerEventBus.emit("onSeek", video?.id || "", s);
+      }}
       onEnded={() => {
-        defaultPlayerEventBus.emit("onEnded", currentVideo?.id || "");
+        defaultPlayerEventBus.emit("onEnded", video?.id || "");
+        updateState({ status: "ended" });
       }}
     />
   );
-});
+};

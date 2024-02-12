@@ -7,13 +7,19 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import { QueueVideo, currentVideoAtom, playerRefAtom } from "@/store/player";
+import {
+  QueueVideo,
+  currentVideoAtom,
+  playerRefAtom,
+  videoStatusAtomFamily,
+} from "@/store/player";
 import { useNavigate, useParams } from "react-router-dom";
 import { useVideo } from "@/services/video.service";
 import { PlayerWrapper } from "@/components/layout/DefaultPlayerContainer";
 import { Input } from "@/shadcn/ui/input";
 import { Label } from "@/shadcn/ui/label";
 import { useSearchParam } from "react-use";
+import WaveformEditor from "./components/WaveformEditor";
 
 export function TLEditorFrame() {
   const id = useSearchParam("id");
@@ -133,15 +139,16 @@ export function TLEditorFrame() {
 }
 
 export function TLEditorBody({ currentVideo }: { currentVideo: QueueVideo }) {
-  const setPlayerRef = useSetAtom(playerRefAtom);
-
+  const videoStatusAtom = videoStatusAtomFamily(currentVideo?.id || "x");
+  const videoStatus = useAtomValue(videoStatusAtom);
   return (
     <>
-      <div className="content">
-        <PlayerWrapper currentVideo={currentVideo} ref={setPlayerRef} />
+      <div className="content overflow-hidden rounded">
+        <PlayerWrapper currentVideo={currentVideo} />
       </div>
 
       <div className="sidebar">
+        {JSON.stringify(videoStatus)}
         {/* <!-- Sidebar content goes here --> */}
         {/* <editor-sidebar :room-id="roomId" :player="player?.player" /> */}
       </div>
@@ -153,6 +160,7 @@ export function TLEditorBody({ currentVideo }: { currentVideo: QueueVideo }) {
 
       <div className="waveform">
         {/* <!-- waveform content goes here --> */}
+        <WaveformEditor videoId={currentVideo?.id || "x"} />
         {/* <Waveform
           :video-id="videoId"
           :room="room"
