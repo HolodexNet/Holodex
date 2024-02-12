@@ -111,6 +111,7 @@
     "postcss": "^8.4.35",
     "postcss-import": "^16.0.0",
     "postcss-import-ext-glob": "^2.1.1",
+    "postcss-input-range": "^5.0.0",
     "prettier": "^3.2.5",
     "react-git-info": "^2.0.1",
     "rollup-plugin-bundle-analyzer": "^1.6.6",

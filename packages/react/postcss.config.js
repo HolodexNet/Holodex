@@ -4,5 +4,6 @@ export default {
     autoprefixer: {},
     "postcss-import-ext-glob": {},
     "postcss-import": {},
+    "postcss-input-range": {},
   },
 };

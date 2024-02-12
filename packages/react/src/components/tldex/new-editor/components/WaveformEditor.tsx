@@ -25,7 +25,7 @@ const WaveformEditor = ({ videoId }: { videoId: string }) => {
   } = useWaveformGenerator();
   const videoStatusAtom = videoStatusAtomFamily(videoId || "x");
   const videoStatus = useAtomValue(videoStatusAtom);
-  console.log(videoStatus);
+
   const {
     canvasCbRef,
     canvasRef,
@@ -71,7 +71,7 @@ const WaveformEditor = ({ videoId }: { videoId: string }) => {
           max={videoStatus.duration}
           value={videoStatus.progress || 0}
           className="timeline-slider"
-          step="0.01"
+          step="0.1"
           onChange={
             (t) => {
               console.log("changing to", t.target.value);
