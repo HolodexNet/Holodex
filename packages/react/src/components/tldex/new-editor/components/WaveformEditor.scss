@@ -8,13 +8,15 @@
   display: inline-block;
   width: 100%;
   -webkit-appearance: none;
+  height: 8px;
+  @apply bg-base-6;
 
   &:focus {
     outline: none;
   }
 
   &::range-track {
-    @apply bg-base-3;
+    @apply bg-base-5;
     width: 100%;
     height: 5px;
     cursor: pointer;
