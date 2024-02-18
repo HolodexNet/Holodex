@@ -4,33 +4,6 @@ import { getDefaultStore } from "jotai";
 import { orgAtom } from "@/store/org";
 import { Frame } from "@/components/layout/Frame";
 import { NavigateToMusicdex } from "@/components/channel/NavigateToMusicdex";
-import React from "react";
-
-const Login = React.lazy(() => import("./login"));
-const Settings = React.lazy(() => import("./settings"));
-const SettingsLang = React.lazy(() => import("./settings/lang"));
-const SettingsTheme = React.lazy(() => import("./settings/theme"));
-const SettingsUser = React.lazy(() => import("./settings/user"));
-const SettingsHomepage = React.lazy(() => import("./settings/homepage"));
-const SettingsBlocked = React.lazy(() => import("./settings/blocked"));
-const About = React.lazy(() => import("./about"));
-const AboutGeneral = React.lazy(() => import("./about/general"));
-const AboutChangelog = React.lazy(() => import("./about/changelog"));
-const AboutFaq = React.lazy(() => import("./about/faq"));
-const AboutRequest = React.lazy(() => import("./about/request"));
-const AboutPlaceholder = React.lazy(() => import("./about/placeholder"));
-const AboutExtensions = React.lazy(() => import("./about/extensions"));
-const AboutContact = React.lazy(() => import("./about/contact"));
-const AboutPrivacy = React.lazy(() => import("./about/privacy"));
-const Watch = React.lazy(() => import("./watch"));
-const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
-const Channel = React.lazy(() => import("./channel"));
-const EditVideo = React.lazy(() => import("./editVideo"));
-const Kitchensink = React.lazy(() => import("@/Kitchensink"));
-const Playlists = React.lazy(() => import("./playlists"));
-const Playlist = React.lazy(() => import("./playlist"));
-const Favourites = React.lazy(() => import("./favourites"));
-const TLEditorFrame = React.lazy(() => import("./tleditor"));
 
 const store = getDefaultStore();
 
@@ -41,7 +14,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "favorites",
-        element: <Favourites />,
+        async lazy() {
+          const Favourites = (await import("./favourites")).default;
+          return { Component: Favourites };
+        },
       },
       {
         path: "search",
@@ -69,11 +45,17 @@ const router = createBrowserRouter([
       },
       {
         path: "org/:org/channels",
-        element: <ChannelsOrg />,
+        async lazy() {
+          const OrgChannels = (await import("./orgChannels")).default;
+          return { Component: OrgChannels };
+        },
       },
       {
         path: "channel/:id",
-        element: <Channel />,
+        async lazy() {
+          const Channel = (await import("./channel")).default;
+          return { Component: Channel };
+        },
         children: [
           {
             path: "about",
@@ -95,7 +77,10 @@ const router = createBrowserRouter([
       },
       {
         path: "edit/video/:id",
-        element: <EditVideo />,
+        async lazy() {
+          const EditVideo = (await import("./editVideo")).default;
+          return { Component: EditVideo };
+        },
       },
       {
         path: "profile",
@@ -103,86 +88,157 @@ const router = createBrowserRouter([
       },
       {
         path: "settings",
-        element: <Settings />,
+        // element: <Settings />,
+        async lazy() {
+          const { Settings } = await import("./settings");
+          return { Component: Settings };
+        },
         children: [
           {
             path: "",
-            element: <SettingsLang />,
+            async lazy() {
+              const { SettingsLang } = await import("./settings");
+              return { Component: SettingsLang };
+            },
           },
           {
             path: "lang",
-            element: <SettingsLang />,
+            async lazy() {
+              const { SettingsLang } = await import("./settings");
+              return { Component: SettingsLang };
+            },
           },
           {
             path: "themes",
-            element: <SettingsTheme />,
+            async lazy() {
+              const { SettingsTheme } = await import("./settings");
+              return { Component: SettingsTheme };
+            },
           },
           {
             path: "user",
-            element: <SettingsUser />,
+            async lazy() {
+              const { SettingsUser } = await import("./settings");
+              return { Component: SettingsUser };
+            },
           },
           {
             path: "homepage",
-            element: <SettingsHomepage />,
+            async lazy() {
+              const { SettingsHomepage } = await import("./settings");
+              return { Component: SettingsHomepage };
+            },
           },
           {
             path: "blocked",
-            element: <SettingsBlocked />,
+            async lazy() {
+              const { SettingsBlocked } = await import("./settings");
+              return { Component: SettingsBlocked };
+            },
           },
           // Add children routes similar to above pattern
         ],
       },
       {
         path: "playlists",
-        element: <Playlists />,
+        async lazy() {
+          const Playlists = (await import("./playlists")).default;
+          return { Component: Playlists };
+        },
       },
       {
         path: "playlist/:id",
-        element: <Playlist />,
+        async lazy() {
+          const Playlist = (await import("./playlist")).default;
+          return { Component: Playlist };
+        },
       },
       {
         path: "about",
-        element: <About />,
+        async lazy() {
+          const { About } = await import("./about");
+          return { Component: About };
+        },
         children: [
           {
             path: "",
-            element: <AboutGeneral />,
+            async lazy() {
+              const { AboutGeneral } = await import("./about");
+              return { Component: AboutGeneral };
+            },
           },
           {
             path: "general",
-            element: <AboutGeneral />,
+            async lazy() {
+              const { AboutGeneral } = await import("./about");
+              return { Component: AboutGeneral };
+            },
           },
           {
             path: "changelog",
-            element: <AboutChangelog />,
+            async lazy() {
+              const { AboutChangelog } = await import("./about");
+              return { Component: AboutChangelog };
+            },
           },
-          { path: "faq", element: <AboutFaq /> },
-          { path: "request", element: <AboutRequest /> },
+          {
+            path: "faq",
+            async lazy() {
+              const { AboutFaq } = await import("./about");
+              return { Component: AboutFaq };
+            },
+          },
+          {
+            path: "request",
+            async lazy() {
+              const AboutRequest = (await import("./about/request")).default;
+              return { Component: AboutRequest };
+            },
+          },
           {
             path: "placeholder",
-            element: <AboutPlaceholder />,
+            async lazy() {
+              const AboutPlaceholder = (await import("./about/placeholder"))
+                .default;
+              return { Component: AboutPlaceholder };
+            },
           },
           {
             path: "extensions",
-            element: <AboutExtensions />,
+            async lazy() {
+              const { AboutExtensions } = await import("./about");
+              return { Component: AboutExtensions };
+            },
           },
           {
             path: "contact",
-            element: <AboutContact />,
+            async lazy() {
+              const { AboutContact } = await import("./about");
+              return { Component: AboutContact };
+            },
           },
           {
             path: "privacy",
-            element: <AboutPrivacy />,
+            async lazy() {
+              const { AboutPrivacy } = await import("./about");
+              return { Component: AboutPrivacy };
+            },
           },
         ],
       },
       {
         path: "kitchensink",
-        element: <Kitchensink />,
+        async lazy() {
+          const Kitchensink = (await import("@/Kitchensink")).default;
+          return { Component: Kitchensink };
+        },
       },
       {
         path: "login",
-        element: <Login />,
+        async lazy() {
+          const Login = (await import("./login")).default;
+          return { Component: Login };
+        },
       },
       {
         path: "tlclient",
@@ -190,11 +246,17 @@ const router = createBrowserRouter([
       },
       {
         path: "scripteditor",
-        element: <TLEditorFrame />,
+        async lazy() {
+          const TLEditorFrame = (await import("./tleditor")).default;
+          return { Component: TLEditorFrame };
+        },
       },
       {
         path: "watch/:id",
-        element: <Watch />,
+        async lazy() {
+          const Watch = (await import("./watch")).default;
+          return { Component: Watch };
+        },
       },
       {
         path: "debug",

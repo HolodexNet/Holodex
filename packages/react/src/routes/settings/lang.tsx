@@ -19,7 +19,7 @@ import { useAtom } from "jotai";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function SettingsLang() {
+export function SettingsLang() {
   const [useENName, setUseENName] = useAtom(englishNameAtom);
   const [clipLangs, setClipLangs] = useAtom(clipLanguageAtom);
   const [langOpen, setLangOpen] = useState(false);

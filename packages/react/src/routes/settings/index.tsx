@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 
-export default function Settings() {
+export function Settings() {
   const { t } = useTranslation();
 
   const routes: InlayContainerRoutes[] = useMemo(
@@ -49,3 +49,9 @@ export default function Settings() {
     </>
   );
 }
+
+export { SettingsBlocked } from "./blocked";
+export { SettingsLang } from "./lang";
+export { SettingsTheme } from "./theme";
+export { SettingsUser } from "./user";
+export { SettingsHomepage } from "./homepage";

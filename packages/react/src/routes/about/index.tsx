@@ -1,8 +1,9 @@
 import { InlayContainer } from "@/components/layout/InlayContainer";
+import exp from "constants";
 import { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-export default function About() {
+export function About() {
   const { t } = useTranslation();
 
   const routes = useMemo(
@@ -60,3 +61,12 @@ export default function About() {
     </>
   );
 }
+
+export { AboutGeneral } from "./general";
+export { AboutChangelog } from "./changelog";
+export { AboutFaq } from "./faq";
+// export { AboutRequest } from "./request";
+// export { AboutPlaceholder } from "./placeholder";
+export { AboutExtensions } from "./extensions";
+export { AboutContact } from "./contact";
+export { AboutPrivacy } from "./privacy";

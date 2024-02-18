@@ -1,4 +1,4 @@
-export default function AboutChangelog() {
+export function AboutChangelog() {
   return (
     <iframe
       className="min-h-[70vh] w-full"

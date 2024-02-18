@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useCopyToClipboard } from "usehooks-ts";
 
-export default function SettingsUser() {
+export function SettingsUser() {
   const { toast } = useToast();
   const [, copy] = useCopyToClipboard();
   const user = useAtomValue(userAtom);

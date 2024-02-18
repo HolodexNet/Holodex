@@ -4,7 +4,7 @@ import { QuickLink, QuickLinkProps } from "@/components/about/QuickLink";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function AboutGeneral() {
+export function AboutGeneral() {
   const { t } = useTranslation();
 
   const quickLinks: QuickLinkProps[] = useMemo(

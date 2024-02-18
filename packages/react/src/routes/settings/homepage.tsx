@@ -16,7 +16,7 @@ import { useVideoCardSizes } from "@/store/video";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 
-export default function SettingsHomepage() {
+export function SettingsHomepage() {
   const { t } = useTranslation();
   const [defaultOpen, setDefaultOpen] = useAtom(defaultOpenAtom);
   const { size, setSize } = useVideoCardSizes(["lg", "md", "sm"]);

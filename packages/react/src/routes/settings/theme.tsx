@@ -23,7 +23,7 @@ import type { SelectProps } from "@radix-ui/react-select";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 
-export default function SettingsTheme() {
+export function SettingsTheme() {
   const { t } = useTranslation();
   const [dark, setDark] = useAtom(darkAtom);
   const [base, setBase] = useAtom(baseAtom);

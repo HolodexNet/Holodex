@@ -4,7 +4,7 @@ import { blockedChannelsAtom } from "@/store/settings";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 
-export default function SettingsBlocked() {
+export function SettingsBlocked() {
   const { t } = useTranslation();
   // const [blockedChannels, setBlockedChannels] = useAtom(blockedChannelsAtom);
   const blockedChannels = useAtomValue(blockedChannelsAtom);
