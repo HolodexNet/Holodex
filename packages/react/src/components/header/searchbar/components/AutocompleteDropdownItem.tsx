@@ -34,8 +34,8 @@ export function AutocompleteDropdownItem({
       return query.text === "$t"
         ? t(`search.class_values.${query.type}.${query.value}`, " ")
         : query.text === "?"
-        ? query.value
-        : query.text;
+          ? query.value
+          : query.text;
     },
     [t],
   );

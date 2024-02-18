@@ -8,6 +8,7 @@ import { playerRefAtom, videoStatusAtomFamily } from "@/store/player";
 import { useAtomValue } from "jotai";
 
 import "./WaveformEditor.scss";
+import { Button } from "@/shadcn/ui/button";
 
 // import { useWaveformGenerator } from "./useWaveform"; // Placeholder, adjust according to actual implementation
 
@@ -86,25 +87,25 @@ const WaveformEditor = ({ videoId }: { videoId: string }) => {
           style={{ height: "130px" }}
           ref={canvasCbRef}
         />
+        <div className="pointer-events-none absolute z-10 -mt-10 flex w-full justify-between text-xs">
+          <span>{formatDuration(startTime * 1000)}</span>
+          <span className="">{formatDuration(endTime * 1000)}</span>
+        </div>
         {/* Waveform subtitles and interactions would be handled here */}
       </div>
       <div className="wf-status">
         {stage === "waiting" && (
-          <a className="link" onClick={init}>
+          <Button className="link" onClick={init}>
             Click here to Fetch audio information from youtube, this will use up
             20MB per hour of stream and take a minute or two depending on your
             internet speed.
-          </a>
+          </Button>
         )}
         {stage !== "done" && (
           <span>
             {stage}: {message} {errorMessage ? "?ERROR?: " + errorMessage : ""}
           </span>
         )}
-      </div>
-      <div className="w-full">
-        <span>{formatDuration(startTime * 1000)}</span>
-        <span className="float-right">{formatDuration(endTime * 1000)}</span>
       </div>
     </div>
   );

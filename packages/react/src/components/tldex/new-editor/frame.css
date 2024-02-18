@@ -29,21 +29,20 @@
   text-transform: none;
 }
 
-.tl-frame .tl-topbar>* {
+/* .tl-frame .tl-topbar>* {
   text-transform: unset !important;
-}
+} */
 
 .tl-frame {
   @apply gap-2;
   display: grid;
-  grid-template-columns: 3fr minmax(400px, 2fr);
-  grid-template-rows: max-content 1fr 60px 200px;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr 200px;
   height: 100%;
   grid-template-areas:
-    "header header"
-    "content sidebar"
-    "tooling sidebar"
-    "waveform waveform";
+    "header"
+    "content"
+    "waveform";
 }
 
 .tl-frame .header {

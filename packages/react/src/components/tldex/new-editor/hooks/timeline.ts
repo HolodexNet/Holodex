@@ -8,8 +8,9 @@ import {
   useSubtitles,
 } from "./subtitles";
 import { useAtomValue } from "jotai";
-import { PlayingVideoState } from "@/store/player";
+import { PlayingVideoState, playerRefAtom } from "@/store/player";
 import { useInterval } from "usehooks-ts";
+import { useAtomCallback } from "jotai/utils";
 
 /**
  * waveform should be a [ second, value ] sorted array where the second value is between 0-100
@@ -19,6 +20,10 @@ export const useTimelineRendererBase = (
   videoStatus: PlayingVideoState | undefined,
 ) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const getPlayer = useAtomCallback(
+    useCallback((get) => get(playerRefAtom), []),
+  );
+
   // const [currentTime, setCurrentTime] = useState(0);
   // const containerRef = useRef(null);
   const [containerRef, containerSize] = useMeasure<HTMLDivElement>();
@@ -27,7 +32,6 @@ export const useTimelineRendererBase = (
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(50);
   const timelineRef = useRef<Timeline | null>(null);
-
   // Initialize Timeline once the component has mounted and canvasRef.current is available
 
   const canvasCbRef = useCallback((node: HTMLCanvasElement | null) => {
@@ -53,6 +57,9 @@ export const useTimelineRendererBase = (
 
       t.on("timeUpdate", (v) => {
         // setCurrentTime(v[0]);
+        const player = getPlayer();
+        player?.seekTo(v[0]);
+        player?.getInternalPlayer()?.playVideo?.();
         console.log("timeUpdate", v);
       });
 
@@ -79,10 +86,10 @@ export const useTimelineRendererBase = (
     },
     timelineRef.current
       ? videoStatus?.status == "playing"
-        ? 60
+        ? 15
         : videoStatus?.status == "paused" || videoStatus?.status == "stopped"
           ? null
-          : 500
+          : 100
       : null,
   );
 

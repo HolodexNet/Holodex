@@ -20,6 +20,7 @@ import { Input } from "@/shadcn/ui/input";
 import { Label } from "@/shadcn/ui/label";
 import { useSearchParam } from "react-use";
 import WaveformEditor from "./components/WaveformEditor";
+import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
 
 export function TLEditorFrame() {
   const id = useSearchParam("id");
@@ -143,30 +144,23 @@ export function TLEditorBody({ currentVideo }: { currentVideo: QueueVideo }) {
   const videoStatus = useAtomValue(videoStatusAtom);
   return (
     <>
-      <div className="content overflow-hidden rounded">
-        <PlayerWrapper currentVideo={currentVideo} />
-      </div>
-
-      <div className="sidebar">
-        {JSON.stringify(videoStatus)}
-        {/* <!-- Sidebar content goes here --> */}
-        {/* <editor-sidebar :room-id="roomId" :player="player?.player" /> */}
-      </div>
-
-      <div className="tooling">
-        {/* <!-- tooling content goes here --> */}
-        {/* tooling { room?.messages.length } */}
-      </div>
+      <PanelGroup direction="horizontal" className="content">
+        <Panel defaultSize={60} minSize={40}>
+          <div className="flex size-full flex-col">
+            <div className="flex-1 overflow-hidden rounded">
+              <PlayerWrapper currentVideo={currentVideo} />
+            </div>
+            <div className="h-[60px]">Tooling</div>
+          </div>
+        </Panel>
+        <PanelResizeHandle className="w-2 hover:bg-base-4" />
+        <Panel defaultSize={40} minSize={20}>
+          {JSON.stringify(videoStatus)}
+        </Panel>
+      </PanelGroup>
 
       <div className="waveform">
-        {/* <!-- waveform content goes here --> */}
         <WaveformEditor videoId={currentVideo?.id || "x"} />
-        {/* <Waveform
-          :video-id="videoId"
-          :room="room"
-          :player="player"
-          @sort-messages="chatDB.sortRoom(roomId)"
-        /> */}
       </div>
     </>
   );

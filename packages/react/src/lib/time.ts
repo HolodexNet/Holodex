@@ -4,15 +4,26 @@ import { getDefaultStore } from "jotai";
 const store = getDefaultStore();
 
 export function formatDuration(millisecs: number) {
-  const negate = millisecs < 0;
-  const secs = millisecs / 1000;
-  const h = Math.floor(secs / (60 * 60));
-  const m = Math.floor((secs % (60 * 60)) / 60);
-  const s = Math.floor((secs % (60 * 60)) % 60);
-  const hStr = h ? `${h}:` : "";
-  const mStr = String(m).padStart(h ? 2 : 1, "0");
-  const sStr = String(s).padStart(2, "0");
-  return `${negate ? "-" : ""}${hStr}${mStr}:${sStr}`;
+  const seconds = millisecs / 1000;
+  const s = Math.abs(millisecs / 1000);
+
+  const t = [0, 0, 0];
+  let r = s % 3600;
+
+  t[0] = Math.floor(s / 3600);
+  t[1] = Math.floor(r / 60);
+  r = r % 60;
+  t[2] = Math.floor(r);
+
+  return (
+    (seconds < 0 ? "-" : "") +
+    (t[0] < 10 ? "0" : "") +
+    t[0] +
+    ":" +
+    (t[1] < 10 ? "0" + t[1] : t[1]) +
+    ":" +
+    (t[2] < 10 ? "0" + t[2] : t[2])
+  );
 }
 
 const numberFormatAdjust: Record<string, string> = {

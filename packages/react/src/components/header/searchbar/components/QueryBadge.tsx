@@ -29,8 +29,8 @@ export function QueryBadge({ item }: { item: PrimitiveAtom<QueryItem> }) {
       return query.text === "$t"
         ? t(`search.class_values.${query.type}.${query.value}`, " ")
         : query.text === "?"
-        ? query.value
-        : query.text;
+          ? query.value
+          : query.text;
     },
     [t],
   );
