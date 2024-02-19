@@ -229,8 +229,8 @@ export default {
                 const currentSongs = queryed.results || [];
                 for (const song of currentSongs) {
                     if (!parsedIDs.includes(song.trackId)) {
-                        parsedIDs.append(song.trackId)
-                        regionSongs.append(song)
+                        parsedIDs.push(song.trackId)
+                        regionSongs.push(song)
                     }
                 }
             };
