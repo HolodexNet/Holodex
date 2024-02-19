@@ -225,7 +225,7 @@ export default {
             let regionSongs = [];
             let parsedIDs = [];
             let currentSongs = []
-            regions.forEach(r => {
+            for (const r of regions) {
                 currentSongs = await this.searchAutocomplete(query, lang=lang, country=r);
                 regionSongs.concat(currentSongs.reduce(acc, cur) => {
                     if (!parsedIDs.includes(cur.trackId)) {
@@ -234,7 +234,7 @@ export default {
                     }
                     return acc;
                 })
-            });
+            };
             return regionSongs;
         }
         async searchMusicdex(query) {
