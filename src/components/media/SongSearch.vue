@@ -233,7 +233,7 @@ export default {
                         acc.append(cur)
                     }
                     return acc;
-                })
+                }))
             };
             return regionSongs;
         }
