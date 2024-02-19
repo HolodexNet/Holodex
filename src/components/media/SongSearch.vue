@@ -225,8 +225,8 @@ export default {
             let regionSongs = [];
             let parsedIDs = [];
             for (const r of regions) {
-                const query = await this.searchAutocomplete(query, lang, r);
-                const currentSongs = query.results || [];
+                const queryed = await this.searchAutocomplete(query, lang, r);
+                const currentSongs = queryed.results || [];
                 for (const song of currentSongs) {
                     if (!parsedIDs.includes(song.trackId)) {
                         parsedIDs.append(song.trackId)
