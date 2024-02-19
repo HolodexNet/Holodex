@@ -236,7 +236,7 @@ export default {
                 }))
             };
             return regionSongs;
-        }
+        },
         async searchMusicdex(query) {
             try {
                 const resp = await axiosInstance({
