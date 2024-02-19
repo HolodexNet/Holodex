@@ -224,9 +224,9 @@ export default {
             // Order regions by highest to lowest priority; missing IDs will merge in.
             let regionSongs = [];
             let parsedIDs = [];
-            let currentSongs = []
             for (const r of regions) {
-                currentSongs = await this.searchAutocomplete(query, lang, r);
+                const query = await this.searchAutocomplete(query, lang, r);
+                const currentSongs = query.results || [];
                 for (const song of currentSongs) {
                     if (!parsedIDs.includes(song.trackId)) {
                         parsedIDs.append(song.trackId)
