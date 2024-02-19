@@ -157,8 +157,8 @@ export default {
             this.isLoading = true;
             const [md, res, resEn] = await Promise.all([
                 this.searchMusicdex(query),
-                this.searchAutocomplete(query, "ja_jp"),
-                this.searchAutocomplete(query, "en_us"),
+                this.searchRegions(query, "ja_jp"),
+                this.searchRegions(query, "en_us"),
             ]);
             const lookupEn = resEn.results || [];
             console.log(lookupEn);
@@ -211,15 +211,30 @@ export default {
             // console.log(res);
             return res;
         },
-        async searchAutocomplete(query, lang = "ja_jp") {
+        async searchAutocomplete(query, lang = "ja_jp", country = "JP") {
             return jsonp("https://itunes.apple.com/search", {
                 term: query,
                 entity: "musicTrack",
-                country: "JP",
+                country,
                 limit: 10,
                 lang,
             });
         },
+        async searchRegions(query, lang = "ja_jp", regions: Array<String> = ['JP', 'US']) {
+            // Order regions by highest to lowest priority; missing IDs will merge in.
+            let regionSongs = [];
+            let parsedIDs = [];
+            regions.forEach(r => {
+                regionSongs.concat((await this.searchAutocomplete(query, lang=lang, country=r)).reduce(acc, cur) => {
+                    if (!parsedIDs.includes(cur.trackId)) {
+                        parsedIDs.append(cur.trackId)
+                        acc.append(cur)
+                    }
+                    return acc;
+                })
+            });
+            return regionSongs;
+        }
         async searchMusicdex(query) {
             try {
                 const resp = await axiosInstance({
