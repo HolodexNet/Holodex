@@ -160,7 +160,7 @@ export default {
                 this.searchRegions(query, "ja_jp"),
                 this.searchRegions(query, "en_us"),
             ]);
-            const lookupEn = resEn.results || [];
+            const lookupEn = resEn || [];
             console.log(lookupEn);
             const fnLookupFn = (id, name, altName) => {
                 const foundEn = lookupEn.find((x) => x.trackId === id);
@@ -177,11 +177,11 @@ export default {
                 }
                 return altName || name;
             };
-            if (res && res.results) {
-                console.log(res.results);
+            if (res) {
+                console.log(res);
                 this.fromApi = [
                     ...md.slice(0, 3),
-                    ...res.results.map(
+                    ...res.map(
                         ({
                             trackId,
                             collectionName,
@@ -222,7 +222,7 @@ export default {
         },
         async searchRegions(query, lang = "ja_jp", regions: Array<String> = ['JP', 'US']) {
             // Order regions by highest to lowest priority; missing IDs will merge in.
-            let regionSongs = [];
+            const regionSongs = [];
             let parsedIDs = [];
             for (const r of regions) {
                 const queryed = await this.searchAutocomplete(query, lang, r);
