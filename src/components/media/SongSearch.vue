@@ -227,13 +227,12 @@ export default {
             let currentSongs = []
             for (const r of regions) {
                 currentSongs = await this.searchAutocomplete(query, lang, r);
-                regionSongs.concat(currentSongs.reduce((acc, cur) => {
-                    if (!parsedIDs.includes(cur.trackId)) {
-                        parsedIDs.append(cur.trackId)
-                        acc.append(cur)
+                for (const song of currentSongs) {
+                    if (!parsedIDs.includes(song.trackId)) {
+                        parsedIDs.append(song.trackId)
+                        regionSongs.append(song)
                     }
-                    return acc;
-                }))
+                }
             };
             return regionSongs;
         },
