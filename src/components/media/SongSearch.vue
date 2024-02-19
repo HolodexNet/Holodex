@@ -227,7 +227,7 @@ export default {
             let currentSongs = []
             for (const r of regions) {
                 currentSongs = await this.searchAutocomplete(query, lang=lang, country=r);
-                regionSongs.concat(currentSongs.reduce(acc, cur) => {
+                regionSongs.concat(currentSongs.reduce((acc, cur) => {
                     if (!parsedIDs.includes(cur.trackId)) {
                         parsedIDs.append(cur.trackId)
                         acc.append(cur)
