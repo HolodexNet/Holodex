@@ -9,12 +9,14 @@ import {
   ResizablePanelGroup,
 } from "@/shadcn/ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
+import { TypographyH3, TypographyH4 } from "@/shadcn/ui/typography";
 import { currentVideoAtom } from "@/store/player";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import "./editVideo.scss";
 
 export default function EditVideo() {
   const { id } = useParams();
@@ -38,17 +40,22 @@ export default function EditVideo() {
       <div className="">
         <div className="container"></div>
         <ResizablePanelGroup
-          className="container"
+          className="container min-h-[90vh]"
           direction={siteIsSmall ? "vertical" : "horizontal"}
         >
           <ResizablePanel minSize={10} defaultSize={20}>
-            <div className="px-4">
-              <DefaultPlayerPositionAnchor className="aspect-video w-full overflow-hidden rounded-lg" />
+            <div id="player-anchor-container" className="relative h-full p-2">
+              <DefaultPlayerPositionAnchor
+                id="player-anchor"
+                className="overflow-hidden"
+              />
             </div>
           </ResizablePanel>
           <ResizableHandle withHandle />
           <ResizablePanel className="px-4">
-            <h3 className="mb-4 mt-2 text-xl">Editing: {data?.title} </h3>
+            <TypographyH3 className="mb-4 mt-2">
+              Editing: {data?.title}
+            </TypographyH3>
 
             {isPending || error ? (
               <Loading size="lg" error={error} />

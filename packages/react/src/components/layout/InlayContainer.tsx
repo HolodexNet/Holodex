@@ -27,7 +27,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
           <Button
             key={href + label}
             asChild
-            className="justify-start"
+            className="justify-start gap-4 px-4"
             size="lg"
             variant={
               href === location.pathname ? "secondary" : "ghost-secondary"
@@ -60,6 +60,17 @@ export function InlayContainer({ routes }: InlayContainerProps) {
           <Suspense fallback={<Loading size="xl" />}>
             <Outlet />
           </Suspense>
+        </div>
+        <div className="block w-full rounded-lg bg-base-3 p-2 md:hidden">
+          <Button
+            size="lg"
+            variant="link"
+            className="w-full justify-start px-2"
+            onClick={() => navigate(-1)}
+          >
+            <div className="i-heroicons:chevron-left" />
+            {t("component.mainNav.back")}
+          </Button>
         </div>
       </div>
     </div>
