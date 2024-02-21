@@ -194,6 +194,7 @@ views:
       all: 全部
       official: 存档
       subber: 剪辑
+      collabs: 联动
   library:
     savedVideosTitle: 保存的视频
     createYtPlaylistButton: 创建YouTube播放列表({0})

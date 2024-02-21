@@ -194,6 +194,7 @@ views:
       all: 全部
       official: 存檔
       subber: 剪輯
+      collabs: 連動
   library:
     savedVideosTitle: 儲存的影片
     createYtPlaylistButton: 建立YouTube播放清單 ({0})
