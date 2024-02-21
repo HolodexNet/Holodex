@@ -155,24 +155,10 @@ export function VideoCard({
     [videoHref],
   );
 
-  const videoMenu = (
-    <VideoMenu url={externalLink} {...videoObject}>
-      <Button
-        variant="ghost"
-        size="icon-lg"
-        className="absolute right-0 top-0 h-8 w-6 rounded-sm opacity-0 group-hover:opacity-100"
-        onClickCapture={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <div className="i-heroicons:ellipsis-vertical h-6 w-6" />
-      </Button>
-    </VideoMenu>
-  );
-
   const videoCardClasses = useMemo(
     () => ({
       outerLayer: clsx([
+        size == "list" && "rounded-sm hover:bg-base-3 @lg:px-2",
         (size == "list" || size == "sm") && "group relative flex gap-4 py-2",
         (size == "md" || size == "lg") && "group flex w-full flex-col gap-4",
       ]),
@@ -198,6 +184,21 @@ export function VideoCard({
       scheduleText: "text-xs @lg:text-sm text-base-11",
     }),
     [size],
+  );
+
+  const videoMenu = (
+    <VideoMenu url={externalLink} {...videoObject}>
+      <Button
+        variant="ghost"
+        size="icon-lg"
+        className="absolute right-0 top-0 h-8 w-6 rounded-sm opacity-0 group-hover:opacity-100"
+        onClickCapture={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <div className="i-heroicons:ellipsis-vertical h-6 w-6" />
+      </Button>
+    </VideoMenu>
   );
 
   return (
@@ -235,7 +236,7 @@ export function VideoCard({
           placeholderType={placeholderType}
         />
       </Link>
-      <div className="relative flex gap-2 @sm:gap-1">
+      <div className="relative flex grow gap-2 @sm:gap-1">
         {(size == "lg" || size == "md") && channel && (
           <Link
             to={`/channel/${channel.id}`}

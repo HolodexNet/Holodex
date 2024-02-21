@@ -89,7 +89,8 @@ export function Home() {
           cardSize === "lg",
         "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-2 gap-y-2":
           cardSize === "md",
-        "@container flex flex-col max-w-screen mx-auto": cardSize === "list",
+        "@container flex flex-col max-w-screen mx-auto px-4 py-1":
+          cardSize === "list",
       }),
     [cardSize],
   );
