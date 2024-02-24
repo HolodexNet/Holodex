@@ -2,11 +2,12 @@ import { useMemo } from "react";
 import { VideoCard } from "./VideoCard";
 import { SkeletonVideoCard } from "./SkeletonVideoCard";
 import { WindowVirtualizer } from "virtua";
+import { cn } from "@/lib/utils";
 
 interface MainVideoListingProps {
   videos: VideoBase[];
   size: VideoCardSize;
-  className: string;
+  className?: string;
   fetchNextPage?: () => void;
   isLoading?: boolean;
   hasNextPage?: boolean;
@@ -41,6 +42,23 @@ export function MainVideoListing({
     return out;
   }, [videos, countPerRow]);
 
+  const listClassName = useMemo(
+    () =>
+      cn(
+        "px-4 py-2 md:px-8",
+        {
+          "@container grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-x-4 gap-y-4":
+            size === "lg",
+          "@container grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-x-2 gap-y-2":
+            size === "md",
+          "@container flex flex-col max-w-screen mx-auto px-4 py-1":
+            size === "list",
+        },
+        className,
+      ),
+    [size, className],
+  );
+
   // const fetchedCountRef = useRef(-1);
   return (
     <div className="w-full">
@@ -60,7 +78,7 @@ export function MainVideoListing({
       >
         {videosGroupedByRow.map((videoRow, idx) => {
           return (
-            <div key={`row-${idx}`} className={className}>
+            <div key={`row-${idx}`} className={listClassName}>
               {videoRow.map((video) => (
                 <VideoCard key={"video-" + video.id} {...video} size={size} />
               ))}
@@ -68,7 +86,7 @@ export function MainVideoListing({
           );
         })}
         {(isLoading || isFetchingNextPage) && (
-          <div key={`row-loading`} className={className}>
+          <div key={`row-loading`} className={listClassName}>
             {(isLoading || isFetchingNextPage) &&
               Array.from({
                 length: isLoading ? 24 : isFetchingNextPage ? countPerRow : 0,

@@ -113,7 +113,7 @@ export default function Watch() {
       <div className="flex h-full w-full  @container" ref={ref}>
         <div
           className={cn("mx-auto flex w-full gap-8", {
-            "@screen-lg:p-8 p-4 max-w-screen-2xl": !theaterMode,
+            " p-4 pt-2 max-w-screen-2xl": !theaterMode,
           })}
         >
           <div className={cn("flex w-full flex-col gap-4")}>

@@ -82,19 +82,6 @@ export function Home() {
     },
   );
 
-  const listClassName = useMemo(
-    () =>
-      cn("px-4 py-2 md:px-8", {
-        "@container grid grid-cols-1 grid-cols-[repeat(auto-fill,minmax(360px,1fr))] gap-x-4 gap-y-4":
-          cardSize === "lg",
-        "@container grid grid-cols-2 grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-2 gap-y-2":
-          cardSize === "md",
-        "@container flex flex-col max-w-screen mx-auto px-4 py-1":
-          cardSize === "list",
-      }),
-    [cardSize],
-  );
-
   useEffect(() => {
     navigate(`/org/${currentOrg}`, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -177,7 +164,6 @@ export function Home() {
               isLoading={liveLoading}
               videos={live ?? []}
               size={cardSize}
-              className={listClassName}
               containerWidth={bounds.width}
             />
           }
@@ -186,7 +172,6 @@ export function Home() {
           {
             <MainVideoListing
               isLoading={archiveLoading}
-              className={listClassName}
               size={cardSize}
               videos={archives?.pages?.flatMap((x) => x.items) ?? []}
               fetchNextPage={fetchArchives}
@@ -200,7 +185,6 @@ export function Home() {
           {
             <MainVideoListing
               isLoading={clipLoading}
-              className={listClassName}
               size={cardSize}
               videos={clips?.pages?.flatMap((x) => x.items) ?? []}
               fetchNextPage={fetchClips}

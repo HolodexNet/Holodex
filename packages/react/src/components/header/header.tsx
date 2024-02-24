@@ -1,4 +1,4 @@
-import { toggleSidebarAtom } from "@/hooks/useFrame";
+import { isSidebarOpenAtom, toggleSidebarAtom } from "@/hooks/useFrame";
 import { darkAtom } from "@/hooks/useTheme";
 import { Button } from "@/shadcn/ui/button";
 import { userAtom } from "@/store/auth";
@@ -29,10 +29,11 @@ export function Header({ id }: HeaderProps) {
   const [dark, toggle] = useAtom(darkAtom);
   const user = useAtomValue(userAtom);
   const frameToggleSidebar = useSetAtom(toggleSidebarAtom);
+  const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
   const { logout } = useAuth();
 
   return (
-    <header id={id} className="z-40 flex items-center gap-4 bg-base-2 px-2">
+    <header id={id} className="z-40 flex items-center gap-1 bg-base-2 px-2">
       <Button
         size="icon"
         variant="ghost"
@@ -41,6 +42,28 @@ export function Header({ id }: HeaderProps) {
       >
         <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
+
+      {
+        <Button
+          size="icon"
+          variant="link"
+          className={clsx(
+            "h-12 w-12 p-0 opacity-100 transition-all hover:bg-secondaryA-2",
+            {
+              "-translate-y-8 duration-200 opacity-0": isSidebarOpen,
+            },
+          )}
+          asChild
+        >
+          <Link to="/">
+            <img
+              src="/icons/uetchy_logo.png"
+              className="mx-auto h-6 w-6 transition-transform hover:-translate-y-0.5"
+            />
+          </Link>
+        </Button>
+      }
+
       <div className="hidden grow md:flex" />
       <SearchBar className="max-w-lg" />
       <Button

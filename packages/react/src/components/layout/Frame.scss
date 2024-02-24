@@ -57,7 +57,7 @@ $responsive-breakpoint: 768px;
   display: grid;
   grid-template-rows: var(--header-height-clearance) auto var(--footer-height-clearance);
   grid-template-columns: var(--sidebar-width-clearance) auto;
-  // transition: grid-template-columns 0.3s;
+  transition: grid-template-columns 0.3s;
 
   min-height: 100vh;
 
