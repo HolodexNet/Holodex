@@ -47,10 +47,8 @@ export function MainVideoListing({
       cn(
         "px-4 py-2 md:px-8",
         {
-          "@container grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-x-4 gap-y-4":
-            size === "lg",
-          "@container grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-x-2 gap-y-2":
-            size === "md",
+          "@container grid gap-4": size === "lg",
+          "@container grid gap-2": size === "md",
           "@container flex flex-col max-w-screen mx-auto px-4 py-1":
             size === "list",
         },
@@ -78,7 +76,11 @@ export function MainVideoListing({
       >
         {videosGroupedByRow.map((videoRow, idx) => {
           return (
-            <div key={`row-${idx}`} className={listClassName}>
+            <div
+              key={`row-${idx}`}
+              className={listClassName}
+              style={{ gridTemplateColumns: `repeat(${countPerRow}, 1fr)` }}
+            >
               {videoRow.map((video) => (
                 <VideoCard key={"video-" + video.id} {...video} size={size} />
               ))}
@@ -86,7 +88,11 @@ export function MainVideoListing({
           );
         })}
         {(isLoading || isFetchingNextPage) && (
-          <div key={`row-loading`} className={listClassName}>
+          <div
+            key={`row-loading`}
+            className={listClassName}
+            style={{ gridTemplateColumns: `repeat(${countPerRow}, 1fr)` }}
+          >
             {(isLoading || isFetchingNextPage) &&
               Array.from({
                 length: isLoading ? 24 : isFetchingNextPage ? countPerRow : 0,
