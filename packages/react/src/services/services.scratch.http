@@ -1,4 +1,4 @@
-GET https://holodex.net/api/v2/videos?status=live&org=Hololive
+GET https://holodex.net/api/v2/topics
 X-APIKEY: 59e0876a-2f2f-418f-a7f4-6e5f407b3309
 
 

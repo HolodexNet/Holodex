@@ -17,6 +17,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import "./editVideo.scss";
+import { VideoEditMusic } from "@/components/edit/VideoEditMusic";
 
 export default function EditVideo() {
   const { id } = useParams();
@@ -78,7 +79,9 @@ export default function EditVideo() {
                 <TabsContent value="topic">
                   <VideoEditTopic video={data} />
                 </TabsContent>
-                <TabsContent value="music">Music stuff</TabsContent>
+                <TabsContent value="music">
+                  <VideoEditMusic video={data} />
+                </TabsContent>
               </Tabs>
             )}
           </ResizablePanel>

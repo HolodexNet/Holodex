@@ -90,6 +90,8 @@ export const createFetchClient = (token?: string | null) => {
   return fetchFn;
 };
 
+export type FetchClient = ReturnType<typeof createFetchClient>;
+
 async function handleResponse<T>(response: Response) {
   return response.json().then((obj) => {
     const data = obj as T;
