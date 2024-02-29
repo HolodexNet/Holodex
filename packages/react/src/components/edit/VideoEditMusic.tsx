@@ -9,6 +9,8 @@ import { useState } from "react";
 import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import { ItunesSearchDropdown } from "./ItunesSearchDropdown";
+import { Button } from "@/shadcn/ui/button";
+import { TypographyH4 } from "@/shadcn/ui/typography";
 
 export function VideoEditMusic({ video }: { video: Video }) {
   const [time, setTime] = useState(0);
@@ -18,9 +20,16 @@ export function VideoEditMusic({ video }: { video: Video }) {
   const [duration, setTimeDuration] = useState(180);
 
   return (
-    <div className="flex flex-col justify-items-stretch gap-4 pt-4">
+    <div className="flex flex-col justify-items-stretch gap-4 pt-4 text-base-11">
+      <TypographyH4 className="text-base-12">
+        <div className="i-lucide:list-plus mr-1 inline-block align-middle"></div>
+        Add New Song / Select song from Tracklist to modify
+      </TypographyH4>
+
       <div className="">
-        <Label htmlFor="itunes_search">iTunes/Musicdex Lookup</Label>
+        <Label htmlFor="itunes_search">
+          Autofill Song Info using iTunes / Musicdex (optional)
+        </Label>
         <ItunesSearchDropdown />
       </div>
       <div className="flex flex-row flex-wrap gap-2">
@@ -93,6 +102,24 @@ export function VideoEditMusic({ video }: { video: Video }) {
           </div>
         </div>
       </div>
+      <div className="flex gap-2">
+        <Button variant="ghost" className="bg-primaryA-4 hover:bg-primaryA-8">
+          Add Song
+        </Button>
+        <Button
+          variant="ghost"
+          className="bg-redA-4 hover:bg-redA-8 active:bg-redA-11"
+        >
+          Reset
+        </Button>
+        <Button variant="ghost-secondary">Listen to Track on iTunes</Button>
+      </div>
+      <hr className="border-base-4" />
+      <TypographyH4 className="text-base-12">
+        <div className="i-lucide:list-music mr-1 inline-block align-middle"></div>
+        Tracklist:
+      </TypographyH4>
+      <div className="min-h-4 rounded-lg bg-base-3"></div>
     </div>
   );
 }

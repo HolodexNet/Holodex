@@ -51,25 +51,12 @@ export function ItunesSearchDropdown({
       <CommandInput
         wrapperClassName="border border-base rounded-md"
         id="itunes_search"
+        placeholder="Search for existing song..."
         value={search}
         onValueChange={setSearch}
         onBlur={() => setOpen(false)}
         onFocus={() => setOpen(true)}
       />
-      {/* <div className="group rounded-md border border-base px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
-        <div className="flex flex-wrap gap-1">
-          <CommandPrimitive.Input
-            ref={inputRef}
-            value={search}
-            onValueChange={updateSearch}
-            onBlur={() => setOpen(false)}
-            onFocus={() => setOpen(true)}
-            placeholder={t("component.search.searchLabel")}
-            className="ml-2 flex-1 bg-transparent outline-none placeholder:text-base-8"
-          />
-        </div>
-      </div> */}
-      {/* <div className="relative"> */}
       {open && (
         <CommandList className="absolute top-10 z-10 w-full rounded-b-md border border-solid border-base bg-base-1 text-base-11">
           {autocomplete?.length ?? 0 > 0 ? (
@@ -77,13 +64,7 @@ export function ItunesSearchDropdown({
               <CommandGroup heading={<div>Search Results</div>} />
               <CommandSeparator />
               <CommandGroup className="h-full">
-                {autocomplete?.map((item) => {
-                  return <TrackItem item={item} />;
-                  // <AutocompleteDropdownItem
-                  //   item={item}
-                  //   onSelect={() => handleItemSelect(item)}
-                  // />
-                })}
+                {autocomplete?.map((item) => <TrackItem item={item} />)}
               </CommandGroup>
               {/* </div> */}
             </>
