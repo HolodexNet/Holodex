@@ -63,23 +63,23 @@ export function Header({ id }: HeaderProps) {
       }
 
       <div className="hidden grow md:flex" />
-      <SearchBar className="max-w-lg" />
-      <Button
+      <SearchBar className="max-w-lg md:mr-1 lg:mr-2" />
+      {/* <Button
         size="icon"
         variant="ghost"
         className="p-0 text-base-9"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:magnifying-glass h-full text-xl" />
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         size="icon"
         variant="ghost"
         className="hidden p-0 text-base-9 md:flex"
         onClick={() => toggle(!dark)}
       >
         <div className="i-heroicons:sun-20-solid h-full text-xl " />
-      </Button>
+      </Button> */}
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger className="w-11 shrink-0 overflow-hidden rounded-full">
