@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import { orgAtom } from "@/store/org";
 import { HTMLAttributes } from "react";
 import { isMobileAtom } from "@/hooks/useFrame";
+import { Logo } from "../header/Logo";
 // import { ScrollArea } from "@/shadcn/ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,7 +22,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
     <div className={cn("pb-12 border-r-base-5 border-r", className)} id={id}>
       <div className="min-h-[100dvh] space-y-2 bg-base-2 py-2">
         <div className="flex items-center gap-2 px-4 pb-2 pt-4">
-          <img src="/icons/uetchy_logo.png" className="ml-1.5 h-6 w-6" />
+          <Logo className="ml-1.5 h-8 w-8" />
           <h2 className="text-2xl font-semibold tracking-tight">Holodex</h2>
           <div className="flex grow" />
           <Button

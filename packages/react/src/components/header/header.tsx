@@ -15,6 +15,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { SearchBar } from "./searchbar/components/SearchBar";
 import clsx from "clsx";
+import { Logo } from "./Logo";
 
 interface HeaderProps
   extends React.DetailedHTMLProps<
@@ -56,10 +57,7 @@ export function Header({ id }: HeaderProps) {
           asChild
         >
           <Link to="/">
-            <img
-              src="/icons/uetchy_logo.png"
-              className="mx-auto h-6 w-6 transition-transform hover:-translate-y-0.5"
-            />
+            <Logo className="h-8 w-8" />
           </Link>
         </Button>
       }

@@ -75,7 +75,7 @@ export const useTimelineRendererBase = (
       const x = timelineRef.current.draw({
         currentTime: videoStatus
           ? videoStatus.progress +
-            (Date.now() - videoStatus.progressRecordedAt ?? 0) / 1000
+            (Date.now() - videoStatus.progressRecordedAt) / 1000
           : 0,
         waveform,
       });
