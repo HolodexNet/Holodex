@@ -54,6 +54,19 @@ export function localizedDayjs(time, lang) {
     // lang = dayjsName[lang] || lang;
     return dayjs(time);
 }
+
+export function titleTimeString(available_at, lang ) {
+    const ts = localizedDayjs(available_at, lang);
+    const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
+    const ts2 = ts
+        .tz("Asia/Tokyo")
+        .format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
+    if (ts1 === ts2) {
+        return ts1;
+    }
+    return `${ts1}\n${ts2}`;
+}
+
 export function formatDistance(time, lang, $t, allowNegative = true, now = dayjs()) {
     let diff;
     if (!time) return "?";
