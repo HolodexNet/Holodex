@@ -62,8 +62,6 @@ component:
     uploadScript: TL-Skript hochladen
   videoDescription:
     description: Beschreibung
-  video:
-    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -653,11 +651,8 @@ channelRequest:
   EnglishNameLabel: Englischer Kanalname
   Comments: Kommentare
   CommentsHint: Weitere Kommentare, die du uns mitteilen möchtest.
-  VtuberRequirementText: >-
-    Für Unabhängige sind mindestens 20K Abonnenten erforderlich. VTuber werden als Teil der bestehenden Orgs akzeptiert. <br /><br />Neue Orgs werden nach Abonnentenzahlen erstellt.
   ClipperRequirementText: >-
     Clipper-Kanäle müssen mindestens 2 Monate alt sein und regelmäßig bzw. mehr als 20 Clips in einem Monat hochladen. Das Spammen von kurzen täglichen Clips, das Hochladen ausschließlich kurzer &lt;1min Clips oder das Benutzen von unschmeichelhaften Thumbnails zählen alle gegen den Kanal. Auch die Qualität der Inhalte kann beurteilt werden. <br /><br />Es ist wichtig zu beachten, dass Clipper ihre Quellen über Kanallinks, @YouTube-Kanalerwähnungen und Video-Links angeben sollten. Überzitierung (z.B. alle Nijisanji-Mitglieder verlinken) schafft Arbeit für Holodex-Editoren, und Unterzitieren (keine Links) versteckt Clips. <br /><br /> Holodex nutzt Algorithmen, um Überzitierungen zu erkennen und automatisch zu korrigieren, aber diese funktionieren möglicherweise nicht immer perfekt. Clipper, die häufig überzitieren, können dafür von der Plattform entfernt werden.
   DeletionRequirementText: >-
     Löschung sollte nur angefragt werden, wenn du/ihr der/die Kanalbesitzer bist/seid. Bitte gib Kontaktinformationen an, damit wir dies überprüfen können.
   PageTitle: Holodex Kanalanfrage
-  ChannelURLErrorFeedback: Muss https://www.youtube.com/channel/UC_____ sein
