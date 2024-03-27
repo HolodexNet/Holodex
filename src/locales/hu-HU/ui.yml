@@ -192,7 +192,7 @@ views:
     noStreams: Nincs élő vagy bejelentett stream jelenleg
     recentVideoToggles:
       all: Összes
-      official: Előző streamek
+      official: Korábbi streamek
       subber: Klipek
   library:
     savedVideosTitle: Mentett videók
