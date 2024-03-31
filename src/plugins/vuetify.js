@@ -41,7 +41,7 @@ const possibleChars = [768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 77
 const randInt = upperBound => Math.floor(Math.random() * upperBound);
 
 function combiningChars() {
-    return () => String.fromCharCode(codes[randInt(possibleChars.length)]);
+    return () => String.fromCharCode(possibleChars[randInt(possibleChars.length)]);
 }
 
 const repeat = (fn, count) => {
