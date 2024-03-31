@@ -53,7 +53,7 @@ const repeat = (fn, count) => {
 }
   
 
-const zalgo = (str) => {
+export const zalgo = (str) => {
     let mstr = str;
     const n = 0.5;
     const randomCombiningChar = combiningChars();
@@ -186,9 +186,6 @@ export const i18n = new VueI18n({
 
             return choicesLength < 4 ? 2 : 3;
         },
-    },
-    postTranslation(str) {
-        return zalgo(str);
     },
 });
 
