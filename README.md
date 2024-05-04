@@ -1,10 +1,12 @@
 # Holodex
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/RiceCakess/holodex/blob/master/LICENSE)
-[![Discord Chat](https://img.shields.io/discord/796190073271353385.svg)](https://discord.gg/jctkgHBt4b)
+[![Discord](https://img.shields.io/discord/796190073271353385?label=Discord)](https://discord.gg/jctkgHBt4b)
 [![Deploy to Prod](https://github.com/RiceCakess/holoclips/workflows/Deploy%20to%20production/badge.svg)](https://github.com/RiceCakess/holoclips/actions?query=workflow%3A%22Deploy+to+production%22)
 [![Crowdin](https://badges.crowdin.net/holodex/localized.svg)](https://crowdin.com/project/holodex)
 [![Twitter Follow](https://img.shields.io/twitter/follow/holodex?style=social)](https://twitter.com/holodex)
+
+Holodex is a fan-made vtuber platform at https://holodex.net. The website compiles livestreams from these creators onto a single page and encourages users to fall down the vtuber rabbit hole with a multitude of features including multiview, TL filter, clips, music and more.
 
 ![holodex](https://github.com/RiceCakess/Holodex/blob/dev/public/img/intro-promo.jpg)
 
