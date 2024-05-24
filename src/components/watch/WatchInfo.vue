@@ -257,7 +257,7 @@ export default {
             const topic = this.video.topic_id;
             const capitalizedTopic = topic[0].toUpperCase() + topic.slice(1);
             const { org } = this.video.channel;
-            let q = `type,value,text\ntopic,${topic},${capitalizedTopic}`;
+            let q = `type,value,text\ntopic,"${topic}","${capitalizedTopic}"`;
             if (org) {
                 q += `\norg,${org},${org}`;
             }
