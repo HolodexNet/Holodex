@@ -642,9 +642,6 @@ channelRequest:
   EnglishNameLabel: İngilizce Kanal İsmi
   Comments: Yorumlar
   CommentsHint: Bize iletmek istediğin diğer yorumlar.
-  VtuberRequirementText: >-
-    Bağımsızlar için en az 20K abone gereklidir. Var olan orgların parçası olan VTuberlar kabul edilecektir. <br /><br />Yeni Orglar ortalama abone sayısına göre oluşturulacaktır.
   DeletionRequirementText: >-
     Silme sadece kanal sahibi/sahipleri tarafından talep edilmeli, lütfen bunu doğrulamamız için iletişim bilgisi sağlayın.
   PageTitle: Holodex Kanal Talebi
-  ChannelURLErrorFeedback: https://www.youtube.com/channel/UC_____ şeklinde olmalı
