@@ -1,11 +1,11 @@
-import * as React from "react";
-import { X } from "lucide-react";
+import * as React from "react"
+import { X } from "lucide-react"
 
-import { Badge } from "./badge";
-import { Command, CommandGroup, CommandItem } from "./command";
-import { Command as CommandPrimitive } from "cmdk";
+import { Badge } from "./badge"
+import { Command, CommandGroup, CommandItem } from "./command"
+import { Command as CommandPrimitive } from "cmdk"
 
-type Framework = Record<"value" | "label", string>;
+type Framework = Record<"value" | "label", string>
 
 const FRAMEWORKS = [
   {
@@ -40,43 +40,43 @@ const FRAMEWORKS = [
     value: "nest.js",
     label: "Nest.js",
   },
-] satisfies Framework[];
+] satisfies Framework[]
 
 export function FancyMultiSelect() {
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const [open, setOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState<Framework[]>([FRAMEWORKS[4]]);
-  const [inputValue, setInputValue] = React.useState("");
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  const [open, setOpen] = React.useState(false)
+  const [selected, setSelected] = React.useState<Framework[]>([FRAMEWORKS[4]])
+  const [inputValue, setInputValue] = React.useState("")
 
   const handleUnselect = React.useCallback((framework: Framework) => {
-    setSelected((prev) => prev.filter((s) => s.value !== framework.value));
-  }, []);
+    setSelected((prev) => prev.filter((s) => s.value !== framework.value))
+  }, [])
 
   const handleKeyDown = React.useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
-      const input = inputRef.current;
+      const input = inputRef.current
       if (input) {
         if (e.key === "Delete" || e.key === "Backspace") {
           if (input.value === "") {
             setSelected((prev) => {
-              const newSelected = [...prev];
-              newSelected.pop();
-              return newSelected;
-            });
+              const newSelected = [...prev]
+              newSelected.pop()
+              return newSelected
+            })
           }
         }
         // This is not a default behaviour of the <input /> field
         if (e.key === "Escape") {
-          input.blur();
+          input.blur()
         }
       }
     },
-    [],
-  );
+    []
+  )
 
   const selectables = FRAMEWORKS.filter(
-    (framework) => !selected.includes(framework),
-  );
+    (framework) => !selected.includes(framework)
+  )
 
   return (
     <Command
@@ -93,19 +93,19 @@ export function FancyMultiSelect() {
                   className="ml-1 rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      handleUnselect(framework);
+                      handleUnselect(framework)
                     }
                   }}
                   onMouseDown={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
+                    e.preventDefault()
+                    e.stopPropagation()
                   }}
                   onClick={() => handleUnselect(framework)}
                 >
                   <X className="h-3 w-3 text-base-8 hover:text-base-11" />
                 </button>
               </Badge>
-            );
+            )
           })}
           {/* Avoid having the "Search" Icon */}
           <CommandPrimitive.Input
@@ -128,23 +128,23 @@ export function FancyMultiSelect() {
                   <CommandItem
                     key={framework.value}
                     onMouseDown={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
+                      e.preventDefault()
+                      e.stopPropagation()
                     }}
                     onSelect={(_) => {
-                      setInputValue("");
-                      setSelected((prev) => [...prev, framework]);
+                      setInputValue("")
+                      setSelected((prev) => [...prev, framework])
                     }}
                     className={"cursor-pointer"}
                   >
                     {framework.label}
                   </CommandItem>
-                );
+                )
               })}
             </CommandGroup>
           </div>
         ) : null}
       </div>
     </Command>
-  );
+  )
 }

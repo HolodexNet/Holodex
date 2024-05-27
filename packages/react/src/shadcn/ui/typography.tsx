@@ -1,5 +1,5 @@
-import React from "react";
-import { cn } from "@/lib/utils";
+import React from "react"
+import { cn } from "@/lib/utils"
 
 export interface H3Props extends React.ComponentPropsWithoutRef<"h3"> {}
 
@@ -10,13 +10,13 @@ const TypographyH3 = React.forwardRef<HTMLHeadingElement, H3Props>(
         ref={ref}
         className={cn(
           "scroll-m-20 text-2xl font-semibold tracking-tight",
-          className,
+          className
         )}
         {...props}
       />
-    );
-  },
-);
+    )
+  }
+)
 
 export interface H4Props extends React.ComponentPropsWithoutRef<"h4"> {}
 
@@ -27,13 +27,13 @@ const TypographyH4 = React.forwardRef<HTMLHeadingElement, H4Props>(
         ref={ref}
         className={cn(
           "scroll-m-20 text-xl font-semibold tracking-tight",
-          className,
+          className
         )}
         {...props}
       />
-    );
-  },
-);
+    )
+  }
+)
 
 export interface LargeProps extends React.ComponentPropsWithoutRef<"div"> {}
 
@@ -45,9 +45,9 @@ const TypographyLarge = React.forwardRef<HTMLDivElement, LargeProps>(
         className={cn("text-lg font-semibold", className)}
         {...props}
       />
-    );
-  },
-);
+    )
+  }
+)
 
 export interface ParagraphProps extends React.ComponentPropsWithoutRef<"p"> {}
 
@@ -59,8 +59,8 @@ const TypographyP = React.forwardRef<HTMLParagraphElement, ParagraphProps>(
         className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}
         {...props}
       />
-    );
-  },
-);
+    )
+  }
+)
 
-export { TypographyH3, TypographyH4, TypographyLarge, TypographyP };
+export { TypographyH3, TypographyH4, TypographyLarge, TypographyP }

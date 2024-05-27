@@ -36,7 +36,8 @@ module.exports = {
     "gource/*",
     "gource",
     "public/*.js",
-    "public/*.js.map"
+    "public/*.js.map",
+    "src/shadcn/ui/*"
   ],
 
   parser: "@typescript-eslint/parser",
