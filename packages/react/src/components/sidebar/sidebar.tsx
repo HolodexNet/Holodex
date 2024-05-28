@@ -20,7 +20,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
 
   return (
     <div className={cn("pb-12 border-r-base-5 border-r", className)} id={id}>
-      <div className="min-h-[100dvh] space-y-2 bg-base-2 py-2">
+      <div className="min-h-[100dvh] space-y-2 bg-base-2">
         <div className="flex items-center gap-2 px-4 pb-2 pt-4">
           <Logo className="ml-1.5 h-8 w-8" />
           <h2 className="text-2xl font-semibold tracking-tight">Holodex</h2>
@@ -49,12 +49,12 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
               href={`/org/${org}/channels`}
               icon="i-heroicons:user-group"
             />
-          </div>
-        </div>
-        {/* <hr className="border-base" /> */}
-        <div className="px-3 py-2">
-          {/* <h2 className="mb-2 px-4 font-semibold tracking-tight">Holodex</h2> */}
-          <div className="space-y-2">
+            {/* </div> */}
+            {/* </div> */}
+            <hr className="border-base" />
+            {/* <div className="px-3 py-2"> */}
+            {/* <h2 className="mb-2 px-4 font-semibold tracking-tight">Holodex</h2> */}
+            {/* <div className="space-y-2"> */}
             <SidebarItem
               label={t("component.mainNav.favorites")}
               icon="i-heroicons:heart"

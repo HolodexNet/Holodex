@@ -82,7 +82,7 @@ export function Header({ id }: HeaderProps) {
       </Button> */}
       {user ? (
         <DropdownMenu>
-          <DropdownMenuTrigger className="w-11 shrink-0 overflow-hidden rounded-full">
+          <DropdownMenuTrigger className="w-9 shrink-0 overflow-hidden rounded-full">
             <img
               src={`https://api.dicebear.com/7.x/shapes/svg?seed=${user.id}`}
             />
