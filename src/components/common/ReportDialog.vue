@@ -30,7 +30,7 @@
             :value="reason.value"
             hide-details="true"
             class="shrink mt-2"
-            @click="reason.text.includes('mention') && suggestedMentions === null ? loadMentions() : null"
+            @click="reason.value.includes('mention') && suggestedMentions === null ? loadMentions() : null"
           />
           <br>
           <span v-if="selectedReasons.includes('Incorrect video topic')">

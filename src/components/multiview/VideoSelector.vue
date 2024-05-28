@@ -248,7 +248,7 @@ export default {
                 ignoreBlock: false,
                 // only hide collabs when favorites tab
                 hideCollabs: this.shouldHideCollabs,
-                forOrg: this.isRealOrg && this.selectedOrg.name,
+                forOrg: this.isRealOrg ? this.selectedOrg.name : "none",
                 hideIgnoredTopics: true,
                 hidePlaceholder: this.hidePlaceholder,
                 hideMissing: this.hideMissing,

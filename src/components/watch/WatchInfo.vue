@@ -156,6 +156,7 @@ import {
     formatDistance,
     dayjs,
     localizedDayjs,
+    titleTimeString,
 } from "@/utils/time";
 import TruncatedText from "@/components/common/TruncatedText.vue";
 import { mdiAt } from "@mdi/js";
@@ -202,15 +203,7 @@ export default {
             return this.$store.state.settings.lang;
         },
         absoluteTimeString() {
-            const ts = localizedDayjs(this.video.available_at, this.lang);
-            const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
-            const ts2 = ts
-                .tz("Asia/Tokyo")
-                .format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
-            if (ts1 === ts2) {
-                return ts1;
-            }
-            return `${ts1}\n${ts2}`;
+            return titleTimeString(this.video.available_at, this.lang);
         },
         formattedTime() {
             switch (this.video.status) {
@@ -264,7 +257,7 @@ export default {
             const topic = this.video.topic_id;
             const capitalizedTopic = topic[0].toUpperCase() + topic.slice(1);
             const { org } = this.video.channel;
-            let q = `type,value,text\ntopic,${topic},${capitalizedTopic}`;
+            let q = `type,value,text\ntopic,"${topic}","${capitalizedTopic}"`;
             if (org) {
                 q += `\norg,${org},${org}`;
             }

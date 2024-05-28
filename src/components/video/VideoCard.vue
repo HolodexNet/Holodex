@@ -307,7 +307,7 @@ import {
     formatDuration,
     formatDistance,
     dayjs,
-    localizedDayjs,
+    titleTimeString,
 } from "@/utils/time";
 import { mdiBroadcast, mdiTwitch, mdiTwitter } from "@mdi/js";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
@@ -454,16 +454,7 @@ export default {
             );
         },
         absoluteTimeString() {
-            const ts = localizedDayjs(this.data.available_at, this.lang);
-
-            const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
-            const ts2 = ts
-                .tz("Asia/Tokyo")
-                .format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
-            if (ts1 === ts2) {
-                return ts1;
-            }
-            return `${ts1}\n${ts2}`;
+            return titleTimeString(this.data.available_at, this.lang);
         },
         videoTitle() {
             return this.title;

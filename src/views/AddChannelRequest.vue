@@ -236,7 +236,7 @@ export default {
         linkRule: (v) => !!v.match(/^https?:\/\/[\w-]+(\.[\w-]+)+\.?(\/\S*)?/) || "Invalid url",
         twitterRule: (v) => !v || !!v.match(/^@.*$/) || "@ABC",
         channelURLRule(v) {
-            const REGEX = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel\/|@)([\w-_]*)$/i;
+            const REGEX = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel\/|@)([\w-.]*)$/i;
 
             const cid = v.match(REGEX);
             console.log(cid);

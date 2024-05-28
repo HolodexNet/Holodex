@@ -37,6 +37,29 @@ export const langs = [
     { val: "th", display: "ไทย", credit: "SnowNeko#0282" },
 ];
 
+const possibleChars = [768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 794, 795, 829, 830, 831, 832, 833, 834, 835, 836, 838, 842, 843, 844, 848, 849, 850, 855, 856, 859, 861, 862, 864, 865, 867, 868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879, 820, 821, 822, 823, 824, 790, 791, 792, 793, 796, 797, 798, 799, 800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819, 825, 826, 827, 828, 837, 839, 840, 841, 845, 846, 851, 852, 853, 854, 857, 858, 860, 863, 866,];
+const randInt = upperBound => Math.floor(Math.random() * upperBound);
+
+function combiningChars() {
+    return () => String.fromCharCode(possibleChars[randInt(possibleChars.length)]);
+}
+
+const repeat = (fn, count) => {
+    const result = []
+    for (let i = 0; i < count; i++) {
+      result.push(fn())
+    }
+    return result
+}
+  
+
+export const zalgo = (str) => {
+    let mstr = str;
+    const n = 0.5;
+    const randomCombiningChar = combiningChars();
+    return mstr.split('').map((char, i) => `${char}${repeat(randomCombiningChar, n).join('')}`).join('');;
+};
+
 export const asyncLang = {
     async en() {
         await import("dayjs/locale/en");

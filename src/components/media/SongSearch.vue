@@ -157,10 +157,10 @@ export default {
             this.isLoading = true;
             const [md, res, resEn] = await Promise.all([
                 this.searchMusicdex(query),
-                this.searchAutocomplete(query, "ja_jp"),
-                this.searchAutocomplete(query, "en_us"),
+                this.searchRegions(query, "ja_jp"),
+                this.searchRegions(query, "en_us"),
             ]);
-            const lookupEn = resEn.results || [];
+            const lookupEn = resEn || [];
             console.log(lookupEn);
             const fnLookupFn = (id, name, altName) => {
                 const foundEn = lookupEn.find((x) => x.trackId === id);
@@ -177,11 +177,11 @@ export default {
                 }
                 return altName || name;
             };
-            if (res && res.results) {
-                console.log(res.results);
+            if (res) {
+                console.log(res);
                 this.fromApi = [
                     ...md.slice(0, 3),
-                    ...res.results.map(
+                    ...res.map(
                         ({
                             trackId,
                             collectionName,
@@ -211,14 +211,30 @@ export default {
             // console.log(res);
             return res;
         },
-        async searchAutocomplete(query, lang = "ja_jp") {
+        async searchAutocomplete(query, lang = "ja_jp", country = "JP") {
             return jsonp("https://itunes.apple.com/search", {
                 term: query,
                 entity: "musicTrack",
-                country: "JP",
+                country,
                 limit: 10,
                 lang,
             });
+        },
+        async searchRegions(query, lang = "ja_jp", regions: Array<String> = ['JP', 'US']) {
+            // Order regions by highest to lowest priority; missing IDs will merge in.
+            const regionSongs = [];
+            let parsedIDs = [];
+            for (const r of regions) {
+                const queryed = await this.searchAutocomplete(query, lang, r);
+                const currentSongs = queryed.results || [];
+                for (const song of currentSongs) {
+                    if (!parsedIDs.includes(song.trackId)) {
+                        parsedIDs.push(song.trackId)
+                        regionSongs.push(song)
+                    }
+                }
+            };
+            return regionSongs;
         },
         async searchMusicdex(query) {
             try {

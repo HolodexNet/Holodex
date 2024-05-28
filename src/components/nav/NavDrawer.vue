@@ -103,7 +103,9 @@
               <v-avatar v-if="vid.host_channel" :size="20">
                 <ChannelImg :channel="vid.host_channel" :size="20" />
               </v-avatar>
-              {{ formatDurationUpcoming(vid.available_at) }}
+              <time v-if="vid.available_at" :datetime="vid.available_at" :title="absoluteTimeString(vid)">
+                {{ formatDurationUpcoming(vid.available_at) }}
+              </time>
             </div>
           </v-list-item-action-text>
         </v-list-item>
@@ -152,7 +154,7 @@
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
-import { dayjs, formatDurationShort } from "@/utils/time";
+import { dayjs, formatDurationShort, titleTimeString } from "@/utils/time";
 import { mdiTuneVariant, mdiPatreon, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import Settings from "@/views/Settings.vue";
 import MusicdexLogo from "@/components/common/MusicdexLogo.vue";
@@ -297,6 +299,9 @@ export default {
         formatDurationUpcoming(ts) {
             const secs = dayjs(ts).diff(dayjs()) / 1000;
             return formatDurationShort(Math.abs(secs));
+        },
+        absoluteTimeString(video) {
+            return titleTimeString(video.available_at);
         },
         isLive(video) {
             return video.status === "live";
