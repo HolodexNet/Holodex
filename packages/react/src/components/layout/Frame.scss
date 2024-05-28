@@ -1,5 +1,6 @@
 $header-height: 60px;
-$sidebar-width: 200px + calc(100px * calc(100vw / 1920vw));
+// $sidebar-width: calc(180px + min(100px, calc(100vw * calc(100 / 1920))));
+$sidebar-width: 208px; // maybe static sidebar width is better than have it flex. w-52 is 208px.
 $footer-height: 40px;
 $responsive-breakpoint: 768px;
 
@@ -57,7 +58,7 @@ $responsive-breakpoint: 768px;
   display: grid;
   grid-template-rows: var(--header-height-clearance) auto var(--footer-height-clearance);
   grid-template-columns: var(--sidebar-width-clearance) auto;
-  transition: grid-template-columns 0.3s;
+  // transition: grid-template-columns 0.3s;
 
   min-height: 100vh;
 
@@ -88,6 +89,7 @@ $responsive-breakpoint: 768px;
   >main {
     grid-area: content;
     max-width: 100dvw;
+    // transition: None;
     // disabling for now so we can use position sticky
     // overflow-y: auto;
   }

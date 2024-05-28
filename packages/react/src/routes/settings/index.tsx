@@ -2,12 +2,14 @@ import {
   InlayContainer,
   InlayContainerRoutes,
 } from "@/components/layout/InlayContainer";
+import useAlwaysShowScrollbar from "@/hooks/useAlwaysShowScrollbar";
 import { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 
 export function Settings() {
   const { t } = useTranslation();
+  useAlwaysShowScrollbar();
 
   const routes: InlayContainerRoutes[] = useMemo(
     () => [
