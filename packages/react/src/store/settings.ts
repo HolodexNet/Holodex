@@ -1,5 +1,7 @@
 import { atom } from "jotai";
 
+// TODO these need to be hooked up to storage.
+
 export const englishNameAtom = atom(false);
 export const clipLanguageAtom = atom<string[]>([]);
 export const redirectModeAtom = atom(false);
