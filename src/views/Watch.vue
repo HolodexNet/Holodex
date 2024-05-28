@@ -12,7 +12,8 @@
       'theater-mode': video.type === 'stream' || $vuetify.breakpoint.mdAndDown,
       'show-chat': showChatWindow,
       'full-height': theaterMode,
-      'show-highlights-bar': showHighlightsBar
+      'show-highlights-bar': showHighlightsBar,
+      'flex-row-reverse': watchViewReversed,
     }"
   >
     <KeyPress
@@ -215,6 +216,7 @@ export default {
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
         ...syncState("watch", ["showTL", "showLiveChat", "theaterMode"]),
+        ...syncState("settings", ["watchViewReversed"]),
         chatStatus: {
             get() {
                 return {
