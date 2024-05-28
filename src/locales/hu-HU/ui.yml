@@ -194,6 +194,7 @@ views:
       all: Összes
       official: Korábbi streamek
       subber: Klipek
+      collabs: Vendégként
   library:
     savedVideosTitle: Mentett videók
     createYtPlaylistButton: YT lejátszási lista létrehozása ({0})

@@ -168,6 +168,7 @@ views:
       all: Tutti
       official: Archivo
       subber: Clip
+      collabs: Collaborazioni
   library:
     savedVideosTitle: Video salvati
     createYtPlaylistButton: Crea una Playlist di YouTube ({0})

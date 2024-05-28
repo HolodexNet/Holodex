@@ -189,6 +189,7 @@ views:
       all: Semua
       official: Arsip
       subber: Klip
+      collabs: Kolaborasi
   library:
     savedVideosTitle: Video Tersimpan
     createYtPlaylistButton: Buat YT Playlist ({0})

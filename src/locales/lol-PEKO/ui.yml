@@ -136,6 +136,7 @@ views:
       all: all
       official: Arcaib
       subber: kirinuki
+      collabs: Corabo
   library:
     deleteConfirmation: Delete {0} video is ok?
     deleteConfirmationOK: Yes delete
