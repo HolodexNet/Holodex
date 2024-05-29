@@ -28,7 +28,7 @@ export interface TLDexStoreState {
   liveTlHideSpoiler: boolean; // Hide message past current video time
 }
 
-export const tldexSettngsAtom = atomWithStorage("tldex", {
+export const tldexSettngsAtom = atomWithStorage<TLDexStoreState>("tldex", {
   liveTlStickBottom: false,
   liveTlLang: store.get(clipLangAtom).value,
   liveTlFontSize: 13,
@@ -40,18 +40,5 @@ export const tldexSettngsAtom = atomWithStorage("tldex", {
   liveTlShowSubtitle: true, // Show subtitles on videos
   liveTlHideSpoiler: false, // Hide message past current video time
 });
-
-export const tldexStateAtom = atom<TLDexStoreState>((get) => ({
-  liveTlStickBottom: false,
-  liveTlLang: get(clipLangAtom).value,
-  liveTlFontSize: 13,
-  liveTlShowVerified: true, // show verified messages
-  liveTlShowModerator: true, // show moderator messages
-  liveTlShowVtuber: true, // show vtuber messages
-  liveTlShowLocalTime: false, // show client local time
-  liveTlWindowSize: 0.3, // Default size, otherwise percentage height
-  liveTlShowSubtitle: true, // Show subtitles on videos
-  liveTlHideSpoiler: false, // Hide message past current video time
-}));
 
 export const tldexBlockedAtom = atomWithStorage<string[]>("tldex-blocked", []);

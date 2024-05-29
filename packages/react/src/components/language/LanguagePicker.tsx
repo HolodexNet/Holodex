@@ -17,7 +17,7 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { t } from "i18next";
 import { cn } from "@/lib/utils";
 
-export const LanguageSelector = () => {
+export const ClipLanguageSelector = () => {
   const [currentLang, setCurrentLang] = useAtom(clipLangAtom);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");

@@ -222,8 +222,8 @@ export function VideoCard({
           className="aspect-video h-full w-full rounded-md object-cover"
         />
         {topic_id && (
-          <span className="absolute left-1 top-1 rounded-sm bg-black/80 px-1 text-sm capitalize text-white">
-            {topic_id}
+          <span className="absolute left-1 top-1 text-pretty rounded-sm bg-black/80 px-1 text-xs capitalize text-white/80 group-hover:text-white">
+            {topic_id.replaceAll("_", " ")}
           </span>
         )}
         <VideoCardDuration

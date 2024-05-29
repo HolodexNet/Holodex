@@ -15,7 +15,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { clipLangAtom } from "@/store/i18n";
-import { LanguageSelector } from "@/components/language/LanguagePicker";
+import { ClipLanguageSelector } from "@/components/language/LanguagePicker";
 import { Helmet } from "react-helmet-async";
 import { MainVideoListing } from "./../components/video/MainVideoListing";
 import useMeasure from "react-use-measure";
@@ -156,7 +156,7 @@ export function Home() {
               )}
             />
           </Button>
-          <LanguageSelector />
+          <ClipLanguageSelector />
         </TabsList>
         <TabsContent value="live">
           {

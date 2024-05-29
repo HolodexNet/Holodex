@@ -44,6 +44,8 @@ component:
     points: pts
     playlist: Playlist
     back: Back
+    tlclient: TL Client
+    scriptEditor: TL Editor
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Watching'

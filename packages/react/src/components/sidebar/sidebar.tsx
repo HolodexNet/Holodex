@@ -8,6 +8,7 @@ import { orgAtom } from "@/store/org";
 import { HTMLAttributes } from "react";
 import { isMobileAtom } from "@/hooks/useFrame";
 import { Logo } from "../header/Logo";
+import { useIsLgAndUp } from "@/hooks/useBreakpoint";
 // import { ScrollArea } from "@/shadcn/ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,7 +18,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 export function Sidebar({ className, id, onClose }: SidebarProps) {
   const { t } = useTranslation();
   const org = useAtomValue(orgAtom);
-
+  const isLgAndUp = useIsLgAndUp();
   return (
     <div className={cn("pb-12 border-r-base-5 border-r", className)} id={id}>
       <div className="min-h-[100dvh] space-y-2 bg-base-2">
@@ -73,14 +74,33 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
               href="https://music.holodex.net"
               onClose={onClose}
             />
-            <hr className="border-base" />
             <SidebarItem
-              className="text-base-11"
               label={t("component.mainNav.playlist")}
               icon="i-heroicons:queue-list"
               href="/playlists"
               onClose={onClose}
             />
+            <hr className="border-base" />
+            {isLgAndUp && (
+              <SidebarItem
+                className="text-base-11"
+                label={t("component.mainNav.tlclient")}
+                icon="i-heroicons:language"
+                href="/settings"
+                onClose={onClose}
+              />
+            )}
+            {isLgAndUp && (
+              <SidebarItem
+                className="text-base-11"
+                label={t("component.mainNav.scriptEditor")}
+                // icon="i-solar:subtitles-linear"
+                // icon="i-gravity-ui:timeline"
+                icon="i-fluent:gantt-chart-16-regular"
+                href="/settings"
+                onClose={onClose}
+              />
+            )}
             <SidebarItem
               className="text-base-11"
               label={t("component.mainNav.settings")}

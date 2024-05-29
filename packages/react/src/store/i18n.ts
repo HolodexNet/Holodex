@@ -19,6 +19,8 @@ export const clipLangAtom = atomWithStorage<(typeof CLIPPER_LANGS)[number]>(
   },
 );
 
+// vvv tbh i don't know what this block is supposed to do here: vvv
+
 export const tFunctionAtom = atom<i18n["t"] | undefined>(undefined);
 
 /** Sync the Store tFunction with the application `t` */
@@ -31,3 +33,5 @@ export function useSyncTFunction() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [t]);
 }
+
+// ^^^ it doesn't seem to have impact on the rest of the codebase. ^^^
