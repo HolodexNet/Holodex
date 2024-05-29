@@ -16,8 +16,8 @@
 
 @layer base {
   body {
-    @apply bg-base-2 text-base-12;
+    @apply bg-base-1 text-base-12;
     font-family: "Noto Sans", sans-serif;
-    font-family: "Nunito", "Noto Sans", sans-serif;
+    font-family: "Noto Sans", sans-serif;
   }
 }

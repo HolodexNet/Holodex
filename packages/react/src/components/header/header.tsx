@@ -34,7 +34,7 @@ export function Header({ id }: HeaderProps) {
   const { logout } = useAuth();
 
   return (
-    <header id={id} className="z-40 flex items-center gap-1 bg-base-2 px-2">
+    <header id={id} className="z-40 flex items-center gap-1 px-2">
       <Button
         size="icon"
         variant="ghost"

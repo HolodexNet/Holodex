@@ -18,7 +18,7 @@ export function About() {
       {
         label: t("about.changelog.title"),
         href: "/about/changelog",
-        icon: "i-heroicons:sparkles",
+        icon: "i-heroicons:swatch",
       },
       {
         label: t("about.faq.title"),
@@ -28,7 +28,7 @@ export function About() {
       {
         label: t("views.about.add_my_channel"),
         href: "/about/request",
-        icon: "i-heroicons:pencil-square",
+        icon: "i-heroicons:sparkles",
       },
       {
         label: t("about.placeholder.title"),
@@ -38,7 +38,7 @@ export function About() {
       {
         label: t("about.extensions.title"),
         href: "/about/extensions",
-        icon: "i-heroicons:puzzle-piece",
+        icon: "i-heroicons:bolt",
       },
       {
         label: t("about.contact.title"),

@@ -27,8 +27,8 @@ export function SettingsLang() {
 
   return (
     <div className="flex flex-col p-2 md:p-4">
-      <SettingsItem label={t("views.settings.languageSettings")}>
-        <div className="ml-auto flex flex-col items-end gap-2">
+      <SettingsItem label={t("views.settings.languageSettings")} fullWidth>
+        <div className="flex flex-col gap-3">
           <Popover open={langOpen} onOpenChange={setLangOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -78,32 +78,33 @@ export function SettingsLang() {
           </div>
         </div>
       </SettingsItem>
-      <SettingsItem label={t("views.settings.useEnglishNameLabel")}>
-        <div className="flex min-w-full items-center gap-4">
-          <Label htmlFor="use_english_names" className="text-base-11">
+      <SettingsItem label={t("views.settings.useEnglishNameLabel")} fullWidth>
+        <div className="flex gap-3">
+          <Checkbox
+            id="use_english_names"
+            checked={useENName}
+            onCheckedChange={(c) => setUseENName(!!c)}
+          />
+          <Label
+            htmlFor="use_english_names"
+            className={cn({
+              "opacity-65": !useENName,
+            })}
+          >
             {t("views.settings.useEnglishNameMsg")}
           </Label>
-          <div className="flex grow" />
-          <Switch
+          {/* <div className="flex grow" /> */}
+          {/* <Switch
             id="use_english_names"
             checked={useENName}
             onCheckedChange={setUseENName}
-          />
+          /> */}
         </div>
       </SettingsItem>
-      <SettingsItem label={t("views.settings.clipLanguageSelection")}>
-        <div className="flex w-full flex-col rounded-lg border border-base">
+      <SettingsItem label={t("views.settings.clipLanguageSelection")} fullWidth>
+        <div className="grid gap-3">
           {TL_LANGS.map(({ text, value }, index) => (
-            <Label
-              className={cn(
-                "flex min-w-[18rem] w-full justify-between items-center gap-4 px-4 py-4 hover:cursor-pointer",
-                {
-                  "bg-base-4": index % 2,
-                },
-              )}
-              htmlFor={`cliplang-${value}`}
-            >
-              {text}
+            <div className="flex items-center gap-3">
               <Checkbox
                 id={`cliplang-${value}`}
                 checked={clipLangs.includes(value)}
@@ -115,7 +116,15 @@ export function SettingsLang() {
                   )
                 }
               />
-            </Label>
+              <Label
+                className={cn({
+                  "opacity-65": !clipLangs.includes(value),
+                })}
+                htmlFor={`cliplang-${value}`}
+              >
+                {text}
+              </Label>
+            </div>
           ))}
         </div>
       </SettingsItem>

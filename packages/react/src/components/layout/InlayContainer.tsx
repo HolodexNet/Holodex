@@ -19,7 +19,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
     <div className="flex justify-center gap-4 p-4 md:p-8">
       <div
         className={cn(
-          "bg-base-3 flex h-fit w-full md:w-72 xl:w-80 shrink-0 flex-col gap-2 rounded-lg p-2",
+          "bg-base-2 flex h-fit w-full md:w-72 xl:w-80 shrink-0 flex-col gap-2 rounded-lg p-2",
           { "hidden md:flex": itemSelected },
         )}
       >
@@ -29,9 +29,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
             asChild
             className="justify-start gap-4 px-4"
             size="lg"
-            variant={
-              href === location.pathname ? "secondary" : "ghost-secondary"
-            }
+            variant={href === location.pathname ? "default" : "ghost"}
           >
             <Link to={href}>
               <div className={icon} />
@@ -45,7 +43,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
           "flex flex-col gap-4": itemSelected,
         })}
       >
-        <div className="block w-full rounded-lg bg-base-3 p-2 md:hidden">
+        <div className="block w-full rounded-lg bg-base-2 p-2 md:hidden">
           <Button
             size="lg"
             variant="link"
@@ -56,12 +54,12 @@ export function InlayContainer({ routes }: InlayContainerProps) {
             {t("component.mainNav.back")}
           </Button>
         </div>
-        <div className="w-full rounded-lg bg-base-3 p-2 md:p-4">
+        <div className="w-full rounded-lg bg-base-2 p-2 md:p-4">
           <Suspense fallback={<Loading size="xl" />}>
             <Outlet />
           </Suspense>
         </div>
-        <div className="block w-full rounded-lg bg-base-3 p-2 md:hidden">
+        <div className="block w-full rounded-lg bg-base-2 p-2 md:hidden">
           <Button
             size="lg"
             variant="link"

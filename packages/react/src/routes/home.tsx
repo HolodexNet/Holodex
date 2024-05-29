@@ -104,7 +104,7 @@ export function Home() {
         <title>{currentOrg} - Holodex</title>
       </Helmet>
       <Tabs defaultValue={tab} onValueChange={setTab} ref={ref}>
-        <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-2 md:px-8">
+        <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-1 md:px-8">
           <TabsTrigger value="live" className="px-2">
             <Trans
               i18nKey="views.home.liveOrUpcomingHeading"
