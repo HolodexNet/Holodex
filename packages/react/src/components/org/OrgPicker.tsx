@@ -40,17 +40,20 @@ export function OrgSelectorCombobox() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
+        <button
           role="combobox"
-          size="lg"
           aria-expanded={open}
-          className="w-full justify-between px-4"
+          className={cn(
+            "inline-flex min-h-8 w-full items-center justify-between rounded-md bg-base-3 pl-4 pr-2 py-1",
+            "text-lg font-medium text-left text-base-12 transition",
+            "hover:bg-base-4 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-7 active:scale-[97%] active:bg-primaryA-7 disabled:pointer-events-none disabled:opacity-50",
+            open && "ring-2 ring-primary-9",
+          )}
         >
           {orgs.find((org) => org.name === currentOrg.name)?.name ||
             t("Select organization...")}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+        </button>
       </PopoverTrigger>
       <PopoverContent className="max-w-[80vw] p-0">
         <Command>
