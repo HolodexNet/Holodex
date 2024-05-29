@@ -31,16 +31,19 @@ export function SettingsLang() {
         <div className="flex flex-col gap-3">
           <Popover open={langOpen} onOpenChange={setLangOpen}>
             <PopoverTrigger asChild>
-              <Button
-                size="lg"
-                variant="outline"
+              <button
                 role="combobox"
                 aria-expanded={langOpen}
-                className="w-fit min-w-[240px] justify-between border-base px-4"
+                className={cn(
+                  "inline-flex min-h-8 min-w-48 w-full items-center justify-between rounded-md bg-base-3 pl-4 pr-2 py-1",
+                  "text-lg font-medium text-left text-base-12 transition",
+                  "hover:bg-primary-5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-7 active:scale-[97%] active:bg-primaryA-7 disabled:pointer-events-none disabled:opacity-50",
+                  langOpen && "ring-2 ring-primary-9 hover:bg-base-5 bg-base-4",
+                )}
               >
                 {langs.find(({ val }) => i18n.language === val)?.display}
                 <div className="i-lucide:chevrons-up-down ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
+              </button>
             </PopoverTrigger>
             <PopoverContent className="w-fit min-w-[240px] p-0">
               <Command>

@@ -82,7 +82,7 @@ export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
       className={cn("overflow-visible bg-transparent", className)}
       shouldFilter={false}
     >
-      <div className="group rounded-md border border-base px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
+      <div className="group rounded-md bg-base-2 px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:bg-base-3">
         <div className="flex flex-wrap gap-1">
           {queryPieces.map((queryItem, i) => {
             return <QueryBadge item={queryItem} key={"badge" + i} />;
@@ -102,7 +102,7 @@ export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
       <div className="relative">
         {open && autocomplete.length > 0 ? (
           <>
-            <div className="absolute top-2 z-10 w-full rounded-md border border-base bg-base-1 text-base-11 shadow-md outline-none animate-in">
+            <div className="absolute top-2 z-10 w-full rounded-md border border-base bg-base-2 text-base-11 shadow-lg outline-none animate-in">
               <CommandGroup
                 heading={<div>{t("search.menu_header_text")}</div>}
               />
