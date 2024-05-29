@@ -5,7 +5,7 @@ import { Badge } from "@/shadcn/ui/badge";
 import { Button } from "@/shadcn/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { playerRefAtom } from "@/store/player";
-import { tldexBlockedAtom, tldexStateAtom } from "@/store/tldex";
+import { tldexBlockedAtom, tldexSettngsAtom } from "@/store/tldex";
 import { useAtom, useAtomValue } from "jotai";
 import { DetailedHTMLProps, HTMLAttributes, forwardRef } from "react";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ interface TLChatProps {
 }
 
 export function TLChat({ videoId }: TLChatProps) {
-  const tldexState = useAtomValue(tldexStateAtom);
+  const tldexState = useAtomValue(tldexSettngsAtom);
   const roomID: RoomIDString = `${videoId}/${tldexState.liveTlLang}`;
   const { chatDB } = useSocket(roomID);
 

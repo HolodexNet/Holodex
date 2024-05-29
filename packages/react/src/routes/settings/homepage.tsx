@@ -124,17 +124,13 @@ export function SettingsHomepage() {
       <SettingsItem label={t("views.settings.ignoredTopicsLabel")}>
         <div className="flex w-full flex-col gap-2">
           <TopicPicker
-            onSelect={(topic) =>
-              setIgnoredTopics((currentTopics) => [...currentTopics, topic])
-            }
+            onSelect={(topic) => setIgnoredTopics([...ignoredTopics, topic])}
           />
           <div className="flex flex-wrap gap-2">
             {ignoredTopics.map((topic) => (
               <Badge
                 onClick={() =>
-                  setIgnoredTopics((currentTopics) =>
-                    currentTopics.filter((t) => t !== topic),
-                  )
+                  setIgnoredTopics(ignoredTopics.filter((t) => t !== topic))
                 }
               >
                 {topic}

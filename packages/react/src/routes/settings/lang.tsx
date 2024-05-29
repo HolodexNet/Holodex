@@ -106,16 +106,16 @@ export function SettingsLang() {
       </SettingsItem>
       <SettingsItem label={t("views.settings.clipLanguageSelection")} fullWidth>
         <div className="grid gap-3">
-          {TL_LANGS.map(({ text, value }, index) => (
+          {TL_LANGS.map(({ text, value }) => (
             <div className="flex items-center gap-3">
               <Checkbox
                 id={`cliplang-${value}`}
                 checked={clipLangs.includes(value)}
                 onCheckedChange={(checked) =>
-                  setClipLangs((langs) =>
+                  setClipLangs(
                     checked
-                      ? [...langs, value]
-                      : langs.filter((lang) => lang !== value),
+                      ? [...clipLangs, value]
+                      : clipLangs.filter((lang) => lang !== value),
                   )
                 }
               />

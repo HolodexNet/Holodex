@@ -13,8 +13,8 @@ const messageProcessor = ({ type, message }) => {
 
 const ffmpeg = self.FFmpeg.createFFmpeg({
   log: true,
-  corePath: "http://localhost:8080/ffprobe-core.js",
-  wasmPath: "http://localhost:8080/ffprobe-core.wasm",
+  corePath: "/ffprobe-core.js",
+  wasmPath: "/ffprobe-core.wasm",
   logger: messageProcessor,
   progressLogger: (message) => console.log(message),
   mainName: "main",

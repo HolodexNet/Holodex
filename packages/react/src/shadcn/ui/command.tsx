@@ -4,7 +4,6 @@ import { Command as CommandPrimitive } from "cmdk"
 
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent } from "@/shadcn/ui/dialog"
-import { wrapper } from "./../../components/video/VideoCard"
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,

@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue, useStore } from "jotai";
 import { useClient } from "./useClient";
-import { tldexStateAtom } from "@/store/tldex";
+import { tldexSettngsAtom } from "@/store/tldex";
 import { roomToLang, roomToVideoID, toParsedMessage } from "@/lib/socket";
 import { roomsAtom, videoToRoomAtom } from "@/store/chat";
 import { useEffect } from "react";
@@ -11,7 +11,7 @@ export function useChatDB(roomId: RoomIDString) {
   const queryClient = useQueryClient();
   const client = useClient();
   const store = useStore();
-  const tldexState = useAtomValue(tldexStateAtom);
+  const tldexState = useAtomValue(tldexSettngsAtom);
   const [room, setRoom] = useAtom(roomsAtom(roomId));
   const [videoToRoom, setVideoToRoom] = useAtom(
     videoToRoomAtom(roomToVideoID(roomId)),

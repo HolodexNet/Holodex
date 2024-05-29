@@ -48,10 +48,10 @@ export function ChannelMenu({
         <DropdownMenuItem
           className="flex gap-2"
           onClick={() =>
-            setBlockedChannels((currVal) =>
+            setBlockedChannels(
               isBlocked
-                ? currVal.filter(({ id }) => id !== channelId)
-                : [...currVal, { id: channelId, ...rest }],
+                ? blockedChannels.filter(({ id }) => id !== channelId)
+                : [...blockedChannels, { id: channelId, ...rest }],
             )
           }
         >
