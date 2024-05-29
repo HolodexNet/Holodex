@@ -46,8 +46,8 @@ export function OrgSelectorCombobox() {
           className={cn(
             "inline-flex min-h-8 w-full items-center justify-between rounded-md bg-base-3 pl-4 pr-2 py-1",
             "text-lg font-medium text-left text-base-12 transition",
-            "hover:bg-base-4 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-7 active:scale-[97%] active:bg-primaryA-7 disabled:pointer-events-none disabled:opacity-50",
-            open && "ring-2 ring-primary-9",
+            "hover:bg-primary-5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-7 active:scale-[97%] active:bg-primaryA-7 disabled:pointer-events-none disabled:opacity-50",
+            open && "ring-2 ring-primary-9 hover:bg-base-5 bg-base-4",
           )}
         >
           {orgs.find((org) => org.name === currentOrg.name)?.name ||
