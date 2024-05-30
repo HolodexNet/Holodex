@@ -1,4 +1,4 @@
-import { Command as CommandPrimitive } from "cmdk";
+import { CommandList, Command as CommandPrimitive } from "cmdk";
 import {
   Command,
   CommandEmpty,
@@ -100,26 +100,28 @@ export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
         </div>
       </div>
       <div className="relative">
-        {open && autocomplete.length > 0 ? (
-          <>
-            <div className="absolute top-2 z-10 w-full rounded-md border border-base bg-base-2 text-base-11 shadow-lg outline-none animate-in">
-              <CommandGroup
-                heading={<div>{t("search.menu_header_text")}</div>}
-              />
-              <CommandSeparator />
-              <CommandGroup className="h-full overflow-auto">
-                {autocomplete.map((item) => {
-                  return (
-                    <AutocompleteDropdownItem
-                      item={item}
-                      onSelect={() => handleItemSelect(item)}
-                    />
-                  );
-                })}
-              </CommandGroup>
-            </div>
-          </>
-        ) : null}
+        <CommandList>
+          {open && autocomplete.length > 0 ? (
+            <>
+              <div className="absolute top-2 z-10 w-full rounded-md border border-base bg-base-2 text-base-11 shadow-lg outline-none animate-in">
+                <CommandGroup
+                  heading={<div>{t("search.menu_header_text")}</div>}
+                />
+                <CommandSeparator />
+                <CommandGroup className="h-full overflow-auto">
+                  {autocomplete.map((item) => {
+                    return (
+                      <AutocompleteDropdownItem
+                        item={item}
+                        onSelect={() => handleItemSelect(item)}
+                      />
+                    );
+                  })}
+                </CommandGroup>
+              </div>
+            </>
+          ) : null}
+        </CommandList>
       </div>
     </Command>
   );

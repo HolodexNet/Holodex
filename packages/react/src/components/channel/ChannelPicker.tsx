@@ -7,6 +7,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/shadcn/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { useAtom, useAtomValue } from "jotai";
@@ -77,23 +78,25 @@ export function ChannelPicker<
               }),
             })}
           />
-          <CommandEmpty>{t("component.channelPicker.notFound")}</CommandEmpty>
-          <CommandGroup>
-            {data?.vtuber?.map((channel) => (
-              <CommandItem
-                key={channel.id}
-                value={channel.name}
-                onSelect={() => onSelect(channel)}
-              >
-                {channel.name}
-              </CommandItem>
-            ))}
-            {isPending && (
-              <CommandItem className="flex justify-center py-2" disabled>
-                <div className="i-lucide:loader-2 animate-spin" />
-              </CommandItem>
-            )}
-          </CommandGroup>
+          <CommandList>
+            <CommandEmpty>{t("component.channelPicker.notFound")}</CommandEmpty>
+            <CommandGroup>
+              {data?.vtuber?.map((channel) => (
+                <CommandItem
+                  key={channel.id}
+                  value={channel.name}
+                  onSelect={() => onSelect(channel)}
+                >
+                  {channel.name}
+                </CommandItem>
+              ))}
+              {isPending && (
+                <CommandItem className="flex justify-center py-2" disabled>
+                  <div className="i-lucide:loader-2 animate-spin" />
+                </CommandItem>
+              )}
+            </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>
