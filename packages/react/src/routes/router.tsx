@@ -5,6 +5,7 @@ import { orgAtom } from "@/store/org";
 import { Frame } from "@/components/layout/Frame";
 import { NavigateToMusicdex } from "@/components/channel/NavigateToMusicdex";
 import React from "react";
+import ChannelVideos from "./channel/ChannelVideos";
 
 const Login = React.lazy(() => import("./login"));
 const Settings = React.lazy(() => import("./settings"));
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
         path: "channel/:id",
         element: <Channel />,
         children: [
+          {
+            index: true,
+            element: <ChannelVideos />,
+          },
           {
             path: "about",
             element: <div>Channel_About</div>,

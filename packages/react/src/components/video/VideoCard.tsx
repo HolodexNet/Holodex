@@ -177,8 +177,8 @@ export function VideoCard({
         (size == "md" || size == "lg") && "group flex w-full flex-col gap-4",
       ]),
       thumbnailLink: clsx([
-        size == "xs" && "relative w-28 shrink-0 overflow-hidden @lg:w-36",
-        size == "sm" && "relative w-36 shrink-0 overflow-hidden @lg:w-48",
+        size == "xs" && "@lg:w-36 relative w-28 shrink-0 overflow-hidden",
+        size == "sm" && "@lg:w-48 relative w-36 shrink-0 overflow-hidden",
         (size == "md" || size == "lg") && "relative w-full",
       ]),
       videoTextInfo: clsx([
@@ -188,7 +188,7 @@ export function VideoCard({
       ]),
       titleLink: clsx([
         (size == "xs" || size == "sm") &&
-          "line-clamp-2 pr-4 text-sm font-bold @lg:text-lg",
+          "@lg:text-lg line-clamp-2 pr-4 text-sm font-bold",
         (size == "md" || size == "lg") &&
           "line-clamp-2 pr-4 text-sm font-bold md:text-[1rem] md:leading-6",
       ]),
@@ -234,7 +234,7 @@ export function VideoCard({
           placeholderType={placeholderType}
         />
       </Link>
-      <div className="relative flex gap-2 @sm:gap-1">
+      <div className="@sm:gap-1 relative flex gap-2">
         {(size == "lg" || size == "md") && channel && (
           <Link
             to={`/channel/${channel.id}`}
@@ -289,7 +289,7 @@ export function VideoCard({
           {size != "xs" && (
             <div className={videoCardClasses.scheduleText}>
               {status === "live" && (
-                <div className="flex gap-1 text-base-11">
+                <div className="text-base-11 flex gap-1">
                   <span className="text-red-500">
                     {t("component.videoCard.liveNow")}
                   </span>

@@ -17,6 +17,13 @@ interface UseChannelsParams {
   lang?: string;
 }
 
+interface UseChannelVideosParams {
+  lang?: string[];
+  include?: VideoIncludeParam[];
+  limit?: number;
+  offset?: number;
+}
+
 export function useChannels(
   params: UseChannelsParams,
   // config: infer
@@ -56,5 +63,24 @@ export function useChannel(
     queryKey: ["channel", channelId],
     queryFn: async () => await client<Channel>(`/api/v2/channels/${channelId}`),
     ...config,
+  });
+}
+
+export function useChannelVideos(
+  channelId: string,
+  type: "videos" | "collabs" | "clips",
+  params?: UseChannelVideosParams,
+) {
+  const client = useClient();
+
+  return useInfiniteQuery<VideoBase[], HTTPError>({
+    queryKey: ["channel", channelId, "videos"],
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }) =>
+      await client(`/api/v2/channels/${channelId}/${type}`, {
+        params: { ...params, pagenated: true, offset: pageParam },
+      }),
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.length ? allPages.flat().length : undefined,
   });
 }

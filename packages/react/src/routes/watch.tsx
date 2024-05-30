@@ -52,7 +52,7 @@ export default function Watch() {
 
   // Preload video frames for better experience
   useLayoutEffect(() => {
-    const videoPlaceholder: QueueVideo = location.state.video ?? {
+    const videoPlaceholder: QueueVideo = location.state?.video ?? {
       id: id!,
       url: `https://youtu.be/${id}`,
       channel_id: "",
