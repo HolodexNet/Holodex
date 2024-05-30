@@ -1,11 +1,12 @@
 import { Loading } from "@/components/common/Loading";
+import { VideoEditSongs } from "@/components/edit/VideoEditSongs";
 import { VideoEditTopic } from "@/components/edit/VideoEditTopic";
 import { DefaultPlayerPositionAnchor } from "@/components/player/DefaultPlayerPositionAnchor";
 import { useVideo } from "@/services/video.service";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { currentVideoAtom } from "@/store/player";
 import { useSetAtom } from "jotai";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -46,6 +47,9 @@ export default function EditVideo() {
             </TabsList>
             <TabsContent value="topic">
               <VideoEditTopic video={data} />
+            </TabsContent>
+            <TabsContent value="music">
+              <VideoEditSongs />
             </TabsContent>
           </Tabs>
         )}

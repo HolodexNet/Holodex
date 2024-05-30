@@ -84,6 +84,7 @@ export const DefaultPlayerContainer = React.memo(() => {
                 },
               },
             }}
+            progressInterval={200}
             onStart={() =>
               defaultPlayerEventBus.emit("onStart", currentVideo?.id || "")
             }
