@@ -4,7 +4,7 @@ import { atomFamily, atomWithStorage } from "jotai/utils";
 import type ReactPlayer from "react-player";
 import type { OnProgressProps } from "react-player/base";
 
-export interface QueueVideo extends VideoBase {
+export interface QueueVideo extends VideoRef {
   url?: string;
 }
 

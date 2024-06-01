@@ -179,7 +179,10 @@ export function VideoCard({
         <div className="absolute bottom-1 right-1 flex flex-col items-end gap-1">
           {video.songcount && (
             <span className="text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
-              <div className="i-lucide:music-4 inline-block text-[10px]"></div>
+              <div
+                className="i-lucide:music-4 inline-block align-middle"
+                style={{ fontSize: "11px", lineHeight: "1.25rem" }}
+              />
               &nbsp;{video.songcount}
             </span>
           )}

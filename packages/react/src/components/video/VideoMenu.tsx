@@ -26,7 +26,9 @@ const LazyNewPlaylistDialog = lazy(
   () => import("@/components/playlist/NewPlaylistDialog"),
 );
 
-interface VideoMenuProps extends VideoBase {
+type VideoMenuBase = Partial<VideoBase> & VideoRef;
+
+interface VideoMenuProps extends VideoMenuBase {
   children: ReactNode;
   url?: string;
 }
@@ -60,7 +62,16 @@ export function VideoMenu({
             setQueue((q) =>
               isQueued
                 ? q.filter(({ id }) => videoId !== id)
-                : [...q, { id: videoId, type, status, url, ...rest }],
+                : [
+                    ...q,
+                    {
+                      id: videoId,
+                      type,
+                      status,
+                      url,
+                      ...rest,
+                    },
+                  ],
             )
           }
         >
