@@ -193,24 +193,7 @@ export default function IndividualPlaylist({ playlist }: Props) {
               </div>
             ) : null}
             <div className="grow">
-              <VideoCard
-                id={video.id}
-                size="sm"
-                channel={video.channel}
-                channel_id={video.channel.id}
-                type={video.type}
-                title={`${index + 1}. ${video.title}`}
-                description=""
-                duration={video.duration}
-                topic_id={video.topic_id}
-                published_at={video.published_at}
-                status={video.status}
-                start_scheduled={null}
-                start_actual={null}
-                end_actual={null}
-                live_viewers={null}
-                songcount={0}
-              />
+              <VideoCard size="sm" video={video} />
             </div>
           </div>
         );

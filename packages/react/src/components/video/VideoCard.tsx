@@ -11,12 +11,14 @@ import { useDuration } from "@/hooks/useDuration";
 import { clsx } from "clsx";
 import { VideoThumbnail } from "../image";
 
-type VideoCardType = VideoBase &
+type VideoCardType = VideoRef &
+  Partial<VideoBase> &
   Partial<Video> &
   Partial<Live> &
   Partial<PlaceholderVideo>;
 
-interface VideoCardProps extends VideoCardType {
+interface VideoCardProps {
+  video: VideoCardType;
   size: VideoCardSize;
   onInfoClick?: React.MouseEventHandler<HTMLElement>;
   onThumbnailClick?: React.MouseEventHandler<HTMLElement>;
@@ -39,89 +41,37 @@ interface VideoCardProps extends VideoCardType {
 // });
 
 export function VideoCard({
-  id,
-  topic_id,
-  status,
-  type,
-  duration,
-  start_actual,
-  start_scheduled,
-  end_actual,
-  available_at,
-  title,
-  channel,
-  thumbnail,
-  live_viewers,
-  link,
-  placeholderType,
+  video,
   size,
   onInfoClick,
   onThumbnailClick,
   onChannelClick,
-  ...rest
 }: VideoCardProps) {
   const { dayjs } = useAtomValue(localeAtom);
   const { t } = useTranslation();
 
   const navigate = useNavigate();
 
-  const isTwitch = link?.includes("twitch");
-  const videoHref = useMemo(
-    () => (!isTwitch && status === "live" && link ? link : `/watch/${id}`),
-    [isTwitch, status, link, id],
-  );
+  const isTwitch = video.link?.includes("twitch");
+  const videoHref =
+    !isTwitch && video.status === "live" && video.link
+      ? video.link
+      : `/watch/${video.id}`;
+
   const thumbnailSrc = useMemo(
-    () => (type === "placeholder" ? thumbnail : makeYtThumbnailUrl(id, size)),
-    [type, thumbnail, id, size],
+    () =>
+      video.link === "placeholder"
+        ? video.thumbnail
+        : makeYtThumbnailUrl(video.id, size),
+    [video.thumbnail, video.id, size, video.link],
   );
-  const externalLink = useMemo(
-    () => (type === "placeholder" ? link : `https://youtu.be/${id}`),
-    [type, link, id],
-  );
+  const externalLink =
+    video.type === "placeholder" ? video.link : `https://youtu.be/${video.id}`;
 
   const videoTarget =
-    !isTwitch && placeholderType === "external-stream" ? "_blank" : undefined;
-
-  const videoObject = useMemo(
-    () => ({
-      id,
-      topic_id,
-      status,
-      type,
-      duration,
-      start_actual,
-      start_scheduled,
-      end_actual,
-      available_at,
-      title,
-      channel,
-      thumbnail,
-      live_viewers,
-      link,
-      placeholderType,
-      size,
-      ...rest,
-    }),
-    [
-      id,
-      topic_id,
-      status,
-      type,
-      duration,
-      start_actual,
-      start_scheduled,
-      end_actual,
-      available_at,
-      title,
-      channel,
-      thumbnail,
-      live_viewers,
-      link,
-      placeholderType,
-      size,
-      rest,
-    ],
-  );
+    !isTwitch && video.placeholderType === "external-stream"
+      ? "_blank"
+      : undefined;
 
   const goToVideoClickHandler = useCallback(
     (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -134,13 +84,13 @@ export function VideoCard({
         window.open(videoHref, "_blank");
       } else {
         navigate(videoHref, {
-          state: { video: videoObject },
+          state: { video },
         });
         evt.preventDefault();
         evt.stopPropagation();
       }
     },
-    [navigate, videoHref, videoObject],
+    [navigate, videoHref, video],
   );
   const goToVideoAuxClickHandler = useCallback(
     (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -187,7 +137,7 @@ export function VideoCard({
   );
 
   const videoMenu = (
-    <VideoMenu url={externalLink} {...videoObject}>
+    <VideoMenu url={externalLink} {...video}>
       <Button
         variant="ghost"
         size="icon-lg"
@@ -206,7 +156,7 @@ export function VideoCard({
       <Link
         to={videoHref}
         target={videoTarget}
-        state={{ video: videoObject }}
+        state={{ video }}
         className={videoCardClasses.thumbnailLink}
         onClick={
           onThumbnailClick
@@ -221,29 +171,32 @@ export function VideoCard({
           src={thumbnailSrc}
           className="aspect-video h-full w-full rounded-md object-cover"
         />
-        {topic_id && (
+        {video.topic_id && (
           <span className="absolute left-1 top-1 text-pretty rounded-sm bg-black/80 px-1 text-xs capitalize text-white/80 group-hover:text-white">
-            {topic_id.replaceAll("_", " ")}
+            {video.topic_id.replaceAll("_", " ")}
           </span>
         )}
-        <VideoCardDuration
-          type={type}
-          status={status}
-          duration={duration}
-          start_actual={start_actual}
-          end_actual={end_actual}
-          link={link}
-          placeholderType={placeholderType}
-        />
+        <div className="absolute bottom-1 right-1 flex flex-col items-end gap-1">
+          {video.songcount && (
+            <span className="text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
+              <div className="i-lucide:music-4 inline-block text-[10px]"></div>
+              &nbsp;{video.songcount}
+            </span>
+          )}
+          <VideoCardDuration className="" {...video} />
+        </div>
       </Link>
       <div className="relative flex grow gap-2 @sm:gap-1">
-        {(size == "lg" || size == "md") && channel && (
+        {(size == "lg" || size == "md") && video.channel && (
           <Link
-            to={`/channel/${channel.id}`}
+            to={`/channel/${video.channel.id}`}
             className="shrink-0"
             onClick={(e) => e.stopPropagation()}
           >
-            <img src={channel.photo ?? ""} className="h-8 w-8 rounded-full" />
+            <img
+              src={video.channel.photo ?? ""}
+              className="h-8 w-8 rounded-full"
+            />
           </Link>
         )}
         {/* Set min-height because react-virtuoso will break if the height is not fixed */}
@@ -255,7 +208,7 @@ export function VideoCard({
           <Link
             className={videoCardClasses.titleLink}
             to={videoHref}
-            state={{ video: videoObject }}
+            state={{ video }}
             target={videoTarget}
             onClick={
               onInfoClick
@@ -269,13 +222,13 @@ export function VideoCard({
                   }
             }
           >
-            {title}
+            {video.title}
           </Link>
-          {channel && (
+          {video.channel && (
             <Link
               className={videoCardClasses.channelLink}
               id="channelLink"
-              to={`/channel/${channel.id}`}
+              to={`/channel/${video.channel.id}`}
               onClick={
                 onChannelClick
                   ? (e) => {
@@ -285,7 +238,7 @@ export function VideoCard({
                   : (e) => e.stopPropagation()
               }
             >
-              {channel.name}
+              {video.channel.name}
             </Link>
           )}
           {size != "xs" && (
@@ -295,32 +248,32 @@ export function VideoCard({
                   <span className="text-red-500">
                     {t("component.videoCard.liveNow")}
                   </span>
-                  {!!live_viewers && (
+                  {!!video.live_viewers && (
                     <>
                       <span>/</span>
                       <span>
                         {t("component.videoCard.watching", {
-                          0: formatCount(live_viewers),
+                          0: formatCount(video.live_viewers),
                         })}
                       </span>
                     </>
                   )}
                 </div>
               )}
-              {(type === "placeholder" || status === "upcoming") &&
-                status !== "live" &&
-                start_scheduled && (
+              {(video.type === "placeholder" || video.status === "upcoming") &&
+                video.status !== "live" &&
+                video.start_scheduled && (
                   <span className="text-base-11">
                     {t("time.diff_future_date", {
-                      0: dayjs(start_scheduled).fromNow(false),
-                      1: dayjs(start_scheduled).format("hh:mm A"),
+                      0: dayjs(video.start_scheduled).fromNow(false),
+                      1: dayjs(video.start_scheduled).format("hh:mm A"),
                     })}
                   </span>
                 )}
-              {status === "past" && available_at && (
+              {video.status === "past" && video.available_at && (
                 <span className="text-base-11">
                   {t("time.distance_past_date", {
-                    0: dayjs(available_at).fromNow(false),
+                    0: dayjs(video.available_at).fromNow(false),
                   })}
                 </span>
               )}
@@ -341,6 +294,7 @@ function VideoCardDuration({
   end_actual,
   link,
   placeholderType,
+  className,
 }: Pick<
   VideoCardType,
   | "type"
@@ -350,7 +304,7 @@ function VideoCardDuration({
   | "end_actual"
   | "link"
   | "placeholderType"
->) {
+> & { className?: string }) {
   const { t } = useTranslation();
 
   const isPremiere = type === "stream" && status === "upcoming" && duration;
@@ -368,8 +322,9 @@ function VideoCardDuration({
   return durationMs ?? status === "upcoming" ? (
     <span
       className={cn(
-        "flex justify-center items-center gap-1 bg-black/80 absolute bottom-1 right-1 px-1 rounded-sm text-sm text-white whitespace-nowrap",
+        "flex justify-center items-center gap-1 bg-black/80 px-1 text-white/80 rounded-sm text-sm whitespace-nowrap group-hover:text-white",
         { "bg-red-700/80": status === "live" },
+        className,
       )}
     >
       {placeholderType &&

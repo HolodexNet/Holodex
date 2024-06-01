@@ -82,7 +82,11 @@ export function MainVideoListing({
               style={{ gridTemplateColumns: `repeat(${countPerRow}, 1fr)` }}
             >
               {videoRow.map((video) => (
-                <VideoCard key={"video-" + video.id} {...video} size={size} />
+                <VideoCard
+                  key={"video-" + video.id}
+                  video={video}
+                  size={size}
+                />
               ))}
             </div>
           );

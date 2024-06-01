@@ -52,6 +52,9 @@ interface Video extends VideoBase {
   mentions?: ChannelBase[];
   comments?: CommentBase[];
   recommendations?: VideoBase[];
+  live_tl_count?: {
+    [key: string]: number;
+  };
 }
 
 enum RELATIONSHIP_TYPES {

@@ -33,7 +33,7 @@ export function PlayerRecommendations({
           label={t("component.relatedVideo.simulcastsLabel")}
         >
           {simulcasts.map((video) => (
-            <VideoCard key={video.id} size="sm" {...video} />
+            <VideoCard key={video.id} size="sm" video={video} />
           ))}
         </RecommendationCollapsible>
       )}
@@ -42,7 +42,7 @@ export function PlayerRecommendations({
           label={t("component.relatedVideo.refersLabel")}
         >
           {refers.map((video) => (
-            <VideoCard key={video.id} size="sm" {...video} />
+            <VideoCard key={video.id} size="sm" video={video} />
           ))}
         </RecommendationCollapsible>
       )}
@@ -51,7 +51,7 @@ export function PlayerRecommendations({
           label={t("component.relatedVideo.sourcesLabel")}
         >
           {sources.map((video) => (
-            <VideoCard key={video.id} size="sm" {...video} />
+            <VideoCard key={video.id} size="sm" video={video} />
           ))}
         </RecommendationCollapsible>
       )}
@@ -60,7 +60,7 @@ export function PlayerRecommendations({
           label={t("component.relatedVideo.clipsLabel")}
         >
           {clips.map((video) => (
-            <VideoCard key={video.id} size="sm" {...video} />
+            <VideoCard key={video.id} size="sm" video={video} />
           ))}
         </RecommendationCollapsible>
       )}
@@ -69,7 +69,7 @@ export function PlayerRecommendations({
           label={t("component.relatedVideo.sameSourceClips")}
         >
           {same_source_clips.map((video) => (
-            <VideoCard key={video.id} size="sm" {...video} />
+            <VideoCard key={video.id} size="sm" video={video} />
           ))}
         </RecommendationCollapsible>
       )}
@@ -78,7 +78,7 @@ export function PlayerRecommendations({
           label={t("component.relatedVideo.recommendationsLabel")}
         >
           {recommendations.map((video) => (
-            <VideoCard key={video.id} size="sm" {...video} />
+            <VideoCard key={video.id} size="sm" video={video} />
           ))}
         </RecommendationCollapsible>
       )}

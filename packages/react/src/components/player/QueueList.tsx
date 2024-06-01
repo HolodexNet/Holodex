@@ -61,7 +61,7 @@ export function QueueList() {
                 "bg-base-5": currentVideo?.id === video.id,
               })}
             >
-              <VideoCard size="xs" {...video} />
+              <VideoCard size="xs" video={video} />
             </div>
           ))}
         </div>
