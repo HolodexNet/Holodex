@@ -63,8 +63,8 @@ export function TimeAdjuster({
   };
 
   const setTimeToCurrent = (): void => {
-    setTime(videoStatus.progress);
-    onValueChange(videoStatus.progress);
+    setTime(+videoStatus.progress.toFixed(1));
+    onValueChange(+videoStatus.progress.toFixed(1));
   };
 
   const isDragging = useRef(false);

@@ -11,16 +11,23 @@ import { Input } from "@/shadcn/ui/input";
 import { ItunesSearchDropdown } from "./ItunesSearchDropdown";
 import { Button } from "@/shadcn/ui/button";
 import { TypographyH4 } from "@/shadcn/ui/typography";
+import useTrackTiming from "./useTrackTiming";
 
 export function VideoEditMusic({ video }: { video: Video }) {
-  const [time, setTime] = useState(0);
-  const [timeEnd, setTimeEnd] = useState(180);
+  const {
+    time,
+    timeEnd,
+    duration,
+    adjustStartTime,
+    adjustEndTime,
+    adjustDuration,
+  } = useTrackTiming();
+
   const [trackName, setTrackName] = useState("");
   const [artist, setArtist] = useState("");
-  const [duration, setTimeDuration] = useState(180);
 
   return (
-    <div className="flex flex-col justify-items-stretch gap-4 pt-4 text-base-11">
+    <div className="flex flex-col justify-items-stretch gap-4 p-4 text-base-11">
       <TypographyH4 className="text-base-12">
         <div className="i-lucide:list-plus mr-1 inline-block align-middle"></div>
         Add New Song / Select song from Tracklist to modify
@@ -56,19 +63,19 @@ export function VideoEditMusic({ video }: { video: Video }) {
       </div>
       <div className="grid gap-1">
         <Label htmlFor="track_name">Track Timing Controls</Label>
-        <div className="row flex justify-center border border-solid border-base-4 pb-6 pt-2">
+        <div className="flex justify-center rounded-md border border-solid border-base-5 pb-6 pt-2 focus-within:ring-2 focus-within:ring-primary-7">
           <div>
             <TimeAdjuster
               videoId={video.id}
               value={time}
-              onValueChange={setTime}
+              onValueChange={adjustStartTime}
             />
           </div>
           <TooltipProvider>
             <Tooltip delayDuration={100}>
               <TooltipTrigger asChild>
-                <div className="mx-3 mt-7 text-base-8 hover:text-base-10">
-                  <div className="i-ic:sharp-start  cursor-pointer"></div>
+                <div className="mx-1 mb-1 mt-5 cursor-pointer rounded-sm p-2 text-base-8 hover:bg-base-3 hover:hover:text-base-10">
+                  <div className="i-ic:sharp-start  "></div>
                 </div>
               </TooltipTrigger>
               <TooltipContent side="top">Test Start</TooltipContent>
@@ -76,17 +83,14 @@ export function VideoEditMusic({ video }: { video: Video }) {
           </TooltipProvider>
 
           <div className="max-w-32 basis-1/4">
-            <DurationAdjuster
-              value={duration}
-              onValueChange={setTimeDuration}
-            />
+            <DurationAdjuster value={duration} onValueChange={adjustDuration} />
           </div>
 
           <TooltipProvider>
             <Tooltip delayDuration={100}>
               <TooltipTrigger asChild>
-                <div className="mx-3 mt-7 text-base-8 hover:text-base-10">
-                  <div className="i-ic:sharp-keyboard-tab cursor-pointer"></div>
+                <div className="mx-1 mb-1 mt-5 cursor-pointer rounded-sm p-2 text-base-8 hover:bg-base-3 hover:text-base-10">
+                  <div className="i-ic:sharp-keyboard-tab "></div>
                 </div>
               </TooltipTrigger>
               <TooltipContent side="top">Test End</TooltipContent>
@@ -97,7 +101,7 @@ export function VideoEditMusic({ video }: { video: Video }) {
             <TimeAdjuster
               videoId={video.id}
               value={timeEnd}
-              onValueChange={setTimeEnd}
+              onValueChange={adjustEndTime}
             />
           </div>
         </div>

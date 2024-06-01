@@ -432,6 +432,8 @@ views:
       add: Add
     sources:
       title: Sources/Clips (in development)
+    changeMusic:
+      title: Edit Song Tracklist
   login:
     apikeyMsg: >-
       You can use API key to query Holodex API programmatically. Only one key

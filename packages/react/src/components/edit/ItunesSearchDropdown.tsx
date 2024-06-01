@@ -49,30 +49,30 @@ export function ItunesSearchDropdown({
       shouldFilter={false}
     >
       <CommandInput
-        wrapperClassName="border border-base rounded-md"
+        wrapperClassName="border border-base rounded-md focus-within:ring-2 focus-within:ring-primary-9"
         id="itunes_search"
+        className=""
         placeholder="Search for existing song..."
         value={search}
         onValueChange={setSearch}
         onBlur={() => setOpen(false)}
         onFocus={() => setOpen(true)}
       />
-      {open && (
-        <CommandList className="absolute top-10 z-10 w-full rounded-b-md border border-solid border-base bg-base-1 text-base-11">
-          {autocomplete?.length ?? 0 > 0 ? (
-            <>
-              <CommandGroup heading={<div>Search Results</div>} />
-              <CommandSeparator />
-              <CommandGroup className="h-full">
-                {autocomplete?.map((item) => <TrackItem item={item} />)}
-              </CommandGroup>
-              {/* </div> */}
-            </>
-          ) : (
+      {open &&
+        (autocomplete?.length ?? 0 > 0 ? (
+          <CommandList className="absolute top-10 z-10 w-full rounded-b-md border border-solid border-base bg-base-1 text-base-11">
+            <CommandGroup heading={<div>Search Results</div>} />
+            <CommandSeparator />
+            <CommandGroup className="h-full">
+              {autocomplete?.map((item) => <TrackItem item={item} />)}
+            </CommandGroup>
+            {/* </div> */}
+          </CommandList>
+        ) : (
+          <CommandList>
             <CommandEmpty />
-          )}
-        </CommandList>
-      )}
+          </CommandList>
+        ))}
     </Command>
   );
 }

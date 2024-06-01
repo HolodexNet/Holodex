@@ -73,7 +73,7 @@ export default function EditVideo() {
                     {t("views.editor.channelMentions.title")}
                   </TabsTrigger>
                   <TabsTrigger value="music">
-                    {t("component.mainNav.music")}
+                    {t("views.editor.changeMusic.title")}
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="topic">
