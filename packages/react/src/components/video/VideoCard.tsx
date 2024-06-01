@@ -131,7 +131,7 @@ export function VideoCard({
       ]),
       channelLink:
         "line-clamp-1 text-xs text-base-11 hover:text-base-12 @lg:text-sm",
-      scheduleText: "text-xs @lg:text-sm text-base-11",
+      scheduleText: "text-sm @lg:text-sm text-base-11",
     }),
     [size],
   );
@@ -172,7 +172,7 @@ export function VideoCard({
           className="aspect-video h-full w-full rounded-md object-cover"
         />
         {video.topic_id && (
-          <span className="absolute left-1 top-1 text-pretty rounded-sm bg-black/80 px-1 text-xs capitalize text-white/80 group-hover:text-white">
+          <span className="absolute left-1 top-1 text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
             {video.topic_id.replaceAll("_", " ")}
           </span>
         )}
