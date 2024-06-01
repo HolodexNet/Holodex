@@ -366,7 +366,7 @@ function VideoCardDuration({
   return durationMs ?? status === "upcoming" ? (
     <span
       className={cn(
-        "flex justify-center items-center gap-1 bg-black/80 absolute bottom-1 right-1 px-1 rounded-sm text-sm text-white whitespace-nowrap",
+        "absolute bottom-1 right-1 flex items-center justify-center gap-1 whitespace-nowrap rounded-sm bg-black/80 px-1 text-sm text-white",
         { "bg-red-700/80": status === "live" },
       )}
     >
