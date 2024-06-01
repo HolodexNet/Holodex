@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 interface UseTrackTiming {
-  time: number;
+  timeStart: number;
   timeEnd: number;
   duration: number;
   adjustStartTime: (newStartTime: number) => void;
@@ -10,39 +10,55 @@ interface UseTrackTiming {
 }
 
 function useTrackTiming(
+  videoDuration: number,
   initialStart: number = 0,
   initialEnd: number = 180,
   initialDuration: number = 180,
 ): UseTrackTiming {
-  const [time, setTime] = useState<number>(initialStart);
+  const [timeStart, setTimeStart] = useState<number>(initialStart);
   const [timeEnd, setTimeEnd] = useState<number>(initialEnd);
   const [duration, setDuration] = useState<number>(initialDuration);
 
   useEffect(() => {
-    setTimeEnd(time + duration);
-  }, [time, duration]);
+    const adjustedEndTime = Math.min(timeStart + duration, videoDuration);
+    setTimeEnd(adjustedEndTime);
+    setDuration(adjustedEndTime - timeStart);
+  }, [timeStart, duration, videoDuration]);
 
   useEffect(() => {
-    setDuration(timeEnd - time);
-  }, [timeEnd]);
+    const adjustedDuration = timeEnd - timeStart;
+    setDuration(adjustedDuration);
+  }, [timeStart, timeEnd, videoDuration]);
 
   const adjustStartTime = (newStartTime: number) => {
-    setTime(newStartTime);
-    setTimeEnd(newStartTime + duration); // Update end time to maintain the duration
+    const clampedStartTime = Math.max(0, Math.min(newStartTime, videoDuration));
+    setTimeStart(clampedStartTime);
+    const newEndTime = clampedStartTime + duration;
+    setTimeEnd(newEndTime > videoDuration ? videoDuration : newEndTime);
+    if (newEndTime > videoDuration) {
+      setDuration(videoDuration - clampedStartTime);
+    }
   };
 
   const adjustEndTime = (newEndTime: number) => {
-    setTimeEnd(newEndTime);
-    setDuration(newEndTime - time); // Update duration to reflect the new end time
+    const clampedEndTime = Math.max(
+      timeStart,
+      Math.min(newEndTime, videoDuration),
+    );
+    setTimeEnd(clampedEndTime);
+    setDuration(clampedEndTime - timeStart);
   };
 
   const adjustDuration = (newDuration: number) => {
-    setDuration(newDuration);
-    setTimeEnd(time + newDuration); // Update end time to reflect the new duration
+    const clampedDuration = Math.max(
+      0,
+      Math.min(newDuration, videoDuration - timeStart),
+    );
+    setDuration(clampedDuration);
+    setTimeEnd(timeStart + clampedDuration);
   };
-
   return {
-    time,
+    timeStart,
     timeEnd,
     duration,
     adjustStartTime,

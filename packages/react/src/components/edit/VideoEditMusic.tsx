@@ -15,13 +15,13 @@ import useTrackTiming from "./useTrackTiming";
 
 export function VideoEditMusic({ video }: { video: Video }) {
   const {
-    time,
+    timeStart,
     timeEnd,
     duration,
     adjustStartTime,
     adjustEndTime,
     adjustDuration,
-  } = useTrackTiming();
+  } = useTrackTiming(video.duration - 1);
 
   const [trackName, setTrackName] = useState("");
   const [artist, setArtist] = useState("");
@@ -67,7 +67,7 @@ export function VideoEditMusic({ video }: { video: Video }) {
           <div>
             <TimeAdjuster
               videoId={video.id}
-              value={time}
+              value={timeStart}
               onValueChange={adjustStartTime}
             />
           </div>
@@ -83,7 +83,11 @@ export function VideoEditMusic({ video }: { video: Video }) {
           </TooltipProvider>
 
           <div className="max-w-32 basis-1/4">
-            <DurationAdjuster value={duration} onValueChange={adjustDuration} />
+            <DurationAdjuster
+              value={duration}
+              onValueChange={adjustDuration}
+              max={video.duration - timeStart}
+            />
           </div>
 
           <TooltipProvider>

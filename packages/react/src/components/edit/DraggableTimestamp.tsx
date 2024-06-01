@@ -54,6 +54,10 @@ export function TimeAdjuster({
   const [time, setTime] = useState(value);
   const [editMode, setEditMode] = useState(false);
 
+  useEffect(() => {
+    setTime(value);
+  }, [value]);
+
   const incrementTime = (amount: number): void => {
     setTime((prev: number) => {
       const newValue = Math.max(0, prev + amount);
@@ -225,7 +229,8 @@ export function TimeAdjuster({
 export function DurationAdjuster({
   value,
   onValueChange,
-}: Omit<ITimeAdjusterProps, "videoId">) {
+  max,
+}: Omit<ITimeAdjusterProps, "videoId"> & { max: number }) {
   const [time, setTime] = useState(value);
   const [editMode, setEditMode] = useState(false);
 
@@ -243,6 +248,10 @@ export function DurationAdjuster({
       }
     };
   }, []);
+
+  useEffect(() => {
+    setTime(value);
+  }, [value]);
 
   const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
     isDragging.current = true;
@@ -275,8 +284,8 @@ export function DurationAdjuster({
         const timeChange = calculateTimeChange(deltaX);
 
         const t = Math.floor(Math.max(0, dragStartTime.current + timeChange));
-        setTime(t);
-        onValueChange(t);
+        setTime(Math.min(t, max));
+        onValueChange(Math.min(t, max));
       }
 
       if (timeoutId.current) {
