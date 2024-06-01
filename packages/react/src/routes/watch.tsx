@@ -52,7 +52,8 @@ export default function Watch() {
 
   // Preload video frames for better experience
   useLayoutEffect(() => {
-    const videoPlaceholder: QueueVideo = location.state.video ?? {
+    const videoPlaceholder: VideoRef & { url: string } = location.state
+      .video ?? {
       id: id!,
       url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
       channel_id: "",
@@ -67,6 +68,7 @@ export default function Watch() {
         name: "",
         type: "vtuber",
       },
+      live_viewers: 0,
     };
     setMiniPlayer(false);
     setCurrentVideo(videoPlaceholder);

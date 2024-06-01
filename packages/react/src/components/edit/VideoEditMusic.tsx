@@ -37,7 +37,13 @@ export function VideoEditMusic({ video }: { video: Video }) {
         <Label htmlFor="itunes_search">
           Autofill Song Info using iTunes / Musicdex (optional)
         </Label>
-        <ItunesSearchDropdown />
+        <ItunesSearchDropdown
+          onSelectItem={(item) => {
+            setTrackName(item.trackName);
+            setArtist(item.artistName);
+            adjustDuration(item.trackTimeMillis / 1000);
+          }}
+        />
       </div>
       <div className="flex flex-row flex-wrap gap-2">
         <div className="grid min-w-80 grow gap-1">

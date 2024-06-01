@@ -4,6 +4,7 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandInput,
+  CommandItem,
   CommandList,
   CommandSeparator,
 } from "@/shadcn/ui/command";
@@ -26,7 +27,7 @@ export function ItunesSearchDropdown({
   className,
 }: {
   className?: string;
-  onSelectItem?: (item: ItunesItem) => void;
+  onSelectItem?: (item: IdentifiedTrack) => void;
 }) {
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounceValue(search, 500);
@@ -40,6 +41,7 @@ export function ItunesSearchDropdown({
   );
 
   const handleItemSelect = (item: IdentifiedTrack) => {
+    console.log(item);
     onSelectItem?.(item);
     setOpen(false); // Close dropdown after selection
   };
@@ -64,7 +66,18 @@ export function ItunesSearchDropdown({
             <CommandGroup heading={<div>Search Results</div>} />
             <CommandSeparator />
             <CommandGroup className="h-full">
-              {autocomplete?.map((item) => <TrackItem item={item} />)}
+              {autocomplete?.map((item, i) => (
+                <CommandItem
+                  onSelectCapture={(v) => {
+                    console.log(v);
+                    handleItemSelect(item);
+                  }}
+                  key={item.trackId ?? item.trackName + i}
+                  value={i}
+                >
+                  <TrackItem item={item} />
+                </CommandItem>
+              ))}
             </CommandGroup>
             {/* </div> */}
           </CommandList>
@@ -88,7 +101,7 @@ const TrackItem = ({ item }: { item: IdentifiedItunesTrack }) => {
   };
 
   return (
-    <div className="flex flex-row gap-2 py-1 pl-3 pr-1 hover:bg-base-4">
+    <div className="flex w-full flex-row gap-2">
       <div className="h-10 w-10">
         {item.artworkUrl100 && (
           <img
