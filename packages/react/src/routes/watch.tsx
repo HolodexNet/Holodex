@@ -30,11 +30,12 @@ export default function Watch() {
   const location = useLocation();
   const { id } = useParams();
   const { value: clipLang } = useAtomValue(clipLangAtom);
-  const { data, isSuccess } = useVideo<PlaceholderVideo>(
+  const { data, isSuccess, isPlaceholderData } = useVideo<PlaceholderVideo>(
     { id: id!, lang: clipLang, c: "1" },
     {
       enabled: !!id,
       refetchInterval: 1000 * 60 * 3,
+      placeholderData: location.state?.video as PlaceholderVideo,
     },
   );
   const { data: channel } = useChannel(data?.channel.id ?? "", {
@@ -50,38 +51,19 @@ export default function Watch() {
   const [ref, bounds] = useMeasure({ debounce: 50, scroll: false });
 
   // Preload video frames for better experience
-  useEffect(() => {
-    const videoPlaceholder: VideoRef = (location?.state?.video as VideoRef) ?? {
-      id: id!,
-      // url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
-      channel_id: "",
-      title: "",
-      description: "",
-      type: "stream",
-      duration: 0,
-      status: "live",
-      songcount: 0,
-      channel: {
-        id: "",
-        name: "",
-        type: "vtuber",
-      },
-      live_viewers: 0,
-    };
-    setMiniPlayer(false);
-    setCurrentVideo(videoPlaceholder);
-    if (queue.length)
-      setQueue((q) =>
-        q.some((v) => v.id === id)
-          ? q
-          : q.toSpliced(
-              q.findIndex((q) => q.id === currentVideo?.id) + 1,
-              0,
-              videoPlaceholder,
-            ),
-      );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location?.state?.video]);
+  // useEffect(() => {
+  //   if (queue.length)
+  //     setQueue((q) =>
+  //       q.some((v) => v.id === id)
+  //         ? q
+  //         : q.toSpliced(
+  //             q.findIndex((q) => q.id === currentVideo?.id) + 1,
+  //             0,
+  //             videoPlaceholder,
+  //           ),
+  //     );
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [location?.state?.video]);
 
   useEffect(() => {
     if (isSuccess) {
