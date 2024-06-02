@@ -8,7 +8,6 @@ import { headerHiddenAtom } from "@/hooks/useFrame";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import {
-  QueueVideo,
   currentVideoAtom,
   playerRefAtom,
   videoStatusAtomFamily,

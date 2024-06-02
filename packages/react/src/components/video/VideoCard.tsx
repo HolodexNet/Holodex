@@ -11,7 +11,7 @@ import { useDuration } from "@/hooks/useDuration";
 import { clsx } from "clsx";
 import { VideoThumbnail } from "../image";
 
-type VideoCardType = VideoRef &
+export type VideoCardType = VideoRef &
   Partial<VideoBase> &
   Partial<Video> &
   Partial<Live> &
@@ -137,7 +137,7 @@ export function VideoCard({
   );
 
   const videoMenu = (
-    <VideoMenu url={externalLink} {...video}>
+    <VideoMenu url={externalLink} video={video}>
       <Button
         variant="ghost"
         size="icon-lg"

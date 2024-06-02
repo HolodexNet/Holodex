@@ -12,7 +12,6 @@ import { useChannel } from "@/services/channel.service";
 import { useVideo } from "@/services/video.service";
 import { clipLangAtom } from "@/store/i18n";
 import {
-  QueueVideo,
   chatOpenAtom,
   chatPosAtom,
   currentVideoAtom,
@@ -51,11 +50,10 @@ export default function Watch() {
   const [ref, bounds] = useMeasure({ debounce: 50, scroll: false });
 
   // Preload video frames for better experience
-  useLayoutEffect(() => {
-    const videoPlaceholder: VideoRef & { url: string } = location.state
-      .video ?? {
+  useEffect(() => {
+    const videoPlaceholder: VideoRef = (location?.state?.video as VideoRef) ?? {
       id: id!,
-      url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
+      // url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
       channel_id: "",
       title: "",
       description: "",
@@ -83,13 +81,13 @@ export default function Watch() {
             ),
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location?.state?.video]);
 
   useEffect(() => {
     if (isSuccess) {
       setCurrentVideo({
         ...data,
-        url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
+        // url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
       });
       if (queue.length)
         setQueue((q) =>
@@ -98,7 +96,7 @@ export default function Watch() {
             1,
             {
               ...data,
-              url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
+              // url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
             },
           ),
         );

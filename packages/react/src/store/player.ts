@@ -4,10 +4,6 @@ import { atomFamily, atomWithStorage } from "jotai/utils";
 import type ReactPlayer from "react-player";
 import type { OnProgressProps } from "react-player/base";
 
-export interface QueueVideo extends VideoRef {
-  url?: string;
-}
-
 export const playerRefAtom = atom<ReactPlayer | null>(null);
 
 export const miniPlayerAtom = atom(false);
@@ -21,14 +17,19 @@ export const chatPosAtom = atomWithStorage<"left" | "right">(
   "right",
 );
 
+type VideoRefLike = VideoRef &
+  Partial<VideoBase> &
+  Partial<Video> &
+  Partial<Live> &
+  Partial<PlaceholderVideo>;
 /**
  * The current video being played, which is used for global single-player modes
  * such as the Watch page and edit page.
  *
  * If we are on a page where multiple videos can be played, this will not be used.
  */
-export const currentVideoAtom = atom<QueueVideo | null>(null);
-export const queueAtom = atomWithStorage<QueueVideo[]>("queue", []);
+export const currentVideoAtom = atom<VideoRefLike | null>(null);
+export const queueAtom = atomWithStorage<VideoRefLike[]>("queue", []);
 
 export type PlayingVideoState = {
   videoId: string;

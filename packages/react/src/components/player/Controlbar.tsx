@@ -9,22 +9,16 @@ import {
   theaterModeAtom,
   tlOpenAtom,
 } from "@/store/player";
+import { VideoCardType } from "../video/VideoCard";
 
-interface ControlbarProps extends VideoBase {
+interface ControlbarProps {
   link?: string;
+  video: VideoCardType;
   // onChatClick: () => void;
   // onTLClick: () => void;
 }
 
-export function Controlbar({
-  id,
-  type,
-  status,
-  link,
-  // onChatClick,
-  // onTLClick,
-  ...rest
-}: ControlbarProps) {
+export function Controlbar({ video, link }: ControlbarProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -112,7 +106,7 @@ export function Controlbar({
           {t("component.apiError.reload")}
         </span>
       </Button>
-      <VideoMenu id={id} type={type} status={status} {...rest} url={url}>
+      <VideoMenu video={video} url={url}>
         <Button className="shrink-0" size="icon" variant="ghost">
           <div className="i-heroicons:ellipsis-vertical" />
         </Button>

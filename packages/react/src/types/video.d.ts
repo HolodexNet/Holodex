@@ -32,7 +32,7 @@ interface VideoBase extends VideoRef {
   type: VideoType;
   topic_id: string | null;
   published_at: string | null;
-  available_at?: string;
+  available_at?: Date | number | string;
   duration: number;
   status: VideoStatus;
   start_scheduled: string | null;

@@ -1,6 +1,5 @@
 import {
   PlayingVideoState,
-  QueueVideo,
   currentVideoAtom,
   defaultPlayerEventBus,
   miniPlayerAtom,
@@ -18,6 +17,7 @@ import type { OnProgressProps } from "react-player/base";
 import { useFloating, autoUpdate } from "@floating-ui/react-dom";
 import { size, offset } from "@floating-ui/react-dom";
 import ReactPlayer from "react-player";
+import { VideoCardType } from "../video/VideoCard";
 
 const LazyReactPlayer = React.lazy(() => import("react-player"));
 
@@ -76,7 +76,7 @@ export const PlayerWrapper = ({
   currentVideo,
   customSetPlayerRef,
 }: {
-  currentVideo?: QueueVideo;
+  currentVideo?: VideoCardType;
   customSetPlayerRef?: React.Ref<ReactPlayer>;
 }) => {
   const setPlayerRef = useSetAtom(playerRefAtom);
