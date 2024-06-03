@@ -35,8 +35,6 @@ export default function Channel() {
 
   if (!id || !channel) return <Loading size="md" />;
 
-  console.log(location.pathname.split("/"));
-
   return (
     <>
       <Helmet>
@@ -57,35 +55,40 @@ export default function Channel() {
             tab !== "music" && navigate(`/channel/${channel?.id}/${tab}`)
           }
         >
-          <div className="bg-base-3 border-b-base-5 sticky top-0 z-50 flex flex-col gap-8 border-b-[1px] py-4 shadow-lg">
-            <div className="container flex items-center gap-4">
-              <ChannelImg channelId={channel?.id} />
-              <div className="flex flex-col overflow-hidden">
-                <div className="text-base-11 text-xs">
-                  {channel?.org}
-                  {channel?.group && ` / ${channel?.group}`}
-                </div>
-                <div className="line-clamp-1 text-lg font-bold">
-                  {channel?.name}
-                </div>
-                <div className="text-base-11 text-sm">
-                  {t("component.channelInfo.subscriberCount", {
-                    n: formatCount(channel?.subscriber_count ?? "0"),
-                  })}
-                  {` / ${t("component.channelInfo.videoCount", {
-                    0: channel?.video_count ?? "0",
-                  })}`}
-                  {` / ${t("component.channelInfo.clipCount", {
-                    n: channel?.clip_count ?? "0",
-                  })}`}
-                </div>
-                <div className="mt-1 flex max-w-full gap-1 overflow-x-auto">
-                  {channel?.top_topics?.map((topic) => (
-                    <TopicBadge key={topic} size="sm" topic={topic} />
-                  ))}
+          <div className="bg-base-3 border-b-base-5 sticky top-0 z-20 flex flex-col gap-2 border-b-[1px] pt-4 shadow-lg md:gap-6">
+            <div className="container flex items-start gap-4 px-4 max-sm:flex-col md:items-center md:px-8">
+              <div className="flex items-center gap-4">
+                <ChannelImg
+                  className="size-16 md:size-24"
+                  channelId={channel?.id}
+                />
+                <div className="flex flex-col overflow-hidden">
+                  <div className="text-base-11 text-xs">
+                    {channel?.org}
+                    {channel?.group && ` / ${channel?.group}`}
+                  </div>
+                  <div className="line-clamp-1 text-lg font-bold">
+                    {channel?.name}
+                  </div>
+                  <div className="text-base-11 text-sm">
+                    {t("component.channelInfo.subscriberCount", {
+                      n: formatCount(channel?.subscriber_count ?? "0"),
+                    })}
+                    {/* {` / ${t("component.channelInfo.videoCount", {
+                      0: channel?.video_count ?? "0",
+                    })}`}
+                    {` / ${t("component.channelInfo.clipCount", {
+                      n: channel?.clip_count ?? "0",
+                    })}`} */}
+                  </div>
+                  <div className="mt-1 flex max-w-full gap-1 overflow-x-auto">
+                    {channel?.top_topics?.map((topic) => (
+                      <TopicBadge key={topic} size="sm" topic={topic} />
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="ml-auto">
+              <div className="w-full md:ml-auto md:w-fit">
                 <ChannelSocials
                   size="lg"
                   id={channel?.id}
@@ -94,7 +97,7 @@ export default function Channel() {
                 />
               </div>
             </div>
-            <TabsList className="container justify-start bg-transparent py-0">
+            <TabsList className="container justify-start overflow-x-auto bg-transparent md:px-8">
               <TabsTrigger value="">{t("views.channel.video")}</TabsTrigger>
               <TabsTrigger value="clips">
                 {t("views.channel.clips")}
