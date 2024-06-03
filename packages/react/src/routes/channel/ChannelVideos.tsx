@@ -3,7 +3,7 @@ import { ChannelOutletContext } from "../channel";
 import { useChannelVideos } from "@/services/channel.service";
 import { MainVideoListing } from "@/components/video/MainVideoListing";
 
-export default function ChannelVideos() {
+export default function ChannelVideos({ type }: { type: ChannelVideoType }) {
   const { id, channel } = useOutletContext<ChannelOutletContext>();
 
   const {
@@ -12,9 +12,7 @@ export default function ChannelVideos() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useChannelVideos(id, "videos");
-
-  console.log(videos);
+  } = useChannelVideos(id, type);
 
   return (
     <div className="container py-4">

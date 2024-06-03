@@ -5,7 +5,6 @@ import { orgAtom } from "@/store/org";
 import { Frame } from "@/components/layout/Frame";
 import { NavigateToMusicdex } from "@/components/channel/NavigateToMusicdex";
 import React from "react";
-import ChannelVideos from "./channel/ChannelVideos";
 
 const Login = React.lazy(() => import("./login"));
 const Settings = React.lazy(() => import("./settings"));
@@ -26,6 +25,8 @@ const AboutPrivacy = React.lazy(() => import("./about/privacy"));
 const Watch = React.lazy(() => import("./watch"));
 const ChannelsOrg = React.lazy(() => import("./channelsOrg"));
 const Channel = React.lazy(() => import("./channel"));
+const ChannelVideos = React.lazy(() => import("./channel/ChannelVideos"));
+const ChannelAbout = React.lazy(() => import("./channel/ChannelAbout"));
 const EditVideo = React.lazy(() => import("./editVideo"));
 const Kitchensink = React.lazy(() => import("@/Kitchensink"));
 const Playlists = React.lazy(() => import("./playlists"));
@@ -77,19 +78,19 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <ChannelVideos />,
+            element: <ChannelVideos type="videos" />,
           },
           {
             path: "about",
-            element: <div>Channel_About</div>,
+            element: <ChannelAbout />,
           },
           {
             path: "clips",
-            element: <div>Channel_Clips</div>,
+            element: <ChannelVideos type="clips" />,
           },
           {
             path: "collabs",
-            element: <div>Channel_Collabs</div>,
+            element: <ChannelVideos type="collabs" />,
           },
           {
             path: "music",

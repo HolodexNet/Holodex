@@ -68,13 +68,13 @@ export function useChannel(
 
 export function useChannelVideos(
   channelId: string,
-  type: "videos" | "collabs" | "clips",
+  type: ChannelVideoType,
   params?: UseChannelVideosParams,
 ) {
   const client = useClient();
 
   return useInfiniteQuery<VideoBase[], HTTPError>({
-    queryKey: ["channel", channelId, "videos"],
+    queryKey: ["channel", channelId, type],
     initialPageParam: 0,
     queryFn: async ({ pageParam }) =>
       await client(`/api/v2/channels/${channelId}/${type}`, {

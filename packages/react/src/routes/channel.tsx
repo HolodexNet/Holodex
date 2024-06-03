@@ -7,10 +7,16 @@ import { getChannelBannerImages } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
 import { Tabs, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
 export type ChannelOutletContext = {
   id: string;
@@ -21,20 +27,15 @@ export default function Channel() {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [tab, setTab] = useState("");
 
   const { data: channel } = useChannel(id!);
 
-  const onTabChange = (tab: string) => {
-    // Open Musicdex when selected music tab
-    if (tab === "music") return open("https://music.holodex.net");
-
-    setTab(tab);
-    navigate(`/channel/${channel?.id}/${tab}`);
-  };
-
   if (!id || !channel) return <Loading size="md" />;
+
+  console.log(location.pathname.split("/"));
 
   return (
     <>
@@ -50,8 +51,13 @@ export default function Channel() {
               : ""
           }
         />
-        <Tabs value={tab} onValueChange={onTabChange}>
-          <div className="bg-base-3 border-b-base-5 sticky top-0 z-50 flex flex-col gap-8 border-b-[1px] py-4 shadow-md">
+        <Tabs
+          value={location.pathname.split("/").at(-1)}
+          onValueChange={(tab) =>
+            tab !== "music" && navigate(`/channel/${channel?.id}/${tab}`)
+          }
+        >
+          <div className="bg-base-3 border-b-base-5 sticky top-0 z-50 flex flex-col gap-8 border-b-[1px] py-4 shadow-lg">
             <div className="container flex items-center gap-4">
               <ChannelImg channelId={channel?.id} />
               <div className="flex flex-col overflow-hidden">
@@ -96,9 +102,11 @@ export default function Channel() {
               <TabsTrigger value="collabs">
                 {t("views.channel.collabs")}
               </TabsTrigger>
-              <TabsTrigger value="music" className="gap-2">
-                {t("views.channel.music")}
-                <ExternalLink size={16} />
+              <TabsTrigger value="music" className="gap-2" asChild>
+                <Link target="_blank" to="https://music.holodex.net">
+                  {t("views.channel.music")}
+                  <ExternalLink size={16} />
+                </Link>
               </TabsTrigger>
               <TabsTrigger value="about">
                 {t("views.channel.about")}
