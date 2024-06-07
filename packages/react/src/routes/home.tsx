@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { orgAtom } from "@/store/org";
 import { useVideoCardSizes } from "@/store/video";
 import { useAtomValue } from "jotai";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import {
   Navigate,
@@ -94,8 +94,6 @@ export function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, tab]);
 
-  const [ref, bounds] = useMeasure({ scroll: false });
-
   if (!org) return <Navigate to="/org404" />;
 
   return (
@@ -103,14 +101,14 @@ export function Home() {
       <Helmet>
         <title>{currentOrg} - Holodex</title>
       </Helmet>
-      <Tabs defaultValue={tab} onValueChange={setTab} ref={ref}>
+      <Tabs defaultValue={tab} onValueChange={setTab}>
         <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-1 md:px-8">
           <TabsTrigger value="live" className="px-2">
             <Trans
               i18nKey="views.home.liveOrUpcomingHeading"
               components={{
                 liveCount: live ? (
-                  <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm">
+                  <span className="bg-secondary-5 mx-1 rounded-sm p-1 text-sm">
                     {live.filter(({ status }) => status === "live").length ||
                       "0"}
                   </span>
@@ -118,7 +116,7 @@ export function Home() {
                   <span className="w-1" />
                 ),
                 upcomingCount: live ? (
-                  <span className="-mr-1 ml-1 rounded-sm bg-secondary-5 p-1 text-sm">
+                  <span className="bg-secondary-5 -mr-1 ml-1 rounded-sm p-1 text-sm">
                     {live.filter(({ status }) => status === "upcoming")
                       .length || "0"}
                   </span>
@@ -158,18 +156,15 @@ export function Home() {
           </Button>
           <ClipLanguageSelector />
         </TabsList>
-        <TabsContent value="live">
-          {
+        <div className="px-4 md:px-8">
+          <TabsContent value="live">
             <MainVideoListing
               isLoading={liveLoading}
               videos={live ?? []}
               size={cardSize}
-              containerWidth={bounds.width}
             />
-          }
-        </TabsContent>
-        <TabsContent value="archive">
-          {
+          </TabsContent>
+          <TabsContent value="archive">
             <MainVideoListing
               isLoading={archiveLoading}
               size={cardSize}
@@ -177,12 +172,9 @@ export function Home() {
               fetchNextPage={fetchArchives}
               hasNextPage={hasArchiveNextPage}
               isFetchingNextPage={isFetchingArchiveNextPage}
-              containerWidth={bounds.width}
-            ></MainVideoListing>
-          }
-        </TabsContent>
-        <TabsContent value="clips">
-          {
+            />
+          </TabsContent>
+          <TabsContent value="clips">
             <MainVideoListing
               isLoading={clipLoading}
               size={cardSize}
@@ -190,10 +182,9 @@ export function Home() {
               fetchNextPage={fetchClips}
               hasNextPage={hasClipsNextPage}
               isFetchingNextPage={isFetchingClipsNextPage}
-              containerWidth={bounds.width}
-            ></MainVideoListing>
-          }
-        </TabsContent>
+            />
+          </TabsContent>
+        </div>
       </Tabs>
     </>
   );

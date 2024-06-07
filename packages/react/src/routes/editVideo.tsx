@@ -1,4 +1,5 @@
 import { Loading } from "@/components/common/Loading";
+import { VideoEditSongs } from "@/components/edit/VideoEditSongs";
 import { VideoEditTopic } from "@/components/edit/VideoEditTopic";
 import { DefaultPlayerPositionAnchor } from "@/components/player/DefaultPlayerPositionAnchor";
 import { siteIsSmallAtom } from "@/hooks/useFrame";
@@ -38,54 +39,31 @@ export default function EditVideo() {
   return (
     <>
       <Helmet></Helmet>
-      <div className="">
-        <div className="container"></div>
-        <ResizablePanelGroup
-          className="container min-h-[90vh]"
-          direction={siteIsSmall ? "vertical" : "horizontal"}
-        >
-          <ResizablePanel minSize={10} defaultSize={20}>
-            <div id="player-anchor-container" className="relative h-full p-2">
-              <DefaultPlayerPositionAnchor
-                id="player-anchor"
-                className="overflow-hidden"
-              />
-            </div>
-          </ResizablePanel>
-          <ResizableHandle withHandle />
-          <ResizablePanel className="px-4">
-            <TypographyH3 className="mb-4 mt-2">
-              Editing: {data?.title}
-            </TypographyH3>
-
-            {isPending || error ? (
-              <Loading size="lg" error={error} />
-            ) : (
-              <Tabs
-                className="w-full grow-0 basis-2/3"
-                defaultValue="topic"
-                onValueChange={setTab}
-                value={tab}
-              >
-                <TabsList className="w-full justify-start">
-                  <TabsTrigger value="topic">
-                    {t("views.editor.changeTopic.title")} /{" "}
-                    {t("views.editor.channelMentions.title")}
-                  </TabsTrigger>
-                  <TabsTrigger value="music">
-                    {t("views.editor.changeMusic.title")}
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="topic">
-                  <VideoEditTopic video={data} />
-                </TabsContent>
-                <TabsContent value="music">
-                  <VideoEditMusic video={data} />
-                </TabsContent>
-              </Tabs>
-            )}
-          </ResizablePanel>
-        </ResizablePanelGroup>
+      <div className="flex h-full w-full flex-col gap-8 p-4 md:p-8 lg:flex-row">
+        <div className="flex w-full max-w-md shrink-0 grow-0 basis-auto flex-col lg:basis-1/3">
+          <DefaultPlayerPositionAnchor className="aspect-video w-full overflow-hidden rounded-lg" />
+        </div>
+        {isPending || error ? (
+          <Loading size="lg" error={error} />
+        ) : (
+          <Tabs className="w-full grow-0 basis-2/3" defaultValue="topic">
+            <TabsList className="w-full justify-start">
+              <TabsTrigger value="topic">
+                {t("component.search.type.topic")} /{" "}
+                {t("views.editor.channelMentions.title")}
+              </TabsTrigger>
+              <TabsTrigger value="music">
+                {t("component.mainNav.music")}
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="topic">
+              <VideoEditTopic video={data} />
+            </TabsContent>
+            <TabsContent value="music">
+              <VideoEditSongs />
+            </TabsContent>
+          </Tabs>
+        )}
       </div>
     </>
   );

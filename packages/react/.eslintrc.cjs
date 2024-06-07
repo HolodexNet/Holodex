@@ -11,10 +11,10 @@ module.exports = {
   plugins: ["react-refresh", "prettier"],
   settings: {
     tailwindcss: {
+      callees: ["cn"],
       whitelist: [
         "i\\-.+:?.+",
         // doesn't work see: [https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/284]
-        "@.+:?.+",
       ],
     },
   },
@@ -55,6 +55,15 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "tailwindcss/no-custom-classname": ["warn", { whitelist: ['i-[a-zA-Z-]+:[a-zA-Z0-9-]+'], }],
+    "tailwindcss/no-custom-classname": [
+      "warn",
+      {
+        whitelist: [
+          "i-[a-zA-Z-]+:[a-zA-Z0-9-]+", // iconify classes
+          "\\S+-(base|primary|secondary)-[0-9]{1,2}", // custom colors
+          "@.+:?.+", // @tailwindcss/container-queries classes
+        ],
+      },
+    ],
   },
 };

@@ -12,7 +12,7 @@ export function ChannelImg({
   return (
     <img
       loading="lazy"
-      className={cn("rounded-full shrink-0", className)}
+      className={cn("shrink-0 rounded-full", className)}
       src={getChannelPhoto(channelId, size)}
     />
   );

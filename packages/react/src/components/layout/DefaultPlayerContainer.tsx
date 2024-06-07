@@ -114,6 +114,7 @@ export const PlayerWrapper = ({
           },
         },
       }}
+            progressInterval={200}
       onStart={() => {
         defaultPlayerEventBus.emit("onStart", video?.id || "");
         updateState({ status: "playing" });

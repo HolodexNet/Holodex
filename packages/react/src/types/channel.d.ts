@@ -1,4 +1,5 @@
 type ChannelType = "vtuber" | "subber";
+type ChannelVideoType = "videos" | "collabs" | "clips";
 
 interface ChannelBase {
   id: string;
