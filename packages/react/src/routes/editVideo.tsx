@@ -10,7 +10,7 @@ import {
 } from "@/shadcn/ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { TypographyH3, TypographyH4 } from "@/shadcn/ui/typography";
-import { currentVideoAtom } from "@/store/player";
+import { miniplayerVideoAtom } from "@/store/player";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
@@ -22,18 +22,10 @@ import { VideoEditMusic } from "@/components/edit/VideoEditMusic";
 export default function EditVideo() {
   const { id } = useParams();
   const { t } = useTranslation();
-  const setCurrentVideo = useSetAtom(currentVideoAtom);
+  const setCurrentVideo = useSetAtom(miniplayerVideoAtom);
   const siteIsSmall = useAtomValue(siteIsSmallAtom);
   const { data, error, isPending, isSuccess } = useVideo({ id: id! });
   const [tab, setTab] = useState("topic");
-
-  useEffect(() => {
-    if (data)
-      setCurrentVideo({
-        ...data,
-        url: `https://youtu.be/${id}`,
-      });
-  }, [data, id, setCurrentVideo]);
 
   return (
     <>

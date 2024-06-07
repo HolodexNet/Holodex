@@ -82,6 +82,7 @@
     "string-similarity-js": "^2.1.4",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
+    "type-fest": "^4.18.3",
     "use-seconds": "^1.7.0",
     "usehooks-ts": "^2.12.1",
     "vaul": "^0.9.0",

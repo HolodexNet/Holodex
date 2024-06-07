@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 import { useCopyToClipboard } from "usehooks-ts";
 import { useToast } from "@/shadcn/ui/use-toast";
 import { useAtom } from "jotai";
-import { queueAtom } from "@/store/player";
+import { queueAtom } from "@/store/queue";
 import { VideoCardType } from "./VideoCard";
 
 const LazyNewPlaylistDialog = lazy(

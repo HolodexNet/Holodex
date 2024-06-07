@@ -8,13 +8,13 @@ import { headerHiddenAtom } from "@/hooks/useFrame";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import {
-  currentVideoAtom,
+  miniplayerVideoAtom,
   playerRefAtom,
   videoStatusAtomFamily,
 } from "@/store/player";
 import { useNavigate, useParams } from "react-router-dom";
 import { useVideo } from "@/services/video.service";
-import { PlayerWrapper } from "@/components/layout/DefaultPlayerContainer";
+import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { Input } from "@/shadcn/ui/input";
 import { Label } from "@/shadcn/ui/label";
 import { useSearchParam } from "react-use";
@@ -25,8 +25,8 @@ export function TLEditorFrame() {
   const id = useSearchParam("id");
   const { t } = useTranslation();
   const [urlField, setUrlField] = useState<string>("");
-  const currentVideo = useAtomValue(currentVideoAtom);
-  const setCurrentVideo = useSetAtom(currentVideoAtom);
+  const currentVideo = useAtomValue(miniplayerVideoAtom);
+  const setCurrentVideo = useSetAtom(miniplayerVideoAtom);
   const { data, error, isPending, isSuccess } = useVideo(
     { id: id! },
     { enabled: !!id },
@@ -147,7 +147,7 @@ export function TLEditorBody({ currentVideo }: { currentVideo: QueueVideo }) {
         <Panel defaultSize={60} minSize={40}>
           <div className="flex size-full flex-col">
             <div className="flex-1 overflow-hidden rounded">
-              <PlayerWrapper currentVideo={currentVideo} />
+              <PlayerWrapper id={currentVideo?.id || "x"} url={} />
             </div>
             <div className="h-[60px]">Tooling</div>
           </div>

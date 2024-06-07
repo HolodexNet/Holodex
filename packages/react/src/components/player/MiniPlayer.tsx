@@ -1,10 +1,10 @@
-import { currentVideoAtom } from "@/store/player";
+import { miniplayerVideoAtom } from "@/store/player";
 import { useAtomValue } from "jotai";
 import { Link } from "react-router-dom";
 import { DefaultPlayerPositionAnchor } from "./DefaultPlayerPositionAnchor";
 
 export function MiniPlayer() {
-  const currentVideo = useAtomValue(currentVideoAtom);
+  const currentVideo = useAtomValue(miniplayerVideoAtom);
 
   return (
     <div className="fixed inset-x-4 bottom-0 flex flex-col overflow-hidden rounded-t-lg bg-base sm:left-auto sm:w-96">

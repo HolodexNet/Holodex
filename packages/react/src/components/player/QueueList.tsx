@@ -1,4 +1,5 @@
-import { currentVideoAtom, queueAtom } from "@/store/player";
+import { miniplayerVideoAtom } from "@/store/player";
+import { queueAtom } from "@/store/queue";
 import { useAtom, useAtomValue } from "jotai";
 import { VideoCard } from "../video/VideoCard";
 import { useTranslation } from "react-i18next";
@@ -15,7 +16,7 @@ import { cn } from "@/lib/utils";
 export function QueueList() {
   const [open, setOpen] = useState(true);
   const { t } = useTranslation();
-  const currentVideo = useAtomValue(currentVideoAtom);
+  const currentVideo = useAtomValue(miniplayerVideoAtom);
   const [queue, setQueue] = useAtom(queueAtom);
 
   return (

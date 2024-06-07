@@ -14,12 +14,12 @@ import { clipLangAtom } from "@/store/i18n";
 import {
   chatOpenAtom,
   chatPosAtom,
-  currentVideoAtom,
+  miniplayerVideoAtom,
   miniPlayerAtom,
-  queueAtom,
   theaterModeAtom,
   tlOpenAtom,
 } from "@/store/player";
+import { queueAtom } from "@/store/queue";
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
@@ -35,13 +35,16 @@ export default function Watch() {
     {
       enabled: !!id,
       refetchInterval: 1000 * 60 * 3,
-      placeholderData: location.state?.video as PlaceholderVideo,
+      placeholderData: () => {
+        if (location.state?.video && location.state?.video.channel)
+          return location.state?.video;
+      },
     },
   );
   const { data: channel } = useChannel(data?.channel.id ?? "", {
     enabled: !!data,
   });
-  const [currentVideo, setCurrentVideo] = useAtom(currentVideoAtom);
+  const [currentVideo, setCurrentVideo] = useAtom(miniplayerVideoAtom);
   const [queue, setQueue] = useAtom(queueAtom);
   const [miniPlayer, setMiniPlayer] = useAtom(miniPlayerAtom);
   const theaterMode = useAtomValue(theaterModeAtom);
@@ -49,42 +52,6 @@ export default function Watch() {
   const [tlOpen, setTLOpen] = useAtom(tlOpenAtom);
   const chatPos = useAtomValue(chatPosAtom);
   const [ref, bounds] = useMeasure({ debounce: 50, scroll: false });
-
-  // Preload video frames for better experience
-  // useEffect(() => {
-  //   if (queue.length)
-  //     setQueue((q) =>
-  //       q.some((v) => v.id === id)
-  //         ? q
-  //         : q.toSpliced(
-  //             q.findIndex((q) => q.id === currentVideo?.id) + 1,
-  //             0,
-  //             videoPlaceholder,
-  //           ),
-  //     );
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [location?.state?.video]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      setCurrentVideo({
-        ...data,
-        // url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
-      });
-      if (queue.length)
-        setQueue((q) =>
-          q.toSpliced(
-            q.findIndex((q) => q.id === id),
-            1,
-            {
-              ...data,
-              // url: idToVideoURL(id!, location.state?.video.link ?? data?.link),
-            },
-          ),
-        );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess, id]);
 
   return (
     <>
