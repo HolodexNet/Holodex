@@ -1,6 +1,5 @@
 import { Loading } from "@/components/common/Loading";
 import { VideoEditTopic } from "@/components/edit/VideoEditTopic";
-import { DefaultPlayerPositionAnchor } from "@/components/player/DefaultPlayerPositionAnchor";
 import { siteIsSmallAtom } from "@/hooks/useFrame";
 import { useVideo } from "@/services/video.service";
 import {
@@ -18,13 +17,16 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import "./editVideo.scss";
 import { VideoEditMusic } from "@/components/edit/VideoEditMusic";
+import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 
 export default function EditVideo() {
   const { id } = useParams();
   const { t } = useTranslation();
   const setCurrentVideo = useSetAtom(miniplayerVideoAtom);
   const siteIsSmall = useAtomValue(siteIsSmallAtom);
-  const { data, error, isPending, isSuccess } = useVideo({ id: id! });
+  const { data, error, isPending, isSuccess } = useVideo<PlaceholderVideo>({
+    id: id!,
+  });
   const [tab, setTab] = useState("topic");
 
   return (
@@ -38,10 +40,7 @@ export default function EditVideo() {
         >
           <ResizablePanel minSize={10} defaultSize={20}>
             <div id="player-anchor-container" className="relative h-full p-2">
-              <DefaultPlayerPositionAnchor
-                id="player-anchor"
-                className="overflow-hidden"
-              />
+              {isSuccess && <PlayerWrapper id={data.id} url={data.link} />}
             </div>
           </ResizablePanel>
           <ResizableHandle withHandle />
@@ -72,7 +71,7 @@ export default function EditVideo() {
                   <VideoEditTopic video={data} />
                 </TabsContent>
                 <TabsContent value="music">
-                  <VideoEditMusic video={data} />
+                  {isSuccess && <VideoEditMusic video={data} />}
                 </TabsContent>
               </Tabs>
             )}

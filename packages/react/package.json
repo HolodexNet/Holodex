@@ -129,6 +129,6 @@
     "typescript-plugin-css-modules": "^5.1.0",
     "unocss": "^0.60.3",
     "unocss-preset-autoprefixer": "^0.0.7",
-    "vite": "^5.2.11"
+    "vite": "^5.2.13"
   }
 }

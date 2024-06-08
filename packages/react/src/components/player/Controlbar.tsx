@@ -6,6 +6,7 @@ import { useAtom, useSetAtom } from "jotai";
 import {
   chatOpenAtom,
   miniPlayerAtom,
+  miniplayerVideoAtom,
   theaterModeAtom,
   tlOpenAtom,
 } from "@/store/player";
@@ -23,6 +24,7 @@ export function Controlbar({ video, link }: ControlbarProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const setMiniPlayer = useSetAtom(miniPlayerAtom);
+  const setMiniplayerVideo = useSetAtom(miniplayerVideoAtom);
   const [theaterMode, setTheaterMode] = useAtom(theaterModeAtom);
   const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
   const [tlOpen, setTlOpen] = useAtom(tlOpenAtom);
@@ -95,6 +97,7 @@ export function Controlbar({ video, link }: ControlbarProps) {
         onClick={() => {
           location.state?.isMinimizable ? navigate(-1) : navigate("/");
           setMiniPlayer((v) => !v);
+          setMiniplayerVideo(video);
         }}
       >
         <div className="i-lucide:arrow-down-right-square" />

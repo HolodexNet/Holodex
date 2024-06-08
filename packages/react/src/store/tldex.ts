@@ -1,7 +1,7 @@
 import { TLLanguageCode } from "@/lib/consts";
 import { clipLangAtom } from "./i18n";
 import { atomWithStorage } from "jotai/utils";
-import { atom, getDefaultStore } from "jotai";
+import { getDefaultStore } from "jotai";
 
 const store = getDefaultStore();
 

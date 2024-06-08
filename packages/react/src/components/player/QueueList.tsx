@@ -13,10 +13,9 @@ import { useState } from "react";
 import NewPlaylistDialog from "../playlist/NewPlaylistDialog";
 import { cn } from "@/lib/utils";
 
-export function QueueList() {
+export function QueueList({ currentId }: { currentId?: string }) {
   const [open, setOpen] = useState(true);
   const { t } = useTranslation();
-  const currentVideo = useAtomValue(miniplayerVideoAtom);
   const [queue, setQueue] = useAtom(queueAtom);
 
   return (
@@ -34,8 +33,9 @@ export function QueueList() {
           <div className={open ? "i-heroicons:minus" : "i-heroicons:plus"} />
           {t("component.queue.title")}
           <span className="ml-auto text-sm text-base-11">
-            {queue.findIndex(({ id }) => currentVideo?.id === id) + 1} /{" "}
-            {queue.length}
+            {currentId &&
+              queue.findIndex(({ id }) => currentId === id) + 1 + " / "}
+            {queue.length} items
           </span>
         </Button>
       </CollapsibleTrigger>
@@ -59,7 +59,7 @@ export function QueueList() {
           {queue.map((video) => (
             <div
               className={cn("px-4", {
-                "bg-base-5": currentVideo?.id === video.id,
+                "bg-base-5": currentId === video.id,
               })}
             >
               <VideoCard size="xs" video={video} />

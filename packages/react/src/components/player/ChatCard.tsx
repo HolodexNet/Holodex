@@ -13,7 +13,12 @@ import { useStateList } from "react-use";
 
 const CHAT_SIZES_ITER = [1, 1.6, 2, 2.5, 0.3, 0.6, 0.8];
 
-export function ChatCard({ id, status, channel, link }: PlaceholderVideo) {
+export function ChatCard({
+  id,
+  status,
+  channel,
+  link,
+}: Pick<PlaceholderVideo, "id" | "status" | "channel" | "link">) {
   const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
   const [tlOpen, setTlOpen] = useAtom(tlOpenAtom);
   const { state: chatBasis, next: nextChatBasis } =

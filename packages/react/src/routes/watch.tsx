@@ -1,8 +1,8 @@
 import { ChannelCard } from "@/components/channel/ChannelCard";
 import { ChatModal } from "@/components/chat/ChatModal";
+import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { ChatCard } from "@/components/player/ChatCard";
 import { Controlbar } from "@/components/player/Controlbar";
-import { DefaultPlayerPositionAnchor } from "@/components/player/DefaultPlayerPositionAnchor";
 import { PlayerDescription } from "@/components/player/PlayerDescription";
 import { PlayerRecommendations } from "@/components/player/PlayerRecommendations";
 import { PlayerStats } from "@/components/player/PlayerStats";
@@ -21,7 +21,6 @@ import {
 } from "@/store/player";
 import { queueAtom } from "@/store/queue";
 import { useAtom, useAtomValue } from "jotai";
-import { useEffect, useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
 import useMeasure from "react-use-measure";
@@ -30,21 +29,31 @@ export default function Watch() {
   const location = useLocation();
   const { id } = useParams();
   const { value: clipLang } = useAtomValue(clipLangAtom);
-  const { data, isSuccess, isPlaceholderData } = useVideo<PlaceholderVideo>(
+  const {
+    data: currentVideo,
+    isSuccess,
+    isPlaceholderData,
+  } = useVideo<PlaceholderVideo>(
     { id: id!, lang: clipLang, c: "1" },
     {
       enabled: !!id,
-      refetchInterval: 1000 * 60 * 3,
+      refetchOnMount: true,
+      staleTime: 30 * 1000,
       placeholderData: () => {
         if (location.state?.video && location.state?.video.channel)
           return location.state?.video;
       },
     },
   );
-  const { data: channel } = useChannel(data?.channel.id ?? "", {
-    enabled: !!data,
+  const { data: channel } = useChannel(currentVideo?.channel.id ?? "", {
+    enabled: !!currentVideo,
+    placeholderData: () => {
+      if (location.state?.video && location.state?.video.channel)
+        return location.state?.video;
+    },
   });
-  const [currentVideo, setCurrentVideo] = useAtom(miniplayerVideoAtom);
+
+  const [_, setMiniplayerVideo] = useAtom(miniplayerVideoAtom);
   const [queue, setQueue] = useAtom(queueAtom);
   const [miniPlayer, setMiniPlayer] = useAtom(miniPlayerAtom);
   const theaterMode = useAtomValue(theaterModeAtom);
@@ -56,8 +65,8 @@ export default function Watch() {
   return (
     <>
       <Helmet>
-        <title>{data?.title}</title>
-        <meta name="description" content={data?.description} />
+        <title>{currentVideo?.title}</title>
+        <meta name="description" content={currentVideo?.description} />
       </Helmet>
       <div className="flex h-full w-full  @container" ref={ref}>
         <div
@@ -73,32 +82,39 @@ export default function Watch() {
                   : "rounded-lg overflow-hidden",
               ])}
             >
-              {!miniPlayer && (
+              {!miniPlayer && currentVideo && (
                 <div
                   className={cn("w-full h-full flex", {
                     "flex-row-reverse": chatPos === "left",
                   })}
                 >
-                  <DefaultPlayerPositionAnchor
-                    className="h-full w-full"
-                    style={{ aspectRatio: theaterMode ? "" : "16 / 9" }}
+                  <PlayerWrapper
+                    id={currentVideo?.id}
+                    url={currentVideo?.link}
+                    // className="h-full w-full"
+                    // style={{ aspectRatio: theaterMode ? "" : "16 / 9" }}
                   />
-                  {theaterMode && data && (chatOpen || tlOpen) && (
+                  {theaterMode && currentVideo && (chatOpen || tlOpen) && (
                     <div className="hidden min-w-[24rem] @screen-lg:flex">
-                      <ChatCard {...data} />
+                      <ChatCard {...currentVideo} />
                     </div>
                   )}
                 </div>
               )}
-              {currentVideo && <Controlbar {...(data ?? currentVideo)} />}
+              {currentVideo && (
+                <Controlbar
+                  video={currentVideo}
+                  link={idToVideoURL(currentVideo.id, currentVideo.link)}
+                />
+              )}
             </div>
             <div
               className={cn("flex flex-col gap-1", {
                 "px-4 @screen-lg:px-8 py-4": theaterMode,
               })}
             >
-              <h2 className="text-xl font-bold">{data?.title}</h2>
-              {currentVideo && <PlayerStats {...(data ?? currentVideo)} />}
+              <h2 className="text-xl font-bold">{currentVideo?.title}</h2>
+              {currentVideo && <PlayerStats {...currentVideo} />}
             </div>
             <div
               className={cn("flex flex-col gap-4", {
@@ -106,18 +122,20 @@ export default function Watch() {
               })}
             >
               {channel && <ChannelCard size="xs" {...channel} />}
-              {!data?.link?.includes("twitch") && data?.description && (
-                <PlayerDescription description={data.description} />
-              )}
+              {!currentVideo?.link?.includes("twitch") &&
+                currentVideo?.description && (
+                  <PlayerDescription description={currentVideo.description} />
+                )}
               <div className="flex @screen-lg:hidden">
-                <PlayerRecommendations {...data} />
+                <PlayerRecommendations {...currentVideo} />
               </div>
             </div>
           </div>
           {!theaterMode && (
             <div className="hidden w-96 shrink-0 flex-col gap-4 @screen-lg:flex">
-              {!!queue.length && <QueueList />}
-              {(data?.type === "stream" || data?.status === "live") && (
+              {!!queue.length && <QueueList currentId={currentVideo?.id} />}
+              {(currentVideo?.type === "stream" ||
+                currentVideo?.status === "live") && (
                 <div
                   className={cn(
                     "border-base rounded-lg border overflow-hidden",
@@ -126,20 +144,20 @@ export default function Watch() {
                     },
                   )}
                 >
-                  <ChatCard {...data} />
+                  <ChatCard {...currentVideo} />
                 </div>
               )}
-              <PlayerRecommendations {...data} />
+              <PlayerRecommendations {...currentVideo} />
             </div>
           )}
         </div>
-        {data && bounds.width < 1023 && (
+        {currentVideo && bounds.width < 1023 && (
           <ChatModal
             tlOpen={tlOpen}
             chatOpen={chatOpen}
-            id={data.id}
-            status={data.status}
-            channelId={data.channel.id}
+            id={currentVideo.id}
+            status={currentVideo.status}
+            channelId={currentVideo.channel.id}
           />
         )}
       </div>

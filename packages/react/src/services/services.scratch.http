@@ -7,3 +7,10 @@ X-APIKEY: 59e0876a-2f2f-418f-a7f4-6e5f407b3309
 
 GET https://staging.holodex.net/api/v3/videos?type=placeholder%2Cstream&include=mentions&org=Hololive&max_upcoming_hours=24&nextPage=WzE3MDcwNjIzNzcwMDAsIllua3g2TWVZU0pNIl0=
 X-APIKEY: 59e0876a-2f2f-418f-a7f4-6e5f407b3309
+
+
+
+###
+
+GET https://staging.holodex.net/api/v2/live
+X-APIKEY: 59e0876a-2f2f-418f-a7f4-6e5f407b3309

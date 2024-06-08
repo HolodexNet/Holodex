@@ -1,14 +1,21 @@
 import { miniplayerVideoAtom } from "@/store/player";
 import { useAtomValue } from "jotai";
 import { Link } from "react-router-dom";
-import { DefaultPlayerPositionAnchor } from "./DefaultPlayerPositionAnchor";
+import { PlayerWrapper } from "../layout/PlayerWrapper";
+import { idToVideoURL } from "@/lib/utils";
 
 export function MiniPlayer() {
   const currentVideo = useAtomValue(miniplayerVideoAtom);
 
   return (
     <div className="fixed inset-x-4 bottom-0 flex flex-col overflow-hidden rounded-t-lg bg-base sm:left-auto sm:w-96">
-      <DefaultPlayerPositionAnchor className="aspect-video w-full" />
+      {currentVideo && (
+        <PlayerWrapper
+          // className="aspect-video w-full"
+          id={currentVideo.id}
+          url={idToVideoURL(currentVideo.id, currentVideo.link)}
+        />
+      )}
       <div className="flex flex-col p-4">
         <Link
           to={`/watch/${currentVideo?.id}`}
