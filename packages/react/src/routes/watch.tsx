@@ -14,7 +14,6 @@ import { clipLangAtom } from "@/store/i18n";
 import {
   chatOpenAtom,
   chatPosAtom,
-  miniplayerVideoAtom,
   miniPlayerAtom,
   theaterModeAtom,
   tlOpenAtom,
@@ -53,9 +52,8 @@ export default function Watch() {
     },
   });
 
-  const [_, setMiniplayerVideo] = useAtom(miniplayerVideoAtom);
-  const [queue, setQueue] = useAtom(queueAtom);
-  const [miniPlayer, setMiniPlayer] = useAtom(miniPlayerAtom);
+  const queue = useAtomValue(queueAtom);
+  const miniPlayer = useAtomValue(miniPlayerAtom);
   const theaterMode = useAtomValue(theaterModeAtom);
   const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
   const [tlOpen, setTLOpen] = useAtom(tlOpenAtom);

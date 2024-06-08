@@ -58,13 +58,11 @@ export function VideoCard({
       ? video.link
       : `/watch/${video.id}`;
 
-  const thumbnailSrc = useMemo(
-    () =>
-      video.link === "placeholder"
-        ? video.thumbnail
-        : makeYtThumbnailUrl(video.id, size),
-    [video.thumbnail, video.id, size, video.link],
-  );
+  const thumbnailSrc =
+    video.link === "placeholder"
+      ? video.thumbnail
+      : makeYtThumbnailUrl(video.id, size);
+
   const externalLink =
     video.type === "placeholder" ? video.link : `https://youtu.be/${video.id}`;
 

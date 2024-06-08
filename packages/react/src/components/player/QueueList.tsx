@@ -46,7 +46,7 @@ export function QueueList({ currentId }: { currentId?: string }) {
               triggerElement={
                 <Button variant="ghost">
                   <div className="i-heroicons:plus-circle" />
-                  {t("playlist")}
+                  {t("component.playlist.menu.new-playlist")}
                 </Button>
               }
               videoIds={queue.map(({ id }) => id)}
