@@ -57,7 +57,11 @@ export default defineConfig({
     },
   },
   plugins: [
-    bundleAnalyzer({}),
+    bundleAnalyzer({
+      analyzerMode: process.env["HOME"]?.includes("/home/holodex")
+        ? "static" // don't use server mode when compiling on the linux server
+        : "server",
+    }),
     react({
       babel: {
         presets: ["jotai/babel/preset"],
