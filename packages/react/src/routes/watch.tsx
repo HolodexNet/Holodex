@@ -60,6 +60,7 @@ export default function Watch() {
   const chatPos = useAtomValue(chatPosAtom);
   const [ref, bounds] = useMeasure({ debounce: 50, scroll: false });
 
+  const url = idToVideoURL(id, currentVideo?.link);
   return (
     <>
       <Helmet>
@@ -88,7 +89,7 @@ export default function Watch() {
                 >
                   <PlayerWrapper
                     id={currentVideo?.id}
-                    url={currentVideo?.link}
+                    url={url}
                     // className="h-full w-full"
                     // style={{ aspectRatio: theaterMode ? "" : "16 / 9" }}
                   />
@@ -99,12 +100,7 @@ export default function Watch() {
                   )}
                 </div>
               )}
-              {currentVideo && (
-                <Controlbar
-                  video={currentVideo}
-                  url={idToVideoURL(currentVideo.id, currentVideo.link)}
-                />
-              )}
+              {currentVideo && <Controlbar video={currentVideo} url={url} />}
             </div>
             <div
               className={cn("flex flex-col gap-1", {

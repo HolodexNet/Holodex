@@ -39,13 +39,11 @@ export const PlayerWrapper = ({
       ref={customSetPlayerRef ?? setPlayerRef}
       // pass `key` to prevent flicker issue https://github.com/CookPete/react-player/issues/413#issuecomment-395404630
       key={url}
-      style={
-        {
-          // aspectRatio: "16 / 9", uncommenting this may cause the aspect ratio to lock on certain pages such as script editor
-        }
-      }
-      // width="100%"
-      width="auto"
+      style={{
+        aspectRatio: "16 / 9", //uncommenting this may cause the aspect ratio to lock on certain pages such as script editor
+      }}
+      width="100%"
+      // width="auto"
       height="100%"
       url={url}
       controls
