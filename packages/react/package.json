@@ -12,7 +12,7 @@
     "lint:fix": "eslint ./src --fix",
     "pretty:fix": "prettier --write ./src",
     "preview": "vite preview",
-    "prepare": "cd ..\\.. && husky install packages\\react\\.husky"
+    "prepare": "cd ../.. && husky install packages/react/.husky"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
