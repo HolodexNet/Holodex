@@ -49,7 +49,10 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
   return (
     <DropdownMenu onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent onClick={(e) => e.stopPropagation()}>
+      <DropdownMenuContent
+        onClick={(e) => e.stopPropagation()}
+        // className="border-base-5"
+      >
         <DropdownMenuItem
           className="flex gap-2"
           onClick={() =>

@@ -60,7 +60,7 @@ export default function Watch() {
   const chatPos = useAtomValue(chatPosAtom);
   const [ref, bounds] = useMeasure({ debounce: 50, scroll: false });
 
-  const url = idToVideoURL(id, currentVideo?.link);
+  const url = idToVideoURL(id!, currentVideo?.link);
   return (
     <>
       <Helmet>
