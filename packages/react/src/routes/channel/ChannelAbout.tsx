@@ -8,10 +8,10 @@ export default function ChannelAbout() {
 
   return (
     <div className="container flex gap-4 py-4 max-sm:flex-col-reverse">
-      <div className="bg-base-3 w-full whitespace-pre-wrap rounded-lg p-4">
+      <div className="w-full whitespace-pre-wrap rounded-lg bg-base-3 p-4">
         {channel.description}
       </div>
-      <div className="bg-base-3 divide-base-5 h-fit w-full shrink-0 flex-col divide-y-2 rounded-lg p-4 md:w-80 [&>p]:py-2">
+      <div className="h-fit w-full shrink-0 flex-col divide-y-2 divide-base-5 rounded-lg bg-base-3 p-4 md:w-80 [&>p]:py-2">
         <h3 className="pb-2 text-xl font-bold">
           {t("component.channelInfo.stats")}
         </h3>

@@ -31,7 +31,7 @@ export function Loading(
     <div
       {...props}
       className={cn(
-        "flex w-full h-full justify-center items-center",
+        "flex h-full w-full items-center justify-center",
         props.className,
       )}
     >

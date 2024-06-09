@@ -54,7 +54,7 @@ export default function ChannelsOrg() {
           >
             <Label
               className={cn(
-                "bg-base-4 border-base border-r-2 px-4 py-2 text-lg first:rounded-l-lg last:rounded-r-lg last:border-r-0 hover:cursor-pointer",
+                "border-r-2 border-base bg-base-4 px-4 py-2 text-lg first:rounded-l-lg last:rounded-r-lg last:border-r-0 hover:cursor-pointer",
                 { "bg-secondary-9": displayStyle == "grid" },
               )}
             >
@@ -63,7 +63,7 @@ export default function ChannelsOrg() {
             </Label>
             <Label
               className={cn(
-                "bg-base-4 border-base border-r-2 px-4 py-2 text-lg first:rounded-l-lg last:rounded-r-lg last:border-r-0 hover:cursor-pointer",
+                "border-r-2 border-base bg-base-4 px-4 py-2 text-lg first:rounded-l-lg last:rounded-r-lg last:border-r-0 hover:cursor-pointer",
                 { "bg-secondary-9": displayStyle == "list" },
               )}
             >

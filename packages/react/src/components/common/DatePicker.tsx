@@ -26,7 +26,7 @@ export function DatePicker(
           variant="outline"
           size="lg"
           className={cn(
-            "w-full justify-start text-left font-normal border-base-6 focus:border-blue-6",
+            "w-full justify-start border-base-6 text-left font-normal focus:border-blue-6",
             !date && "text-base-11",
           )}
         >

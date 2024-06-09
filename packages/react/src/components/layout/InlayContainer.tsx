@@ -19,7 +19,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
     <div className="flex justify-center gap-4 p-4 md:p-8">
       <div
         className={cn(
-          "bg-base-2 flex h-fit w-full md:w-72 xl:w-80 shrink-0 flex-col gap-2 rounded-lg p-2",
+          "flex h-fit w-full shrink-0 flex-col gap-2 rounded-lg bg-base-2 p-2 md:w-72 xl:w-80",
           { "hidden md:flex": itemSelected },
         )}
       >
@@ -39,7 +39,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
         ))}
       </div>
       <div
-        className={cn("hidden md:block w-full max-w-screen-lg", {
+        className={cn("hidden w-full max-w-screen-lg md:block", {
           "flex flex-col gap-4": itemSelected,
         })}
       >

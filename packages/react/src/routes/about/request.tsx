@@ -64,7 +64,7 @@ function RequestTypeRadioButton({
   return (
     <div
       className={cn(
-        "w-full p-4 border-2 border-primary rounded-md transition-colors cursor-pointer",
+        "w-full cursor-pointer rounded-md border-2 border-primary p-4 transition-colors",
         {
           "bg-primary-6 border-primary-8": isSelected,
         },

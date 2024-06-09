@@ -55,7 +55,7 @@ export default function Channel() {
             tab !== "music" && navigate(`/channel/${channel?.id}/${tab}`)
           }
         >
-          <div className="bg-base-3 border-b-base-5 sticky top-0 z-20 flex flex-col gap-2 border-b-[1px] pt-4 shadow-lg md:gap-6">
+          <div className="sticky top-0 z-20 flex flex-col gap-2 border-b-[1px] border-b-base-5 bg-base-3 pt-4 shadow-lg md:gap-6">
             <div className="container flex items-start gap-4 px-4 max-sm:flex-col md:items-center md:px-8">
               <div className="flex items-center gap-4">
                 <ChannelImg
@@ -63,14 +63,14 @@ export default function Channel() {
                   channelId={channel?.id}
                 />
                 <div className="flex flex-col overflow-hidden">
-                  <div className="text-base-11 text-xs">
+                  <div className="text-xs text-base-11">
                     {channel?.org}
                     {channel?.group && ` / ${channel?.group}`}
                   </div>
                   <div className="line-clamp-1 text-lg font-bold">
                     {channel?.name}
                   </div>
-                  <div className="text-base-11 text-sm">
+                  <div className="text-sm text-base-11">
                     {t("component.channelInfo.subscriberCount", {
                       n: formatCount(channel?.subscriber_count ?? "0"),
                     })}

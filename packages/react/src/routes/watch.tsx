@@ -74,15 +74,15 @@ export default function Watch() {
         >
           <div className={cn("flex w-full flex-col gap-4")}>
             <div
-              className={cn("bg-base-3 flex w-full flex-col", [
+              className={cn("flex w-full flex-col bg-base-3", [
                 theaterMode
                   ? "aspect-video @screen-lg:h-[calc(100dvh_-_var(--header-height))]"
-                  : "rounded-lg overflow-hidden",
+                  : "overflow-hidden rounded-lg",
               ])}
             >
               {!miniPlayer && currentVideo && (
                 <div
-                  className={cn("w-full h-full flex", {
+                  className={cn("flex h-full w-full", {
                     "flex-row-reverse": chatPos === "left",
                   })}
                 >
@@ -136,7 +136,7 @@ export default function Watch() {
                 currentVideo?.status === "live") && (
                 <div
                   className={cn(
-                    "border-base rounded-lg border overflow-hidden",
+                    "overflow-hidden rounded-lg border border-base",
                     {
                       "h-[80vh] max-h-[80vh]": chatOpen || tlOpen,
                     },

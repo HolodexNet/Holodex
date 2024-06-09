@@ -20,7 +20,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
   const org = useAtomValue(orgAtom);
   const isLgAndUp = useIsLgAndUp();
   return (
-    <div className={cn("pb-12 border-r-base-5 border-r", className)} id={id}>
+    <div className={cn("border-r border-r-base-5 pb-12", className)} id={id}>
       <div className="min-h-[100dvh] space-y-2 bg-base-2">
         <div className="flex items-center gap-2 px-4 pb-2 pt-4">
           <Logo className="ml-1.5 h-8 w-8" />

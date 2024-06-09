@@ -41,7 +41,7 @@ const TLChatItem = forwardRef<
 >((props, ref) => (
   <div
     {...props}
-    className={cn(props.className, "border-base-4 border-b-0 last:border-b-0")}
+    className={cn(props.className, "border-b-0 border-base-4 last:border-b-0")}
     ref={ref}
   />
 ));

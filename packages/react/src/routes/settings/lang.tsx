@@ -35,10 +35,10 @@ export function SettingsLang() {
                 role="combobox"
                 aria-expanded={langOpen}
                 className={cn(
-                  "inline-flex min-h-8 min-w-48 w-full items-center justify-between rounded-md bg-base-3 pl-4 pr-2 py-1",
-                  "text-lg font-medium text-left text-base-12 transition",
+                  "inline-flex min-h-8 w-full min-w-48 items-center justify-between rounded-md bg-base-3 py-1 pl-4 pr-2",
+                  "text-left text-lg font-medium text-base-12 transition",
                   "hover:bg-primary-5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-7 active:scale-[97%] active:bg-primaryA-7 disabled:pointer-events-none disabled:opacity-50",
-                  langOpen && "ring-2 ring-primary-9 hover:bg-base-5 bg-base-4",
+                  langOpen && "bg-base-4 ring-2 ring-primary-9 hover:bg-base-5",
                 )}
               >
                 {langs.find(({ val }) => i18n.language === val)?.display}

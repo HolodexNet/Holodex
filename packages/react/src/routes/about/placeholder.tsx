@@ -117,7 +117,7 @@ export default function AboutPlaceholder() {
 
   const typeCN = (typeId: string) =>
     cn(
-      "border-blue-6 hover:bg-blue-3 flex w-full cursor-pointer items-center justify-center rounded-md border-2 py-2 text-lg transition-all active:scale-[97%] select-none",
+      "flex w-full cursor-pointer select-none items-center justify-center rounded-md border-2 border-blue-6 py-2 text-lg transition-all hover:bg-blue-3 active:scale-[97%]",
       {
         "bg-blue-7  border-blue-8 hover:bg-blue-6": type === typeId,
       },

@@ -187,7 +187,7 @@ export function VideoCard({
           <VideoCardDuration className="" {...video} />
         </div>
       </Link>
-      <div className="@sm:gap-1 relative flex grow gap-2">
+      <div className="relative flex grow gap-2 @sm:gap-1">
         {(size == "lg" || size == "md") && video.channel && (
           <Link
             to={`/channel/${video.channel.id}`}
@@ -245,7 +245,7 @@ export function VideoCard({
           {size != "xs" && (
             <div className={videoCardClasses.scheduleText}>
               {status === "live" && (
-                <div className="text-base-11 flex gap-1">
+                <div className="flex gap-1 text-base-11">
                   <span className="text-red-500">
                     {t("component.videoCard.liveNow")}
                   </span>
@@ -323,7 +323,7 @@ function VideoCardDuration({
   return durationMs ?? status === "upcoming" ? (
     <span
       className={cn(
-        "flex justify-center items-center gap-1 bg-black/80 px-1 text-white/80 rounded-sm text-sm whitespace-nowrap group-hover:text-white",
+        "flex items-center justify-center gap-1 whitespace-nowrap rounded-sm bg-black/80 px-1 text-sm text-white/80 group-hover:text-white",
         { "bg-red-700/80": status === "live" },
         className,
       )}

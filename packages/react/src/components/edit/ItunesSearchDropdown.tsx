@@ -47,7 +47,7 @@ export function ItunesSearchDropdown({
   };
   return (
     <Command
-      className={cn("overflow-visible bg-transparent relative", className)}
+      className={cn("relative overflow-visible bg-transparent", className)}
       shouldFilter={false}
     >
       <CommandInput

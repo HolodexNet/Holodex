@@ -82,7 +82,7 @@ export function SettingsHomepage() {
         >
           {defaultPages.map(({ label, value }) => (
             <div
-              className={cn("flex items-center text-primary-12 space-x-2 p-4", {
+              className={cn("flex items-center space-x-2 p-4 text-primary-12", {
                 "bg-primaryA-4": value === defaultOpen,
                 "text-base-11": value !== defaultOpen,
               })}
@@ -108,7 +108,7 @@ export function SettingsHomepage() {
           {gridSizes.map(({ label, value, icon }) => (
             <Label
               className={cn(
-                "bg-base-4 border-base border-r-2 px-4 py-2 text-lg first:rounded-l-lg last:rounded-r-lg last:border-r-0 hover:cursor-pointer",
+                "border-r-2 border-base bg-base-4 px-4 py-2 text-lg first:rounded-l-lg last:rounded-r-lg last:border-r-0 hover:cursor-pointer",
                 { "bg-secondary-9": value === size },
               )}
             >
@@ -145,7 +145,7 @@ export function SettingsHomepage() {
           {hideFeatures.map(({ label, value, onChange }, index) => (
             <Label
               className={cn(
-                "flex min-w-[18rem] w-full justify-between items-center gap-4 px-4 py-4 hover:cursor-pointer",
+                "flex w-full min-w-[18rem] items-center justify-between gap-4 p-4 hover:cursor-pointer",
                 {
                   "bg-base-4": index % 2,
                 },
