@@ -2,6 +2,7 @@ import { ChannelImg } from "@/components/channel/ChannelImg";
 import { ChannelSocials } from "@/components/channel/ChannelSocials";
 import { Loading } from "@/components/common/Loading";
 import { TopicBadge } from "@/components/topic/TopicBadge";
+import { MUSICDEX_URL } from "@/lib/consts";
 import { formatCount } from "@/lib/time";
 import { getChannelBannerImages } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
@@ -106,7 +107,10 @@ export default function Channel() {
                 {t("views.channel.collabs")}
               </TabsTrigger>
               <TabsTrigger value="music" className="gap-2" asChild>
-                <Link target="_blank" to="https://music.holodex.net">
+                <Link
+                  target="_blank"
+                  to={MUSICDEX_URL + "/channel/" + channel?.id}
+                >
                   {t("views.channel.music")}
                   <ExternalLink size={16} />
                 </Link>

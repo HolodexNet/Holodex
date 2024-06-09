@@ -9,6 +9,7 @@ import { HTMLAttributes } from "react";
 import { isMobileAtom } from "@/hooks/useFrame";
 import { Logo } from "../header/Logo";
 import { useIsLgAndUp } from "@/hooks/useBreakpoint";
+import { MUSICDEX_URL } from "@/lib/consts";
 // import { ScrollArea } from "@/shadcn/ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -71,7 +72,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
             <SidebarItem
               label="Musicdex"
               icon="i-heroicons:musical-note"
-              href="https://music.holodex.net"
+              href={MUSICDEX_URL}
               onClose={onClose}
             />
             <SidebarItem

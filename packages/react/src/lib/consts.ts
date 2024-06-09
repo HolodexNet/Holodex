@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape,max-len */
-export const musicdexURL =
+export const MUSICDEX_URL =
   window.location.origin === "https://holodex.net"
     ? "https://music.holodex.net"
     : "https://music-staging.holodex.net";
@@ -106,7 +106,7 @@ export const STATUSES = {
   MISSING: "missing",
 } as const;
 
-export const companionExtensionId = "jkdnofimdhpbhdjbcdlgnccfjjkidlgp";
+export const COMPANION_EXTENSION_ID = "jkdnofimdhpbhdjbcdlgnccfjjkidlgp";
 
 export const MESSAGE_TYPES = Object.freeze({
   TOKEN: "token",
