@@ -13,13 +13,13 @@ import {
 import { VideoCardType } from "../video/VideoCard";
 
 interface ControlbarProps {
-  link?: string;
+  url?: string;
   video: VideoCardType;
   // onChatClick: () => void;
   // onTLClick: () => void;
 }
 
-export function Controlbar({ video, link }: ControlbarProps) {
+export function Controlbar({ video, url }: ControlbarProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -28,8 +28,6 @@ export function Controlbar({ video, link }: ControlbarProps) {
   const [theaterMode, setTheaterMode] = useAtom(theaterModeAtom);
   const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
   const [tlOpen, setTlOpen] = useAtom(tlOpenAtom);
-
-  const url = link?.includes("twitch") ? link : `https://youtu.be/${id}`;
 
   return (
     <div className="flex shrink-0 items-center gap-0 overflow-x-auto border-t-[1px] border-base px-4 py-2 text-base-11 @screen-lg:gap-2">
