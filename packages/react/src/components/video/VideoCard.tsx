@@ -315,7 +315,7 @@ function VideoCardDuration({
   const durationMs = useDuration({
     type,
     status,
-    duration,
+    duration: duration ?? 0,
     end_actual,
     start_actual,
   });

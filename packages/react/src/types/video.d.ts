@@ -36,15 +36,15 @@ type LiveEndpointResponse = Omit<VideoBase, "channel_id" | "description"> &
 interface VideoBase extends VideoRef {
   channel_id: string;
   description: string;
-  topic_id: string | null;
-  published_at: string | null;
+  topic_id?: string | null;
+  published_at?: string;
   available_at?: Date | number | string;
   duration: number;
   status: VideoStatus;
-  start_scheduled: string | null;
-  start_actual: string | null;
-  end_actual: string | null;
-  live_viewers: number | null;
+  start_scheduled?: string;
+  start_actual?: string;
+  end_actual?: string;
+  live_viewers?: number;
   songcount: number;
 }
 

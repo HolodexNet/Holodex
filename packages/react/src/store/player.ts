@@ -94,7 +94,7 @@ export const videoStatusAtomFamily = atomFamily(
 );
 
 export const videoPlayerRefAtomFamily = atomFamily(
-  (id: string) => atom<ReactPlayer | null>(null),
+  (_: string) => atom<ReactPlayer | null>(null),
   (a, b) => a === b,
 );
 

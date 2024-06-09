@@ -18,10 +18,9 @@ import {
   useSongAutocomplete,
 } from "./songSearch.service";
 import { useDebounceValue } from "usehooks-ts";
+import { localeAtom } from "@/store/i18n";
+import { useAtomValue } from "jotai";
 
-interface ItunesItem {
-  // todo
-}
 export function ItunesSearchDropdown({
   onSelectItem,
   className,
@@ -73,9 +72,9 @@ export function ItunesSearchDropdown({
                     handleItemSelect(item);
                   }}
                   key={item.trackId ?? item.trackName + i}
-                  value={i}
+                  value={String(i)}
                 >
-                  <TrackItem item={item} />
+                  <SongItem {...item} />
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -87,6 +86,36 @@ export function ItunesSearchDropdown({
           </CommandList>
         ))}
     </Command>
+  );
+}
+
+function SongItem({
+  artworkUrl100,
+  trackName,
+  artistName,
+  collectionName,
+  releaseDate,
+}: Pick<
+  IdentifiedItunesTrack,
+  | "artworkUrl100"
+  | "trackName"
+  | "artistName"
+  | "collectionName"
+  | "releaseDate"
+>) {
+  const { dayjs } = useAtomValue(localeAtom);
+
+  return (
+    <div className="flex items-center justify-center gap-2">
+      <img className="h-10 w-10 rounded-sm" src={artworkUrl100 || ""} />
+      <div className="flex flex-col">
+        <span className="font-bold">{trackName}</span>
+        <span className="text-sm text-base-11">
+          {artistName} / {collectionName} /{" "}
+          {dayjs(releaseDate).format("YYYY-MM")}
+        </span>
+      </div>
+    </div>
   );
 }
 

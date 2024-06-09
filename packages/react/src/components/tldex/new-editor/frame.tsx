@@ -7,12 +7,8 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import {
-  miniplayerVideoAtom,
-  playerRefAtom,
-  videoStatusAtomFamily,
-} from "@/store/player";
-import { useNavigate, useParams } from "react-router-dom";
+import { videoStatusAtomFamily } from "@/store/player";
+import { useNavigate } from "react-router-dom";
 import { useVideo } from "@/services/video.service";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { Input } from "@/shadcn/ui/input";
@@ -132,7 +128,7 @@ export function TLEditorFrame() {
   );
 }
 
-export function TLEditorBody({ currentVideo }: { currentVideo: QueueVideo }) {
+export function TLEditorBody({ currentVideo }: { currentVideo: Video }) {
   const videoStatusAtom = videoStatusAtomFamily(currentVideo?.id || "x");
   const videoStatus = useAtomValue(videoStatusAtom);
   return (
