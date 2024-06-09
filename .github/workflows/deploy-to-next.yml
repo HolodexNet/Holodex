@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.KEY }}
           script_stop: true
           script: |
-            cd /opt/next_web/packages/vue3 || { echo "No directory found"; exit 1; } 
+            cd /opt/next_web/packages/react || { echo "No directory found"; exit 1; } 
             git pull origin next
             npm ci
             npm run build
