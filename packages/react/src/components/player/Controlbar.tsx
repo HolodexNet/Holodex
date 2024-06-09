@@ -6,34 +6,28 @@ import { useAtom, useSetAtom } from "jotai";
 import {
   chatOpenAtom,
   miniPlayerAtom,
+  miniplayerVideoAtom,
   theaterModeAtom,
   tlOpenAtom,
 } from "@/store/player";
+import { VideoCardType } from "../video/VideoCard";
 
-interface ControlbarProps extends VideoBase {
-  link?: string;
+interface ControlbarProps {
+  url?: string;
+  video: VideoCardType;
   // onChatClick: () => void;
   // onTLClick: () => void;
 }
 
-export function Controlbar({
-  id,
-  type,
-  status,
-  link,
-  // onChatClick,
-  // onTLClick,
-  ...rest
-}: ControlbarProps) {
+export function Controlbar({ video, url }: ControlbarProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const setMiniPlayer = useSetAtom(miniPlayerAtom);
+  const setMiniplayerVideo = useSetAtom(miniplayerVideoAtom);
   const [theaterMode, setTheaterMode] = useAtom(theaterModeAtom);
   const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
   const [tlOpen, setTlOpen] = useAtom(tlOpenAtom);
-
-  const url = link?.includes("twitch") ? link : `https://youtu.be/${id}`;
 
   return (
     <div className="flex shrink-0 items-center gap-0 overflow-x-auto border-t-[1px] border-base px-4 py-2 text-base-11 @screen-lg:gap-2">
@@ -101,6 +95,7 @@ export function Controlbar({
         onClick={() => {
           location.state?.isMinimizable ? navigate(-1) : navigate("/");
           setMiniPlayer((v) => !v);
+          setMiniplayerVideo(video);
         }}
       >
         <div className="i-lucide:arrow-down-right-square" />
@@ -112,7 +107,7 @@ export function Controlbar({
           {t("component.apiError.reload")}
         </span>
       </Button>
-      <VideoMenu id={id} type={type} status={status} {...rest} url={url}>
+      <VideoMenu video={video} url={url}>
         <Button className="shrink-0" size="icon" variant="ghost">
           <div className="i-heroicons:ellipsis-vertical" />
         </Button>

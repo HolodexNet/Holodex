@@ -11,7 +11,7 @@ import { useDuration } from "@/hooks/useDuration";
 import { clsx } from "clsx";
 import { VideoThumbnail } from "../image";
 
-type VideoCardType = VideoRef &
+export type VideoCardType = VideoRef &
   Partial<VideoBase> &
   Partial<Video> &
   Partial<Live> &
@@ -58,13 +58,11 @@ export function VideoCard({
       ? video.link
       : `/watch/${video.id}`;
 
-  const thumbnailSrc = useMemo(
-    () =>
-      video.link === "placeholder"
-        ? video.thumbnail
-        : makeYtThumbnailUrl(video.id, size),
-    [video.thumbnail, video.id, size, video.link],
-  );
+  const thumbnailSrc =
+    video.link === "placeholder"
+      ? video.thumbnail
+      : makeYtThumbnailUrl(video.id, size);
+
   const externalLink =
     video.type === "placeholder" ? video.link : `https://youtu.be/${video.id}`;
 
@@ -137,7 +135,7 @@ export function VideoCard({
   );
 
   const videoMenu = (
-    <VideoMenu url={externalLink} {...video}>
+    <VideoMenu url={externalLink} video={video}>
       <Button
         variant="ghost"
         size="icon-lg"

@@ -84,6 +84,7 @@
     "string-similarity-js": "^2.1.4",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
+    "type-fest": "^4.18.3",
     "use-seconds": "^1.7.0",
     "usehooks-ts": "^2.12.1",
     "vaul": "^0.9.0",
@@ -130,6 +131,6 @@
     "typescript-plugin-css-modules": "^5.1.0",
     "unocss": "^0.60.3",
     "unocss-preset-autoprefixer": "^0.0.7",
-    "vite": "^5.2.11"
+    "vite": "^5.2.13"
   }
 }

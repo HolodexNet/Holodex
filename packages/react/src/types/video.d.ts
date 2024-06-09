@@ -24,15 +24,21 @@ interface VideoRef {
   duration?: number;
 }
 
+/**
+ * The default video object returned by /live Endpoints.
+ *
+/**
+ * The default video object returned by /live Endpoints.
+ */
+type LiveEndpointResponse = Omit<VideoBase, "channel_id" | "description"> &
+  PlaceholderTitlePayload;
+
 interface VideoBase extends VideoRef {
-  id: string;
   channel_id: string;
-  title: string;
   description: string;
-  type: VideoType;
   topic_id: string | null;
   published_at: string | null;
-  available_at?: string;
+  available_at?: Date | number | string;
   duration: number;
   status: VideoStatus;
   start_scheduled: string | null;
@@ -42,6 +48,9 @@ interface VideoBase extends VideoRef {
   songcount: number;
 }
 
+/**
+ * Video is the default response of the Holodex API
+ */
 interface Video extends VideoBase {
   songs: number;
   clips?: Clip[];

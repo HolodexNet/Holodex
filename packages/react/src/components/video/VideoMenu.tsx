@@ -20,27 +20,21 @@ import { Link } from "react-router-dom";
 import { useCopyToClipboard } from "usehooks-ts";
 import { useToast } from "@/shadcn/ui/use-toast";
 import { useAtom } from "jotai";
-import { queueAtom } from "@/store/player";
+import { queueAtom } from "@/store/queue";
+import { VideoCardType } from "./VideoCard";
 
 const LazyNewPlaylistDialog = lazy(
   () => import("@/components/playlist/NewPlaylistDialog"),
 );
 
-type VideoMenuBase = Partial<VideoBase> & VideoRef;
-
-interface VideoMenuProps extends VideoMenuBase {
+interface VideoMenuProps {
+  video: VideoCardType;
   children: ReactNode;
   url?: string;
 }
 
-export function VideoMenu({
-  children,
-  id: videoId,
-  type,
-  status,
-  url,
-  ...rest
-}: VideoMenuProps) {
+export function VideoMenu({ children, video, url }: VideoMenuProps) {
+  const videoId = video.id;
   const { toast } = useToast();
   const [, copy] = useCopyToClipboard();
   const [isOpen, setIsOpen] = useState(false);
@@ -60,18 +54,7 @@ export function VideoMenu({
           className="flex gap-2"
           onClick={() =>
             setQueue((q) =>
-              isQueued
-                ? q.filter(({ id }) => videoId !== id)
-                : [
-                    ...q,
-                    {
-                      id: videoId,
-                      type,
-                      status,
-                      url,
-                      ...rest,
-                    },
-                  ],
+              isQueued ? q.filter(({ id }) => videoId !== id) : [...q, video],
             )
           }
         >
@@ -100,7 +83,7 @@ export function VideoMenu({
             </Link>
           </DropdownMenuItem>
         )}
-        {type !== "clip" && (
+        {video.type !== "clip" && (
           <DropdownMenuItem asChild>
             <Link
               className="flex gap-2"

@@ -25,14 +25,26 @@ export function MainVideoListing({
   isFetchingNextPage,
   isLoading,
 }: MainVideoListingProps) {
-  const countPerRow = useMemo(() => {
-    if (size === "list") return 1;
-    if (size === "lg") return Math.max(1, Math.floor(containerWidth / 360));
-    if (size === "md") return Math.max(1, Math.floor(containerWidth / 240));
-    if (size === "sm") return Math.max(1, Math.floor(containerWidth / 200));
-    if (size === "xs") return Math.max(1, Math.floor(containerWidth / 180));
-    return 1;
-  }, [containerWidth, size]);
+  let countPerRow;
+  switch (size) {
+    case "list":
+      countPerRow = 1;
+      break;
+    case "lg":
+      countPerRow = Math.max(1, Math.floor(containerWidth / 360));
+      break;
+    case "md":
+      countPerRow = Math.max(1, Math.floor(containerWidth / 240));
+      break;
+    case "sm":
+      countPerRow = Math.max(1, Math.floor(containerWidth / 200));
+      break;
+    case "xs":
+      countPerRow = Math.max(1, Math.floor(containerWidth / 180));
+      break;
+    default:
+      countPerRow = 1;
+  }
 
   const videosGroupedByRow = useMemo(() => {
     const out = [];
