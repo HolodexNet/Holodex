@@ -102,7 +102,7 @@ export default function Watch() {
               {currentVideo && (
                 <Controlbar
                   video={currentVideo}
-                  link={idToVideoURL(currentVideo.id, currentVideo.link)}
+                  url={idToVideoURL(currentVideo.id, currentVideo.link)}
                 />
               )}
             </div>
