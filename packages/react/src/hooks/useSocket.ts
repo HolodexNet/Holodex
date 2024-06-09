@@ -1,4 +1,4 @@
-import io, { Socket } from "socket.io-client";
+import io, { type Socket } from "socket.io-client";
 import { roomToLang, roomToVideoID, toParsedMessage } from "../lib/socket";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
