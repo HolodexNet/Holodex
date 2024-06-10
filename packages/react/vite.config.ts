@@ -29,6 +29,9 @@ export default defineConfig({
         "ffprobe-core.wasm",
         "ffmpeg.min.js",
       ],
+      output: {
+        experimentalMinChunkSize: 6000,
+      },
     },
   },
   server: {
@@ -61,6 +64,7 @@ export default defineConfig({
       analyzerMode: process.env["HOME"]?.includes("/home/holodex")
         ? "static" // don't use server mode when compiling on the linux server
         : "server",
+      port: 9821,
     }),
     react({
       babel: {

@@ -87,7 +87,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
                 className="text-base-11"
                 label={t("component.mainNav.tlclient")}
                 icon="i-heroicons:language"
-                href="/settings"
+                href="/tlclient"
                 onClose={onClose}
               />
             )}
@@ -98,7 +98,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
                 // icon="i-solar:subtitles-linear"
                 // icon="i-gravity-ui:timeline"
                 icon="i-fluent:gantt-chart-16-regular"
-                href="/settings"
+                href="/scripteditor"
                 onClose={onClose}
               />
             )}

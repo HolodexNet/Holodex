@@ -12,11 +12,11 @@ export function SettingsItem({
   fullWidth,
 }: SettingsItemProps) {
   return (
-    <div className="flex flex-wrap justify-between gap-4 border-b-2 border-base-5 py-6 first:pt-0 last:border-b-0">
+    <div className="my-4 flex flex-wrap justify-between gap-4 first:pt-0 last:border-b-0">
       <h3 className={"text-xl font-bold " + (fullWidth && " w-full")}>
         {label}
       </h3>
-      {Children.only(children)}
+      <div className={fullWidth ? "px-4" : ""}>{children}</div>
     </div>
   );
 }

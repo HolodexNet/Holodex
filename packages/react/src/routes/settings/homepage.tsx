@@ -2,7 +2,9 @@ import { SettingsItem } from "@/components/settings/SettingsItem";
 import { TopicPicker } from "@/components/topic/TopicPicker";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/shadcn/ui/badge";
+import { Checkbox } from "@/shadcn/ui/checkbox";
 import { Label } from "@/shadcn/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/shadcn/ui/radio-group";
 import { Switch } from "@/shadcn/ui/switch";
 import {
@@ -44,15 +46,15 @@ export function SettingsHomepage() {
     },
     {
       value: "md",
-      label: t("views.settings.gridSize.0"),
+      label: t("views.settings.gridSize.1"),
       icon: "i-lucide:grid-3x3",
     },
     {
       value: "sm",
-      label: t("views.settings.gridSize.1"),
+      label: t("views.settings.gridSize.2"),
       icon: "i-lucide:list",
     },
-  ];
+  ] as const;
 
   const hideFeatures = [
     {
@@ -74,55 +76,47 @@ export function SettingsHomepage() {
 
   return (
     <div className="flex flex-col p-2 md:p-4">
-      <SettingsItem label={t("views.settings.defaultPage")}>
-        <RadioGroup
-          className="flex w-full flex-col gap-0 overflow-hidden rounded-lg border border-base"
-          value={defaultOpen}
-          onValueChange={(val: "Home" | "Favorites") => setDefaultOpen(val)}
-        >
-          {defaultPages.map(({ label, value }) => (
+      <SettingsItem label={t("views.settings.defaultPage")} fullWidth>
+        <div className="flex flex-col gap-2">
+          <div
+            className={cn("flex cursor-pointer items-center gap-2", {
+              "text-primary-8": defaultOpen === "Home",
+            })}
+            onClick={() => setDefaultOpen("Home")}
+          >
+            <div className="i-lucide:home"></div>
+            <div>{t("views.settings.defaultHomepage.lastVisitedOrgHome")}</div>
+          </div>
+          <div
+            className={cn("flex cursor-pointer items-center gap-2", {
+              "text-primary-8": defaultOpen === "Favorites",
+            })}
+            onClick={() => setDefaultOpen("Favorites")}
+          >
+            <div className="i-lucide:heart"></div>
+            <div>
+              {t("views.settings.defaultHomepage.favoritesWhenLoggedIn")}
+            </div>
+          </div>
+        </div>
+      </SettingsItem>
+      <SettingsItem label={t("views.settings.gridSizeLabel")} fullWidth>
+        <div className="flex flex-col gap-2">
+          {gridSizes.map(({ label, value, icon }) => (
             <div
-              className={cn("flex items-center space-x-2 p-4 text-primary-12", {
-                "bg-primaryA-4": value === defaultOpen,
-                "text-base-11": value !== defaultOpen,
+              className={cn("flex cursor-pointer items-center gap-2", {
+                "text-primary-8": value === size,
               })}
+              onClick={() => setSize(value)}
             >
-              <Label
-                htmlFor={"defaultPage" + value}
-                className={cn(
-                  "flex w-full items-center justify-between hover:cursor-pointer",
-                )}
-              >
-                {label}
-              </Label>
-              <RadioGroupItem value={value} id={"defaultPage" + value} />
+              <div className={icon}></div>
+              <div>{label}</div>
             </div>
           ))}
-        </RadioGroup>
+        </div>
       </SettingsItem>
-      <SettingsItem label={t("views.settings.gridSizeLabel")}>
-        <RadioGroup
-          className="ml-auto flex gap-0 rounded-lg"
-          onValueChange={(val: "lg" | "md" | "sm") => setSize(val)}
-        >
-          {gridSizes.map(({ label, value, icon }) => (
-            <Label
-              className={cn(
-                "border-r-2 border-base bg-base-4 px-4 py-2 text-lg first:rounded-l-lg last:rounded-r-lg last:border-r-0 hover:cursor-pointer",
-                { "bg-secondary-9": value === size },
-              )}
-            >
-              <div className="flex flex-row items-center gap-1">
-                <div className={icon}></div>
-                <span>{label}</span>
-              </div>
-              <RadioGroupItem value={value} className="sr-only" />
-            </Label>
-          ))}
-        </RadioGroup>
-      </SettingsItem>
-      <SettingsItem label={t("views.settings.ignoredTopicsLabel")}>
-        <div className="flex w-full flex-col gap-2">
+      <SettingsItem label={t("views.settings.ignoredTopicsLabel")} fullWidth>
+        <div className="flex flex-col gap-2">
           <TopicPicker
             onSelect={(topic) => setIgnoredTopics([...ignoredTopics, topic])}
           />
@@ -140,25 +134,24 @@ export function SettingsHomepage() {
           </div>
         </div>
       </SettingsItem>
-      <SettingsItem label={t("views.settings.hideFeaturesLabel")}>
-        <div className="flex w-full flex-col rounded-lg border border-base">
+      <SettingsItem label={t("views.settings.hideFeaturesLabel")} fullWidth>
+        <div className="flex w-full flex-col items-start gap-2">
           {hideFeatures.map(({ label, value, onChange }, index) => (
-            <Label
-              className={cn(
-                "flex w-full min-w-[18rem] items-center justify-between gap-4 p-4 hover:cursor-pointer",
-                {
-                  "bg-base-4": index % 2,
-                },
-              )}
-              htmlFor={`hidefeature-${label}`}
-            >
-              {label}
-              <Switch
-                id={`hidefeature-${label}`}
+            <div className="flex gap-2">
+              <Checkbox
                 checked={value}
                 onCheckedChange={onChange}
+                id={`hidefeature-${label}`}
               />
-            </Label>
+              <Label
+                className={cn("cursor-pointer", {
+                  "bg-base-3": index % 2,
+                })}
+                htmlFor={`hidefeature-${label}`}
+              >
+                {label}
+              </Label>
+            </div>
           ))}
         </div>
       </SettingsItem>
