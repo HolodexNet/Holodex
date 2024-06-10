@@ -12,16 +12,30 @@ import { Input } from "@/shadcn/ui/input";
 import { Textarea } from "@/shadcn/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Email is invalid" }),
+  message: z.string().min(80, { message: "Message is required" }),
+});
 
 export function AboutFaqEmailForm() {
   const { t } = useTranslation();
-  const form = useForm({
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       email: "",
       message: "",
     },
   });
+
   const { mutate } = useReportMutation({ type: "contact" });
 
   return (
@@ -41,7 +55,7 @@ export function AboutFaqEmailForm() {
               <FormItem>
                 <FormLabel>{t("about.contactForm.name")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Type here" {...field} />
+                  <Input type="text" placeholder="Type here" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -74,7 +88,7 @@ export function AboutFaqEmailForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" variant="secondary" className="mt-4">
+        <Button type="submit" variant="ghost" className="mt-4">
           {t("about.contactForm.sendButton")}
         </Button>
       </form>

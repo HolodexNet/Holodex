@@ -58,7 +58,7 @@ export function SettingsUser() {
 
   return (
     <div className="flex flex-col p-2 md:p-4">
-      <div className="flex items-center gap-6">
+      <div className="mb-4 flex items-center gap-6">
         <img
           className="h-24 w-24 rounded-full"
           src={`https://api.dicebear.com/7.x/shapes/svg?seed=${user.id}`}
@@ -158,10 +158,10 @@ export function SettingsUser() {
           </Button>
         </div>
       </div>
-      <SettingsItem label={t("views.login.linkAcc")}>
+      <SettingsItem label={t("views.login.linkAcc")} fullWidth>
         <LoginButtons />
       </SettingsItem>
-      <SettingsItem label={t("views.login.username")}>
+      <SettingsItem label={t("views.login.username")} fullWidth>
         <div className="ml-auto flex w-full max-w-md items-center gap-2">
           <Input placeholder={user.username} />
           <Button className="whitespace-nowrap">
@@ -169,15 +169,15 @@ export function SettingsUser() {
           </Button>
         </div>
       </SettingsItem>
-      <SettingsItem label={t("views.login.ownedYtChannel")}>
+      {/* <SettingsItem label={t("views.login.ownedYtChannel")}>
         <div className="ml-auto flex max-w-md flex-col gap-2">
           <Input className="ml-auto max-w-md" value="None on file" disabled />
           <span className="text-xs text-base-11">
             {t("views.login.futureYtcOwnerMessage")}
           </span>
         </div>
-      </SettingsItem>
-      <SettingsItem label="API Key">
+      </SettingsItem> */}
+      <SettingsItem label="API Key" fullWidth>
         <div className="ml-auto flex w-full max-w-md flex-col gap-4">
           <div className="flex items-center gap-2">
             <Input value={user.api_key} readOnly />

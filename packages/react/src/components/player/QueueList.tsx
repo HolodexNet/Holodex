@@ -1,4 +1,3 @@
-import { miniplayerVideoAtom } from "@/store/player";
 import { queueAtom } from "@/store/queue";
 import { useAtom, useAtomValue } from "jotai";
 import { VideoCard } from "../video/VideoCard";
