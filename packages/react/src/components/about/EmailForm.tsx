@@ -46,8 +46,9 @@ export function AboutFaqEmailForm() {
             Object.entries(payload).map(([name, value]) => ({ name, value })),
           ),
         )}
+        className="grid gap-2 md:gap-4"
       >
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
           <FormField
             control={form.control}
             name="name"
@@ -82,13 +83,13 @@ export function AboutFaqEmailForm() {
             <FormItem>
               <FormLabel>{t("about.contactForm.message")}</FormLabel>
               <FormControl>
-                <Textarea placeholder="..." {...field} />
+                <Textarea placeholder="..." {...field} className="min-h-32" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" variant="ghost" className="mt-4">
+        <Button type="submit" variant="ghost" className="" size="lg">
           {t("about.contactForm.sendButton")}
         </Button>
       </form>

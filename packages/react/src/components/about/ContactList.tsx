@@ -1,5 +1,6 @@
 import { AboutFaqEmailForm } from "@/components/about/EmailForm";
 import { AboutHeading } from "@/components/about/Heading";
+import { Button } from "@/shadcn/ui/button";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -8,7 +9,33 @@ export function ContactList() {
 
   return (
     <div>
-      <AboutHeading>{t("about.contact.discord")}</AboutHeading>
+      <AboutHeading>Get in touch</AboutHeading>
+      <p className="my-2 max-w-[700px] text-gray-500 dark:text-gray-400">
+        Have a question or want to work together? We'd love to hear from you.
+      </p>
+      <div className="grid w-full max-w-md grid-cols-1 gap-4 sm:grid-cols-2">
+        <Button asChild variant="default" className="p-8">
+          <a
+            href="https://twitter.com/messages/compose?recipient_id=1320894663084048384&text=Hello"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="i-logos:twitter" />
+            {t("about.contact.twitter")}
+          </a>
+        </Button>
+        <Button asChild variant="default" className="p-8">
+          <a
+            href="https://twitter.com/messages/compose?recipient_id=1320894663084048384&text=Hello"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="i-logos:discord-icon" />
+            {t("about.contact.discord")}
+          </a>
+        </Button>
+      </div>
+      {/* <AboutHeading>{t("about.contact.discord")}</AboutHeading>
       <Link to="https://discord.gg/A24AbzgvRJ" target="_blank">
         <img
           src="https://discordapp.com/api/guilds/796190073271353385/widget.png?style=banner2"
@@ -36,7 +63,7 @@ export function ContactList() {
             src="https://img.shields.io/twitter/url?label=Message%20%40Holodex&style=social&url=https%3A%2F%2Fholodex.net"
           />
         </Link>
-      </div>
+      </div> */}
       <AboutHeading>{t("about.contact.email")}</AboutHeading>
       <AboutFaqEmailForm />
     </div>

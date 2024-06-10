@@ -25,7 +25,7 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
       <div className="min-h-[100dvh] space-y-2 bg-base-2">
         <div className="flex items-center gap-2 px-4 pb-2 pt-4">
           <Logo className="ml-1.5 h-8 w-8" />
-          <h2 className="text-2xl font-semibold tracking-tight">Holodex</h2>
+          <h2 className="text-3xl font-semibold tracking-tight">Holodex</h2>
           <div className="flex grow" />
           <Button
             variant="ghost"
