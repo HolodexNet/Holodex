@@ -55,15 +55,17 @@ export function QueueList({ currentId }: { currentId?: string }) {
               Clear
             </Button>
           </div>
-          {queue.map((video) => (
-            <div
-              className={cn("px-4", {
-                "bg-base-5": currentId === video.id,
-              })}
-            >
-              <VideoCard size="xs" video={video} />
-            </div>
-          ))}
+          <div className="flex flex-col">
+            {queue.map((video) => (
+              // <div
+              //   className={cn("px-4", {
+              //     "bg-base-5": currentId === video.id,
+              //   })}
+              // >
+              <VideoCard showDuration={false} size="sm" video={video} />
+              // </div>
+            ))}
+          </div>
         </div>
       </CollapsibleContent>
     </Collapsible>

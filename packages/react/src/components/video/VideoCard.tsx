@@ -23,6 +23,7 @@ interface VideoCardProps {
   onInfoClick?: React.MouseEventHandler<HTMLElement>;
   onThumbnailClick?: React.MouseEventHandler<HTMLElement>;
   onChannelClick?: React.MouseEventHandler<HTMLElement>;
+  showDuration: boolean;
 }
 
 // export const wrapper = cva({
@@ -46,6 +47,7 @@ export function VideoCard({
   onInfoClick,
   onThumbnailClick,
   onChannelClick,
+  showDuration = true,
 }: VideoCardProps) {
   const { dayjs } = useAtomValue(localeAtom);
   const { t } = useTranslation();
@@ -184,7 +186,7 @@ export function VideoCard({
               &nbsp;{video.songcount}
             </span>
           )}
-          <VideoCardDuration className="" {...video} />
+          {showDuration && <VideoCardDuration className="" {...video} />}
         </div>
       </Link>
       <div className="relative flex grow gap-2 @sm:gap-1">

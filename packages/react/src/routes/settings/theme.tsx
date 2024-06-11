@@ -8,6 +8,15 @@ import {
   secondaryAtom,
 } from "@/hooks/useTheme";
 import { Badge } from "@/shadcn/ui/badge";
+import { Button } from "@/shadcn/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/shadcn/ui/dropdown-menu";
 import { Label } from "@/shadcn/ui/label";
 import {
   Select,
@@ -32,37 +41,35 @@ export function SettingsTheme() {
 
   return (
     <div className="flex flex-col p-2 md:p-4">
-      <SettingsItem label={t("views.settings.darkModeLabel")}>
+      <SettingsItem label={t("views.settings.darkModeLabel")} fullWidth>
         <Switch checked={dark} onCheckedChange={setDark} />
       </SettingsItem>
 
-      <SettingsItem label={"Theme Colors"}>
-        <div className="flex w-full flex-col gap-2">
-          <div className="flex flex-wrap gap-4">
-            <div className="flex max-w-sm flex-col gap-2">
-              <Label className="text-base-11">Base Color</Label>
-              <ColorPicker
-                options={THEME_BASE_COLORS}
-                value={base}
-                onValueChange={setBase}
-              ></ColorPicker>
-            </div>
-            <div className="flex max-w-sm flex-col gap-2">
-              <Label className="text-base-11">Primary Color</Label>
-              <ColorPicker
-                options={THEME_COLORS.concat(THEME_BASE_COLORS)}
-                value={primary}
-                onValueChange={setPrimary}
-              ></ColorPicker>
-            </div>
-            <div className="flex max-w-sm flex-col gap-2">
-              <Label className="text-base-11">Secondary Color</Label>
-              <ColorPicker
-                options={THEME_COLORS.concat(THEME_BASE_COLORS)}
-                value={secondary}
-                onValueChange={setSecondary}
-              ></ColorPicker>
-            </div>
+      <SettingsItem label={"Theme Colors"} fullWidth>
+        <div className="flex flex-wrap gap-4">
+          <div className="flex w-full flex-col gap-2">
+            <Label className="text-base-11">Base Color</Label>
+            <ColorPicker
+              options={THEME_BASE_COLORS}
+              value={base}
+              onValueChange={setBase}
+            ></ColorPicker>
+          </div>
+          <div className="flex max-w-sm flex-col gap-2">
+            <Label className="text-base-11">Primary Color</Label>
+            <ColorPicker
+              options={THEME_COLORS.concat(THEME_BASE_COLORS)}
+              value={primary}
+              onValueChange={setPrimary}
+            ></ColorPicker>
+          </div>
+          <div className="flex max-w-sm flex-col gap-2">
+            <Label className="text-base-11">Secondary Color</Label>
+            <ColorPicker
+              options={THEME_COLORS.concat(THEME_BASE_COLORS)}
+              value={secondary}
+              onValueChange={setSecondary}
+            ></ColorPicker>
           </div>
         </div>
       </SettingsItem>
@@ -72,23 +79,37 @@ export function SettingsTheme() {
 
 interface ColorPickerProps {
   options: string[];
+  value: string;
+  onValueChange: (value: string) => void;
 }
 
-function ColorPicker({ options, ...rest }: ColorPickerProps & SelectProps) {
+function ColorPicker({ options, value, onValueChange }: ColorPickerProps) {
   return (
-    <Select {...rest}>
-      <SelectTrigger className="max-w-sm">
-        <SelectValue placeholder="Select a Color" />
-      </SelectTrigger>
-      <SelectContent className="max-h-48">
-        <SelectGroup>
-          <SelectLabel>Colors</SelectLabel>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild className="max-w-sm">
+        <Button variant="ghost" className="h-10 w-[300px] justify-between pl-0">
+          <div
+            className="flex h-10 grow flex-col content-center justify-center rounded-md text-sm font-medium"
+            style={{
+              backgroundColor: `var(--${value}-9)`,
+              color: `var(--${value}-12)`,
+            }}
+          >
+            <p>{value}</p>
+          </div>
+          <div className="i-lucide:chevron-down h-4 w-4 opacity-60"></div>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="">
+        <DropdownMenuLabel>Select a color</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <div className="grid grid-cols-4 gap-2">
           {options.map((x) => {
             return (
-              <SelectItem key={x} value={x}>
+              <DropdownMenuItem key={x} onSelect={() => onValueChange(x)}>
                 <Badge
                   variant="default"
-                  className="w-32"
+                  className="h-8 w-20"
                   style={{
                     backgroundColor: `var(--${x}-9)`,
                     color: `var(--${x}-12)`,
@@ -96,11 +117,11 @@ function ColorPicker({ options, ...rest }: ColorPickerProps & SelectProps) {
                 >
                   {x}
                 </Badge>
-              </SelectItem>
+              </DropdownMenuItem>
             );
           })}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+        </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
