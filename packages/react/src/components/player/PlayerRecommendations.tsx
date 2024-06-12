@@ -109,12 +109,12 @@ function RecommendationCollapsible({
           onClick={() => setOpen(!open)}
         >
           <div className={open ? "i-heroicons:minus" : "i-heroicons:plus"} />
-          {label}
+          <span className="capitalize">{label}</span>
           <div className="grow" />
           <span>{Children.count(children)}</span>
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent>{children}</CollapsibleContent>
+      <CollapsibleContent className="bg-base-2">{children}</CollapsibleContent>
     </Collapsible>
   );
 }

@@ -11,6 +11,7 @@ import {
 import { useMemo, useState } from "react";
 import NewPlaylistDialog from "../playlist/NewPlaylistDialog";
 import { cn } from "@/lib/utils";
+import { WATCH_PAGE_DROPDOWN_BUTTON_STYLE } from "@/shadcn/ui/button.variants";
 
 export function QueueList({ currentId }: { currentId?: string }) {
   const { t } = useTranslation();
@@ -24,13 +25,13 @@ export function QueueList({ currentId }: { currentId?: string }) {
   return (
     <Collapsible
       open={open}
-      className="flex flex-col gap-2 rounded-lg bg-base-3 @container"
+      className="flex flex-col gap-2 overflow-hidden rounded-lg border border-base bg-base-3 @container"
     >
       <CollapsibleTrigger asChild>
         <Button
           size="lg"
           variant="ghost"
-          className="justify-start px-4 font-bold"
+          className={WATCH_PAGE_DROPDOWN_BUTTON_STYLE}
           onClick={() => setOpen(!open)}
         >
           <div className={open ? "i-heroicons:minus" : "i-heroicons:plus"} />
@@ -43,7 +44,7 @@ export function QueueList({ currentId }: { currentId?: string }) {
       </CollapsibleTrigger>
       <CollapsibleContent>
         {open && (
-          <div className="flex max-h-[70vh] flex-col overflow-y-auto">
+          <div className="flex max-h-[40vh] flex-col overflow-y-auto">
             <div className="flex justify-between">
               <NewPlaylistDialog
                 triggerElement={
