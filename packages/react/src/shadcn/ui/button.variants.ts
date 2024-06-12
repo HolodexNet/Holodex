@@ -33,3 +33,6 @@ export const buttonVariants = cva(
     },
   }
 )
+
+export const WATCH_PAGE_DROPDOWN_BUTTON_STYLE =
+  "flex w-full justify-start rounded-none px-4 py-2 transition-[padding] active:transform-none active:px-5"

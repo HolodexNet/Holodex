@@ -7,6 +7,7 @@ import { Children, ReactNode, useState } from "react";
 import { VideoCard } from "../video/VideoCard";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/shadcn/ui/button";
+import { WATCH_PAGE_DROPDOWN_BUTTON_STYLE } from "@/shadcn/ui/button.variants";
 
 export function PlayerRecommendations({
   sources,
@@ -96,12 +97,15 @@ function RecommendationCollapsible({
   const [open, setOpen] = useState(true);
 
   return (
-    <Collapsible open={open}>
+    <Collapsible
+      open={open}
+      className="overflow-hidden rounded-lg border border-base bg-base-3"
+    >
       <CollapsibleTrigger asChild>
         <Button
           size="lg"
           variant="ghost"
-          className="flex w-full cursor-pointer px-4 text-lg font-bold"
+          className={WATCH_PAGE_DROPDOWN_BUTTON_STYLE}
           onClick={() => setOpen(!open)}
         >
           <div className={open ? "i-heroicons:minus" : "i-heroicons:plus"} />

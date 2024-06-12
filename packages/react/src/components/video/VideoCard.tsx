@@ -23,7 +23,7 @@ interface VideoCardProps {
   onInfoClick?: React.MouseEventHandler<HTMLElement>;
   onThumbnailClick?: React.MouseEventHandler<HTMLElement>;
   onChannelClick?: React.MouseEventHandler<HTMLElement>;
-  showDuration: boolean;
+  showDuration?: boolean;
 }
 
 // export const wrapper = cva({

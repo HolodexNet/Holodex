@@ -10,6 +10,7 @@ import { TLChat } from "../tldex/TLChat";
 import { useAtom } from "jotai";
 import { chatOpenAtom, tlOpenAtom } from "@/store/player";
 import { useStateList } from "react-use";
+import { WATCH_PAGE_DROPDOWN_BUTTON_STYLE } from "@/shadcn/ui/button.variants";
 
 const CHAT_SIZES_ITER = [1, 1.6, 2, 2.5, 0.3, 0.6, 0.8];
 
@@ -25,17 +26,17 @@ export function ChatCard({
     useStateList(CHAT_SIZES_ITER);
 
   return (
-    <div className="flex h-full w-full flex-col bg-base-3">
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-lg border border-base bg-base-3">
       <Collapsible
         open={chatOpen}
-        className={cn("flex flex-col", {})}
+        className={cn("flex flex-col bg-base-3")}
         style={{ flexGrow: chatOpen ? (tlOpen ? chatBasis : 1) : 0 }}
       >
         <CollapsibleTrigger asChild>
           <Button
             size="lg"
             variant="ghost"
-            className="flex w-full justify-start rounded-none px-4 py-2 transition-[padding] active:transform-none active:px-5"
+            className={WATCH_PAGE_DROPDOWN_BUTTON_STYLE}
             onClick={() => setChatOpen((v) => !v)}
           >
             <div
@@ -79,7 +80,7 @@ export function ChatCard({
           <Button
             size="lg"
             variant="ghost"
-            className="flex w-full justify-start rounded-none px-4 py-2 active:transform-none active:px-5"
+            className={WATCH_PAGE_DROPDOWN_BUTTON_STYLE}
             onClick={() => setTlOpen((v) => !v)}
           >
             <div

@@ -134,12 +134,9 @@ export default function Watch() {
               {(currentVideo?.type === "stream" ||
                 currentVideo?.status === "live") && (
                 <div
-                  className={cn(
-                    "overflow-hidden rounded-lg border border-base",
-                    {
-                      "h-[80vh] max-h-[80vh]": chatOpen || tlOpen,
-                    },
-                  )}
+                  className={cn("overflow-hidden", {
+                    "h-[80vh] max-h-[80vh]": chatOpen || tlOpen,
+                  })}
                 >
                   <ChatCard {...currentVideo} />
                 </div>
