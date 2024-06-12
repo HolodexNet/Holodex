@@ -8,14 +8,18 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/shadcn/ui/collapsible";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import NewPlaylistDialog from "../playlist/NewPlaylistDialog";
 import { cn } from "@/lib/utils";
 
 export function QueueList({ currentId }: { currentId?: string }) {
-  const [open, setOpen] = useState(true);
   const { t } = useTranslation();
   const [queue, setQueue] = useAtom(queueAtom);
+  // currentIdInQueue:
+  const currentIdIdxInQueue = useMemo(() => {
+    return currentId && queue.findIndex(({ id }) => currentId === id) + 1;
+  }, [currentId, queue]);
+  const [open, setOpen] = useState(!!currentIdIdxInQueue);
 
   return (
     <Collapsible
@@ -32,41 +36,36 @@ export function QueueList({ currentId }: { currentId?: string }) {
           <div className={open ? "i-heroicons:minus" : "i-heroicons:plus"} />
           {t("component.queue.title")}
           <span className="ml-auto text-sm text-base-11">
-            {currentId &&
-              queue.findIndex(({ id }) => currentId === id) + 1 + " / "}
+            {currentIdIdxInQueue ? currentIdIdxInQueue + " / " : ""}
             {queue.length} items
           </span>
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="flex max-h-[70vh] flex-col overflow-y-auto">
-          <div className="flex justify-between">
-            <NewPlaylistDialog
-              triggerElement={
-                <Button variant="ghost">
-                  <div className="i-heroicons:plus-circle" />
-                  {t("component.playlist.menu.new-playlist")}
-                </Button>
-              }
-              videoIds={queue.map(({ id }) => id)}
-            />
+        {open && (
+          <div className="flex max-h-[70vh] flex-col overflow-y-auto">
+            <div className="flex justify-between">
+              <NewPlaylistDialog
+                triggerElement={
+                  <Button variant="ghost">
+                    <div className="i-heroicons:plus-circle" />
+                    {t("component.playlist.menu.new-playlist")}
+                  </Button>
+                }
+                videoIds={queue.map(({ id }) => id)}
+              />
 
-            <Button variant="ghost" onClick={() => setQueue([])}>
-              Clear
-            </Button>
+              <Button variant="ghost" onClick={() => setQueue([])}>
+                Clear
+              </Button>
+            </div>
+            <div className="flex flex-col px-2">
+              {queue.map((video) => (
+                <VideoCard showDuration={false} size="sm" video={video} />
+              ))}
+            </div>
           </div>
-          <div className="flex flex-col px-2">
-            {queue.map((video) => (
-              // <div
-              //   className={cn("px-4", {
-              //     "bg-base-5": currentId === video.id,
-              //   })}
-              // >
-              <VideoCard showDuration={false} size="sm" video={video} />
-              // </div>
-            ))}
-          </div>
-        </div>
+        )}
       </CollapsibleContent>
     </Collapsible>
   );

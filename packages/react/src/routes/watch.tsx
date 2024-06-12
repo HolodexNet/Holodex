@@ -23,10 +23,8 @@ import { queueAtom } from "@/store/queue";
 import { useAtom, useAtomValue } from "jotai";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
-import useMeasure from "react-use-measure";
 
 export default function Watch() {
-  console.log("rerendered watch!");
   const location = useLocation();
   const { id } = useParams();
   const { value: clipLang } = useAtomValue(clipLangAtom);

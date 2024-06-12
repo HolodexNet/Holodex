@@ -35,25 +35,27 @@ export function ChatCard({
           <Button
             size="lg"
             variant="ghost"
-            className="flex w-full justify-start rounded-none px-4 py-2"
+            className="flex w-full justify-start rounded-none px-4 py-2 transition-[padding] active:transform-none active:px-5"
             onClick={() => setChatOpen((v) => !v)}
           >
             <div
               className={chatOpen ? "i-heroicons:minus" : "i-heroicons:plus"}
             />
-            {chatOpen ? "Close chat" : "Open chat"}
+            {"Chat"}
 
-            <Button
-              size="icon"
-              variant="ghost"
-              className="ml-auto hover:bg-primary-6"
-              onClick={(e) => {
-                e.stopPropagation();
-                nextChatBasis();
-              }}
-            >
-              <div className="i-fluent:arrow-autofit-height-dotted-24-regular"></div>
-            </Button>
+            {chatOpen && (
+              <Button
+                size="icon"
+                variant="ghost"
+                className="ml-auto hover:bg-primary-6"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextChatBasis();
+                }}
+              >
+                <div className="i-fluent:arrow-autofit-height-dotted-24-regular"></div>
+              </Button>
+            )}
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent asChild>
@@ -77,13 +79,13 @@ export function ChatCard({
           <Button
             size="lg"
             variant="ghost"
-            className="flex w-full justify-start rounded-none px-4 py-2"
+            className="flex w-full justify-start rounded-none px-4 py-2 active:transform-none active:px-5"
             onClick={() => setTlOpen((v) => !v)}
           >
             <div
               className={tlOpen ? "i-heroicons:minus" : "i-heroicons:plus"}
             />
-            {tlOpen ? "Close TL" : "Open TL"}
+            {"TLdex"}
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent asChild>

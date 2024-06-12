@@ -20,7 +20,7 @@ export const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline focus-visible:underline focus-visible:ring-secondary-7",
       },
       size: {
-        default: "h-8 gap-2 px-3.5 py-2",
+        default: "h-8 gap-2 px-3.5 py-2", // also counts as "md"
         sm: "h-6 gap-1.5 rounded-md px-1 text-xs",
         lg: "h-10 gap-3 rounded-md px-6 text-lg ",
         icon: "h-8 w-8",
