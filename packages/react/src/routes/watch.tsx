@@ -87,12 +87,14 @@ export default function Watch() {
                     "flex-row-reverse": chatPos === "left",
                   })}
                 >
-                  <PlayerWrapper
-                    id={currentVideo?.id}
-                    url={url}
-                    // className="h-full w-full"
-                    // style={{ aspectRatio: theaterMode ? "" : "16 / 9" }}
-                  />
+                  <div className="grow">
+                    <PlayerWrapper
+                      id={currentVideo?.id}
+                      url={url}
+                      // className="h-full w-full"
+                      // style={{ aspectRatio: theaterMode ? "" : "16 / 9" }}
+                    />
+                  </div>
                   {theaterMode && currentVideo && (chatOpen || tlOpen) && (
                     <div className="hidden min-w-[24rem] @screen-lg:flex">
                       <ChatCard {...currentVideo} />

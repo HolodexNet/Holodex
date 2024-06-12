@@ -39,8 +39,8 @@ export function QueueList({ currentId }: { currentId?: string }) {
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="flex max-h-[70vh] flex-col overflow-y-auto py-2 ">
-          <div className="flex justify-between px-4 pb-2">
+        <div className="flex max-h-[70vh] flex-col overflow-y-auto">
+          <div className="flex justify-between">
             <NewPlaylistDialog
               triggerElement={
                 <Button variant="ghost">
@@ -55,7 +55,7 @@ export function QueueList({ currentId }: { currentId?: string }) {
               Clear
             </Button>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col px-2">
             {queue.map((video) => (
               // <div
               //   className={cn("px-4", {

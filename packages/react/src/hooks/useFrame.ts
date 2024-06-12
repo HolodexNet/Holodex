@@ -30,9 +30,11 @@ export const isSidebarOpenAtom = atom(window.innerWidth > MobileSizeBreak);
 export const indicatePageFullscreenAtom = atom(
   null,
   (get, set, pageIsFullscreen: boolean) => {
+    console.log("indicatePageFullscreen", pageIsFullscreen);
     const currentFullscreenStatus = get(pageIsFullscreenAtom);
     if (currentFullscreenStatus !== pageIsFullscreen && pageIsFullscreen) {
       set(isSidebarOpenAtom, false);
+      set(indicatePageFullscreenAtom, true);
     } else if (
       currentFullscreenStatus !== pageIsFullscreen &&
       !pageIsFullscreen
@@ -55,6 +57,11 @@ export const onResizeAtom = atom(null, (get, set) => {
     console.log("closing");
     set(isSidebarOpenAtom, false);
   } else if (width >= MobileSizeBreak && !get(indicatePageFullscreenAtom)) {
+    console.log(
+      "state debug",
+      get(indicatePageFullscreenAtom),
+      get(sidebarPrefOpenAtom),
+    );
     // else if the sidebar is closed, open it
     set(isSidebarOpenAtom, get(sidebarPrefOpenAtom));
   }
