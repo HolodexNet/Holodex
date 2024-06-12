@@ -7,6 +7,7 @@ import { PlayerDescription } from "@/components/player/PlayerDescription";
 import { PlayerRecommendations } from "@/components/player/PlayerRecommendations";
 import { PlayerStats } from "@/components/player/PlayerStats";
 import { QueueList } from "@/components/player/QueueList";
+import { useIsLgAndUp } from "@/hooks/useBreakpoint";
 import { cn, idToVideoURL } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
 import { useVideo } from "@/services/video.service";
@@ -25,6 +26,7 @@ import { useLocation, useParams } from "react-router-dom";
 import useMeasure from "react-use-measure";
 
 export default function Watch() {
+  console.log("rerendered watch!");
   const location = useLocation();
   const { id } = useParams();
   const { value: clipLang } = useAtomValue(clipLangAtom);
@@ -58,7 +60,8 @@ export default function Watch() {
   const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
   const [tlOpen, setTLOpen] = useAtom(tlOpenAtom);
   const chatPos = useAtomValue(chatPosAtom);
-  const [ref, bounds] = useMeasure({ debounce: 50, scroll: false });
+
+  const smOrMd = !useIsLgAndUp();
 
   const url = idToVideoURL(id!, currentVideo?.link);
   return (
@@ -67,7 +70,7 @@ export default function Watch() {
         <title>{currentVideo?.title}</title>
         <meta name="description" content={currentVideo?.description} />
       </Helmet>
-      <div className="flex h-full w-full  @container" ref={ref}>
+      <div className="flex h-full w-full @container">
         <div
           className={cn("mx-auto flex w-full gap-8", {
             " p-4 pt-2 max-w-screen-2xl": !theaterMode,
@@ -147,7 +150,7 @@ export default function Watch() {
             </div>
           )}
         </div>
-        {currentVideo && bounds.width < 1023 && (
+        {currentVideo && smOrMd && (
           <ChatModal
             tlOpen={tlOpen}
             chatOpen={chatOpen}

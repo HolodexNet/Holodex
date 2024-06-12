@@ -27,6 +27,8 @@ import { DefaultPlayerContainer } from "./DefaultPlayerContainer";
 import { useOnClickOutside } from "usehooks-ts";
 
 export function Frame() {
+  console.log("rerendered frame!");
+
   const location = useLocation();
   const navigate = useNavigate();
   const toggle = useSetAtom(toggleSidebarAtom);
