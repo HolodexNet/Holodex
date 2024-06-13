@@ -10,6 +10,10 @@ import {
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
+function FaqQuestion({ children }: { children: React.ReactNode }) {
+  return <h3 className="text-xl font-semibold tracking-tight">{children}</h3>;
+}
+
 export function AboutFaq() {
   const { t } = useTranslation();
 
@@ -17,7 +21,9 @@ export function AboutFaq() {
     <div>
       <Accordion type="multiple">
         <AccordionItem value="youtube">
-          <AccordionTrigger>{t("about.faq.ytchatHeader")}</AccordionTrigger>
+          <AccordionTrigger>
+            <FaqQuestion>{t("about.faq.ytchatHeader")}</FaqQuestion>
+          </AccordionTrigger>
           <AccordionContent>
             <AboutDescription className="mb-2">
               {t("about.faq.ytchatContent")}
@@ -32,7 +38,9 @@ export function AboutFaq() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="autoplay">
-          <AccordionTrigger>{t("about.faq.autoplayHeader")}</AccordionTrigger>
+          <AccordionTrigger>
+            <FaqQuestion>{t("about.faq.autoplayHeader")}</FaqQuestion>
+          </AccordionTrigger>
           <AccordionContent>
             <AboutDescription>
               {t("about.faq.autoplayContent")}
@@ -44,7 +52,9 @@ export function AboutFaq() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="mobile">
-          <AccordionTrigger>{t("about.faq.mobile.title")}</AccordionTrigger>
+          <AccordionTrigger>
+            <FaqQuestion>{t("about.faq.mobile.title")}</FaqQuestion>
+          </AccordionTrigger>
           <AccordionContent>
             <AboutDescription>
               {t("about.faq.mobile.content.summary")}
@@ -65,7 +75,7 @@ export function AboutFaq() {
         </AccordionItem>
         <AccordionItem value="favorite-disappear">
           <AccordionTrigger>
-            {t("about.faq.favorite.disappear.title")}
+            <FaqQuestion>{t("about.faq.favorite.disappear.title")}</FaqQuestion>
           </AccordionTrigger>
           <AccordionContent>
             <AboutDescription>
@@ -74,7 +84,9 @@ export function AboutFaq() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="subber">
-          <AccordionTrigger>{t("about.faq.subber.title")}</AccordionTrigger>
+          <AccordionTrigger>
+            <FaqQuestion>{t("about.faq.subber.title")}</FaqQuestion>
+          </AccordionTrigger>
           <AccordionContent>
             <AboutDescription>
               {t("about.faq.subber.contents.0")}
@@ -89,7 +101,9 @@ export function AboutFaq() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="video">
-          <AccordionTrigger>{t("about.faq.videoLinkage")}</AccordionTrigger>
+          <AccordionTrigger>
+            <FaqQuestion>{t("about.faq.videoLinkage")}</FaqQuestion>
+          </AccordionTrigger>
           <AccordionContent>
             <AboutDescription>
               {t("about.faq.videoLinkageContent")}
@@ -97,7 +111,9 @@ export function AboutFaq() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="quit">
-          <AccordionTrigger>{t("about.faq.quitHolodex")}</AccordionTrigger>
+          <AccordionTrigger>
+            <FaqQuestion>{t("about.faq.quitHolodex")}</FaqQuestion>
+          </AccordionTrigger>
           <AccordionContent>
             <AboutDescription>
               {t("about.faq.quitHolodexContent")}
@@ -105,7 +121,9 @@ export function AboutFaq() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="feedback">
-          <AccordionTrigger>{t("about.faq.feedback.title")}</AccordionTrigger>
+          <AccordionTrigger>
+            <FaqQuestion>{t("about.faq.feedback.title")}</FaqQuestion>
+          </AccordionTrigger>
           <AccordionContent>
             <AboutDescription>
               {t("about.faq.feedback.contents.0")}
@@ -113,7 +131,9 @@ export function AboutFaq() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="support">
-          <AccordionTrigger>{t("about.faq.support.title")}</AccordionTrigger>
+          <AccordionTrigger>
+            <FaqQuestion>{t("about.faq.support.title")}</FaqQuestion>
+          </AccordionTrigger>
           <AccordionContent>
             <AboutDescription
               className="mb-2"
@@ -139,7 +159,9 @@ export function AboutFaq() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="gdpr">
-          <AccordionTrigger>{t("about.gdpr")}</AccordionTrigger>
+          <AccordionTrigger>
+            <FaqQuestion>{t("about.gdpr")}</FaqQuestion>
+          </AccordionTrigger>
           <AccordionContent>
             <AboutDescription>
               {t("about.gdprContent")}
@@ -148,6 +170,7 @@ export function AboutFaq() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+      <div className="h-12"></div>
       <ContactList />
     </div>
   );

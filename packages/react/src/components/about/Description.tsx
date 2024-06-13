@@ -8,9 +8,6 @@ export function AboutDescription(
   >,
 ) {
   return (
-    <p
-      {...props}
-      className={cn("mt-2 leading-8 tracking-wide", props.className)}
-    />
+    <p {...props} className={cn("mt-2 indent-4 leading-8", props.className)} />
   );
 }

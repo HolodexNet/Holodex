@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-const MobileSizeBreak = 768;
+const MobileSizeBreak = 868;
 const FooterSizeBreak = 500;
 
 export const sidebarPrefOpenAtom = atomWithStorage(

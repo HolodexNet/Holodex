@@ -10,7 +10,6 @@ import {
 } from "@/shadcn/ui/collapsible";
 import { useMemo, useState } from "react";
 import NewPlaylistDialog from "../playlist/NewPlaylistDialog";
-import { cn } from "@/lib/utils";
 import { WATCH_PAGE_DROPDOWN_BUTTON_STYLE } from "@/shadcn/ui/button.variants";
 
 export function QueueList({ currentId }: { currentId?: string }) {

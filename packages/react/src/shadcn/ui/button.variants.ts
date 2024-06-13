@@ -9,8 +9,10 @@ export const buttonVariants = cva(
           "bg-base-3 text-base-12 hover:bg-base-4 focus-visible:ring-primary-7 active:bg-primaryA-7",
         outline:
           "border border-primary-7 bg-transparent hover:border-primaryA-8 hover:bg-primaryA-5 focus-visible:ring-primary-7",
+        primary:
+          "bg-primary-9 text-base-12 hover:bg-primaryA-4 focus-visible:ring-primary-7",
         secondary:
-          "bg-secondary-9 text-base-12 hover:bg-secondaryA-4 focus-visible:ring-secondary-7 ",
+          "bg-secondary-9 text-base-12 hover:bg-secondaryA-4 focus-visible:ring-secondary-7",
         ghost:
           "hover:bg-base-4 hover:text-base-12 focus-visible:ring-primary-7 active:bg-primaryA-7",
         "ghost-yt":

@@ -21,7 +21,13 @@ const formSchema = z.object({
     .string()
     .min(1, { message: "Email is required" })
     .email({ message: "Email is invalid" }),
-  message: z.string().min(80, { message: "Message is required" }),
+  message: z
+    .string()
+    .min(1, { message: "Message is required" })
+    .min(20, {
+      message: "Message must be at least 20 characters",
+    })
+    .max(500, { message: "Message must be less than 500 characters" }),
 });
 
 export function AboutFaqEmailForm() {
@@ -90,6 +96,7 @@ export function AboutFaqEmailForm() {
           )}
         />
         <Button type="submit" variant="ghost" className="" size="lg">
+          <div className="i-heroicons:envelope"></div>
           {t("about.contactForm.sendButton")}
         </Button>
       </form>

@@ -35,6 +35,7 @@ export function ContactList() {
           </a>
         </Button>
       </div>
+      <div className="h-4"></div>
       {/* <AboutHeading>{t("about.contact.discord")}</AboutHeading>
       <Link to="https://discord.gg/A24AbzgvRJ" target="_blank">
         <img

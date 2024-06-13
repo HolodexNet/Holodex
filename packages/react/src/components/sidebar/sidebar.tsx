@@ -193,10 +193,10 @@ function SidebarItem({
       className={cn(
         "w-full justify-start",
         className,
-        { "text-base-12 font-semibold": isHere },
+        { "text-base-12 font-semibold tracking-tight": isHere },
         { "font-base-11 font-light": !isHere },
       )}
-      variant={isHere ? "default" : "ghost"}
+      variant={isHere ? "primary" : "ghost"}
       onClick={isMobile ? onClose : undefined}
     >
       <Link to={href}>
