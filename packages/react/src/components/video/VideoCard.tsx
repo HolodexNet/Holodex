@@ -9,7 +9,8 @@ import { useAtomValue } from "jotai";
 import { localeAtom } from "@/store/i18n";
 import { useDuration } from "@/hooks/useDuration";
 import { clsx } from "clsx";
-import { VideoThumbnail } from "../image";
+import { VideoThumbnail } from "./VideoThumbnail";
+import classes from "./../../Global.d";
 
 export type VideoCardType = VideoRef &
   Partial<VideoBase> &
@@ -61,7 +62,7 @@ export function VideoCard({
       : `/watch/${video.id}`;
 
   const thumbnailSrc =
-    video.link === "placeholder"
+    video.type === "placeholder"
       ? video.thumbnail
       : makeYtThumbnailUrl(video.id, size);
 
@@ -169,7 +170,11 @@ export function VideoCard({
       >
         <VideoThumbnail
           src={thumbnailSrc}
-          className="aspect-video h-full w-full rounded-md object-cover"
+          className={
+            (video.type === "placeholder" &&
+              "brightness-75 saturate-[0.75] transition-[filter] duration-300 ease-in-out group-hover:brightness-100 group-hover:saturate-100") +
+            " aspect-video h-full w-full rounded-md object-cover "
+          }
         />
         {video.topic_id && (
           <span className="absolute left-1 top-1 text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">

@@ -13,8 +13,11 @@ export function VideoThumbnail({
     <Img
       src={src || ""}
       loader={
-        <div className="flex aspect-video h-full w-full items-center justify-center ">
-          <div className="i-eos-icons:bubble-loading"></div>
+        <div className="flex aspect-video h-full w-full items-center justify-center opacity-50">
+          <div
+            className="i-svg-spinners:3-dots-scale"
+            style={{ lineHeight: "50px", fontSize: "50px" }}
+          ></div>
         </div>
       }
       {...rest}

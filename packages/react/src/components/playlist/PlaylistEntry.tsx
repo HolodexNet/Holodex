@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/shadcn/ui/button";
 import { userAtom } from "@/store/auth";
 import DeletePlaylistDialog from "@/components/playlist/DeletePlaylistDialog";
-import { VideoThumbnail } from "../image";
+import { VideoThumbnail } from "../video/VideoThumbnail";
 
 export default function PlaylistEntry({
   video_ids,
