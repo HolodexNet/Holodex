@@ -10,7 +10,6 @@ import { localeAtom } from "@/store/i18n";
 import { useDuration } from "@/hooks/useDuration";
 import { clsx } from "clsx";
 import { VideoThumbnail } from "./VideoThumbnail";
-import classes from "./../../Global.d";
 
 export type VideoCardType = VideoRef &
   Partial<VideoBase> &

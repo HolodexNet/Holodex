@@ -159,40 +159,34 @@ export function Home() {
           <ClipLanguageSelector />
         </TabsList>
         <TabsContent value="live">
-          {
-            <MainVideoListing
-              isLoading={liveLoading}
-              videos={live ?? []}
-              size={cardSize}
-              containerWidth={bounds.width}
-            />
-          }
+          <MainVideoListing
+            isLoading={liveLoading}
+            videos={live ?? []}
+            size={cardSize}
+            containerWidth={bounds.width}
+          />
         </TabsContent>
         <TabsContent value="archive">
-          {
-            <MainVideoListing
-              isLoading={archiveLoading}
-              size={cardSize}
-              videos={archives?.pages?.flatMap((x) => x.items) ?? []}
-              fetchNextPage={fetchArchives}
-              hasNextPage={hasArchiveNextPage}
-              isFetchingNextPage={isFetchingArchiveNextPage}
-              containerWidth={bounds.width}
-            ></MainVideoListing>
-          }
+          <MainVideoListing
+            isLoading={archiveLoading}
+            size={cardSize}
+            videos={archives?.pages?.flatMap((x) => x.items) ?? []}
+            fetchNextPage={fetchArchives}
+            hasNextPage={hasArchiveNextPage}
+            isFetchingNextPage={isFetchingArchiveNextPage}
+            containerWidth={bounds.width}
+          ></MainVideoListing>
         </TabsContent>
         <TabsContent value="clips">
-          {
-            <MainVideoListing
-              isLoading={clipLoading}
-              size={cardSize}
-              videos={clips?.pages?.flatMap((x) => x.items) ?? []}
-              fetchNextPage={fetchClips}
-              hasNextPage={hasClipsNextPage}
-              isFetchingNextPage={isFetchingClipsNextPage}
-              containerWidth={bounds.width}
-            ></MainVideoListing>
-          }
+          <MainVideoListing
+            isLoading={clipLoading}
+            size={cardSize}
+            videos={clips?.pages?.flatMap((x) => x.items) ?? []}
+            fetchNextPage={fetchClips}
+            hasNextPage={hasClipsNextPage}
+            isFetchingNextPage={isFetchingClipsNextPage}
+            containerWidth={bounds.width}
+          ></MainVideoListing>
         </TabsContent>
       </Tabs>
     </>

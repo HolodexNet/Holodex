@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, PluginOption } from "vite";
 
 // Faster React using swc apparently, but can't use it atm.
 import react from "@vitejs/plugin-react";
@@ -30,7 +30,7 @@ export default defineConfig({
         "ffmpeg.min.js",
       ],
       output: {
-        experimentalMinChunkSize: 6000,
+        experimentalMinChunkSize: 10000,
       },
     },
   },
@@ -65,7 +65,7 @@ export default defineConfig({
         ? "static" // don't use server mode when compiling on the linux server
         : "server",
       port: 9821,
-    }),
+    }) as unknown as PluginOption,
     react({
       babel: {
         presets: ["jotai/babel/preset"],
@@ -76,11 +76,11 @@ export default defineConfig({
       // ],
     }),
     UnoCSS({ presets: [presetIcons()] }),
-    yaml(),
+    yaml() as unknown as PluginOption,
     dynamicImportVars({
       // for importing yml dynamically.
       include: ["src/locales/**/*.yml", "node_modules/dayjs/**/*.js"],
-    }),
+    }) as unknown as PluginOption,
   ],
   resolve: {
     alias: {
