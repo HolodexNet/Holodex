@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { HelmetProvider } from "react-helmet-async";
@@ -6,8 +6,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import "./index.css";
 import "uno.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { DevTools } from "jotai-devtools";
 import "./lib/i18n";
 import dayjs from "dayjs";
 import calendar from "dayjs/plugin/calendar";
@@ -31,6 +29,27 @@ const queryClient = new QueryClient({
   },
 });
 
+const DevTools =
+  process.env.NODE_ENV === "development"
+    ? React.lazy(async () => {
+        const [moduleExports, _] = await Promise.all([
+          import("jotai-devtools"),
+          import("jotai-devtools/styles.css"),
+        ]);
+        return { default: moduleExports.DevTools };
+      })
+    : () => null;
+
+const ReactQueryDevtools =
+  process.env.NODE_ENV === "development"
+    ? React.lazy(async () => {
+        return {
+          default: (await import("@tanstack/react-query-devtools"))
+            .ReactQueryDevtools,
+        };
+      })
+    : () => null;
+
 dayjs.extend(calendar);
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -41,8 +60,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools />
-        <DevTools />
+        {process.env.NODE_ENV === "development" && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <ReactQueryDevtools />
+            <DevTools />
+          </Suspense>
+        )}
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
           <ErrorBoundary
             FallbackComponent={ErrorFallback}

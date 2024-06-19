@@ -19,6 +19,7 @@ import { ClipLanguageSelector } from "@/components/language/LanguagePicker";
 import { Helmet } from "react-helmet-async";
 import { MainVideoListing } from "./../components/video/MainVideoListing";
 import useMeasure from "react-use-measure";
+import { Separator } from "@/shadcn/ui/separator";
 
 export function Home() {
   const navigate = useNavigate();
@@ -160,10 +161,17 @@ export function Home() {
         </TabsList>
         <TabsContent value="live">
           <MainVideoListing
-            isLoading={liveLoading}
-            videos={live ?? []}
+            isLoading={false}
             size={cardSize}
             containerWidth={bounds.width}
+            videos={live?.filter(({ status }) => status === "live") ?? []}
+          />
+          <Separator className="mb-4 mt-2 w-full border-base-3 lg:mb-6 lg:mt-4" />
+          <MainVideoListing
+            isLoading={liveLoading}
+            size={cardSize}
+            containerWidth={bounds.width}
+            videos={live?.filter(({ status }) => status !== "live") ?? []}
           />
         </TabsContent>
         <TabsContent value="archive">
