@@ -1,9 +1,10 @@
+import { VideoCardCountdownToLive } from "./VideoCardCountdownToLive";
 import { formatCount, formatDuration } from "@/lib/time";
 import { Button } from "@/shadcn/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { VideoMenu } from "./VideoMenu";
 import { cn, makeYtThumbnailUrl } from "@/lib/utils";
-import { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAtomValue } from "jotai";
 import { localeAtom } from "@/store/i18n";
@@ -17,12 +18,19 @@ export type VideoCardType = VideoRef &
   Partial<Live> &
   Partial<PlaceholderVideo>;
 
+export type OnClickHandler = (
+  part: "full" | "info" | "thumbnail" | "channel",
+  event: React.MouseEvent,
+) => void;
+
 interface VideoCardProps {
   video: VideoCardType;
   size: VideoCardSize;
-  onInfoClick?: React.MouseEventHandler<HTMLElement>;
-  onThumbnailClick?: React.MouseEventHandler<HTMLElement>;
-  onChannelClick?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * onClick handler for the Video Card, will be provided with the part and event.
+   * call preventDefaults to prevent early navigation, and stopPropagation to prevent the event from bubbling.
+   */
+  onClick?: OnClickHandler;
   showDuration?: boolean;
 }
 
@@ -41,17 +49,16 @@ interface VideoCardProps {
 //   },
 // });
 
+const LazyVideoCardPlaceholder = React.lazy(
+  () => import("./VideoCardPlaceholder"),
+);
+
 export function VideoCard({
   video,
   size,
-  onInfoClick,
-  onThumbnailClick,
-  onChannelClick,
+  onClick,
   showDuration = true,
 }: VideoCardProps) {
-  const { dayjs } = useAtomValue(localeAtom);
-  const { t } = useTranslation();
-
   const navigate = useNavigate();
 
   const isTwitch = video.link?.includes("twitch");
@@ -73,16 +80,35 @@ export function VideoCard({
       ? "_blank"
       : undefined;
 
+  const [open, setOpen] = useState(false); // placeholder popup state.
+
   const goToVideoClickHandler = useCallback(
     (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      console.info("goToVideoClickHandler", evt);
-      if ((evt.target as HTMLAnchorElement).closest("#channelLink")) {
-        console.info("no action b/c closest element is a channel link.", evt);
+      if ((evt.target as HTMLElement).closest("a")) {
+        if (video.type === "placeholder") {
+          console.info("took over click.", evt);
+          setOpen(true);
+          evt.preventDefault();
+          evt.stopPropagation();
+          return;
+        }
+        console.info("no action b/c closest element is a link.", evt);
         return;
       }
+      console.info("JS video click handling", evt);
+      // clicked a non-link part of the video card.
       if (evt.ctrlKey) {
+        /** Control clicking a non-link part always goes to the external link no matter what the context */
         window.open(videoHref, "_blank");
+        evt.preventDefault();
+        evt.stopPropagation();
       } else {
+        if (video.type === "placeholder") {
+          setOpen(true);
+          evt.preventDefault();
+          evt.stopPropagation();
+          return;
+        }
         navigate(videoHref, {
           state: { video },
         });
@@ -90,16 +116,19 @@ export function VideoCard({
         evt.stopPropagation();
       }
     },
-    [navigate, videoHref, video],
+    [videoHref, navigate, video],
   );
+
+  /**
+   * Alt clicking always goes to the external link no matter what the context.
+   */
   const goToVideoAuxClickHandler = useCallback(
     (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      if (
-        evt.button === 1 &&
-        !(evt.target as HTMLAnchorElement).closest("#channelLink")
-      ) {
+      if (evt.button === 1 && !(evt.target as HTMLElement).closest("a")) {
         console.info("goToVideoAuxClickHandler", evt);
         window.open(videoHref, "_blank");
+        evt.preventDefault();
+        evt.stopPropagation();
       }
     },
     [videoHref],
@@ -111,6 +140,7 @@ export function VideoCard({
         size == "list" && "rounded-sm hover:bg-base-3 @lg:px-2",
         (size == "list" || size == "sm") && "group relative flex gap-4 py-2",
         (size == "md" || size == "lg") && "group flex w-full flex-col gap-4",
+        onClick && "cursor-pointer",
       ]),
       thumbnailLink: clsx([
         size == "list" &&
@@ -133,7 +163,7 @@ export function VideoCard({
         "line-clamp-1 text-xs text-base-11 hover:text-base-12 @lg:text-sm",
       scheduleText: "text-sm @lg:text-sm text-base-11",
     }),
-    [size],
+    [onClick, size],
   );
 
   const videoMenu = (
@@ -144,6 +174,7 @@ export function VideoCard({
         className="absolute right-0 top-0 h-8 w-6 rounded-sm opacity-0 group-hover:opacity-100"
         onClickCapture={(e) => {
           e.preventDefault();
+          e.stopPropagation();
         }}
       >
         <div className="i-heroicons:ellipsis-vertical h-6 w-6" />
@@ -152,19 +183,18 @@ export function VideoCard({
   );
 
   return (
-    <div className={videoCardClasses.outerLayer}>
+    <div
+      className={videoCardClasses.outerLayer}
+      onClick={(e) => (onClick ? onClick("full", e) : goToVideoClickHandler(e))}
+    >
+      {/* Thumbnail for the video */}
       <Link
         to={videoHref}
         target={videoTarget}
         state={{ video }}
         className={videoCardClasses.thumbnailLink}
-        onClick={
-          onThumbnailClick
-            ? (e) => {
-                e.preventDefault();
-                onThumbnailClick(e);
-              }
-            : undefined
+        onClick={(e) =>
+          onClick ? onClick("thumbnail", e) : goToVideoClickHandler(e)
         }
       >
         <VideoThumbnail
@@ -193,12 +223,15 @@ export function VideoCard({
           {showDuration && <VideoCardDuration className="" {...video} />}
         </div>
       </Link>
+      {/* This block contains the entire bottom of the video card, which is the channel thumbnail + Video Text Info + Menu */}
       <div className="relative flex grow gap-2 @sm:gap-1">
+        {/* Channel thumbnail, only drawn on large & medium video cards */}
         {(size == "lg" || size == "md") && video.channel && (
           <Link
             to={`/channel/${video.channel.id}`}
+            id="channelLink"
             className="shrink-0"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => onClick && onClick("channel", e)}
           >
             <img
               src={video.channel.photo ?? ""}
@@ -206,7 +239,8 @@ export function VideoCard({
             />
           </Link>
         )}
-        {/* Set min-height because react-virtuoso will break if the height is not fixed */}
+
+        {/* This block contains the Video Text Info: Title, Channel, Schedule. */}
         <div
           className={videoCardClasses.videoTextInfo}
           onClick={goToVideoClickHandler}
@@ -217,16 +251,8 @@ export function VideoCard({
             to={videoHref}
             state={{ video }}
             target={videoTarget}
-            onClick={
-              onInfoClick
-                ? (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onInfoClick(e);
-                  }
-                : (e) => {
-                    e.stopPropagation();
-                  }
+            onClick={(e) =>
+              onClick ? onClick("info", e) : goToVideoClickHandler(e)
             }
           >
             {video.title}
@@ -236,61 +262,30 @@ export function VideoCard({
               className={videoCardClasses.channelLink}
               id="channelLink"
               to={`/channel/${video.channel.id}`}
-              onClick={
-                onChannelClick
-                  ? (e) => {
-                      e.preventDefault();
-                      onChannelClick(e);
-                    }
-                  : (e) => e.stopPropagation()
-              }
+              onClick={(e) => onClick && onClick("channel", e)}
             >
               {video.channel.name}
             </Link>
           )}
           {size != "xs" && (
             <div className={videoCardClasses.scheduleText}>
-              {status === "live" && (
-                <div className="flex gap-1 text-base-11">
-                  <span className="text-red-500">
-                    {t("component.videoCard.liveNow")}
-                  </span>
-                  {!!video.live_viewers && (
-                    <>
-                      <span>/</span>
-                      <span>
-                        {t("component.videoCard.watching", {
-                          0: formatCount(video.live_viewers),
-                        })}
-                      </span>
-                    </>
-                  )}
-                </div>
-              )}
-              {(video.type === "placeholder" || video.status === "upcoming") &&
-                video.status !== "live" &&
-                video.start_scheduled && (
-                  <span className="text-base-11">
-                    {t("time.diff_future_date", {
-                      0: dayjs(video.start_scheduled).fromNow(false),
-                      1: dayjs(video.start_scheduled).format("hh:mm A"),
-                    })}
-                  </span>
-                )}
-              {video.status === "past" && video.available_at && (
-                <span className="text-base-11">
-                  {t("time.distance_past_date", {
-                    0: dayjs(video.available_at).fromNow(false),
-                  })}
-                </span>
-              )}
+              <VideoCardCountdownToLive video={video} />
             </div>
           )}
         </div>
         {videoMenu}
       </div>
+      <div onClick={stopPropagation} onMouseDown={stopPropagation}>
+        <LazyVideoCardPlaceholder open={open} setOpen={setOpen} video={video} />
+      </div>
     </div>
   );
+}
+
+function stopPropagation<
+  T extends React.MouseEvent<HTMLDivElement, MouseEvent>,
+>(e: T) {
+  e.stopPropagation();
 }
 
 function VideoCardDuration({
