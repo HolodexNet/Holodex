@@ -15,7 +15,6 @@
     "prepare": "cd ../.. && husky install packages/react/.husky"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
     "@hookform/resolvers": "^3.3.2",
     "@losting/timeline": "github:sphinxrave/timeline",
     "@radix-ui/colors": "^3.0.0",
@@ -53,7 +52,6 @@
     "i18next": "^23.7.6",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-chained-backend": "^4.6.2",
-    "i18next-http-backend": "^2.4.2",
     "i18next-icu": "^2.3.0",
     "i18next-resources-to-backend": "^1.2.0",
     "jotai": "^2.8.3",
@@ -66,7 +64,6 @@
     "react-day-picker": "^8.9.1",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^4.0.11",
-    "react-grid-layout": "^1.4.4",
     "react-helmet-async": "^2.0.4",
     "react-hook-form": "^7.49.2",
     "react-i18next": "^14.0.1",
