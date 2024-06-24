@@ -22,6 +22,7 @@ import { useToast } from "@/shadcn/ui/use-toast";
 import { useAtom } from "jotai";
 import { queueAtom } from "@/store/queue";
 import { VideoCardType } from "./VideoCard";
+import "./VideoMenu.css";
 
 const LazyNewPlaylistDialog = lazy(
   () => import("@/components/playlist/NewPlaylistDialog"),
@@ -52,9 +53,10 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
       <DropdownMenuContent
         onClick={(e) => e.stopPropagation()}
         // className="border-base-5"
+        className="tracking-tight"
       >
         <DropdownMenuItem
-          className="flex gap-2"
+          className="video-menu-item"
           onClick={() =>
             setQueue((q) =>
               isQueued ? q.filter(({ id }) => videoId !== id) : [...q, video],
@@ -70,26 +72,28 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
         </DropdownMenuItem>
         {url && (
           <DropdownMenuItem asChild>
-            <Link className="flex gap-2" to={url} target="_blank">
-              <div className={isTwitch ? "i-lucide:twitch" : "i-mdi:youtube"} />
+            <Link className="video-menu-item" to={url} target="_blank">
+              <div className="i-lucide:external-link" />
               {isTwitch
                 ? t("views.watch.openOnTwitch")
                 : t("views.settings.redirectModeLabel")}
             </Link>
           </DropdownMenuItem>
         )}
-        {!isTwitch && (
-          <DropdownMenuItem asChild>
-            <Link className="flex gap-2" to={`/edit/video/${videoId}`}>
-              <div className="i-heroicons:pencil" />
-              {t("component.videoCard.edit")}
-            </Link>
-          </DropdownMenuItem>
-        )}
+        <DropdownMenuItem
+          className="video-menu-item"
+          onClick={() => {
+            copy(`${window.origin}/watch/${videoId}`);
+            toast({ title: t("component.toast.copiedToClipboard") });
+          }}
+        >
+          <div className="i-heroicons:link-20-solid" />
+          {t("component.videoCard.copyLink")}
+        </DropdownMenuItem>
         {video.type !== "clip" && (
           <DropdownMenuItem asChild>
             <Link
-              className="flex gap-2"
+              className="video-menu-item"
               to={`/multiview/AAUY${videoId}%2cUAEYchat`}
             >
               <div className="i-heroicons:rectangle-group" />
@@ -99,7 +103,7 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
         )}
         <DropdownMenuGroup>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="flex gap-2">
+            <DropdownMenuSubTrigger className="video-menu-item bg-base-1">
               <div className="i-heroicons:queue-list" />
               {t("component.mainNav.playlist")}
             </DropdownMenuSubTrigger>
@@ -139,33 +143,31 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
             </DropdownMenuPortal>
           </DropdownMenuSub>
         </DropdownMenuGroup>
-        <DropdownMenuItem
-          className="flex gap-2"
-          onClick={() => {
-            copy(`${window.origin}/watch/${videoId}`);
-            toast({ title: t("component.toast.copiedToClipboard") });
-          }}
-        >
-          <div className="i-heroicons:link" />
-          {t("component.videoCard.copyLink")}
-        </DropdownMenuItem>
+        {!isTwitch && (
+          <DropdownMenuItem asChild>
+            <Link className="video-menu-item" to={`/edit/video/${videoId}`}>
+              <div className="i-lucide:edit-3" />
+              {t("component.videoCard.edit")}
+            </Link>
+          </DropdownMenuItem>
+        )}
         {status === "upcoming" && (
-          <DropdownMenuItem className="flex gap-2">
+          <DropdownMenuItem className="video-menu-item">
             <div className="i-heroicons:calendar" />
             {t("component.videoCard.googleCalendar")}
           </DropdownMenuItem>
         )}
-        <DropdownMenuItem className="flex gap-2">
+        <DropdownMenuItem className="video-menu-item">
           <div className="i-heroicons:newspaper" />
           {t("component.videoCard.openClient")}
         </DropdownMenuItem>
         {status === "past" && (
-          <DropdownMenuItem className="flex gap-2">
+          <DropdownMenuItem className="video-menu-item">
             <div className="i-heroicons:document-arrow-up" />
             {t("component.videoCard.uploadScript")}
           </DropdownMenuItem>
         )}
-        <DropdownMenuItem className="flex gap-2">
+        <DropdownMenuItem className="video-menu-item">
           <div className="i-heroicons:flag" />
           {t("component.reportDialog.title")}
         </DropdownMenuItem>
