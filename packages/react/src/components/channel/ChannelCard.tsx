@@ -14,7 +14,7 @@ type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
   Partial<Omit<T, NonOptionalKeys>>;
 type PartialChannel = WithNonOptional<
   Channel,
-  keyof ShortChannel | "subscriber_count" | "video_count"
+  keyof ShortChannel | "subscriber_count" | "video_count" | "inactive"
 >;
 
 interface ChannelCardProps extends PartialChannel {
@@ -44,7 +44,8 @@ export function ChannelCard({
   clip_count,
   top_topics,
   twitter,
-  twitch, // inactive,
+  twitch,
+  inactive,
 }: ChannelCardProps) {
   const { t } = useTranslation();
 
@@ -53,7 +54,10 @@ export function ChannelCard({
     case "sm":
       return (
         <div className="flex items-center gap-4 rounded-lg bg-base-3 p-4">
-          <ChannelImg className="h-12 w-12" channelId={id} />
+          <ChannelImg
+            className={`h-12 w-12 ${inactive && "opacity-80 saturate-50"}`}
+            channelId={id}
+          />
           <div className="flex flex-col overflow-hidden">
             <div className="text-xs text-base-11">
               {org}
@@ -97,7 +101,11 @@ export function ChannelCard({
     case "lg":
       return (
         // Set min-height because react-virtuoso will break if the height is not fixed
-        <div className="group relative flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4">
+        <div
+          className={
+            "group relative flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4"
+          }
+        >
           <ChannelMenu
             {...{
               id,
@@ -119,11 +127,25 @@ export function ChannelCard({
             </Button>
           </ChannelMenu>
           <ChannelImg
-            className="-z-0 -mb-36 mt-4 h-32 w-32 opacity-20 blur-2xl saturate-150"
+            className={`-z-0 -mb-36 mt-4 h-32 w-32 opacity-20 blur-2xl ${inactive ? "brightness-75 saturate-50" : "saturate-150"}`}
             channelId={id}
           />
-          <ChannelImg className="z-10 h-24 w-24" channelId={id} />
-          <div className="z-10 line-clamp-2 text-center text-lg font-bold">
+          <ChannelImg
+            className={`z-10 h-24 w-24 ${inactive && "brightness-75 saturate-50"}`}
+            channelId={id}
+          />
+          {/* {inactive && (
+                    <div
+                      className="i-fa:graduation-cap absolute z-10 h-24 w-24 text-[40px] leading-10"
+                      style={{
+                        transform: "translate(24px,-10px) rotate(20deg)",
+                        color: "var(--base-10)",
+                      }}
+                    ></div>
+                  )} */}
+          <div
+            className={`${inactive && "text-base-10"} z-10 line-clamp-2 text-center text-lg font-bold`}
+          >
             {name}
           </div>
           <div className="flex flex-col items-center">
@@ -142,7 +164,15 @@ export function ChannelCard({
               </span>
             </div>
           </div>
-          {top_topics && <TopicBadge topic={top_topics[0]} />}
+          <div className="mt-1 flex flex-wrap justify-center gap-0.5">
+            {top_topics?.map((topic) => (
+              <TopicBadge
+                size="sm"
+                topic={topic}
+                className="border-base-7 capitalize text-base-10 "
+              />
+            ))}
+          </div>
           <div className="flex grow" />
           {children ?? (
             <ChannelSocials
