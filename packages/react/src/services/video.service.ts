@@ -137,8 +137,16 @@ export function useVideo<T = Video>(
 export function usePlaceholderMutation() {
   const client = useClient();
 
-  return useMutation<PlaceholderVideo[], Error, PlaceholderRequestBody>({
-    mutationFn: async (body) => client.post("/api/v2/videos/placeholder", body),
+  return useMutation<
+    PlaceholderVideo[],
+    Error,
+    { body: PlaceholderRequestBody; token?: string | null }
+  >({
+    mutationFn: async ({ body, token }) => {
+      return client.post("/api/v2/videos/placeholder", body, {
+        params: token ? { token } : undefined,
+      });
+    },
   });
 }
 

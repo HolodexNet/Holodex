@@ -19,8 +19,7 @@ export const clipLangAtom = atomWithStorage<(typeof CLIPPER_LANGS)[number]>(
   },
 );
 
-// vvv tbh i don't know what this block is supposed to do here: vvv
-
+// configures a tFunction atom that will be synced with the application `t`, for the atom system to access translations.
 export const tFunctionAtom = atom<i18n["t"] | undefined>(undefined);
 
 /** Sync the Store tFunction with the application `t` */

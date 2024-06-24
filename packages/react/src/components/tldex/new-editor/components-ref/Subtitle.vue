@@ -20,10 +20,12 @@
         :precision="2"
         :formatter="(n) => formatDuration(n * 1000.0, 1)"
         class="self-center text-xs"
-        @change="(diff: number) => {
-          modelValue.timestamp = (diff * 1000)
-          $emit('tsChanged');
-        }"
+        @change="
+          (diff: number) => {
+            modelValue.timestamp = diff * 1000;
+            $emit('tsChanged');
+          }
+        "
       >
         {{ formatDuration((modelValue?.video_offset || 0) * 1000) }}
       </DraggableNumber>
