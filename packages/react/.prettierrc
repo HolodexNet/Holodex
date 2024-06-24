@@ -7,6 +7,5 @@
   "printWidth": 80,
   "useTabs": false,
   "endOfLine": "auto",
-  "curly": true,
   "arrowParens": "always"
 }
