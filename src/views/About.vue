@@ -103,7 +103,7 @@
             <v-btn
               class="text-left mt-4 white--text orange"
               block
-              href="https://holodex.stoplight.io/"
+              href="https://docs.holodex.net/"
               target="_blank"
             >
               <v-icon left>
