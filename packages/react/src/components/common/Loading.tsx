@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-import { DetailedHTMLProps, HTMLAttributes } from "react";
+import { DetailedHTMLProps, HTMLAttributes, useEffect, useRef } from "react";
 import { ApiError } from "./ApiError";
 import { HTTPError } from "@/lib/fetch";
 import { Button } from "@/shadcn/ui/button";
 import { useTranslation } from "react-i18next";
+import { useIntersectionObserver } from "usehooks-ts";
 
 interface LoadingProps {
   size: "sm" | "md" | "lg" | "xl";
@@ -48,17 +49,31 @@ export function VirtuosoLoadingFooter({
     isLoading: boolean;
     hasNextPage: boolean;
     loadMore?: () => void;
+    autoload?: boolean;
   } & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 }) {
   const { t } = useTranslation();
+  const { loadMore, isLoading, autoload } = context || {};
+
+  const { ref, isIntersecting, entry } = useIntersectionObserver({
+    rootMargin: "-100px",
+  });
+
+  useEffect(() => {
+    console.log(isIntersecting, isLoading, autoload);
+    if (autoload && isIntersecting && !isLoading) {
+      loadMore?.();
+    }
+  }, [autoload, isIntersecting, isLoading, loadMore]);
 
   return context?.isLoading ? (
     <Loading {...context} />
   ) : context?.hasNextPage ? (
     <Button
+      ref={ref}
       variant="outline"
       className="mt-4 w-full"
-      onClick={context.loadMore}
+      onClick={loadMore}
     >
       {t("component.channelList.loadMore")}
     </Button>
