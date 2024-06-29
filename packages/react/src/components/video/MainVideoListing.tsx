@@ -1,22 +1,21 @@
 import { useMemo } from "react";
 import { VideoCard } from "./VideoCard";
 import { SkeletonVideoCard } from "./SkeletonVideoCard";
-import { WindowVirtualizer } from "virtua";
+import { VirtuosoGrid } from "react-virtuoso";
 import { cn } from "@/lib/utils";
+import { VirtuosoLoadingFooter } from "@/components/common/Loading";
 
 interface MainVideoListingProps {
-  videos: VideoBase[];
+  videos?: VideoBase[];
   size: VideoCardSize;
   className?: string;
   fetchNextPage?: () => void;
   isLoading?: boolean;
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
-  containerWidth: number;
 }
 
 export function MainVideoListing({
-  containerWidth,
   videos,
   size,
   className,
@@ -25,99 +24,61 @@ export function MainVideoListing({
   isFetchingNextPage,
   isLoading,
 }: MainVideoListingProps) {
-  let countPerRow;
-  switch (size) {
-    case "list":
-      countPerRow = 1;
-      break;
-    case "lg":
-      countPerRow = Math.max(1, Math.floor(containerWidth / 360));
-      break;
-    case "md":
-      countPerRow = Math.max(1, Math.floor(containerWidth / 240));
-      break;
-    case "sm":
-      countPerRow = Math.max(1, Math.floor(containerWidth / 200));
-      break;
-    case "xs":
-      countPerRow = Math.max(1, Math.floor(containerWidth / 180));
-      break;
-    default:
-      countPerRow = 1;
-  }
-
-  const videosGroupedByRow = useMemo(() => {
-    const out = [];
-    for (let i = 0; i < videos.length; i += countPerRow) {
-      out.push(videos.slice(i, i + countPerRow));
-    }
-    return out;
-  }, [videos, countPerRow]);
-
   const listClassName = useMemo(
     () =>
       cn(
-        "px-4 py-2 md:px-8",
+        "grid w-full gap-4 px-4 py-2 @container md:px-8",
         {
-          "@container grid gap-4": size === "lg",
-          "@container grid gap-2": size === "md",
-          "@container flex flex-col max-w-screen mx-auto px-4 py-1":
-            size === "list",
+          "grid-cols-1": size === "list",
+          "grid-cols-[repeat(auto-fill,minmax(340px,1fr))]": size === "lg",
+          "grid-cols-[repeat(auto-fill,minmax(220px,1fr))]": size === "md",
+          "grid-cols-[repeat(auto-fill,minmax(180px,1fr))]": size === "sm",
+          "grid-cols-[repeat(auto-fill,minmax(160px,1fr))]": size === "xs",
         },
         className,
       ),
     [size, className],
   );
 
-  // const fetchedCountRef = useRef(-1);
+  // const Footer = () =>
+  //   (isLoading || isFetchingNextPage) && (
+  //     <div className={listClassName}>
+  //       {Array.from({ length: 8 }).map((_, index) => (
+  //         <SkeletonVideoCard key={`placeholder-${index}`} />
+  //       ))}
+  //     </div>
+  //   );
+
   return (
-    <div className="w-full">
-      <WindowVirtualizer
-        onRangeChange={async (_, end) => {
-          if (
-            hasNextPage &&
-            !isFetchingNextPage &&
-            !isLoading &&
-            end + 2 > videosGroupedByRow.length //&&
-            // fetchedCountRef.current < videosGroupedByRow.length
-          ) {
-            // fetchedCountRef.current = videosGroupedByRow.length;
-            fetchNextPage?.();
-          }
-        }}
-      >
-        {videosGroupedByRow.map((videoRow, idx) => {
-          return (
-            <div
-              key={`row-${idx}`}
-              className={listClassName}
-              style={{ gridTemplateColumns: `repeat(${countPerRow}, 1fr)` }}
-            >
-              {videoRow.map((video) => (
-                <VideoCard
-                  key={"video-" + video.id}
-                  video={video}
-                  size={size}
-                />
-              ))}
-            </div>
-          );
-        })}
-        {(isLoading || isFetchingNextPage) && (
-          <div
-            key={`row-loading`}
-            className={listClassName}
-            style={{ gridTemplateColumns: `repeat(${countPerRow}, 1fr)` }}
-          >
-            {(isLoading || isFetchingNextPage) &&
-              Array.from({
-                length: isLoading ? 24 : isFetchingNextPage ? countPerRow : 0,
-              }).map((_, index) => (
-                <SkeletonVideoCard key={`placeholder-${index}`} />
-              ))}
-          </div>
-        )}
-      </WindowVirtualizer>
-    </div>
+    <VirtuosoGrid
+      useWindowScroll
+      data={isLoading ? ([1, 2, 3, 4, 5, 6] as unknown as VideoBase[]) : videos}
+      listClassName={listClassName}
+      itemContent={(index, video) =>
+        isLoading ? (
+          <SkeletonVideoCard key={`placeholder-${index}`} />
+        ) : (
+          <VideoCard key={`video-${video.id}`} video={video} size={size} />
+        )
+      }
+      endReached={async () => {
+        if (hasNextPage && !isFetchingNextPage && !isLoading) {
+          await fetchNextPage?.();
+        }
+      }}
+      context={{
+        size: "sm",
+        isLoading: !!isLoading || !!isFetchingNextPage,
+        hasNextPage: !!hasNextPage,
+        loadMore: fetchNextPage,
+      }}
+      components={
+        hasNextPage && !isLoading
+          ? {
+              Footer: VirtuosoLoadingFooter,
+            }
+          : {}
+      }
+    />
   );
 }

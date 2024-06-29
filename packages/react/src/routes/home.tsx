@@ -95,8 +95,6 @@ export function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, tab]);
 
-  const [ref, bounds] = useMeasure({ scroll: false });
-
   if (!org) return <Navigate to="/org404" />;
 
   return (
@@ -104,7 +102,7 @@ export function Home() {
       <Helmet>
         <title>{currentOrg} - Holodex</title>
       </Helmet>
-      <Tabs defaultValue={tab} onValueChange={setTab} ref={ref}>
+      <Tabs defaultValue={tab} onValueChange={setTab}>
         <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-1 md:px-8">
           <TabsTrigger value="live" className="px-2">
             <Trans
@@ -161,16 +159,14 @@ export function Home() {
         </TabsList>
         <TabsContent value="live">
           <MainVideoListing
-            isLoading={false}
+            isLoading={liveLoading}
             size={cardSize}
-            containerWidth={bounds.width}
             videos={live?.filter(({ status }) => status === "live") ?? []}
           />
           <Separator className="mb-4 mt-2 w-full border-base-3 lg:mb-6 lg:mt-4" />
           <MainVideoListing
             isLoading={liveLoading}
             size={cardSize}
-            containerWidth={bounds.width}
             videos={live?.filter(({ status }) => status !== "live") ?? []}
           />
         </TabsContent>
@@ -182,7 +178,6 @@ export function Home() {
             fetchNextPage={fetchArchives}
             hasNextPage={hasArchiveNextPage}
             isFetchingNextPage={isFetchingArchiveNextPage}
-            containerWidth={bounds.width}
           ></MainVideoListing>
         </TabsContent>
         <TabsContent value="clips">
@@ -193,7 +188,6 @@ export function Home() {
             fetchNextPage={fetchClips}
             hasNextPage={hasClipsNextPage}
             isFetchingNextPage={isFetchingClipsNextPage}
-            containerWidth={bounds.width}
           ></MainVideoListing>
         </TabsContent>
       </Tabs>

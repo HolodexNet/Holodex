@@ -93,6 +93,7 @@ export default function ChannelsOrg() {
               isLoading: isFetchingNextPage,
               hasNextPage,
               loadMore: fetchChannels,
+              autoload: true,
             }}
             components={{
               Footer: VirtuosoLoadingFooter,
