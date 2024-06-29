@@ -62,8 +62,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         {process.env.NODE_ENV === "development" && (
           <Suspense fallback={<div>Loading...</div>}>
-            <ReactQueryDevtools />
-            <DevTools />
+            <ReactQueryDevtools position={"right"} buttonPosition="top-right" />
+            <DevTools position="top-right" />
           </Suspense>
         )}
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>

@@ -152,15 +152,6 @@ export function Sidebar({ className, id, onClose }: SidebarProps) {
             </div>
           </ScrollArea> */}
         </div>
-        {/* <div className="relative bottom-0">
-          <Button
-            size="icon"
-            className="w-20 h-20"
-            onClick={() => toggle(!dark)}
-          >
-            <div className="i-heroicons:sun-20-solid w-20 h-20 text-4xl" />
-          </Button>
-        </div> */}
       </div>
     </div>
   );

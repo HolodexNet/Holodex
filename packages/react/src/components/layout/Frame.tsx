@@ -23,8 +23,8 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ErrorFallback } from "../common/ErrorFallback";
 import { Loading } from "../common/Loading";
 import { MiniPlayer } from "../player/MiniPlayer";
-import { DefaultPlayerContainer } from "./DefaultPlayerContainer";
 import { useOnClickOutside } from "usehooks-ts";
+import { Footer } from "./Footer";
 
 export function Frame() {
   console.log("rerendered frame!");
@@ -94,8 +94,7 @@ export function Frame() {
           </Suspense>
         </ErrorBoundary>
       </main>
-      {isMobile && <footer className="">Footer</footer>}
-      <DefaultPlayerContainer />
+      {isMobile && <Footer />}
       {miniPlayer && <MiniPlayer />}
       <Toaster />
     </div>
