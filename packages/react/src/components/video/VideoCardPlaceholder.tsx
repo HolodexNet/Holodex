@@ -36,7 +36,7 @@ export default function VideoCardPlaceholder({
   const user = useAtomValue(userAtom);
 
   const thumbnailSrc =
-    video.type === "placeholder"
+    video.type === "placeholder" && video.thumbnail
       ? `/statics/thumbnail/maxres/${btoa(video.thumbnail).replace("+", "-").replace("/", "_").replace(/=+$/, "")}.jpg`
       : `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`;
 
@@ -53,11 +53,11 @@ export default function VideoCardPlaceholder({
 
   const content = useMemo(
     () => (
-      <div className="grid gap-6">
+      <div className="grid gap-6 rounded-lg border border-solid border-base-6">
         <VideoThumbnail
           src={thumbnailSrc}
           alt="Stream Thumbnail"
-          className="h-[500px] max-h-[50vh] rounded-lg bg-black object-cover"
+          className="aspect-video max-h-[50vh] w-full rounded-sm bg-black object-cover"
         />
         <div className="grid gap-2 px-4">
           <h2 className="text-2xl font-bold">{video.title}</h2>
@@ -69,46 +69,9 @@ export default function VideoCardPlaceholder({
             <div className="i-heroicons:clock -mb-1 mr-1 inline-block text-sm" />
             <VideoCardCountdownToLive video={video} />
           </div>
-          {user && user.role !== "user" && (
-            <div className="pl-6">
-              <code className="text-sm">{video.id}</code>
-              <Button variant="default" className="m-2" asChild>
-                <a href={`/add_placeholder?id=${video.id}`}>Edit</a>
-              </Button>
-              <AlertDialog
-                open={showDeleteConfirm}
-                onOpenChange={setShowDeleteConfirm}
-              >
-                <AlertDialogTrigger asChild>
-                  <Button variant="destructive" className="m-2">
-                    Delete
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={deletePlaceholder}>
-                      Delete
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </div>
-          )}
         </div>
-        <div className="grid gap-4 px-4">
-          <Button
-            size="lg"
-            variant="default"
-            className="placeholder:text-punchout float-right"
-            asChild
-          >
+        <div className="grid gap-4 px-4 pb-4">
+          <Button size="lg" variant="default" className="" asChild>
             <a href={video.link} target="_blank" rel="noopener noreferrer">
               <div
                 className={
@@ -124,76 +87,99 @@ export default function VideoCardPlaceholder({
                   : t("component.placeholderVideo.eventPageBtn")}
             </a>
           </Button>
-          <div className="">
-            <p>{t("component.placeholderVideo.creditTitleText")}</p>
-            {video.credits?.discord && (
-              <p>
-                {t("component.placeholderVideo.discordCredit", {
-                  user: video.credits.discord.user,
-                  guild: (
-                    <strong>
-                      <a
-                        href={`https://discord.gg/${video.credits.discord.link}`}
-                        className="inline-block"
-                      >
-                        <div className="i-logos:discord-icon mr-1 inline-block" />
-                        {video.credits.discord.guildName}
-                      </a>
-                    </strong>
-                  ),
-                })}
-              </p>
-            )}
-            {video.credits?.datasource && (
-              <p>
-                {t("component.placeholderVideo.datasourceCredit", {
-                  name: video.credits.datasource.name,
-                })}
-                <strong>
-                  <a href={video.credits.datasource.link}>
-                    <div className="i-heroicons:arrow-top-right-on-square mr-1 inline-block" />
-                    {video.credits.datasource.link}
-                  </a>
-                </strong>
-              </p>
-            )}
-            {video.credits?.bot && (
-              <p>
-                {t("component.placeholderVideo.botCredit", {
-                  name: video.credits.bot.name,
-                  user: video.credits.bot.user,
-                })}
-                <strong>
-                  <a href={video.credits.bot.link}>
-                    <div className="i-heroicons:arrow-top-right-on-square mr-1 inline-block" />
-                    {video.credits.bot.link}
-                  </a>
-                </strong>
-              </p>
-            )}
-            {video.credits?.editor && (
-              <p>
-                {t("component.placeholderVideo.editorCredit", {
-                  name: video.credits.editor.name,
-                })}
-              </p>
+          <div className="flex flex-row">
+            <div className="grow">
+              <p>{t("component.placeholderVideo.creditTitleText")}</p>
+              {video.credits?.discord && (
+                <p>
+                  {t("component.placeholderVideo.discordCredit", {
+                    user: video.credits.discord.user,
+                    guild: (
+                      <strong>
+                        <a
+                          href={`https://discord.gg/${video.credits.discord.link}`}
+                          className="inline-block"
+                        >
+                          <div className="i-logos:discord-icon mr-1 inline-block" />
+                          {video.credits.discord.guildName}
+                        </a>
+                      </strong>
+                    ),
+                  })}
+                </p>
+              )}
+              {video.credits?.datasource && (
+                <p>
+                  {t("component.placeholderVideo.datasourceCredit", {
+                    0: video.credits.datasource.name,
+                  })}
+                  <strong>
+                    <a href={video.credits.datasource.link}>
+                      <div className="i-heroicons:arrow-top-right-on-square mr-1 inline-block" />
+                      {video.credits.datasource.link}
+                    </a>
+                  </strong>
+                </p>
+              )}
+              {video.credits?.bot && (
+                <p>
+                  {t("component.placeholderVideo.botCredit", {
+                    0: video.credits.bot.name,
+                    1: video.credits.bot.user,
+                  })}
+                  <strong>
+                    <a href={video.credits.bot.link}>
+                      <div className="i-heroicons:arrow-top-right-on-square mr-1 inline-block" />
+                      {video.credits.bot.link}
+                    </a>
+                  </strong>
+                </p>
+              )}
+              {video.credits?.editor && (
+                <p>
+                  {t("component.placeholderVideo.editorCredit", {
+                    0: video.credits.editor.name,
+                  })}
+                </p>
+              )}
+            </div>
+            {user && user.role !== "user" && (
+              <div className="pl-6">
+                <code className="text-sm">{video.id}</code>
+                <Button variant="default" className="m-2" asChild>
+                  <a href={`/add_placeholder?id=${video.id}`}>Edit</a>
+                </Button>
+                <AlertDialog
+                  open={showDeleteConfirm}
+                  onOpenChange={setShowDeleteConfirm}
+                >
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" className="m-2">
+                      Delete
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={deletePlaceholder}>
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
             )}
           </div>
         </div>
       </div>
     ),
-    [
-      thumbnailSrc,
-      video.title,
-      video.channel.name,
-      video.id,
-      video.link,
-      video.placeholderType,
-      video.credits,
-      t,
-      user,
-      showDeleteConfirm,
-    ],
+    [thumbnailSrc, video, t, user, showDeleteConfirm],
   );
 
   if (isSmall) {

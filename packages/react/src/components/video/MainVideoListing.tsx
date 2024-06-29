@@ -66,6 +66,7 @@ export function MainVideoListing({
           await fetchNextPage?.();
         }
       }}
+      overscan={10}
       context={{
         size: "sm",
         isLoading: !!isLoading || !!isFetchingNextPage,
