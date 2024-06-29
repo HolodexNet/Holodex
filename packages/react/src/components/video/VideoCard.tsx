@@ -274,9 +274,13 @@ export function VideoCard({
           )}
         </div>
         {videoMenu}
-      </div>
-      <div onClick={stopPropagation} onMouseDown={stopPropagation}>
-        <LazyVideoCardPlaceholder open={open} setOpen={setOpen} video={video} />
+        <div onClick={stopPropagation} onMouseDown={stopPropagation}>
+          <LazyVideoCardPlaceholder
+            open={open}
+            setOpen={setOpen}
+            video={video}
+          />
+        </div>
       </div>
     </div>
   );
