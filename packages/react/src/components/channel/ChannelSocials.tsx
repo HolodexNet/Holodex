@@ -43,7 +43,7 @@ export function ChannelSocials({
               asChild
             >
               <Link to={`https://x.com/${twitter}`}>
-                <div className="i-lucide:twitter" />
+                <div className="i-mdi:twitter" />
               </Link>
             </Button>
           )}
@@ -55,7 +55,7 @@ export function ChannelSocials({
               asChild
             >
               <Link to={`https://twitch.tv/${twitch}`}>
-                <div className="i-lucide:twitch" />
+                <div className="i-mdi:twitch" />
               </Link>
             </Button>
           )}
@@ -120,14 +120,14 @@ export function ChannelSocials({
             {twitter && (
               <Button asChild className="w-full" variant="ghost" size="icon-lg">
                 <Link to={`https://x.com/${twitter}`} target="_blank">
-                  <div className="i-lucide:twitter" />
+                  <div className="i-mdi:twitter" />
                 </Link>
               </Button>
             )}
             {twitch && (
               <Button asChild className="w-full" variant="ghost" size="icon-lg">
                 <Link to={`https://twitch.tv/${twitch}`} target="_blank">
-                  <div className="i-lucide:twitch" />
+                  <div className="i-mdi:twitch" />
                 </Link>
               </Button>
             )}

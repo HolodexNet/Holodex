@@ -6,7 +6,6 @@ import { ChannelMenu } from "./ChannelMenu";
 import { ChannelImg } from "./ChannelImg";
 import { TopicBadge } from "../topic/TopicBadge";
 import { ChannelSocials } from "./ChannelSocials";
-import type { SetOptional } from "type-fest";
 import { Link, useNavigate } from "react-router-dom";
 
 type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
