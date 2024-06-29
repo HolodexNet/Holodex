@@ -1,14 +1,25 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent } from "@/shadcn/ui/dialog";
 import { Drawer, DrawerContent } from "@/shadcn/ui/drawer";
 import { Button } from "@/shadcn/ui/button";
-import { ChevronsUpDown } from "lucide-react";
 import { siteIsSmallAtom } from "@/hooks/useFrame";
-import type { VideoCardType } from "./VideoCard";
-import { makeYtThumbnailUrl } from "@/lib/utils";
 import { VideoThumbnail } from "./VideoThumbnail";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/shadcn/ui/alert-dialog";
+import { userAtom } from "@/store/auth";
+import { VideoCardType } from "./VideoCard";
+import { VideoCardCountdownToLive } from "./VideoCardCountdownToLive";
 
 export default function VideoCardPlaceholder({
   open,
@@ -21,11 +32,24 @@ export default function VideoCardPlaceholder({
 }) {
   const { t } = useTranslation();
   const isSmall = useAtomValue(siteIsSmallAtom);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const user = useAtomValue(userAtom);
 
   const thumbnailSrc =
     video.type === "placeholder"
-      ? video.thumbnail
-      : makeYtThumbnailUrl(video.id, "lg");
+      ? `/statics/thumbnail/maxres/${btoa(video.thumbnail).replace("+", "-").replace("/", "_").replace(/=+$/, "")}.jpg`
+      : `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`;
+
+  const deletePlaceholder = async () => {
+    try {
+      // Implement your delete logic here
+      alert("Successfully deleted, probably.");
+    } catch (e) {
+      console.error(e);
+      alert("Failed to delete");
+    }
+    setShowDeleteConfirm(false);
+  };
 
   const content = useMemo(
     () => (
@@ -33,9 +57,9 @@ export default function VideoCardPlaceholder({
         <VideoThumbnail
           src={thumbnailSrc}
           alt="Stream Thumbnail"
-          className="rounded-lg object-cover"
+          className="h-[500px] max-h-[50vh] rounded-lg bg-black object-cover"
         />
-        <div className="grid gap-2">
+        <div className="grid gap-2 px-4">
           <h2 className="text-2xl font-bold">{video.title}</h2>
           <div className="flex items-center gap-2 text-base-10">
             <div className="i-heroicons:user -mb-1 mr-1 inline-block text-sm" />
@@ -43,24 +67,133 @@ export default function VideoCardPlaceholder({
           </div>
           <div className="flex items-center gap-2 text-base-10">
             <div className="i-heroicons:clock -mb-1 mr-1 inline-block text-sm" />
-            <span>Starts in 2 hours</span>
+            <VideoCardCountdownToLive video={video} />
           </div>
+          {user && user.role !== "user" && (
+            <div className="pl-6">
+              <code className="text-sm">{video.id}</code>
+              <Button variant="default" className="m-2" asChild>
+                <a href={`/add_placeholder?id=${video.id}`}>Edit</a>
+              </Button>
+              <AlertDialog
+                open={showDeleteConfirm}
+                onOpenChange={setShowDeleteConfirm}
+              >
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" className="m-2">
+                    Delete
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={deletePlaceholder}>
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          )}
         </div>
-        <div className="grid gap-4">
-          <p>
-            Join us for an exciting deep sea exploration as we dive into the
-            unknown and uncover the mysteries of the ocean floor. Our expert
-            team of marine biologists will guide us through this incredible
-            journey, sharing their knowledge and insights along the way.
-          </p>
-          <div className="flex justify-end">
-            <Button variant="outline">Remind Me</Button>
-            <Button className="ml-2">Join Stream</Button>
+        <div className="grid gap-4 px-4">
+          <Button
+            size="lg"
+            variant="default"
+            className="placeholder:text-punchout float-right"
+            asChild
+          >
+            <a href={video.link} target="_blank" rel="noopener noreferrer">
+              <div
+                className={
+                  video.placeholderType === "scheduled-yt-stream"
+                    ? "i-logos:youtube-icon mr-2"
+                    : "i-heroicons:arrow-top-right-on-square mr-2"
+                }
+              />
+              {video.placeholderType === "scheduled-yt-stream"
+                ? t("component.placeholderVideo.scheduledEvent")
+                : video.placeholderType === "external-stream"
+                  ? t("component.placeholderVideo.streamPageBtn")
+                  : t("component.placeholderVideo.eventPageBtn")}
+            </a>
+          </Button>
+          <div className="">
+            <p>{t("component.placeholderVideo.creditTitleText")}</p>
+            {video.credits?.discord && (
+              <p>
+                {t("component.placeholderVideo.discordCredit", {
+                  user: video.credits.discord.user,
+                  guild: (
+                    <strong>
+                      <a
+                        href={`https://discord.gg/${video.credits.discord.link}`}
+                        className="inline-block"
+                      >
+                        <div className="i-logos:discord-icon mr-1 inline-block" />
+                        {video.credits.discord.guildName}
+                      </a>
+                    </strong>
+                  ),
+                })}
+              </p>
+            )}
+            {video.credits?.datasource && (
+              <p>
+                {t("component.placeholderVideo.datasourceCredit", {
+                  name: video.credits.datasource.name,
+                })}
+                <strong>
+                  <a href={video.credits.datasource.link}>
+                    <div className="i-heroicons:arrow-top-right-on-square mr-1 inline-block" />
+                    {video.credits.datasource.link}
+                  </a>
+                </strong>
+              </p>
+            )}
+            {video.credits?.bot && (
+              <p>
+                {t("component.placeholderVideo.botCredit", {
+                  name: video.credits.bot.name,
+                  user: video.credits.bot.user,
+                })}
+                <strong>
+                  <a href={video.credits.bot.link}>
+                    <div className="i-heroicons:arrow-top-right-on-square mr-1 inline-block" />
+                    {video.credits.bot.link}
+                  </a>
+                </strong>
+              </p>
+            )}
+            {video.credits?.editor && (
+              <p>
+                {t("component.placeholderVideo.editorCredit", {
+                  name: video.credits.editor.name,
+                })}
+              </p>
+            )}
           </div>
         </div>
       </div>
     ),
-    [],
+    [
+      thumbnailSrc,
+      video.title,
+      video.channel.name,
+      video.id,
+      video.link,
+      video.placeholderType,
+      video.credits,
+      t,
+      user,
+      showDeleteConfirm,
+    ],
   );
 
   if (isSmall) {
@@ -76,7 +209,7 @@ export default function VideoCardPlaceholder({
   return (
     <Dialog open={open} onOpenChange={setOpen} modal={true}>
       <DialogContent
-        className="p-0 sm:max-w-[600px]"
+        className="w-[80%] p-0 sm:max-w-[980px]"
         onClick={(e) => e.stopPropagation()}
       >
         {content}

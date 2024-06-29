@@ -6,6 +6,12 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { CLIPPER_LANGS } from "@/lib/consts";
 
+export const preferredTimezonesAtom = atom([
+  "America/New_York",
+  "Europe/London",
+  "Asia/Tokyo",
+]);
+
 export const localeAtom = atom({
   lang: window.localStorage.getItem("i18nextLng") ?? navigator.language,
   dayjs: (...args: Parameters<typeof dayjs>) => dayjs(...args),

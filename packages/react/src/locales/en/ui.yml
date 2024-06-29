@@ -352,6 +352,7 @@ views:
       lastVisitedOrgHome: Last Visited Org Home
       favoritesWhenLoggedIn: Favorites (When Logged In)
     hideFeaturesLabel: Hide Features
+    showTimezonesOnHover: Show Timezones on hover
   app:
     update_available: An update is available
     update_btn: Update

@@ -20,6 +20,8 @@ export const buttonVariants = cva(
         "ghost-secondary":
           "hover:bg-secondary-4 hover:text-base-12 focus-visible:ring-secondary-7 active:bg-secondaryA-7",
         link: "text-primary underline-offset-4 hover:underline focus-visible:underline focus-visible:ring-secondary-7",
+        destructive:
+          "bg-red-9 text-base-12 hover:bg-redA-10 focus-visible:ring-red-7 active:bg-redA-11",
       },
       size: {
         default: "h-8 gap-2 px-3.5 py-2", // also counts as "md"

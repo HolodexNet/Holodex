@@ -10,11 +10,11 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary-9 text-primary-12 shadow hover:bg-primaryA-4 focus:ring-primary-8",
+          "border-transparent bg-primary-6 text-primary-12 shadow hover:bg-primaryA-4 focus:ring-primary-8",
         primary:
-          "border-transparent bg-primary-9 text-primary-12 shadow hover:bg-primaryA-4 focus:ring-primary-8",
+          "border-transparent bg-primary-6 text-primary-12 shadow hover:bg-primaryA-4 focus:ring-primary-8",
         secondary:
-          "border-transparent bg-secondary-9 text-secondary-12 hover:bg-secondaryA-4 focus:ring-secondary-8",
+          "border-transparent bg-secondary-6 text-secondary-12 hover:bg-secondaryA-4 focus:ring-secondary-8",
         outline: "text-base-12 focus:ring-base-8", // Assuming the foreground is a high-contrast text of base color
       },
       size: {

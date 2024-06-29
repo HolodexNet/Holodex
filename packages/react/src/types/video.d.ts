@@ -98,6 +98,7 @@ interface PlaceholderCredit {
   link?: string; // for discord this is the invite code.
   name?: string; // for discord this is the guild ID
   user?: string;
+  guildName?: string;
 }
 
 interface PlaceholderTitlePayload {

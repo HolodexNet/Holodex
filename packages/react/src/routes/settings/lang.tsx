@@ -1,4 +1,5 @@
 import { SettingsItem } from "@/components/settings/SettingsItem";
+import TimezoneSelector from "@/components/settings/SettingsTimezonePicker";
 import { TL_LANGS } from "@/lib/consts";
 import { langs } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -130,6 +131,9 @@ export function SettingsLang() {
             </div>
           ))}
         </div>
+      </SettingsItem>
+      <SettingsItem label={t("views.settings.showTimezonesOnHover")} fullWidth>
+        <TimezoneSelector />
       </SettingsItem>
     </div>
   );
