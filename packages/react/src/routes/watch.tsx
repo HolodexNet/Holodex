@@ -21,6 +21,7 @@ import {
 } from "@/store/player";
 import { queueAtom } from "@/store/queue";
 import { useAtom, useAtomValue } from "jotai";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -53,7 +54,7 @@ export default function Watch() {
   });
 
   const queue = useAtomValue(queueAtom);
-  const miniPlayer = useAtomValue(miniPlayerAtom);
+  const [miniPlayer, setMiniPlayer] = useAtom(miniPlayerAtom);
   const theaterMode = useAtomValue(theaterModeAtom);
   const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
   const [tlOpen, setTLOpen] = useAtom(tlOpenAtom);
@@ -62,6 +63,11 @@ export default function Watch() {
   const smOrMd = !useIsLgAndUp();
 
   const url = idToVideoURL(id!, currentVideo?.link);
+
+  useEffect(() => {
+    setMiniPlayer(false);
+  }, []);
+
   return (
     <>
       <Helmet>
