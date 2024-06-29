@@ -29,11 +29,11 @@ $responsive-breakpoint: 768px;
     grid-template-rows: var(--header-height-clearance) auto var(
         --footer-height-clearance
       );
-    height: 100vh;
+    // height: 100vh;
 
-    > main {
-      overflow-y: auto;
-    }
+    // > main {
+    //   overflow-y: auto;
+    // }
   }
 
   &.sidebar-open {
