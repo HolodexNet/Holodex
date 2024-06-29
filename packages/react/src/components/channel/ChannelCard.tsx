@@ -6,6 +6,7 @@ import { ChannelMenu } from "./ChannelMenu";
 import { ChannelImg } from "./ChannelImg";
 import { TopicBadge } from "../topic/TopicBadge";
 import { ChannelSocials } from "./ChannelSocials";
+import type { SetOptional } from "type-fest";
 
 type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
   T,
@@ -14,7 +15,7 @@ type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
   Partial<Omit<T, NonOptionalKeys>>;
 type PartialChannel = WithNonOptional<
   Channel,
-  keyof ShortChannel | "subscriber_count" | "video_count" | "inactive"
+  keyof ShortChannel | "subscriber_count" | "video_count"
 >;
 
 interface ChannelCardProps extends PartialChannel {
