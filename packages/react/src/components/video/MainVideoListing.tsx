@@ -73,7 +73,7 @@ export function MainVideoListing({
         loadMore: fetchNextPage,
       }}
       components={
-        hasNextPage
+        hasNextPage && !isLoading
           ? {
               Footer: VirtuosoLoadingFooter,
             }

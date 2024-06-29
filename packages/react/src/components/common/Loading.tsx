@@ -16,12 +16,12 @@ export function Loading(
   props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
     LoadingProps,
 ) {
-  const sizeCN = cn({
-    "text-sm": props.size === "sm",
-    "text-lg": props.size === "md",
-    "text-2xl": props.size === "lg",
-    "text-4xl": props.size === "xl",
-  });
+  // const sizeCN = cn({
+  //   "text-sm": props.size === "sm",
+  //   "text-lg": props.size === "md",
+  //   "text-2xl": props.size === "lg",
+  //   "text-4xl": props.size === "xl",
+  // });
 
   if (props.error) return <ApiError error={props.error} />;
 
@@ -55,26 +55,21 @@ export function VirtuosoLoadingFooter({
   const { t } = useTranslation();
   const { loadMore, isLoading, autoload } = context || {};
 
-  const { ref, isIntersecting, entry } = useIntersectionObserver({
+  const { ref, isIntersecting } = useIntersectionObserver({
     rootMargin: "-100px",
   });
 
   useEffect(() => {
     console.log(isIntersecting, isLoading, autoload);
-    if (autoload && isIntersecting && !isLoading) {
-      loadMore?.();
+    if (autoload && isIntersecting && !isLoading && loadMore) {
+      loadMore();
     }
   }, [autoload, isIntersecting, isLoading, loadMore]);
 
   return context?.isLoading ? (
     <Loading {...context} />
   ) : context?.hasNextPage ? (
-    <Button
-      ref={ref}
-      variant="outline"
-      className="mt-4 w-full"
-      onClick={loadMore}
-    >
+    <Button ref={ref} variant="primary" className="mt-4" onClick={loadMore}>
       {t("component.channelList.loadMore")}
     </Button>
   ) : undefined;
