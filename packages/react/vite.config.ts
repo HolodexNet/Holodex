@@ -1,8 +1,8 @@
 import { defineConfig, PluginOption } from "vite";
 
 // Faster React using swc apparently, but can't use it atm.
-import react from "@vitejs/plugin-react";
-// import react from "@vitejs/plugin-react-swc"; //currently borked.
+// import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc"; //currently borked.
 /* sadly broken due to https://github.com/pmndrs/swc-jotai/issues/22 */
 
 import yaml from "@rollup/plugin-yaml";
@@ -30,7 +30,7 @@ export default defineConfig({
         "ffmpeg.min.js",
       ],
       output: {
-        experimentalMinChunkSize: 10000,
+        experimentalMinChunkSize: 30000,
       },
     },
   },
@@ -67,13 +67,10 @@ export default defineConfig({
       port: 9821,
     }) as unknown as PluginOption,
     react({
-      babel: {
-        presets: ["jotai/babel/preset"],
-      },
-      // plugins: [
-      //   /* ["@swc-jotai/debug-label", {}]
-      //     sadly broken due to https://github.com/pmndrs/swc-jotai/issues/22 */
-      // ],
+      // babel: {
+      //   presets: ["jotai/babel/preset"],
+      // },
+      plugins: [["@swc-jotai/debug-label", {}]],
     }),
     UnoCSS({ presets: [presetIcons()] }),
     yaml() as unknown as PluginOption,
