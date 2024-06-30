@@ -67,10 +67,12 @@ export default defineConfig({
       port: 9821,
     }) as unknown as PluginOption,
     react({
+      /* top part babel is for standard plugin-react, bottom part is for plugin-react-swc. */
       // babel: {
       //   presets: ["jotai/babel/preset"],
       // },
       plugins: [["@swc-jotai/debug-label", {}]],
+      devTarget: "esnext", // SWC only.
     }),
     UnoCSS({ presets: [presetIcons()] }),
     yaml() as unknown as PluginOption,
