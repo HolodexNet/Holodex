@@ -1,5 +1,4 @@
-import * as React from "react"
-import { X } from "lucide-react"
+import React from "react"
 
 import { Badge } from "./badge"
 import { Command, CommandGroup, CommandItem } from "./command"
@@ -102,7 +101,7 @@ export function FancyMultiSelect() {
                   }}
                   onClick={() => handleUnselect(framework)}
                 >
-                  <X className="h-3 w-3 text-base-8 hover:text-base-11" />
+                  <div className="h-4 w-4 i-lucide:x text-base-8 hover:text-base-11"></div>
                 </button>
               </Badge>
             )

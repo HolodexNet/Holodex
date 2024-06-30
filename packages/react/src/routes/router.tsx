@@ -1,5 +1,4 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import { Home } from "@/routes/home";
 import { getDefaultStore } from "jotai";
 import { orgAtom } from "@/store/org";
 import { Frame } from "@/components/layout/Frame";
@@ -53,7 +52,10 @@ const router = createBrowserRouter([
       },
       {
         path: "org/:org",
-        element: <Home />,
+        async lazy() {
+          const Home = (await import("./home")).Home;
+          return { Component: Home };
+        },
       },
       {
         path: "channels",
