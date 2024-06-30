@@ -24,7 +24,6 @@ import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import dayjs from "dayjs";
 import { Button } from "@/shadcn/ui/button";
 import { usePlaceholderMutation, useVideo } from "@/services/video.service";
 import { useToast } from "@/shadcn/ui/use-toast";
@@ -32,6 +31,7 @@ import { Label } from "@/shadcn/ui/label";
 import { cn } from "@/lib/utils";
 import { AboutHeading } from "@/components/about/Heading";
 import { useSearchParams } from "react-router-dom";
+import { localeAtom } from "@/store/i18n";
 
 const timezones = [
   {
@@ -53,11 +53,21 @@ const timezones = [
 ];
 
 export default function AboutPlaceholder() {
+  const { dayjs } = useAtomValue(localeAtom);
   const { toast } = useToast();
   const { t } = useTranslation();
   const user = useAtomValue(userAtom);
   const [id, setId] = useState("");
+
   const [type, setType] = useState("new");
+  const typeCN = (typeId: string) =>
+    cn(
+      "flex w-full cursor-pointer select-none items-center justify-center rounded-md border-2 border-blue-6 py-2 text-lg transition-all hover:bg-blue-3 active:scale-[97%]",
+      {
+        "bg-blue-7 border-blue-8 hover:bg-blue-6": type === typeId,
+      },
+    );
+
   const [timezone, setTimezone] = useState("Asia/Tokyo");
   const [searchParams] = useSearchParams();
 
@@ -66,7 +76,7 @@ export default function AboutPlaceholder() {
       id: "",
       channel_id: "",
       duration: 60,
-      liveTime: dayjs.tz(new Date(), "UTC").startOf("day").toISOString(),
+      liveTime: dayjs().tz("UTC").startOf("day").toISOString(),
       title: {
         credits: {
           editor: {
@@ -120,14 +130,6 @@ export default function AboutPlaceholder() {
       variant: "error",
     });
   };
-
-  const typeCN = (typeId: string) =>
-    cn(
-      "flex w-full cursor-pointer select-none items-center justify-center rounded-md border-2 border-blue-6 py-2 text-lg transition-all hover:bg-blue-3 active:scale-[97%]",
-      {
-        "bg-blue-7 border-blue-8 hover:bg-blue-6": type === typeId,
-      },
-    );
 
   useEffect(() => {
     if (type === "existing" && id && data) {
@@ -339,7 +341,7 @@ export default function AboutPlaceholder() {
               </FormItem>
             )}
           />
-          <div className="flex flex-wrap gap-4">
+          <div className="mb-1 flex flex-wrap gap-4">
             <FormField
               control={form.control}
               name="title.placeholderType"
@@ -357,6 +359,7 @@ export default function AboutPlaceholder() {
                   </FormLabel>
                   <FormControl>
                     <RadioGroup
+                      className="gap-3"
                       value={field.value}
                       onValueChange={field.onChange}
                     >
@@ -399,6 +402,7 @@ export default function AboutPlaceholder() {
                   </FormLabel>
                   <FormControl>
                     <RadioGroup
+                      className="gap-3"
                       value={field.value}
                       onValueChange={field.onChange}
                     >
@@ -456,7 +460,7 @@ export default function AboutPlaceholder() {
                       <DatePicker
                         selected={
                           field.value
-                            ? dayjs.tz(field.value, "UTC").toDate()
+                            ? dayjs(field.value).tz("UTC").toDate()
                             : undefined
                         }
                         timezone={timezone}
@@ -478,7 +482,7 @@ export default function AboutPlaceholder() {
                   {t("component.addPlaceholder.durationLabel")}
                 </FormLabel>
                 <FormControl>
-                  <FormItem className="flex items-center gap-2">
+                  <FormItem className="flex max-w-60 items-center gap-2">
                     <Input
                       type="number"
                       step="1"
@@ -520,9 +524,9 @@ function PlaceholderRadioItem({
   return (
     <FormItem className="flex items-center gap-2 space-y-0">
       <FormControl>
-        <RadioGroupItem className="h-5 w-5" value={value} />
+        <RadioGroupItem className="h-4 w-4" value={value} />
       </FormControl>
-      <FormLabel className="line-clamp-1 text-lg">{label}</FormLabel>
+      <FormLabel className="line-clamp-1">{label}</FormLabel>
     </FormItem>
   );
 }

@@ -1,7 +1,4 @@
 import React, { useState, useMemo } from "react";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 import { Button } from "@/shadcn/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import {
@@ -11,8 +8,8 @@ import {
   CommandInput,
   CommandItem,
 } from "@/shadcn/ui/command";
-import { preferredTimezonesAtom } from "@/store/i18n";
-import { useAtom } from "jotai";
+import { localeAtom, preferredTimezonesAtom } from "@/store/i18n";
+import { useAtom, useAtomValue } from "jotai";
 import { Badge } from "@/shadcn/ui/badge";
 
 const allTimezones: Record<string, string> = {
@@ -97,9 +94,8 @@ const allTimezones: Record<string, string> = {
   "Pacific/Tongatapu": "Nuku'alofa",
 };
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
 const TimezoneSelector = () => {
+  const { dayjs } = useAtomValue(localeAtom);
   const [open, setOpen] = useState(false);
   const [selectedTimezones, setSelectedTimezones] = useAtom(
     preferredTimezonesAtom,

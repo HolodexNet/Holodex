@@ -2,6 +2,7 @@ import { AboutDescription } from "@/components/about/Description";
 import { AboutHeading } from "@/components/about/Heading";
 import { QuickLink, QuickLinkProps } from "@/components/about/QuickLink";
 import StatComponent from "@/components/about/Stats";
+import { Loading } from "@/components/common/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -112,7 +113,11 @@ function StatsBlock() {
 
   if (!isSuccess || !stats) {
     // return a loading state using Shadcn
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loading size="lg"></Loading>
+      </div>
+    );
   }
 
   return (
