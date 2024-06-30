@@ -34,7 +34,7 @@ export const FormInput = ({
   name: string;
   label: string;
   description?: string;
-} & Omit<Parameters<typeof Input>[0], "id">) => {
+} & Parameters<typeof Input>[0]) => {
   const { control } = useFormContext();
 
   return (
@@ -106,7 +106,10 @@ export const FormDatePicker = ({
   name,
   label,
   ...props
-}: Parameters<typeof DatePicker>[0] & { name: string; label: string }) => {
+}: Omit<
+  Parameters<typeof DatePicker>[0],
+  "selected" | "onSelect" | "timezone"
+> & { name: string; label: string }) => {
   const { t } = useTranslation();
   const { control } = useFormContext();
   const { dayjs } = useAtomValue(localeAtom);
@@ -164,7 +167,10 @@ export const FormChannelPicker = ({
   name,
   label,
   ...props
-}: Parameters<typeof ChannelPicker>[0] & { name: string; label: string }) => {
+}: Omit<Parameters<typeof ChannelPicker>[0], "value" | "onSelect"> & {
+  name: string;
+  label: string;
+}) => {
   const { control } = useFormContext();
 
   return (
