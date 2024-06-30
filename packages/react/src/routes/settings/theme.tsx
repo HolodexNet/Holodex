@@ -18,17 +18,8 @@ import {
   DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu";
 import { Label } from "@/shadcn/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/shadcn/ui/select";
+
 import { Switch } from "@/shadcn/ui/switch";
-import type { SelectProps } from "@radix-ui/react-select";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 

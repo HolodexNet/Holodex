@@ -1,5 +1,5 @@
 import { queueAtom } from "@/store/queue";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { VideoCard } from "../video/VideoCard";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/shadcn/ui/button";

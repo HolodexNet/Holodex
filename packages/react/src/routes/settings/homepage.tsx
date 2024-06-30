@@ -4,9 +4,6 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/shadcn/ui/badge";
 import { Checkbox } from "@/shadcn/ui/checkbox";
 import { Label } from "@/shadcn/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
-import { RadioGroup, RadioGroupItem } from "@/shadcn/ui/radio-group";
-import { Switch } from "@/shadcn/ui/switch";
 import {
   defaultOpenAtom,
   hideCollabStreamsAtom,

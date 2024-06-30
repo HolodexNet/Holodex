@@ -1,9 +1,4 @@
-import {
-  miniplayerVideoAtom,
-  miniPlayerAtom,
-  playerLocationRefAtom,
-  playerRefAtom,
-} from "@/store/player";
+import { miniPlayerAtom, playerLocationRefAtom } from "@/store/player";
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import React, { Suspense } from "react";
@@ -12,8 +7,6 @@ import { useLocation } from "react-router-dom";
 import { Loading } from "../common/Loading";
 import { useFloating, autoUpdate } from "@floating-ui/react-dom";
 import { size, offset } from "@floating-ui/react-dom";
-import { VideoCardType } from "../video/VideoCard";
-import { PlayerWrapper } from "./PlayerWrapper";
 
 /* 
   ┌────────────────────────────────────────────────────────────────────────────┐

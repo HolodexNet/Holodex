@@ -1,13 +1,11 @@
 import { VideoCardCountdownToLive } from "./VideoCardCountdownToLive";
-import { formatCount, formatDuration } from "@/lib/time";
+import { formatDuration } from "@/lib/time";
 import { Button } from "@/shadcn/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { VideoMenu } from "./VideoMenu";
 import { cn, makeYtThumbnailUrl } from "@/lib/utils";
 import React, { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useAtomValue } from "jotai";
-import { localeAtom } from "@/store/i18n";
 import { useDuration } from "@/hooks/useDuration";
 import { clsx } from "clsx";
 import { VideoThumbnail } from "./VideoThumbnail";

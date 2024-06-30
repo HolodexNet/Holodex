@@ -7,7 +7,7 @@ import {
 import { useToast } from "@/shadcn/ui/use-toast";
 import { blockedChannelsAtom } from "@/store/settings";
 import { useAtom } from "jotai";
-import { Children, ReactNode, useState } from "react";
+import { Children, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { useCopyToClipboard } from "usehooks-ts";
 

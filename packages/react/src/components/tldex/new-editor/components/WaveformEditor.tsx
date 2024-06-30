@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useTimelineRendererBase } from "../hooks/timeline";
 import { formatDuration } from "@/lib/time";
 import { useWaveformGenerator } from "../hooks/waveform_generator";

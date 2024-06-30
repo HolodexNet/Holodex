@@ -1,6 +1,6 @@
 import { Button } from "@/shadcn/ui/button";
 import "./frame.css";
-import { cn, idToVideoURL } from "@/lib/utils";
+import { idToVideoURL } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { ContextMenuShortcut } from "@/shadcn/ui/context-menu";
 import { useAtomValue, useSetAtom } from "jotai";

@@ -1,10 +1,5 @@
 import { CommandList, Command as CommandPrimitive } from "cmdk";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandSeparator,
-} from "@/shadcn/ui/command";
+import { Command, CommandGroup, CommandSeparator } from "@/shadcn/ui/command";
 import { cn } from "@/lib/utils";
 import {
   queryAtom,

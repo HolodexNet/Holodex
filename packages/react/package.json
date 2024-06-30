@@ -49,6 +49,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^0.2.1",
     "dayjs": "^1.11.10",
+    "eslint-plugin-unused-imports": "^3.2.0",
     "i18next": "^23.7.6",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-chained-backend": "^4.6.2",

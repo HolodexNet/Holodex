@@ -9,9 +9,9 @@ import {
   ResizablePanelGroup,
 } from "@/shadcn/ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
-import { TypographyH3, TypographyH4 } from "@/shadcn/ui/typography";
-import { useAtomValue, useSetAtom } from "jotai";
-import { useContext, useEffect, useState } from "react";
+import { TypographyH3 } from "@/shadcn/ui/typography";
+import { useAtomValue } from "jotai";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";

@@ -1,6 +1,5 @@
 import { InlayContainer } from "@/components/layout/InlayContainer";
 import useAlwaysShowScrollbar from "@/hooks/useAlwaysShowScrollbar";
-import exp from "constants";
 import { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";

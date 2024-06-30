@@ -3,7 +3,6 @@ import TimezoneSelector from "@/components/settings/SettingsTimezonePicker";
 import { TL_LANGS } from "@/lib/consts";
 import { langs } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
-import { Button } from "@/shadcn/ui/button";
 import { Checkbox } from "@/shadcn/ui/checkbox";
 import {
   Command,
@@ -14,7 +13,6 @@ import {
 } from "@/shadcn/ui/command";
 import { Label } from "@/shadcn/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
-import { Switch } from "@/shadcn/ui/switch";
 import { clipLanguageAtom, englishNameAtom } from "@/store/settings";
 import { useAtom } from "jotai";
 import { useState } from "react";

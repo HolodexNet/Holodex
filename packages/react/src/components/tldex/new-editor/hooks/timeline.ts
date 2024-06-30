@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 import Timeline from "@losting/timeline";
 import { gte } from "sorted-array-functions";
 import { useMeasure } from "react-use";

@@ -9,9 +9,6 @@ import {
   CommandSeparator,
 } from "@/shadcn/ui/command";
 import { useState } from "react";
-import { AutocompleteDropdownItem } from "../header/searchbar/components/AutocompleteDropdownItem";
-import { useQuery } from "@tanstack/react-query";
-import { Command as CommandPrimitive } from "cmdk";
 import {
   IdentifiedItunesTrack,
   IdentifiedTrack,

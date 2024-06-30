@@ -8,7 +8,7 @@ import { getChannelBannerImages } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
 import { Tabs, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { ExternalLink } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import {

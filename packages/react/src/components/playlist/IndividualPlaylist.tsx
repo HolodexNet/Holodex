@@ -1,9 +1,5 @@
-import {
-  usePlaylist,
-  usePlaylistSaveMutation,
-} from "@/services/playlist.service";
+import { usePlaylistSaveMutation } from "@/services/playlist.service";
 import { VideoCard } from "@/components/video/VideoCard";
-import { useTranslation } from "react-i18next";
 import { TypographyH3, TypographyP } from "@/shadcn/ui/typography";
 import { Button } from "@/shadcn/ui/button";
 import { Separator } from "@/shadcn/ui/separator";

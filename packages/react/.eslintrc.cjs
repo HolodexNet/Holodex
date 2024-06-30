@@ -8,7 +8,7 @@ module.exports = {
     "plugin:tailwindcss/recommended",
     "prettier",
   ],
-  plugins: ["react-refresh", "prettier"],
+  plugins: ["react-refresh", "prettier", "unused-imports"],
   settings: {
     tailwindcss: {
       callees: ["cn"],
@@ -65,5 +65,15 @@ module.exports = {
         ],
       },
     ],
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+        "warn",
+        {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_",
+        },
+    ]
   },
 };

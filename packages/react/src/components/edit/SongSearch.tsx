@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { ChevronsUpDown, Loader2, X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { Button } from "@/shadcn/ui/button";
 import {
   Command,

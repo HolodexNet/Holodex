@@ -2,7 +2,7 @@ import { TopicPicker } from "../topic/TopicPicker";
 import { useState } from "react";
 import { Button } from "@/shadcn/ui/button";
 import { useTranslation } from "react-i18next";
-import { TypographyH4, TypographyLarge } from "@/shadcn/ui/typography";
+import { TypographyLarge } from "@/shadcn/ui/typography";
 import { ChannelPicker } from "../channel/ChannelPicker";
 import {
   useVideoMentionsMutation,

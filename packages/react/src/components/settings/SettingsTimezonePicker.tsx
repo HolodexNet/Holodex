@@ -19,7 +19,6 @@ const TimezoneSelector = () => {
   const [selectedTimezones, setSelectedTimezones] = useAtom(
     preferredTimezonesAtom,
   );
-  const [showTimezonesOnHover, setShowTimezonesOnHover] = useState(false);
 
   const timezoneOptions = useMemo(() => {
     return Object.keys(allTimezones).map((tz) => {

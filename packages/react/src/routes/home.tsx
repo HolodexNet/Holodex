@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { orgAtom } from "@/store/org";
 import { useVideoCardSizes } from "@/store/video";
 import { useAtomValue } from "jotai";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import {
   Navigate,
@@ -18,7 +18,6 @@ import { clipLangAtom } from "@/store/i18n";
 import { ClipLanguageSelector } from "@/components/language/LanguagePicker";
 import { Helmet } from "react-helmet-async";
 import { MainVideoListing } from "./../components/video/MainVideoListing";
-import useMeasure from "react-use-measure";
 import { Separator } from "@/shadcn/ui/separator";
 
 export function Home() {

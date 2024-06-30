@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-import { DetailedHTMLProps, HTMLAttributes, useEffect, useRef } from "react";
+import { DetailedHTMLProps, HTMLAttributes, useEffect } from "react";
 import { ApiError } from "./ApiError";
 import { HTTPError } from "@/lib/fetch";
 import { Button } from "@/shadcn/ui/button";
