@@ -1,64 +1,35 @@
-import { ChannelPicker } from "@/components/channel/ChannelPicker";
-import { DatePicker } from "@/components/common/DatePicker";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/shadcn/ui/form";
-import { Input } from "@/shadcn/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/shadcn/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shadcn/ui/select";
-import { userAtom } from "@/store/auth";
-import { useAtomValue } from "jotai";
-import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
+import { useAtomValue } from "jotai";
+import { useSearchParams } from "react-router-dom";
+import { userAtom } from "@/store/auth";
+import { localeAtom } from "@/store/i18n";
+import { useVideo } from "@/services/video.service";
 import { Button } from "@/shadcn/ui/button";
-import { usePlaceholderMutation, useVideo } from "@/services/video.service";
-import { useToast } from "@/shadcn/ui/use-toast";
+import { AboutHeading } from "@/components/about/Heading";
+import {
+  FormRadioGroup,
+  FormChannelPicker,
+  FormDatePicker,
+  FormInput,
+} from "@/components/about/placeholder/FormFields";
+import {
+  PlaceholderFormData,
+  placeholderSchema,
+} from "@/components/about/placeholder/schema";
+import { usePlaceholderSubmit } from "@/components/about/placeholder/usePlaceholderSubmit";
+import { Form } from "@/shadcn/ui/form";
+import { RadioGroup, RadioGroupItem } from "@/shadcn/ui/radio-group";
 import { Label } from "@/shadcn/ui/label";
 import { cn } from "@/lib/utils";
-import { AboutHeading } from "@/components/about/Heading";
-import { useSearchParams } from "react-router-dom";
-import { localeAtom } from "@/store/i18n";
-
-const timezones = [
-  {
-    text: "GMT (+0)",
-    value: "Etc/GMT",
-  },
-  {
-    text: "JST (+9)",
-    value: "Asia/Tokyo",
-  },
-  {
-    text: "PST/PDT (-8/-7)",
-    value: "America/Los_Angeles",
-  },
-  {
-    text: "EST/EDT (-5/-4)",
-    value: "America/New_York",
-  },
-];
 
 export default function AboutPlaceholder() {
-  const { dayjs } = useAtomValue(localeAtom);
-  const { toast } = useToast();
   const { t } = useTranslation();
+  const { dayjs } = useAtomValue(localeAtom);
   const user = useAtomValue(userAtom);
-  const [id, setId] = useState("");
-
+  const [searchParams] = useSearchParams();
   const [type, setType] = useState("new");
   const typeCN = (typeId: string) =>
     cn(
@@ -68,10 +39,10 @@ export default function AboutPlaceholder() {
       },
     );
 
-  const [timezone, setTimezone] = useState("Asia/Tokyo");
-  const [searchParams] = useSearchParams();
+  const [id, setId] = useState("");
 
-  const form = useForm<PlaceholderRequestBody>({
+  const methods = useForm<PlaceholderFormData>({
+    resolver: zodResolver(placeholderSchema),
     defaultValues: {
       id: "",
       channel_id: "",
@@ -84,67 +55,48 @@ export default function AboutPlaceholder() {
             name: user?.username,
           },
         },
+        name: "",
+        jp_name: "",
+        link: "",
+        thumbnail: "",
+        placeholderType: "scheduled-yt-stream",
+        certainty: "certain",
       },
     },
   });
 
-  const { data } = useVideo<PlaceholderVideo>(
+  const { data: videoData } = useVideo<PlaceholderVideo>(
     { id },
     {
       enabled: type === "existing" && !!id,
     },
   );
 
-  const { mutate } = usePlaceholderMutation();
-
-  const onSubmit: SubmitHandler<PlaceholderRequestBody> = ({
-    duration,
-    ...body
-  }) => {
-    mutate(
-      {
-        body: { duration: duration * 60, ...body },
-        token: searchParams.get("token"),
-      },
-      {
-        onSuccess: () => {
-          toast({
-            title: t("component.addPlaceholder.success"),
-          });
-        },
-        onError: (error) => {
-          console.error(error);
-          toast({
-            title: t("component.addPlaceholder.error"),
-            description: error.message,
-            variant: "error",
-          });
-        },
-      },
-    );
-  };
-
-  const onInvalid = () => {
-    toast({
-      title: t("component.addPlaceholder.error"),
-      variant: "error",
-    });
-  };
+  const onSubmit = usePlaceholderSubmit(searchParams.get("token"));
 
   useEffect(() => {
-    if (type === "existing" && id && data) {
-      form.setValue("channel_id", data.channel.id ?? "");
-      form.setValue("liveTime", data.start_scheduled ?? "");
-      form.setValue("duration", data.duration / 60 ?? 60);
-      form.setValue("title.link", data.link ?? "");
-      form.setValue("title.name", data.title ?? "");
-      form.setValue("title.jp_name", data.jp_name ?? "");
-      form.setValue("title.thumbnail", data.thumbnail ?? "");
-      form.setValue("title.placeholderType", data.placeholderType ?? "");
-      form.setValue("title.certainty", data.certainty ?? "");
+    if (type === "existing" && id && videoData) {
+      methods.reset({
+        channel_id: videoData.channel_id,
+        liveTime: videoData.start_scheduled,
+        duration: videoData.duration / 60,
+        title: {
+          link: videoData.link,
+          name: videoData.title,
+          jp_name: videoData.jp_name,
+          thumbnail: videoData.thumbnail,
+          placeholderType: videoData.placeholderType,
+          certainty: videoData.certainty,
+          credits: {
+            editor: {
+              user: user?.id,
+              name: user?.username,
+            },
+          },
+        },
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [videoData, type, id, user]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -165,343 +117,91 @@ export default function AboutPlaceholder() {
           </Label>
         </RadioGroup>
       </div>
-      <Form {...form}>
+      <Form {...methods}>
         <form
-          onSubmit={form.handleSubmit(onSubmit, onInvalid)}
+          onSubmit={methods.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <FormField
-            control={form.control}
+          <FormInput
             name="title.credits.editor.name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t("component.addPlaceholder.creditName")}
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={user?.username}
-                    {...field}
-                    {...form.register("title.credits.editor.name", {
-                      required: {
-                        value: true,
-                        message: t("channelRequest.required"),
-                      },
-                    })}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={t("component.addPlaceholder.creditName")}
+            placeholder={user?.username}
           />
           {type === "existing" && (
-            <FormField
-              control={form.control}
+            <FormInput
               name="id"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>{t("component.addPlaceholder.idLabel")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      {...form.register("id", {
-                        required: {
-                          value: true,
-                          message: t("channelRequest.required"),
-                        },
-                        minLength: {
-                          value: 11,
-                          message: t("component.addPlaceholder.idHint"),
-                        },
-                        maxLength: {
-                          value: 11,
-                          message: t("component.addPlaceholder.idHint"),
-                        },
-                        onChange: (e) => setId(e.target.value),
-                      })}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label={t("component.addPlaceholder.idLabel")}
+              onChange={(e) => setId(e.target.value)}
             />
           )}
-          <FormField
-            control={form.control}
+          <FormChannelPicker
             name="channel_id"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>
-                  {t("component.addPlaceholder.channelLabel")}
-                </FormLabel>
-                <FormControl>
-                  <ChannelPicker
-                    name="channel_id"
-                    form={form}
-                    value={field.value}
-                    onSelect={({ id }) => {
-                      form.setValue("channel_id", id);
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={t("component.addPlaceholder.channelLabel")}
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="title.name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t("component.addPlaceholder.titleLabel")}
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    {...form.register("title.name", {
-                      required: {
-                        value: true,
-                        message: t("channelRequest.required"),
-                      },
-                    })}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {t("component.addPlaceholder.titleHint")}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={t("component.addPlaceholder.titleLabel")}
+            description={t("component.addPlaceholder.titleHint")}
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="title.jp_name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t("component.addPlaceholder.jpTitleLabel")}
-                </FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormDescription>
-                  {t("component.addPlaceholder.jpTitleHint")}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={t("component.addPlaceholder.jpTitleLabel")}
+            description={t("component.addPlaceholder.jpTitleHint")}
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="title.link"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("component.addPlaceholder.linkLabel")}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="https://twitter.com/..."
-                    {...field}
-                    {...form.register("title.link", {
-                      required: {
-                        value: true,
-                        message: t("channelRequest.required"),
-                      },
-                    })}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {t("component.addPlaceholder.linkHint")}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={t("component.addPlaceholder.linkLabel")}
+            placeholder="https://twitter.com/..."
+            description={t("component.addPlaceholder.linkHint")}
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="title.thumbnail"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t("component.addPlaceholder.thumbnailLabel")}
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="https://imgur.com/..."
-                    {...field}
-                    {...form.register("title.thumbnail", {
-                      required: {
-                        value: true,
-                        message: t("channelRequest.required"),
-                      },
-                    })}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={t("component.addPlaceholder.thumbnailLabel")}
+            placeholder="https://imgur.com/..."
           />
-          <div className="mb-1 flex flex-wrap gap-4">
-            <FormField
-              control={form.control}
-              name="title.placeholderType"
-              render={({ field }) => (
-                <FormItem
-                  {...form.register("title.placeholderType", {
-                    required: {
-                      value: true,
-                      message: t("channelRequest.required"),
-                    },
-                  })}
-                >
-                  <FormLabel>
-                    {t("component.addPlaceholder.eventType.label")}
-                  </FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      className="gap-3"
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      <PlaceholderRadioItem
-                        value="scheduled-yt-stream"
-                        label={t(
-                          "component.addPlaceholder.eventType.scheduledYTStream",
-                        )}
-                      />
-                      <PlaceholderRadioItem
-                        value="external-stream"
-                        label={t(
-                          "component.addPlaceholder.eventType.externalStream",
-                        )}
-                      />
-                      <PlaceholderRadioItem
-                        value="event"
-                        label={t("component.addPlaceholder.eventType.event")}
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="title.certainty"
-              render={({ field }) => (
-                <FormItem
-                  {...form.register("title.certainty", {
-                    required: {
-                      value: true,
-                      message: t("channelRequest.required"),
-                    },
-                  })}
-                >
-                  <FormLabel>
-                    {t("component.addPlaceholder.certainty.label")}
-                  </FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      className="gap-3"
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      <PlaceholderRadioItem
-                        value="certain"
-                        label={t("component.addPlaceholder.certainty.certain")}
-                      />
-                      <PlaceholderRadioItem
-                        value="likely"
-                        label={t("component.addPlaceholder.certainty.likely")}
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <FormField
-            control={form.control}
+          <FormRadioGroup
+            name="title.placeholderType"
+            label={t("component.addPlaceholder.eventType.label")}
+            options={[
+              {
+                value: "scheduled-yt-stream",
+                label: t(
+                  "component.addPlaceholder.eventType.scheduledYTStream",
+                ),
+              },
+              {
+                value: "external-stream",
+                label: t("component.addPlaceholder.eventType.externalStream"),
+              },
+              {
+                value: "event",
+                label: t("component.addPlaceholder.eventType.event"),
+              },
+            ]}
+          />
+          <FormRadioGroup
+            name="title.certainty"
+            label={t("component.addPlaceholder.certainty.label")}
+            options={[
+              {
+                value: "certain",
+                label: t("component.addPlaceholder.certainty.certain"),
+              },
+              {
+                value: "likely",
+                label: t("component.addPlaceholder.certainty.likely"),
+              },
+            ]}
+          />
+          <FormDatePicker
             name="liveTime"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>{t("component.addPlaceholder.dateLabel")}</FormLabel>
-                <FormControl>
-                  <FormItem className="flex items-center gap-2 space-y-0">
-                    <FormItem>
-                      <Select
-                        defaultValue={timezone}
-                        onValueChange={setTimezone}
-                      >
-                        <SelectTrigger className="min-w-[120px] whitespace-nowrap">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            {timezones.map(({ text, value }) => (
-                              <SelectItem key={value} value={value}>
-                                {text}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                    <FormItem
-                      className="w-full"
-                      {...form.register("liveTime", {
-                        required: {
-                          value: true,
-                          message: t("channelRequest.required"),
-                        },
-                      })}
-                    >
-                      <DatePicker
-                        selected={
-                          field.value
-                            ? dayjs(field.value).tz("UTC").toDate()
-                            : undefined
-                        }
-                        timezone={timezone}
-                        onSelect={(date) => field.onChange(date.toISOString())}
-                      />
-                    </FormItem>
-                  </FormItem>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={t("component.addPlaceholder.dateLabel")}
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="duration"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t("component.addPlaceholder.durationLabel")}
-                </FormLabel>
-                <FormControl>
-                  <FormItem className="flex max-w-60 items-center gap-2">
-                    <Input
-                      type="number"
-                      step="1"
-                      {...field}
-                      {...form.register("duration", {
-                        required: {
-                          value: true,
-                          message: t("channelRequest.required"),
-                        },
-                      })}
-                    />
-                    <span className="shrink-0 whitespace-nowrap">
-                      {t("component.addPlaceholder.duration.minutes")}
-                    </span>
-                  </FormItem>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={t("component.addPlaceholder.durationLabel")}
+            type="number"
+            step="1"
           />
           <Button size="lg" className="w-full">
             {type === "new"
@@ -511,22 +211,5 @@ export default function AboutPlaceholder() {
         </form>
       </Form>
     </div>
-  );
-}
-
-function PlaceholderRadioItem({
-  value,
-  label,
-}: {
-  value: string;
-  label: string;
-}) {
-  return (
-    <FormItem className="flex items-center gap-2 space-y-0">
-      <FormControl>
-        <RadioGroupItem className="h-4 w-4" value={value} />
-      </FormControl>
-      <FormLabel className="line-clamp-1">{label}</FormLabel>
-    </FormItem>
   );
 }

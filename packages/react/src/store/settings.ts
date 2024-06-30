@@ -1,4 +1,4 @@
-import { atom } from "jotai";
+import { atom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 // Define the interface for the new settings state
@@ -38,6 +38,18 @@ export const englishNameAtom = atom(
     set(settingsAtom, { ...get(settingsAtom), englishName: newValue });
   },
 );
+
+export function usePreferredName({
+  name,
+  english_name,
+}: {
+  name?: string;
+  english_name?: string;
+}) {
+  const useEnglishName = useAtomValue(englishNameAtom);
+
+  return useEnglishName ? english_name || name : name;
+}
 
 export const clipLanguageAtom = atom(
   (get) => get(settingsAtom).clipLanguage,

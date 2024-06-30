@@ -24,9 +24,8 @@ export function DatePicker(
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          size="lg"
           className={cn(
-            "w-full justify-start border-base-6 text-left font-normal focus:border-blue-6",
+            "h-9 justify-start border-base-6 text-left text-sm font-normal focus:border-blue-6 ",
             !date && "text-base-11",
           )}
         >

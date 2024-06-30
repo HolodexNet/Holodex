@@ -82,17 +82,6 @@ enum CHAT_SOURCES {
   USER = "user",
 }
 
-enum PLACEHOLDER_TYPES {
-  YT_STREAM = "scheduled-yt-stream",
-  EXTERNAL_STREAM = "external-stream",
-  EVENT = "event",
-}
-
-enum PLACEHOLDER_CERTAINTY {
-  CERTAIN = "certain",
-  LIKELY = "likely",
-}
-
 interface PlaceholderCredit {
   //Removed Temporarily img?: string;
   link?: string; // for discord this is the invite code.
@@ -103,11 +92,11 @@ interface PlaceholderCredit {
 
 interface PlaceholderTitlePayload {
   name: string;
-  jp_name: string;
+  jp_name?: string;
   link: string;
   thumbnail: string;
-  placeholderType: PLACEHOLDER_TYPES;
-  certainty: PLACEHOLDER_CERTAINTY;
+  placeholderType: "event" | "external-stream" | "scheduled-yt-stream";
+  certainty: "certain" | "likely";
   credits: {
     discord?: PlaceholderCredit;
     datasource?: PlaceholderCredit;

@@ -1,4 +1,5 @@
 import atomWithDebounce from "@/lib/atomWithDebounce";
+import { useChannel } from "@/services/channel.service";
 import { useSearchAutoCompleteMutation } from "@/services/search.service";
 import { Button } from "@/shadcn/ui/button";
 import {
@@ -10,6 +11,7 @@ import {
   CommandList,
 } from "@/shadcn/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
+import { usePreferredName } from "@/store/settings";
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect } from "react";
 import {
@@ -50,6 +52,9 @@ export function ChannelPicker<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue]);
 
+  const { data: selectedChannel } = useChannel(value, { enabled: !!value });
+  const preferredSelectedName = usePreferredName(selectedChannel || {});
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -59,7 +64,9 @@ export function ChannelPicker<
           variant="outline"
           role="combobox"
         >
-          {value || t("channelRequest.ChannelPickerLabel")}
+          {preferredSelectedName ||
+            value ||
+            t("channelRequest.ChannelPickerLabel")}
           <div className="i-lucide:chevrons-up-down text-sm opacity-50" />
         </Button>
       </PopoverTrigger>
