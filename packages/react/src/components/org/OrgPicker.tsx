@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -51,7 +50,7 @@ export function OrgSelectorCombobox() {
         >
           {orgs.find((org) => org.name === currentOrg.name)?.name ||
             t("Select organization...")}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <div className="i-lucide:chevrons-up-down ml-2 inline-block h-4 w-4 shrink-0 align-middle opacity-50"></div>
         </button>
       </PopoverTrigger>
       <PopoverContent className="max-w-[80vw] p-0">
@@ -69,9 +68,9 @@ export function OrgSelectorCombobox() {
                     setOpen(false);
                   }}
                 >
-                  <Check
+                  <div
                     className={cn(
-                      "mr-2 h-4 w-4",
+                      "i-lucide:check mr-2 h-4 w-4",
                       value === org.name ? "opacity-100" : "opacity-0",
                     )}
                   />

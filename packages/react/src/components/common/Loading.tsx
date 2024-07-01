@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
 import { DetailedHTMLProps, HTMLAttributes, useEffect } from "react";
 import { ApiError } from "./ApiError";
 import { HTTPError } from "@/lib/fetch";
@@ -36,7 +35,7 @@ export function Loading(
         props.className,
       )}
     >
-      <Loader2 className="animate-spin" />
+      <div className="i-lucide:loader-2 animate-spin" />
     </div>
   );
 }

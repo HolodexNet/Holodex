@@ -1,5 +1,4 @@
 import * as React from "react";
-import { X } from "lucide-react";
 import { Badge } from "@/shadcn/ui/badge";
 import { QueryItem } from "../types";
 import { PrimitiveAtom, useAtomValue, useSetAtom } from "jotai";
@@ -51,7 +50,7 @@ export function QueryBadge({ item }: { item: PrimitiveAtom<QueryItem> }) {
         }}
         onClick={() => querySplitItemAction({ type: "remove", atom: item })}
       >
-        <X className="h-3 w-3 text-base-8 hover:text-base-11" />
+        <div className="i-lucide:x h-3 w-3 text-sm text-base-8 hover:text-base-11"></div>
       </button>
     </Badge>
   );

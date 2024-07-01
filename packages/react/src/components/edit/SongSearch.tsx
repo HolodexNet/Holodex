@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { Loader2, X } from "lucide-react";
 import { Button } from "@/shadcn/ui/button";
 import {
   Command,
@@ -72,7 +71,7 @@ export function SongSearch({
               className="ml-auto text-red-11"
               onClick={() => onSelect()}
             >
-              <X />
+              <div className="i-mdi:close text-lg" />
             </Button>
           )}
         </div>
@@ -108,7 +107,7 @@ export function SongSearch({
               ))}
               {isPending && (
                 <CommandItem className="flex justify-center py-4" disabled>
-                  <Loader2 className="animate-spin" />
+                  <div className="i-lucide:loader-2 animate-spin text-3xl" />
                 </CommandItem>
               )}
             </CommandGroup>

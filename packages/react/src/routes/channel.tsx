@@ -7,7 +7,6 @@ import { formatCount } from "@/lib/time";
 import { getChannelBannerImages } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
 import { Tabs, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
-import { ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
@@ -112,7 +111,7 @@ export default function Channel() {
                   to={MUSICDEX_URL + "/channel/" + channel?.id}
                 >
                   {t("views.channel.music")}
-                  <ExternalLink size={16} />
+                  <div className="i-lucide:external-link text-lg" />
                 </Link>
               </TabsTrigger>
               <TabsTrigger value="about">

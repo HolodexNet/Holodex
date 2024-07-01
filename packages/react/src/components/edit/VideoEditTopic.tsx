@@ -9,7 +9,6 @@ import {
   useVideoTopicMutation,
 } from "@/services/video.service";
 import { ChannelCard } from "../channel/ChannelCard";
-import { Loader2 } from "lucide-react";
 import { Badge } from "@/shadcn/ui/badge";
 import clsx from "clsx";
 
@@ -46,7 +45,7 @@ export function VideoEditTopic({ video }: { video: Video }) {
           topic && topicMutate({ topicId: topic, videoId: video?.id })
         }
       >
-        {topicPending && <Loader2 size={12} className="animate-spin" />}
+        {topicPending && <div className="i-lucide:loader-2 animate-spin" />}
         {t("views.editor.changeTopic.button")}
       </Button>
       <TypographyLarge>
@@ -63,7 +62,7 @@ export function VideoEditTopic({ video }: { video: Video }) {
           })
         }
       >
-        {mentionsPending && <Loader2 size={12} className="animate-spin" />}
+        {mentionsPending && <div className="i-lucide:loader-2 animate-spin" />}
         {t("views.editor.channelMentions.add")}
       </Button>
       {video.mentions?.map((channel) => (

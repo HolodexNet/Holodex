@@ -1,5 +1,3 @@
-import { Calendar as CalendarIcon } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
 import { Calendar } from "@/shadcn/ui/calendar";
@@ -29,7 +27,7 @@ export function DatePicker(
             !date && "text-base-11",
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
+          <div className="i-heroicons:calendar mr-2 h-4 w-4" />
           {date ? (
             dayjs(date).tz(timezone).format("YYYY-MM-DD HH:mm")
           ) : (

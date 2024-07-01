@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { ChevronsUpDown } from "lucide-react";
 import { Button } from "@/shadcn/ui/button";
 import {
   Command,
@@ -59,7 +58,7 @@ export function TopicPicker({ value, onSelect }: TopicPickerProps) {
             className="max-w-xs justify-between border-base px-4"
           >
             {value ?? t("component.topicPicker.pickLabel")}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <div className="i-heroicons:chevron-up-down ml-2 h-4 w-4 shrink-0 opacity-50 " />
           </Button>
         </DrawerTrigger>
         <DrawerContent className="p-0">
@@ -109,7 +108,7 @@ export function TopicPicker({ value, onSelect }: TopicPickerProps) {
           className="max-w-xs justify-between border-base px-4"
         >
           {value ?? t("component.topicPicker.pickLabel")}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <div className="i-heroicons:chevron-up-down ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0">
