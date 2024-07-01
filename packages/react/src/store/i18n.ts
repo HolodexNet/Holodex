@@ -4,9 +4,8 @@ import { atomWithStorage } from "jotai/utils";
 import type { i18n } from "i18next";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { CLIPPER_LANGS } from "@/lib/consts";
 
-export const preferredTimezonesAtom = atom([
+export const preferredTimezonesAtom = atomWithStorage("preferred_timezones", [
   "America/New_York",
   "Europe/London",
   "Asia/Tokyo",
@@ -16,14 +15,6 @@ export const localeAtom = atom({
   lang: window.localStorage.getItem("i18nextLng") ?? navigator.language,
   dayjs: (...args: Parameters<typeof dayjs>) => dayjs(...args),
 });
-
-export const clipLangAtom = atomWithStorage<(typeof CLIPPER_LANGS)[number]>(
-  "lang",
-  {
-    text: "English",
-    value: "en",
-  },
-);
 
 // configures a tFunction atom that will be synced with the application `t`, for the atom system to access translations.
 export const tFunctionAtom = atom<i18n["t"] | undefined>(undefined);

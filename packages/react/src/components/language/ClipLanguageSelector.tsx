@@ -1,0 +1,93 @@
+import React from "react";
+import { CLIPPER_LANGS } from "@/lib/consts";
+import { atom, useAtom, useSetAtom } from "jotai";
+import {
+  Command,
+  CommandList,
+  CommandGroup,
+  CommandItem,
+} from "@/shadcn/ui/command";
+import { Popover, PopoverTrigger, PopoverContent } from "@/shadcn/ui/popover";
+import { Button } from "@/shadcn/ui/button";
+import { cn } from "@/lib/utils";
+import { clipLanguageAtom } from "@/store/settings";
+
+// Define the toggle atom
+const toggleClipLanguageAtom = atom(
+  null, // Read function returns null as this is a write-only atom
+  (get, set, langValue: string) => {
+    const currentLangs = get(clipLanguageAtom);
+    if (currentLangs.includes(langValue)) {
+      set(
+        clipLanguageAtom,
+        currentLangs.filter((lang) => lang !== langValue),
+      );
+    } else {
+      set(clipLanguageAtom, [...currentLangs, langValue]);
+    }
+  },
+);
+
+export const ClipLanguageSelector: React.FC = () => {
+  const [selectedLangs] = useAtom(clipLanguageAtom);
+  const toggleLanguage = useSetAtom(toggleClipLanguageAtom);
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          role="combobox"
+          size="icon-lg"
+          aria-expanded={open}
+        >
+          <div className="i-fluent:globe-search-24-regular text-lg"></div>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="max-w-[80vw] p-0">
+        <Command>
+          {/* <CommandInput placeholder={t("Search languages...")} /> */}
+          <CommandList>
+            {/* <CommandEmpty>{t("No language found.")}</CommandEmpty> */}
+            <CommandGroup>
+              {CLIPPER_LANGS.map((lang) => (
+                <CommandItem
+                  key={lang.value}
+                  onSelect={() => toggleLanguage(lang.value)}
+                >
+                  <div
+                    className={cn(
+                      "i-heroicons:check mr-2 h-4 w-4",
+                      selectedLangs.includes(lang.value)
+                        ? "opacity-100"
+                        : "opacity-0",
+                    )}
+                  />
+                  {lang.text}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+        {selectedLangs.length > 0 && (
+          <div className="flex flex-wrap gap-1 border-t border-base-5 p-2">
+            {selectedLangs.map((langValue) => {
+              const lang = CLIPPER_LANGS.find((l) => l.value === langValue);
+              return (
+                <Button
+                  key={langValue}
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => toggleLanguage(langValue)}
+                >
+                  {lang?.text}
+                </Button>
+              );
+            })}
+          </div>
+        )}
+      </PopoverContent>
+    </Popover>
+  );
+};

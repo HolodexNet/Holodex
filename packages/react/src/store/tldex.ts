@@ -1,9 +1,5 @@
 import { TLLanguageCode } from "@/lib/consts";
-import { clipLangAtom } from "./i18n";
 import { atomWithStorage } from "jotai/utils";
-import { getDefaultStore } from "jotai";
-
-const store = getDefaultStore();
 
 export interface TLDexStoreState {
   // whether live TL sticks to the bottom or not
@@ -30,7 +26,7 @@ export interface TLDexStoreState {
 
 export const tldexSettngsAtom = atomWithStorage<TLDexStoreState>("tldex", {
   liveTlStickBottom: false,
-  liveTlLang: store.get(clipLangAtom).value,
+  liveTlLang: "en",
   liveTlFontSize: 13,
   liveTlShowVerified: true, // show verified messages
   liveTlShowModerator: true, // show moderator messages

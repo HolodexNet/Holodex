@@ -58,6 +58,10 @@ export const clipLanguageAtom = atom(
   },
 );
 
+export const clipLanguageQueryAtom = atom((get) =>
+  get(clipLanguageAtom).join(","),
+);
+
 export const redirectModeAtom = atom(
   (get) => get(settingsAtom).redirectMode,
   (get, set, newValue: boolean) => {

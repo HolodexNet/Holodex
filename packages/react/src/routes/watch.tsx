@@ -11,7 +11,6 @@ import { useIsLgAndUp } from "@/hooks/useBreakpoint";
 import { cn, idToVideoURL } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
 import { useVideo } from "@/services/video.service";
-import { clipLangAtom } from "@/store/i18n";
 import {
   chatOpenAtom,
   chatPosAtom,
@@ -20,6 +19,7 @@ import {
   tlOpenAtom,
 } from "@/store/player";
 import { queueAtom } from "@/store/queue";
+import { clipLanguageQueryAtom } from "@/store/settings";
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
@@ -28,13 +28,13 @@ import { useLocation, useParams } from "react-router-dom";
 export default function Watch() {
   const location = useLocation();
   const { id } = useParams();
-  const { value: clipLang } = useAtomValue(clipLangAtom);
+  const clipLangQuery = useAtomValue(clipLanguageQueryAtom);
   const {
     data: currentVideo,
     isSuccess,
     isPlaceholderData,
   } = useVideo<PlaceholderVideo>(
-    { id: id!, lang: clipLang, c: "1" },
+    { id: id!, lang: clipLangQuery, c: "1" },
     {
       enabled: !!id,
       refetchOnMount: true,

@@ -14,11 +14,11 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { clipLangAtom } from "@/store/i18n";
-import { ClipLanguageSelector } from "@/components/language/LanguagePicker";
 import { Helmet } from "react-helmet-async";
 import { MainVideoListing } from "./../components/video/MainVideoListing";
 import { Separator } from "@/shadcn/ui/separator";
+import { clipLanguageAtom } from "@/store/settings";
+import { ClipLanguageSelector } from "@/components/language/ClipLanguageSelector";
 
 export function Home() {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export function Home() {
     { org, type: ["placeholder", "stream"], include: ["mentions"] },
     { refetchInterval: 1000 * 60 * 5, enabled: tab === "live" },
   );
-  const clipLang = useAtomValue(clipLangAtom);
+  const clipLangs = useAtomValue(clipLanguageAtom);
 
   const {
     data: archives,
@@ -74,7 +74,7 @@ export function Home() {
       include: ["mentions"],
       max_upcoming_hours: 1,
       limit: 32,
-      lang: [`${clipLang.value}`],
+      lang: clipLangs,
     },
     {
       refetchInterval: 1000 * 60 * 5,
@@ -133,10 +133,13 @@ export function Home() {
             {t("views.home.recentVideoToggles.subber")}
           </TabsTrigger>
           <div className="flex grow" />
+          <ClipLanguageSelector />
           <Button
             className="shrink-0"
             size="icon-lg"
             variant="ghost"
+            role="button"
+            type="button"
             onClick={() => {
               setNextSize();
               console.log("new card size", nextSize);
@@ -154,7 +157,6 @@ export function Home() {
               )}
             />
           </Button>
-          <ClipLanguageSelector />
         </TabsList>
         <TabsContent value="live">
           <MainVideoListing
