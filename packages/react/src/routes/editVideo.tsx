@@ -1,6 +1,5 @@
 import { Loading } from "@/components/common/Loading";
 import { VideoEditTopic } from "@/components/edit/VideoEditTopic";
-import { DefaultPlayerPositionAnchor } from "@/components/player/DefaultPlayerPositionAnchor";
 import { siteIsSmallAtom } from "@/hooks/useFrame";
 import { useVideo } from "@/services/video.service";
 import {
@@ -17,12 +16,16 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import "./editVideo.scss";
 import { VideoEditMusic } from "@/components/edit/VideoEditMusic";
+import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
+import { idToVideoURL } from "@/lib/utils";
 
 export default function EditVideo() {
   const { id } = useParams();
   const { t } = useTranslation();
   const siteIsSmall = useAtomValue(siteIsSmallAtom);
-  const { data, error, isPending, isSuccess } = useVideo({ id: id! });
+  const { data, error, isPending, isSuccess } = useVideo<PlaceholderVideo>({
+    id: id!,
+  });
   const [tab, setTab] = useState("topic");
 
   return (
@@ -35,12 +38,12 @@ export default function EditVideo() {
           direction={siteIsSmall ? "vertical" : "horizontal"}
         >
           <ResizablePanel minSize={10} defaultSize={20}>
-            <div id="player-anchor-container" className="relative h-full p-2">
-              <DefaultPlayerPositionAnchor
-                id="player-anchor"
-                className="overflow-hidden"
-              />
-            </div>
+            {isSuccess && data && (
+              <PlayerWrapper
+                id={data?.id}
+                url={idToVideoURL(data.id, data.link)}
+              ></PlayerWrapper>
+            )}
           </ResizablePanel>
           <ResizableHandle withHandle />
           <ResizablePanel className="px-4">

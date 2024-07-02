@@ -294,7 +294,10 @@ const router = createBrowserRouter([
       },
       {
         path: "debug",
-        element: <div>Debug</div>,
+        async lazy() {
+          const Debug = (await import("./debug")).default;
+          return { Component: Debug };
+        },
       },
       {
         path: "debug/run",

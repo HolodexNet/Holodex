@@ -15,23 +15,30 @@ import {
 import { useState, useEffect } from "react";
 
 interface StatBlockProps {
+  /**
+   * The title of the statistic.
+   */
   title: string;
+  /**
+   * The initial amount to display.
+   */
   amount: number;
+  /**
+   * The change in the amount. Optional.
+   */
   change?: number;
+  /**
+   * The duration of the animation in milliseconds.
+   */
   duration: number;
+  /**
+   * The text to display after the amount. Optional.
+   */
   timeText?: string; // e.g. "last week"
 }
 
 /**
- * Renders a statistic component with an animated display of the amount.
- *
- * @param {StatBlockProps} props - The props for the component.
- * @param {string} props.title - The title of the statistic.
- * @param {number} props.amount - The initial amount to display.
- * @param {number} props.change - The change in the amount.
- * @param {number} props.duration - The duration of the animation in milliseconds.
- * @param {string} props.timeText - The text to display after the amount.
- * @return {JSX.Element} The rendered statistic component.
+ * Renders a statistic card with an animated display of the amount.
  */
 export default function StatComponent({
   title,
