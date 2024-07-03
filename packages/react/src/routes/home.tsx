@@ -133,7 +133,7 @@ export function Home() {
             {t("views.home.recentVideoToggles.subber")}
           </TabsTrigger>
           <div className="flex grow" />
-          <ClipLanguageSelector />
+          {tab === "clips" && <ClipLanguageSelector />}
           <Button
             className="shrink-0"
             size="icon-lg"

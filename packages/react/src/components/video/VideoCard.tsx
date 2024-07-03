@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useDuration } from "@/hooks/useDuration";
 import { clsx } from "clsx";
 import { VideoThumbnail } from "./VideoThumbnail";
+import { usePreferredName } from "@/store/settings";
 
 export type VideoCardType = VideoRef &
   Partial<VideoBase> &
@@ -180,6 +181,8 @@ export function VideoCard({
     </VideoMenu>
   );
 
+  const chName = usePreferredName(video.channel);
+
   return (
     <div
       className={videoCardClasses.outerLayer}
@@ -262,7 +265,7 @@ export function VideoCard({
               to={`/channel/${video.channel.id}`}
               onClick={(e) => onClick && onClick("channel", e)}
             >
-              {video.channel.name}
+              {chName}
             </Link>
           )}
           {size != "xs" && (

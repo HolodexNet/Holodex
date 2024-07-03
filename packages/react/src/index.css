@@ -21,3 +21,12 @@
     /* font-family: "Noto Sans", sans-serif; */
   }
 }
+
+.tsqd-parent-container .tsqd-transitions-container>div {
+  /* button[aria-label="Open Tanstack query devtools"] aint it.*/
+  margin-top: 50px;
+}
+
+.jotai-devtools-trigger-button {
+  margin-top: 100px;
+}

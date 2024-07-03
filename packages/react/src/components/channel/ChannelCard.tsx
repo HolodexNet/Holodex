@@ -7,6 +7,7 @@ import { ChannelImg } from "./ChannelImg";
 import { TopicBadge } from "../topic/TopicBadge";
 import { ChannelSocials } from "./ChannelSocials";
 import { Link, useNavigate } from "react-router-dom";
+import { usePreferredName } from "@/store/settings";
 
 type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
   T,
@@ -75,6 +76,11 @@ export function ChannelCard({
     [channelHref, navigate],
   );
 
+  const preferredName = usePreferredName({
+    name,
+    english_name,
+  });
+
   switch (size) {
     case "xs":
     case "sm":
@@ -93,7 +99,9 @@ export function ChannelCard({
                 {org}
                 {group && ` / ${group}`}
               </div>
-              <div className="line-clamp-1 text-lg font-bold">{name}</div>
+              <div className="line-clamp-1 text-lg font-bold">
+                {preferredName}
+              </div>
               <div className="text-sm text-base-11">
                 {showSubscribers &&
                   t("component.channelInfo.subscriberCount", {
@@ -111,7 +119,11 @@ export function ChannelCard({
               {size === "sm" && (
                 <div className="mt-1 flex max-w-full gap-1 overflow-x-auto">
                   {top_topics?.map((topic) => (
-                    <TopicBadge size="sm" topic={topic} />
+                    <TopicBadge
+                      size="sm"
+                      topic={topic}
+                      className="border-base-7 capitalize text-base-10 "
+                    />
                   ))}
                 </div>
               )}
@@ -167,19 +179,10 @@ export function ChannelCard({
               className={`z-10 h-24 w-24 ${inactive && "brightness-75 saturate-50"}`}
               channelId={id}
             />
-            {/* {inactive && (
-                    <div
-                      className="i-fa:graduation-cap absolute z-10 h-24 w-24 text-[40px] leading-10"
-                      style={{
-                        transform: "translate(24px,-10px) rotate(20deg)",
-                        color: "var(--base-10)",
-                      }}
-                    ></div>
-                  )} */}
             <div
               className={`${inactive && "text-base-10"} z-10 line-clamp-2 text-center text-lg font-bold`}
             >
-              {name}
+              {preferredName}
             </div>
             <div className="flex flex-col items-center">
               <div className="whitespace-nowrap text-sm text-base-11">

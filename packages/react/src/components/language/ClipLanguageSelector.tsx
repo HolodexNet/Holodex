@@ -11,6 +11,7 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/shadcn/ui/popover";
 import { Button } from "@/shadcn/ui/button";
 import { cn } from "@/lib/utils";
 import { clipLanguageAtom } from "@/store/settings";
+import { useTranslation } from "react-i18next";
 
 // Define the toggle atom
 const toggleClipLanguageAtom = atom(
@@ -32,6 +33,7 @@ export const ClipLanguageSelector: React.FC = () => {
   const [selectedLangs] = useAtom(clipLanguageAtom);
   const toggleLanguage = useSetAtom(toggleClipLanguageAtom);
   const [open, setOpen] = React.useState(false);
+  const { t } = useTranslation();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -41,16 +43,23 @@ export const ClipLanguageSelector: React.FC = () => {
           role="combobox"
           size="icon-lg"
           aria-expanded={open}
+          title={t("views.settings.clipLanguageSelection")}
         >
-          <div className="i-fluent:globe-search-24-regular text-lg"></div>
+          <div className="relative h-6 w-6">
+            <div className="i-tabler:language-hiragana absolute h-full w-full text-xl" />
+            <div
+              className="i-mdi:filter-gear-outline absolute inset-0 mb-auto ml-auto h-full w-full opacity-50"
+              style={{ fontSize: "10px", marginBottom: "3px" }}
+            />
+          </div>
+          <span className="sr-only">Select clip language</span>{" "}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="max-w-[80vw] p-0">
         <Command>
           {/* <CommandInput placeholder={t("Search languages...")} /> */}
           <CommandList>
-            {/* <CommandEmpty>{t("No language found.")}</CommandEmpty> */}
-            <CommandGroup>
+            <CommandGroup heading={t("views.settings.clipLanguageSelection")}>
               {CLIPPER_LANGS.map((lang) => (
                 <CommandItem
                   key={lang.value}

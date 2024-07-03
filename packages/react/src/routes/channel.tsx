@@ -7,6 +7,7 @@ import { formatCount } from "@/lib/time";
 import { getChannelBannerImages } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
 import { Tabs, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
+import { usePreferredName } from "@/store/settings";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
@@ -33,12 +34,14 @@ export default function Channel() {
 
   const { data: channel } = useChannel(id!);
 
+  const preferredName = usePreferredName(channel ?? {});
+
   if (!id || !channel) return <Loading size="md" />;
 
   return (
     <>
       <Helmet>
-        <title>{channel.name} - Holodex</title>
+        <title>{preferredName} - Holodex</title>
       </Helmet>
       <div className="w-full">
         <img
@@ -68,7 +71,7 @@ export default function Channel() {
                     {channel?.group && ` / ${channel?.group}`}
                   </div>
                   <div className="line-clamp-1 text-lg font-bold">
-                    {channel?.name}
+                    {preferredName}
                   </div>
                   <div className="text-sm text-base-11">
                     {t("component.channelInfo.subscriberCount", {
@@ -83,7 +86,12 @@ export default function Channel() {
                   </div>
                   <div className="mt-1 flex max-w-full gap-1 overflow-x-auto">
                     {channel?.top_topics?.map((topic) => (
-                      <TopicBadge key={topic} size="sm" topic={topic} />
+                      <TopicBadge
+                        key={topic}
+                        size="sm"
+                        topic={topic}
+                        className="border-base-7 capitalize text-base-10 "
+                      />
                     ))}
                   </div>
                 </div>

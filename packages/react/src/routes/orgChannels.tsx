@@ -5,12 +5,18 @@ import { useChannels } from "@/services/channel.service";
 import { Label } from "@/shadcn/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/shadcn/ui/radio-group";
 import { orgAtom } from "@/store/org";
-import { useAtomValue } from "jotai";
-import { useEffect, useMemo, useState } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { atomWithStorage } from "jotai/utils";
+import { useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { Virtuoso, VirtuosoGrid } from "react-virtuoso";
+
+const orgChannelDisplayStyleAtom = atomWithStorage<"grid" | "list">(
+  "orgChannelDisplayStyle",
+  window.innerWidth > 498 ? "grid" : "list",
+);
 
 export default function ChannelsOrg() {
   const { t } = useTranslation();
@@ -33,9 +39,7 @@ export default function ChannelsOrg() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOrg]);
 
-  const [displayStyle, setDisplayStyle] = useState(() =>
-    window.innerWidth > 498 ? "grid" : "list",
-  );
+  const [displayStyle, setDisplayStyle] = useAtom(orgChannelDisplayStyleAtom);
 
   const channelList = useMemo(() => channels?.pages.flat() ?? [], [channels]);
 
