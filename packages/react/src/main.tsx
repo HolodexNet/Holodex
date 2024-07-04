@@ -15,6 +15,7 @@ import timezone from "dayjs/plugin/timezone";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { ErrorFallback } from "./components/common/ErrorFallback";
 import { App } from "./App";
+import { TooltipProvider } from "./shadcn/ui/tooltip";
 
 const GOOGLE_CLIENT_ID =
   "275540829388-87s7f9v2ht3ih51ah0tjkqng8pd8bqo2.apps.googleusercontent.com";
@@ -71,7 +72,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             FallbackComponent={ErrorFallback}
             onReset={() => window.location.reload()}
           >
-            <App />
+            <TooltipProvider>
+              <App />
+            </TooltipProvider>
           </ErrorBoundary>
         </GoogleOAuthProvider>
       </QueryClientProvider>

@@ -53,7 +53,7 @@ const router = createBrowserRouter([
       {
         path: "org/:org",
         async lazy() {
-          const Home = (await import("./home")).Home;
+          const Home = (await import("./home/home")).Home;
           return { Component: Home };
         },
       },

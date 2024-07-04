@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 import { formatCount } from "@/lib/time";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/shadcn/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
 import { localeAtom, preferredTimezonesAtom } from "@/store/i18n";
 import { VideoCardType } from "./VideoCard";
 
@@ -38,24 +33,20 @@ export function VideoCardCountdownToLive({
   };
 
   const renderTooltipContent = (timestamp: Parameters<typeof dayjs>[0]) => (
-    <div className="grid grid-cols-2 gap-x-4">
+    <div className="flex flex-col items-stretch gap-1">
       {video.certainty === "likely" && (
-        <span className="col-span-2 mb-2 max-w-56 text-yellow-10">
+        <span className="mb-2 block max-w-48 text-xs text-yellow-10">
           {t("component.videoCard.uncertainPlaceholder")}
         </span>
       )}
-      <div className="space-y-1">
-        {formatTimeForTimezones(timestamp).map(({ timezone }) => (
-          <div key={timezone} className="text-right font-semibold">
-            {timezone}:
+      {formatTimeForTimezones(timestamp).map(({ timezone, time }) => (
+        <div key={timezone} className="">
+          <div className="text-base-9">{timezone}:</div>
+          <div className="text-center text-sm font-semibold text-base-11">
+            {time}
           </div>
-        ))}
-      </div>
-      <div className="space-y-1">
-        {formatTimeForTimezones(timestamp).map(({ timezone, time }) => (
-          <div key={timezone}>{time}</div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 
@@ -92,16 +83,14 @@ export function VideoCardCountdownToLive({
     });
 
     return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <span className={`text-base-11 ${className}`}>{countdownText}</span>
-          </TooltipTrigger>
-          <TooltipContent>
-            {renderTooltipContent(video.start_scheduled)}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span className={`text-base-11 ${className}`}>{countdownText}</span>
+        </TooltipTrigger>
+        <TooltipContent className="bg-base-3 p-1.5">
+          {renderTooltipContent(video.start_scheduled)}
+        </TooltipContent>
+      </Tooltip>
     );
   }
 
@@ -111,16 +100,14 @@ export function VideoCardCountdownToLive({
     });
 
     return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <span className={`text-base-11 ${className}`}>{pastText}</span>
-          </TooltipTrigger>
-          <TooltipContent>
-            {renderTooltipContent(video.available_at)}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span className={`text-base-11 ${className}`}>{pastText}</span>
+        </TooltipTrigger>
+        <TooltipContent className="bg-base-3 p-1.5" avoidCollisions>
+          {renderTooltipContent(video.available_at)}
+        </TooltipContent>
+      </Tooltip>
     );
   }
 

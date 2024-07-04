@@ -83,7 +83,7 @@ export function Frame() {
   useOnClickOutside(ref, handleClickOutside);
   return (
     <div className={mainClasses} id="layout">
-      <aside className="z-50 border-r border-r-base" ref={ref}>
+      <aside className="z-30 border-r border-r-base" ref={ref}>
         <Sidebar id="sidebar" onClose={toggle} />
       </aside>
       <Header id="header" />
