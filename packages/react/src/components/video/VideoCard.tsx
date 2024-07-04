@@ -302,6 +302,7 @@ function VideoCardDuration({
   link,
   placeholderType,
   className,
+  certainty,
 }: Pick<
   VideoCardType,
   | "type"
@@ -310,6 +311,7 @@ function VideoCardDuration({
   | "start_actual"
   | "end_actual"
   | "link"
+  | "certainty"
   | "placeholderType"
 > & { className?: string }) {
   const { t } = useTranslation();
@@ -326,6 +328,30 @@ function VideoCardDuration({
     start_actual,
   });
 
+  // generate the icon to use:
+  let placeholderIcon;
+  if (placeholderType === "external-stream") {
+    if (link?.includes("twitch.tv")) {
+      placeholderIcon = "i-tabler:brand-twitch";
+    } else if (link?.includes("twitcasting.tv") || link?.includes("x.com")) {
+      placeholderIcon = "i-tabler:brand-twitter";
+    } else if (link?.includes("bilibili")) {
+      placeholderIcon = "i-tabler:brand-bilibili";
+    } else if (link?.includes("nicovideo")) {
+      placeholderIcon = "i-simple-icons:niconico";
+    } else {
+      placeholderIcon = "i-tabler:cast";
+    }
+  } else {
+    if (placeholderType === "scheduled-yt-stream" && certainty === "likely") {
+      placeholderIcon = "i-tabler:clock-question";
+    } else if (placeholderType === "event" && certainty === "likely") {
+      placeholderIcon = "i-tabler:calendar-question";
+    } else {
+      placeholderIcon = "i-tabler:calendar-event";
+    }
+  }
+
   return durationMs ?? status === "upcoming" ? (
     <span
       className={cn(
@@ -334,14 +360,14 @@ function VideoCardDuration({
         className,
       )}
     >
-      {placeholderType &&
-        (link?.includes("twitch") ? (
-          <div className="i-lucide:twitch" />
-        ) : placeholderType === "external-stream" ? (
-          <div className="i-lucide:radio m-1 text-lg" />
-        ) : (
-          <div className="i-lucide:youtube m-1 text-lg" />
-        ))}
+      {placeholderType && (
+        <div
+          className={
+            placeholderIcon +
+            (durationMs ? " text-base-11" : " my-1 text-lg text-base-9")
+          }
+        />
+      )}
       {isPremiere
         ? t("component.videoCard.premiere")
         : durationMs && formatDuration(durationMs)}

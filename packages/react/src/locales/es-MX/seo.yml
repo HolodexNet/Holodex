@@ -1,5 +1,3 @@
----
-hello: mundo
 music:
   title: '{{english_name}} Canciones y Covers originales - Holodex'
   description: >-

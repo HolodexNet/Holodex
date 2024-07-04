@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: 灰常拍謝！
@@ -10,6 +9,8 @@ component:
     signInToFavorite: 請登入以使用收藏功能
     unfavoriteAllInGroup: 取消收藏本群組所有頻道
     favoriteAllInGroup: 收藏本群組所有頻道
+    enableGroupDisplay: 於首頁顯示屬於此團體的 Vtuber 頻道
+    disableGroupDisplay: 於首頁隱藏屬於此團體的 Vtuber 頻道
   channelInfo:
     stats: 統計資料
     videoCount: '{0} 部影片'
@@ -17,6 +18,7 @@ component:
     subscriberCount: '{n} 位訂閱者'
     subscriberNA: 無法取得訂閱者數據
     totalViews: 總觀看次數
+    inactiveChannel: 本頻道已不再進行活動
   channelSocials:
     addToFavorites: 加入收藏
     removeFromFavorites: 取消收藏
@@ -48,15 +50,20 @@ component:
     premiere: 首播
     googleCalendar: 新增至 Google 日曆
     totalTLs: 聊天室即時翻譯數
+    totalSongs: 已標記歌曲數
     tlPresence: 過去半小時內有即時翻譯
+    uncertainPlaceholder: 尚未有正式的開始時間，實際的開始時間可能會有誤差。
     typeScheduledYT: 已排定實況
     typeExternalStream: 外部實況
     typeEventPlaceholder: 已排定活動
     openClient: 開啟翻譯客戶端
     openScriptEditor: 開啟文本編輯器
+    popoutChat: 彈出YouTube聊天室視窗
     uploadScript: 上傳翻譯文本
   videoDescription:
     description: 說明
+  video:
+    comment: { }
   description:
     showLess: 只顯示部分資訊
     showMore: 顯示完整資訊
@@ -73,6 +80,8 @@ component:
       topic: 內容標籤
       org: 團體
       titledesc: 標題/描述
+      title: 曲名
+      description: 敘述
       comments: 留言
       videourl: 影片網址
   relatedVideo:
@@ -121,11 +130,15 @@ component:
       此頻道可能正與 {org} 成員或是您所收藏的VTuber連動。您可於設定頁面關閉此顯示功能。
     comments: 請於此處簡略描述您檢舉該影片的原因
     success: 檢舉已送出，謝謝您
+    consider: 推薦您啟用篩選器中的「隱藏連動實況」來解決此問題
     reasons:
       - 影片標籤錯誤
       - 影片品質過於低劣 / 含有誤導性內容
       - 違反了VTuber公司的二創條款或是不當內容
       - 其他原因
+      - 影片標籤錯誤
+      - 提及頻道錯誤
+      - 本{0}並非{1}的相關影片
   thirdpartycookie:
     explanation: >-
       因各家瀏覽器的運作原理不同，部分對於<b>第三方Cookie<b>擁有較多限制的瀏覽器，或是瀏覽器將 <kbd>YouTube.com<kbd> 的 Cookie 封鎖的情況下，可能會導致無法使用 / 無法登入YouTube聊天室。<br /><br /> 您可以透過將 <kbd>YouTube.com<kbd> 的第三方Cookie設置為白名單，或是降低您瀏覽器對 <kbd>Holodex.net</kbd> 的安全/隱私限制來解決此問題。<br /><br /> 以下列出幾個網站來讓您更加理解該如何執行此操作：
@@ -213,6 +226,7 @@ views:
     sort:
       newest: 新增日期（最新）
       oldest: 新增日期（最舊）
+      longest: 時長最長
     type:
       all: 全部
       official: 官方
@@ -258,6 +272,7 @@ views:
     hideCollabStreamsLabel: 隱藏連動實況
     hideCollabStreamsMsg: 隱藏與目前團體成員相關的連動實況
     hidePlaceholderStreams: 隱藏實況活動資訊卡
+    hideMissingStreams: 隱藏已消失的實況
     ignoredTopicsLabel: 隱藏指定內容標籤
     ignoredTopicsMsg: 在首頁與我的收藏頁面中隱藏含有下列內容標籤的影片
     theme: 佈景主題
@@ -267,8 +282,9 @@ views:
     update_btn: 更新
     close_btn: 關閉
     check_about_page: 查看關於頁面以詳細了解更新內容
-    nowSupportsMultiOrg: Holodex現在已支援更多Vtuber團體。
-    loginCallToAction: 登入以取得您的收藏資料
+    nowSupportsMultiOrg: >-
+      提示：你可以在這裡切換團體！
+    loginCallToAction: 登入以自訂您的收藏
   about:
     add_my_channel: 將我的頻道加入Holodex
   watch:
@@ -349,6 +365,10 @@ views:
       - 使用 Google 帳號登入
       - 使用 Discord 帳號登入
       - 使用 Twitter 帳號登入
+    twitterMsg:
+      - 由於 Twitter API 的使用規範改變，2 月 9 日後可能無法再使用 Twitter 登入。
+      - 您目前僅使用 Twitter 作為登入方法。我們強烈建議您連結其他平台，以避免在切換裝置或是清除瀏覽器資料後無法登入你的帳戶。
+      - 如果您無法使用 Twitter 登入 Holodex，且沒有其他連結平台的話，請透過 Twitter 私訊或是 Discord 聯絡我們以取得協助。
     username: 使用者名稱
     usernameBtn:
       - 變更
@@ -427,9 +447,10 @@ views:
   tlClient:
     menu:
       title: 選單
-      setting: TLDex 房間設定
+      setting: TLDex 資料設定
       loadVideo: 顯示影片
       unloadVideo: 隱藏影片
+      loadChat: 將聊天室的訊息新增至社群翻譯區
       unloadChat: 從YouTube聊天室中分離
     tlControl:
       enterBtn: 輸入
@@ -437,8 +458,11 @@ views:
       suffix: 後綴
       fontColour: 字型色彩
       outlineColour: 外框顏色
+      localPrefix: 聊天室中的語言標籤
       addProfile: 新增設定檔
       removeProfile: 移除設定檔
+      shiftUp: 上移設定檔
+      shiftDown: 下移設定檔
       showSetting: 設定
       hideSetting: 隱藏
     addProfilePanel:
@@ -459,6 +483,7 @@ views:
   scriptEditor:
     menu:
       save: 儲存
+      continuousEnd: 翻譯語句連續化（延長結束時間填補空白區域）
       clearAll: 刪除文本
       exportFile: 匯出檔案
       importFile: 匯入檔案
@@ -470,9 +495,11 @@ views:
       headerText: 文字
       setAsStart: 設為起點
       shiftCurrentTime: 位移至目前時間
+      deleteEntry: 刪除項目
     loadVideoPanel:
       title: 載入影片
       inputLabel: 實況連結
+    setStartTitle: 將目前選中項目設為開始，所有在其之前的條目將被刪除。
     importFile:
       overwriteBtn: 覆蓋
     editorModePanel:
@@ -483,8 +510,10 @@ views:
   tlManager:
     title: 文本管理器
     headerID: 影片ID
+    headerEntries: 項目
     download: 下載
     delete: 刪除
+    deleteTitle: 刪除項目
     langPick: 語言
 time:
   soon: 即將開始
@@ -580,6 +609,7 @@ about:
       contents:
         '0': >-
           我們的網站是架於一台有著28核心處理器與60GB記憶體的自架伺服器上，運作成本大概是每月60美元（約1700台幣），並且未來希望在網站上加入更多的功能，因此我們建立了一個 <a href="https://ko-fi.com/holodex">Ko-fi 贊助計畫</a>來用於支付伺服器的運作費用（我們之前也有一個相同用途的 <a href="https://www.patreon.com/holodex">Patreon</a>，但 Ko-fi 對我們來說更加方便）<br /><br />除此之外．在Twitter上給我們支持與鼓勵，抑是給我們任何的意見回饋也是對我們的一種支持！更甚者，你也能在<a href="https://crwd.in/holodex">Crowdin</a>上幫助我們進行使用者介面的翻譯、在影片資料分頁協助我們進行Vtuber音樂資料的建立、在實況底下留言標註有趣的片段對我們來說都是很大的幫助！
+  privacyPolicy: 隱私權政策
   gdpr: 關於GDPR與我的資料
   gdprContent: >-
     我們僅使用「Google分析」的cookie來追蹤每頁的瀏覽人數並分析資料。當您登入後，我們會將您社群媒體帳號的帳號名稱/ID與網站收藏庫的內容綁定。記錄下的內容可能包括您的電子郵件（Google帳號）、Discord ID，或是Twitter帳號。
@@ -625,33 +655,10 @@ channelRequest:
   Comments: 備註（選填）
   CommentsHint: 有什麼想要補充的嗎？
   VtuberRequirementText: >-
-    個人勢 Vtuber 的審核標準為至少要有２萬名訂閱者，若該 Vtuber 為VT團體成員之一，其通過標準將較為寬鬆<br /><br />Holodex 內是否新增團體取決於該團體的平均訂閱數多寡。
+    個人勢 Vtuber 的審核標準為至少需要擁有２萬名訂閱者。<br /><br />若該 Vtuber 為 Holodex 現有 Vtuber 團體成員之一，將會直接通過審核。<br /><br />Holodex 的團體頁籤的新增與否，將以該團體的平均訂閱數多寡作為審核基準。<br /><br />若是以 Twitch 為主要實況平台的 Vtuber 來申請的話，至少需要擁有一個 YouTube 頻道來讓我們的 BOT 做追蹤才有可能通過。
   ClipperRequirementText: >-
     翻譯剪輯頻道的審核標準如下：該頻道至少需要有兩個月的影片上傳歷史並且定時更新頻道內容。此外管理員也會依照該頻道內容的品質來決定是否通過審核— Holodex 不接受每天洗版式的大量更新短影片，或是上傳的翻譯剪輯內容幾乎全數都低於一分鐘的頻道，使用釣魚/誤導式縮圖的翻譯剪輯片段也包含在不通過的標準之內。<br /><br />另外一點要注意的是，剪輯者應於影片描述欄位填寫「實況/影片出處」、「@YouTube頻道」或是「Vtuber頻道連結」來註明影片來源，過度標註（像是在描述欄位填寫一堆彩虹社成員連結）會增加 Holodex 編輯者群們的負擔，而沒有標註（未標明來源）將會導致 Holodex 後台無法判定其內容使否為精華剪輯，進而導致該影片不會出現於 Holodex 頁面上。<br /><br />Holodex 資料庫雖然有標註的自動錯誤修正機制，但此機制運作並不穩定，過度標註可能會導致管理員們被迫於 Holodex 上移除其頻道內容以避免相關問題重複出現。
   DeletionRequirementText: >-
     刪除頻道的申請僅限頻道擁有者提出，請您提供聯絡資料以供我們與您聯絡。
   PageTitle: Holodex 頻道追蹤申請表
-  ChannelURLErrorFeedback: 連結格式須為 https://www.youtube.com/channel/UC_____
-search:
-  class:
-    search: 簡索
-    org: 組織
-    vtuber: up主
-    type: 影片類型
-    topic: 標籤
-    lang: 剪輯語言
-    has_song: 歌曲
-    description: 描述
-    advanced: 高級搜索
-    from: 從
-    to: 到
-  class_values:
-    type:
-      clip: 剪輯
-      stream: 影片/直播
-      placeholder: 排定
-    has_song:
-      none: 沒有標記歌曲
-      non-zero: 有歌曲
-      one: 一首歌
-      many: 多于一首歌
+  ChannelURLErrorFeedback: 頻道連結格式須為 "https://www.youtube.com/channel/UC_____" 或是 "https://www.youtube.com/@_____" 其中之一

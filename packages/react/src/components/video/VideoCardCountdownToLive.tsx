@@ -39,6 +39,11 @@ export function VideoCardCountdownToLive({
 
   const renderTooltipContent = (timestamp: Parameters<typeof dayjs>[0]) => (
     <div className="grid grid-cols-2 gap-x-4">
+      {video.certainty === "likely" && (
+        <span className="col-span-2 mb-2 max-w-56 text-yellow-10">
+          {t("component.videoCard.uncertainPlaceholder")}
+        </span>
+      )}
       <div className="space-y-1">
         {formatTimeForTimezones(timestamp).map(({ timezone }) => (
           <div key={timezone} className="text-right font-semibold">
@@ -77,7 +82,12 @@ export function VideoCardCountdownToLive({
     video.start_scheduled
   ) {
     const countdownText = t("time.diff_future_date", {
-      0: dayjs(video.start_scheduled).fromNow(false),
+      0: (
+        <span className={video.certainty === "likely" ? "italic" : ""}>
+          {dayjs(video.start_scheduled).fromNow(false) +
+            (video.certainty === "likely" ? "?" : "")}
+        </span>
+      ),
       1: dayjs(video.start_scheduled).format("hh:mm A"),
     });
 

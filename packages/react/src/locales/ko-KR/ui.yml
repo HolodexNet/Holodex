@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: 고멘나소리!
@@ -10,6 +9,8 @@ component:
     signInToFavorite: 즐겨찾기하려면 로그인
     unfavoriteAllInGroup: 소속된 모두를 즐겨찾기 해제
     favoriteAllInGroup: 소속된 모두를 즐겨찾기
+    enableGroupDisplay: 이 그룹을 홈 화면에 표시
+    disableGroupDisplay: 이 그룹을 홈 화면에서 숨기기
   channelInfo:
     stats: 통계
     videoCount: '동영상 {0}개'
@@ -17,6 +18,7 @@ component:
     subscriberCount: '구독자 {n}명'
     subscriberNA: 구독자 수를 확인할 수 없음
     totalViews: 총 조회수
+    inactiveChannel: 이 채널은 더 이상 활동하지 않습니다.
   channelSocials:
     addToFavorites: 즐겨찾기에 추가
     removeFromFavorites: 즐겨찾기에서 제거
@@ -48,12 +50,15 @@ component:
     premiere: 최초 공개
     googleCalendar: Google Calendar에 추가
     totalTLs: 전체 실시간 채팅 번역
+    totalSongs: 타임스탬프가 있는 노래
     tlPresence: 최근 30분간 활동 중인 번역가
+    uncertainPlaceholder: 시작 시간은 아직 공식적으로 확인되지 않았으며, 실제로는 다를 수 있습니다.
     typeScheduledYT: 예정된 방송
     typeExternalStream: 외부 방송
     typeEventPlaceholder: 예정된 이벤트
     openClient: 번역 클라이언트 열기
     openScriptEditor: 스크립트 편집기 열기
+    popoutChat: YouTube 채팅 팝업
     uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
@@ -75,6 +80,8 @@ component:
       topic: 주제
       org: 소속
       titledesc: 제목/설명
+      title: 제목
+      description: 설명
       comments: 댓글
       videourl: 동영상 URL
   relatedVideo:
@@ -123,11 +130,15 @@ component:
       이 채널은 즐겨찾기 중인 {org} 멤버와 콜라보 중일 수도 있습니다. 설정에서 이 기능을 끌 수 있어요
     comments: Holodex가 취해야 할 행동은 무엇인가요?
     success: 신고되었습니다. 감사합니다!
+    consider: 필터를 사용하고 이 보고서를 삭제하는 것도 좋습니다.
     reasons:
       - 잘못된 동영상 태그
       - 매우 낮은 화질/오해의 소지가 있는 콘텐츠
       - 소속의 2차 장작 가이드라인을 위반하거나 부적절함
       - 기타
+      - 올바르지 않은 동영상 주제
+      - 올바르지 않은 채널 멘션
+      - '{1}은(는) {0}에 해당하지 않음'
   thirdpartycookie:
     explanation: >-
       인터넷 브라우저의 작동 방식으로 인해 엄격한 <b>타사 쿠키</b> 정책을 사용하는 일부 브라우저 또는 <kbd>YouTube.com</kbd> 쿠키를 차단하는 브라우저는 Youtube 채팅에 로그인하거나 사용하기 어려울 수 있습니다. <br /><br /> 타사 쿠키 차단에서 <kbd>Youtube.com</kbd>을 제외하거나 <kbd>Holodex.net</kbd>의 쿠키 보안 / 개인정보 수준을 낮추면 이 문제를 해결할 수 있습니다. <br /><br /> 이를 수행하는 방법에 대한 자세한 정보를 제공하는 일부 웹 사이트를 포함했습니다.
@@ -198,7 +209,7 @@ views:
     exportCsv: CSV 파일
     selectionSelect50: 50개 선택
     exportYTExplanation: >-
-      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 떄문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
+      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 때문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
     exportYTHeading: YouTube 재생목록을 저장하는 방법
     exportYTInstructions: >-
       <b class="red--text">1단계</b>: YouTube 재생목록을 재생한 다음 미니 플레이어로 플레이어 UI를 변경하세요. <br /><br /> <b class="red--text">2단계</b>: 아무 동영상이나 고른 다음 대기열에 추가하세요. <br /><br /> <b class="red--text">3단계</b>: 이제 재생목록을 저장할 수 있습니다. 저장하려면 저장을 눌러주세요.
@@ -214,6 +225,7 @@ views:
     sort:
       newest: 최신순
       oldest: 오래된순
+      longest: 길이
     type:
       all: 모두
       official: 공식
@@ -259,6 +271,7 @@ views:
     hideCollabStreamsLabel: 콜라보 방송 숨기기
     hideCollabStreamsMsg: 즐겨찾기 피드에서 콜라보 방송을 숨깁니다
     hidePlaceholderStreams: 예약된 YouTube 방송만 표시하기
+    hideMissingStreams: 사라진 방송 숨기기
     ignoredTopicsLabel: 무시된 주제
     ignoredTopicsMsg: 홈과 즐겨찾기 페이지에서 해당 주제의 동영상을 숨깁니다
     theme: 테마
@@ -268,8 +281,9 @@ views:
     update_btn: 업데이트
     close_btn: 닫기
     check_about_page: 변경 사항에 대해 알아보려면 정보 페이지를 확인하세요
-    nowSupportsMultiOrg: 이제 Holodex가 다수의 소속을 지원합니다.
-    loginCallToAction: 자신만의 즐겨찾기를 만들려면 로그인해주세요!
+    nowSupportsMultiOrg: >-
+      팁: 여기에서 조직을 변경할 수 있어요!
+    loginCallToAction: 자신만의 즐겨찾기를 만들려면 로그인해주세요.
   about:
     add_my_channel: 채널 요청
   watch:
@@ -350,6 +364,10 @@ views:
       - Google 계정으로 로그인
       - Discord 계정으로 로그인
       - Twitter 계정으로 로그인
+    twitterMsg:
+      - Twitter의 API 정책 변경으로 인해 2월 9일부터 Twitter를 통한 로그인이 불가능할 수 있습니다.
+      - 현재 Twitter를 통해서만 로그인하고 계신 것으로 보입니다. (다른 기기에서의 로그인이나 브라우저의 기록 삭제로 인해) 계정에 더 이상 로그인하지 못하는 문제를 방지하기 위해 다른 로그인 수단을 추가하는 것을 강력하게 권장합니다.
+      - Twitter 계정으로 Holodex에 로그인할 수 없다면 (그리고 다른 로그인 수단을 추가하지 않았었다면) Twitter DM이나 Discord를 통해 문의해주시면 도와드리겠습니다.
     username: 아이디
     usernameBtn:
       - 변경
@@ -540,7 +558,7 @@ about:
     videoLinkage: 동영상이 버튜버에 제대로 연결되었는지 어떻게 확인하나요?
     videoLinkageContent: >-
       모든 정보는 비디오 설명에서 불러와집니다. 스트림을 클립하는 경우 공식 방송을 연결해야 합니다. 팬이 만든 콘텐츠 (예: bilibili에서 가져온 콘텐츠) 를 클리핑하는 경우 관련 버튜버의 공식 YouTube 채널을 연결해야 합니다. 모든 클립은 Holodex에 알려진 버튜버에 연결되어야하므로 버튜버 채널을 연결하지 않으면 Holodex에 해당 클립이 표시되지 않습니다.
-    quitHolodex: "저는 키리누키 제작자이고 Holodex에서 제 채널을 제거하고 싶습니다\n"
+    quitHolodex: "저는 키리누키 제작자이고 Holodex에서 제 채널을 제거하고 싶습니다\\r"
     quitHolodexContent: >-
       떠나신다니 아쉽습니다 :( 문제가 있다면 도와드리겠습니다. 그래도 제거하고 싶으시다면 Discord를 통해서 메시지를 보내주세요.
     favorite:
@@ -590,6 +608,7 @@ about:
       contents:
         '0': >-
           저희의 자체 호스팅 서버는 운영비가 월 60달러인 28코어 60GB 램 서버로, 기능들을 점점 더 확장하려고 하여 서버 비용을 충당하기 위해 <a href="https://ko-fi.com/holodex">Ko-fi</a>를 시작했습니다. (<a href="https://www.patreon.com/holodex">Patreon</a>도 있지만, 저희는 Ko-fi를 더 선호합니다.)<br /><br />또한 트위터에 피드백과 응원의 메시지를 보내주시고, <a href="https://crwd.in/holodex">Crowdin</a>을 통해 번역을 도우실 뿐만 아니라, 음악 데이터 저장소에도 기여함으로써 Holodex를 지원할 수 있습니다. 심지어 방송에서 재미있는 부분의 시간을 지정하여, 지정한 시간을 원래 방송 댓글에 다는 것만으로도 큰 도움이 됩니다!
+  privacyPolicy: 개인정보 취급방침
   gdpr: GDPR과 내 데이터
   gdprContent: >-
     Google Analytics 쿠키는 페이지뷰 추적을 위해 분석 목적으로 사용됩니다. 로그인 이후에 우리는 소셜 미디어 계정 사용자명과 아이디를 즐겨찾기와 연결시킵니다. 이 데이터에는 (Google) 이메일, Discord ID, 또는 Twitter 아이디가 포함될 수 있습니다.
@@ -641,4 +660,4 @@ channelRequest:
   DeletionRequirementText: >-
     채널 소유자 측에서만 삭제를 요청할 수 있습니다. 이를 확인할 수 있도록 연락처 정보를 제공해 주세요.
   PageTitle: Holodex 채널 요청
-  ChannelURLErrorFeedback: https://www.youtube.com/channel/UC_____ 형식이여야 합니다
+  ChannelURLErrorFeedback: 반드시 https://www.youtube.com/channel/UC_____ 또는 https://www.youtube.com/@_____ 형식이여야 함

@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomenasorry!
@@ -10,6 +9,8 @@ component:
     signInToFavorite: Jelentkezz be, hogy hozzáadj kedvenceket
     unfavoriteAllInGroup: Minden csoport eltávolítása kedvencek közül
     favoriteAllInGroup: Minden csoport kedvencek közé helyezése
+    enableGroupDisplay: Csatornák megjelenítése ezen csoportból a kezdőlapon
+    disableGroupDisplay: Csatornák elrejtése ezen csoportból a kezdőlapon
   channelInfo:
     stats: Statisztikák
     videoCount: '{0} Videó'
@@ -17,6 +18,7 @@ component:
     subscriberCount: '{n} Feliratkozó'
     subscriberNA: Feliratkozók száma nem elérhető
     totalViews: Megtekintések
+    inactiveChannel: Ez a csatorna már nem aktív.
   channelSocials:
     addToFavorites: Hozzáadás kedvencekhez
     removeFromFavorites: Eltávolítás kedvencek közül
@@ -48,12 +50,15 @@ component:
     premiere: Bemutató
     googleCalendar: Hozzáadás a Google naptárhoz
     totalTLs: Összes élő chat fordítás
+    totalSongs: Időbélyegzett dalok száma
     tlPresence: Aktív fordító az utolsó 30 percben
+    uncertainPlaceholder: A kezdés időpontja nincs hivatalosan megerősítve, eltérhet a valóságtól.
     typeScheduledYT: Beütemezett stream
     typeExternalStream: Külső Stream
     typeEventPlaceholder: Beütemezett esemény
     openClient: Fordító kliens megnyitása
     openScriptEditor: Script szerkesztő megnyitása
+    popoutChat: Felugró ablak YouTube chat
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
@@ -75,6 +80,8 @@ component:
       topic: téma
       org: org
       titledesc: cím/leírás
+      title: cím
+      description: leírás
       comments: hozzászólások
       videourl: videó URL-címe
   relatedVideo:
@@ -123,11 +130,15 @@ component:
       Ez a csatorna vendégszerepelhet egy {org} tagnál vagy a kedvenceiddel. Kikapcsolhatod ezt a funkciót a beállításokban
     comments: Mit kéne a Holodexnek tennie?
     success: Visszajelzés elküldve. Köszönjük!
+    consider: Gondold át a szűrő használatát és ezen jelentés elvetését
     reasons:
       - Rosszul címkézett videó
       - Veszélyesen alacsony minőség/Félrevezető tartalom
       - Megsérti az oldal irányelveit vagy nem ide illő
       - Egyéb
+      - Helytelen videó téma
+      - Helytelen csatornanév
+      - Ezen {0} nem tartozik {1}-ba/be
   thirdpartycookie:
     explanation: >-
       Mert ilyenek a böngészők, néhány amelynek működése szigorú a <b>Harmadik féltől származó cookiekkal</b>, vagy amelyek tiltják a <kbd>YouTube.com</kbd> cookiekat, nehézségeket okozhatnak a bejelentkezéssel / Youtube chat használatával. <br /><br /> Ez ellen tehetsz ha fehérlistára teszed a <kbd>Youtube.com</kbd>-ot a harmadik fél cookie blokkolókban, vagy lejjebb véve a cookie védelmet / biztonsági szintet a <kbd>Holodex.net</kbd>-nek. <br /><br /> Hagytunk pár oldalt, amely több információt nyújt arról, hogy hogyan csinálhatod ezt.
@@ -170,7 +181,7 @@ views:
       org: Szervezet
     tabs:
       Vtuber: Vtuber
-      Subber: Felirat készítő
+      Subber: Fordítók
       Favorites: Kedvencek
       Blocked: Letiltva
     favoritesAreEmpty: Még nincsenek kedvenceid!
@@ -181,7 +192,7 @@ views:
     noStreams: Nincs élő vagy bejelentett stream jelenleg
     recentVideoToggles:
       all: Összes
-      official: Előző streamek
+      official: Korábbi streamek
       subber: Klipek
   library:
     savedVideosTitle: Mentett videók
@@ -214,6 +225,7 @@ views:
     sort:
       newest: Legújabb
       oldest: Legrégibb
+      longest: Leghosszabb
     type:
       all: Összes
       official: Hivatalos
@@ -259,6 +271,7 @@ views:
     hideCollabStreamsLabel: Vendégkénti streamek elrejtése
     hideCollabStreamsMsg: Vendégkénti streamek elrejtése a kedvencek közül
     hidePlaceholderStreams: Tervezett streamek elrejtése
+    hideMissingStreams: Hiányzó streamek elrejtése
     ignoredTopicsLabel: Figyelmen kívül hagyott témák
     ignoredTopicsMsg: Elrejti a Kezdőlapból és a Kedvencekből a videókat ebben a témában
     theme: Téma
@@ -268,8 +281,9 @@ views:
     update_btn: Frissítés
     close_btn: Bezárás
     check_about_page: Látogasd meg az Információ oldalt, hogy lásd a változásokat
-    nowSupportsMultiOrg: Holodex már több szervezetet is támogat.
-    loginCallToAction: Jelentkezz be, hogy kedvenceket válassz!
+    nowSupportsMultiOrg: >-
+      Tipp: Itt tudod megváltoztatni az ügynökséget!
+    loginCallToAction: Jelentkezz be, hogy kedvenceket állíts.
   about:
     add_my_channel: Csatorna igénylés
   watch:
@@ -290,7 +304,7 @@ views:
       showVtuberMessages: Vtuber üzenetek megjelenítése
       showLocalTime: Helyi idők mutatása
       tlFontSize: Betű méret
-      tlWindowSize: Fordító mérete (%), hagyd 0%-on automatához
+      tlWindowSize: Fordító mérete (%), 0%-on automatikus
       retryBtn: Újra
       status:
         reconnecting: Újracsatlakozás...
@@ -350,6 +364,10 @@ views:
       - Bejelentkezés Google fiókkal
       - Bejelentkezés Discorddal
       - Bejelentkezés Twitter fiókkal
+    twitterMsg:
+      - A Twitter API irányelvek változások miatt a bejelentkezés Twitterrel előreláthatólag nem fog működni február 9.-e után.
+      - Jelenleg csak Twitter bejelentkezést használsz. Erősen ajánljuk, hogy más bejelentkezési módot is állíts, hogy megelőzzük a fiókból való kizárást. (Más eszközökön vagy böngésző törlés után)
+      - Ha nem tudsz belépni Holodex fiókodba Twitter felhasználóval (valamint nincs más bejelentkezési módot beállítva) kérlek keress minket Twitteren privát üzenetben vagy Discordon segítségért.
     username: Felhasználónév
     usernameBtn:
       - Megváltoztatás
@@ -414,7 +432,7 @@ views:
     login-prompt: Jelentkezz be, hogy egynél több lejátszási listád lehessen
     new-playlist-btn-label: Új lejátszási lista létrehozása
     page-heading: 'A lejátszási listád:'
-    page-instruction: Kattints egy lejátszási listára, hogy aktiváld
+    page-instruction: Kattints egy lejátszási listára, hogy aktuálissá tedd! Mielőtt másikra váltanál, elmenteni a jobb felső sarokban levő lejátszási lista ikonban tudod.
     change-loss-warning: A mentetlen változtatások el fognak veszni. Folytatod?
   extension:
     title: Holodex Plus Bővítmény
@@ -540,7 +558,7 @@ about:
     videoLinkage: Hogyan bizonyosodom meg róla, hogy a videók és klipek biztosan hozzá vannak kapcsolva a vtuberekhez?
     videoLinkageContent: >-
       Minden információt a leírásból szedünk. Ha klipelsz egy streamet, kérlek ne felejtsd el linkelni az eredeti streamet a leírásban. Ha egy rajongói tartalmat klipelsz, (pl. bilibili-ről), csak linkeld be az eredeti hivatalos youtube csatornát a hozzátartozó vtuberhez. Ha nem linkeled a vtuber csatornáját, akkor nem fog megjelenni a videód Holodexen, mivel minden kliphez szükséges egy link a vtuberhez aki ismert Holodexen is.
-    quitHolodex: "Felirat készítő vagyok és szeretném a tartalmaim eltávolítani Holodexről.\n"
+    quitHolodex: "Fordító vagyok és szeretném a tartalmaim eltávolítani Holodexről.\r\n"
     quitHolodexContent: >-
       Sajnáljuk, hogy elmész :(, kérlek jelezd ha van bármi probléma amivel segíthetnénk. Ha mindenképp szeretnéd eltávolíttatni, kérlek üzenj nekünk Discordon.
     favorite:
@@ -549,7 +567,7 @@ about:
         - >-
           A Kedvencek funkció segít, hogy a kedvenc vtuberjeidet lásd elsőként, beállíthatod a kedvenc csatornáid a szívecske ikonra kattintva
         - >-
-          Kérlek vedd figyelembe, hogy feliratkészítőket kedvencekhez adni jelenleg nem támogatott, viszont más módokon feliratkozhatsz rájuk, támogathatod őket.
+          Kérlek vedd figyelembe, hogy fordítók kedvencekhez adni jelenleg nem támogatott, viszont más módokon feliratkozhatsz rájuk, támogathatod őket.
       disappear:
         title: A Kedvencek listám eltűnt / Nem tudok kedvenceket hozzáadni
       contents:
@@ -573,10 +591,10 @@ about:
         - >-
           MugenClips, avagy végtelen klipek, közösen nézhetsz klipeket másokkal egy folyamatosan változó készletből, melyeket sok különböző fordító csatorna készített és készít
     subber:
-      title: Felirat készítő vagyok és nem találom a csatornám és klipjeim a Holodexen
+      title: Fordító vagyok és nem találom a csatornám és klipjeim a Holodexen
       contents:
         - >-
-          Kérlek nézd meg a Csatornák oldalon, hogy listázva vagy-e feliratkészítőként, amennyiben nem, kérlek töltsd ki
+          Kérlek nézd meg a Csatornák oldalon, hogy listázva vagy-e fordítóként, amennyiben nem, kérlek töltsd ki
         - ezt a lapot
         - >-
           , majd hozzáadunk manuálisan. Ha már a listán vagy, kérlek bizonyosodj meg róla, hogy a videóid leírása a helyes linkeket tartalmazza a youtube forráshoz/csatornához!
@@ -590,6 +608,7 @@ about:
       contents:
         '0': >-
           Az általunk hosztolt szerver egy 28 magos, 60 GB RAM-os gépezet, ami havonta kb. $60 USD (19000 HUF) költséggel jár, valamint szeretnénk további funkciókkal bővíteni az oldalt, ezért indítottunk egy <a href="https://ko-fi.com/holodex">Ko-fi-t</a> a szerver költségeinek fedezése érdekében. (<a href="https://www.patreon.com/holodex">Patreonunk</a> is van, de a Ko-fi-t jobban szeretjük.)<br /><br />A támogatásod kifejezheted visszajelzésekkel és biztató üzenetekkel Twitteren, hozzájárulással a fordítócsapat munkáihoz <a href="https://crwd.in/holodex">Crowdin-on</a>, valamint hozzátéve a dal adatbázisunk bővítésével. (Streamekből kiszerkesztve egy-egy időintervallumot) Akár csak egy stream alá kommentelve megjelölni a vicces jeleneteket is egy nagy segítség!
+  privacyPolicy: Adatvédelmi irányelvek
   gdpr: GDPR és az adataim
   gdprContent: >-
     Egy Google Analytics cookiet használunk, hogy nyomon tartsuk az oldal látogatóit, kizárólag elemzési célokkal. Bejelentkezés után társítjuk a közösségi fiókod felhasználónevét és ID-jét a kedvenceiddel. Ez az adat lehet az e-mail címed (Google), Discord ID vagy a Twittered illően kezelve.
@@ -603,7 +622,7 @@ about:
       - Szeretnék nagy köszönetet mondani a
       - 'csapatnak a munkáikért itt:'
       - >-
-        A feliratkészítőknek szintén, akik segítik a tengerentúli nézőket! Kérlek nézd meg őket!
+        A fordítóknak szintén, akik segítik a tengerentúli nézőket! Kérlek nézd meg őket!
       - >-
         Ez egy rajongói készítésű weboldal, a rajta talált tartalmakat a Cover corp és a partnerei birtokolják. Az oldal követi a Cover corp irányelveit a
       - Származtatott Munkavállalói Licencszerződés szerint
@@ -619,7 +638,7 @@ channelRequest:
   RequestType: 'Kérvény típusa:'
   Types:
     AddVtuber: Vtubert hozzáadása ▶️ a Holodexhez, hogy kövesse a csatornáját és klipjeit.
-    AddClipper: Klip/felirat készítő csatorna hozzáadása Holodexhez
+    AddClipper: Klipper/fordító csatorna hozzáadása Holodexhez
     ModifyExistingInfo: Létező csatorna információ frissítése
     DeleteChannel: Saját csatorna törlése
   DirectContactDisclaimer: >-
@@ -635,10 +654,10 @@ channelRequest:
   Comments: Hozzászólások
   CommentsHint: Egyéb megjegyzések, melyeket szeretnél nekünk elmondani.
   VtuberRequirementText: >-
-    Legalább 20k feliratkozó szükséges önállóként. Azok a Vtuberek, akik egy létező szervezethez tartoznak, ez alól felmentésben részesülnek. <br /><br />Új szervezetek az átlag feliratkozószám alapján kerülnek hozzáadásra.
+    Legalább 20k feliratkozó szükséges önálló vtuberként. Azok a Vtuberek, akik egy létező szervezethez tartoznak, ez alól felmentésben részesülnek. <br /><br />Új szervezetek az átlag feliratkozószám alapján kerülnek hozzáadásra.<br /><br />Twitch streamerek esetében egy hivatalos YouTube csatorna szükséges.
   ClipperRequirementText: >-
     Klip készítőktől legalább egy két hónapja feltöltött vtuber klip és rendszeres feltöltést vagy 20 klip egy hónap alatt, amit igényelünk. Rövid klippek spammelése naponta, csupán rövid &lt;1 perces klippek vagy félrevezető indexképek (click-bait) használata a csatorna ellen szólnak. A tartalom minősége szintén bírálásra kerülhet. <br /><br />Fontos megjegyezni, hogy a klippereknek meg kell jelölniük az eredeti forrásuk linkekkel, @Youtube csatorna említésekkel és videó linkekkel. Túljelölgetés (pl. MINDENKIT megjelölni a Nijisanjiból) rengeteg munkát csinál a Holodex szerkesztőknek, a megjelölések kihagyása (nincsenek linkek) pedig láthatatlanná teszi a klippeket. <br /><br /> A Holodex alkalmaz olyan algoritmust, ami észleli a túljelölgetést és automatikusan kijavítja, viszont nem működhet mindig tökéletesen. Klipperek akik rendszeresen túl linkelik a klipjeiket, törlésre kerülhetnek a platformról zajcsökkentés végett.
   DeletionRequirementText: >-
     Csatorna törlést akkor kérhetsz ha te(vagy ti) vagy(tok) a csatorna tulajdonosa(i), kérlek készülj(etek) kilétet igazoló információkkal.
   PageTitle: Holodex Csatorna Kérés
-  ChannelURLErrorFeedback: 'Muszáj az alábbi formában lennie: https://www.youtube.com/channel/UC_____'
+  ChannelURLErrorFeedback: Muszáj https://www.youtube.com/channel/UC_____ vagy https://www.youtube.com/@_____

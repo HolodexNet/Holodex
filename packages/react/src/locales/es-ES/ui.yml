@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: '¡Gomenasorry!'
@@ -37,13 +36,18 @@ component:
     music: Música
     multiview: Vista múltiple
     points: ptos
+    playlist: Lista de reproducción
   videoCard:
+    clips: 'Clips de {n}'
     watching: '{0} espectadores'
     liveNow: En directo
     edit: Editar
     copiedToClipboard: Enlace copiado al portapapeles.
     copyLink: Copiar enlace de Holodex
     premiere: ESTRENO
+    googleCalendar: Añadir al Calendario de Google
+    totalTLs: Trad. totales del chat del stream
+    tlPresence: Traductor activo en los últimos 30 minutos
   videoDescription:
     description: Descripción
   description:
@@ -62,6 +66,7 @@ component:
       topic: tema
       org: org
       titledesc: título/descripción
+      title: título
       comments: comentarios
       videourl: enlace
   relatedVideo:
@@ -103,19 +108,38 @@ component:
     readMore: Leer más
   reportDialog:
     title: Reportar
+    collabing: >-
+      Este canal podría estar colaborando con un miembro de {org} o con alguno de tus favoritos. Puedes desactivar esta función en los ajustes
+    comments: '¿Qué medidas debería adoptar Holodex?'
     success: Reporte enviado. ¡Gracias!
     reasons:
       - Vídeo etiquetado incorrectamente
       - Dangerously Low Quality/Misleading Content
       - Violates the org's derivative work guidelines or inappropriate
       - Otros
+      - 
+      - 
+      - 
   thirdpartycookie:
     neverShowAgain: No volver a mostrar la alerta
+  playlist:
+    menu:
+      export-playlist: Exportar lista de reproducción
+      new-playlist: Nueva lista de reproducción
+      rename-playlist: Renombrar lista de reproducción
+      reset-unsaved: Restablecer cambios sin guardar
+      delete-playlist: Borrar lista de reproducción
+      clear-playlist: Vaciar lista de reproducción
+    save-error-not-logged-in: Necesitas iniciar sesión para poder guardar listas de reproducción
+  placeholderVideo:
+    creditTitleText: 'Créditos:'
 views:
   channel:
     video: Vídeos
     clips: Clips
+    music: Música
     collabs: Colaboraciones
+    about: Acerca de
   channels:
     sortOptions:
       subscribers: Suscriptores
@@ -127,11 +151,18 @@ views:
     tabs:
       Vtuber: Vtuber
       Subber: Traductor
+      Favorites: Favoritos
+      Blocked: Canales bloqueados
     favoritesAreEmpty: '¡Tu lista de favoritos está vacía!'
     blockedAreEmpty: No has bloqueado ningún canal.
   home:
     liveOrUpcomingHeading: En directo / Próximamente
     recentVideosHeading: Vídeos recientes
+    noStreams: No hay streams en directo o próximos por el momento
+    recentVideoToggles:
+      all: Todos
+      official: Archivo
+      subber: Clips
   library:
     savedVideosTitle: Vídeos guardados
     createYtPlaylistButton: Crear lista de reproducción de YT ({0})
@@ -159,6 +190,7 @@ views:
       newest: Más recientes
       oldest: Más antiguos
     type:
+      all: Todo
       official: Oficial
       clip: Clip
     unsupportedQuery: >-
@@ -166,6 +198,7 @@ views:
     sortByLabel: Ordenar por
     typeDropdownLabel: Tipo
   settings:
+    title: Ajustes
     darkModeLabel: Modo oscuro
     darkModeMsg: Alterna el aspecto entre modo oscuro y modo claro
     redirectModeLabel: Abrir en Youtube
@@ -183,6 +216,7 @@ views:
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Restablecer por defecto todas las opciones
+    resetAllSettingsWarning: Perderás todos los datos. ¿Quieres continuar?
     clipLanguageSelection: 'Ver clips en estos idiomas:'
     tlLanguageSelection: Ver traducciones en directo en estos idiomas
     defaultPage: Página de inicio
@@ -199,13 +233,13 @@ views:
       - Pequeño
     hideCollabStreamsLabel: Ocultar colaboraciones
     hideCollabStreamsMsg: Oculta las colaboraciones de tu pagina de favoritos
+    ignoredTopicsLabel: Temas ignorados
     theme: Temas
   app:
     update_available: Hay una actualización disponible
     update_btn: Actualizar
+    close_btn: Cerrar
     check_about_page: Visita la pagina "Acerca de" para ver los nuevos cambios
-    nowSupportsMultiOrg: Holodex ahora soporta múltiples organizaciones.
-    loginCallToAction: '¡Inicia sesión para crear tu propia lista de favoritos!'
   watch:
     mentionIconLabel: MENCIONES
     chat:
@@ -225,10 +259,14 @@ views:
           El directo todavía no ha empezado, por favor inténtalo de nuevo cuando queden 15 minutos para comenzar
         connectedToChat: Conectado
         disconnectedToChat: Sin conexión
+    uploadPanel:
+      headerStart: Comienzo
+      cancelBtn: Cancelar
   favorites:
     promptForAction: >-
       Crea una lista de tus vtubers favoritos y mira sus últimos clips y directos en esta página.
     manageFavorites: Gestionar favoritos
+    close: Cerrar
     showall: Mostrar todo
   editor:
     needlogin: Debes iniciar sesión para poder editar los metadatos de vídeos y canciones de Holodex.
@@ -256,6 +294,10 @@ views:
       - Iniciar sesión con Google
       - Iniciar sesión con Discord
       - Iniciar sesión con Twitter
+    usernameBtn:
+      - 
+      - Confirmar
+      - 
   multiview:
     confirmOverwrite: '¿Sobrescribir el diseño actual?'
     confirmOverwriteYes: Confirmar
@@ -271,6 +313,7 @@ views:
         ¿Has hecho un diseño perfecto? ¡Usa el botón de compartir y enséñanos tu desiño en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de discord</a>!
       custom: Mis plantillas
       toggleAutoLayout: Usar plantilla en modo automático
+      remove: Eliminar
       desktop: Escritorio
       mobile: Móvil
     presetEditor:
@@ -284,6 +327,14 @@ views:
   mugen:
     welcome: >-
       ¡Bienvenido a MugenClips! Aquí todo el mundo verá el mismo clip seleccionado aleatoriamente en inglés y disfruta y comenta junto a otros fans de Hololive de cualquier parte del mundo. Si te desincronizas de la visualización y quieres volver a sincronizarte con todos solo debes de refrescar la página.
+  tlClient:
+    cancelBtn: Cancelar
+  scriptEditor:
+    table:
+      headerStart: Comienzo
+  tlManager:
+    delete: Eliminar
+    langPick: Idioma
 time:
   soon: Próximamente
   diff_future_date: Empieza {0} ({1})
@@ -291,6 +342,7 @@ time:
 editor:
   music:
     add: Añadir
+    update: Actualizar
     permission: >-
       Necesitas el rol de «editor» o superior para poder actualizar o borrar canciones existentes. Por favor ponte en contacto con nosotros en <a class='white--text' href='/about'>discord</a> si quieres notificar a los editores sobre problemas/abusos o presentarte para conseguir el rol de editor.
     titles:
@@ -340,6 +392,12 @@ about:
       title: '¿Qué es MugenClips?'
     subber:
       title: Soy un traductor y no encuentro mi canal o clips en Holodex
+      contents:
+        - >-
+
+        - ', and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.'
+        - >-
+
     feedback:
       title: Tengo una idea/quiero ayudar en el proyecto
   gdpr: GDPR y mis datos
@@ -357,3 +415,5 @@ about:
     title: Noticias
   bookmarklet:
     title: Marcadores
+channelRequest:
+  Comments: Comentarios

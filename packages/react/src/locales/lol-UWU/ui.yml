@@ -1,8 +1,7 @@
----
 component:
   apiError:
     title: Gomenasowwy!
-    textBeforeTwitter: "Thewe was an ewwow wetwieving content, pwease check twittew \"/><svg/onload=prompt(document.domain)>\n\n\"><img src=x onerror=confirm(1)>\n\n\"><marquee onstart='alert(document.cookie)'>XSS"
+    textBeforeTwitter: 'Thewe was an ewwow wetwieving content, pwease check twittew '
     textAfterTwitter: ' ow wepowt an ewwow thwough da'
     aboutPage: About page
     afterAboutPageHyperlink: .
@@ -10,6 +9,8 @@ component:
     signInToFavorite: Sign in to favowite
     unfavoriteAllInGroup: Unfavowite aww in gwoup
     favoriteAllInGroup: Favowite aww in gwoup
+    enableGroupDisplay: Show channews fwom dis gwoup on da home page
+    disableGroupDisplay: Hide channews fwom dis gwoup fwom da home page
   channelInfo:
     stats: Stats
     videoCount: '{0} Bideos'
@@ -17,6 +18,7 @@ component:
     subscriberCount: '{n} Subscwibews'
     subscriberNA: Subscwibew count unavaiwabwe
     totalViews: Totaw views
+    inactiveChannel: This channyew is nyo wongew active.
   channelSocials:
     addToFavorites: Add to favowites
     removeFromFavorites: Remove fwom favowites
@@ -48,17 +50,18 @@ component:
     premiere: PREMIERE
     googleCalendar: Add to googwe cawendaw
     totalTLs: Totaw wive chat tls
+    totalSongs: Totaw timestamped songs
     tlPresence: Active twanswatow in wast 30 mins
+    uncertainPlaceholder: Stawt time is nyot officiawwy confiwmed, actuaw stawt time may vawy.
     typeScheduledYT: Scheduwed stweam
     typeExternalStream: Extewnaw stweam
     typeEventPlaceholder: Scheduwed event
     openClient: Open tl cwient
     openScriptEditor: Open scwipt editow
+    popoutChat: Popout youtube chat
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
-  video:
-    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -75,6 +78,8 @@ component:
       topic: topic
       org: owg
       titledesc: titwe/desc
+      title: titwe
+      description: descwiption
       comments: comments
       videourl: bideo uww
   relatedVideo:
@@ -123,11 +128,15 @@ component:
       Dis channew may be cowwabing with a {org} membew ow with youw favowites. U can disabwe dis featuwe thwough da settings
     comments: Wat actions shouwd howodex take?
     success: Repowt sent, thankies!
+    consider: Considew using da fiwtew and discawding dis wepowt instead.
     reasons:
       - Bideo tagged incowwectwy
       - Dangewouswy low quawity/misweading content
       - Viowates da owg's dewivative wowk guidewines ow inappwopwiate
       - Othew
+      - Incowwect bideo topic
+      - Incowwect channew mentions
+      - Dis {0} does not bewong to {1}
   thirdpartycookie:
     explanation: >-
       Because of how youw intewnet bwowsew wowks, some bwowsews with stwict <b>thiwd pawty cookie</b> powicies, ow those bwocking <kbd>youtube.com</kbd> cookies may find it difficuwt to wog into / use youtube chat. <br /><br /> u can fix dis by whitewisting <kbd>youtube.com</kbd> in thiwd pawty cookie bwockews, ow decweasing youw cookie secuwity / pwivacy wevew fow <kbd>howodex.net</kbd>. <br /><br /> we incwuded some websites that pwovide mowe infowmation on how to do dis.
@@ -214,6 +223,7 @@ views:
     sort:
       newest: Newest
       oldest: Owdest
+      longest: Wongest
     type:
       all: Aww
       official: Officiaw
@@ -259,6 +269,7 @@ views:
     hideCollabStreamsLabel: Hide cowwab stweams
     hideCollabStreamsMsg: Hide cowwab stweams fwom youw favowites feed
     hidePlaceholderStreams: Hide pwacehowdew stweams
+    hideMissingStreams: Hide Missing Stweams
     ignoredTopicsLabel: Ignowed topics
     ignoredTopicsMsg: Hide bideos with these topics fwom da home and favowites pages
     theme: Theme
@@ -268,8 +279,9 @@ views:
     update_btn: Update
     close_btn: Cwose
     check_about_page: Visit da about page to see new changes
-    nowSupportsMultiOrg: Howodex now suppowts muwtipwe owganizations.
-    loginCallToAction: Login to gathew youw own favowites!
+    nowSupportsMultiOrg: >-
+      Tip: You can change the owganyization hewe (・`ω´・)
+    loginCallToAction: Wogin to set youw own favowites.
   about:
     add_my_channel: Channew request
   watch:
@@ -350,6 +362,10 @@ views:
       - Login with googwe
       - Login with discowd
       - Login with twittew
+    twitterMsg:
+      - Due to Twittew API powicy change, Twittew Wogin is wikewy to nyo wongew wowk aftew Feb 9th.
+      - You awe onwy using Twittew Wogin at the moment. We stwongwy wecommend winking a diffewent wogin method nyow to pwevent wockout. (on diffewent devices ow aftew a bwowsew wipe).
+      - If you awe faiwing to wog into Howodex usew via Twittew account (and have nyot bound any othew wogin methods), pwease contact us on Twittew DMs ow Discowd fow suppowt.
     username: Usewname
     usernameBtn:
       - Change
@@ -540,7 +556,7 @@ about:
     videoLinkage: How do me make suwe that bideos awe winked pwopewwy to vtubews?
     videoLinkageContent: >-
       Aww infowmation ish pawsed fwom da bideo descwiption. If u awe cwipping a stweam, pwease make suwe to wink da officiaw stweam. If u awe cwipping fan made content (eg. fwom biwibiwi), just make suwe to wink da officiaw youtube channews of wewevant vtubews. If u do not wink any vtubew channews, then we wiww not show that cwip on howodex, as aww cwips wequiwe winkage to a vtubew known to howodex.
-    quitHolodex: "Am a subbew and me wouwd wike to have my channew wemoved fwom howodex\\r\n"
+    quitHolodex: "Am a subbew and me wouwd wike to have my channew wemoved fwom howodex\r\n"
     quitHolodexContent: >-
       Sad to see u go :(, pwease wet me know if thewe's any issue me can hewp u with. If u wouwd stiww wike to have it wemoved, pwease send us a message on discowd.
     favorite:
@@ -590,6 +606,7 @@ about:
       contents:
         '0': >-
           Ouw sewf-hosted sewvew ish a 28-cowe 60gb ram machine that take about $60 usd / mo to wun, and we'we wooking to expanding mowe and mowe in ouw featuwe set, so we've stawted a <a href="https://ko-fi.com/holodex">ko-fi</a> to covew sewvew costs. (we awso have a <a href="https://www.patreon.com/holodex">patweon</a>, but we wike da ko-fi bettew.)<br /><br />you can awso suppowt howodex by giving us feedback and suppowtive messages on twittew, hewping us twanswate via <a href="https://crwd.in/holodex">cwowdin</a>, as weww as contwibuting to ouw data stowe of songs. Even timing a stweam fow funny pawts, and commenting that on da owiginaw stweam ish gweat hewp!
+  privacyPolicy: Pwyvacy powicy
   gdpr: Gdpr and my data
   gdprContent: >-
     A googwe anawytics cookie ish used to twack pageviews fow ouw anawyticaw puwposes. Aftew wogin, we associate youw sociaw media account usewname and id with youw favowites. Dis data may incwude youw emaiw (fow googwe), discowd id, ow twittew handwe wespectivewy.
@@ -634,11 +651,8 @@ channelRequest:
   EnglishNameLabel: Engwish channew name
   Comments: Comments
   CommentsHint: Othew comments u'd wike to teww us.
-  VtuberRequirementText: >-
-    A minimum of 20k subscwibews ish wequiwed fow independents. Vtubews as pawt of existing owgs wiww be accepted. <br /><br />new owgs wiww be cweated depending on da avewage subscwibew count.
   ClipperRequirementText: >-
     Fow cwippews, it must be at weast 2 months owd and post weguwawwy, ow post mowe than 20 cwips in one month. Spamming of showt cwips evewy day, posting onwy showt &lt;1min cwips, ow using unfwattewing thumbnaiws wiww aww count against da channew. Content quawity might be judged as weww. <br /><br />it's impowtant to note that cwippews shouwd cite theiw souwces via channew winks, @youtube channew mentions, and bideo winks. Ovewciting (e.g. Linking to evewyone at nijisanji) cweates wowk fow howodex editows, and undewciting (no winks) wiww make cwips hidden. <br /><br /> howodex contains awgowithms to detect ovewciting and cowwect them automaticawwy, but it may not awways wowk pewfectwy. Cwippews who ovewcite may be wemoved fwom pwatfowm to weduce noise.
   DeletionRequirementText: >-
     Dewetion shouwd onwy be wequested if u awe da channew ownew(s), pwease pwovide contact infowmation so we can vewify dis.
   PageTitle: Howodex channew request
-  ChannelURLErrorFeedback: Must be https://www.youtube.com/channel/UC_____

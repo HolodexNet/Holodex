@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: '¡Gomenasorry!'
@@ -52,6 +51,9 @@ component:
     typeScheduledYT: Directo programado
     typeExternalStream: Directo externo
     typeEventPlaceholder: Evento programado
+    openClient: Abrir el cliente de traducción
+    openScriptEditor: Abrir el editor de scripts
+    uploadScript: Subir el guión de traducción
   videoDescription:
     description: Descripción
   description:
@@ -70,6 +72,7 @@ component:
       topic: tema
       org: org
       titledesc: título/descripción
+      title: titulo
       comments: comentarios
       videourl: link del vídeo
   relatedVideo:
@@ -123,6 +126,9 @@ component:
       - Contenido peligrosamente de baja calidad/engañoso
       - Viola las pautas del trabajo derivado de las org o inapropiado
       - Otros
+      - 
+      - 
+      - 
   thirdpartycookie:
     explanation: >-
       Debido a cómo funciona tu navegador de internet, algunos navegadores con <b>políticas estrictas de Cookies de terceros</b>, o aquellos bloqueando las cookies de <kbd>YouTube.com</kbd> pueden encontrar difícil iniciar sesion o usar el chat de Youtube. <br /><br /> Puedes arreglar esto al agregar a <kbd>Youtube.com</kbd> a la lista blanca en los bloqueadores de Cookies de terceros, o bajando tu nivel de seguridad / privacidad para <kbd>Holodex.net</kbd>. <br /><br />Incluimos algunas páginas web que proveen más información sobre como hacer esto.
@@ -209,6 +215,7 @@ views:
     sort:
       newest: Mas nuevo
       oldest: Más antiguo
+      longest: Más largo
     type:
       all: Todos
       official: Oficial
@@ -263,8 +270,6 @@ views:
     update_btn: Actualizar
     close_btn: Cerrar
     check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
-    nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
-    loginCallToAction: '¡Inicia sesión para reunir tus propios favoritos!'
   about:
     add_my_channel: Solicitud de canal
   watch:
@@ -295,9 +300,23 @@ views:
         disconnectedToChat: Sin conexión
       archiveNeedExtension: >-
         El archivo del chat no funciona sin la extensión {0} o otras extensiones de terceros.
+      hideSpoiler: Ocultar Spoiler
     removeFromPlaylist: Remover video de la lista de reproducción actual
     saveToPlaylist: Guardar video a la lista de reproducción actual
     likeOnYoutube: Dar me gusta al video en Youtube
+    uploadPanel:
+      title: Subir Script
+      usernameText: La traduccion se publicará bajo el nombre de usuario
+      usernameChange: Cambiar
+      tlLang: Idioma de la traducción
+      headerStart: Inicio
+      headerEnd: Final
+      headerText: Texto
+      cancelBtn: Cancelar
+      okBtn: Ok
+      notifTextErr: NO SE PUDO ANALIZAR EL ARCHIVO (¿ARCHIVO CORRUPTO?)
+      notifTextParsing: Analizando archivo...
+      notifTextErrExt: Extensión de archivo no reconocida.
   favorites:
     promptForAction: >-
       Crea una lista de tus vtubers favoritos y mira sus ultimos clips y directos en esta pagina.
@@ -330,6 +349,11 @@ views:
       - Iniciar sesión con Google
       - Iniciar sesión con Discord
       - Iniciar sesión con Twitter
+    username: Nombre de Usuario
+    usernameBtn:
+      - Cambiar
+      - Confirmar
+      - Guardar
   multiview:
     confirmOverwrite: '¿Sobreescribir el diseño existente?'
     confirmOverwriteYes: Confirmar
@@ -400,6 +424,72 @@ views:
       three: Arregla la pérdida de memoria en el chat en vivo de Youtube
       four: >-
         Arregla las banderas experimentales en el reproductor de Youtube (Como desactivar múltiples directos, la miniatura de la sala de espera no mostrándose) y más!
+  tlClient:
+    menu:
+      title: Menú
+      loadVideo: Mostrar Vídeo
+      unloadVideo: Ocultar Vídeo
+      unloadChat: Separar del chat de YT
+    tlControl:
+      enterBtn: Ingresar
+      prefix: Prefijo
+      suffix: Sufijo
+      fontColour: Color de Fuente
+      outlineColour: Color del borde
+      localPrefix: Etiqueta de idioma en el chat
+      addProfile: Añadir Perfil
+      removeProfile: Remover Perfil
+      showSetting: Ajuste
+      hideSetting: Ocultar
+    addProfilePanel:
+      title: Añadir Nuevo Perfil
+      inputLabel: Nombre del Perfil
+    settingPanel:
+      title: Ajuste
+      mainStreamLink: Enlace principal del directo
+      collabLink: Enlaces de Colaboración
+    removeProfileTitle: Confirmar remover perfil
+    loadChatPanel:
+      title: Cargar chat
+      inputLabel: Enlace del directo
+    unloadChatTitle: '¿Descargar TODO el chat activo?'
+    pangram: El rápido zorro marrón salta sobre el perro perezoso
+    cancelBtn: Cancelar
+    okBtn: Ok
+  scriptEditor:
+    menu:
+      save: Guardar
+      continuousEnd: Hacer el tiempo continuo (cambiar el final)
+      clearAll: Eliminar el Script
+      exportFile: Exportar Archivo
+      importFile: Importar Archivo
+      editorMode: Modo Editor
+    table:
+      headerStart: Inicio
+      headerEnd: Final
+      headerProfile: Perfil
+      headerText: Texto
+      setAsStart: Establecer como inicio
+      deleteEntry: Eliminar entrada
+    loadVideoPanel:
+      title: Cargar Vídeo
+      inputLabel: Enlace del directo
+    setStartTitle: Establecer la entrada seleccionada como inicio, todas las entradas anteriores serán eliminadas.
+    importFile:
+      overwriteBtn: Sobrescribir
+    editorModePanel:
+      activateMode: Activar el modo editor
+      deactivateMode: Desactivar el modo editor
+      roleWarning: No tienes suficientes privilegios
+      filterTranslator: Filtrar el traductor
+  tlManager:
+    title: Gestor de Scripts
+    headerID: ID del vídeo
+    headerEntries: Entradas
+    download: Descargar
+    delete: Eliminar
+    deleteTitle: Eliminar entradas
+    langPick: Idioma
 time:
   soon: Proximamente
   diff_future_date: Inicia {0} ({1})
@@ -538,11 +628,8 @@ channelRequest:
   EnglishNameLabel: Nombre del canal en Inglés
   Comments: Comentarios
   CommentsHint: Otros comentarios que te gustaría decirnos.
-  VtuberRequirementText: >-
-    Se requiere un mínimo de 20K de suscriptores para independientes. Vtubers que son parte de organizaciones existentes serán aceptadas. <br /><br />Organizaciones nuevas serán creadas dependiendo de el conteo promedio de suscriptores.
   ClipperRequirementText: >-
     Para los clippers, debe ser de al menos 2 meses de antigüedad y publicar regularmente, o publicar más de 20 clips en un mes. El spam de clips cortos diariamente, publicar solamente clips cortos de &lt;1min, o usar miniaturas poco favorecedoras contarán contra el canal. La calidad del contenido podría ser juzgada también. <br /><br />Es importante saber que los clippers deberían citar las fuentes vía enlaces de youtube, menciones de canales de @Youtube, y enlaces de videos. Citar de más (por ejemplo enlazar a todos en Nijisanji) crea trabajo para los editores de Holodex, y citar menos (sin enlaces) hará los clips ocultos. <br /><br /> Holodex contiene algoritmos para detectar las citas de más y corregirlas automáticamente, pero puede no funcionar perfectamente. Los clippers que citen podrían ser removidos de la plataforma para reducir el ruido.
   DeletionRequirementText: >-
     La eliminación solo debería ser solicitada si eres el dueño(s) del canal, por favor provee información de contacto para que podamos verificar esto.
   PageTitle: Petición de canal de Holodex
-  ChannelURLErrorFeedback: "Debe ser\nhttps://www.youtube.com/channel/UC_____"

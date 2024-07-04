@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomenasorry!
@@ -70,6 +69,7 @@ component:
       topic: chủ đề
       org: tổ chức
       titledesc: tiêu đề/mô tả
+      title: tiêu đề
       comments: bình luận
       videourl: video url
   relatedVideo:
@@ -123,6 +123,9 @@ component:
       - Chất lượng video quá kém/Nội dung dễ gây hiểu lầm
       - Vi phạm các nguyên tắc thực hiện tác phẩm phái sinh (Derivative Work Guidelines) của tổ chức hoặc nội dung không phù hợp
       - Khác
+      - 
+      - 
+      - 
   thirdpartycookie:
     explanation: >-
       Dựa trên cách trình duyệt hoạt động, một số trình duyệt với khả năng giới hạn/chặn <b>cookies của bên thứ ba</b>, hoặc chặn cookies của <kbd>YouTube</kbd> sẽ gặp một chút khó khăn khi đăng nhập / sử dụng YouTube Chat. <br /><br /> Vấn đề này có thể được giải quyết bằng cách cho phép cookies của <kbd>YouTube</kbd> hoạt động trong trình duyệt, hoặc giảm giới hạn cookies / quyền riêng tư cho <kbd>Holodex.net</kbd>. <br /><br /> Chúng tôi có một số trang web giúp bạn có thêm thông tin và hướng dẫn chi tiết cho vấn đề này.
@@ -263,8 +266,6 @@ views:
     update_btn: Cập nhật
     close_btn: Đóng
     check_about_page: Truy cập trang Giới thiệu để đọc về các thay đổi mới
-    nowSupportsMultiOrg: Holodex giờ đã hỗ trợ nhiều tổ chức khác nhau.
-    loginCallToAction: Hãy đăng nhập để lưu các kênh bạn yêu thích!
   about:
     add_my_channel: Yêu cầu thêm kênh
   watch:
@@ -299,6 +300,10 @@ views:
     removeFromPlaylist: Xoá video khỏi playlist hiện tại
     saveToPlaylist: Lưu video vào playlist hiện tại
     likeOnYoutube: Thích video này trên Youtube
+    uploadPanel:
+      usernameChange: Thay đổi
+      headerStart: Bắt đầu
+      cancelBtn: Hủy bỏ
   favorites:
     promptForAction: >-
       Tạo một danh sách các Vtuber yêu thích để xem các clip và livestream mới nhất của họ tại trang này.
@@ -331,6 +336,10 @@ views:
       - Đăng nhập bằng Google
       - Đăng nhập bằng Discord
       - Đăng nhập bằng Twitter
+    usernameBtn:
+      - Thay đổi
+      - Xác nhận
+      - Lưu
   multiview:
     confirmOverwrite: Ghi đè bố cục hiện tại?
     confirmOverwriteYes: Xác nhận
@@ -401,6 +410,16 @@ views:
       three: Sửa lỗi tràn bộ nhớ từ live chat của Youtube
       four: >-
         Sửa các lỗi của Youtube (ví dụ như không cho phép mở nhiều stream cùng một lúc, ảnh thu nhỏ không hiển thị) và nhiều hơn nữa!
+  tlClient:
+    cancelBtn: Hủy bỏ
+  scriptEditor:
+    menu:
+      save: Lưu
+    table:
+      headerStart: Bắt đầu
+  tlManager:
+    delete: Xoá
+    langPick: Ngôn ngữ
 time:
   soon: sớm
   diff_future_date: Bắt đầu {0} ({1})
@@ -445,7 +464,7 @@ about:
     videoLinkage: Làm cách nào để tôi có thể đảm bảo rằng các video được liên kết đúng cách với các Vtuber?
     videoLinkageContent: >-
       Tất cả mọi thông tin đều được trích từ mô tả của video. Nếu bạn clip từ một stream, xin hãy chắc chắn rằng bạn đã trích dẫn liên kết đến stream gốc. Nếu như bạn clip từ một video của fan (vd: từ bilibili), hãy chắc chắn rằng bạn có trích dẫn liên kết đến kênh Youtube chính thức của những Vtuber liên quan. Nếu như bạn không đặt bất cứ liên kết nào đến Vtuber trong phần mô tả video của mình, clip đó sẽ không được hiển thị trên Holodex, vì mọi clip đều được yêu cầu phải liên kết đến một Vtuber cụ thể trong hệ thống.
-    quitHolodex: "Tôi là một subber/clipper và tôi muốn gỡ bỏ kênh của mình khỏi Holodex\\r\n"
+    quitHolodex: "Tôi là một subber/clipper và tôi muốn gỡ bỏ kênh của mình khỏi Holodex\r\n"
     quitHolodexContent: >-
       Buồn thật đấy :(, xin hãy cho tôi biết nếu bạn cần tôi giúp đỡ bất cứ thứ gì về vấn đề này. Nếu bạn vẫn muốn gỡ bỏ kênh của mình, xin hãy nhắn tin cho chúng tôi trên Discord.
     favorite:
@@ -520,3 +539,5 @@ about:
     title: Bookmarklets
     description: >-
       Kéo các bookmarklet bên dưới lên thanh dấu trang của bạn để mở stream từ trang Youtube bằng Holodex một cách dễ dàng:
+channelRequest:
+  Comments: Bình luận

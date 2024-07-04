@@ -14,7 +14,7 @@ export function PlayerDescription({
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
   return (
-    <div className="align-start flex flex-col gap-2 rounded-lg bg-base-3 p-4">
+    <div className="flex flex-col gap-2 rounded-lg bg-base-3 p-4">
       <div
         className={cn("whitespace-pre-wrap break-all text-sm", {
           "line-clamp-3": !isExpanded,

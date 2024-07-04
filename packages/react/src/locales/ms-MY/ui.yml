@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Sumimaaf!
@@ -10,6 +9,8 @@ component:
     signInToFavorite: Pendaftaran diperlukan
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
+    enableGroupDisplay: Paparkan saluran pecahan ini di Laman Utama
+    disableGroupDisplay: Sembunyikan saluran pecahan ini di Laman Utama
   channelInfo:
     stats: Statistik
     videoCount: '{0} Buah Video'
@@ -17,6 +18,7 @@ component:
     subscriberCount: '{n} Langganan'
     subscriberNA: Bilangan langganan tidak tersedia
     totalViews: Jumlah Tontonan
+    inactiveChannel: Saluran ini sudah tidak lagi bergiat.
   channelSocials:
     addToFavorites: Tambahkan pada Kegemaran
     removeFromFavorites: Alih keluar daripada Kegemaran
@@ -48,12 +50,20 @@ component:
     premiere: TAYANGAN PERDANA
     googleCalendar: Tambahkan ke Kalendar Google
     totalTLs: Jumlah terjemahan sembang langsung
+    totalSongs: Bilangan lagu yang bercap masa
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
+    uncertainPlaceholder: Masa mula tidak disahkan. Percanggahan masa mula sebenar mungkin ada.
     typeScheduledYT: Siaran Terancang
     typeExternalStream: Siaran Luar
     typeEventPlaceholder: Acara Terancang
+    openClient: Buka Pelanggan Terjemahan
+    openScriptEditor: Buka Penyunting Skrip
+    popoutChat: Timbulkan sembang YouTube
+    uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -70,6 +80,8 @@ component:
       topic: topik
       org: kumpulan
       titledesc: tajuk/perihalan
+      title: judul
+      description: perihalan
       comments: ulasan
       videourl: url video
   relatedVideo:
@@ -118,11 +130,15 @@ component:
       Ada kemungkinan saluran ini bersiarsama dengan ahli {org} atau mana-mana penggiat YouTube kegemaranmu. Saluran ini boleh disembunyikan di laman tetapan
     comments: Apakah tindakan selanjutnya?
     success: Terima kasih! Laporan telah dikirim.
+    consider: Sebaiknya gunakan penapis dan batalkan laporan ini.
     reasons:
       - Video tidak ditandai dengan betul
       - Kandungan video tidak bermutu atau mengelirukan
       - Melanggar garis panduan pertubuhan terbabit atau memaparkan kandungan yang tidak bersesuaian
       - Lain-lain
+      - Kesalahan topik video
+      - Kesalahan penyebutan nama saluran
+      - '{0} ini tidak ada kaitannya dengan {1}'
   thirdpartycookie:
     explanation: >-
       Sesetengah penyemak imbas dengan dasar <b>cecikut pihak ketiga</b> yang ketat ataupun yang menyekat cecikut <kbd>YouTube.com</kbd> berkebarangkalian menghadapi kesukaran mengelog masuk mahupun menggunakan sembang langsung Youtube. <br /><br /> Masalah ini boleh diselesaikan dengan memasukkan <kbd>Youtube.com</kbd> ke dalam senarai putih penyekat cecikut pihak ketiga ataupun menggunakan tahap tetapan keselamatan cecikut yang rendah bagi <kbd>Holodex.net</kbd>. <br /><br /> Berikut disertakan sekali beberapa tapak sesawang yang boleh memberikan maklumat lanjut berkenaan langkah-langkah yang harus dilakukan.
@@ -209,6 +225,7 @@ views:
     sort:
       newest: Terbaharu
       oldest: Terlama
+      longest: Terpanjang
     type:
       all: Semua
       official: Rasmi
@@ -254,6 +271,7 @@ views:
     hideCollabStreamsLabel: Sembunyikan Siarsama
     hideCollabStreamsMsg: Sembunyikan siarsama di laman Kegemaran
     hidePlaceholderStreams: Sembunyikan Siaran Sementara
+    hideMissingStreams: Siaran Tak Tersedia Disorok
     ignoredTopicsLabel: Topik Diketepikan
     ignoredTopicsMsg: Video yang bertopik berikut disembunyikan di laman Utama dan Kegemaran
     theme: Warna tema
@@ -263,8 +281,9 @@ views:
     update_btn: Kemas Kini
     close_btn: Tutup
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
-    nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong
-    loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
+    nowSupportsMultiOrg: >-
+      Petunjuk: Di sini kumpulan boleh diubah!
+    loginCallToAction: Tetapkan kegemaran anda dengan mengelog masuk.
   about:
     add_my_channel: Memohon Penambahan Saluran
   watch:
@@ -296,9 +315,23 @@ views:
         disconnectedToChat: Terputus
       archiveNeedExtension: >-
         Ruangan sembang terarkib hanya berfungsi apabila pelanjutan/sambungan {0} atau mana-mana pelanjutan/sambungan pihak ketiga lain.
+      hideSpoiler: Sembunyikan Terjemahan Akan Datang
     removeFromPlaylist: Alih keluar video daripada senarai main semasa
     saveToPlaylist: Simpan video pada senarai main semasa
     likeOnYoutube: Berikan tanda suka di YouTube
+    uploadPanel:
+      title: Muat Naik Skrip
+      usernameText: Terjemahan dimuat naik dengan nama pengguna ini
+      usernameChange: Ubah
+      tlLang: Bahasa Terjemahan
+      headerStart: Mula
+      headerEnd: Tamat
+      headerText: Teks
+      cancelBtn: Batal
+      okBtn: Baik
+      notifTextErr: GAGAL MENGHURAIKAN FAIL (FAIL ROSAK?)
+      notifTextParsing: Sedang menghuraikan fail...
+      notifTextErrExt: Sambungan fail tidak dikenali.
   favorites:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
@@ -331,6 +364,15 @@ views:
       - Log masuk dengan Google
       - Log masuk dengan Discord
       - Log masuk dengan Twitter
+    twitterMsg:
+      - Perubahan dasar API Twitter mungkin menyebabkan log masuk menggunakan akaun Twitter tidak berfungsi lagi menjelang 9 hb Februari.
+      - Buat masa ini anda masih mengelog masuk menggunakan akaun Twitter. Anda amatlah disarankan menggunakan kaedah mengelog masuk yang lain bagi mengelakkan akaun anda dihalang masuk (sekiranya digunakan peranti lain ataupun setelah dipadam maklumat laman di penyemak imbas).
+      - Sekiranya anda tidak dapat mengelog masuk ke pengguna Holodex dengan akaun Twitter (manakala kaedah log masuk lain masih belum digunakan), sila dapatkan bantuan dengan menghubungi kami dengan PM tepi di Twitter ataupun melalui Discord.
+    username: Nama Pengguna
+    usernameBtn:
+      - Ubah
+      - Sahkan
+      - Simpan
   multiview:
     confirmOverwrite: Ubah tataletak semasa?
     confirmOverwriteYes: Sahkan
@@ -401,6 +443,77 @@ views:
       three: Memperbaiki bocoran ingatan ruangan sembang YouTube
       four: >-
         Memperbaiki bendera percubaan di pemain YouTube (Contoh: mematikan berbilang siaran, gambar kenit tidak dipaparkan ketika menunggu siaran) dan lain-lain lagi!
+  tlClient:
+    menu:
+      title: Menu
+      setting: Tetapan Bilik TLDex
+      loadVideo: Paparkan Video
+      unloadVideo: Sembunyikan Video
+      loadChat: Gabungkan sembang YouTube dengan terjemahan siaran
+      unloadChat: Pisahkan dengan sembang YouTube
+    tlControl:
+      enterBtn: Masukkan
+      prefix: Awalan
+      suffix: Akhiran
+      fontColour: Warna Pasuan
+      outlineColour: Warna Garis Bentuk
+      localPrefix: Tanda Bahasa di Ruangan Sembang
+      addProfile: Tambah Profil
+      removeProfile: Hapus Profil
+      shiftUp: Alih Profil ke Atas
+      shiftDown: Alih Profil ke Bawah
+      showSetting: Tetapan
+      hideSetting: Sembunyikan
+    addProfilePanel:
+      title: Tambah Profil Baru
+      inputLabel: Nama Profil
+    settingPanel:
+      title: Tetapan
+      mainStreamLink: Pautan Siaran Utama
+      collabLink: Pautan Siarsama
+    removeProfileTitle: Sahkan hapus profil
+    loadChatPanel:
+      title: Muat Sembang
+      inputLabel: Pautan Siaran
+    unloadChatTitle: Punggah SEMUA sembang yang masih berlangsung?
+    pangram: Melur seorang penghidap xenofobia universal yang takut pada warga jazirah, contohnya Qatar
+    cancelBtn: Batal
+    okBtn: Baik
+  scriptEditor:
+    menu:
+      save: Simpan
+      continuousEnd: Selanjarkan Masa (ubah tamat)
+      clearAll: Hapus Skrip
+      exportFile: Eksport Fail
+      importFile: Import Fail
+      editorMode: Ragam Suntingan
+    table:
+      headerStart: Mula
+      headerEnd: Tamat
+      headerProfile: Profil
+      headerText: Teks
+      setAsStart: Titik permulaan
+      shiftCurrentTime: Alihkan ke masa sekarang
+      deleteEntry: Hapus masukan
+    loadVideoPanel:
+      title: Muat Video
+      inputLabel: Pautan Siaran
+    setStartTitle: Masukan yang terpilih dijadikan pemula manakala semua masukan terdahulu terhapus.
+    importFile:
+      overwriteBtn: Tulis Ganti
+    editorModePanel:
+      activateMode: Hidupkan Ragam Suntingan
+      deactivateMode: Matikan Ragam Suntingan
+      roleWarning: Hak anda tidak memadai
+      filterTranslator: Saring penterjemah
+  tlManager:
+    title: Pengurus Skrip
+    headerID: ID Video
+    headerEntries: Masukan
+    download: Muat Turun
+    delete: Hapus
+    deleteTitle: Hapus Masukan
+    langPick: Bahasa
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
@@ -495,6 +608,7 @@ about:
       contents:
         '0': >-
           Perkakas yang merumahkan laman kami secara sendiri ini mempunyai RAM sebanyak 60GB dengan 28 teras serta memakan belanja sebanyak 60 dolar AS (kira-kira RM250 / B$80 / S$80 / Rp 850.000) per bulan. Tambahan lagi, kami merancang mahu mengembangkan ciri-ciri yang disediakan. Oleh itu, kami sedang menerima sumbangan daripada para pengunjung melalui <a href="https://ko-fi.com/holodex">Ko-fi</a> demi menampung pembiayaan pelayan kami. (Sumbangan juga boleh diberikan melalui <a href="https://www.patreon.com/holodex">Patreon</a>, namun kami lebih menggemari Ko-fi.)<br /><br />Sumbangan lain yang diterima termasuklah maklum balas dan kata-kata semangat di Twitter, penerjemahan laman melalui <a href="https://crwd.in/holodex">Crowdin</a> dan juga sumbangan simpanan data lagu. Sekecil-kecil sumbangan pun amatlah dihargai! Contohnya, menghitung detik-detik yang menarik dan menghiburkan lalu meletakkan ulasan bercap masa di siaran asal.
+  privacyPolicy: Dasar Kebersendirian
   gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
     Sebuah cecikut Google Analitis digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
@@ -520,3 +634,30 @@ about:
     title: Penanda laman kecil
     description: >-
       Cipta penanda laman kecil dengan menarik mana-mana penanda di bawah ke bar penanda laman. Anda boleh membuka laman tontonan video di Holodex dengan menekannya ketika di laman YouTube:
+channelRequest:
+  RequestType: 'Jenis Permintaan:'
+  Types:
+    AddVtuber: Hendak menambah penggiyut maya ▶️ supaya Holodex boleh memantau saluran dan sedutan siarannya.
+    AddClipper: Hendak menambah saluran sedutan/terjemahan di Holodex
+    ModifyExistingInfo: Hendak mengubah suai maklumat saluran yang sedia ada
+    DeleteChannel: Hendak mengalih keluar saluran saya
+  DirectContactDisclaimer: >-
+    ID Discord, alamat e-mel mahupun Twitter anda boleh diberikan sekiranya anda mahu dihubungi (maklumat ini kekal rahsia) agar kami dapat memberikan maklum balas. Maklumat ini hanya boleh dilihat oleh pentadbir Holodex.
+  DirectContactLabel: Kaedah Perhubungan (pilihan)
+  TwitterHandle: Akaun Twitter Saluran Ini (pilihan)
+  VtuberGroupLabel: Kumpulan Penggiat YouTube Maya (pilihan)
+  VtuberGroupHint: Penggiyut maya ini berasal daripada pertubuhan/kumpulan mana?
+  ChannelLanguageLabel: Bahasa utama saluran
+  EnglishNameHint: >-
+    Sekiranya nama saluran tidak berbahasa Inggeris, tolong sediakan nama Inggerisnya. Patuhi urutan nama bahasa asalnya (cth. Natsuiro Matsuri) atau nama Inggeris pilihannya (cth. Elu the Elf, Emma★August).
+  EnglishNameLabel: Nama Inggeris Saluran
+  Comments: Ulasan
+  CommentsHint: Ulasan tambahan yang mahu disampaikan.
+  VtuberRequirementText: >-
+    Penggiat YouTube persendirian harus mempunyai sekurang-kurangnya 20 ribu langganan. Sekiranya penggiat tersebut sebahagian daripada kumpulan sedia ada, maka dia akan diterima masuk. <br /><br />Kumpulan baharu diciptakan mengikut bilangan langganan purata kumpulan tersebut.<br /><br />Penyiar di Twitch harus mempunyai saluran rasmi di YouTube agar boleh didaftarkan.
+  ClipperRequirementText: >-
+    Syarat pembuat sedutan adalah sama ada membuka akaunnya melebihi dua bulan yang lalu ataupun memuat naik sekurang-kurangnya 20 buah sedutan dalam tempoh sebulan. Saluran ini berkemungkinan ditolak sekiranya kegiatannya merangkumi memuat naik sedutan pendek secara bertubi-tubi setiap hari, membuat sedutan bertempoh &lt;1minit sahaja atau menggunakan gambar kenit yang tidak senonoh. Mutu bahan kandungannya juga boleh diambil kira. <br /><br />Saluran sedutan juga seharusnya meletakkan sumber video melalui pautan saluran, sebutan @saluran YouTube dan pautan video. Pautan yang berlebihan (cth. memautkan keseluruhan anggota Nijisanji) hanya menambah beban para penyunting Holodex manakala pautan yang kurang (atau tiada langsung) hanya menyukarkan sedutan dipaparkan. <br /><br /> Holodex mempunyai sebuah algoritma yang secara sendiri mampu mengesan lalu membetulkan pemautan berlebihan, namun keberhasilannya masih terbatas. Saluran video sedutan yang membuat pautan secara berlebihan berkemungkinan dialih keluar daripada laman ini bagi mengurangkan masalah.
+  DeletionRequirementText: >-
+    Permintaan pengalihkeluaran saluran hanya boleh dilakukan oleh empunya saluran. Harap disediakan maklumat perhubungan agar kami dapat mengesahkan permintaan ini.
+  PageTitle: Permintaan Saluran Holodex
+  ChannelURLErrorFeedback: Pastikan pautan dalam bentuk https://www.youtube.com/channel/UC_____ atau https://www.youtube.com/@_____

@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomennascusa!
@@ -67,6 +66,7 @@ component:
       topic: argomento
       org: org
       titledesc: titolo/descrizione
+      title: titolo
       comments: commenti
       videourl: url del video
   relatedVideo:
@@ -117,6 +117,9 @@ component:
       - Contenuti di estrema Bassa Qualità/Fuorvianti
       - Viola le linee guida di opere derivate o è inappropriato
       - Altro
+      - 
+      - 
+      - 
   thirdpartycookie:
     explanation: >-
       A causa del modo in cui funziona il tuo internet browser, alcuni browser con rigide <b>politiche sui cookie di terze parti</b>, o quelli che bloccano <kbd>YouTube.com</kbd> i cookie potrebbero avere difficoltà ad accedere / usare la chat di Youtube. <br /><br /> È possibile risolvere questo problema inserendo <kbd>Youtube. om</kbd> nella whitelist del "blocca Cookie di terze parti", o diminuendo il livello di sicurezza dei cookie / della privacy per <kbd>Holodex. et</kbd>. <br /><br /> Abbiamo incluso alcuni siti web che forniscono ulteriori informazioni su come poterlo fare.
@@ -133,6 +136,8 @@ component:
       delete-playlist: Elimina Playlist
       clear-playlist: Svuota playlist
     save-error-not-logged-in: Devi aver effettuato l'accesso per salvare playlist
+  placeholderVideo:
+    creditTitleText: 'Riconoscimenti:'
 views:
   channel:
     video: Video
@@ -246,8 +251,6 @@ views:
     update_btn: Aggiorna
     close_btn: Chiudi
     check_about_page: Visita la "Pagina delle Info" per vedere i nuovi cambiamenti
-    nowSupportsMultiOrg: Holodex ora supporta più organizzazioni.
-    loginCallToAction: Accedi per ottenere i tuoi preferiti!
   about:
     add_my_channel: Richiesta di aggiunta del Canale
   watch:
@@ -271,6 +274,9 @@ views:
         disconnectedToChat: Disconnesso
     removeFromPlaylist: Rimuovi video dalla playlist corrente
     saveToPlaylist: Salva video nella playlist corrente
+    uploadPanel:
+      headerStart: Avvia
+      cancelBtn: Annulla
   favorites:
     promptForAction: >-
       Crea una lista dei tuoi vtuber preferiti e vedi le loro ultime dirette e clip su questa pagina.
@@ -303,6 +309,10 @@ views:
       - Accedi con Google
       - Accedi con Discord
       - Accedi con Twitter
+    usernameBtn:
+      - 
+      - Conferma
+      - 
   multiview:
     confirmOverwrite: Sovrascrivere il layout attuale?
     confirmOverwriteYes: Conferma
@@ -344,6 +354,14 @@ views:
     page-heading: 'Le tue Playlist:'
     page-instruction: Clicca su una playlist per attivarla.
     change-loss-warning: Perderai le modifiche non salvate. Continuare?
+  tlClient:
+    cancelBtn: Annulla
+  scriptEditor:
+    table:
+      headerStart: Avvia
+  tlManager:
+    delete: Elimina
+    langPick: Lingua
 time:
   soon: presto
   diff_future_date: Inizia {0} ({1})
@@ -453,3 +471,5 @@ about:
     title: Novità
   news:
     title: Notizie
+channelRequest:
+  Comments: Commenti

@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Gomenasorry!
@@ -67,6 +66,7 @@ component:
       topic: Tópico
       org: Org
       titledesc: título/desc
+      title: título
       comments: Comentários
       videourl: URL de Vídeo
   relatedVideo:
@@ -115,6 +115,9 @@ component:
       - Conteúdo Perigososamente de Baixa Qualidade ou Enganoso
       - Inapropriado ou Viola as diretrizes de trabalho derivado
       - Outros
+      - 
+      - 
+      - 
   thirdpartycookie:
     explanation: >-
       Pode ser difícil acessar / usar o chat do Youtube devido às políticas de <b>Cookie de Terceiros</b> rígidas ou aos cookies do <kbd>Youtube.com</kbd> bloqueados. <br /><br /> Impedir <kbd>Youtube.com</kbd> de bloquear Cookies de Terceiros, ou reduzir o nível de segurança / privacidade de cookies para <kbd>Holodex.net</kbd> pode corrigir isso. <br /><br /> Incluímos alguns sites que explicam como fazer isso.
@@ -131,6 +134,8 @@ component:
       delete-playlist: Excluir Playlist
       clear-playlist: Limpar Playlist
     save-error-not-logged-in: Você precisa estar logado para salvar Playlists
+  placeholderVideo:
+    creditTitleText: 'Creditos:'
 views:
   channel:
     video: Vídeos
@@ -244,8 +249,6 @@ views:
     update_btn: Atualizar
     close_btn: Fechar
     check_about_page: Veja o que há de novo no Holodex acessando a página de Informações
-    nowSupportsMultiOrg: Holodex agora suporta múltiplas organizações.
-    loginCallToAction: Faça login para ter seus próprios favoritos!
   about:
     add_my_channel: Solicitação de canal
   watch:
@@ -269,6 +272,9 @@ views:
         disconnectedToChat: Desconectado
     removeFromPlaylist: Remover vídeo da lista atual
     saveToPlaylist: Salvar vídeo na lista atual
+    uploadPanel:
+      headerStart: Iniciar
+      cancelBtn: Cancelar
   favorites:
     promptForAction: >-
       Crie uma lista com seus vtubers favoritos para ver clipes e lives mais recentes nesta página.
@@ -301,6 +307,10 @@ views:
       - Entrar com o Google
       - Entrar com Discord
       - Entrar com o Twitter
+    usernameBtn:
+      - 
+      - Confirmar
+      - 
   multiview:
     confirmOverwrite: Sobrescrever layout atual?
     confirmOverwriteYes: Confirmar
@@ -338,6 +348,14 @@ views:
     page-heading: 'Suas listas:'
     page-instruction: Clique numa lista para torná-la ativa.
     change-loss-warning: Perderás mudanças não salvas. Continuar?
+  tlClient:
+    cancelBtn: Cancelar
+  scriptEditor:
+    table:
+      headerStart: Iniciar
+  tlManager:
+    delete: Excluir
+    langPick: Idioma
 time:
   soon: em breve
   diff_future_date: Começa {0} ({1})
@@ -392,6 +410,12 @@ about:
       title: O que é MugenClips?
     subber:
       title: Sou um subber e não consigo encontrar meu canal ou clipes no Holodex
+      contents:
+        - >-
+
+        - ', and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.'
+        - >-
+
     feedback:
       title: Eu tenho feedback/quero contribuir com o projeto
   gdpr: GDPR e meus dados
@@ -404,14 +428,16 @@ about:
   credits:
     title: Creditos
     contents:
-      - I would like to give big thanks to the
-      - team for their work on
+      - 
+      - 
       - >-
-        Also to all the subbers for helping the overseas bros! Please check them out!
+
       - >-
-        This is a fan made website and the content found on this website is owned by Cover corp and its partners. The site follows the guidelines set forth by Cover corp in their
+
       - Contrato de Licença de Obra Derivada
   changelog:
     title: Mudanças
   news:
     title: Novidades
+channelRequest:
+  Comments: Comentários

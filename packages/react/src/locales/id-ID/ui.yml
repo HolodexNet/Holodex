@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: Maafkeun
@@ -17,6 +16,7 @@ component:
     subscriberCount: '{n} Subscriber'
     subscriberNA: Jumlah Subscriber tidak tersedia
     totalViews: Jumlah Ditonton
+    inactiveChannel: Channel ini sudah tidak aktif.
   channelSocials:
     addToFavorites: Tambahkan ke Favorit
     removeFromFavorites: Hapus dari Favorit
@@ -49,11 +49,13 @@ component:
     googleCalendar: Tambahkan ke Kalender Google
     totalTLs: Jumlah Terjemahan Obrolan
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
+    uncertainPlaceholder: Waktu mulai tidak terkonfirmasi secara resmi, waktu mulai sebenarnya bisa saja berbeda.
     typeScheduledYT: Stream Terjadwal
     typeExternalStream: Stream Eksternal
     typeEventPlaceholder: Acara Terjadwal
-    openClient: Buka TL Client
+    openClient: Buka Klien TL
     openScriptEditor: Buka Editor Naskah
+    popoutChat: Pindahkan YouTube Chat
     uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
@@ -73,6 +75,8 @@ component:
       topic: topik
       org: org
       titledesc: judul/desk
+      title: judul
+      description: deskripsi
       comments: Komen
       videourl: url video
   relatedVideo:
@@ -121,11 +125,15 @@ component:
       Channel ini mungkin sedang berkolaborasi dengan salah satu anggota {org} atau salah satu vtuber favoritmu. Kamu dapat menonaktifkan fitur ini di pengaturan
     comments: Tindakan apa yang harus Holodex lakukan?
     success: Laporan telah dikirim, Terima Kasih!
+    consider: Sebaiknya gunakan filter dan batalkan laporan ini.
     reasons:
       - Tag Video salah
       - Kualitas Rendah / Konten Menyesatkan
       - Melanggar Pedoman Kebijakan Karya yang ditetapkan organisasi atau tidak pantas
       - Lainnya
+      - Kesalahan topik video
+      - Kesalahan penyebutan nama channel
+      - '{0} ini tidak ada kaitannya dengan {1}'
   thirdpartycookie:
     explanation: >-
       Karena cara kerja browser internetmu, beberapa browser dengan kebijakan ketat <b>Cookie Pihak Ketiga</b> atau pemblokiran cookies dari <kbd>YouTube.com</kbd> akan membuat sulit untuk masuk / menggunakan chat Youtube. <br /><br /> Kamu bisa memperbaiki hal ini dengan cara whitelist <kbd>Youtube.com</kbd> dalam pemblokiran Cookie Pihak Ketiga, atau menurunkan tingkatan keamanan / privasi cookie untuk situs <kbd>Holodex.net</kbd>. <br /><br /> Kami akan mencantumkan beberapa situs yang akan memberikan informasi lebih lanjut mengenai hal ini.
@@ -212,6 +220,7 @@ views:
     sort:
       newest: Terbaru
       oldest: Terlama
+      longest: Terlama
     type:
       all: Semua
       official: Resmi
@@ -256,7 +265,8 @@ views:
       - Kecil
     hideCollabStreamsLabel: Sembunyikan Siaran Kolaborasi
     hideCollabStreamsMsg: Menyembunyikan siaran kolaborasi dari halaman favorit kamu
-    hidePlaceholderStreams: Sembunyikan Jadwal Siaran
+    hidePlaceholderStreams: Sembunyikan Jadwal Siaran Sementara
+    hideMissingStreams: Sembunyikan Siaran Hilang
     ignoredTopicsLabel: Topik yang Diabaikan
     ignoredTopicsMsg: Menyembunyikan video yang berkaitan dengan topik yang dipilih dari halaman Beranda dan Favorit
     theme: Tema
@@ -266,8 +276,9 @@ views:
     update_btn: Perbarui
     close_btn: Tutup
     check_about_page: Kunjungi halaman Tentang untuk melihat pembaharuan
-    nowSupportsMultiOrg: Holodex kini mendukung berbagai organisasi
-    loginCallToAction: Masuk untuk mengumpulkan favorit kamu!
+    nowSupportsMultiOrg: >-
+      Tip: Kamu dapat mengubah organisasi disini!
+    loginCallToAction: Masuk untuk mengatur favoritmu.
   about:
     add_my_channel: Mengajukan Channel
   watch:
@@ -279,9 +290,9 @@ views:
       showTLBtn: Tampilkan Terjemahan
       TLSettingsTitle: Pengaturan Terjemahan
       showSubtitle: Menampilkan Takarir
-      expandTL: Menampilkan kolom TLdex
-      tlStart: Pesan Awal
-      StickBottomSettingLabel: Sematkan Dibawah
+      expandTL: Perluas TLdex
+      tlStart: Awal Pesan
+      StickBottomSettingLabel: Lekat Bawah
       StickBottomSettingsDesc: Kolom TL akan diletakkan di bawah Chat Youtube
       showVerifiedMessages: Menampilkan Pesan Pengguna yang Terverifikasi
       showModeratorMessages: Menampilkan Pesan Moderator
@@ -348,6 +359,10 @@ views:
       - Masuk dengan Google
       - Masuk dengan Discord
       - Masuk dengan Twitter
+    twitterMsg:
+      - Karena perubahan kebijakan API Twitter, Masuk dengan Twitter kemungkinan tidak lagi berfungsi setelah 9 Februari.
+      - Kamu hanya memakai Twitter sebagai sarana masuk. Kami sarankan untuk mengkaitkan metode masuk lain sekarang untuk mencegah penguncian. (pada perangkat lain atau setelah penghapusan browser).
+      - Jika kamu gagal masuk ke dalam Holodex via akun Twitter (dan tidak mengkaitkan akun dengan metode masuk lainnya), mohon hubungi kami untuk mendapatkan bantuan melalui DM Twitter atau Discord.
     username: Nama Pengguna
     usernameBtn:
       - Ubah
@@ -386,12 +401,12 @@ views:
     fullScreen: Layar Penuh
     mediaControls: Kontrol Media
     mediaControlsEmpty: Video yang diputar akan muncul disini
-    editAutoLayout: Mengubah Tataletak Otomatis
+    editAutoLayout: Atur Tataletak Otomatis
     changeLayout: Ubah Tataletak
     done: Selesai
     hints: Petunjuk
-    presetsHint: Buka menu preset untuk mengganti tataletak dan mengubah tataletak otomatis
-    mediaControlsHint1: Gunakan Kontrol Media untuk mensenyapkan dan menyinkronkan (
+    presetsHint: Buka menu preset untuk mengganti tataletak dan mengatur tataletak otomatis
+    mediaControlsHint1: Gunakan Kontrol Media untuk menyenyapkan dan menyinkronkan (
     mediaControlsHint2: ) siaran langsung
     dragDropHint: Seret dan lepas siaran dari bilah alat ke kolom skema untuk mengatur siaran
     reorderHint: Gunakan menu Tata Ulang untuk mengganti posisi video/chat
@@ -399,10 +414,10 @@ views:
     reorderLayoutDetail: Seret dan lepas ikon ke posisi yang diinginkan
     sync:
       nothingToSync: >-
-        Tidak ada apapun untuk di sinkronkan, mohon buka dua arsip (misalnya. stream kolaborasi)
+        Tidak ada apapun untuk disinkronkan, mohon buka dua arsip tumpang tindih (misalnya. stream kolaborasi)
       syncSettings: Pengaturan Sinkronisasi
       syncSettingsDetail: >-
-        Video di sinkronkan berdasarkan waktu mulai stream, dan dapat desinkron di tengah - tengah stream ketika ada masalah teknis atau porsi sebagian stream di hapus/di cut. Gunakan offset untuk penyelarasan video secara manual
+        Video disinkronkan berdasarkan waktu mulai siaran, dan dapat desinkron di tengah-tengah siaran ketika ada masalah teknis atau porsi sebagian siaran dihapus. Gunakan offset untuk menyelarasan video secara manual
   mugen:
     welcome: >-
       Selamat datang di MugenClips! Semua orang yang berada di halaman ini melihat klip hololive bahasa inggris yang sama yang dipilih secara acak. Menonton bareng dan mengobrol sesama fans Hololive dari seluruh penjuru dunia. jika kamu mempercepat klip dan ingin mensinkronkan kembali video dengan semua orang, tekan refresh pada halaman ini.
@@ -426,14 +441,22 @@ views:
   tlClient:
     menu:
       title: Menu
+      setting: Pengaturan ruang TLDex
+      loadVideo: Tampilkan video
+      unloadVideo: Sembunyikan video
+      loadChat: Tambah Obrolan Youtube ke Broadcast TL
+      unloadChat: Lepas dari obrolan Youtube
     tlControl:
       enterBtn: Masukkan
       prefix: Awalan
       suffix: Akhiran
       fontColour: Warna Font
       outlineColour: Warna Outline
+      localPrefix: Label Bahasa dalam Obrolan
       addProfile: Tambah Profil
       removeProfile: Hapus Profil
+      shiftUp: Geser Profil ke Atas
+      shiftDown: Geser Profil ke Bawah
       showSetting: Pengaturan
       hideSetting: Sembunyikan
     addProfilePanel:
@@ -620,15 +643,12 @@ channelRequest:
   VtuberGroupHint: Agensi / Grup mana vtuber ini berasal?
   ChannelLanguageLabel: Bahasa utama channel
   EnglishNameHint: >-
-    Berikan nama dalam b.inggris jika nama channel dalam bahasa lain. Gunakan konvensi nama Vtuber dari bahasa aslinya (cth. 夏色まつり = Natsuiro Matsuri), atau nama EN pilihan mereka (cth. Elu the Elf, Emma★August).
-  EnglishNameLabel: Nama Channel dalam B.Inggris
+    Berikan nama dalam Bahasa Inggris jika nama channel tidak dalam Bahasa Inggris. Gunakan konvensi nama Vtuber dari bahasa aslinya (cth. 夏色まつり = Natsuiro Matsuri), atau nama EN pilihan mereka (cth. Elu the Elf, Emma★August).
+  EnglishNameLabel: Nama Channel dalam Bahasa Inggris
   Comments: Komentar
   CommentsHint: Komentar lain yang ingin kamu sampaikan pada kami.
-  VtuberRequirementText: >-
-    Diperlukan minimal 20 ribu subscriber untuk independen. Vtuber sebagai bagian dari agensi yang sudah ada akan diterima. <br /><br />Agensi baru akan dibuat tergantung dari jumlah rata-rata subscriber.
   ClipperRequirementText: >-
     Untuk clipper, usia channel minimal 2 bulan dan mengunggah secara konsisten, atau mengunggah lebih dari 20 klip dalam satu bulan. Spam klip pendek setiap hari, hanya mengunggah klip pendek &lt;1 menit, atau menggunakan thumbnail yang tidak menarik semuanya akan diperhitungkan. Kualitas konten mungkin juga akan dinilai. <br /><br />Penting untuk diperhatikan bahwa clipper harus mengutip sumbernya dalam deskripsi video dengan tautan channel, mention channel @Youtube, dan tautan video. overciting (cth. Menautkan semua orang di Nijisanji) membuat pekerjaan lebih untuk editor Holodex, dan underciting (tidak ada tautan / tidak mengutip sama sekali) akan membuat klip disembunyikan. <br /><br /> Holodex berisi algoritme untuk mendeteksi overciting dan mengoreksinya secara otomatis, tetapi mungkin tidak selalu bekerja dengan sempurna. Clipper yang sering overcite akan dihapus dari platform untuk mengurangi noise.
   DeletionRequirementText: >-
     Penghapusan channel hanya dapat diajukan jika kamu adalah (salah satu) pemilik channel tersebut, mohon isi informasi kontak sehingga kami dapat memverifikasi ini.
   PageTitle: Holodex Pengajuan Channel
-  ChannelURLErrorFeedback: Harus format https://www.youtube.com/channel/UC_____

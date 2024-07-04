@@ -15,9 +15,9 @@ export function formatDuration(millisecs: number) {
   r = r % 60;
   t[2] = Math.floor(r);
 
-  return `${
-    (seconds < 0 ? "-" : "") + String(t[0]).padStart(2, "0")
-  }:${String(t[1]).padStart(2, "0")}:${String(t[2]).padStart(2, "0")}`;
+  return `${seconds < 0 ? "-" : ""}${
+    t[0] > 0 ? String(t[0]).padStart(2, "0") + ":" : ""
+  }${String(t[1]).padStart(2, "0")}:${String(t[2]).padStart(2, "0")}`;
 }
 
 const numberFormatAdjust: Record<string, string> = {

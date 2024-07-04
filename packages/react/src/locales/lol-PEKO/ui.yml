@@ -1,7 +1,9 @@
----
 component:
   apiError:
     title: Very very sorry!
+  channelList:
+    unfavoriteAllInGroup: Not suki everybody
+    favoriteAllInGroup: Everybody suki peko
   channelInfo:
     stats: Stattz
     videoCount: '{0} Video'
@@ -12,6 +14,7 @@ component:
     addToFavorites: Feibaritto
     removeFromFavorites: No Feibaritto
     unblock: No block this
+    blocked: brokku ok
   mainNav:
     home: Ho-mu
     favorites: Feibaritto
@@ -50,6 +53,7 @@ component:
       topic: topic
       org: soshiki
       titledesc: titoru/setumei
+      title: taitoru
       comments: komments
       videourl: video url
   relatedVideo:
@@ -84,10 +88,13 @@ component:
     comments: What do next?
     success: Send repolt thanks you!!!
     reasons:
-      - Video tagged incorrectly
-      - Dangerously Low Quality/Misleading Content
-      - Violates the org's derivative work guidelines or inappropriate
+      - 
+      - 
+      - 
       - ader
+      - 
+      - 
+      - 
   thirdpartycookie:
     dialogTitle: holodex in youtube chatto
   playlist:
@@ -100,12 +107,14 @@ component:
       clear-playlist: Pleylisto clear
   placeholderVideo:
     streamPageBtn: Stream Pej
+    creditTitleText: 'CREJITTZ:'
 views:
   channel:
     video: video
     clips: kirinuki
     music: Musik
     collabs: Corabo
+    about: About
   channels:
     sortOptions:
       subscribers: Doroku
@@ -143,6 +152,7 @@ views:
     sort:
       newest: motto new
     type:
+      all: all
       official: Oficial
   settings:
     title: Settei
@@ -184,6 +194,9 @@ views:
         connectedToChat: Is conect
         disconnectedToChat: connect down
     likeOnYoutube: Like bideo oan Yuchubu
+    uploadPanel:
+      headerStart: Staato
+      cancelBtn: No no no
   favorites:
     manageFavorites: feibaritt manegi
     close: Peklose
@@ -202,6 +215,10 @@ views:
       - Googooru de login peko
       - Disucodo de login peko
       - Twitter de login peko
+    usernameBtn:
+      - 
+      - "Yes"
+      - 
   multiview:
     confirmOverwriteYes: "Yes"
     permalink: paamarink
@@ -233,11 +250,20 @@ views:
   extension:
     title: Holodeksu Purasu Eksutenshon
     features: Ficha
+  tlClient:
+    cancelBtn: No no no
+  scriptEditor:
+    table:
+      headerStart: Staato
+  tlManager:
+    delete: Deret
+    langPick: Ranguige
 time:
   soon: will start
 editor:
   music:
     add: Put song
+    update: Update
     titles:
       help: HERUPU
     trackNameInput: Music namae
@@ -251,7 +277,11 @@ about:
       title: Favolite is what?
     MugenClips:
       title: MogenClips is what?
+  gdprContent: >-
+    A Googuru Anareeticu cookie isu used to track pageveeyoos for our anareeticaru purposes. After rogin, we assoseatu your sociaru media account usernemu and ID wiz your favorites. Dis data may incurude your Emairu (for Googuru), Discordu ID, or Tweetah handeru respecturuvury.
   credits:
     title: CREJITTZ
   news:
     title: New
+channelRequest:
+  Comments: komments
