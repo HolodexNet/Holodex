@@ -48,12 +48,8 @@ export function Home() {
             <Trans
               i18nKey="views.home.liveOrUpcomingHeading"
               components={{
-                liveCount: (
-                  <span className="mx-1 rounded-sm bg-secondary-5 p-1 text-sm" />
-                ),
-                upcomingCount: (
-                  <span className="-mr-1 ml-1 rounded-sm bg-secondary-5 p-1 text-sm" />
-                ),
+                liveCount: <></>,
+                upcomingCount: <></>,
               }}
             />
           </TabsTrigger>

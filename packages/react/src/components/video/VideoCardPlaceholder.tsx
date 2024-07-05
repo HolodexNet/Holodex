@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
-import { Dialog, DialogContent } from "@/shadcn/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/shadcn/ui/dialog";
 import { Drawer, DrawerContent } from "@/shadcn/ui/drawer";
 import { Button } from "@/shadcn/ui/button";
 import { siteIsSmallAtom } from "@/hooks/useFrame";
@@ -194,6 +194,7 @@ export default function VideoCardPlaceholder({
 
   return (
     <Dialog open={open} onOpenChange={setOpen} modal={true}>
+      <DialogTitle hidden>Holodex Placeholder Event</DialogTitle>
       <DialogContent
         className="w-[80%] p-0 sm:max-w-[980px]"
         onClick={(e) => e.stopPropagation()}
