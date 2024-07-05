@@ -1,162 +1,168 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { OrgSelectorCombobox } from "../org/OrgPicker";
 import { useTranslation } from "react-i18next";
-import { Link, useLocation } from "react-router-dom";
-import { orgAtom } from "@/store/org";
-import { HTMLAttributes } from "react";
-import { isMobileAtom } from "@/hooks/useFrame";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { HTMLAttributes, useRef, useState } from "react";
+import {
+  isFloatingAtom,
+  isMobileAtom,
+  isSidebarOpenAtom,
+  sidebarShouldBeFullscreenAtom,
+  toggleSidebarAtom,
+} from "@/hooks/useFrame";
 import { Logo } from "../header/Logo";
-import { useIsLgAndUp } from "@/hooks/useBreakpoint";
 import { MUSICDEX_URL } from "@/lib/consts";
-// import { ScrollArea } from "@/shadcn/ui/scroll-area"
+import { atom } from "jotai";
+import { useOnClickOutside } from "usehooks-ts";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  onClose: () => void;
-}
+// New atom for pinned orgs
+const pinnedOrgsAtom = atom<string[]>(["Hololive", "Nijisanji", "VSPo"]);
 
-export function Sidebar({ className, id, onClose }: SidebarProps) {
+export function Sidebar() {
   const { t } = useTranslation();
-  const org = useAtomValue(orgAtom);
-  const isLgAndUp = useIsLgAndUp();
+  const [pinnedOrgs] = useAtom(pinnedOrgsAtom);
+  const [tldexOpen, setTldexOpen] = useState(false);
+  const { org } = useParams();
+  const ref = useRef(null);
+
+  const floating = useAtomValue(isFloatingAtom);
+  const [open, setOpen] = useAtom(isSidebarOpenAtom);
+  const toggle = useSetAtom(toggleSidebarAtom);
+  const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
+
+  const handleClickOutside = () => {
+    floating && open && setOpen(false);
+  };
+
+  useOnClickOutside(ref, handleClickOutside);
+
   return (
-    <div className={cn("border-r border-r-base-5 pb-12", className)} id={id}>
-      <div className="min-h-[100dvh] space-y-2 bg-base-2">
-        <div className="flex items-center gap-2 px-4 pb-2 pt-4">
-          <Logo className="ml-1.5 h-8 w-8" />
-          <h2 className="text-3xl font-semibold tracking-tight">Holodex</h2>
-          <div className="flex grow" />
-          <Button
-            variant="ghost"
-            className="i-heroicons:x-mark p-4 md:hidden"
-            onClick={onClose}
-          />
-        </div>
-        <div className="px-3 py-2">
-          <div className="mb-2">
-            <OrgSelectorCombobox />
+    <aside className="z-30 border-r border-r-base" ref={ref}>
+      <div className={"border-r border-r-base-5 pb-12"} id="sidebar">
+        <div className="flex min-h-[100dvh] flex-col space-y-2 bg-base-2">
+          <div className="flex items-center gap-2 px-4 pb-2 pt-4">
+            <Logo className="ml-1.5 h-8 w-8" />
+            <h2 className="text-3xl font-semibold tracking-tight">Holodex</h2>
+            <div className="flex grow" />
+            <Button
+              variant="ghost"
+              className="i-heroicons:x-mark p-4 md:hidden"
+              onClick={toggle}
+            />
           </div>
-          {/* <h2 className="mb-2 px-4 font-semibold tracking-tight">Hololive</h2> */}
-          <div className="space-y-1">
-            <SidebarItem
-              onClose={onClose}
-              label={t("component.mainNav.home")}
-              href={`/org/${org}`}
-              icon="i-heroicons:home"
-            />
-            <SidebarItem
-              onClose={onClose}
-              label={t("component.mainNav.channels")}
-              href={`/org/${org}/channels`}
-              icon="i-heroicons:user-group"
-            />
-            {/* </div> */}
-            {/* </div> */}
-            <hr className="border-base" />
-            {/* <div className="px-3 py-2"> */}
-            {/* <h2 className="mb-2 px-4 font-semibold tracking-tight">Holodex</h2> */}
-            {/* <div className="space-y-2"> */}
+          <div className="flex grow flex-col space-y-1 px-3 py-2">
+            <div className="mb-2">
+              <OrgSelectorCombobox />
+            </div>
+            {pinnedOrgs.map((pinnedOrg) => (
+              <div key={pinnedOrg} className="space-y-1">
+                {org === pinnedOrg && <hr className="border-base" />}
+
+                <SidebarItem
+                  onClose={toggle}
+                  label={pinnedOrg}
+                  href={`/org/${pinnedOrg}`}
+                  icon="i-ph:placeholder-fill"
+                />
+                {org === pinnedOrg && (
+                  <div className="w-full pl-6">
+                    <SidebarItem
+                      onClose={toggle}
+                      label={"Members"}
+                      href={`/org/${pinnedOrg}/channels`}
+                      icon="i-heroicons:identification"
+                    />
+                  </div>
+                )}
+
+                {org === pinnedOrg && <hr className="border-base" />}
+              </div>
+            ))}
+            <div className="grow"></div>
+            <hr className="my-2 border-base" />
             <SidebarItem
               label={t("component.mainNav.favorites")}
               icon="i-heroicons:heart"
               href="/favorites"
-              onClose={onClose}
+              onClose={toggle}
             />
             <SidebarItem
               label={t("component.mainNav.multiview")}
               icon="i-heroicons:rectangle-group"
               href="/multiview"
-              onClose={onClose}
+              onClose={toggle}
             />
             <SidebarItem
               label="Musicdex"
               icon="i-heroicons:musical-note"
               href={MUSICDEX_URL}
-              onClose={onClose}
+              onClose={toggle}
             />
             <SidebarItem
               label={t("component.mainNav.playlist")}
               icon="i-heroicons:queue-list"
               href="/playlists"
-              onClose={onClose}
+              onClose={toggle}
             />
-            <hr className="border-base" />
-            {isLgAndUp && (
+          </div>
+          {/* Icon-only buttons row */}
+          <div className="flex justify-around py-2 text-base-11">
+            <Button
+              variant="ghost"
+              className="p-2"
+              size="icon-lg"
+              onClick={() => setTldexOpen(!tldexOpen)}
+            >
+              <svg
+                version="1.1"
+                id="Layer_1"
+                viewBox="0 0 24 24"
+                xmlSpace="preserve"
+                style={{ fill: "var(--base-11)", width: 24, height: 24 }}
+              >
+                <path
+                  d="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z M4,10h4v2H4V10z M14,16H4v-2h10V16z M20,16h-4v-2
+    h4V16z M20,12H10v-2h10V12z"
+                />
+              </svg>
+            </Button>
+            <Button variant="ghost" className="p-2" size="icon-lg" asChild>
+              <Link to="/settings">
+                <span className="i-heroicons:cog-6-tooth" />
+              </Link>
+            </Button>
+            <Button variant="ghost" className="p-2" size="icon-lg" asChild>
+              <Link to="/about">
+                <span className="i-heroicons:information-circle" />
+              </Link>
+            </Button>
+          </div>
+          {/* TLDex submenu */}
+          {tldexOpen && (
+            <div className="space-y-1 px-3">
               <SidebarItem
                 className="text-base-11"
                 label={t("component.mainNav.tlclient")}
                 icon="i-heroicons:language"
                 href="/tlclient"
-                onClose={onClose}
+                onClose={toggle}
               />
-            )}
-            {isLgAndUp && (
               <SidebarItem
                 className="text-base-11"
                 label={t("component.mainNav.scriptEditor")}
-                // icon="i-solar:subtitles-linear"
-                // icon="i-gravity-ui:timeline"
                 icon="i-fluent:gantt-chart-16-regular"
                 href="/scripteditor"
-                onClose={onClose}
+                onClose={toggle}
               />
-            )}
-            <SidebarItem
-              className="text-base-11"
-              label={t("component.mainNav.settings")}
-              icon="i-heroicons:cog-6-tooth"
-              href="/settings"
-              onClose={onClose}
-            />
-            <SidebarItem
-              className="text-base-11"
-              label={t("component.mainNav.about")}
-              icon="i-heroicons:information-circle"
-              href="/about"
-              onClose={onClose}
-            />
-          </div>
-        </div>
-        <div className="py-2">
-          {/* <h2 className="relative px-7 text-lg font-semibold tracking-tight">
-            Favorites
-          </h2> */}
-          {/* <ScrollArea className="h-[300px] px-1">
-            <div className="space-y-1 p-2">
-              {playlists?.map((playlist, i) => (
-                <Button
-                  key={`${playlist}-${i}`}
-                  variant="ghost"
-                  className="w-full justify-start font-normal"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="mr-2 h-4 w-4"
-                  >
-                    <path d="M21 15V6" />
-                    <path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                    <path d="M12 12H3" />
-                    <path d="M16 6H3" />
-                    <path d="M12 18H3" />
-                  </svg>
-                  {playlist}
-                </Button>
-              ))}
             </div>
-          </ScrollArea> */}
+          )}
         </div>
       </div>
-    </div>
+    </aside>
   );
 }
-
 function SidebarItem({
   className,
   onClose,
@@ -185,7 +191,7 @@ function SidebarItem({
         "w-full justify-start",
         className,
         { "text-base-12 font-semibold tracking-tight": isHere },
-        { "font-base-11 font-light": !isHere },
+        { "text-base-11 font-light": !isHere },
       )}
       variant={isHere ? "primary" : "ghost"}
       onClick={isMobile ? onClose : undefined}

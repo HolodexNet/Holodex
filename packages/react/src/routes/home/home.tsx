@@ -16,6 +16,9 @@ import { ClipLanguageSelector } from "@/components/language/ClipLanguageSelector
 import { LiveTab } from "./LiveTab";
 import { ArchiveTab } from "./ArchiveTab";
 import { ClipsTab } from "./ClipsTab";
+import { useVideoCardSizes } from "@/store/video";
+import { Button } from "@/shadcn/ui/button";
+import { cn } from "@/lib/utils";
 
 export function Home() {
   const navigate = useNavigate();
@@ -61,6 +64,7 @@ export function Home() {
           </TabsTrigger>
           <div className="flex grow" />
           {tab === "clips" && <ClipLanguageSelector />}
+          <CardSizeToggle />
         </TabsList>
         <TabsContent value="live">
           <LiveTab />
@@ -75,3 +79,35 @@ export function Home() {
     </>
   );
 }
+
+export const CardSizeToggle: React.FC = () => {
+  const { nextSize, setNextSize } = useVideoCardSizes(["list", "md", "lg"]);
+
+  const handleClick = () => {
+    setNextSize();
+    console.log("new card size", nextSize);
+  };
+
+  return (
+    <Button
+      className="shrink-0"
+      size="icon-lg"
+      variant="ghost"
+      role="button"
+      type="button"
+      onClick={handleClick}
+    >
+      <div
+        className={cn(
+          {
+            md: "i-lucide:grid-3x3",
+            lg: "i-lucide:layout-grid",
+            list: "i-lucide:list",
+            xs: "", // not used
+            sm: "",
+          }[nextSize],
+        )}
+      />
+    </Button>
+  );
+};

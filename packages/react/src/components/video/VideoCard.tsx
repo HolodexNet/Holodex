@@ -3,8 +3,8 @@ import { formatDuration } from "@/lib/time";
 import { Button } from "@/shadcn/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { VideoMenu } from "./VideoMenu";
-import { cn, makeYtThumbnailUrl } from "@/lib/utils";
-import React, { useCallback, useMemo, useState } from "react";
+import { cn, makeYtThumbnailUrl, resizeChannelPhoto } from "@/lib/utils";
+import React, { Suspense, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDuration } from "@/hooks/useDuration";
 import { clsx } from "clsx";
@@ -51,6 +51,8 @@ interface VideoCardProps {
 const LazyVideoCardPlaceholder = React.lazy(
   () => import("./VideoCardPlaceholder"),
 );
+
+export const MemoizedVideoCard = React.memo(VideoCard);
 
 export function VideoCard({
   video,
@@ -235,7 +237,10 @@ export function VideoCard({
             onClick={(e) => onClick && onClick("channel", e)}
           >
             <img
-              src={video.channel.photo ?? ""}
+              src={
+                video.channel.photo &&
+                resizeChannelPhoto(video.channel.photo, 64)
+              }
               className="h-8 w-8 rounded-full"
             />
           </Link>
@@ -276,11 +281,13 @@ export function VideoCard({
         </div>
         {videoMenu}
         <div onClick={stopPropagation} onMouseDown={stopPropagation}>
-          <LazyVideoCardPlaceholder
-            open={open}
-            setOpen={setOpen}
-            video={video}
-          />
+          <Suspense fallback={null}>
+            <LazyVideoCardPlaceholder
+              open={open}
+              setOpen={setOpen}
+              video={video}
+            />
+          </Suspense>
         </div>
       </div>
     </div>

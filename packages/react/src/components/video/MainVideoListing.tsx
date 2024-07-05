@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { VideoCard } from "./VideoCard";
+import { MemoizedVideoCard } from "./VideoCard";
 import { SkeletonVideoCard } from "./SkeletonVideoCard";
 import { VirtuosoGrid } from "react-virtuoso";
 import { cn } from "@/lib/utils";
@@ -58,7 +58,11 @@ export function MainVideoListing({
         isLoading ? (
           <SkeletonVideoCard key={`placeholder-${index}`} />
         ) : (
-          <VideoCard key={`video-${video.id}`} video={video} size={size} />
+          <MemoizedVideoCard
+            key={`video-${video.id}`}
+            video={video}
+            size={size}
+          />
         )
       }
       endReached={async () => {

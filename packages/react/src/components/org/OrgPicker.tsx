@@ -48,8 +48,7 @@ export function OrgSelectorCombobox() {
             open && "bg-base-4 ring-2 ring-primary-9 hover:bg-base-5",
           )}
         >
-          {orgs.find((org) => org.name === currentOrg.name)?.name ||
-            t("Select organization...")}
+          {t("Go to...")}
           <div className="i-lucide:chevrons-up-down ml-2 inline-block h-4 w-4 shrink-0 align-middle opacity-50"></div>
         </button>
       </PopoverTrigger>

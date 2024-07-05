@@ -53,7 +53,7 @@ export default function VideoCardPlaceholder({
 
   const content = useMemo(
     () => (
-      <div className="grid gap-6 rounded-lg border border-solid border-base-6">
+      <div className="grid gap-6">
         <VideoThumbnail
           src={thumbnailSrc}
           alt="Stream Thumbnail"
@@ -185,7 +185,11 @@ export default function VideoCardPlaceholder({
   if (isSmall) {
     return (
       <Drawer open={open} onOpenChange={setOpen} modal={true}>
-        <DrawerContent className="p-0" onClick={(e) => e.stopPropagation()}>
+        <DrawerContent
+          className="rounded-lg border border-solid border-base-6 bg-base-2 p-0"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="h-4"></div>
           {content}
         </DrawerContent>
       </Drawer>
@@ -196,7 +200,7 @@ export default function VideoCardPlaceholder({
     <Dialog open={open} onOpenChange={setOpen} modal={true}>
       <DialogTitle hidden>Holodex Placeholder Event</DialogTitle>
       <DialogContent
-        className="w-[80%] p-0 sm:max-w-[980px]"
+        className="w-[80%] rounded-lg border border-solid border-base-6 p-0 sm:max-w-[980px]"
         onClick={(e) => e.stopPropagation()}
       >
         {content}
