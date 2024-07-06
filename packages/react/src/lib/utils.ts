@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { VIDEO_URL_REGEX } from "./consts";
 
 /**
  * Shadcn helper util to join classnames
@@ -140,4 +141,8 @@ export function idToVideoURL(id: string, link?: string) {
   }
   const url = link?.includes("twitch") ? link : `https://youtu.be/${id}`;
   return url;
+}
+
+export function videoURLtoID(url: string) {
+  return VIDEO_URL_REGEX.exec(url)?.groups?.id;
 }
