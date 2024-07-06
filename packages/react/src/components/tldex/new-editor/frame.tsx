@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./frame.css";
 import WaveformEditor from "./components/WaveformEditor";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  useBeforeUnload,
+  useBlocker,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { useVideo } from "@/services/video.service";
 import { Button } from "@/shadcn/ui/button";
 import { useTranslation } from "react-i18next";
@@ -14,28 +19,95 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import { headerHiddenAtom } from "@/hooks/useFrame";
+import SubtitleTimeline from "./components/SubtitleTimeline";
+import { useChatDB } from "@/hooks/useChatDB";
+import { useSubtitles } from "./hooks/subtitles";
 
 export function TLEditorFrame() {
-  const { id } = useVideoData();
+  const { id, currentVideo } = useVideoData();
   const makeHeaderHide = useSetAtom(headerHiddenAtom);
+  const { messages, loadMessages } = useChatDB(
+    id ? `${id}/en` : "not_a_room/en",
+  );
+  const { updateSubtitles } = useSubtitles();
+  const [isBlocking, setIsBlocking] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
     makeHeaderHide(true);
     return () => makeHeaderHide(false);
-  });
+  }, [makeHeaderHide]);
+
+  useEffect(() => {
+    if (id) {
+      loadMessages({ partial: 100000 });
+      setIsBlocking(true); // Start blocking navigation once we have loaded data
+    }
+  }, [id, loadMessages]);
+
+  useEffect(() => {
+    if (messages) {
+      updateSubtitles(messages);
+    }
+  }, [messages, updateSubtitles]);
+
+  // Prevent soft navigation within the SPA
+  const blocker = useBlocker(isBlocking);
+
+  useEffect(() => {
+    if (blocker.state === "blocked") {
+      const proceed = window.confirm(
+        "Are you sure you want to leave? You may lose unsaved changes.",
+      );
+      if (proceed) {
+        blocker.proceed();
+      } else {
+        blocker.reset();
+      }
+    }
+  }, [blocker]);
+
+  // Prevent hard refresh and closing tab
+  const handleBeforeUnload = useCallback(
+    (event: BeforeUnloadEvent) => {
+      if (isBlocking) {
+        event.preventDefault();
+        event.returnValue = "You may lose unsaved changes if you leave.";
+      }
+    },
+    [isBlocking],
+  );
+
+  useBeforeUnload(handleBeforeUnload);
+
+  const handleSave = useCallback(() => {
+    // Implement your save logic here
+    console.log("Saving...");
+    // After successful save:
+    setIsBlocking(false);
+  }, []);
+
+  const handleExit = useCallback(() => {
+    if (
+      window.confirm(
+        "Are you sure you want to exit? You may lose unsaved changes.",
+      )
+    ) {
+      setIsBlocking(false);
+      navigate("/"); // Navigate to home or any other appropriate route
+    }
+  }, [navigate]);
 
   return (
     <div className="absolute h-full w-full">
       <div className="tl-frame inset-0 p-4">
-        <TLEditorHeader />
+        <TLEditorHeader /* onSave={handleSave} onExit={handleExit} */ />
         <TLEditorContent videoId={id || ""} />
         {id && <WaveformEditor videoId={id} />}
       </div>
     </div>
   );
 }
-
-// Additional components and hooks in separate files:
-
 // TLEditorHeader.tsx
 export function TLEditorHeader() {
   const { t } = useTranslation();
@@ -93,7 +165,7 @@ export function TLEditorContent({ videoId }: { videoId?: string }) {
       </Panel>
       <PanelResizeHandle className="w-2 hover:bg-base-4" />
       <Panel defaultSize={40} minSize={20}>
-        <VideoStatus videoId={videoId} />
+        <SubtitleTimeline />
       </Panel>
     </PanelGroup>
   );
@@ -139,7 +211,11 @@ function VideoStatus({ videoId }: { videoId?: string }) {
   const videoStatusAtom = videoStatusAtomFamily(videoId || "x");
   const videoStatus = useAtomValue(videoStatusAtom);
 
-  return <div>{JSON.stringify(videoStatus)}</div>;
+  return (
+    <span className="content w-full text-wrap text-base-11">
+      {JSON.stringify(videoStatus, null, 2)}
+    </span>
+  );
 }
 
 // useVideoData.ts
