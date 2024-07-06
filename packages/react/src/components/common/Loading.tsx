@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useIntersectionObserver } from "usehooks-ts";
 
 interface LoadingProps {
-  size: "sm" | "md" | "lg" | "xl";
+  size: "sm" | "md" | "lg" | "xl" | undefined;
   error?: HTTPError | null;
 }
 
@@ -55,7 +55,8 @@ export function VirtuosoLoadingFooter({
   const { loadMore, isLoading, autoload } = context || {};
 
   const { ref, isIntersecting } = useIntersectionObserver({
-    rootMargin: "-100px",
+    threshold: 0,
+    rootMargin: "-10px",
   });
 
   useEffect(() => {
@@ -65,10 +66,15 @@ export function VirtuosoLoadingFooter({
     }
   }, [autoload, isIntersecting, isLoading, loadMore]);
 
-  return context?.isLoading ? (
-    <Loading {...context} />
+  return isLoading ? (
+    <Loading size={context?.size} className={context?.className} />
   ) : context?.hasNextPage ? (
-    <Button ref={ref} variant="primary" className="mt-4" onClick={loadMore}>
+    <Button
+      ref={ref}
+      variant="primary"
+      className={context?.className + " mt-4"}
+      onClick={loadMore}
+    >
       {t("component.channelList.loadMore")}
     </Button>
   ) : undefined;
