@@ -4,6 +4,7 @@ import { FancyMultiSelect } from "./shadcn/ui/fancy-multiselect";
 import { Switch } from "./shadcn/ui/switch";
 import { Label } from "./shadcn/ui/label";
 import { Checkbox } from "./shadcn/ui/checkbox";
+import SubtitleTester from "./components/tldex/new-editor/hooks/SubtitleTester";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,6 +12,8 @@ function App() {
   return (
     <div className="space-y-4 p-4">
       <h3>This page is for testing components and styling.</h3>
+
+      <SubtitleTester />
 
       <hr className="border-base" />
 

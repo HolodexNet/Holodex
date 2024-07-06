@@ -57,21 +57,12 @@ export function TLEditorFrame() {
             </ContextMenuShortcut>
           </Button>
 
-          {/* 
-            <!-- <Button size="sm" onClick="console.log('show')">
-              { t("views.tlClient.menu.loadVideo") }
-            </Button>
-            <Button size="sm" onClick="console.log('hide')">
-              { t("views.tlClient.menu.unloadVideo") }
-            </Button> --> */}
-          {/* <div className="h-6 w-2 bg-primary opacity-60" /> */}
           <Button size="sm" className="min-w-16 px-2">
             {t("views.scriptEditor.menu.importFile")}
           </Button>
           <Button size="sm" className="min-w-16 px-2">
             {t("views.scriptEditor.menu.exportFile")}
           </Button>
-          {/* <div className="h-6 w-2 bg-primary opacity-60" /> */}
 
           <Button
             size="sm"

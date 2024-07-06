@@ -1,3 +1,4 @@
+import { atomWithUndo } from "@/lib/jotai/atomWithHistory";
 import { PrimitiveAtom, atom, useAtom } from "jotai";
 import { splitAtom } from "jotai/utils";
 import { add } from "sorted-array-functions";
@@ -17,61 +18,45 @@ export function ParsedMessageOFFSETComparator(
   return 0;
 }
 
-const initialState: ParsedMessage[] = []; // Initial state can be an empty array or loaded from somewhere
+const initialState: ParsedMessage[] = [];
 
 export const subtitlesAtom = atom(initialState);
+export const subtitlesUndoableAtom = atomWithUndo(subtitlesAtom, 100); // Limit to 100 undo steps
 export const subtitleAtomsAtom = splitAtom(subtitlesAtom);
 
 export const useSubtitles = () => {
-  const [_, setList] = useAtom(subtitlesAtom);
-  const [subtitles, dispatch] = useAtom(subtitleAtomsAtom);
+  const [subtitles, setSubtitles] = useAtom(subtitlesAtom);
+  const [{ undo, redo, canUndo, canRedo }] = useAtom(subtitlesUndoableAtom);
+  const [_, dispatch] = useAtom(subtitleAtomsAtom);
 
   const addSubtitle = (subtitle: ParsedMessage) => {
-    setList((oldSubtitles) => {
-      add(oldSubtitles, subtitle, ParsedMessageOFFSETComparator);
-      return oldSubtitles;
+    setSubtitles((oldSubtitles) => {
+      const newSubtitles = [...oldSubtitles];
+      add(newSubtitles, subtitle, ParsedMessageOFFSETComparator);
+      return newSubtitles;
     });
   };
 
-  const setSubtitles = (newSubtitles: ParsedMessage[]) => {
-    setList(newSubtitles.sort(ParsedMessageOFFSETComparator));
+  const updateSubtitles = (newSubtitles: ParsedMessage[]) => {
+    setSubtitles([...newSubtitles].sort(ParsedMessageOFFSETComparator));
   };
 
   const deleteSubtitle = (subtitleAtom: PrimitiveAtom<ParsedMessage>) =>
     dispatch({ type: "remove", atom: subtitleAtom });
 
-  // const removeSubtitle = (index: number) => {
-  //   setSubtitles((oldSubtitles) => oldSubtitles.filter((_, i) => i !== index));
-  // };
-
   const clearSubtitles = () => {
-    setList([]);
+    setSubtitles([]);
   };
 
   return {
     subtitles,
-    setSubtitles,
+    updateSubtitles,
     addSubtitle,
     deleteSubtitle,
-    // removeSubtitle,
     clearSubtitles,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
   };
 };
-
-// I'm not sure how useful this construct is
-// export const useSubtitleItem = (subtitleAtom: PrimitiveAtom<ParsedMessage>) => {
-//   const [subtitle, setSubtitle] = useAtom(subtitleAtom);
-//   const [list, dispatch] = useAtom(subtitleAtomsAtom);
-
-//   const updateSubtitle = (
-//     newDetails: ParsedMessage | ((prev: ParsedMessage) => ParsedMessage),
-//   ) => {
-//     setSubtitle(newDetails);
-//   };
-
-//   const deleteSubtitle = () => dispatch({ type: "remove", atom: subtitleAtom });
-
-//   // Potentially add select/deselect logic here or handle it separately based on the application's needs
-
-//   return { subtitle, updateSubtitle, deleteSubtitle };
-// };
