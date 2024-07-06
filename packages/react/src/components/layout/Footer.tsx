@@ -1,29 +1,34 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { orgAtom } from "@/store/org";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { openSidebarAtom } from "@/hooks/useFrame";
 
 const FooterItem = ({
   icon,
   label,
   href,
+  onClick,
 }: {
   icon: string;
   label: string;
-  href: string;
+  href?: string;
+  onClick?: () => void;
 }) => {
   const location = useLocation();
   const isActive =
     href === location.pathname ||
-    (href.startsWith("/settings") &&
+    (href?.startsWith("/settings") &&
       location.pathname.startsWith("/settings")) ||
-    (href.startsWith("/about") && location.pathname.startsWith("/about"));
+    (href?.startsWith("/about") && location.pathname.startsWith("/about"));
 
+  const Comp = href ? Link : "div";
   return (
-    <Link
-      to={href}
+    <Comp
+      to={href || "#"}
+      onClick={onClick}
       className={cn(
         "flex basis-1/5 flex-col items-center justify-center text-xs",
         isActive ? "text-primary" : "text-base-11",
@@ -31,25 +36,28 @@ const FooterItem = ({
     >
       <span className={cn(icon, "mb-1 text-2xl")}></span>
       {label}
-    </Link>
+    </Comp>
   );
 };
 
 export const Footer = () => {
   const { t } = useTranslation();
   const org = useAtomValue(orgAtom);
+  const openSidebar = useSetAtom(openSidebarAtom);
 
   const navItems = [
     {
-      icon: "i-heroicons:home",
-      label: t("component.mainNav.home"),
-      href: `/org/${org}`,
+      icon: "i-heroicons:bars-3",
+      label: "Menu",
+      onClick: () => {
+        openSidebar();
+      },
     },
-    {
-      icon: "i-heroicons:user-group",
-      label: t("component.mainNav.channels"),
-      href: `/org/${org}/channels`,
-    },
+    // {
+    //   icon: "i-heroicons:user-group",
+    //   label: t("component.mainNav.channels"),
+    //   href: `/org/${org}/channels`,
+    // },
     {
       icon: "i-heroicons:heart",
       label: t("component.mainNav.favorites"),

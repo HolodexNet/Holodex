@@ -25,15 +25,17 @@ $responsive-breakpoint: 768px;
   &.mobile-footer {
     --footer-height-clearance: calc(
       #{$footer-height} + env(safe-area-inset-bottom) / 2
-    ); // maybe add the iphone safety area here.
+    );
+    // maybe add the iphone safety area here.
     grid-template-rows: var(--header-height-clearance) auto var(
         --footer-height-clearance
       );
+
     // height: 100vh;
 
-    // > main {
-    //   overflow-y: auto;
-    // }
+    /* > main {
+       overflow-y: auto;
+     } */
   }
 
   &.sidebar-open {
@@ -74,6 +76,7 @@ $responsive-breakpoint: 768px;
   // transition: grid-template-columns 0.3s;
 
   min-height: 100vh;
+  max-width: 100dvw;
 
   grid-template-areas:
     "sidebar header"

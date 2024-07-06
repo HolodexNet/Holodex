@@ -18,7 +18,6 @@
   body {
     @apply bg-base-1 text-base-12;
     font-family: "Inter", sans-serif;
-    /* font-family: "Noto Sans", sans-serif; */
   }
 }
 

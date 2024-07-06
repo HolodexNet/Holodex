@@ -27,7 +27,7 @@ export function VideoCardCountdownToLive({
   }, []);
 
   const renderTooltipContent = useCallback(
-    (timestamp: string | Date | number | Dayjs) => {
+    (id: string, timestamp: string | Date | number | Dayjs) => {
       const formatTimeForTimezones = (
         timestamp: Parameters<typeof dayjs>[0],
       ) => {
@@ -46,7 +46,7 @@ export function VideoCardCountdownToLive({
             </span>
           )}
           {formatTimeForTimezones(timestamp).map(({ timezone, time }) => (
-            <div key={timezone} className="">
+            <div key={id + timezone} className="">
               <div className="text-base-9">{timezone}:</div>
               <div className="text-center text-sm font-semibold text-base-11">
                 {time}
@@ -97,7 +97,7 @@ export function VideoCardCountdownToLive({
           <span className={`text-base-11 ${className}`}>{countdownText}</span>
         </TooltipTrigger>
         <TooltipContent className="bg-base-3 p-1.5">
-          {renderTooltipContent(tick)}
+          {renderTooltipContent(video.id, tick)}
         </TooltipContent>
       </Tooltip>
     );
@@ -116,7 +116,7 @@ export function VideoCardCountdownToLive({
           <span className={`text-base-11 ${className}`}>{pastText}</span>
         </TooltipTrigger>
         <TooltipContent className="bg-base-3 p-1.5" avoidCollisions>
-          {renderTooltipContent(tick)}
+          {renderTooltipContent(video.id, tick)}
         </TooltipContent>
       </Tooltip>
     );
