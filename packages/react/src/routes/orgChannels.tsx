@@ -21,7 +21,6 @@ import { cn } from "@/lib/utils";
 // Types
 type DisplayStyle = "grid" | "list";
 type SortOption = "suborg" | "subscriber_count" | "view_count";
-type GroupOption = "none" | "group";
 
 // Atoms and constants
 const orgChannelDisplayStyleAtom = atomWithStorage<DisplayStyle>(
@@ -32,10 +31,6 @@ const orgChannelDisplayStyleAtom = atomWithStorage<DisplayStyle>(
 const orgChannelSortByAtom = atomWithStorage<SortOption>(
   "orgChannelSortBy",
   "suborg",
-);
-const orgChannelGroupByAtom = atomWithStorage<GroupOption>(
-  "orgChannelGroupBy",
-  "none",
 );
 
 const sortOptions: { value: SortOption; label: string; icon: string }[] = [
@@ -50,15 +45,6 @@ const sortOptions: { value: SortOption; label: string; icon: string }[] = [
     label: "Views",
     icon: "i-lucide:eye",
   },
-];
-
-const groupOptions: {
-  value: GroupOption;
-  label: string;
-  icon: string;
-}[] = [
-  { value: "none", label: "No Grouping", icon: "i-lucide:user" },
-  { value: "group", label: "Group", icon: "i-lucide:users" },
 ];
 
 // Channel component
@@ -115,7 +101,6 @@ export default function ChannelsOrg() {
 
   const [displayStyle, setDisplayStyle] = useAtom(orgChannelDisplayStyleAtom);
   const [sortBy, setSortBy] = useAtom(orgChannelSortByAtom);
-  const [groupBy, setGroupBy] = useAtom(orgChannelGroupByAtom);
 
   const {
     data: channels,
@@ -132,8 +117,7 @@ export default function ChannelsOrg() {
   const sortedAndGroupedChannels = useMemo(() => {
     const processedChannels = channels?.pages.flat() ?? [];
 
-    // Group channels
-    if (groupBy === "group" && sortBy === "suborg") {
+    if (sortBy === "suborg") {
       const groupedChannels: Record<string, Channel[]> = {};
       processedChannels.forEach((channel) => {
         const group = channel.group || "Other";
@@ -154,7 +138,7 @@ export default function ChannelsOrg() {
     }
 
     return { "": processedChannels };
-  }, [channels, sortBy, groupBy]);
+  }, [channels, sortBy]);
 
   return (
     <>
@@ -189,9 +173,6 @@ export default function ChannelsOrg() {
             value={sortBy}
             onValueChange={(value: SortOption) => {
               setSortBy(value);
-              if (value !== "suborg") {
-                setGroupBy("none");
-              }
             }}
           >
             <SelectTrigger className="w-full sm:w-[200px]">
@@ -199,25 +180,6 @@ export default function ChannelsOrg() {
             </SelectTrigger>
             <SelectContent>
               {sortOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  <div className="flex items-center gap-2">
-                    <span className={cn(option.icon, "text-base")} />
-                    {option.label}
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select
-            value={groupBy}
-            onValueChange={(value: GroupOption) => setGroupBy(value)}
-            disabled={sortBy !== "suborg"}
-          >
-            <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="Group by" />
-            </SelectTrigger>
-            <SelectContent>
-              {groupOptions.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   <div className="flex items-center gap-2">
                     <span className={cn(option.icon, "text-base")} />
