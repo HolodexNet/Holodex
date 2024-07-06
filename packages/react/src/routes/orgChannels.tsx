@@ -20,11 +20,7 @@ import { cn } from "@/lib/utils";
 
 // Types
 type DisplayStyle = "grid" | "list";
-type SortOption =
-  | "default"
-  | "mostSubscribed"
-  | "leastSubscribed"
-  | "mostViewed";
+type SortOption = "suborg" | "subscriber_count" | "view_count";
 type GroupOption = "none" | "group";
 
 // Atoms and constants
@@ -35,7 +31,7 @@ const orgChannelDisplayStyleAtom = atomWithStorage<DisplayStyle>(
 
 const orgChannelSortByAtom = atomWithStorage<SortOption>(
   "orgChannelSortBy",
-  "default",
+  "suborg",
 );
 const orgChannelGroupByAtom = atomWithStorage<GroupOption>(
   "orgChannelGroupBy",
@@ -43,28 +39,23 @@ const orgChannelGroupByAtom = atomWithStorage<GroupOption>(
 );
 
 const sortOptions: { value: SortOption; label: string; icon: string }[] = [
-  { value: "default", label: "Standard Sort", icon: "i-lucide:arrow-down-a-z" },
+  { value: "suborg", label: "Standard Sort", icon: "i-lucide:arrow-down-a-z" },
   {
-    value: "mostSubscribed",
-    label: "Most Subscribed",
-    icon: "i-lucide:arrow-down-1-0",
+    value: "subscriber_count",
+    label: "Subscribers",
+    icon: "i-lucide:users",
   },
   {
-    value: "leastSubscribed",
-    label: "Least Subscribed",
-    icon: "i-lucide:arrow-up-1-0",
+    value: "view_count",
+    label: "Views",
+    icon: "i-lucide:eye",
   },
-  // {
-  //   value: "mostViewed",
-  //   label: "Most Viewed",
-  //   icon: "i-lucide:arrow-down-1-0",
-  // },
 ];
 
 const groupOptions: {
   value: GroupOption;
   label: string;
-  icon: React.ReactNode;
+  icon: string;
 }[] = [
   { value: "none", label: "No Grouping", icon: "i-lucide:user" },
   { value: "group", label: "Group", icon: "i-lucide:users" },
@@ -119,7 +110,6 @@ const GroupComponent: React.FC<{
 // Main ChannelsOrg component
 export default function ChannelsOrg() {
   const { t } = useTranslation();
-  // const navigate = useNavigate();
   const { org } = useParams();
   const currentOrg = useAtomValue(orgAtom);
 
@@ -134,40 +124,16 @@ export default function ChannelsOrg() {
     hasNextPage,
   } = useChannels({
     org,
-    sort: "suborg",
+    sort: sortBy,
+    order:
+      sortBy === "subscriber_count" || sortBy === "view_count" ? "desc" : "asc",
   });
-
-  // useEffect(() => {
-  //   navigate(`/org/${currentOrg}/channels`);
-  // }, [currentOrg, navigate]);
 
   const sortedAndGroupedChannels = useMemo(() => {
     const processedChannels = channels?.pages.flat() ?? [];
 
-    // Sort channels
-    switch (sortBy) {
-      case "mostSubscribed":
-        processedChannels.sort(
-          (a, b) => Number(b.subscriber_count) - Number(a.subscriber_count),
-        );
-        break;
-      case "leastSubscribed":
-        processedChannels.sort(
-          (a, b) => Number(a.subscriber_count) - Number(b.subscriber_count),
-        );
-        break;
-      // case "mostViewed":
-      //   processedChannels.sort(
-      //     (a, b) => Number(b.view_count) - Number(a.view_count), // why doesn't viewcount work?
-      //   );
-      //   break;
-      default:
-        // Keep the default sorting (by suborg)
-        break;
-    }
-
     // Group channels
-    if (groupBy === "group") {
+    if (groupBy === "group" && sortBy === "suborg") {
       const groupedChannels: Record<string, Channel[]> = {};
       processedChannels.forEach((channel) => {
         const group = channel.group || "Other";
@@ -221,7 +187,12 @@ export default function ChannelsOrg() {
 
           <Select
             value={sortBy}
-            onValueChange={(value: SortOption) => setSortBy(value)}
+            onValueChange={(value: SortOption) => {
+              setSortBy(value);
+              if (value !== "suborg") {
+                setGroupBy("none");
+              }
+            }}
           >
             <SelectTrigger className="w-full sm:w-[200px]">
               <SelectValue placeholder="Sort by" />
@@ -240,6 +211,7 @@ export default function ChannelsOrg() {
           <Select
             value={groupBy}
             onValueChange={(value: GroupOption) => setGroupBy(value)}
+            disabled={sortBy !== "suborg"}
           >
             <SelectTrigger className="w-full sm:w-[200px]">
               <SelectValue placeholder="Group by" />
