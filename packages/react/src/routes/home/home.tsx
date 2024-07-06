@@ -19,6 +19,8 @@ import { ClipsTab } from "./ClipsTab";
 import { useVideoCardSizes } from "@/store/video";
 import { Button } from "@/shadcn/ui/button";
 import { cn } from "@/lib/utils";
+import { Separator } from "@/shadcn/ui/separator";
+import { useIntersectionObserver } from "usehooks-ts";
 
 export function Home() {
   const navigate = useNavigate();
@@ -46,26 +48,7 @@ export function Home() {
         <title>{currentOrg} - Holodex</title>
       </Helmet>
       <Tabs defaultValue={tab} onValueChange={setTab}>
-        <TabsList className="sticky top-0 z-20 flex h-fit max-w-full justify-start overflow-x-auto bg-base-1 md:px-8">
-          <TabsTrigger value="live" className="px-2">
-            <Trans
-              i18nKey="views.home.liveOrUpcomingHeading"
-              components={{
-                liveCount: <></>,
-                upcomingCount: <></>,
-              }}
-            />
-          </TabsTrigger>
-          <TabsTrigger value="archive">
-            {t("views.home.recentVideoToggles.official")}
-          </TabsTrigger>
-          <TabsTrigger value="clips">
-            {t("views.home.recentVideoToggles.subber")}
-          </TabsTrigger>
-          <div className="flex grow" />
-          {tab === "clips" && <ClipLanguageSelector />}
-          <CardSizeToggle />
-        </TabsList>
+        <StickyTabsList tab={tab} />
         <TabsContent value="live">
           <LiveTab />
         </TabsContent>
@@ -79,6 +62,45 @@ export function Home() {
     </>
   );
 }
+
+function StickyTabsList({ tab }: { tab: string }) {
+  const { t } = useTranslation();
+  const { isIntersecting: isStuckAtTop, ref } = useIntersectionObserver({
+    threshold: 1,
+    rootMargin: "-1px 0px 0px 0px",
+  });
+
+  return (
+    <TabsList
+      ref={ref}
+      className={cn(
+        "sticky top-0 z-20 flex items-stretch justify-start overflow-x-auto rounded-none bg-base-2 p-2 transition-all md:px-10",
+        isStuckAtTop && "rounded-lg md:mx-8 md:px-2",
+      )}
+    >
+      <TabsTrigger value="live" className="px-2">
+        <Trans
+          i18nKey="views.home.liveOrUpcomingHeading"
+          components={{
+            liveCount: <></>,
+            upcomingCount: <></>,
+          }}
+        />
+      </TabsTrigger>
+      <TabsTrigger value="archive">
+        {t("views.home.recentVideoToggles.official")}
+      </TabsTrigger>
+      <TabsTrigger value="clips">
+        {t("views.home.recentVideoToggles.subber")}
+      </TabsTrigger>
+      <Separator orientation="vertical" className="relative h-auto" />
+      {tab === "clips" && <ClipLanguageSelector />}
+      <CardSizeToggle />
+    </TabsList>
+  );
+}
+
+export default StickyTabsList;
 
 export const CardSizeToggle: React.FC = () => {
   const { nextSize, setNextSize } = useVideoCardSizes(["list", "md", "lg"]);
