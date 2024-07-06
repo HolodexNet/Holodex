@@ -76,6 +76,7 @@ export function MainVideoListing({
         isLoading: !!isLoading || !!isFetchingNextPage,
         hasNextPage: !!hasNextPage,
         loadMore: fetchNextPage,
+        autoload: !!fetchNextPage,
       }}
       components={
         hasNextPage && !isLoading
