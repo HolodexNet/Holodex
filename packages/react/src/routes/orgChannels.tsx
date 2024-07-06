@@ -5,10 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { VirtuosoLoadingFooter } from "@/components/common/Loading";
-import { cn } from "@/lib/utils";
 import { useChannels } from "@/services/channel.service";
-import { Label } from "@/shadcn/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/shadcn/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -18,6 +15,8 @@ import {
 } from "@/shadcn/ui/select";
 import { orgAtom } from "@/store/org";
 import { ChannelCard } from "@/components/channel/ChannelCard";
+import { Button } from "@/shadcn/ui/button";
+import { cn } from "@/lib/utils";
 
 // Types
 type DisplayStyle = "grid" | "list";
@@ -34,16 +33,32 @@ const orgChannelDisplayStyleAtom = atomWithStorage<DisplayStyle>(
   window.innerWidth > 498 ? "grid" : "list",
 );
 
-const sortOptions: { value: SortOption; label: string }[] = [
-  { value: "default", label: "Default" },
-  { value: "mostSubscribed", label: "Most Subscribed" },
-  { value: "leastSubscribed", label: "Least Subscribed" },
-  { value: "mostViewed", label: "Most Viewed" },
+const sortOptions: { value: SortOption; label: string; icon: string }[] = [
+  { value: "default", label: "Standard Sort", icon: "i-lucide:arrow-down-a-z" },
+  {
+    value: "mostSubscribed",
+    label: "Most Subscribed",
+    icon: "i-lucide:arrow-down-1-0",
+  },
+  {
+    value: "leastSubscribed",
+    label: "Least Subscribed",
+    icon: "i-lucide:arrow-up-1-0",
+  },
+  // {
+  //   value: "mostViewed",
+  //   label: "Most Viewed",
+  //   icon: "i-lucide:arrow-down-1-0",
+  // },
 ];
 
-const groupOptions: { value: GroupOption; label: string }[] = [
-  { value: "none", label: "No Grouping" },
-  { value: "group", label: "Group" },
+const groupOptions: {
+  value: GroupOption;
+  label: string;
+  icon: React.ReactNode;
+}[] = [
+  { value: "none", label: "No Grouping", icon: "i-lucide:user" },
+  { value: "group", label: "Group", icon: "i-lucide:users" },
 ];
 
 // Channel component
@@ -132,11 +147,11 @@ export default function ChannelsOrg() {
           (a, b) => Number(a.subscriber_count) - Number(b.subscriber_count),
         );
         break;
-      case "mostViewed":
-        processedChannels.sort(
-          (a, b) => Number(b.view_count) - Number(a.view_count),
-        );
-        break;
+      // case "mostViewed":
+      //   processedChannels.sort(
+      //     (a, b) => Number(b.view_count) - Number(a.view_count), // why doesn't viewcount work?
+      //   );
+      //   break;
       default:
         // Keep the default sorting (by suborg)
         break;
@@ -175,6 +190,26 @@ export default function ChannelsOrg() {
       </Helmet>
       <div className="h-full w-full px-4 md:p-8">
         <div className="mb-6 flex flex-col gap-4 sm:flex-row">
+          {/* Controls */}
+          <div className="flex gap-1">
+            <Button
+              variant={displayStyle === "grid" ? "default" : "base-outline"}
+              size="icon-lg"
+              className="h-9 w-9"
+              onClick={() => setDisplayStyle("grid")}
+            >
+              <span className="i-lucide:layout-grid text-base" />
+            </Button>
+            <Button
+              variant={displayStyle === "list" ? "default" : "base-outline"}
+              size="icon-lg"
+              className="h-9 w-9"
+              onClick={() => setDisplayStyle("list")}
+            >
+              <span className="i-lucide:list text-base" />
+            </Button>
+          </div>
+
           <Select
             value={sortBy}
             onValueChange={(value: SortOption) => setSortBy(value)}
@@ -185,7 +220,10 @@ export default function ChannelsOrg() {
             <SelectContent>
               {sortOptions.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
-                  {option.label}
+                  <div className="flex items-center gap-2">
+                    <span className={cn(option.icon, "text-base")} />
+                    {option.label}
+                  </div>
                 </SelectItem>
               ))}
             </SelectContent>
@@ -200,36 +238,16 @@ export default function ChannelsOrg() {
             <SelectContent>
               {groupOptions.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
-                  {option.label}
+                  <div className="flex items-center gap-2">
+                    <span className={cn(option.icon, "text-base")} />
+                    {option.label}
+                  </div>
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          <RadioGroup
-            className="ml-auto flex gap-0 rounded-lg"
-            value={displayStyle}
-            onValueChange={(val: DisplayStyle) => setDisplayStyle(val)}
-          >
-            <Label
-              className={cn(
-                "border-r-2 border-base bg-base-4 px-4 py-2 text-lg first:rounded-l-lg last:rounded-r-lg last:border-r-0 hover:cursor-pointer",
-                { "bg-secondary-9": displayStyle === "grid" },
-              )}
-            >
-              <div className="i-lucide:grid-3x3"></div>
-              <RadioGroupItem value="grid" className="sr-only" />
-            </Label>
-            <Label
-              className={cn(
-                "border-r-2 border-base bg-base-4 px-4 py-2 text-lg first:rounded-l-lg last:rounded-r-lg last:border-r-0 hover:cursor-pointer",
-                { "bg-secondary-9": displayStyle === "list" },
-              )}
-            >
-              <div className="i-lucide:list"></div>
-              <RadioGroupItem value="list" className="sr-only" />
-            </Label>
-          </RadioGroup>
         </div>
+
         <div>
           {Object.entries(sortedAndGroupedChannels).map(
             ([group, channelsInGroup]) => (
