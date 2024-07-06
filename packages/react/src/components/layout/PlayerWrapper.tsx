@@ -4,8 +4,8 @@ import {
   videoPlayerRefAtomFamily,
   videoStatusAtomFamily,
 } from "@/store/player";
-import { useSetAtom } from "jotai";
-import React from "react";
+import { useAtom, useSetAtom } from "jotai";
+import React, { useCallback, useEffect } from "react";
 import type { OnProgressProps } from "react-player/base";
 import ReactPlayer from "react-player";
 import { LazyReactPlayer } from "./DefaultPlayerContainer";
@@ -22,14 +22,33 @@ interface IPlayerWrapper {
 export const PlayerWrapper = React.memo(
   ({ id, url, customSetPlayerRef }: IPlayerWrapper) => {
     const playerRefAtom = videoPlayerRefAtomFamily(id);
-    const setPlayerRef = useSetAtom(playerRefAtom);
+    const [playerRef, setPlayerRef] = useAtom(playerRefAtom);
 
     const videoStatusAtom = videoStatusAtomFamily(id || "x");
     const playingVideoStateSetter = useSetAtom(videoStatusAtom);
     // Assuming you have a way to access `set` for updating the atom
-    const updateState = (update: Partial<PlayingVideoState>) => {
-      playingVideoStateSetter((prev) => ({ ...prev, ...update }));
-    };
+    const updateState = useCallback(
+      (update: Partial<PlayingVideoState>) => {
+        playingVideoStateSetter((prev) => ({ ...prev, ...update }));
+      },
+      [playingVideoStateSetter],
+    );
+
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        const player = playerRef;
+        if (player) {
+          updateState({
+            progress: player.getCurrentTime(),
+            progressRecordedAt: Date.now(),
+          });
+        }
+      }, 1000);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, [playerRef, updateState]);
 
     return (
       <LazyReactPlayer
