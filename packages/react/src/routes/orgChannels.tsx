@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { VirtuosoLoadingFooter } from "@/components/common/Loading";
@@ -31,6 +31,15 @@ type GroupOption = "none" | "group";
 const orgChannelDisplayStyleAtom = atomWithStorage<DisplayStyle>(
   "orgChannelDisplayStyle",
   window.innerWidth > 498 ? "grid" : "list",
+);
+
+const orgChannelSortByAtom = atomWithStorage<SortOption>(
+  "orgChannelSortBy",
+  "default",
+);
+const orgChannelGroupByAtom = atomWithStorage<GroupOption>(
+  "orgChannelGroupBy",
+  "none",
 );
 
 const sortOptions: { value: SortOption; label: string; icon: string }[] = [
@@ -110,13 +119,13 @@ const GroupComponent: React.FC<{
 // Main ChannelsOrg component
 export default function ChannelsOrg() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { org } = useParams();
   const currentOrg = useAtomValue(orgAtom);
 
   const [displayStyle, setDisplayStyle] = useAtom(orgChannelDisplayStyleAtom);
-  const [sortBy, setSortBy] = useState<SortOption>("default");
-  const [groupBy, setGroupBy] = useState<GroupOption>("none");
+  const [sortBy, setSortBy] = useAtom(orgChannelSortByAtom);
+  const [groupBy, setGroupBy] = useAtom(orgChannelGroupByAtom);
 
   const {
     data: channels,
@@ -128,9 +137,9 @@ export default function ChannelsOrg() {
     sort: "suborg",
   });
 
-  useEffect(() => {
-    navigate(`/org/${currentOrg}/channels`);
-  }, [currentOrg, navigate]);
+  // useEffect(() => {
+  //   navigate(`/org/${currentOrg}/channels`);
+  // }, [currentOrg, navigate]);
 
   const sortedAndGroupedChannels = useMemo(() => {
     const processedChannels = channels?.pages.flat() ?? [];

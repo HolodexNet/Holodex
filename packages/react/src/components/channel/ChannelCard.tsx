@@ -1,4 +1,4 @@
-import { formatCount } from "@/lib/time";
+import { formatCount } from "@/lib/numbers";
 import { Button } from "@/shadcn/ui/button";
 import { ReactNode, useCallback } from "react";
 import { useTranslation } from "react-i18next";

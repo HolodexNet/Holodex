@@ -1,5 +1,6 @@
 import { useDuration } from "@/hooks/useDuration";
-import { formatCount, formatDuration } from "@/lib/time";
+import { formatDuration } from "@/lib/time";
+import { formatCount } from "@/lib/numbers";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/shadcn/ui/badge";
 import { localeAtom } from "@/store/i18n";

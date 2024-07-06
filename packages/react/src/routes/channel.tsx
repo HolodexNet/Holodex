@@ -3,7 +3,7 @@ import { ChannelSocials } from "@/components/channel/ChannelSocials";
 import { Loading } from "@/components/common/Loading";
 import { TopicBadge } from "@/components/topic/TopicBadge";
 import { MUSICDEX_URL } from "@/lib/consts";
-import { formatCount } from "@/lib/time";
+import { formatCount } from "@/lib/numbers";
 import { getChannelBannerImages } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
 import { Tabs, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";

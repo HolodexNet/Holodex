@@ -1,8 +1,3 @@
-import { localeAtom } from "@/store/i18n";
-import { getDefaultStore } from "jotai";
-
-const store = getDefaultStore();
-
 export function formatDuration(millisecs: number) {
   const seconds = millisecs / 1000;
   const s = Math.abs(millisecs / 1000);
@@ -18,20 +13,4 @@ export function formatDuration(millisecs: number) {
   return `${seconds < 0 ? "-" : ""}${
     t[0] > 0 ? String(t[0]).padStart(2, "0") + ":" : ""
   }${String(t[1]).padStart(2, "0")}:${String(t[2]).padStart(2, "0")}`;
-}
-
-const numberFormatAdjust: Record<string, string> = {
-  "lol-UWU": "en",
-  "lol-PEKO": "en",
-};
-
-export function formatCount(n: number | string, lng = "en") {
-  const { lang } = store.get(localeAtom);
-  const converted = lang ?? numberFormatAdjust[lng] ?? lng;
-
-  return new Intl.NumberFormat(converted, {
-    compactDisplay: "short",
-    notation: "compact",
-    maximumSignificantDigits: 3,
-  }).format(Number(n));
 }

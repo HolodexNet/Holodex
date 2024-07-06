@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
-import { formatCount } from "@/lib/time";
+import { formatCount } from "@/lib/numbers";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
 import { localeAtom, preferredTimezonesAtom } from "@/store/i18n";
 import { VideoCardType } from "./VideoCard";
