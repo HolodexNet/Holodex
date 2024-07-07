@@ -37,7 +37,7 @@
   @apply gap-2;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: max-content 1fr 200px;
+  grid-template-rows: max-content 1fr 150px;
   height: 100%;
   grid-template-areas:
     "header"

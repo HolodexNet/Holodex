@@ -19,7 +19,7 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
   return (
     <div
       className="flex w-full flex-col flex-nowrap"
-      style={{ height: "200px" }}
+      style={{ height: "150px" }}
     >
       {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <div className="slider-container">

@@ -1,17 +1,27 @@
-import React, { useMemo } from "react";
-import { Button } from "@/shadcn/ui/button";
+import React from "react";
+
 import { formatBytes } from "@/lib/utils";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   generateWaveformAtom,
   waveformAtom,
   waveformErrorMessageAtom,
   waveformFormatAtom,
+  waveformGeneratorStateAtom,
   waveformProgressAtom,
   waveformStageAtom,
   waveformTotalSizeAtom,
 } from "./atoms/waveformAtoms";
+
 import { formatDuration } from "@/lib/time";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "@/shadcn/ui/menubar";
 
 export const WaveformLoadingButton = ({ videoId }: { videoId: string }) => {
   const [, generateWaveform] = useAtom(generateWaveformAtom);
@@ -19,10 +29,11 @@ export const WaveformLoadingButton = ({ videoId }: { videoId: string }) => {
   const progress = useAtomValue(waveformProgressAtom);
   const totalSize = useAtomValue(waveformTotalSizeAtom);
   const errorMessage = useAtomValue(waveformErrorMessageAtom);
-  const [format, setFormat] = useAtom(waveformFormatAtom);
+  const format = useAtomValue(waveformFormatAtom);
+  const setWaveGeneratorState = useSetAtom(waveformGeneratorStateAtom);
   const [waveform, setWaveform] = useAtom(waveformAtom);
 
-  const message = useMemo(() => {
+  const message = React.useMemo(() => {
     switch (stage) {
       case "waiting":
         return "Generate Waveform";
@@ -31,7 +42,7 @@ export const WaveformLoadingButton = ({ videoId }: { videoId: string }) => {
       case "transcoding":
         return `Transcoding: ${formatDuration(progress * 1000)}...`;
       case "done":
-        return "Waveform generation complete";
+        return "✔";
       case "error":
         return `Error: ${errorMessage}`;
     }
@@ -127,8 +138,11 @@ export const WaveformLoadingButton = ({ videoId }: { videoId: string }) => {
         alert("Warning: The loaded waveform is for a different video.");
       }
       setWaveform(savedWaveform);
-      setWaveform(savedFormat);
-      // You might want to update the format atom here as well
+      setWaveGeneratorState((st) => ({
+        ...st,
+        format: savedFormat,
+        stage: "done",
+      }));
       alert("Waveform loaded successfully!");
     } catch (err) {
       console.error("Failed to parse waveform data:", err);
@@ -137,28 +151,35 @@ export const WaveformLoadingButton = ({ videoId }: { videoId: string }) => {
       );
     }
   };
+
   return (
-    <div className="flex w-full space-x-2">
-      <Button
-        onClick={() => generateWaveform(videoId)}
-        disabled={stage !== "waiting" && stage !== "error"}
-        className="grow"
-      >
-        {message}
-        {format && stage === "done" && (
-          <span className="ml-2">
-            Format: {format.mime_type}, Bitrate: {format.bitrate}
-          </span>
-        )}
-      </Button>
-      {waveform.length > 0 && (
-        <Button onClick={handleSaveWaveform} className="shrink-0">
-          Save Waveform
-        </Button>
-      )}
-      <Button onClick={handleLoadWaveform} className="shrink-0">
-        Load Waveform
-      </Button>
-    </div>
+    <Menubar>
+      <MenubarMenu>
+        <MenubarTrigger>Audio Waveform</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem
+            onSelect={() => generateWaveform(videoId)}
+            disabled={stage !== "waiting" && stage !== "error"}
+          >
+            {message}
+            {format && stage === "done" && (
+              <span className="ml-1">
+                Format: {format.mime_type}, Bitrate: {format.bitrate}
+              </span>
+            )}
+          </MenubarItem>
+          <MenubarSeparator />
+          <MenubarItem
+            onSelect={handleSaveWaveform}
+            disabled={waveform.length === 0}
+          >
+            Save Waveform
+          </MenubarItem>
+          <MenubarItem onSelect={handleLoadWaveform}>
+            Load Saved Waveform
+          </MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    </Menubar>
   );
 };
