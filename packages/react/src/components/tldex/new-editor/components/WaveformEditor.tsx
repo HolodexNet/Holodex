@@ -61,10 +61,13 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
           }}
         />
       </div>
-      <div className="relative shrink grow" ref={containerRef}>
+      <div
+        className="relative max-w-full shrink grow overflow-hidden"
+        ref={containerRef}
+      >
         {currentSubs.map((subtitle, index) => (
           <Rnd
-            key={subtitle.key}
+            key={subtitle.id}
             position={{
               x: timeToPosition(subtitle.video_offset),
               y: 15,

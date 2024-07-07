@@ -37,7 +37,7 @@ export const useTimelineRendererBase = (
     if (node !== null) {
       const t = new Timeline(node, {
         // Timeline configuration...\
-        fps: 120,
+        fps: 60,
         maxZoom: 8,
         minZoom: 1,
         fill: true,
@@ -73,7 +73,9 @@ export const useTimelineRendererBase = (
       const x = timelineRef.current.draw({
         currentTime: videoStatus
           ? videoStatus.progress +
-            (Date.now() - videoStatus.progressRecordedAt) / 1000
+            (videoStatus?.status == "playing"
+              ? (Date.now() - videoStatus.progressRecordedAt) / 1000
+              : 0)
           : 0,
         waveform,
       });
@@ -86,8 +88,8 @@ export const useTimelineRendererBase = (
       ? videoStatus?.status == "playing"
         ? 15
         : videoStatus?.status == "paused" || videoStatus?.status == "stopped"
-          ? null
-          : 100
+          ? 400
+          : 400
       : null,
   );
 
