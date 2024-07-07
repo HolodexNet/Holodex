@@ -4,6 +4,7 @@ import { PrimitiveAtom } from "jotai";
 import { subtitleAtomsAtom, useSubtitles } from "../hooks/subtitles";
 import { Button } from "@/shadcn/ui/button";
 import { formatDuration } from "@/lib/time";
+import { Textarea } from "@/shadcn/ui/textarea";
 
 const SubtitleTimeline = () => {
   const [subtitleAtoms] = useAtom(subtitleAtomsAtom);
@@ -68,6 +69,7 @@ const SubtitleItem: React.FC<SubtitleItemProps> = ({
       const newOffset = (subtitle.video_offset + nextSubtitle.video_offset) / 2;
       onAddSubtitle({
         message: "",
+        duration: 3000,
         timestamp: Date.now(),
         video_offset: newOffset,
         name: "New Subtitle",
@@ -86,8 +88,8 @@ const SubtitleItem: React.FC<SubtitleItemProps> = ({
   };
 
   return (
-    <div className="subtitle-item flex border-b border-base-4 p-2 hover:bg-base-3">
-      <div className="actions mr-2 flex flex-col space-y-1">
+    <div className="flex border-b border-base-4 py-1 hover:bg-base-3">
+      <div className="flex flex-col justify-between space-y-1 brightness-50">
         <Button size="sm" variant="ghost" onClick={handleDelete} title="Delete">
           <i className="i-mdi:delete text-base" />
         </Button>
@@ -110,14 +112,16 @@ const SubtitleItem: React.FC<SubtitleItemProps> = ({
           <i className="i-mdi:plus text-base" />
         </Button>
       </div>
-      <div className="subtitle-content grow">
-        <div className="subtitle-time text-xs text-base-11">
-          {formatDuration(subtitle.video_offset * 1000)}
+      <div className="grow">
+        <div className="text-xs text-base-11">
+          {formatDuration(subtitle.video_offset * 1000)} -{" "}
+          {subtitle.duration &&
+            formatDuration(subtitle.video_offset * 1000 + subtitle.duration)}
         </div>
-        <textarea
+        <Textarea
           value={subtitle.message}
           onChange={handleChange}
-          className="w-full rounded bg-base-1 p-1"
+          className="w-full rounded bg-base-1 p-1 text-sm"
           rows={3}
         />
       </div>
