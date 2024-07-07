@@ -26,7 +26,7 @@ module.exports = {
     "tailwind.config.js",
     "postcss.config.js",
     "uno.config.ts",
-    "src/components/tldex/new-editor/support",
+    "src/components/tldex/new-editor/hooks/support",
     "node_modules",
     ".DS_Store",
     "dist",

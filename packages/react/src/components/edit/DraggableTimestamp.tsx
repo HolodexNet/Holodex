@@ -6,6 +6,8 @@ import MaskedInput from "react-text-mask";
 import { Input } from "@/shadcn/ui/input";
 import { clsx } from "clsx";
 
+type TimeoutId = number | NodeJS.Timeout;
+
 const parseTime = (timeString: string): number => {
   const [hours, minutes, seconds] = timeString.split(":").map(Number);
   return hours * 3600 + minutes * 60 + seconds;
@@ -74,7 +76,7 @@ export function TimeAdjuster({
   const isDragging = useRef(false);
   const wasDragged = useRef(false);
   const dragStartX = useRef(0);
-  const timeoutId = useRef<NodeJS.Timeout | null>(null);
+  const timeoutId = useRef<TimeoutId | null>(null);
   const dragStartTime = useRef(value);
 
   useEffect(() => {
@@ -237,7 +239,7 @@ export function DurationAdjuster({
   const isDragging = useRef(false);
   const wasDragged = useRef(false);
   const dragStartX = useRef(0);
-  const timeoutId = useRef<NodeJS.Timeout | null>(null);
+  const timeoutId = useRef<TimeoutId | null>(null);
   const dragStartTime = useRef(value);
 
   useEffect(() => {

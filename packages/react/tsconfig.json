@@ -6,7 +6,7 @@
       "ESNext",
       "ES2023",
       "DOM",
-      "DOM.Iterable"
+      "DOM.Iterable",
     ],
     "baseUrl": ".",
     "paths": {
@@ -39,7 +39,11 @@
     "strict": true,
     "noUnusedLocals": false,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "types": [
+      "@types/wicg-file-system-access",
+      "@types/node",
+    ]
   },
   "include": [
     "src"

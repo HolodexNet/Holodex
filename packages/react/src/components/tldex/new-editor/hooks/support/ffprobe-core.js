@@ -141,7 +141,7 @@ var createFFprobeCore = (function () {
       var b = e["_" + a];
       assert(
         b,
-        "Cannot call unknown function " + a + ", make sure it is exported"
+        "Cannot call unknown function " + a + ", make sure it is exported",
       );
       return b;
     }
@@ -199,7 +199,7 @@ var createFFprobeCore = (function () {
               : ((f -= 65536),
                 (d += String.fromCharCode(
                   55296 | (f >> 10),
-                  56320 | (f & 1023)
+                  56320 | (f & 1023),
                 )));
           }
         } else d += String.fromCharCode(f);
@@ -324,7 +324,7 @@ var createFFprobeCore = (function () {
       k(a);
       xa = !0;
       a = new WebAssembly.RuntimeError(
-        "abort(" + a + "). Build with -s ASSERTIONS=1 for more info."
+        "abort(" + a + "). Build with -s ASSERTIONS=1 for more info.",
       );
       ba(a);
       throw a;
@@ -390,10 +390,10 @@ var createFFprobeCore = (function () {
           return 1e3 * a[0] + a[1] / 1e6;
         })
       : "undefined" !== typeof dateNow
-      ? (lb = dateNow)
-      : (lb = function () {
-          return performance.now();
-        });
+        ? (lb = dateNow)
+        : (lb = function () {
+            return performance.now();
+          });
     function mb(a) {
       return (D[nb() >> 2] = a);
     }
@@ -456,8 +456,8 @@ var createFFprobeCore = (function () {
         "." === f
           ? a.splice(d, 1)
           : ".." === f
-          ? (a.splice(d, 1), c++)
-          : c && (a.splice(d, 1), c--);
+            ? (a.splice(d, 1), c++)
+            : c && (a.splice(d, 1), c--);
       }
       if (b) for (; c; c--) a.unshift("..");
       return a;
@@ -469,7 +469,7 @@ var createFFprobeCore = (function () {
         a.split("/").filter(function (d) {
           return !!d;
         }),
-        !b
+        !b,
       ).join("/")) ||
         b ||
         (a = ".");
@@ -531,7 +531,7 @@ var createFFprobeCore = (function () {
         a.split("/").filter(function (d) {
           return !!d;
         }),
-        !b
+        !b,
       ).join("/");
       return (b ? "/" : "") + a || ".";
     }
@@ -691,13 +691,14 @@ var createFFprobeCore = (function () {
           J.Vd(c.mode)
             ? ((c.Od = K.je.dir.node), (c.Pd = K.je.dir.stream), (c.Nd = {}))
             : J.isFile(c.mode)
-            ? ((c.Od = K.je.file.node),
-              (c.Pd = K.je.file.stream),
-              (c.Sd = 0),
-              (c.Nd = null))
-            : J.qe(c.mode)
-            ? ((c.Od = K.je.link.node), (c.Pd = K.je.link.stream))
-            : J.Ge(c.mode) && ((c.Od = K.je.Df.node), (c.Pd = K.je.Df.stream));
+              ? ((c.Od = K.je.file.node),
+                (c.Pd = K.je.file.stream),
+                (c.Sd = 0),
+                (c.Nd = null))
+              : J.qe(c.mode)
+                ? ((c.Od = K.je.link.node), (c.Pd = K.je.link.stream))
+                : J.Ge(c.mode) &&
+                  ((c.Od = K.je.Df.node), (c.Pd = K.je.Df.stream));
           c.timestamp = Date.now();
           a && (a.Nd[b] = c);
           return c;
@@ -752,10 +753,10 @@ var createFFprobeCore = (function () {
             J.Vd(a.mode)
               ? (b.size = 4096)
               : J.isFile(a.mode)
-              ? (b.size = a.Sd)
-              : J.qe(a.mode)
-              ? (b.size = a.link.length)
-              : (b.size = 0);
+                ? (b.size = a.Sd)
+                : J.qe(a.mode)
+                  ? (b.size = a.link.length)
+                  : (b.size = 0);
             b.atime = new Date(a.timestamp);
             b.mtime = new Date(a.timestamp);
             b.ctime = new Date(a.timestamp);
@@ -925,7 +926,7 @@ var createFFprobeCore = (function () {
             a.split("/").filter(function (h) {
               return !!h;
             }),
-            !1
+            !1,
           );
           var f = J.root;
           c = "/";
@@ -1091,8 +1092,8 @@ var createFFprobeCore = (function () {
             ? J.qe(a.mode)
               ? 32
               : J.Vd(a.mode) && ("r" !== J.Kf(b) || b & 512)
-              ? 31
-              : J.oe(a, J.Kf(b))
+                ? 31
+                : J.oe(a, J.Kf(b))
             : 44;
         },
         ag: 4096,
@@ -1177,7 +1178,7 @@ var createFFprobeCore = (function () {
             k(
               "warning: " +
                 J.Ye +
-                " FS.syncfs operations in flight at once, probably just doing extra work"
+                " FS.syncfs operations in flight at once, probably just doing extra work",
             );
           var f = J.Nf(J.root.Ud),
             g = 0;
@@ -1299,7 +1300,7 @@ var createFFprobeCore = (function () {
                   "', '" +
                   b +
                   "') threw an exception: " +
-                  t.message
+                  t.message,
               );
             }
             J.Rf(r);
@@ -1319,7 +1320,7 @@ var createFFprobeCore = (function () {
                   "', '" +
                   b +
                   "') threw an exception: " +
-                  t.message
+                  t.message,
               );
             }
           }
@@ -1339,7 +1340,7 @@ var createFFprobeCore = (function () {
               "FS.trackingDelegate['willDeletePath']('" +
                 a +
                 "') threw an exception: " +
-                g.message
+                g.message,
             );
           }
           b.Od.rmdir(b, c);
@@ -1351,7 +1352,7 @@ var createFFprobeCore = (function () {
               "FS.trackingDelegate['onDeletePath']('" +
                 a +
                 "') threw an exception: " +
-                g.message
+                g.message,
             );
           }
         },
@@ -1375,7 +1376,7 @@ var createFFprobeCore = (function () {
               "FS.trackingDelegate['willDeletePath']('" +
                 a +
                 "') threw an exception: " +
-                g.message
+                g.message,
             );
           }
           b.Od.unlink(b, c);
@@ -1387,7 +1388,7 @@ var createFFprobeCore = (function () {
               "FS.trackingDelegate['onDeletePath']('" +
                 a +
                 "') threw an exception: " +
-                g.message
+                g.message,
             );
           }
         },
@@ -1492,7 +1493,7 @@ var createFFprobeCore = (function () {
               error: !1,
             },
             d,
-            f
+            f,
           );
           d.Pd.open && d.Pd.open(d);
           !e.logReadFiles ||
@@ -1512,7 +1513,7 @@ var createFFprobeCore = (function () {
               "FS.trackingDelegate['onOpenFile']('" +
                 a +
                 "', flags) threw an exception: " +
-                m.message
+                m.message,
             );
           }
           return d;
@@ -1572,7 +1573,7 @@ var createFFprobeCore = (function () {
               "FS.trackingDelegate['onWriteToFile']('" +
                 a.path +
                 "') threw an exception: " +
-                m.message
+                m.message,
             );
           }
           return b;
@@ -1697,7 +1698,7 @@ var createFFprobeCore = (function () {
               },
             },
             {},
-            "/proc/self/fd"
+            "/proc/self/fd",
           );
         },
         og: function () {
@@ -1884,7 +1885,7 @@ var createFFprobeCore = (function () {
           var b = !0;
           if ("undefined" !== typeof XMLHttpRequest)
             throw Error(
-              "Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread."
+              "Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.",
             );
           if (pa)
             try {
@@ -1935,11 +1936,11 @@ var createFFprobeCore = (function () {
                       E +
                       ", " +
                       Q +
-                      ") or no bytes requested!"
+                      ") or no bytes requested!",
                   );
                 if (Q > t - 1)
                   throw Error(
-                    "only " + t + " bytes available! programmer error!"
+                    "only " + t + " bytes available! programmer error!",
                   );
                 var S = new XMLHttpRequest();
                 S.open("GET", c, !1);
@@ -1964,7 +1965,7 @@ var createFFprobeCore = (function () {
               (p = t = 1),
                 (p = t = this.Pf(0).length),
                 ea(
-                  "LazyFiles on gzip forces download of the whole file when length is accessed"
+                  "LazyFiles on gzip forces download of the whole file when length is accessed",
                 );
             this.fg = t;
             this.eg = p;
@@ -2048,7 +2049,7 @@ var createFFprobeCore = (function () {
                 function (C) {
                   t(C);
                 },
-                h
+                h,
               )
             : t(c);
         },
@@ -2284,7 +2285,7 @@ var createFFprobeCore = (function () {
               c = /ws[s]?:\/\/([^:]+):(\d+)/.exec(d.url);
               if (!c)
                 throw Error(
-                  "WebSocket URL must be in the format ws(s)://address:port"
+                  "WebSocket URL must be in the format ws(s)://address:port",
                 );
               b = c[1];
               c = parseInt(c[2], 10);
@@ -2329,7 +2330,7 @@ var createFFprobeCore = (function () {
                 116,
                 (a.ue & 65280) >> 8,
                 a.ue & 255,
-              ])
+              ]),
             );
           return b;
         },
@@ -2608,7 +2609,7 @@ var createFFprobeCore = (function () {
         d = [];
       if (
         !/^((?=.*::)(?!.*::.+::)(::)?([\dA-F]{1,4}:(:|\b)|){5}|([\dA-F]{1,4}:){6})((([\dA-F]{1,4}((?!\3)::|:\b|$))|(?!\2\3)){2}|(((2[0-4]|1\d|[1-9])?\d|25[0-5])\.?\b){4})$/i.test(
-          a
+          a,
         )
       )
         return null;
@@ -2880,7 +2881,7 @@ var createFFprobeCore = (function () {
                       a +
                       ")! (error: " +
                       g +
-                      ")"
+                      ")",
                   );
                   return;
                 }
@@ -2899,7 +2900,7 @@ var createFFprobeCore = (function () {
                   f +
                   " of type " +
                   typeof f +
-                  "!"
+                  "!",
               );
               return;
           }
@@ -2992,7 +2993,7 @@ var createFFprobeCore = (function () {
               h -
               1) &
               -h)) >>
-          g
+          g,
       );
     }
     var Bc = [],
@@ -3156,7 +3157,7 @@ var createFFprobeCore = (function () {
           "Assertion failed: " +
             z(a) +
             ", at: " +
-            [b ? z(b) : "unknown filename", c, d ? z(d) : "unknown function"]
+            [b ? z(b) : "unknown filename", c, d ? z(d) : "unknown function"],
         );
       },
       Na: function (a, b) {
@@ -3638,12 +3639,12 @@ var createFFprobeCore = (function () {
       Ha: pb,
       I: function () {
         n(
-          "To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking"
+          "To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking",
         );
       },
       Sa: function () {
         n(
-          "To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking"
+          "To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking",
         );
       },
       _: function (a) {
@@ -3723,7 +3724,7 @@ var createFFprobeCore = (function () {
           d,
           f,
           g,
-          m ? B.subarray(m, m + h) : null
+          m ? B.subarray(m, m + h) : null,
         );
       },
       id: function (a, b, c, d, f, g, h, m, r) {
@@ -3735,7 +3736,7 @@ var createFFprobeCore = (function () {
           f,
           g,
           h,
-          r ? B.subarray(r, r + m) : null
+          r ? B.subarray(r, r + m) : null,
         );
       },
       hd: function (a, b, c, d, f, g, h, m) {
@@ -3967,7 +3968,7 @@ var createFFprobeCore = (function () {
                   for (b = d.Ie = 0; b < f; ++b)
                     d.Ie = Math.max(
                       d.Ie,
-                      W.getActiveAttrib(a, b).name.length + 1
+                      W.getActiveAttrib(a, b).name.length + 1,
                     );
                 }
                 D[c >> 2] = d.Ie;
@@ -3980,7 +3981,7 @@ var createFFprobeCore = (function () {
                   )
                     d.Je = Math.max(
                       d.Je,
-                      W.getActiveUniformBlockName(a, b).length + 1
+                      W.getActiveUniformBlockName(a, b).length + 1,
                     );
                 D[c >> 2] = d.Je;
               } else D[c >> 2] = W.getProgramParameter(N[a], b);
@@ -4049,9 +4050,9 @@ var createFFprobeCore = (function () {
               null === a && (a = "(unknown error)"),
               (D[c >> 2] = a ? a.length + 1 : 0))
             : 35720 == b
-            ? ((a = W.getShaderSource(R[a])),
-              (D[c >> 2] = a ? a.length + 1 : 0))
-            : (D[c >> 2] = W.getShaderParameter(R[a], b))
+              ? ((a = W.getShaderSource(R[a])),
+                (D[c >> 2] = a ? a.length + 1 : 0))
+              : (D[c >> 2] = W.getShaderParameter(R[a], b))
           : V(1281);
       },
       nc: function (a) {
@@ -4062,7 +4063,7 @@ var createFFprobeCore = (function () {
             b = b.concat(
               b.map(function (d) {
                 return "GL_" + d;
-              })
+              }),
             );
             b = xc(b.join(" "));
             break;
@@ -4429,7 +4430,7 @@ var createFFprobeCore = (function () {
           F[b >> 2],
           F[(b + 4) >> 2],
           F[(b + 8) >> 2],
-          F[(b + 12) >> 2]
+          F[(b + 12) >> 2],
         );
       },
       $: function (a, b) {
@@ -4564,7 +4565,7 @@ var createFFprobeCore = (function () {
                 x,
                 D[(b + 8 * g) >> 2],
                 D[(b + (8 * g + 4)) >> 2],
-                void 0
+                void 0,
               );
               if (0 > h) {
                 var m = -1;
@@ -4700,7 +4701,7 @@ var createFFprobeCore = (function () {
             D[(a + 8) >> 2],
             D[(a + 4) >> 2],
             D[a >> 2],
-            0
+            0,
           ),
           c = D[(a + 32) >> 2],
           d = b.getTimezoneOffset(),
@@ -4832,11 +4833,11 @@ var createFFprobeCore = (function () {
         for (var t in q) c = c.replace(new RegExp(t, "g"), q[t]);
         var v =
             "Sunday Monday Tuesday Wednesday Thursday Friday Saturday".split(
-              " "
+              " ",
             ),
           C =
             "January February March April May June July August September October November December".split(
-              " "
+              " ",
             );
         q = {
           "%a": function (p) {
@@ -4910,13 +4911,13 @@ var createFFprobeCore = (function () {
                       (Kc(Jc(p.getFullYear()) ? Lc : Mc, p.getMonth() - 1) -
                         31) +
                       p.getDate()) /
-                      7
+                      7,
                   ),
-                  2
+                  2,
                 )
               : 0 === h(w, u)
-              ? "01"
-              : "00";
+                ? "01"
+                : "00";
           },
           "%V": function (p) {
             var u = new Date(p.ae + 1901, 0, 4),
@@ -4926,15 +4927,15 @@ var createFFprobeCore = (function () {
             return 0 > h(E, w)
               ? "53"
               : 0 >= h(u, E)
-              ? "01"
-              : g(
-                  Math.ceil(
-                    (w.getFullYear() < p.ae + 1900
-                      ? p.af + 32 - w.getDate()
-                      : p.af + 1 - w.getDate()) / 7
-                  ),
-                  2
-                );
+                ? "01"
+                : g(
+                    Math.ceil(
+                      (w.getFullYear() < p.ae + 1900
+                        ? p.af + 32 - w.getDate()
+                        : p.af + 1 - w.getDate()) / 7,
+                    ),
+                    2,
+                  );
           },
           "%w": function (p) {
             return p.$e;
@@ -4954,13 +4955,13 @@ var createFFprobeCore = (function () {
                       (Kc(Jc(p.getFullYear()) ? Lc : Mc, p.getMonth() - 1) -
                         31) +
                       p.getDate()) /
-                      7
+                      7,
                   ),
-                  2
+                  2,
                 )
               : 0 === h(w, u)
-              ? "01"
-              : "00";
+                ? "01"
+                : "00";
           },
           "%y": function (p) {
             return (p.ae + 1900).toString().substring(2);
@@ -5199,7 +5200,7 @@ var createFFprobeCore = (function () {
                   k("wasm streaming compile failed: " + g);
                   k("falling back to ArrayBuffer instantiation");
                   return c(b);
-                }
+                },
               );
             });
       })().catch(ba);

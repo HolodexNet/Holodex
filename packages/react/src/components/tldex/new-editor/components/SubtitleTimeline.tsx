@@ -11,7 +11,7 @@ const SubtitleTimeline = () => {
   const { addSubtitle, deleteSubtitle } = useSubtitles();
 
   return (
-    <div className="subtitle-timeline h-full overflow-y-auto bg-base-2">
+    <div className="h-full overflow-y-auto bg-base-2">
       {subtitleAtoms.map((subtitleAtom, index) => (
         <SubtitleItem
           key={subtitleAtom.toString()}

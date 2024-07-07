@@ -1,84 +1,40 @@
-import React, { useMemo } from "react";
-import { useTimelineRendererBase } from "../hooks/timeline";
 import { formatDuration } from "@/lib/time";
-import { useWaveformGenerator } from "../hooks/waveform_generator";
+import { useTimelineRendererBase } from "../hooks/timeline";
 
-import { formatBytes } from "@/lib/utils";
 import { playerRefAtom, videoStatusAtomFamily } from "@/store/player";
 import { useAtomValue } from "jotai";
 
+import { waveformAtom } from "../atoms/waveformAtoms";
 import "./WaveformEditor.scss";
-import { Button } from "@/shadcn/ui/button";
 
-// import { useWaveformGenerator } from "./useWaveform"; // Placeholder, adjust according to actual implementation
-
-// Assuming the useTimelineRendererBase hook has been correctly migrated and imported
-const WaveformEditor = ({ videoId }: { videoId: string }) => {
+export const WaveformEditor = ({ videoId }: { videoId: string }) => {
+  const waveform = useAtomValue(waveformAtom);
   const player = useAtomValue(playerRefAtom);
-  const {
-    waveform,
-    stage,
-    progress,
-    latchAndRun,
-    format,
-    totalSize,
-    errorMessage,
-  } = useWaveformGenerator();
-  const videoStatusAtom = videoStatusAtomFamily(videoId || "x");
+  const videoStatusAtom = videoStatusAtomFamily(videoId);
   const videoStatus = useAtomValue(videoStatusAtom);
 
-  const {
-    canvasCbRef,
-    canvasRef,
-    containerRef,
-    currentSubs,
-    startTime,
-    endTime,
-  } = useTimelineRendererBase(waveform, videoStatus);
-
-  const init = () => {
-    setTimeout(() => {
-      latchAndRun(videoId);
-      // Placeholder for actual init functionality
-      console.log("Initializing with videoId:", videoId);
-    }, 1000);
-  };
-
-  const message = useMemo(() => {
-    switch (stage) {
-      case "waiting":
-        return "waiting...";
-      case "downloading":
-        return Math.round(progress) + "% of " + formatBytes(totalSize);
-      case "transcoding":
-        return "In progress: " + formatDuration(progress * 1000) + "...";
-      case "done":
-      case "error":
-        return "";
-    }
-  }, [stage, progress, totalSize]);
-  // Assuming msg and stage logic is handled internally or through props
-  // const { msg, stage } = useWaveformGenerator(); // Placeholder for actual hook/logic
+  const { canvasCbRef, containerRef, startTime, endTime } =
+    useTimelineRendererBase(waveform, videoStatus);
 
   return (
     <div
       className="flex w-full flex-col flex-nowrap"
       style={{ height: "200px" }}
     >
+      {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <div className="slider-container">
         <input
           type="range"
           min="0"
           max={videoStatus.duration}
           value={videoStatus.progress || 0}
+          // eslint-disable-next-line tailwindcss/no-custom-classname
           className="timeline-slider"
           step="0.1"
-          onChange={
-            (t) => {
-              console.log("changing to", t.target.value);
-              player?.seekTo(+t.target.value);
-            } // Adjust according to actual player method
-          }
+          onChange={(e) => {
+            const newTime = parseFloat(e.target.value);
+            player?.seekTo(newTime);
+          }}
         />
       </div>
       <div className="relative shrink grow" ref={containerRef}>
@@ -89,26 +45,9 @@ const WaveformEditor = ({ videoId }: { videoId: string }) => {
         />
         <div className="pointer-events-none absolute z-10 -mt-10 flex w-full justify-between text-xs">
           <span>{formatDuration(startTime * 1000)}</span>
-          <span className="">{formatDuration(endTime * 1000)}</span>
+          <span>{formatDuration(endTime * 1000)}</span>
         </div>
-        {/* Waveform subtitles and interactions would be handled here */}
-      </div>
-      <div className="wf-status">
-        {stage === "waiting" && (
-          <Button className="link" onClick={init}>
-            Click here to Fetch audio information from youtube, this will use up
-            20MB per hour of stream and take a minute or two depending on your
-            internet speed.
-          </Button>
-        )}
-        {stage !== "done" && (
-          <span>
-            {stage}: {message} {errorMessage ? "?ERROR?: " + errorMessage : ""}
-          </span>
-        )}
       </div>
     </div>
   );
 };
-
-export default WaveformEditor;

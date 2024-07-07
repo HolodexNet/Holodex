@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./frame.css";
-import WaveformEditor from "./components/WaveformEditor";
 import {
   useBeforeUnload,
   useBlocker,
@@ -14,14 +13,15 @@ import { ContextMenuShortcut } from "@/shadcn/ui/context-menu";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { idToVideoURL, videoURLtoID } from "@/lib/utils";
-import { videoStatusAtomFamily } from "@/store/player";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import SubtitleTimeline from "./components/SubtitleTimeline";
 import { useChatDB } from "@/hooks/useChatDB";
 import { useSubtitles } from "./hooks/subtitles";
+import { WaveformEditor } from "./components/WaveformEditor";
+import { WaveformLoadingButton } from "./WaveformLoadingButton";
 
 export function TLEditorFrame() {
   const { id, currentVideo } = useVideoData();
@@ -29,7 +29,7 @@ export function TLEditorFrame() {
   const { messages, loadMessages } = useChatDB(
     id ? `${id}/en` : "not_a_room/en",
   );
-  const { updateSubtitles } = useSubtitles();
+  const { subtitles, updateSubtitles } = useSubtitles();
   const [isBlocking, setIsBlocking] = useState(false);
   const navigate = useNavigate();
 
@@ -39,17 +39,17 @@ export function TLEditorFrame() {
   }, [makeHeaderHide]);
 
   useEffect(() => {
-    if (id) {
+    if (id && !isBlocking && !messages?.length) {
       loadMessages({ partial: 100000 });
       setIsBlocking(true); // Start blocking navigation once we have loaded data
     }
-  }, [id, loadMessages]);
+  }, [id, loadMessages, isBlocking, messages]);
 
   useEffect(() => {
-    if (messages) {
+    if (messages && messages.length > 0 && !subtitles.length) {
       updateSubtitles(messages);
     }
-  }, [messages, updateSubtitles]);
+  }, [messages, updateSubtitles, subtitles]);
 
   // Prevent soft navigation within the SPA
   const blocker = useBlocker(isBlocking);
@@ -102,8 +102,7 @@ export function TLEditorFrame() {
     <div className="absolute h-full w-full">
       <div className="tl-frame inset-0 p-4">
         <TLEditorHeader /* onSave={handleSave} onExit={handleExit} */ />
-        <TLEditorContent videoId={id || ""} />
-        {id && <WaveformEditor videoId={id} />}
+        <TLEditorContent />
       </div>
     </div>
   );
@@ -143,7 +142,7 @@ export function TLEditorHeader() {
 }
 
 // TLEditorContent.tsx
-export function TLEditorContent({ videoId }: { videoId?: string }) {
+export function TLEditorContent() {
   const { currentVideo } = useVideoData();
 
   if (!currentVideo) {
@@ -151,23 +150,28 @@ export function TLEditorContent({ videoId }: { videoId?: string }) {
   }
 
   return (
-    <PanelGroup direction="horizontal" className="content">
-      <Panel defaultSize={60} minSize={40}>
-        <div className="flex size-full flex-col">
-          <div className="flex-1 overflow-hidden rounded">
-            <PlayerWrapper
-              id={currentVideo.id || "x"}
-              url={idToVideoURL(currentVideo.id || "x")}
-            />
+    <>
+      <PanelGroup direction="horizontal" className="content">
+        <Panel defaultSize={60} minSize={40}>
+          <div className="flex size-full flex-col">
+            <div className="flex-1 overflow-hidden rounded">
+              <PlayerWrapper
+                id={currentVideo.id || "x"}
+                url={idToVideoURL(currentVideo.id || "x")}
+              />
+            </div>
+            <div className="h-[60px]">
+              <WaveformLoadingButton videoId={currentVideo.id} />
+            </div>
           </div>
-          <div className="h-[60px]">Tooling</div>
-        </div>
-      </Panel>
-      <PanelResizeHandle className="w-2 hover:bg-base-4" />
-      <Panel defaultSize={40} minSize={20}>
-        <SubtitleTimeline />
-      </Panel>
-    </PanelGroup>
+        </Panel>
+        <PanelResizeHandle className="w-2 hover:bg-base-4" />
+        <Panel defaultSize={40} minSize={20}>
+          <SubtitleTimeline />
+        </Panel>
+      </PanelGroup>
+      <WaveformEditor videoId={currentVideo.id} />
+    </>
   );
 }
 
@@ -203,18 +207,6 @@ function VideoIdInput() {
         <Button type="submit">Load</Button>
       </form>
     </div>
-  );
-}
-
-// VideoStatus.tsx
-function VideoStatus({ videoId }: { videoId?: string }) {
-  const videoStatusAtom = videoStatusAtomFamily(videoId || "x");
-  const videoStatus = useAtomValue(videoStatusAtom);
-
-  return (
-    <span className="content w-full text-wrap text-base-11">
-      {JSON.stringify(videoStatus, null, 2)}
-    </span>
   );
 }
 
