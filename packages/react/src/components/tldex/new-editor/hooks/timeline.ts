@@ -8,9 +8,8 @@ import {
   useSubtitles,
 } from "./subtitles";
 import { useAtomValue } from "jotai";
-import { PlayingVideoState, playerRefAtom } from "@/store/player";
+import { PlayingVideoState, videoPlayerRefAtomFamily } from "@/store/player";
 import { useInterval } from "usehooks-ts";
-import { useAtomCallback } from "jotai/utils";
 
 /**
  * waveform should be a [ second, value ] sorted array where the second value is between 0-100
@@ -20,12 +19,11 @@ export const useTimelineRendererBase = (
   videoStatus: PlayingVideoState | undefined,
 ) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const getPlayer = useAtomCallback(
-    useCallback((get) => get(playerRefAtom), []),
+  const playerRefAtom = videoPlayerRefAtomFamily(
+    videoStatus?.videoId || "__nonexistent__",
   );
+  const player = useAtomValue(playerRefAtom);
 
-  // const [currentTime, setCurrentTime] = useState(0);
-  // const containerRef = useRef(null);
   const [containerRef, containerSize] = useMeasure<HTMLDivElement>();
   const listOfSubs = useAtomValue(subtitlesAtom);
   const { subtitles: allSubs } = useSubtitles(); // Use Jotai atom for subtitles
@@ -56,11 +54,11 @@ export const useTimelineRendererBase = (
       });
 
       t.on("timeUpdate", (v) => {
-        // setCurrentTime(v[0]);
-        const player = getPlayer();
+        // if player is already playing, keep playing.
+        const isPlaying = player?.getInternalPlayer()?.getPlayerState() === 1;
         player?.seekTo(v[0]);
-        player?.getInternalPlayer()?.playVideo?.();
-        console.log("timeUpdate", v);
+        if (isPlaying) player?.getInternalPlayer()?.playVideo?.();
+        console.log("timeUpdate", v, player);
       });
 
       timelineRef.current = t;
