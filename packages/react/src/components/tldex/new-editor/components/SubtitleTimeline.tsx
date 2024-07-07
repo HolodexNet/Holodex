@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { useAtom } from "jotai";
+import React from "react";
+import { useAtom, useStore } from "jotai";
 import { PrimitiveAtom } from "jotai";
 import { subtitleAtomsAtom, useSubtitles } from "../hooks/subtitles";
 import { Button } from "@/shadcn/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { formatDuration } from "@/lib/time";
-import { Trash2, GitMerge, Plus } from "lucide-react";
 
 const SubtitleTimeline = () => {
   const [subtitleAtoms] = useAtom(subtitleAtomsAtom);
-  const { deleteSubtitle } = useSubtitles();
+  const { addSubtitle, deleteSubtitle } = useSubtitles();
 
   return (
     <div className="subtitle-timeline h-full overflow-y-auto bg-base-2">
-      {subtitleAtoms.map((subtitleAtom) => (
+      {subtitleAtoms.map((subtitleAtom, index) => (
         <SubtitleItem
           key={subtitleAtom.toString()}
           subtitleAtom={subtitleAtom}
+          nextSubtitleAtom={subtitleAtoms[index + 1]}
           onDelete={deleteSubtitle}
+          onAddSubtitle={addSubtitle}
         />
       ))}
     </div>
@@ -26,73 +26,100 @@ const SubtitleTimeline = () => {
 
 interface SubtitleItemProps {
   subtitleAtom: PrimitiveAtom<ParsedMessage>;
+  nextSubtitleAtom?: PrimitiveAtom<ParsedMessage>;
   onDelete: (subtitleAtom: PrimitiveAtom<ParsedMessage>) => void;
+  onAddSubtitle: (subtitle: ParsedMessage) => void;
 }
 
 const SubtitleItem: React.FC<SubtitleItemProps> = ({
   subtitleAtom,
+  nextSubtitleAtom,
   onDelete,
+  onAddSubtitle,
 }) => {
-  const [subtitle] = useAtom(subtitleAtom);
-  const [isEditing, setIsEditing] = useState(false);
+  const [subtitle, setSubtitle] = useAtom(subtitleAtom);
+  const store = useStore();
 
   const handleDelete = () => onDelete(subtitleAtom);
 
   const handleMerge = () => {
-    // Implement merge functionality
-    console.log("Merge subtitle:", subtitle);
+    const nextSubtitle = nextSubtitleAtom ? store.get(nextSubtitleAtom) : null;
+    if (nextSubtitle) {
+      const mergedMessage = `${subtitle.message} ${nextSubtitle.message}`;
+      const mergedDuration =
+        nextSubtitle.video_offset -
+        subtitle.video_offset +
+        (subtitle.duration ?? 1000);
+
+      setSubtitle((prev) => ({
+        ...prev,
+        message: mergedMessage,
+        parsed: mergedMessage,
+        duration: mergedDuration,
+      }));
+
+      onDelete(nextSubtitleAtom!);
+    }
   };
 
-  const handleInsert = () => {
-    // Implement insert functionality
-    console.log("Insert after subtitle:", subtitle);
+  const handleAddSubtitle = () => {
+    const nextSubtitle = nextSubtitleAtom ? store.get(nextSubtitleAtom) : null;
+    if (nextSubtitle) {
+      const newOffset = (subtitle.video_offset + nextSubtitle.video_offset) / 2;
+      onAddSubtitle({
+        message: "",
+        timestamp: Date.now(),
+        video_offset: newOffset,
+        name: "New Subtitle",
+        key: `subtitle-${Date.now()}`,
+        parsed: "",
+      });
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setSubtitle((prev) => ({
+      ...prev,
+      message: e.target.value,
+      parsed: e.target.value,
+    }));
   };
 
   return (
-    <div className="subtitle-item flex items-center border-b border-base-4 p-2 hover:bg-base-3">
-      <div className="actions mr-2 flex space-x-1">
+    <div className="subtitle-item flex border-b border-base-4 p-2 hover:bg-base-3">
+      <div className="actions mr-2 flex flex-col space-y-1">
         <Button size="sm" variant="ghost" onClick={handleDelete} title="Delete">
-          <Trash2 size={16} />
+          <i className="i-mdi:delete text-base" />
         </Button>
-        <Button size="sm" variant="ghost" onClick={handleMerge} title="Merge">
-          <GitMerge size={16} />
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={handleMerge}
+          title="Merge"
+          disabled={!nextSubtitleAtom}
+        >
+          <i className="i-mdi:call-merge text-base" />
         </Button>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button size="sm" variant="ghost" title="Insert">
-              <Plus size={16} />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-48">
-            <div className="flex flex-col space-y-2">
-              <Button size="sm" onClick={() => handleInsert()}>
-                Insert Subtitle
-              </Button>
-              <Button size="sm" onClick={() => handleInsert()}>
-                Insert Comment
-              </Button>
-            </div>
-          </PopoverContent>
-        </Popover>
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={handleAddSubtitle}
+          title="Add Subtitle"
+          disabled={!nextSubtitleAtom}
+        >
+          <i className="i-mdi:plus text-base" />
+        </Button>
       </div>
-      <div className="subtitle-content grow" onClick={() => setIsEditing(true)}>
+      <div className="subtitle-content grow">
         <div className="subtitle-time text-xs text-base-11">
           {formatDuration(subtitle.video_offset * 1000)}
         </div>
-        {isEditing ? (
-          <input
-            type="text"
-            value={subtitle.message}
-            onChange={(e) => {
-              // Implement update functionality
-              console.log("Update subtitle:", e.target.value);
-            }}
-            onBlur={() => setIsEditing(false)}
-            className="w-full rounded bg-base-1 p-1"
-          />
-        ) : (
-          <div className="subtitle-text">{subtitle.message}</div>
-        )}
+        <textarea
+          value={subtitle.message}
+          onChange={handleChange}
+          className="w-full rounded bg-base-1 p-1"
+          rows={3}
+        />
       </div>
     </div>
   );
