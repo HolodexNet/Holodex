@@ -8,7 +8,7 @@ import { waveformAtom } from "../atoms/waveformAtoms";
 import "./WaveformEditor.scss";
 
 import React from "react";
-import { Rnd } from "react-rnd";
+import { DraggableData, Rnd } from "react-rnd";
 
 export const WaveformEditor = ({ videoId }: { videoId: string }) => {
   const waveform = useAtomValue(waveformAtom);
@@ -37,8 +37,8 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
     return Math.max(startTime, Math.min(time, endTime));
   };
 
-  const handleDrag = (index: number, d: { x: number; y: number }) => {
-    // can't yet.
+  const handleDrag = (index: number, d: DraggableData) => {
+    console.log("drag", index, positionToTime(d.x));
   };
 
   return (
@@ -79,7 +79,7 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
                 ) - timeToPosition(subtitle.video_offset),
               height: 30,
             }}
-            onDragStop={(e, d) => handleDrag(index, d)}
+            onDragStop={(_, d) => handleDrag(index, d)}
             bounds="parent"
             style={{ position: "absolute" }}
             className="border border-x-2 border-primary-9"
