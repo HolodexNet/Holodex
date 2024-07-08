@@ -61,15 +61,23 @@ export function ChannelSocials({
           )}
           <Button
             size="icon-lg"
-            variant={isFavorited ? "outline" : "secondary"}
+            variant={isFavorited ? "ghost" : "secondary"}
+            className={
+              isFavorited
+                ? "group text-red-10 hover:text-red-8 hover:saturate-50"
+                : ""
+            }
             onClick={() =>
               mutate([{ op: isFavorited ? "remove" : "add", channel_id: id }])
             }
             disabled={isPending}
           >
             <div
+              // eslint-disable-next-line tailwindcss/no-custom-classname
               className={
-                isFavorited ? "i-heroicons:heart-solid" : "i-heroicons:heart"
+                isFavorited
+                  ? "i-tabler:heart group-hover:i-tabler-heart-broken"
+                  : "i-tabler:heart-plus"
               }
             />
           </Button>
@@ -80,7 +88,7 @@ export function ChannelSocials({
       return (
         <div className="flex w-full flex-col gap-2">
           <Button
-            className="w-full"
+            className="group w-full"
             variant={isFavorited ? "outline" : "secondary"}
             disabled={isPending}
             onClick={() => {
@@ -93,11 +101,14 @@ export function ChannelSocials({
               console.log(isFavorited);
             }}
           >
-            {isFavorited ? (
-              <div className="i-heroicons:heart-solid" />
-            ) : (
-              <div className="i-heroicons:heart" />
-            )}
+            <div
+              // eslint-disable-next-line tailwindcss/no-custom-classname
+              className={
+                isFavorited
+                  ? "i-tabler:heart group-hover:i-tabler-heart-broken"
+                  : "i-tabler:heart-plus"
+              }
+            />
             {isFavorited
               ? t("component.channelSocials.removeFromFavorites")
               : t("component.channelSocials.addToFavorites")}

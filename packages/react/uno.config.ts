@@ -1,6 +1,7 @@
 import {
   defineConfig,
   presetIcons,
+  presetUno,
   presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
@@ -21,4 +22,5 @@ export default defineConfig({
     // }),
     // presetAutoprefixer(),
   ],
+  variants: presetUno().variants, // this brings in the :hover utility for UNOCSS icons.
 });

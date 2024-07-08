@@ -6,11 +6,11 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-base-3 text-base-12 hover:bg-base-4 focus-visible:ring-primary-7 active:bg-primaryA-7",
+          "bg-base-3 text-base-12 hover:bg-base-4 focus-visible:ring-primary-7 active:bg-primaryA-7 border-base-5",
         "base-outline":
-          "border border-base-7 bg-transparent hover:border-base-8 hover:bg-base-5 focus-visible:ring-primary-7",
+          "border border-base-5 bg-transparent hover:border-base-6 hover:bg-base-5 focus-visible:ring-primary-7",
         outline:
-          "border border-primary-7 bg-transparent hover:border-primaryA-8 hover:bg-primaryA-5 focus-visible:ring-primary-7",
+          "border border-primary-5 bg-transparent hover:border-primaryA-6 hover:bg-primaryA-5 focus-visible:ring-primary-7",
         primary:
           "bg-primary-9 text-base-12 hover:bg-primaryA-4 focus-visible:ring-primary-7",
         secondary:

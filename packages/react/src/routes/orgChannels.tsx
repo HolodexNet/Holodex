@@ -148,7 +148,7 @@ export default function ChannelsOrg() {
         </title>
       </Helmet>
       <div className="h-full w-full px-4 md:p-8">
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row">
+        <div className="mb-6 flex flex-row gap-4">
           {/* Controls */}
           <div className="flex gap-1">
             <Button
@@ -175,7 +175,7 @@ export default function ChannelsOrg() {
               setSortBy(value);
             }}
           >
-            <SelectTrigger className="w-full sm:w-[200px]">
+            <SelectTrigger className="w-auto">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>

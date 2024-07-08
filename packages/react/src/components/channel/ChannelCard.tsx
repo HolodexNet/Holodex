@@ -117,7 +117,7 @@ export function ChannelCard({
                   })}`}
               </div>
               {size === "sm" && (
-                <div className="mt-1 flex max-w-full gap-1 overflow-x-auto">
+                <div className="mt-1 flex max-w-full gap-1 overflow-x-hidden">
                   {top_topics?.map((topic) => (
                     <TopicBadge
                       size="sm"
@@ -180,7 +180,7 @@ export function ChannelCard({
               channelId={id}
             />
             <div
-              className={`${inactive && "text-base-10"} z-10 line-clamp-2 text-center text-lg font-bold`}
+              className={`${inactive && "text-base-10"} z-10 line-clamp-2 min-h-[2lh] text-center text-lg font-bold`}
             >
               {preferredName}
             </div>
