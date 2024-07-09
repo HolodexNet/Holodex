@@ -12,25 +12,25 @@ import { useTranslation } from "react-i18next";
 import { ContextMenuShortcut } from "@/shadcn/ui/context-menu";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
-import { idToVideoURL, videoURLtoID } from "@/lib/utils";
+import { idToVideoURL } from "@/lib/utils";
 import { useSetAtom } from "jotai";
-import { Label } from "@/shadcn/ui/label";
-import { Input } from "@/shadcn/ui/input";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import SubtitleTimeline from "./components/SubtitleTimeline";
 import { useChatDB } from "@/hooks/useChatDB";
 import { useSubtitles } from "./hooks/subtitles";
 import { WaveformEditor } from "./components/WaveformEditor";
 import { WaveformLoadingButton } from "./WaveformLoadingButton";
+import { Menubar } from "@/shadcn/ui/menubar";
+import { VideoIdInput } from "./VideoIdInput";
 
 export function TLEditorFrame() {
-  const { id, currentVideo } = useVideoData();
+  const { id } = useVideoData();
   const makeHeaderHide = useSetAtom(headerHiddenAtom);
   const { messages, loadMessages } = useChatDB(
     id ? `${id}/en` : "not_a_room/en",
   );
   const { subtitles, updateSubtitles } = useSubtitles();
-  const [isBlocking, setIsBlocking] = useState(false);
+  const [isBlocking, setIsBlocking] = useState(false); // navigation-away blocker
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -101,25 +101,31 @@ export function TLEditorFrame() {
   return (
     <div className="absolute h-full w-full">
       <div className="tl-frame inset-0 p-4">
-        <TLEditorHeader /* onSave={handleSave} onExit={handleExit} */ />
+        <TLEditorHeader onSave={handleSave} onExit={handleExit} />
         <TLEditorContent />
       </div>
     </div>
   );
 }
 // TLEditorHeader.tsx
-export function TLEditorHeader() {
+export function TLEditorHeader({
+  onSave,
+  onExit,
+}: {
+  onSave: () => void;
+  onExit: () => void;
+}) {
   const { t } = useTranslation();
 
   return (
     <div className="tl-topbar">
-      <Button size="sm" className="min-w-16 px-2">
+      <Button size="sm" className="min-w-16 px-2" onClick={onExit}>
         {t("component.mainNav.home")}
       </Button>
       <Button variant="secondary" size="sm" className="px-2">
         {t("views.tlClient.menu.setting")}
       </Button>
-      <Button size="sm" variant="secondary" className="px-2">
+      <Button size="sm" variant="secondary" className="px-2" onClick={onSave}>
         {t("views.scriptEditor.menu.save")}
         <ContextMenuShortcut className="text-secondaryA-11">
           Ctrl+S
@@ -161,7 +167,9 @@ export function TLEditorContent() {
               />
             </div>
             <div className="h-[60px]">
-              <WaveformLoadingButton videoId={currentVideo.id} />
+              <Menubar>
+                <WaveformLoadingButton videoId={currentVideo.id} />
+              </Menubar>
             </div>
           </div>
         </Panel>
@@ -172,41 +180,6 @@ export function TLEditorContent() {
       </PanelGroup>
       <WaveformEditor videoId={currentVideo.id} />
     </>
-  );
-}
-
-// VideoIdInput.tsx
-function VideoIdInput() {
-  const [urlField, setUrlField] = useState<string>("");
-  const navigate = useNavigate();
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const id = videoURLtoID(urlField);
-    if (!id) {
-      alert("Invalid video URL [" + id + "]");
-      return;
-    }
-    navigate("?id=" + id);
-  };
-
-  return (
-    <div className="content">
-      <Label htmlFor="videoId" className="text-base-11">
-        Put in a video ID
-      </Label>
-      <form
-        onSubmit={handleSubmit}
-        className="flex w-full max-w-sm items-center space-x-2"
-      >
-        <Input
-          id="videoId"
-          value={urlField}
-          onInput={(e) => setUrlField(e.currentTarget.value)}
-        />
-        <Button type="submit">Load</Button>
-      </form>
-    </div>
   );
 }
 

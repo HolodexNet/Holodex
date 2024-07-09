@@ -15,7 +15,6 @@ import {
 
 import { formatDuration } from "@/lib/time";
 import {
-  Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
@@ -153,33 +152,31 @@ export const WaveformLoadingButton = ({ videoId }: { videoId: string }) => {
   };
 
   return (
-    <Menubar>
-      <MenubarMenu>
-        <MenubarTrigger>Audio Waveform</MenubarTrigger>
-        <MenubarContent>
-          <MenubarItem
-            onSelect={() => generateWaveform(videoId)}
-            disabled={stage !== "waiting" && stage !== "error"}
-          >
-            {message}
-            {format && stage === "done" && (
-              <span className="ml-1">
-                Format: {format.mime_type}, Bitrate: {format.bitrate}
-              </span>
-            )}
-          </MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem
-            onSelect={handleSaveWaveform}
-            disabled={waveform.length === 0}
-          >
-            Save Waveform
-          </MenubarItem>
-          <MenubarItem onSelect={handleLoadWaveform}>
-            Load Saved Waveform
-          </MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
-    </Menubar>
+    <MenubarMenu>
+      <MenubarTrigger>Audio Waveform</MenubarTrigger>
+      <MenubarContent>
+        <MenubarItem
+          onSelect={() => generateWaveform(videoId)}
+          disabled={stage !== "waiting" && stage !== "error"}
+        >
+          {message}
+          {format && stage === "done" && (
+            <span className="ml-1">
+              Format: {format.mime_type}, Bitrate: {format.bitrate}
+            </span>
+          )}
+        </MenubarItem>
+        <MenubarSeparator />
+        <MenubarItem
+          onSelect={handleSaveWaveform}
+          disabled={waveform.length === 0}
+        >
+          Save Waveform
+        </MenubarItem>
+        <MenubarItem onSelect={handleLoadWaveform}>
+          Load Saved Waveform
+        </MenubarItem>
+      </MenubarContent>
+    </MenubarMenu>
   );
 };
