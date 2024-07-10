@@ -13,15 +13,16 @@ import { ContextMenuShortcut } from "@/shadcn/ui/context-menu";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { idToVideoURL } from "@/lib/utils";
-import { useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import SubtitleTimeline from "./components/SubtitleTimeline";
 import { useChatDB } from "@/hooks/useChatDB";
-import { useSubtitles } from "./hooks/subtitles";
+import { subtitlesUndoableAtom, useSubtitles } from "./hooks/subtitles";
 import { WaveformEditor } from "./components/WaveformEditor";
 import { WaveformLoadingButton } from "./WaveformLoadingButton";
 import { Menubar } from "@/shadcn/ui/menubar";
 import { VideoIdInput } from "./VideoIdInput";
+import clsx from "clsx";
 
 export function TLEditorFrame() {
   const { id } = useVideoData();
@@ -116,6 +117,7 @@ export function TLEditorHeader({
   onExit: () => void;
 }) {
   const { t } = useTranslation();
+  const [{ undo, redo, canUndo, canRedo }] = useAtom(subtitlesUndoableAtom);
 
   return (
     <div className="tl-topbar">
@@ -137,10 +139,28 @@ export function TLEditorHeader({
       <Button size="sm" className="min-w-16 px-2">
         {t("views.scriptEditor.menu.exportFile")}
       </Button>
-      <Button size="sm" variant="outline" className="min-w-16 px-2">
+      <Button
+        size="sm"
+        variant="outline"
+        className={clsx(
+          "min-w-16 px-2",
+          canUndo && "text-primary-11",
+          !canUndo && "text-secondary-11",
+        )}
+        onClick={() => undo()}
+      >
         Undo
       </Button>
-      <Button size="sm" variant="outline" className="min-w-16 px-2">
+      <Button
+        size="sm"
+        variant="outline"
+        className={clsx(
+          "min-w-16 px-2",
+          canRedo && "text-primary-11",
+          !canRedo && "text-secondary-11",
+        )}
+        onClick={() => redo()}
+      >
         Redo
       </Button>
     </div>

@@ -51,13 +51,12 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "dayjs": "^1.11.10",
-    "eslint-plugin-unused-imports": "^3.2.0",
     "i18next": "^23.7.6",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-chained-backend": "^4.6.2",
     "i18next-icu": "^2.3.0",
     "i18next-resources-to-backend": "^1.2.0",
-    "jotai": "^2.8.4",
+    "jotai": "^2.9.0",
     "jotai-devtools": "^0.10.0",
     "jsonp-es6": "^1.0.0",
     "lucide-react": "^0.294.0",
@@ -92,7 +91,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.220",
+    "@iconify/json": "^2.2.226",
     "@rollup/plugin-dynamic-import-vars": "^2.1.2",
     "@rollup/plugin-yaml": "^4.1.2",
     "@swc-jotai/debug-label": "^0.1.1",
@@ -115,6 +114,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "eslint-plugin-tailwindcss": "github:HolodexNet/eslint-plugin-tailwindcss",
+    "eslint-plugin-unused-imports": "^3.2.0",
     "husky": "^9.0.10",
     "lightningcss": "^1.25.1",
     "lint-staged": "^15.2.2",
@@ -129,7 +129,7 @@
     "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5",
     "typescript-plugin-css-modules": "^5.1.0",
-    "unocss": "^0.61.0",
+    "unocss": "^0.61.3",
     "unocss-preset-autoprefixer": "^0.0.7",
     "vite": "^5.2.13"
   }

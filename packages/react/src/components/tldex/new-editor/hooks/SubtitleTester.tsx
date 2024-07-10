@@ -4,15 +4,7 @@ import { useAtom } from "jotai";
 import { PrimitiveAtom } from "jotai";
 
 const SubtitleTester: React.FC = () => {
-  const {
-    addSubtitle,
-    deleteSubtitle,
-    clearSubtitles,
-    undo,
-    redo,
-    canUndo,
-    canRedo,
-  } = useSubtitles();
+  const { addSubtitle, deleteSubtitle, clearSubtitles } = useSubtitles();
 
   const [subtitleAtoms] = useAtom(subtitleAtomsAtom);
   const [newSubtitle, setNewSubtitle] = useState("");
@@ -56,20 +48,6 @@ const SubtitleTester: React.FC = () => {
       </div>
 
       <div style={{ marginBottom: "20px" }}>
-        <button
-          onClick={undo}
-          disabled={!canUndo}
-          style={{ marginRight: "10px", padding: "5px 10px" }}
-        >
-          Undo
-        </button>
-        <button
-          onClick={redo}
-          disabled={!canRedo}
-          style={{ marginRight: "10px", padding: "5px 10px" }}
-        >
-          Redo
-        </button>
         <button onClick={clearSubtitles} style={{ padding: "5px 10px" }}>
           Clear All
         </button>

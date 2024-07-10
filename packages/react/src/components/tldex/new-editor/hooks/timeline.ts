@@ -50,7 +50,6 @@ export const useTimelineRendererBase = (
       t.on("drag", (s) => {
         setStartTime(s[0]);
         setEndTime(s[1]);
-        console.log("drag", s);
       });
 
       t.on("timeUpdate", (v) => {
@@ -88,8 +87,8 @@ export const useTimelineRendererBase = (
       ? videoStatus?.status == "playing"
         ? 15
         : videoStatus?.status == "paused" || videoStatus?.status == "stopped"
-          ? 400
-          : 400
+          ? 50
+          : 50
       : null,
   );
 

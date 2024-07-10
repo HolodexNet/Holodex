@@ -22,11 +22,10 @@ const initialState: ParsedMessage[] = [];
 
 export const subtitlesAtom = atom(initialState);
 export const subtitlesUndoableAtom = atomWithUndo(subtitlesAtom, 100); // Limit to 100 undo steps
-export const subtitleAtomsAtom = splitAtom(subtitlesAtom);
+export const subtitleAtomsAtom = splitAtom(subtitlesAtom, (k) => k.key);
 
 export const useSubtitles = () => {
   const [subtitles, setSubtitles] = useAtom(subtitlesAtom);
-  const [{ undo, redo, canUndo, canRedo }] = useAtom(subtitlesUndoableAtom);
   const [_, dispatch] = useAtom(subtitleAtomsAtom);
 
   const addSubtitle = (subtitle: ParsedMessage) => {
@@ -54,9 +53,5 @@ export const useSubtitles = () => {
     addSubtitle,
     deleteSubtitle,
     clearSubtitles,
-    undo,
-    redo,
-    canUndo,
-    canRedo,
   };
 };
