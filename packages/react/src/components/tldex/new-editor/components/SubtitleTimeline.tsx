@@ -1,27 +1,30 @@
 import React from "react";
-import { useAtom, useStore } from "jotai";
+import { useAtom, useAtomValue, useSetAtom, useStore } from "jotai";
 import { PrimitiveAtom } from "jotai";
 import { Button } from "@/shadcn/ui/button";
 import { formatDuration } from "@/lib/time";
 import { Textarea } from "@/shadcn/ui/textarea";
-import { useSubtitleManager } from "../hooks/subtitles";
+import { subtitleAtomsMap, subtitleManagerAtom } from "../hooks/subtitles";
 import { nanoid } from "nanoid";
+import { useScriptEditorParams } from "../useScriptEditorParams";
 
 const SubtitleTimeline = () => {
-  const { addSubtitle, deleteSubtitle, updateSubtitle, allSubtitles } =
-    useSubtitleManager();
-
+  const { intervalTree } = useAtomValue(subtitleManagerAtom);
   return (
     <div className="h-full overflow-y-auto bg-base-2">
-      {allSubtitles.map((subtitleAtom, index) => (
-        <SubtitleItem
-          key={subtitleAtom.toString()}
-          subtitleAtom={subtitleAtom}
-          nextSubtitleAtom={allSubtitles[index + 1]}
-          onDelete={deleteSubtitle}
-          onAddSubtitle={addSubtitle}
-        />
-      ))}
+      {intervalTree.items
+        .map(({ value: id }) => subtitleAtomsMap.get(id))
+        .filter(
+          (subtitle): subtitle is PrimitiveAtom<ParsedScripterMessage> =>
+            subtitle !== null,
+        )
+        .map((subtitleAtom, index, arr) => (
+          <SubtitleItem
+            key={subtitleAtom.toString()}
+            subtitleAtom={subtitleAtom}
+            nextSubtitleAtom={arr[index + 1]}
+          />
+        ))}
     </div>
   );
 };
@@ -29,21 +32,14 @@ const SubtitleTimeline = () => {
 interface SubtitleItemProps {
   subtitleAtom: PrimitiveAtom<ParsedScripterMessage>;
   nextSubtitleAtom?: PrimitiveAtom<ParsedScripterMessage>;
-  onDelete: (subtitleId: string) => void;
-  onAddSubtitle: (subtitle: ParsedScripterMessage) => void;
 }
 
 const SubtitleItem = React.memo(
-  ({
-    subtitleAtom,
-    nextSubtitleAtom,
-    onDelete,
-    onAddSubtitle,
-  }: SubtitleItemProps) => {
+  ({ subtitleAtom, nextSubtitleAtom }: SubtitleItemProps) => {
     const [subtitle, setSubtitle] = useAtom(subtitleAtom);
     const store = useStore();
-
-    const handleDelete = () => onDelete(subtitle.id);
+    const dispatch = useSetAtom(subtitleManagerAtom);
+    const { creditName } = useScriptEditorParams();
 
     const handleMerge = () => {
       const nextSubtitle = nextSubtitleAtom
@@ -59,11 +55,11 @@ const SubtitleItem = React.memo(
         setSubtitle((prev) => ({
           ...prev,
           message: mergedMessage,
-          parsed: mergedMessage,
+          parsed: "",
+          end: prev.video_offset + mergedDuration,
           duration: mergedDuration,
         }));
-
-        onDelete(nextSubtitle.id!);
+        dispatch({ type: "DELETE_SUBTITLE", payload: nextSubtitle.id });
       }
     };
 
@@ -75,17 +71,21 @@ const SubtitleItem = React.memo(
         const newOffset =
           (subtitle.video_offset + nextSubtitle.video_offset) / 2;
         const newTimestamp =
-          subtitle.timestamp + newOffset - subtitle.video_offset;
-        onAddSubtitle({
-          id: nanoid(),
-          message: "",
-          duration: 3000,
-          timestamp: newTimestamp,
-          video_offset: newOffset,
-          end: newOffset + 3000,
-          name: "Uncredited User TODO",
-          parsed: "",
-          key: `subtitle-${Date.now()}`,
+          subtitle.timestamp + newOffset * 1000 - subtitle.video_offset * 1000;
+        const duration = 3000;
+        dispatch({
+          type: "ADD_SUBTITLE",
+          payload: {
+            id: nanoid(),
+            message: "",
+            duration: duration,
+            timestamp: newTimestamp,
+            video_offset: newOffset,
+            end: newOffset + duration,
+            name: creditName!, // must be present at this stage
+            parsed: "",
+            key: `subtitle-${Date.now()}`,
+          },
         });
       }
     };
@@ -104,7 +104,9 @@ const SubtitleItem = React.memo(
           <Button
             size="sm"
             variant="ghost"
-            onClick={handleDelete}
+            onClick={() =>
+              dispatch({ type: "DELETE_SUBTITLE", payload: subtitle.id })
+            }
             title="Delete"
           >
             <i className="i-mdi:delete text-base" />
