@@ -1,12 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import Timeline from "@losting/timeline";
-import { gte } from "sorted-array-functions";
 import { useMeasure } from "react-use";
-import {
-  ParsedMessageOFFSETComparator,
-  subtitlesAtom,
-  useSubtitles,
-} from "./subtitles";
 import { useAtomValue } from "jotai";
 import { PlayingVideoState, videoPlayerRefAtomFamily } from "@/store/player";
 import { useInterval } from "usehooks-ts";
@@ -25,8 +19,6 @@ export const useTimelineRendererBase = (
   const player = useAtomValue(playerRefAtom);
 
   const [containerRef, containerSize] = useMeasure<HTMLDivElement>();
-  const listOfSubs = useAtomValue(subtitlesAtom);
-  const { subtitles: allSubs } = useSubtitles(); // Use Jotai atom for subtitles
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(50);
   const timelineRef = useRef<Timeline | null>(null);
@@ -92,27 +84,11 @@ export const useTimelineRendererBase = (
       : null,
   );
 
-  // const currentSubs = () => {
-  const lower = gte(
-    listOfSubs,
-    { video_offset: startTime - 10 } as unknown as ParsedMessage,
-    ParsedMessageOFFSETComparator,
-  );
-  const upper = gte(
-    listOfSubs,
-    { video_offset: endTime + 10 } as unknown as ParsedMessage,
-    ParsedMessageOFFSETComparator,
-  );
-  const currentSubs = listOfSubs.slice(lower, upper < 0 ? undefined : upper);
-  // }, [listOfSubs, startTime, endTime]);
-
   return {
     canvasCbRef,
     containerRef,
     canvasRef,
     containerSize,
-    allSubs,
-    currentSubs,
     startTime,
     endTime,
   };

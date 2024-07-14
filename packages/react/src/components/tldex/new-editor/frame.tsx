@@ -1,56 +1,64 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./frame.css";
-import {
-  useBeforeUnload,
-  useBlocker,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
-import { useVideo } from "@/services/video.service";
+import { useBeforeUnload, useBlocker, useNavigate } from "react-router-dom";
 import { Button } from "@/shadcn/ui/button";
 import { useTranslation } from "react-i18next";
 import { ContextMenuShortcut } from "@/shadcn/ui/context-menu";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { idToVideoURL } from "@/lib/utils";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import SubtitleTimeline from "./components/SubtitleTimeline";
-import { useChatDB } from "@/hooks/useChatDB";
-import { subtitlesUndoableAtom, useSubtitles } from "./hooks/subtitles";
 import { WaveformEditor } from "./components/WaveformEditor";
 import { WaveformLoadingButton } from "./WaveformLoadingButton";
 import { Menubar } from "@/shadcn/ui/menubar";
 import { VideoIdInput } from "./VideoIdInput";
 import clsx from "clsx";
+import { useScriptEditorParams } from "./useScriptEditorParams";
+import { Loading } from "@/components/common/Loading";
+import { clientAtom } from "@/hooks/useClient";
+import { useQuery } from "@tanstack/react-query";
+import { getSubtitlesForVideo, subtitleManagerAtom } from "./hooks/subtitles";
 
 export function TLEditorFrame() {
-  const { id } = useVideoData();
+  const {
+    id,
+    currentVideo,
+    isPending: isVideoPending,
+    editorLanguage,
+  } = useScriptEditorParams();
   const makeHeaderHide = useSetAtom(headerHiddenAtom);
-  const { messages, loadMessages } = useChatDB(
-    id ? `${id}/en` : "not_a_room/en",
-  );
-  const { subtitles, updateSubtitles } = useSubtitles();
   const [isBlocking, setIsBlocking] = useState(false); // navigation-away blocker
+  const client = useAtomValue(clientAtom);
   const navigate = useNavigate();
+  const subtitleDispatch = useSetAtom(subtitleManagerAtom);
 
   useEffect(() => {
+    // hides the holodex default header
     makeHeaderHide(true);
     return () => makeHeaderHide(false);
-  }, [makeHeaderHide]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const {
+    isSuccess,
+    data: script,
+    isLoading: isScriptLoading,
+  } = useQuery({
+    queryKey: ["script", id, editorLanguage],
+    queryFn: async () => {
+      return getSubtitlesForVideo(client, id!, editorLanguage);
+    },
+    enabled: !!id && !!editorLanguage,
+  });
 
   useEffect(() => {
-    if (id && !isBlocking && !messages?.length) {
-      loadMessages({ partial: 100000 });
-      setIsBlocking(true); // Start blocking navigation once we have loaded data
+    if (isSuccess) {
+      subtitleDispatch({ type: "ADD_SUBTITLES", payload: script });
     }
-  }, [id, loadMessages, isBlocking, messages]);
-
-  useEffect(() => {
-    if (messages && messages.length > 0 && !subtitles.length) {
-      updateSubtitles(messages);
-    }
-  }, [messages, updateSubtitles, subtitles]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess, script]);
 
   // Prevent soft navigation within the SPA
   const blocker = useBlocker(isBlocking);
@@ -103,7 +111,9 @@ export function TLEditorFrame() {
     <div className="absolute h-full w-full">
       <div className="tl-frame inset-0 p-4">
         <TLEditorHeader onSave={handleSave} onExit={handleExit} />
-        <TLEditorContent />
+        {!id && !currentVideo && <VideoIdInput />}
+        {id && (isVideoPending || isScriptLoading) && <Loading size="md" />}
+        {id && currentVideo && <TLEditorContent />}
       </div>
     </div>
   );
@@ -169,11 +179,7 @@ export function TLEditorHeader({
 
 // TLEditorContent.tsx
 export function TLEditorContent() {
-  const { currentVideo } = useVideoData();
-
-  if (!currentVideo) {
-    return <VideoIdInput />;
-  }
+  const { currentVideo, id } = useScriptEditorParams();
 
   return (
     <>
@@ -181,14 +187,11 @@ export function TLEditorContent() {
         <Panel defaultSize={60} minSize={40}>
           <div className="flex size-full flex-col">
             <div className="flex-1 overflow-hidden rounded">
-              <PlayerWrapper
-                id={currentVideo.id || "x"}
-                url={idToVideoURL(currentVideo.id || "x")}
-              />
+              <PlayerWrapper id={id || "x"} url={idToVideoURL(id || "x")} />
             </div>
             <div className="h-[60px]">
               <Menubar>
-                <WaveformLoadingButton videoId={currentVideo.id} />
+                <WaveformLoadingButton videoId={id!} />
               </Menubar>
             </div>
           </div>
@@ -198,21 +201,7 @@ export function TLEditorContent() {
           <SubtitleTimeline />
         </Panel>
       </PanelGroup>
-      <WaveformEditor videoId={currentVideo.id} />
+      <WaveformEditor videoId={id!} />
     </>
   );
-}
-
-// useVideoData.ts
-function useVideoData() {
-  const [urlSearchParams] = useSearchParams();
-  const id = urlSearchParams.get("id");
-  const {
-    data: currentVideo,
-    error,
-    isPending,
-    isSuccess,
-  } = useVideo({ id: id || "" }, { enabled: !!id });
-
-  return { id, currentVideo, error, isPending, isSuccess };
 }

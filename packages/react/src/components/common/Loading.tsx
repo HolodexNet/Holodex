@@ -15,12 +15,12 @@ export function Loading(
   props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
     LoadingProps,
 ) {
-  // const sizeCN = cn({
-  //   "text-sm": props.size === "sm",
-  //   "text-lg": props.size === "md",
-  //   "text-2xl": props.size === "lg",
-  //   "text-4xl": props.size === "xl",
-  // });
+  const sizeCN = cn({
+    "text-sm": props.size === "sm",
+    "text-lg": props.size === "md",
+    "text-2xl": props.size === "lg",
+    "text-4xl": props.size === "xl",
+  });
 
   if (props.error) return <ApiError error={props.error} />;
 
@@ -32,6 +32,7 @@ export function Loading(
       {...props}
       className={cn(
         "flex h-full w-full items-center justify-center",
+        sizeCN,
         props.className,
       )}
     >

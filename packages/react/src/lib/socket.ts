@@ -19,14 +19,17 @@ export function toParsedMessage(
   video_id?: string,
 ): ParsedMessage {
   msg.timestamp = +msg.timestamp;
+  const duration = +(msg.duration ?? msg.message.length * 65 + 1800);
   const parsed: ParsedMessage = {
     ...msg,
     // ...(relativeTsAnchor && { relativeMs: msg.timestamp - relativeTsAnchor }),
     timestamp: +msg.timestamp,
     key: msg.name + msg.timestamp + msg.message,
     parsed: "",
-    duration: +(msg.duration ?? msg.message.length * 65 + 1800),
+    duration,
     video_id,
+    end:
+      msg.video_offset !== undefined ? msg.video_offset + duration : undefined,
   };
   // Check if there's any emojis represented as URLs formatted by backend
   if (msg.message.includes("https://") && !("parsed" in msg)) {

@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.10",
+    "@flatten-js/interval-tree": "^1.1.3",
     "@hookform/resolvers": "^3.3.2",
     "@losting/timeline": "github:sphinxrave/timeline",
     "@radix-ui/colors": "^3.0.0",
@@ -60,6 +61,7 @@
     "jotai-devtools": "^0.10.0",
     "jsonp-es6": "^1.0.0",
     "lucide-react": "^0.294.0",
+    "nanoid": "^5.0.7",
     "oauth-open": "^1.0.4",
     "protoframe": "^1.1.1",
     "react": "^18.3.1",
