@@ -47,6 +47,8 @@ interface ParsedMessage extends TLDexMessage {
 interface ParsedScripterMessage extends ParsedMessage {
   id: string;
   end: number;
+  duration: number;
+  timestamp: null; // let's assign the timestamp when we save this event. use video relative ts for now.
 }
 
 interface ChatMessage {

@@ -1,6 +1,5 @@
-import { PrimitiveAtom, atom, useAtom } from "jotai";
+import { PrimitiveAtom, atom, useAtomValue, useSetAtom } from "jotai";
 import IntervalTree from "@flatten-js/interval-tree";
-import { useCallback } from "react";
 import { FetchClient } from "@/lib/fetch";
 import { toParsedMessage } from "@/lib/socket";
 export async function getSubtitlesForVideo(
@@ -19,7 +18,10 @@ export async function getSubtitlesForVideo(
         mode: 1, // TL Client Mode.
       },
     })
-  ).map((message) => toParsedMessage(message, video) as ParsedScripterMessage);
+  ).map(
+    (message) =>
+      toParsedMessage(message, video) as unknown as ParsedScripterMessage,
+  );
 }
 
 type UndoAction = {
@@ -35,10 +37,10 @@ export const subtitleAtomsMap = new Map<
   PrimitiveAtom<ParsedScripterMessage>
 >();
 
-const intervalTreeAtom = atom(() => new IntervalTree<string>());
+export const intervalTreeAtom = atom(new IntervalTree<string>());
+export const intervalTreeBumpAtom = atom(0);
 
 const undoQueueAtom = atom<UndoAction[]>([]);
-
 const updateIntervalTree = (
   tree: IntervalTree<string>,
   id: string,
@@ -49,6 +51,7 @@ const updateIntervalTree = (
     tree.remove(oldInterval, id);
   }
   tree.insert(newInterval, id);
+  return tree;
 };
 
 export type SubtitleManagerAction =
@@ -69,6 +72,14 @@ export const subtitleManagerAtom = atom(
 
     const pushUndoAction = (action: UndoAction) => {
       set(undoQueueAtom, (prev) => {
+        // check if the action is on editing the same subtitle, then don't push.
+        if (
+          prev.length > 0 &&
+          prev[0].type === action.type &&
+          prev[0].id === action.id
+        ) {
+          return prev;
+        }
         const newQueue = [action, ...prev.slice(0, MAX_UNDO_ACTIONS - 1)];
         return newQueue;
       });
@@ -80,10 +91,13 @@ export const subtitleManagerAtom = atom(
         subtitles.forEach((subtitle) => {
           const subtitleAtom = atom(structuredClone(subtitle));
           subtitleAtomsMap.set(subtitle.id, subtitleAtom);
-          updateIntervalTree(intervalTree, subtitle.id, null, [
-            subtitle.video_offset,
-            subtitle.end,
-          ]);
+          set(intervalTreeAtom, (t) =>
+            updateIntervalTree(t, subtitle.id, null, [
+              subtitle.video_offset,
+              subtitle.end,
+            ]),
+          );
+          set(intervalTreeBumpAtom, (b) => b + 1);
         });
         // Bulk actions are not undoable, so we don't push to undoQueue
         break;
@@ -92,10 +106,14 @@ export const subtitleManagerAtom = atom(
         const newSubtitle: ParsedScripterMessage = action.payload;
         const subtitleAtom = atom(structuredClone(newSubtitle));
         subtitleAtomsMap.set(newSubtitle.id, subtitleAtom);
-        updateIntervalTree(intervalTree, newSubtitle.id, null, [
-          newSubtitle.video_offset,
-          newSubtitle.end,
-        ]);
+        set(intervalTreeAtom, (t) =>
+          updateIntervalTree(t, newSubtitle.id, null, [
+            newSubtitle.video_offset,
+            newSubtitle.end,
+          ]),
+        );
+        set(intervalTreeBumpAtom, (b) => b + 1);
+
         pushUndoAction({ type: "create", id: newSubtitle.id });
         break;
       }
@@ -110,12 +128,15 @@ export const subtitleManagerAtom = atom(
             oldData: oldSubtitle,
           });
           set(subtitleAtom, structuredClone(updatedSubtitle));
-          updateIntervalTree(
-            intervalTree,
-            updatedSubtitle.id,
-            [oldSubtitle.video_offset, oldSubtitle.end],
-            [updatedSubtitle.video_offset, updatedSubtitle.end],
+          set(intervalTreeAtom, (t) =>
+            updateIntervalTree(
+              t,
+              updatedSubtitle.id,
+              [oldSubtitle.video_offset, oldSubtitle.end],
+              [updatedSubtitle.video_offset, updatedSubtitle.end],
+            ),
           );
+          set(intervalTreeBumpAtom, (b) => b + 1);
         }
         break;
       }
@@ -135,6 +156,8 @@ export const subtitleManagerAtom = atom(
           );
           subtitleAtomsMap.delete(subtitleId);
         }
+        set(intervalTreeBumpAtom, (b) => b + 1);
+
         break;
       }
       case "UNDO": {
@@ -181,6 +204,7 @@ export const subtitleManagerAtom = atom(
               }
               break;
           }
+          set(intervalTreeBumpAtom, (b) => b + 1);
         }
         break;
       }
@@ -188,68 +212,81 @@ export const subtitleManagerAtom = atom(
   },
 );
 
-export const useSubtitleManager = () => {
-  const [{ intervalTree }, dispatch] = useAtom(subtitleManagerAtom);
+export const undoActionAtom = atom(
+  (get) => get(undoQueueAtom).length > 0,
+  (_, set) => {
+    set(subtitleManagerAtom, { type: "UNDO" });
+  },
+);
 
-  const addSubtitle = useCallback(
-    (subtitle: Omit<ParsedScripterMessage, "id" | "key">) => {
-      const id = Date.now().toString();
-      const newSubtitle: ParsedScripterMessage = {
-        ...subtitle,
-        id,
-        key: `subtitle-${id}`,
-        end: subtitle.video_offset + (subtitle.duration || 3000) / 1000, // Default duration of 3 seconds if not provided
-      };
-      dispatch({ type: "ADD_SUBTITLE", payload: newSubtitle });
-    },
-    [dispatch],
-  );
+export function useSpecificSubtitle(id: string) {
+  const message = useAtomValue(subtitleAtomsMap.get(id)!);
+  const edit = useSetAtom(subtitleManagerAtom);
+  return [message, edit] as const;
+}
 
-  const updateSubtitle = useCallback(
-    (subtitle: ParsedScripterMessage) => {
-      const updatedSubtitle: ParsedScripterMessage = {
-        ...subtitle,
-        end: subtitle.video_offset + (subtitle.duration || 3000) / 1000,
-      };
-      dispatch({ type: "UPDATE_SUBTITLE", payload: updatedSubtitle });
-    },
-    [dispatch],
-  );
+// export const useSubtitleManager = () => {
+//   const [{ intervalTree }, dispatch] = useAtom(subtitleManagerAtom);
 
-  const deleteSubtitle = useCallback(
-    (id: string) => {
-      dispatch({ type: "DELETE_SUBTITLE", payload: id });
-    },
-    [dispatch],
-  );
+//   const addSubtitle = useCallback(
+//     (subtitle: Omit<ParsedScripterMessage, "id" | "key">) => {
+//       const id = Date.now().toString();
+//       const newSubtitle: ParsedScripterMessage = {
+//         ...subtitle,
+//         id,
+//         key: `subtitle-${id}`,
+//         end: subtitle.video_offset + (subtitle.duration || 3000) / 1000, // Default duration of 3 seconds if not provided
+//       };
+//       dispatch({ type: "ADD_SUBTITLE", payload: newSubtitle });
+//     },
+//     [dispatch],
+//   );
 
-  const getSubtitlesInRange = useCallback(
-    (start: number, end: number): PrimitiveAtom<ParsedScripterMessage>[] => {
-      const ids = intervalTree.search([start, end]);
-      return ids
-        .map((id) => {
-          const subtitleAtom = subtitleAtomsMap.get(id);
-          return subtitleAtom;
-        })
-        .filter((x): x is PrimitiveAtom<ParsedScripterMessage> => !!x);
-    },
-    [intervalTree],
-  );
+//   const updateSubtitle = useCallback(
+//     (subtitle: ParsedScripterMessage) => {
+//       const updatedSubtitle: ParsedScripterMessage = {
+//         ...subtitle,
+//         end: subtitle.video_offset + (subtitle.duration || 3000) / 1000,
+//       };
+//       dispatch({ type: "UPDATE_SUBTITLE", payload: updatedSubtitle });
+//     },
+//     [dispatch],
+//   );
 
-  const getAllSubtitles = useCallback(() => {
-    return intervalTree.items
-      .map(({ value: id }) => subtitleAtomsMap.get(id))
-      .filter(
-        (subtitle): subtitle is PrimitiveAtom<ParsedScripterMessage> =>
-          subtitle !== null,
-      );
-  }, [intervalTree]);
+//   const deleteSubtitle = useCallback(
+//     (id: string) => {
+//       dispatch({ type: "DELETE_SUBTITLE", payload: id });
+//     },
+//     [dispatch],
+//   );
 
-  return {
-    addSubtitle,
-    updateSubtitle,
-    deleteSubtitle,
-    getSubtitlesInRange,
-    getAllSubtitles,
-  };
-};
+//   const getSubtitlesInRange = useCallback(
+//     (start: number, end: number): PrimitiveAtom<ParsedScripterMessage>[] => {
+//       const ids = intervalTree.search([start, end]);
+//       return ids
+//         .map((id) => {
+//           const subtitleAtom = subtitleAtomsMap.get(id);
+//           return subtitleAtom;
+//         })
+//         .filter((x): x is PrimitiveAtom<ParsedScripterMessage> => !!x);
+//     },
+//     [intervalTree],
+//   );
+
+//   const getAllSubtitles = useCallback(() => {
+//     return intervalTree.items
+//       .map(({ value: id }) => subtitleAtomsMap.get(id))
+//       .filter(
+//         (subtitle): subtitle is PrimitiveAtom<ParsedScripterMessage> =>
+//           subtitle !== null,
+//       );
+//   }, [intervalTree]);
+
+//   return {
+//     addSubtitle,
+//     updateSubtitle,
+//     deleteSubtitle,
+//     getSubtitlesInRange,
+//     getAllSubtitles,
+//   };
+// };

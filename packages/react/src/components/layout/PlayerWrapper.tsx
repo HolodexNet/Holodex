@@ -5,7 +5,7 @@ import {
   videoStatusAtomFamily,
 } from "@/store/player";
 import { useAtom, useSetAtom } from "jotai";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import type { OnProgressProps } from "react-player/base";
 import ReactPlayer from "react-player";
 import { LazyReactPlayer } from "./DefaultPlayerContainer";
@@ -34,21 +34,21 @@ export const PlayerWrapper = React.memo(
       [playingVideoStateSetter],
     );
 
-    useEffect(() => {
-      const intervalId = setInterval(() => {
-        const player = playerRef;
-        if (player) {
-          updateState({
-            progress: player.getCurrentTime(),
-            progressRecordedAt: Date.now(),
-          });
-        }
-      }, 1000);
+    // useEffect(() => {
+    //   const intervalId = setInterval(() => {
+    //     const player = playerRef;
+    //     if (player) {
+    //       updateState({
+    //         progress: player.getCurrentTime(),
+    //         progressRecordedAt: Date.now(),
+    //       });
+    //     }
+    //   }, 1000);
 
-      return () => {
-        clearInterval(intervalId);
-      };
-    }, [playerRef, updateState]);
+    //   return () => {
+    //     clearInterval(intervalId);
+    //   };
+    // }, [playerRef, updateState]);
 
     return (
       <LazyReactPlayer
@@ -71,6 +71,7 @@ export const PlayerWrapper = React.memo(
             },
           },
         }}
+        progressInterval={250}
         onStart={() => {
           defaultPlayerEventBus.emit("onStart", id || "");
           updateState({ status: "playing" });

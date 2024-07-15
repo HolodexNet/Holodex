@@ -19,7 +19,11 @@ import { useScriptEditorParams } from "./useScriptEditorParams";
 import { Loading } from "@/components/common/Loading";
 import { clientAtom } from "@/hooks/useClient";
 import { useQuery } from "@tanstack/react-query";
-import { getSubtitlesForVideo, subtitleManagerAtom } from "./hooks/subtitles";
+import {
+  getSubtitlesForVideo,
+  subtitleManagerAtom,
+  undoActionAtom,
+} from "./hooks/subtitles";
 
 export function TLEditorFrame() {
   const {
@@ -48,13 +52,15 @@ export function TLEditorFrame() {
   } = useQuery({
     queryKey: ["script", id, editorLanguage],
     queryFn: async () => {
-      return getSubtitlesForVideo(client, id!, editorLanguage);
+      return getSubtitlesForVideo(client, id!, editorLanguage!);
     },
     enabled: !!id && !!editorLanguage,
+    refetchInterval: false,
   });
 
   useEffect(() => {
     if (isSuccess) {
+      console.log("Subtitles loaded:", script);
       subtitleDispatch({ type: "ADD_SUBTITLES", payload: script });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,7 +133,7 @@ export function TLEditorHeader({
   onExit: () => void;
 }) {
   const { t } = useTranslation();
-  const [{ undo, redo, canUndo, canRedo }] = useAtom(subtitlesUndoableAtom);
+  const [canUndo, undo] = useAtom(undoActionAtom);
 
   return (
     <div className="tl-topbar">
@@ -161,7 +167,7 @@ export function TLEditorHeader({
       >
         Undo
       </Button>
-      <Button
+      {/* <Button
         size="sm"
         variant="outline"
         className={clsx(
@@ -172,7 +178,7 @@ export function TLEditorHeader({
         onClick={() => redo()}
       >
         Redo
-      </Button>
+      </Button> */}
     </div>
   );
 }

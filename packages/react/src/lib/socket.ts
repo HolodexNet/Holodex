@@ -29,7 +29,9 @@ export function toParsedMessage(
     duration,
     video_id,
     end:
-      msg.video_offset !== undefined ? msg.video_offset + duration : undefined,
+      msg.video_offset !== undefined
+        ? msg.video_offset + duration / 1000
+        : undefined,
   };
   // Check if there's any emojis represented as URLs formatted by backend
   if (msg.message.includes("https://") && !("parsed" in msg)) {

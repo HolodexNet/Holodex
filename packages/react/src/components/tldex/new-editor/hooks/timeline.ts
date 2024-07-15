@@ -17,6 +17,7 @@ export const useTimelineRendererBase = (
     videoStatus?.videoId || "__nonexistent__",
   );
   const player = useAtomValue(playerRefAtom);
+  const isSeeking = useRef({ is: false, value: 0, requestedOn: 0 });
 
   const [containerRef, containerSize] = useMeasure<HTMLDivElement>();
   const [startTime, setStartTime] = useState(0);
@@ -24,43 +25,66 @@ export const useTimelineRendererBase = (
   const timelineRef = useRef<Timeline | null>(null);
   // Initialize Timeline once the component has mounted and canvasRef.current is available
 
-  const canvasCbRef = useCallback((node: HTMLCanvasElement | null) => {
-    canvasRef.current = node;
-    if (node !== null) {
-      const t = new Timeline(node, {
-        // Timeline configuration...\
-        fps: 60,
-        maxZoom: 8,
-        minZoom: 1,
-        fill: true,
-        scaleSpacing: 80,
-        textColor: "#eee",
-        pointColor: "#0c9",
-        pointWidth: 4,
-      });
+  const canvasCbRef = useCallback(
+    (node: HTMLCanvasElement | null) => {
+      canvasRef.current = node;
+      if (node !== null && player !== null) {
+        const t = new Timeline(node, {
+          // Timeline configuration...\
+          fps: 60,
+          maxZoom: 8,
+          minZoom: 1,
+          fill: true,
+          scaleSpacing: 80,
+          textColor: "#eee",
+          pointColor: "#0c9",
+          pointWidth: 4,
+        });
 
-      t.on("drag", (s) => {
-        setStartTime(s[0]);
-        setEndTime(s[1]);
-      });
+        t.on("drag", (s) => {
+          console.log("drag", s);
+          setStartTime(s[0]);
+          setEndTime(s[1]);
+        });
 
-      t.on("timeUpdate", (v) => {
-        // if player is already playing, keep playing.
-        const isPlaying = player?.getInternalPlayer()?.getPlayerState() === 1;
-        player?.seekTo(v[0]);
-        if (isPlaying) player?.getInternalPlayer()?.playVideo?.();
-        console.log("timeUpdate", v, player);
-      });
+        t.on("timeUpdate", (v) => {
+          // if player is already playing, keep playing.
+          const isPlaying = player?.getInternalPlayer()?.getPlayerState() === 1;
+          player?.seekTo(v[0]);
+          isSeeking.current = {
+            is: true,
+            value: v[0],
+            requestedOn: Date.now(),
+          };
+          if (isPlaying) player?.getInternalPlayer()?.playVideo?.();
+          console.log("timeUpdate", v, player);
+        });
 
-      timelineRef.current = t;
-    } else {
-      timelineRef.current = null;
-    }
-  }, []);
+        timelineRef.current = t;
+      } else {
+        timelineRef.current = null;
+      }
+    },
+    [player],
+  );
 
   useInterval(
     () => {
       if (!timelineRef.current) return;
+      if (isSeeking.current.is) {
+        console.log(
+          (videoStatus?.progress || 0) - isSeeking.current.value,
+          isSeeking.current.requestedOn,
+        );
+        if (
+          Math.abs((videoStatus?.progress ?? 0) - isSeeking.current.value) <
+            0.5 ||
+          Date.now() - isSeeking.current.requestedOn > 1000
+        )
+          isSeeking.current = { is: false, value: 0, requestedOn: 0 };
+        else return; // abort.
+      }
+      // console.log("draw", videoStatus?.progress);
       const x = timelineRef.current.draw({
         currentTime: videoStatus
           ? videoStatus.progress +
