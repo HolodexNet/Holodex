@@ -26,7 +26,7 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
   return (
     <div
       className="flex w-full flex-col flex-nowrap"
-      style={{ height: "200px" }}
+      // style={{ height: "200px" }}
     >
       {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <div className="slider-container">
@@ -46,7 +46,7 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
         />
       </div>
       <div
-        className="relative max-w-full shrink grow overflow-hidden"
+        className="relative max-w-full shrink overflow-hidden"
         ref={containerRef}
       >
         {currentSubs.map((id) => (

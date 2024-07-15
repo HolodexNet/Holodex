@@ -1,29 +1,22 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./frame.css";
 import { useBeforeUnload, useBlocker, useNavigate } from "react-router-dom";
-import { Button } from "@/shadcn/ui/button";
-import { useTranslation } from "react-i18next";
-import { ContextMenuShortcut } from "@/shadcn/ui/context-menu";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { idToVideoURL } from "@/lib/utils";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import SubtitleTimeline from "./components/SubtitleTimeline";
 import { WaveformEditor } from "./components/WaveformEditor";
 import { WaveformLoadingButton } from "./WaveformLoadingButton";
 import { Menubar } from "@/shadcn/ui/menubar";
 import { VideoIdInput } from "./VideoIdInput";
-import clsx from "clsx";
 import { useScriptEditorParams } from "./useScriptEditorParams";
 import { Loading } from "@/components/common/Loading";
 import { clientAtom } from "@/hooks/useClient";
 import { useQuery } from "@tanstack/react-query";
-import {
-  getSubtitlesForVideo,
-  subtitleManagerAtom,
-  undoActionAtom,
-} from "./hooks/subtitles";
+import { getSubtitlesForVideo, subtitleManagerAtom } from "./hooks/subtitles";
+import { TLEditorHeader } from "./TLEditorHeader";
 
 export function TLEditorFrame() {
   const {
@@ -124,65 +117,6 @@ export function TLEditorFrame() {
     </div>
   );
 }
-// TLEditorHeader.tsx
-export function TLEditorHeader({
-  onSave,
-  onExit,
-}: {
-  onSave: () => void;
-  onExit: () => void;
-}) {
-  const { t } = useTranslation();
-  const [canUndo, undo] = useAtom(undoActionAtom);
-
-  return (
-    <div className="tl-topbar">
-      <Button size="sm" className="min-w-16 px-2" onClick={onExit}>
-        {t("component.mainNav.home")}
-      </Button>
-      <Button variant="secondary" size="sm" className="px-2">
-        {t("views.tlClient.menu.setting")}
-      </Button>
-      <Button size="sm" variant="secondary" className="px-2" onClick={onSave}>
-        {t("views.scriptEditor.menu.save")}
-        <ContextMenuShortcut className="text-secondaryA-11">
-          Ctrl+S
-        </ContextMenuShortcut>
-      </Button>
-      <Button size="sm" className="min-w-16 px-2">
-        {t("views.scriptEditor.menu.importFile")}
-      </Button>
-      <Button size="sm" className="min-w-16 px-2">
-        {t("views.scriptEditor.menu.exportFile")}
-      </Button>
-      <Button
-        size="sm"
-        variant="outline"
-        className={clsx(
-          "min-w-16 px-2",
-          canUndo && "text-primary-11",
-          !canUndo && "text-secondary-11",
-        )}
-        onClick={() => undo()}
-      >
-        Undo
-      </Button>
-      {/* <Button
-        size="sm"
-        variant="outline"
-        className={clsx(
-          "min-w-16 px-2",
-          canRedo && "text-primary-11",
-          !canRedo && "text-secondary-11",
-        )}
-        onClick={() => redo()}
-      >
-        Redo
-      </Button> */}
-    </div>
-  );
-}
-
 // TLEditorContent.tsx
 export function TLEditorContent() {
   const { currentVideo, id } = useScriptEditorParams();

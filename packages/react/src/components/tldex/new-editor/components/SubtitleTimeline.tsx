@@ -17,7 +17,7 @@ import clsx from "clsx";
 const SubtitleTimeline = () => {
   const { id } = useScriptEditorParams();
   const intervalTree = useAtomValue(intervalTreeAtom);
-  const videoStatusAtom = videoStatusAtomFamily(id);
+  const videoStatusAtom = videoStatusAtomFamily(id!);
   const bump = useAtomValue(intervalTreeBumpAtom); // bump is used to force re-render
   return (
     <div className="h-full overflow-y-auto bg-base-2">

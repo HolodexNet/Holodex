@@ -40,7 +40,7 @@ const MenubarTrigger = React.forwardRef<
   <MenubarPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-sm px-3 py-1 text-sm font-medium outline-none focus:bg-primary-4 focus:text-primary-11 data-[state=open]:bg-primary-4 data-[state=open]:text-primary-11",
+      "flex cursor-default select-none items-center rounded-sm px-3 py-1 text-sm font-medium outline-none focus:bg-primary-4 focus:text-primary-11 data-[state=open]:bg-primary-4 data-[state=open]:text-primary-11 hover:bg-primary-3 hover:text-primary-11",
       className
     )}
     {...props}
