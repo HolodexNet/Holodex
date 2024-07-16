@@ -62,8 +62,6 @@ export function useAutocomplete() {
       "other",
     ];
 
-    console.log(out);
-
     const autocompleteList = categoryOrder
       .flatMap((x) => out[x])
       .map((x) => {

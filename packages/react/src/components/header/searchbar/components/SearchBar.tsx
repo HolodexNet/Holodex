@@ -13,7 +13,10 @@ import { useTranslation } from "react-i18next";
 import { HTMLAttributes, useRef, useState, useCallback } from "react";
 import { AutocompleteDropdownItem } from "./AutocompleteDropdownItem";
 
-export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
+export function SearchBar({
+  className,
+  autoFocus,
+}: HTMLAttributes<HTMLDivElement>) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -66,7 +69,7 @@ export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
         }
 
         updateSearch("");
-      } // onClick?.(e);
+      }
     },
     [query, updateSearch, t, setQuery, setQueryPieces],
   );
@@ -86,6 +89,7 @@ export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
           <CommandPrimitive.Input
             ref={inputRef}
             value={search}
+            autoFocus={autoFocus}
             onValueChange={updateSearch}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
@@ -94,30 +98,30 @@ export function SearchBar({ className }: HTMLAttributes<HTMLDivElement>) {
           />
         </div>
       </div>
-      <div className="relative">
-        <CommandList>
-          {open && autocomplete.length > 0 ? (
-            <>
-              <div className="absolute top-2 z-10 w-full rounded-md border border-base bg-base-2 text-base-11 shadow-lg outline-none animate-in">
-                <CommandGroup
-                  heading={<div>{t("search.menu_header_text")}</div>}
-                />
-                <CommandSeparator />
-                <CommandGroup className="h-full overflow-auto">
-                  {autocomplete.map((item) => {
-                    return (
-                      <AutocompleteDropdownItem
-                        item={item}
-                        onSelect={() => handleItemSelect(item)}
-                      />
-                    );
-                  })}
-                </CommandGroup>
-              </div>
-            </>
-          ) : null}
-        </CommandList>
-      </div>
+      {/* <div className="relative"> */}
+      <CommandList>
+        {open && autocomplete.length > 0 ? (
+          <>
+            <div className="min-w-80 rounded-md border border-base bg-base-2 text-base-11 shadow-lg outline-none animate-in sm:left-auto sm:w-full">
+              <CommandGroup
+                heading={<div>{t("search.menu_header_text")}</div>}
+              />
+              <CommandSeparator />
+              <CommandGroup className="h-full overflow-auto">
+                {autocomplete.map((item) => {
+                  return (
+                    <AutocompleteDropdownItem
+                      item={item}
+                      onSelect={() => handleItemSelect(item)}
+                    />
+                  );
+                })}
+              </CommandGroup>
+            </div>
+          </>
+        ) : null}
+      </CommandList>
+      {/* </div> */}
     </Command>
   );
 }

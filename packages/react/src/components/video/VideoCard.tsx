@@ -18,7 +18,8 @@ export type VideoCardType = VideoRef &
   Partial<PlaceholderVideo>;
 
 export type OnClickHandler = (
-  part: "full" | "info" | "thumbnail" | "channel",
+  part: "full" | "title" | "thumbnail" | "channel" | "info",
+  video: VideoCardType,
   event: React.MouseEvent,
 ) => void;
 
@@ -26,27 +27,21 @@ interface VideoCardProps {
   video: VideoCardType;
   size: VideoCardSize;
   /**
-   * onClick handler for the Video Card, will be provided with the part and event.
-   * call preventDefaults to prevent early navigation, and stopPropagation to prevent the event from bubbling.
+   *
+   * onClick handler for the Video Card. It will be called with two arguments:
+   * - part: The part of the card that was clicked ("full", "info", "thumbnail", or "channel")
+   * - event: The original React mouse event
+   *
+   * This handler allows custom click behavior for different parts of the card.
+   * If provided, it overrides the default navigation behavior.
+   *
+   * Note: This handler does not automatically prevent default behavior or stop propagation.
+   * If needed, you can call event.preventDefault() and/or event.stopPropagation()
+   * within your handler to control event behavior.
    */
   onClick?: OnClickHandler;
   showDuration?: boolean;
 }
-
-// export const wrapper = cva({
-//   variants: {
-//     size: {
-//       default: "h-8 gap-2 px-3.5 py-2",
-//       sm: "h-6 gap-1.5 rounded-md px-1 text-xs",
-//       lg: "h-10 gap-3 rounded-md px-6 text-lg ",
-//       icon: "h-8 w-8",
-//       "icon-lg": "h-10 w-10 text-lg",
-//     },
-//   },
-//   defaultVariants: {
-//     size: "default",
-//   },
-// });
 
 const LazyVideoCardPlaceholder = React.lazy(
   () => import("./VideoCardPlaceholder"),
@@ -188,7 +183,9 @@ export function VideoCard({
   return (
     <div
       className={videoCardClasses.outerLayer}
-      onClick={(e) => (onClick ? onClick("full", e) : goToVideoClickHandler(e))}
+      onClick={(e) =>
+        onClick ? onClick("full", video, e) : goToVideoClickHandler(e)
+      }
     >
       {/* Thumbnail for the video */}
       <Link
@@ -197,7 +194,7 @@ export function VideoCard({
         state={{ video }}
         className={videoCardClasses.thumbnailLink}
         onClick={(e) =>
-          onClick ? onClick("thumbnail", e) : goToVideoClickHandler(e)
+          onClick ? onClick("thumbnail", video, e) : goToVideoClickHandler(e)
         }
       >
         <VideoThumbnail
@@ -234,7 +231,7 @@ export function VideoCard({
             to={`/channel/${video.channel.id}`}
             id="channelLink"
             className="shrink-0"
-            onClick={(e) => onClick && onClick("channel", e)}
+            onClick={(e) => onClick && onClick("channel", video, e)}
           >
             <img
               src={
@@ -249,7 +246,9 @@ export function VideoCard({
         {/* This block contains the Video Text Info: Title, Channel, Schedule. */}
         <div
           className={videoCardClasses.videoTextInfo}
-          onClick={goToVideoClickHandler}
+          onClick={(e) =>
+            onClick ? onClick("info", video, e) : goToVideoClickHandler(e)
+          }
           onMouseDown={goToVideoAuxClickHandler}
         >
           <Link
@@ -258,7 +257,7 @@ export function VideoCard({
             state={{ video }}
             target={videoTarget}
             onClick={(e) =>
-              onClick ? onClick("info", e) : goToVideoClickHandler(e)
+              onClick ? onClick("title", video, e) : goToVideoClickHandler(e)
             }
           >
             {video.title}
@@ -268,7 +267,7 @@ export function VideoCard({
               className={videoCardClasses.channelLink}
               id="channelLink"
               to={`/channel/${video.channel.id}`}
-              onClick={(e) => onClick && onClick("channel", e)}
+              onClick={(e) => onClick && onClick("channel", video, e)}
             >
               {chName}
             </Link>

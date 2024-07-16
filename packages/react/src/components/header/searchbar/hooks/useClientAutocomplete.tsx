@@ -45,7 +45,7 @@ export function useClientAutocomplete(
             value: x.name,
             text: /*langPrefs.preferredLocaleFn(x.name, x.name_jp) ||*/ x.name,
           })) || [];
-      console.log(ac_opts.org);
+      console.log("why is it string", ac_opts.org);
     }
 
     if (searchCategory === undefined) {

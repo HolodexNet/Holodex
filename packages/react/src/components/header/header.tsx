@@ -71,29 +71,29 @@ export function Header({ id }: HeaderProps) {
 
       {isMobile || isSearching ? (
         isSearching ? (
-          <div className="flex w-full items-center">
-            <SearchBar className="shrink grow" />
+          <div className="mt-3 flex w-full items-start self-start">
+            <SearchBar className="shrink grow" autoFocus />
             <Button
               size="icon"
               variant="ghost"
-              className="ml-2"
+              className="ml-2 text-lg text-base-10"
               onClick={() => setIsSearching(false)}
             >
-              <div className="i-heroicons:x-mark" />
+              <div className="i-heroicons:x-mark h-8 w-8" />
             </Button>
           </div>
         ) : (
           <Button
             size="icon"
             variant="ghost"
-            className="ml-auto"
+            className="ml-auto h-12 w-12 text-xl text-base-10"
             onClick={() => setIsSearching(true)}
           >
-            <div className="i-heroicons:magnifying-glass" />
+            <div className="i-heroicons:magnifying-glass h-8 w-8" />
           </Button>
         )
       ) : (
-        <SearchBar className="max-w-lg md:mr-1 lg:mr-2" />
+        <SearchBar className="mt-3 max-w-lg self-start md:mr-1 lg:mr-2" />
       )}
 
       {!isSearching && <UserMenu />}
@@ -115,7 +115,7 @@ export function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="w-9 shrink-0 overflow-hidden rounded-full">
+      <DropdownMenuTrigger className="mx-2 w-8 shrink-0 overflow-hidden rounded-full">
         <img
           src={`https://api.dicebear.com/7.x/shapes/svg?seed=${user.id}`}
           alt="User avatar"
