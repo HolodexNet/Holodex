@@ -1,5 +1,5 @@
 import { CommandList, Command as CommandPrimitive } from "cmdk";
-import { Command, CommandGroup, CommandSeparator } from "@/shadcn/ui/command";
+import { Command, CommandGroup } from "@/shadcn/ui/command";
 import { cn } from "@/lib/utils";
 import {
   queryAtom,
@@ -80,7 +80,7 @@ export function SearchBar({
       className={cn("overflow-visible bg-transparent", className)}
       shouldFilter={false}
     >
-      <div className="group rounded-md bg-base-2 px-3 py-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:bg-base-3">
+      <div className="group rounded-md bg-base-2 p-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:bg-base-3">
         <div className="flex flex-wrap gap-1">
           {queryPieces.map((queryItem, i) => {
             return <QueryBadge item={queryItem} key={"badge" + i} />;
@@ -102,15 +102,14 @@ export function SearchBar({
       <CommandList>
         {open && autocomplete.length > 0 ? (
           <>
-            <div className="min-w-80 rounded-md border border-base bg-base-2 text-base-11 shadow-lg outline-none animate-in sm:left-auto sm:w-full">
-              <CommandGroup
-                heading={<div>{t("search.menu_header_text")}</div>}
-              />
-              <CommandSeparator />
+            <div className="static z-50 min-w-80 rounded-md border border-base bg-base-2 text-base-11 shadow-lg outline-none animate-in sm:left-auto sm:w-full">
+              <CommandGroup heading={t("search.menu_header_text")} />
+              <hr className="h-px border-base-5" />
               <CommandGroup className="h-full overflow-auto">
                 {autocomplete.map((item) => {
                   return (
                     <AutocompleteDropdownItem
+                      key={item.text + item.type + item.value}
                       item={item}
                       onSelect={() => handleItemSelect(item)}
                     />

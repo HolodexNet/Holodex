@@ -52,13 +52,15 @@ export function AutocompleteDropdownItem({
       className={"cursor-pointer"}
       {...rest}
     >
-      <b>{categoryName(item)}:&nbsp;</b>
+      <span className="font-medium text-base-11">
+        {categoryName(item)}:&nbsp;
+      </span>
       {item.incomplete ? (
-        <span className="font-light opacity-60">
+        <span className="font-normal text-base-9">
           {categoryExplanation(item)}
         </span>
       ) : (
-        <span>{categoryValue(item)}</span>
+        <span className="text-base-11">{categoryValue(item)}</span>
       )}
     </CommandItem>
   );

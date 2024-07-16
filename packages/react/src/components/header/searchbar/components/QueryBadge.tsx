@@ -35,7 +35,11 @@ export function QueryBadge({ item }: { item: PrimitiveAtom<QueryItem> }) {
   );
 
   return (
-    <Badge key={queryItem.type + queryItem.value} variant="primary">
+    <Badge
+      key={queryItem.type + queryItem.value}
+      variant="primary"
+      className="px-1 font-normal tracking-tight"
+    >
       {categoryName(queryItem)}: {categoryValue(queryItem)}
       <button
         className="ml-1 rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
