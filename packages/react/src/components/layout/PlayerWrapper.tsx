@@ -8,7 +8,8 @@ import { useAtom, useSetAtom } from "jotai";
 import React, { useCallback } from "react";
 import type { OnProgressProps } from "react-player/base";
 import ReactPlayer from "react-player";
-import { LazyReactPlayer } from "./DefaultPlayerContainer";
+
+export const LazyReactPlayer = React.lazy(() => import("react-player"));
 
 interface IPlayerWrapper {
   /**

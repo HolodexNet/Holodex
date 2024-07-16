@@ -14,7 +14,6 @@ import { size, offset } from "@floating-ui/react-dom";
   │                                                                            │
   └────────────────────────────────────────────────────────────────────────────┘
  */
-export const LazyReactPlayer = React.lazy(() => import("react-player"));
 
 export const DefaultPlayerContainer = React.memo(() => {
   const anchor = useAtomValue(playerLocationRefAtom);
