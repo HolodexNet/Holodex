@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/shadcn/ui/radio-group";
 import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function AboutRequest() {
+export function AboutRequest() {
   const { t } = useTranslation();
   const [type, setType] = useState("");
 

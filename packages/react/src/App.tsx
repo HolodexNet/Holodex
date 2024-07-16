@@ -1,8 +1,8 @@
+import { BrowserRouter, Routes } from "react-router-dom";
 import { useThemeInit } from "./hooks/useTheme";
-import { RouterProvider } from "react-router-dom";
-import router from "./routes/router";
 import { useSyncTFunction } from "./store/i18n";
 import { useEffect } from "react";
+import { routes } from "./routes/router";
 
 export function App() {
   useThemeInit();
@@ -21,5 +21,9 @@ export function App() {
     }
   }, []);
 
-  return <RouterProvider router={router} />;
+  return (
+    <BrowserRouter>
+      <Routes>{routes}</Routes>
+    </BrowserRouter>
+  );
 }

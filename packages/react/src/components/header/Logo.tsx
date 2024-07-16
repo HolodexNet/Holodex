@@ -4,12 +4,11 @@ import "./Logo.scss";
 import { clsx } from "clsx";
 export function Logo({ className, ...props }: React.SVGProps<SVGSVGElement>) {
   const qc = useQueryClient();
-  const i = useIsFetching(undefined, qc);
-  React.useEffect(() => console.log(i), [i]); //console.log(i)
+  const isLoading = useIsFetching(undefined, qc);
   return (
     <svg
       viewBox="-2 -2 28 30"
-      className={clsx(i && "l_loading", className)}
+      className={clsx(isLoading && "l_loading", className)}
       {...props}
     >
       <defs>

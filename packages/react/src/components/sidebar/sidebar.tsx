@@ -58,7 +58,7 @@ export function Sidebar() {
             </div>
             {pinnedOrgs.map((pinnedOrg) => (
               <div key={pinnedOrg} className="space-y-1">
-                {org === pinnedOrg && <hr className="border-base" />}
+                {/* {org === pinnedOrg && <hr className="border-base" />} */}
 
                 <SidebarItem
                   onClose={toggle}

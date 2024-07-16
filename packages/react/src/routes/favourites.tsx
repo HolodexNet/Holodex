@@ -4,7 +4,7 @@ import { VirtuosoGrid } from "react-virtuoso";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 
-export default function Favorites() {
+export function Favorites() {
   const { t } = useTranslation();
   const { data: favChannels } = useFavorites();
   return (

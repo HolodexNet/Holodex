@@ -12,7 +12,7 @@ import { useToast } from "@/shadcn/ui/use-toast";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 
-export default function ResetClientPage(): JSX.Element {
+export function ResetClientPage(): JSX.Element {
   const { toast } = useToast();
   const [isResetting, setIsResetting] = useState<boolean>(false);
   const navigate = useNavigate();

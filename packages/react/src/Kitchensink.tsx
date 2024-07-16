@@ -5,7 +5,7 @@ import { Switch } from "./shadcn/ui/switch";
 import { Label } from "./shadcn/ui/label";
 import { Checkbox } from "./shadcn/ui/checkbox";
 
-function App() {
+export function Kitchensink() {
   const [count, setCount] = useState(0);
 
   return (
@@ -112,5 +112,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

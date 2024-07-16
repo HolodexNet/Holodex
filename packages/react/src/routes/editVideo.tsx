@@ -19,7 +19,7 @@ import { VideoEditMusic } from "@/components/edit/VideoEditMusic";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { idToVideoURL } from "@/lib/utils";
 
-export default function EditVideo() {
+export function EditVideo() {
   const { id } = useParams();
   const { t } = useTranslation();
   const siteIsSmall = useAtomValue(siteIsSmallAtom);

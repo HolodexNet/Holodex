@@ -94,7 +94,7 @@ const GroupComponent: React.FC<{
 };
 
 // Main ChannelsOrg component
-export default function ChannelsOrg() {
+export function ChannelsOrg() {
   const { t } = useTranslation();
   const { org } = useParams();
   const currentOrg = useAtomValue(orgAtom);

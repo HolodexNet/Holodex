@@ -25,7 +25,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
 
-export default function Watch() {
+export function Watch() {
   const location = useLocation();
   const { id } = useParams();
   const clipLangQuery = useAtomValue(clipLanguageQueryAtom);

@@ -25,7 +25,7 @@ import { RadioGroup, RadioGroupItem } from "@/shadcn/ui/radio-group";
 import { Label } from "@/shadcn/ui/label";
 import { cn } from "@/lib/utils";
 
-export default function AboutPlaceholder() {
+export function AboutPlaceholder() {
   const { t } = useTranslation();
   const { dayjs } = useAtomValue(localeAtom);
   const user = useAtomValue(userAtom);

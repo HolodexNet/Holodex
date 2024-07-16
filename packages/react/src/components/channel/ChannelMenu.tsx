@@ -32,12 +32,13 @@ export function ChannelMenu({
       <DropdownMenuTrigger asChild>
         <div>{Children.only(children)}</div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent sideOffset={40}>
+      <DropdownMenuContent sideOffset={40} onClick={(e) => e.stopPropagation()}>
         <DropdownMenuItem
           className="flex gap-2"
           onClick={() => {
             copy(`${window.location.origin}/channel/${channelId}`);
             toast({
+              variant: "primary",
               title: t("component.toast.copiedToClipboard"),
             });
           }}

@@ -2,7 +2,7 @@ import { LoginButtons } from "@/components/login/LoginButtons";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 
-export default function Login() {
+export function Login() {
   const { t } = useTranslation();
 
   return (

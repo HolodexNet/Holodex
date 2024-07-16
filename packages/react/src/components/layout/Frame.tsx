@@ -32,6 +32,7 @@ export function LocationAwareReactivity() {
 
   useEffect(() => {
     if (location.pathname === "/") {
+      console.log("redirecting to org", org);
       navigate(`/org/${org}`, { replace: true });
     }
   }, [location.pathname, navigate, org]);

@@ -65,18 +65,18 @@ export default function StatComponent({
 
   return (
     <Card className="">
-      <CardHeader className="pb-2">
+      <CardHeader className="space-y-1 p-4 pb-2">
         <CardDescription>{title}</CardDescription>
-        <CardTitle className="text-4xl">
+        <CardTitle className="text-3xl">
           {displayAmount.toLocaleString()}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-4 pt-0">
         {change && (
           <div
             className={`text-xs ${displayAmount > 0 ? "text-green-10" : "text-red-10"}`}
           >
-            {change > 0 ? `+${change}` : `${change}`}
+            {change > 0 ? `+${change} ` : `${change} `}
             {timeText}
           </div>
         )}

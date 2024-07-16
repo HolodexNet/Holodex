@@ -1,4 +1,4 @@
 import { TLEditorFrame } from "@/components/tldex/new-editor/frame";
-export default function TLEditorPage() {
+export function TLEditorPage() {
   return <TLEditorFrame />;
 }

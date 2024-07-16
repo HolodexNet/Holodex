@@ -88,7 +88,7 @@ export function ChannelSocials({
       return (
         <div className="flex w-full flex-col gap-2">
           <Button
-            className="group w-full"
+            className="group/fav w-full"
             variant={isFavorited ? "outline" : "secondary"}
             disabled={isPending}
             onClick={() => {
@@ -105,13 +105,15 @@ export function ChannelSocials({
               // eslint-disable-next-line tailwindcss/no-custom-classname
               className={
                 isFavorited
-                  ? "i-tabler:heart group-hover:i-tabler-heart-broken"
-                  : "i-tabler:heart-plus"
+                  ? "i-tabler:heart group-hover/fav:i-tabler-heart-broken inline-block"
+                  : "i-tabler:heart-plus inline-block"
               }
             />
-            {isFavorited
-              ? t("component.channelSocials.removeFromFavorites")
-              : t("component.channelSocials.addToFavorites")}
+            <span className="line-clamp-1 break-all">
+              {isFavorited
+                ? t("component.channelSocials.removeFromFavorites")
+                : t("component.channelSocials.addToFavorites")}
+            </span>
           </Button>
           <div className="flex w-full gap-2">
             <Button

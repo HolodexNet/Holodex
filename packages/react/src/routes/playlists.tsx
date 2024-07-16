@@ -4,7 +4,7 @@ import { TypographyH3 } from "@/shadcn/ui/typography";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
 
-export default function Playlists() {
+export function Playlists() {
   const { data: playlists } = usePlaylists();
 
   const { t } = useTranslation();

@@ -24,7 +24,7 @@ export type ChannelOutletContext = {
   channel: Channel;
 };
 
-export default function Channel() {
+export function Channel() {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();

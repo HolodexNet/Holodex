@@ -43,6 +43,7 @@
     "types": [
       "@types/wicg-file-system-access",
       "@types/node",
+      "vite/client",
     ]
   },
   "include": [
