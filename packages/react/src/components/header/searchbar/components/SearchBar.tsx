@@ -123,7 +123,13 @@ export function SearchBar({
             }}
           >
             <CommandList>
-              <div className="min-w-80 rounded-md border border-base bg-base-2 text-base-11 shadow-lg outline-none animate-in sm:left-auto sm:w-full">
+              <div
+                className="min-w-80 rounded-md border border-base bg-base-2 text-base-11 outline-none animate-in fade-in-20 slide-in-from-top-2  sm:left-auto sm:w-full"
+                style={{
+                  boxShadow:
+                    "0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)",
+                }}
+              >
                 <CommandGroup heading={t("search.menu_header_text")} />
                 <hr className="h-px border-base-5" />
                 <CommandGroup className="h-full overflow-auto">
