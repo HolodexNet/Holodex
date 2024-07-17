@@ -39,7 +39,7 @@ export function Header({ id }: HeaderProps) {
   const [isSearching, setIsSearching] = useState(false);
 
   return (
-    <header id={id} className="z-20 flex items-center gap-1 px-2">
+    <header id={id} className="flex items-center gap-1 px-2">
       <Button
         size="icon"
         variant="ghost"
