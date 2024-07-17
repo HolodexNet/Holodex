@@ -23,6 +23,7 @@ import { useAtom } from "jotai";
 import { queueAtom } from "@/store/queue";
 import { VideoCardType } from "./VideoCard";
 import "./VideoMenu.css";
+import { useVideoSelection } from "@/hooks/useVideoSelection";
 
 const LazyNewPlaylistDialog = lazy(
   () => import("@/components/playlist/NewPlaylistDialog"),
@@ -46,7 +47,7 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
 
   const isQueued = queue.some(({ id }) => videoId === id);
   const isTwitch = url?.includes("twitch");
-
+  const { addVideo, removeVideo, setSelectionMode } = useVideoSelection();
   return (
     <DropdownMenu onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
@@ -151,6 +152,16 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
             </Link>
           </DropdownMenuItem>
         )}
+        <DropdownMenuItem
+          className="video-menu-item"
+          onClick={() => {
+            addVideo(video as unknown as PlaceholderVideo);
+            setSelectionMode(true);
+          }}
+        >
+          <div className="i-lucide:group" />
+          Add to Selection
+        </DropdownMenuItem>
         {status === "upcoming" && (
           <DropdownMenuItem className="video-menu-item">
             <div className="i-heroicons:calendar" />

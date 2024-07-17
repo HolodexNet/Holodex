@@ -23,6 +23,8 @@ import { ErrorFallback } from "../common/ErrorFallback";
 import { Loading } from "../common/Loading";
 import { MiniPlayer } from "../player/MiniPlayer";
 import { Footer } from "./Footer";
+import SelectionFooter from "./SelectionFooter";
+import { selectionModeAtom } from "@/hooks/useVideoSelection";
 
 export function LocationAwareReactivity() {
   const location = useLocation();
@@ -68,6 +70,7 @@ export function Frame() {
     "sidebar-closed": !open,
     "sidebar-fullscreen": fs,
     "header-hidden": headerHidden,
+    "selection-footer-shown": useAtomValue(selectionModeAtom),
     dark: dark,
   });
 
@@ -88,6 +91,7 @@ export function Frame() {
           </Suspense>
         </ErrorBoundary>
       </main>
+      <SelectionFooter />
       {isMobile && <Footer />}
       {miniPlayer && <MiniPlayer />}
       <Toaster />

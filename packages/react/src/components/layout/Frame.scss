@@ -1,7 +1,7 @@
 $header-height: 60px;
 // $sidebar-width: calc(180px + min(100px, calc(100vw * calc(100 / 1920))));
 $sidebar-width: 208px; // maybe static sidebar width is better than have it flex. w-52 is 208px.
-$footer-height: 40px;
+$footer-height: 53px;
 $responsive-breakpoint: 768px;
 
 #layout {
@@ -27,7 +27,7 @@ $responsive-breakpoint: 768px;
       #{$footer-height} + env(safe-area-inset-bottom) / 2
     );
     // maybe add the iphone safety area here.
-    grid-template-rows: var(--header-height-clearance) auto var(
+    grid-template-rows: var(--header-height-clearance) auto auto var(
         --footer-height-clearance
       );
 
@@ -61,6 +61,7 @@ $responsive-breakpoint: 768px;
     grid-template-areas:
       "sidebar content"
       "sidebar content"
+      "sidebar selectionfooter"
       "appfooter appfooter";
 
     > header {
@@ -68,8 +69,12 @@ $responsive-breakpoint: 768px;
     }
   }
 
+  &.selection-footer-shown {
+    // empty for now
+  }
+
   display: grid;
-  grid-template-rows: var(--header-height-clearance) auto var(
+  grid-template-rows: var(--header-height-clearance) auto auto var(
       --footer-height-clearance
     );
   grid-template-columns: var(--sidebar-width-clearance) auto;
@@ -81,6 +86,7 @@ $responsive-breakpoint: 768px;
   grid-template-areas:
     "sidebar header"
     "sidebar content"
+    "sidebar selectionfooter"
     "appfooter appfooter";
 
   > header {
@@ -94,7 +100,7 @@ $responsive-breakpoint: 768px;
       width: var(--sidebar-width);
       position: fixed;
       top: 0;
-      bottom: 0;
+      padding-bottom: var(--footer-height-clearance);
       left: var(--sidebar-left);
       z-index: 1;
       transition:
@@ -106,12 +112,17 @@ $responsive-breakpoint: 768px;
   > main {
     grid-area: content;
     max-width: 100dvw;
+    padding-bottom: calc(var(--footer-height-clearance) + 20px);
     // transition: None;
     // disabling for now so we can use position sticky
     // overflow-y: auto;
   }
 
-  > footer {
+  > footer#selectionFooter {
+    grid-area: selectionfooter;
+  }
+
+  > footer#footer {
     grid-area: appfooter;
   }
 }

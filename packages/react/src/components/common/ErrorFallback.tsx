@@ -1,16 +1,12 @@
 import { FallbackProps } from "react-error-boundary";
 import { Trans, useTranslation } from "react-i18next";
 import { TwitterFeed } from "./TwitterFeed";
-import { useRouteError } from "react-router-dom";
 import { Button } from "@/shadcn/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
-export function ErrorFallback(props?: Partial<FallbackProps>) {
-  const routeError = useRouteError() as Error | null;
+export function ErrorFallback({ error }: Partial<FallbackProps>) {
   const { t } = useTranslation();
   const { logout } = useAuth();
-
-  const error = routeError ?? (props?.error as Error | null);
 
   return (
     <div className="h-full w-full overflow-y-auto p-8">
