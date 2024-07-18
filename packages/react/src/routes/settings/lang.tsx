@@ -25,7 +25,7 @@ export function SettingsLang() {
   const { i18n, t } = useTranslation();
 
   return (
-    <div className="flex flex-col p-2 md:p-4">
+    <div className="flex flex-col">
       <SettingsItem label={t("views.settings.languageSettings")} fullWidth>
         <div className="flex flex-col gap-3">
           <Popover open={langOpen} onOpenChange={setLangOpen}>
