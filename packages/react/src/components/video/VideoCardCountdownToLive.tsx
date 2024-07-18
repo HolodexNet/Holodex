@@ -7,6 +7,8 @@ import { localeAtom, preferredTimezonesAtom } from "@/store/i18n";
 import { VideoCardType } from "./VideoCard";
 import type { Dayjs } from "dayjs";
 
+let incr = 0;
+
 export function VideoCardCountdownToLive({
   video,
   className,
@@ -46,7 +48,7 @@ export function VideoCardCountdownToLive({
             </span>
           )}
           {formatTimeForTimezones(timestamp).map(({ timezone, time }) => (
-            <div key={id + timezone} className="">
+            <div key={id + timezone + incr++} className="">
               <div className="text-base-9">{timezone}:</div>
               <div className="text-center text-sm font-semibold text-base-11">
                 {time}

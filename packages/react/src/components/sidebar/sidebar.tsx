@@ -86,15 +86,16 @@ export function Sidebar() {
           <Link
             to="/settings/orgs"
             className={cn(
-              "w-full justify-start rounded-md px-4 py-2 text-center text-sm font-semibold tracking-tight text-base-9 transition-opacity hover:bg-base-3",
+              "w-full justify-start rounded-md px-4 py-2 text-center text-sm font-semibold tracking-tight text-base-9 transition-opacity duration-300 hover:bg-base-3",
               {
                 "visible opacity-70": fs,
-                "opacity-0 group-hover/sidebar:opacity-70": !fs,
+                "opacity-0 group-hover/sidebar:opacity-50 hover:!opacity-80":
+                  !fs,
               },
             )}
             style={{
               //dotted border:
-              border: "1px dashed var(--base-4)",
+              border: "2px dashed var(--base-4)",
             }}
           >
             Change Starred Orgs

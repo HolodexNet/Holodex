@@ -153,6 +153,8 @@ i18n
   });
 
 i18n.on("languageChanged", async (lng: SupportedLangCodes) => {
+  console.log("Dayjs Language changing to", lng);
+  if (lng === "en") return;
   const localeCode = await loadDayJsLocale(lng);
 
   store.set(localeAtom, {
