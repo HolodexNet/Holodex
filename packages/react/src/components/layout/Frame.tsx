@@ -4,7 +4,7 @@ import { Sidebar } from "@/components/sidebar/sidebar";
 import {
   headerHiddenAtom,
   indicatePageFullscreenAtom,
-  isFloatingAtom,
+  isSidebarFloatingAtom,
   isMobileAtom,
   isSidebarOpenAtom,
   onResizeAtom,
@@ -57,7 +57,7 @@ export function Frame() {
   const dark = useAtomValue(darkAtom);
   const miniPlayer = useAtomValue(miniPlayerAtom);
   const headerHidden = useAtomValue(headerHiddenAtom);
-  const floating = useAtomValue(isFloatingAtom);
+  const floating = useAtomValue(isSidebarFloatingAtom);
   const open = useAtomValue(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);

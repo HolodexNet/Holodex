@@ -40,6 +40,9 @@ const SettingsHomepage = lazy(() =>
 const SettingsBlocked = lazy(() =>
   import("./settings").then((module) => ({ default: module.SettingsBlocked })),
 );
+const SettingsOrgs = lazy(() =>
+  import("./settings").then((module) => ({ default: module.SettingsOrgs })),
+);
 const Playlists = lazy(() =>
   import("./playlists").then((module) => ({ default: module.Playlists })),
 );
@@ -127,6 +130,7 @@ export const routes = (
       <Route path="user" Component={SettingsUser} />
       <Route path="homepage" Component={SettingsHomepage} />
       <Route path="blocked" Component={SettingsBlocked} />
+      <Route path="orgs" Component={SettingsOrgs} />
     </Route>
     <Route path="playlists" Component={Playlists} />
     <Route path="playlist/:id" element={<div>Playlist Page</div>} />

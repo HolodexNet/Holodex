@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { HTMLAttributes, useRef, useState } from "react";
 import {
-  isFloatingAtom,
+  isSidebarFloatingAtom,
   isMobileAtom,
   isSidebarOpenAtom,
   sidebarShouldBeFullscreenAtom,
@@ -28,7 +28,7 @@ export function Sidebar() {
   const { org } = useParams();
   const ref = useRef(null);
 
-  const floating = useAtomValue(isFloatingAtom);
+  const floating = useAtomValue(isSidebarFloatingAtom);
   const [open, setOpen] = useAtom(isSidebarOpenAtom);
   const toggle = useSetAtom(toggleSidebarAtom);
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
@@ -40,7 +40,11 @@ export function Sidebar() {
   useOnClickOutside(ref, handleClickOutside);
 
   return (
-    <aside className="z-30 border-r border-r-base pb-12" id="sidebar" ref={ref}>
+    <aside
+      className=" z-30 border-r border-r-base pb-12"
+      id="sidebar"
+      ref={ref}
+    >
       <div className="flex min-h-[100dvh] flex-col bg-base-2">
         <div className="flex items-center gap-2 px-4 pb-2 pt-4">
           <Logo className="ml-1.5 h-8 w-8" />
@@ -52,7 +56,7 @@ export function Sidebar() {
             onClick={toggle}
           />
         </div>
-        <div className="flex grow flex-col space-y-1 px-3 py-2">
+        <div className="group/sidebar flex grow flex-col space-y-1 px-3 py-2">
           <div className="mb-2">
             <OrgSelectorCombobox />
           </div>
@@ -80,8 +84,26 @@ export function Sidebar() {
               {org === pinnedOrg && <hr className="border-base" />}
             </div>
           ))}
-          <div className="grow"></div>
-          <hr className="my-2 border-base" />
+          <Link
+            to="/settings/orgs"
+            className={cn(
+              "w-full justify-start rounded-md px-4 py-2 text-center text-sm font-semibold tracking-tight text-base-9 transition-opacity hover:bg-base-3",
+              {
+                "visible opacity-70": fs,
+                "opacity-0 group-hover/sidebar:opacity-70": !fs,
+              },
+            )}
+            style={{
+              //dotted border:
+              border: "1px dashed var(--base-4)",
+            }}
+          >
+            Change Starred Orgs
+          </Link>
+        </div>
+        <div className="grow"></div>
+        <hr className="mx-3 my-1 border-base" />
+        <div className="flex flex-col space-y-1 px-3 pb-1">
           <SidebarItem
             label={t("component.mainNav.favorites")}
             icon="i-heroicons:heart"

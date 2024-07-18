@@ -17,7 +17,7 @@ export const sidebarShouldBeFullscreenAtom = atom(
   window.innerWidth < FooterSizeBreak,
 );
 
-export const isFloatingAtom = atom(
+export const isSidebarFloatingAtom = atom(
   (get) => get(siteIsSmallAtom) || get(pageIsFullscreenAtom),
 );
 

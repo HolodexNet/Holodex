@@ -361,6 +361,7 @@ views:
       favoritesWhenLoggedIn: Favorites (When Logged In)
     hideFeaturesLabel: Hide Features
     showTimezonesOnHover: Show Timezones on hover
+    orgs: Starred Orgs
   app:
     update_available: An update is available
     update_btn: Update

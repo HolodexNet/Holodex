@@ -34,6 +34,11 @@ export function Settings() {
         label: t("views.settings.homepage"),
       },
       {
+        icon: "i-heroicons:star",
+        href: "/settings/orgs",
+        label: t("views.settings.orgs"),
+      },
+      {
         icon: "i-heroicons:eye-slash",
         href: "/settings/blocked",
         label: t("views.settings.blockedChannels"),
@@ -57,3 +62,4 @@ export { SettingsLang } from "./lang";
 export { SettingsTheme } from "./theme";
 export { SettingsUser } from "./user";
 export { SettingsHomepage } from "./homepage";
+export { SettingsOrgs } from "./orgs";
