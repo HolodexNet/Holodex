@@ -168,8 +168,9 @@ export const OrgReranker = ({
         >
           {starredOrgs.map((org) => (
             <SortableItem key={"draggable" + org.name} id={org.name}>
-              <div className="my-1 flex h-10 items-center justify-between rounded bg-primaryA-4 p-2">
-                <span>{org.name}</span>
+              <div className="my-1 flex h-10 cursor-grab items-center justify-between rounded bg-primaryA-4 p-2">
+                <div className="i-mdi:drag mr-1"></div>
+                <span className="grow">{org.name}</span>
                 <button
                   onClick={() => toggleStar(org, true)}
                   className="text-yellow-500 hover:text-yellow-600"
