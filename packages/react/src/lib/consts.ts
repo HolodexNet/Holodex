@@ -114,3 +114,5 @@ export const MESSAGE_TYPES = Object.freeze({
 });
 
 export const MAX_PLAYLIST_LENGTH = 500;
+
+export const GET_ON_INIT = { getOnInit: true };

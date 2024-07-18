@@ -4,8 +4,9 @@ import { atomWithStorage } from "jotai/utils";
 export function atomWithStorageBroadcast<Value>(
   key: string,
   initialValue: Value,
+  opts: { getOnInit?: boolean | undefined } | undefined,
 ) {
-  const baseAtom = atomWithStorage(key, initialValue);
+  const baseAtom = atomWithStorage(key, initialValue, undefined, opts);
   const listeners = new Set<(event: MessageEvent<Value>) => void>();
   if (!window.BroadcastChannel) {
     return baseAtom;

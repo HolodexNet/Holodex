@@ -62,7 +62,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         {process.env.NODE_ENV === "development" && (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense>
             <ReactQueryDevtools position={"right"} buttonPosition="top-right" />
             <DevTools position="top-right" />
           </Suspense>

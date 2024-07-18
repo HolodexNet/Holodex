@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes } from "react-router-dom";
 import { useThemeInit } from "./hooks/useTheme";
 import { useSyncTFunction } from "./store/i18n";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { routes } from "./routes/router";
 
 export function App() {
@@ -23,7 +23,9 @@ export function App() {
 
   return (
     <BrowserRouter>
-      <Routes>{routes}</Routes>
+      <Suspense>
+        <Routes>{routes}</Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

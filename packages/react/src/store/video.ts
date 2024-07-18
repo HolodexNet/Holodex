@@ -1,9 +1,12 @@
+import { GET_ON_INIT } from "@/lib/consts";
 import { useAtom } from "jotai/react";
 import { atomWithStorage } from "jotai/utils";
 
 export const videoCardSizeAtom = atomWithStorage<VideoCardSize>(
   "videocard-size",
   "lg",
+  undefined,
+  GET_ON_INIT,
 );
 
 export function useVideoCardSizes(allowedCardSizes: VideoCardSize[]) {

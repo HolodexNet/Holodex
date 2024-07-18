@@ -32,7 +32,7 @@ export function About() {
       {
         label: t("about.placeholder.title"),
         href: "/about/placeholder",
-        icon: "i-heroicons:calendar-days",
+        icon: "i-tabler:timeline-event-plus",
       },
       {
         label: t("about.extensions.title"),

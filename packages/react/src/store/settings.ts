@@ -1,3 +1,4 @@
+import { GET_ON_INIT } from "@/lib/consts";
 import { atom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
@@ -17,19 +18,24 @@ export interface HolodexSettings {
 }
 
 // Create atoms with storage for each setting
-export const settingsAtom = atomWithStorage<HolodexSettings>("mainSettings", {
-  englishName: false,
-  clipLanguage: [],
-  redirectMode: false,
-  hideThumbnail: false,
-  hidePlaceholder: false,
-  gridDensity: 0,
-  defaultOpen: "Home",
-  hideCollabStreams: false,
-  filterDeadStreams: true,
-  ignoredTopics: [],
-  blockedChannels: [],
-});
+export const settingsAtom = atomWithStorage<HolodexSettings>(
+  "mainSettings",
+  {
+    englishName: false,
+    clipLanguage: [],
+    redirectMode: false,
+    hideThumbnail: false,
+    hidePlaceholder: false,
+    gridDensity: 0,
+    defaultOpen: "Home",
+    hideCollabStreams: false,
+    filterDeadStreams: true,
+    ignoredTopics: [],
+    blockedChannels: [],
+  },
+  undefined,
+  GET_ON_INIT,
+);
 
 // Create individual atoms for each property
 export const englishNameAtom = atom(
