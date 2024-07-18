@@ -28,10 +28,12 @@ export function SettingsHomepage() {
     {
       value: "Home",
       label: t("views.settings.defaultHomepage.lastVisitedOrgHome"),
+      icon: "i-lucide:home",
     },
     {
       value: "Favorites",
       label: t("views.settings.defaultHomepage.favoritesWhenLoggedIn"),
+      icon: "i-lucide:heart",
     },
   ];
 
@@ -72,42 +74,47 @@ export function SettingsHomepage() {
   ];
 
   return (
-    <div className="flex flex-col p-2 md:p-4">
+    <div className="flex flex-col">
       <SettingsItem label={t("views.settings.defaultPage")} fullWidth>
         <div className="flex flex-col gap-2">
-          <div
-            className={cn("flex cursor-pointer items-center gap-2", {
-              "text-primary-8": defaultOpen === "Home",
-            })}
-            onClick={() => setDefaultOpen("Home")}
-          >
-            <div className="i-lucide:home"></div>
-            <div>{t("views.settings.defaultHomepage.lastVisitedOrgHome")}</div>
-          </div>
-          <div
-            className={cn("flex cursor-pointer items-center gap-2", {
-              "text-primary-8": defaultOpen === "Favorites",
-            })}
-            onClick={() => setDefaultOpen("Favorites")}
-          >
-            <div className="i-lucide:heart"></div>
-            <div>
-              {t("views.settings.defaultHomepage.favoritesWhenLoggedIn")}
+          {defaultPages.map(({ value, label, icon }) => (
+            <div key={value} className="flex items-center gap-3">
+              <Checkbox
+                checked={defaultOpen === value}
+                onCheckedChange={() => setDefaultOpen(value)}
+                id={`defaultPage-${value}`}
+              />
+              <Label
+                htmlFor={`defaultPage-${value}`}
+                className={cn("flex cursor-pointer items-center gap-1", {
+                  "opacity-70": defaultOpen !== value,
+                })}
+              >
+                <div className={icon}></div>
+                <span>{label}</span>
+              </Label>
             </div>
-          </div>
+          ))}
         </div>
       </SettingsItem>
       <SettingsItem label={t("views.settings.gridSizeLabel")} fullWidth>
         <div className="flex flex-col gap-2">
           {gridSizes.map(({ label, value, icon }) => (
-            <div
-              className={cn("flex cursor-pointer items-center gap-2", {
-                "text-primary-8": value === size,
-              })}
-              onClick={() => setSize(value)}
-            >
-              <div className={icon}></div>
-              <div>{label}</div>
+            <div key={value} className="flex items-center gap-3">
+              <Checkbox
+                checked={size === value}
+                onCheckedChange={() => setSize(value)}
+                id={`gridSize-${value}`}
+              />
+              <Label
+                htmlFor={`gridSize-${value}`}
+                className={cn("flex cursor-pointer items-center gap-1", {
+                  "opacity-70": size !== value,
+                })}
+              >
+                <div className={icon}></div>
+                <span>{label}</span>
+              </Label>
             </div>
           ))}
         </div>
@@ -120,6 +127,7 @@ export function SettingsHomepage() {
           <div className="flex flex-wrap gap-2">
             {ignoredTopics.map((topic) => (
               <Badge
+                key={topic}
                 onClick={() =>
                   setIgnoredTopics(ignoredTopics.filter((t) => t !== topic))
                 }
@@ -132,18 +140,16 @@ export function SettingsHomepage() {
         </div>
       </SettingsItem>
       <SettingsItem label={t("views.settings.hideFeaturesLabel")} fullWidth>
-        <div className="flex w-full flex-col items-start gap-2">
+        <div className="flex w-full flex-col items-start gap-3">
           {hideFeatures.map(({ label, value, onChange }, index) => (
-            <div className="flex gap-2">
+            <div key={label} className="flex gap-3">
               <Checkbox
                 checked={value}
                 onCheckedChange={onChange}
                 id={`hidefeature-${label}`}
               />
               <Label
-                className={cn("cursor-pointer", {
-                  "bg-base-3": index % 2,
-                })}
+                className={cn("cursor-pointer", { "opacity-70": !value })}
                 htmlFor={`hidefeature-${label}`}
               >
                 {label}

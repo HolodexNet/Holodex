@@ -10,8 +10,8 @@ export function SettingsBlocked() {
   const blockedChannels = useAtomValue(blockedChannelsAtom);
 
   return (
-    <div className="flex flex-col gap-2 p-2 md:p-4">
-      <SettingsItem label={t("views.settings.blockedChannels")}>
+    <div className="flex flex-col gap-2">
+      <SettingsItem label={t("views.settings.blockedChannels")} fullWidth>
         <div className="flex w-full justify-center">
           {blockedChannels.length ? (
             <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] ">

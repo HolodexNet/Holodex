@@ -31,7 +31,7 @@ export function SettingsTheme() {
   const [secondary, setSecondary] = useAtom(secondaryAtom);
 
   return (
-    <div className="flex flex-col p-2 md:p-4">
+    <div className="flex flex-col">
       <SettingsItem label={t("views.settings.darkModeLabel")} fullWidth>
         <Switch checked={dark} onCheckedChange={setDark} />
       </SettingsItem>

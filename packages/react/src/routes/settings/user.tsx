@@ -57,8 +57,8 @@ export function SettingsUser() {
     );
 
   return (
-    <div className="flex flex-col p-2 md:p-4">
-      <div className="mb-4 flex items-center gap-6">
+    <div className="flex flex-col">
+      <div className="my-4 flex items-center gap-6">
         <img
           className="h-24 w-24 rounded-full"
           src={`https://api.dicebear.com/7.x/shapes/svg?seed=${user.id}`}
