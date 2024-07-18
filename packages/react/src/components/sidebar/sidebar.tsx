@@ -66,7 +66,7 @@ export function Sidebar() {
               <SidebarItem
                 onClose={toggle}
                 label={pinnedOrg.name}
-                href={`/org/${pinnedOrg}`}
+                href={`/org/${pinnedOrg.name}`}
                 icon="i-ph:placeholder-fill"
               />
               {org === pinnedOrg.name && (
@@ -74,7 +74,7 @@ export function Sidebar() {
                   <SidebarItem
                     onClose={toggle}
                     label={"Members"}
-                    href={`/org/${pinnedOrg}/channels`}
+                    href={`/org/${pinnedOrg.name}/channels`}
                     icon="i-heroicons:identification"
                   />
                 </div>

@@ -35,7 +35,7 @@ export function SettingsHomepage() {
       label: t("views.settings.defaultHomepage.favoritesWhenLoggedIn"),
       icon: "i-lucide:heart",
     },
-  ];
+  ] as const;
 
   const gridSizes = [
     {
@@ -71,14 +71,17 @@ export function SettingsHomepage() {
       value: hidePlaceholder,
       onChange: () => setHidePlaceholder(!hidePlaceholder),
     },
-  ];
+  ] as const;
 
   return (
     <div className="flex flex-col">
       <SettingsItem label={t("views.settings.defaultPage")} fullWidth>
         <div className="flex flex-col gap-2">
           {defaultPages.map(({ value, label, icon }) => (
-            <div key={value} className="flex items-center gap-3">
+            <div
+              key={"defaultPage-" + value}
+              className="flex items-center gap-3"
+            >
               <Checkbox
                 checked={defaultOpen === value}
                 onCheckedChange={() => setDefaultOpen(value)}
@@ -127,7 +130,7 @@ export function SettingsHomepage() {
           <div className="flex flex-wrap gap-2">
             {ignoredTopics.map((topic) => (
               <Badge
-                key={topic}
+                key={"ignored-topic-" + topic}
                 onClick={() =>
                   setIgnoredTopics(ignoredTopics.filter((t) => t !== topic))
                 }
@@ -141,8 +144,8 @@ export function SettingsHomepage() {
       </SettingsItem>
       <SettingsItem label={t("views.settings.hideFeaturesLabel")} fullWidth>
         <div className="flex w-full flex-col items-start gap-3">
-          {hideFeatures.map(({ label, value, onChange }, index) => (
-            <div key={label} className="flex gap-3">
+          {hideFeatures.map(({ label, value, onChange }) => (
+            <div key={"hidefeature-" + label} className="flex gap-3">
               <Checkbox
                 checked={value}
                 onCheckedChange={onChange}

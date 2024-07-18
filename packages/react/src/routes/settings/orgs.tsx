@@ -132,7 +132,7 @@ export const OrgReranker = ({
     if (active.id !== over?.id) {
       setStarredOrgs((items) => {
         const oldIndex = items.findIndex((item) => item.name === active.id);
-        const newIndex = items.findIndex((item) => item.name === over.id);
+        const newIndex = items.findIndex((item) => item.name === over?.id);
 
         const newItems = arrayMove(items, oldIndex, newIndex);
         setRankedOrgs([...newItems]);
