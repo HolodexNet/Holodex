@@ -1,3 +1,4 @@
+import { GET_ON_INIT } from "@/lib/consts";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
@@ -9,7 +10,12 @@ export const defaultOrgs = [
   { name: "All Vtubers", short: "Vtuber" },
 ];
 
-export const orgRankingAtom = atomWithStorage<Org[]>("orgRanking", defaultOrgs);
+export const orgRankingAtom = atomWithStorage<Org[]>(
+  "orgRanking",
+  defaultOrgs,
+  undefined,
+  GET_ON_INIT,
+);
 
 export const currentOrgAtom = atomWithStorage<Org>("org", {
   name: "Hololive",

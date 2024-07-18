@@ -14,16 +14,15 @@ import {
 } from "@/hooks/useFrame";
 import { Logo } from "../header/Logo";
 import { MUSICDEX_URL } from "@/lib/consts";
-import { atom } from "jotai";
 import { useOnClickOutside } from "usehooks-ts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
+import { orgRankingAtom } from "@/store/org";
 
 // New atom for pinned orgs
-const pinnedOrgsAtom = atom<string[]>(["Hololive", "Nijisanji", "VSPo"]);
 
 export function Sidebar() {
   const { t } = useTranslation();
-  const [pinnedOrgs] = useAtom(pinnedOrgsAtom);
+  const rankedOrgs = useAtomValue(orgRankingAtom);
   const [tldexOpen, setTldexOpen] = useState(false);
   const { org } = useParams();
   const ref = useRef(null);
@@ -60,17 +59,17 @@ export function Sidebar() {
           <div className="mb-2">
             <OrgSelectorCombobox />
           </div>
-          {pinnedOrgs.map((pinnedOrg) => (
-            <div key={pinnedOrg} className="space-y-1">
+          {rankedOrgs.map((pinnedOrg) => (
+            <div key={pinnedOrg.name} className="space-y-1">
               {/* {org === pinnedOrg && <hr className="border-base" />} */}
 
               <SidebarItem
                 onClose={toggle}
-                label={pinnedOrg}
+                label={pinnedOrg.name}
                 href={`/org/${pinnedOrg}`}
                 icon="i-ph:placeholder-fill"
               />
-              {org === pinnedOrg && (
+              {org === pinnedOrg.name && (
                 <div className="w-full pl-6">
                   <SidebarItem
                     onClose={toggle}
@@ -81,7 +80,7 @@ export function Sidebar() {
                 </div>
               )}
 
-              {org === pinnedOrg && <hr className="border-base" />}
+              {org === pinnedOrg.name && <hr className="border-base" />}
             </div>
           ))}
           <Link

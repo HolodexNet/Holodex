@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { Star, StarOff } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { useOrgs } from "@/services/orgs.service";
@@ -22,6 +21,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { Props as DndContextProps } from "@dnd-kit/core/dist/components/DndContext/DndContext.d.ts";
+import { ScrollArea } from "@/shadcn/ui/scroll-area";
 
 // const clamp = (number: number, boundOne: number, boundTwo?: number): number => {
 //   if (!boundTwo) {
@@ -78,7 +78,7 @@ export function SettingsOrgs() {
       <SettingsItem label={"Starred Organizations"} fullWidth>
         <OrgReranker rankedOrgs={rankedOrgs} setRankedOrgs={setRankedOrgs} />
         <button
-          className="rounded-md bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600"
+          className="mt-4 rounded-md bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600"
           onClick={() => {
             setRankedOrgs([]);
           }}
@@ -100,6 +100,7 @@ export const OrgReranker = ({
   const { data: allOrgs } = useOrgs();
   const [starredOrgs, setStarredOrgs] = useState<Org[]>([]);
   const [unstarredOrgs, setUnstarredOrgs] = useState<Org[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -141,7 +142,6 @@ export const OrgReranker = ({
   };
 
   const toggleStar = (org: Org, remove?: boolean) => {
-    console.log("toggle star", org, remove);
     if (remove) {
       setRankedOrgs(
         starredOrgs.filter((starredOrg) => starredOrg.name !== org.name),
@@ -151,8 +151,12 @@ export const OrgReranker = ({
     }
   };
 
+  const filteredUnstarredOrgs = unstarredOrgs.filter((org) =>
+    org.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
   return (
-    <div>
+    <div className="min-w-72 space-y-2">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -164,10 +168,13 @@ export const OrgReranker = ({
         >
           {starredOrgs.map((org) => (
             <SortableItem key={"draggable" + org.name} id={org.name}>
-              <div className="my-1 flex items-center justify-between rounded bg-primaryA-3 p-2">
+              <div className="my-1 flex h-10 items-center justify-between rounded bg-primaryA-4 p-2">
                 <span>{org.name}</span>
-                <button onClick={() => toggleStar(org, true)}>
-                  <Star size={20} fill="gold" stroke="gold" />
+                <button
+                  onClick={() => toggleStar(org, true)}
+                  className="text-yellow-500 hover:text-yellow-600"
+                >
+                  <div className="i-lucide:star-off text-lg" />
                 </button>
               </div>
             </SortableItem>
@@ -176,18 +183,34 @@ export const OrgReranker = ({
       </DndContext>
 
       <div className="mt-4">
-        <h3 className="mb-2 text-lg font-semibold">Unstarred Organizations</h3>
-        {unstarredOrgs.map((org) => (
-          <div
-            key={"unstarred-" + org.name}
-            className="my-1 flex items-center justify-between rounded bg-base-3 p-2"
-          >
-            <span>{org.name}</span>
-            <button onClick={() => toggleStar(org)}>
-              <StarOff size={20} />
-            </button>
-          </div>
-        ))}
+        <h3 className="mb-2 text-center text-lg font-semibold text-base-11">
+          Other Organizations
+        </h3>
+        <div className="flex h-9 w-full rounded-md rounded-b-none border border-base bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-primaryA-8">
+          <input
+            type="text"
+            placeholder="Filter organizations..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full border-0 border-none border-transparent bg-transparent outline-none placeholder:text-base-8"
+          />
+        </div>
+        <ScrollArea className="h-[300px] rounded-md rounded-b rounded-t-none border border-base-5 px-1 md:h-[60vh]">
+          {filteredUnstarredOrgs.map((org) => (
+            <div
+              key={"unstarred-" + org.name}
+              className="my-1 flex items-center justify-between rounded bg-base-4 p-2"
+            >
+              <span>{org.name}</span>
+              <button
+                onClick={() => toggleStar(org)}
+                className="text-gray-500 hover:text-gray-600"
+              >
+                <div className="i-lucide:star text-lg" />
+              </button>
+            </div>
+          ))}{" "}
+        </ScrollArea>
       </div>
     </div>
   );
