@@ -33,7 +33,7 @@ export function SettingsHomepage() {
     {
       value: "Favorites",
       label: t("views.settings.defaultHomepage.favoritesWhenLoggedIn"),
-      icon: "i-lucide:heart",
+      icon: "i-heroicons:heart",
     },
   ] as const;
 

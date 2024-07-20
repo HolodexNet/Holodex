@@ -24,6 +24,7 @@ import { queueAtom } from "@/store/queue";
 import { VideoCardType } from "./VideoCard";
 import "./VideoMenu.css";
 import { useVideoSelection } from "@/hooks/useVideoSelection";
+import { TLDexLogo } from "../common/TLDexLogo";
 
 const LazyNewPlaylistDialog = lazy(
   () => import("@/components/playlist/NewPlaylistDialog"),
@@ -169,7 +170,7 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
           </DropdownMenuItem>
         )}
         <DropdownMenuItem className="video-menu-item">
-          <div className="i-heroicons:newspaper" />
+          <TLDexLogo size={16} />
           {t("component.videoCard.openClient")}
         </DropdownMenuItem>
         {status === "past" && (

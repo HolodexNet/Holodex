@@ -92,6 +92,7 @@ const Watch = lazy(() =>
 const ResetClientPage = lazy(() =>
   import("./debug").then((module) => ({ default: module.ResetClientPage })),
 );
+const Playlist = lazy(() => import("./playlist"));
 
 const store = getDefaultStore();
 
@@ -133,7 +134,7 @@ export const routes = (
       <Route path="orgs" Component={SettingsOrgs} />
     </Route>
     <Route path="playlists" Component={Playlists} />
-    <Route path="playlist/:id" element={<div>Playlist Page</div>} />
+    <Route path="playlist/:id" element={Playlist} />
     <Route path="about" Component={About}>
       <Route index Component={AboutGeneral} />
       <Route path="general" Component={AboutGeneral} />

@@ -2,10 +2,12 @@
   @apply flex gap-2 hover:text-base-12 text-base-11
 }
 
-.video-menu-item div:first-child {
+.video-menu-item div:first-child,
+.video-menu-item svg:first-child {
   @apply text-base-9
 }
 
-.video-menu-item:hover div:first-child {
+.video-menu-item:hover div:first-child,
+.video-menu-item:hover svg:first-child {
   @apply text-base-11
 }

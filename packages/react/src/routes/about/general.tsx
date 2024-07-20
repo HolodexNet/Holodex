@@ -36,7 +36,7 @@ export function AboutGeneral() {
       {
         className:
           "border-orange-10 hover:bg-orange-4 hover:border-orange-10 text-orange-10",
-        href: "https://docs.holodex.net/docs/holodex/f4e6fa31af431-getting-started",
+        href: "https://docs.holodex.net/",
         icon: "i-lucide:file-code",
         label: t("about.quicklink.apiDocs"),
       },
