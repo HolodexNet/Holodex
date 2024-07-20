@@ -230,7 +230,7 @@ export function ModifyInfoForm() {
         <Button disabled={isPending} type="submit" className="w-full">
           <div
             className={
-              isPending ? "i-lucide:loader-2 animate-spin" : "i-heroicons:check"
+              isPending ? "i-lucide:loader-2 animate-spin" : "i-lucide:check"
             }
           />
           {t("channelRequest.sendRequest")}

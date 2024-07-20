@@ -67,7 +67,7 @@ export const ClipLanguageSelector: React.FC = () => {
                 >
                   <div
                     className={cn(
-                      "i-heroicons:check mr-2 h-4 w-4",
+                      "i-lucide:check mr-2 h-4 w-4",
                       selectedLangs.includes(lang.value)
                         ? "opacity-100"
                         : "opacity-0",

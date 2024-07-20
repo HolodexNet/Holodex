@@ -63,7 +63,7 @@ export function SettingsLang() {
                     >
                       <div
                         className={cn(
-                          "i-heroicons:check mr-2 h-4 w-4",
+                          "i-lucide:check mr-2 h-4 w-4",
                           val === i18n.language ? "opacity-100" : "opacity-0",
                         )}
                       />

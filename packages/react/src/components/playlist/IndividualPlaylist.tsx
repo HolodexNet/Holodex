@@ -177,7 +177,7 @@ export default function IndividualPlaylist({ playlist }: Props) {
                   variant="ghost"
                   onClick={() => deleteVideo(index)}
                 >
-                  <span className="i-heroicons:x-mark-solid" />
+                  <span className="i-heroicons:x-mark" />
                 </Button>
                 <Button
                   size="icon"

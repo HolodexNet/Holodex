@@ -7,6 +7,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/shadcn/ui/command";
 import { localeAtom, preferredTimezonesAtom } from "@/store/i18n";
 import { useAtom, useAtomValue } from "jotai";
@@ -81,26 +82,29 @@ const TimezoneSelector = () => {
           <Command>
             <CommandInput placeholder="Search timezone..." className="h-9" />
             <CommandEmpty>No timezone found.</CommandEmpty>
-            <CommandGroup className="max-h-[300px] overflow-auto">
-              {timezoneOptions.map((tz) => (
-                <CommandItem
-                  key={tz.value}
-                  onSelect={() => handleTimezoneSelect(tz.value)}
-                >
-                  <div className="flex w-full flex-row items-center">
-                    <div className="flex flex-col">
-                      {tz.label}
-                      <span className="text-muted">
-                        {allTimezones[tz.label]}
-                      </span>
+            <CommandList>
+              <CommandGroup className="max-h-[300px] overflow-auto">
+                {timezoneOptions.map((tz) => (
+                  <CommandItem
+                    key={tz.value}
+                    value={tz.value}
+                    onSelect={() => handleTimezoneSelect(tz.value)}
+                  >
+                    <div className="flex w-full flex-row items-center">
+                      <div className="flex flex-col">
+                        {tz.label}
+                        <span className="text-muted">
+                          {allTimezones[tz.label]}
+                        </span>
+                      </div>
+                      <div className="ml-auto text-xs text-muted">
+                        (UTC{tz.offset})
+                      </div>
                     </div>
-                    <div className="ml-auto text-xs text-muted">
-                      (UTC{tz.offset})
-                    </div>
-                  </div>
-                </CommandItem>
-              ))}
-            </CommandGroup>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
           </Command>
         </PopoverContent>
       </Popover>

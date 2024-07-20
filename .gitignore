@@ -27,3 +27,4 @@ pnpm-debug.log*
 
 # rollup-bundle-visualizer output
 stats.html
+packages/react/extracted_icons_with_files.txt
