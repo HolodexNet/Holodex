@@ -13,7 +13,7 @@ export function ContactList() {
         Have a question or want to work together? We'd love to hear from you.
       </p>
       <div className="grid w-full max-w-md grid-cols-1 gap-4 sm:grid-cols-2">
-        <Button asChild variant="default" className="p-8">
+        <Button asChild variant="link" className="w-full justify-start">
           <a
             href="https://twitter.com/messages/compose?recipient_id=1320894663084048384&text=Hello"
             target="_blank"
@@ -23,7 +23,7 @@ export function ContactList() {
             {t("about.contact.twitter")}
           </a>
         </Button>
-        <Button asChild variant="default" className="p-8">
+        <Button asChild variant="link" className="w-full justify-start">
           <a
             href="https://twitter.com/messages/compose?recipient_id=1320894663084048384&text=Hello"
             target="_blank"

@@ -159,7 +159,7 @@ export function Sidebar() {
             <TooltipTrigger asChild>
               <Button variant="ghost" className="p-2" size="icon-lg" asChild>
                 <Link to="/about">
-                  <span className="i-heroicons:information-circle" />
+                  <span className="i-heroicons:question-mark-circle" />
                 </Link>
               </Button>
             </TooltipTrigger>

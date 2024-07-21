@@ -667,7 +667,7 @@ editor:
   enterMode: Edit Video
 about:
   quicklinks: Quick Links
-  discordBtn: Holodex Discord
+  discordBtn: Discord
   faq:
     title: FAQ
     ytchatHeader: My Youtube Chat is not logged in!
@@ -831,10 +831,10 @@ about:
         (If you'd like to add your name to this list, drop us a poke on
         Discord!)
   quicklink:
-    twitter: Follow us on twitter
-    ko-fi: Support us on Ko-Fi
-    github: Issues / Source Code
-    apiDocs: API Documentation
+    twitter: Twitter
+    ko-fi: Superchat
+    github: Github
+    apiDocs: API
   contact:
     discord: Join Holodex Discord
     twitter: DM us on Twitter

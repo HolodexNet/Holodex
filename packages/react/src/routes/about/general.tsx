@@ -1,72 +1,24 @@
 import { AboutDescription } from "@/components/about/Description";
 import { AboutHeading } from "@/components/about/Heading";
-import { QuickLink, QuickLinkProps } from "@/components/about/QuickLink";
 import StatComponent from "@/components/about/Stats";
 import { Loading } from "@/components/common/Loading";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 export function AboutGeneral() {
   const { t } = useTranslation();
 
-  const quickLinks: QuickLinkProps[] = useMemo(
-    () => [
-      {
-        className:
-          "border-blue-11 hover:bg-blue-4 hover:border-blue-11 text-blue-11",
-        href: "https://twitter.com/holodex",
-        icon: "i-lucide:twitter",
-        label: t("about.quicklink.twitter"),
-      },
-      {
-        className:
-          "border-blue-500 hover:bg-blue-4 hover:border-blue-500 text-blue-500",
-        href: "https://ko-fi.com/holodex",
-        icon: "i-cib:ko-fi",
-        label: t("about.quicklink.ko-fi"),
-      },
-      {
-        className:
-          "border-secondary-11 hover:bg-secondary-4 hover:border-secondary-11 text-secondary-11",
-        href: "https://github.com/HolodexNet/Holodex",
-        icon: "i-lucide:github",
-        label: t("about.quicklink.github"),
-      },
-      {
-        className:
-          "border-orange-10 hover:bg-orange-4 hover:border-orange-10 text-orange-10",
-        href: "https://docs.holodex.net/",
-        icon: "i-lucide:file-code",
-        label: t("about.quicklink.apiDocs"),
-      },
-      {
-        className:
-          "border-violet-10 hover:bg-violet-4 hover:border-violet-10 text-violet-10",
-        href: "https://discord.gg/A24AbzgvRJ",
-        icon: "i-carbon:logo-discord",
-        label: t("about.discordBtn"),
-      },
-    ],
-    [t],
-  );
-
   return (
     <article className="w-full @container">
+      <AboutHeading>{t("about.quicklinks")}</AboutHeading>
+      <QuickLinks />
       <AboutHeading>{t("about.general.summary.title")}</AboutHeading>
       <AboutDescription>{t("about.general.summary.0")}</AboutDescription>
       <AboutDescription>{t("about.general.summary.1")}</AboutDescription>
       <AboutDescription>{t("about.general.summary.2")}</AboutDescription>
       <AboutHeading>{t("component.channelInfo.stats")}</AboutHeading>
       <StatsBlock></StatsBlock>
-      <AboutHeading>{t("about.quicklinks")}</AboutHeading>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-4 pt-2">
-        {quickLinks.map((link) => (
-          <QuickLink key={link.href} {...link} />
-        ))}
-      </div>
-      <hr className="mt-4 border-base"></hr>
-      <AboutHeading>{t("about.credits.title")}</AboutHeading>
+      <AboutHeading className="mt-6">{t("about.credits.title")}</AboutHeading>
       <AboutDescription>{t("about.general.credits.0")}</AboutDescription>
       <AboutDescription>{t("about.general.credits.1")}</AboutDescription>
       <ul className="list-inside list-disc pt-1">
@@ -151,3 +103,67 @@ function StatsBlock() {
     </div>
   );
 }
+
+const QuickLinks = () => {
+  const { t } = useTranslation();
+
+  const quickLinks = [
+    {
+      className:
+        "border-violet-10 hover:bg-violet-4 hover:border-violet-10 text-violet-10",
+      href: "https://discord.gg/A24AbzgvRJ",
+      icon: "i-carbon:logo-discord",
+      label: t("about.discordBtn"),
+    },
+    {
+      className:
+        "border-blue-11 hover:bg-blue-4 hover:border-blue-11 text-blue-11",
+      href: "https://twitter.com/holodex",
+      icon: "i-lucide:twitter",
+      label: t("about.quicklink.twitter"),
+    },
+    {
+      className:
+        "border-gray-11 hover:bg-gray-4 hover:border-gray-11 text-gray-11",
+      href: "https://github.com/HolodexNet/Holodex",
+      icon: "i-lucide:github",
+      label: t("about.quicklink.github"),
+    },
+    {
+      className:
+        "border-orange-10 hover:bg-orange-4 hover:border-orange-10 text-orange-10",
+      href: "https://docs.holodex.net/",
+      icon: "i-lucide:file-code",
+      label: t("about.quicklink.apiDocs"),
+    },
+    {
+      className:
+        "border-red-500 hover:bg-red-4 hover:border-red-500 text-red-500",
+      href: "https://ko-fi.com/holodex",
+      icon: "i-cib:ko-fi",
+      label: t("about.quicklink.ko-fi"),
+    },
+  ];
+
+  return (
+    <div className="flex w-full flex-wrap gap-4 rounded-lg bg-gray-2 p-4">
+      {quickLinks.map((link, index) => (
+        <a
+          key={index}
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`
+            flex grow basis-1 items-center gap-2 rounded-lg border-2 px-4
+            py-2 transition-all duration-300 ease-in-out
+            ${link.className}
+            focus:outline-none focus:ring-2 focus:ring-gray-8 focus:ring-offset-2
+          `}
+        >
+          <span className={link.icon}></span>
+          <span>{link.label}</span>
+        </a>
+      ))}
+    </div>
+  );
+};
