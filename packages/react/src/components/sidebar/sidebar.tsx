@@ -18,6 +18,7 @@ import { useOnClickOutside } from "usehooks-ts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
 import { orgRankingAtom } from "@/store/org";
 import { TLDexLogo } from "../common/TLDexLogo";
+import { getThumbnailForOrg } from "@/lib/thumb";
 
 export function Sidebar() {
   const { t } = useTranslation();
@@ -66,7 +67,8 @@ export function Sidebar() {
                 onClose={toggle}
                 label={pinnedOrg.name}
                 href={`/org/${pinnedOrg.name}`}
-                icon="i-ph:placeholder-fill"
+                icon={pinnedOrg.icon ? undefined : "i-ph:placeholder-fill"}
+                image={getThumbnailForOrg(pinnedOrg.icon)}
               />
               {org === pinnedOrg.name && (
                 <div className="w-full pl-6">
@@ -193,18 +195,20 @@ function SidebarItem({
   icon,
   label,
   href,
+  image,
 }: {
   className?: HTMLAttributes<HTMLButtonElement>["className"];
   onClose: () => void;
-  icon: HTMLAttributes<HTMLSpanElement>["className"];
+  icon?: HTMLAttributes<HTMLSpanElement>["className"];
   label: string;
   href: string;
+  image?: string; // either an icon or a image should be supplied.
 }) {
   const location = useLocation();
   const isMobile = useAtomValue(isMobileAtom);
 
   const isHere =
-    href === location.pathname ||
+    encodeURI(href) === location.pathname ||
     ((href.startsWith("/settings") || href.startsWith("/about")) &&
       location.pathname.startsWith(href));
 
@@ -221,7 +225,8 @@ function SidebarItem({
       onClick={isMobile ? onClose : undefined}
     >
       <Link to={href}>
-        <span className={icon}></span>
+        {icon && <span className={icon}></span>}
+        {image && <img src={image} className="h-4 w-4" />}
         {label}
       </Link>
     </Button>
