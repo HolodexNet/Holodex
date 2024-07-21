@@ -4,6 +4,7 @@ import { useAtomValue } from "jotai";
 import { clipLanguageAtom } from "@/store/settings";
 import { useParams } from "react-router-dom";
 import { useVideoCardSizes } from "@/store/video";
+import PullToRefresh from "@/components/layout/PullToRefresh";
 
 export function ClipsTab() {
   const { org } = useParams();
@@ -16,6 +17,7 @@ export function ClipsTab() {
     fetchNextPage: fetchClips,
     hasNextPage: hasClipsNextPage,
     isFetchingNextPage: isFetchingClipsNextPage,
+    refetch,
   } = useVideosV3(
     {
       org,
@@ -32,13 +34,15 @@ export function ClipsTab() {
   );
 
   return (
-    <MainVideoListing
-      isLoading={clipLoading}
-      size={cardSize}
-      videos={clips?.pages?.flatMap((x) => x.items) ?? []}
-      fetchNextPage={fetchClips}
-      hasNextPage={hasClipsNextPage}
-      isFetchingNextPage={isFetchingClipsNextPage}
-    />
+    <PullToRefresh onRefresh={refetch}>
+      <MainVideoListing
+        isLoading={clipLoading}
+        size={cardSize}
+        videos={clips?.pages?.flatMap((x) => x.items) ?? []}
+        fetchNextPage={fetchClips}
+        hasNextPage={hasClipsNextPage}
+        isFetchingNextPage={isFetchingClipsNextPage}
+      />
+    </PullToRefresh>
   );
 }
