@@ -1,6 +1,5 @@
 import { ContactList } from "@/components/about/ContactList";
 import { AboutDescription } from "@/components/about/Description";
-import { QuickLink } from "@/components/about/QuickLink";
 import {
   Accordion,
   AccordionContent,
@@ -142,19 +141,35 @@ export function AboutFaq() {
                 __html: t("about.faq.support.contents.0"),
               }}
             />
-            <div className="flex flex-wrap gap-2">
-              <QuickLink
-                className="border-blue-10 text-blue-10"
-                label="Ko-fi: Support Holodex"
+            <div className="flex flex-wrap gap-2 p-2">
+              <a
                 href="https://ko-fi.com/holodex"
-                icon="i-cib:ko-fi"
-              />
-              <QuickLink
-                className="border-orange-10 text-orange-10"
-                label="Patreon: Support Holodex"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`
+              flex grow basis-1 items-center gap-2 rounded-lg border-2 border-red-10
+              px-4 py-2 text-red-10 transition-all
+              duration-300 ease-in-out
+              focus:outline-none focus:ring-2 focus:ring-gray-8 focus:ring-offset-2
+            `}
+              >
+                <span className="i-cib:ko-fi"></span>
+                <span>Ko-fi: Support Holodex</span>
+              </a>
+              <a
                 href="https://patreon.com/holodex"
-                icon="i-cib:patreon"
-              />
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`
+              flex grow basis-1 items-center gap-2 rounded-lg border-2 border-red-10
+              px-4 py-2 text-red-10 transition-all
+              duration-300 ease-in-out
+              focus:outline-none focus:ring-2 focus:ring-gray-8 focus:ring-offset-2
+            `}
+              >
+                <span className="i-cib:patreon"></span>
+                <span>Patreon: Support Holodex</span>
+              </a>
             </div>
           </AccordionContent>
         </AccordionItem>

@@ -1,4 +1,3 @@
-import { QuickLink } from "@/components/about/QuickLink";
 import { LoginButtons } from "@/components/login/LoginButtons";
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { useAuth } from "@/hooks/useAuth";
@@ -192,12 +191,15 @@ export function SettingsUser() {
               <div className="i-heroicons:square-2-stack" />
             </Button>
           </div>
-          <Button onClick={resetKey}>{t("views.login.apikeyNew")}</Button>
-          <QuickLink
-            label={t("about.quicklink.apiDocs")}
-            href="https://docs.holodex.net"
-            icon="i-heroicons:file-code"
-          />
+          <Button variant="destructive" onClick={resetKey}>
+            {t("views.login.apikeyNew")}
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => window.open("https://docs.holodex.net", "_blank")}
+          >
+            API Documentation
+          </Button>
         </div>
       </SettingsItem>
     </div>
