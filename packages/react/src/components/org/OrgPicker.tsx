@@ -13,18 +13,21 @@ import {
 } from "@/shadcn/ui/command";
 import { Popover, PopoverTrigger, PopoverContent } from "@/shadcn/ui/popover";
 import { useTranslation } from "react-i18next";
-import { currentOrgAtom } from "@/store/org";
-import { useAtom } from "jotai/react";
+import { getThumbnailForOrg } from "@/lib/thumb";
 
-export function OrgSelectorCombobox() {
+export function OrgSelectorCombobox({
+  org,
+  setOrg,
+}: {
+  org?: Org;
+  setOrg?: (org: Org) => void;
+}) {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-  const [currentOrg, setCurrentOrg] = useAtom(currentOrgAtom);
-  // const [currentOrg, setOrg] = useAtom(orgAtom)
+  const [value, setValue] = React.useState(org?.name || "");
 
   // Use the useOrgs API service to fetch organizations
-  const { data: orgs, isError } = useOrgs();
+  const { data: orgs, isError } = useOrgs({ enabled: open });
 
   if (isError) {
     return <div>Error fetching organizations</div>;
@@ -63,8 +66,8 @@ export function OrgSelectorCombobox() {
                   key={org.name}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
-                    setCurrentOrg(org);
                     setOpen(false);
+                    setOrg?.(org);
                   }}
                 >
                   <div
@@ -73,6 +76,10 @@ export function OrgSelectorCombobox() {
                       value === org.name ? "opacity-100" : "opacity-0",
                     )}
                   />
+                  <img
+                    className="mr-2 h-8 w-8 rounded-full"
+                    src={getThumbnailForOrg(org.icon)}
+                  ></img>
                   {org.name}
                 </CommandItem>
               ))}

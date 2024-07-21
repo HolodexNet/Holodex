@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { usePlaylists } from "@/services/playlist.service";
+import {
+  usePlaylistSaveMutation,
+  usePlaylists,
+} from "@/services/playlist.service";
 import PlaylistEntry from "@/components/playlist/PlaylistEntry";
 import { TypographyH3, TypographyP } from "@/shadcn/ui/typography";
 import { useTranslation } from "react-i18next";
@@ -17,21 +20,27 @@ import {
 } from "@/shadcn/ui/dialog";
 import { Input } from "@/shadcn/ui/input";
 import { useNavigate } from "react-router-dom";
+import { useClient } from "@/hooks/useClient";
 
 export function Playlists() {
   const { data: playlists, refetch } = usePlaylists();
+  const { mutateAsync: savePlaylist } = usePlaylistSaveMutation();
   const { t } = useTranslation();
   const user = useAtomValue(userAtom);
+  const fetchClient = useClient();
   const [isNewPlaylistDialogOpen, setIsNewPlaylistDialogOpen] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState("");
   const navigate = useNavigate();
 
   const handleCreateNewPlaylist = async () => {
-    // TODO: Implement the API call to create a new playlist
     console.log("Creating new playlist:", newPlaylistName);
     setIsNewPlaylistDialogOpen(false);
     setNewPlaylistName("");
-    await refetch();
+    const newId = await savePlaylist({
+      name: newPlaylistName,
+      video_ids: [],
+      user_id: user?.id,
+    });
   };
 
   return (
@@ -49,7 +58,7 @@ export function Playlists() {
           }
         >
           <div className="flex items-center p-4">
-            <span className="i-heroicons:playlist-plus mr-3 text-4xl" />
+            <div className="i-lucide:list-plus mr-3 text-xl" />
             <div>
               <TypographyP className="font-medium">
                 {t("views.playlist.new-playlist-btn-label")}
@@ -72,7 +81,7 @@ export function Playlists() {
         open={isNewPlaylistDialogOpen}
         onOpenChange={setIsNewPlaylistDialogOpen}
       >
-        <DialogContent>
+        <DialogContent aria-description="Create new playlist">
           <DialogHeader>
             <DialogTitle>
               {t("views.playlist.new-playlist-btn-label")}
