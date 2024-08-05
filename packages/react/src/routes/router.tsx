@@ -134,7 +134,7 @@ export const routes = (
       <Route path="orgs" Component={SettingsOrgs} />
     </Route>
     <Route path="playlists" Component={Playlists} />
-    <Route path="playlist/:id" element={Playlist} />
+    <Route path="playlist/:id" Component={Playlist} />
     <Route path="about" Component={About}>
       <Route index Component={AboutGeneral} />
       <Route path="general" Component={AboutGeneral} />
