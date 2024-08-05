@@ -106,7 +106,7 @@ export function VideoCardCountdownToLive({
   }
 
   if (video.status === "past" && video.available_at) {
-    const tick = dayjs(video.start_scheduled);
+    const tick = dayjs(video.available_at);
 
     const pastText = t("time.distance_past_date", {
       0: tick.fromNow(false),
