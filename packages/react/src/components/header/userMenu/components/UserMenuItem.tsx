@@ -3,12 +3,6 @@ import { DropdownMenuItem } from "@/shadcn/ui/dropdown-menu";
 // import { useTranslation } from "react-i18next";
 import { MenuItem } from "../types";
 
-// interface UserMenuItemProps
-//   extends React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item> {
-//   item: QueryItem;
-//   onSelect: (_: string) => void;
-// }
-
 interface UserMenuItemProps {
   item: MenuItem;
   onClick: () => void;
