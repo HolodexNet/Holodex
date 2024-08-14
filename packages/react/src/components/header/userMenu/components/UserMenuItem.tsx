@@ -12,10 +12,12 @@ export function UserMenuItem({ item, onClick }: UserMenuItemProps) {
   return (
     <DropdownMenuItem
       onClick={() => onClick()}
-      className="flex h-full w-64 flex-row gap-2"
+      className="grid h-full w-full grid-cols-4 p-4"
     >
-      <div className="p-4">{item.icon}</div>
-      <div>{item.value}</div>
+      <div className="col-start-1 self-center justify-self-center">
+        {item.icon}
+      </div>
+      <div className="col-span-3 col-start-2 px-2">{item.value}</div>
     </DropdownMenuItem>
   );
 }
