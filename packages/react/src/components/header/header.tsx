@@ -16,12 +16,18 @@ import { Logo } from "./Logo";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { userAtom } from "@/store/auth";
 import { useState } from "react";
+import { UserMenuItem } from "./userMenu/components/UserMenuItem";
+import {
+  CalendarIcon,
+  ExitIcon,
+  GearIcon,
+  PersonIcon,
+} from "@radix-ui/react-icons";
 interface HeaderProps
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLElement>,
@@ -105,6 +111,28 @@ export function UserMenu() {
   const user = useAtomValue(userAtom);
   const { logout } = useAuth();
 
+  const mockUserMenuItems = [
+    {
+      key: "accountSettings",
+      value: "Account Settings",
+      fn: () => mockNavigate("accountSettings"),
+      icon: <PersonIcon />,
+    },
+    {
+      key: "settings",
+      value: "Settings",
+      fn: () => mockNavigate("settings"),
+      icon: <GearIcon />,
+    },
+    {
+      key: "iCalFeed",
+      value: "ICal Feed",
+      fn: () => mockNavigate("iCalFeed"),
+      icon: <CalendarIcon />,
+    },
+    { key: "logout", value: "Logout", fn: logout, icon: <ExitIcon /> },
+  ];
+
   if (!user) {
     return (
       <Button asChild>
@@ -122,8 +150,22 @@ export function UserMenu() {
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
+        {/* user profile */}
+        {mockUserMenuItems.map((item) => {
+          return (
+            <UserMenuItem
+              key={item.key + item.value}
+              item={{ key: item.key, value: item.value, icon: item.icon }}
+              onClick={item.fn}
+              // add specific icon
+            />
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );
+}
+
+function mockNavigate(destination: string) {
+  console.log(destination);
 }
