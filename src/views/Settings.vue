@@ -125,6 +125,15 @@
               :prepend-icon="mdiWeatherNight"
             />
             <!-- :messages="$t('views.settings.darkModeMsg')" -->
+            <v-switch
+              v-model="watchViewReversed"
+              class="v-input--reverse v-input--expand"
+              :label="$t('views.settings.watchViewReversedLabel')"
+              hide-details
+              inset
+              :prepend-icon="mdiWeatherNight"
+            />
+            <!-- :messages="$t('views.settings.watchViewReversedMsg')" -->
             <div class="mt-6">
               <v-icon style="margin-right: 9px">
                 {{ mdiPalette }}
@@ -319,6 +328,7 @@ export default {
             "autoplayVideo",
             "scrollMode",
             "defaultOpen",
+            "watchViewReversed",
         ]),
         currentCol() {
             if (this.$vuetify.breakpoint.smAndDown) return 12;
