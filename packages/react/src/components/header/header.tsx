@@ -13,15 +13,8 @@ import { Link } from "react-router-dom";
 import { SearchBar } from "./searchbar/components/SearchBar";
 import clsx from "clsx";
 import { Logo } from "./Logo";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/shadcn/ui/dropdown-menu";
-import { useAuth } from "@/hooks/useAuth";
-import { userAtom } from "@/store/auth";
 import { useState } from "react";
+import { UserMenu } from "./userMenu/components/UserMenu";
 interface HeaderProps
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLElement>,
@@ -98,32 +91,5 @@ export function Header({ id }: HeaderProps) {
 
       {!isSearching && <UserMenu />}
     </header>
-  );
-}
-export function UserMenu() {
-  const { t } = useTranslation();
-  const user = useAtomValue(userAtom);
-  const { logout } = useAuth();
-
-  if (!user) {
-    return (
-      <Button asChild>
-        <Link to="/login">{t("component.mainNav.login")}</Link>
-      </Button>
-    );
-  }
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="mx-2 w-8 shrink-0 overflow-hidden rounded-full">
-        <img
-          src={`https://api.dicebear.com/7.x/shapes/svg?seed=${user.id}`}
-          alt="User avatar"
-        />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
   );
 }
