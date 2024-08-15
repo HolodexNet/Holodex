@@ -24,13 +24,13 @@ export function UserMenu() {
     {
       key: "settings",
       value: "Settings",
-      fn: () => mockNavigate("settings"),
+      fn: () => console.log("settings"),
       icon: <GearIcon />,
     },
     {
       key: "iCalFeed",
       value: "ICal Feed",
-      fn: () => mockNavigate("iCalFeed"),
+      fn: () => console.log("iCalFeed"),
       icon: <CalendarIcon />,
     },
     { key: "logout", value: "Logout", fn: logout, icon: <ExitIcon /> },
@@ -52,7 +52,7 @@ export function UserMenu() {
           alt="User avatar"
         />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="z-30 bg-base-2">
+      <DropdownMenuContent className="relative right-8 z-30 bg-base-2">
         {/* user profile */}
         <div className="grid grid-cols-4 grid-rows-3 p-4">
           <Avatar className="col-start-1 row-span-3 row-start-1 self-center justify-self-center">
@@ -87,7 +87,7 @@ export function UserMenu() {
             {t("component.mainNav.points")}
           </DropdownMenuLabel>
         </div>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="border-base" />
         {mockUserMenuItems.map((item) => {
           return (
             <UserMenuItem
@@ -100,8 +100,4 @@ export function UserMenu() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
-function mockNavigate(destination: string) {
-  console.log(destination);
 }
