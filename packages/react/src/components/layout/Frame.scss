@@ -101,7 +101,7 @@ $responsive-breakpoint: 768px;
     top: 0;
     padding-bottom: var(--footer-height-clearance);
     left: var(--sidebar-left);
-    z-index: 1;
+    // z-index: 1;
     transition:
       left 0.3s,
       width 0.3s;

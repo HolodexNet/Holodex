@@ -40,7 +40,7 @@ export function Sidebar() {
 
   return (
     <aside
-      className=" z-30 border-r border-r-base pb-12"
+      className=" z-40 border-r border-r-base pb-12"
       id="sidebar"
       ref={ref}
     >
