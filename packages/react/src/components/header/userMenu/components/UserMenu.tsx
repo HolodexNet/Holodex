@@ -52,8 +52,7 @@ export function UserMenu() {
           alt="User avatar"
         />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="relative right-8 z-30 bg-base-2">
-        {/* user profile */}
+      <DropdownMenuContent className="relative right-8 z-30 w-72 bg-base-2">
         <div className="grid grid-cols-4 grid-rows-3 p-4">
           <Avatar className="col-start-1 row-span-3 row-start-1 self-center justify-self-center">
             <AvatarImage
@@ -63,7 +62,9 @@ export function UserMenu() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="col-span-3 col-start-2 row-span-2 row-start-1">
-            <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
+            <DropdownMenuLabel className="overflow-hidden text-ellipsis">
+              {user.username}
+            </DropdownMenuLabel>
             <div className="flex flex-row gap-2 px-2 py-1.5 ">
               <div
                 className={user.google_id ? "text-secondary-11" : "text-base"}

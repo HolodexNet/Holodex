@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { orgAtom } from "@/store/org";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import {
@@ -21,6 +21,10 @@ import { Button } from "@/shadcn/ui/button";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/shadcn/ui/separator";
 import { useIntersectionObserver } from "usehooks-ts";
+import {
+  isSidebarOpenAtom,
+  sidebarShouldBeFullscreenAtom,
+} from "@/hooks/useFrame";
 
 export function Home() {
   const navigate = useNavigate();
@@ -70,12 +74,17 @@ function StickyTabsList({ tab }: { tab: string }) {
     rootMargin: "-1px 0px 0px 0px",
   });
 
+  const [open] = useAtom(isSidebarOpenAtom);
+  const [isFullScreen] = useAtom(sidebarShouldBeFullscreenAtom);
+
   return (
     <TabsList
       ref={ref}
+      // disable sticky when mobile panel is open and it should be fullscreen
       className={cn(
-        "sticky top-0 z-20 flex items-stretch justify-start overflow-x-auto rounded-none bg-base-2 p-2 transition-all md:px-10",
+        "top-0 z-20 flex items-stretch justify-start overflow-x-auto rounded-none bg-base-2 p-2 transition-all md:px-10",
         isStuckAtTop && "rounded-lg md:mx-8 md:px-2",
+        !open ? "sticky" : isFullScreen ? "" : "sticky",
       )}
     >
       <TabsTrigger value="live" className="px-2">
