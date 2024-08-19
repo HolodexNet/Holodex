@@ -10,6 +10,8 @@ import { useDuration } from "@/hooks/useDuration";
 import { clsx } from "clsx";
 import { VideoThumbnail } from "./VideoThumbnail";
 import { usePreferredName } from "@/store/settings";
+import { useAtomValue } from "jotai";
+import { selectedVideoSetReadonlyAtom } from "@/hooks/useVideoSelection";
 
 export type VideoCardType = VideoRef &
   Partial<VideoBase> &
@@ -78,6 +80,8 @@ export function VideoCard({
 
   const [open, setOpen] = useState(false); // placeholder popup state.
 
+  const selectedSet = useAtomValue(selectedVideoSetReadonlyAtom);
+
   const goToVideoClickHandler = useCallback(
     (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
       if ((evt.target as HTMLElement).closest("a")) {
@@ -137,6 +141,8 @@ export function VideoCard({
         (size == "list" || size == "sm") && "group relative flex gap-4 py-2",
         (size == "md" || size == "lg") && "group flex w-full flex-col gap-4",
         onClick && "cursor-pointer",
+        selectedSet?.includes(video.id) &&
+          "ring-offset-base-2 ring-offset-2 ring-2 ring-primary rounded-lg",
       ]),
       thumbnailLink: clsx([
         size == "list" &&
@@ -159,7 +165,7 @@ export function VideoCard({
         "line-clamp-1 text-xs text-base-11 hover:text-base-12 @lg:text-sm",
       scheduleText: "text-sm @lg:text-sm text-base-11",
     }),
-    [onClick, size],
+    [onClick, size, selectedSet, video.id],
   );
 
   const videoMenu = (
