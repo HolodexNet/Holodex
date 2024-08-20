@@ -47,14 +47,16 @@ export function VideoCardCountdownToLive({
               {t("component.videoCard.uncertainPlaceholder")}
             </span>
           )}
-          {formatTimeForTimezones(timestamp).map(({ timezone, time }) => (
-            <div key={id + timezone + incr++} className="">
-              <div className="text-base-9">{timezone}:</div>
-              <div className="text-center text-sm font-semibold text-base-11">
-                {time}
+          <>
+            {formatTimeForTimezones(timestamp).map(({ timezone, time }) => (
+              <div key={id + timezone + "_" + ++incr}>
+                <div className="text-base-9">{timezone}:</div>
+                <div className="text-center text-sm font-semibold text-base-11">
+                  {time}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </>
         </div>
       );
     },
@@ -65,16 +67,11 @@ export function VideoCardCountdownToLive({
     return (
       <div className={`flex gap-1 text-base-11 ${className}`}>
         <span className="text-red-500">{t("component.videoCard.liveNow")}</span>
-        {!!video.live_viewers && (
-          <>
-            <span>/</span>
-            <span>
-              {t("component.videoCard.watching", {
-                0: formatCount(video.live_viewers),
-              })}
-            </span>
-          </>
-        )}
+        {!!video.live_viewers && "/ "}
+        {!!video.live_viewers &&
+          t("component.videoCard.watching", {
+            0: formatCount(video.live_viewers),
+          })}
       </div>
     );
   }
@@ -85,18 +82,18 @@ export function VideoCardCountdownToLive({
   ) {
     const tick = dayjs(video.start_scheduled);
     const countdownText = t("time.diff_future_date", {
-      0: (
-        <span className={video.certainty === "likely" ? "italic" : ""}>
-          {tick.fromNow(false) + (video.certainty === "likely" ? "?" : "")}
-        </span>
-      ),
+      0: tick.fromNow(false) + (video.certainty === "likely" ? "?" : ""),
       1: tick.format("hh:mm A"),
     });
 
     return (
       <Tooltip>
         <TooltipTrigger asChild>
-          <span className={`text-base-11 ${className}`}>{countdownText}</span>
+          <span
+            className={`text-base-11 ${video.certainty === "likely" ? "italic" : ""} ${className}`}
+          >
+            {countdownText}
+          </span>
         </TooltipTrigger>
         <TooltipContent className="bg-base-3 p-1.5">
           {renderTooltipContent(video.id, tick)}

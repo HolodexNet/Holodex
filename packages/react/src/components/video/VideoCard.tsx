@@ -168,6 +168,7 @@ export function VideoCard({
     [onClick, size, selectedSet, video.id],
   );
 
+  // TODO: possibly externalize the video menu using some sort of 'atom' to prevent it from being re-rendered on every card.
   const videoMenu = (
     <VideoMenu url={externalLink} video={video}>
       <Button
