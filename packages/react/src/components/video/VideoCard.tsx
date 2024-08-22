@@ -11,7 +11,10 @@ import { clsx } from "clsx";
 import { VideoThumbnail } from "./VideoThumbnail";
 import { usePreferredName } from "@/store/settings";
 import { useAtomValue } from "jotai";
-import { selectedVideoSetReadonlyAtom } from "@/hooks/useVideoSelection";
+import {
+  selectedVideoSetReadonlyAtom,
+  useVideoSelection,
+} from "@/hooks/useVideoSelection";
 
 export type VideoCardType = VideoRef &
   Partial<VideoBase> &
@@ -64,59 +67,86 @@ export function VideoCard({
     !isTwitch && video.status === "live" && video.link
       ? video.link
       : `/watch/${video.id}`;
+  const videoIsPlaceholder = video.type === "placeholder";
+  const thumbnailSrc = videoIsPlaceholder
+    ? video.thumbnail
+    : makeYtThumbnailUrl(video.id, size);
 
-  const thumbnailSrc =
-    video.type === "placeholder"
-      ? video.thumbnail
-      : makeYtThumbnailUrl(video.id, size);
-
-  const externalLink =
-    video.type === "placeholder" ? video.link : `https://youtu.be/${video.id}`;
+  const externalLink = videoIsPlaceholder
+    ? video.link
+    : `https://youtu.be/${video.id}`;
 
   const videoTarget =
     !isTwitch && video.placeholderType === "external-stream"
       ? "_blank"
       : undefined;
 
-  const [open, setOpen] = useState(false); // placeholder popup state.
+  const [placeholderOpen, setPlaceholderOpen] = useState(false); // placeholder popup state.
 
   const selectedSet = useAtomValue(selectedVideoSetReadonlyAtom);
+  const { selectionMode, addVideo, removeVideo } = useVideoSelection();
 
   const goToVideoClickHandler = useCallback(
     (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      if ((evt.target as HTMLElement).closest("a")) {
-        if (video.type === "placeholder") {
-          console.info("took over click.", evt);
-          setOpen(true);
+      console.info("JS Video Click Handling", evt);
+      const isLinkClick = (evt.target as HTMLElement).closest("a");
+      if (isLinkClick) {
+        // Handle selection mode
+        if (selectionMode) {
+          if (selectedSet.includes(video.id)) {
+            removeVideo(video.id);
+          } else {
+            addVideo(video as PlaceholderVideo);
+          }
           evt.preventDefault();
           evt.stopPropagation();
           return;
         }
+
+        if (videoIsPlaceholder) {
+          evt.preventDefault();
+          evt.stopPropagation();
+          return setPlaceholderOpen(true);
+        }
+
         console.info("no action b/c closest element is a link.", evt);
         return;
       }
-      console.info("JS video click handling", evt);
-      // clicked a non-link part of the video card.
-      if (evt.ctrlKey) {
+      // clicked a non-link part of the video card. Prevent default behavior.
+      evt.preventDefault();
+      evt.stopPropagation();
+
+      if (evt.ctrlKey || evt.metaKey) {
         /** Control clicking a non-link part always goes to the external link no matter what the context */
-        window.open(videoHref, "_blank");
-        evt.preventDefault();
-        evt.stopPropagation();
-      } else {
-        if (video.type === "placeholder") {
-          setOpen(true);
-          evt.preventDefault();
-          evt.stopPropagation();
-          return;
-        }
-        navigate(videoHref, {
-          state: { video },
-        });
-        evt.preventDefault();
-        evt.stopPropagation();
+        return window.open(videoHref, "_blank");
       }
+
+      // Handle selection mode
+      if (selectionMode) {
+        if (selectedSet.includes(video.id)) {
+          removeVideo(video.id);
+        } else {
+          addVideo(video as PlaceholderVideo);
+        }
+        return;
+      }
+
+      if (videoIsPlaceholder) {
+        return setPlaceholderOpen(true);
+      }
+
+      navigate(videoHref, { state: { video } });
     },
-    [videoHref, navigate, video],
+    [
+      selectionMode,
+      videoIsPlaceholder,
+      navigate,
+      videoHref,
+      video,
+      selectedSet,
+      removeVideo,
+      addVideo,
+    ],
   );
 
   /**
@@ -141,8 +171,10 @@ export function VideoCard({
         (size == "list" || size == "sm") && "group relative flex gap-4 py-2",
         (size == "md" || size == "lg") && "group flex w-full flex-col gap-4",
         onClick && "cursor-pointer",
-        selectedSet?.includes(video.id) &&
-          "ring-offset-base-2 ring-offset-2 ring-2 ring-primary rounded-lg",
+        selectionMode &&
+          (selectedSet?.includes(video.id)
+            ? "ring-offset-base-2 ring-offset-2 ring-4 ring-primary-8 rounded-lg "
+            : "ring-offset-base-2 ring-offset-2 ring-4 ring-base-6 rounded-lg saturate-[0.75] brightness-75 opacity-50"),
       ]),
       thumbnailLink: clsx([
         size == "list" &&
@@ -165,24 +197,7 @@ export function VideoCard({
         "line-clamp-1 text-xs text-base-11 hover:text-base-12 @lg:text-sm",
       scheduleText: "text-sm @lg:text-sm text-base-11",
     }),
-    [onClick, size, selectedSet, video.id],
-  );
-
-  // TODO: possibly externalize the video menu using some sort of 'atom' to prevent it from being re-rendered on every card.
-  const videoMenu = (
-    <VideoMenu url={externalLink} video={video}>
-      <Button
-        variant="ghost"
-        size="icon-lg"
-        className="absolute right-0 top-0 h-8 w-6 rounded-sm opacity-0 group-hover:opacity-100"
-        onClickCapture={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-      >
-        <div className="i-heroicons:ellipsis-vertical h-6 w-6" />
-      </Button>
-    </VideoMenu>
+    [size, onClick, selectionMode, selectedSet, video.id],
   );
 
   const chName = usePreferredName(video.channel);
@@ -207,7 +222,7 @@ export function VideoCard({
         <VideoThumbnail
           src={thumbnailSrc}
           className={
-            (video.type === "placeholder" &&
+            (videoIsPlaceholder &&
               "brightness-75 saturate-[0.75] transition-[filter] duration-300 ease-in-out group-hover:brightness-100 group-hover:saturate-100") +
             " aspect-video h-full w-full rounded-md object-cover "
           }
@@ -285,16 +300,30 @@ export function VideoCard({
             </div>
           )}
         </div>
-        {videoMenu}
-        <div onClick={stopPropagation} onMouseDown={stopPropagation}>
-          <Suspense fallback={null}>
-            <LazyVideoCardPlaceholder
-              open={open}
-              setOpen={setOpen}
-              video={video}
-            />
-          </Suspense>
-        </div>
+        <VideoMenu url={externalLink} video={video}>
+          <Button
+            variant="ghost"
+            size="icon-lg"
+            className="absolute right-0 top-0 h-8 w-6 rounded-sm opacity-0 group-hover:opacity-100"
+            onClickCapture={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <div className="i-heroicons:ellipsis-vertical h-6 w-6" />
+          </Button>
+        </VideoMenu>
+        {videoIsPlaceholder && (
+          <div onClick={stopPropagation} onMouseDown={stopPropagation}>
+            <Suspense fallback={null}>
+              <LazyVideoCardPlaceholder
+                open={placeholderOpen}
+                setOpen={setPlaceholderOpen}
+                video={video}
+              />
+            </Suspense>
+          </div>
+        )}
       </div>
     </div>
   );
