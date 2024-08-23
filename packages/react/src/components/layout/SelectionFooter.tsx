@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { makeYtThumbnailUrl } from "@/lib/utils";
 import { VideoThumbnail } from "../video/VideoThumbnail";
 import { SelectionEditShortcuts } from "../edit/selection/SelectionEditShortcuts";
+import SelectionFooterTopicPicker from "../edit/selection/SelectionFooterTopicPicker";
 const SelectedVideosModal = ({
   isSmall,
   open,
@@ -83,14 +84,14 @@ const SelectionFooter = () => {
       />
 
       <Button
-        variant="outline"
-        size="sm"
-        className={`self-start transition-all ${
-          selectedVideos.length === 0 ? "h-10 w-10 p-0" : "w-auto"
+        variant="link"
+        size="icon"
+        className={`h-6 self-start transition-all hover:text-primary-10 ${
+          selectedVideos.length === 0 ? "w-20" : ""
         }`}
         onClick={exit}
       >
-        <span className="i-mdi:close-circle text-xl" />
+        <div className="i-mdi:close-circle text-xl" />
       </Button>
 
       <div className="ml-4 space-y-2">
@@ -102,9 +103,8 @@ const SelectionFooter = () => {
                   variant="base-outline"
                   size="sm"
                   onClick={clearSelection}
-                  className="flex items-center"
                 >
-                  <span className="i-material-symbols:deselect mr-2" />
+                  <span className="i-material-symbols:deselect" />
                   Deselect
                 </Button>
 
@@ -112,15 +112,20 @@ const SelectionFooter = () => {
                   variant="base-outline"
                   size="sm"
                   onClick={() => setShowVideos(!showVideos)}
-                  className="flex items-center"
                 >
-                  <span className="i-mdi:select-search mr-2" />
+                  <span className="i-mdi:select-search" />
                   Show {selectedVideos.length} Videos
                 </Button>
               </>
             )}
 
-            <Button variant="ghost" size="sm" disabled={!selectedVideos.length}>
+            <Button
+              variant="base-outline"
+              size="sm"
+              disabled={!selectedVideos.length}
+              // TODO: onclick behavior once Multiview is finished.
+            >
+              <span className="i-heroicons:rectangle-group" />
               Open in Multiview
             </Button>
 
@@ -181,30 +186,55 @@ const SelectionFooter = () => {
         )}
 
         {page !== 0 && (
-          <div className="text-sm">
-            <nav className="flex" aria-label="Breadcrumb">
-              <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                <li className="inline-flex items-center">
-                  <a
-                    href="#"
-                    className="text-gray-700 hover:text-blue-600"
-                    onClick={() => setPage(0)}
-                  >
-                    Selection ({selectedVideos.length})
-                  </a>
-                </li>
+          <div className="flex items-center justify-between">
+            <nav className="flex items-center" aria-label="Breadcrumb">
+              <ol className="flex items-center space-x-2 px-2">
                 <li>
-                  <div className="flex items-center">
-                    <span className="mx-2 text-gray-400">/</span>
-                    <span className="text-gray-500">
-                      {page === 1 && "Mentions"}
-                      {page === 2 && "Sources"}
-                      {page === 3 && "Topic"}
-                    </span>
+                  <div
+                    onClick={() => setPage(0)}
+                    className="flex cursor-pointer items-center text-sm font-medium"
+                  >
+                    <div className="i-lucide:chevron-left mr-1" />
+                    Back
                   </div>
+                </li>
+                <li className="text-sm font-medium text-base-10">
+                  | Selected ({selectedVideos.length}) |
+                </li>
+                <li className="text-sm font-medium">
+                  {page === 1 && "Mentions"}
+                  {page === 2 && "Sources"}
+                  {page === 3 && "Set Topic: "}
                 </li>
               </ol>
             </nav>
+            <div className="flex items-center space-x-2">
+              {page === 1 && (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Search channels..."
+                    className="rounded-md border px-2 py-1 text-sm"
+                  />
+                  <Button size="sm" variant="outline">
+                    Add Mention
+                  </Button>
+                </>
+              )}
+              {page === 2 && (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Enter source URL..."
+                    className="rounded-md border px-2 py-1 text-sm"
+                  />
+                  <Button size="sm" variant="outline">
+                    Add Source
+                  </Button>
+                </>
+              )}
+              {page === 3 && <SelectionFooterTopicPicker />}
+            </div>
           </div>
         )}
       </div>

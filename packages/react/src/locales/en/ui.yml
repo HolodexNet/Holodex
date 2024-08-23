@@ -227,6 +227,9 @@ component:
     pickLabel: Pick topics...
   queue:
     title: Queue
+  multiset_topic:
+    button: Set topic '{topic}' for {videos} videos
+    unset: Clear topic on {videos} videos
 views:
   channel:
     video: Videos

@@ -22,9 +22,14 @@ const { debouncedValueAtom, currentValueAtom } = atomWithDebounce("", 300);
 interface TopicPickerProps {
   value?: string;
   onSelect: (topicId: string) => void;
+  buttonClass?: string;
 }
 
-export function TopicPicker({ value, onSelect }: TopicPickerProps) {
+export function TopicPicker({
+  value,
+  onSelect,
+  buttonClass,
+}: TopicPickerProps) {
   const [debouncedValue, setDebouncedValue] = useAtom(debouncedValueAtom);
   const currentValue = useAtomValue(currentValueAtom);
   const { t } = useTranslation();
@@ -55,7 +60,9 @@ export function TopicPicker({ value, onSelect }: TopicPickerProps) {
             role="combobox"
             size="lg"
             aria-expanded={open}
-            className="max-w-xs justify-between border-base px-4"
+            className={
+              "max-w-xs justify-between border-base px-4" + buttonClass
+            }
           >
             {value ?? t("component.topicPicker.pickLabel")}
             <div className="i-heroicons:chevron-up-down ml-2 h-4 w-4 shrink-0 opacity-50 " />
@@ -105,7 +112,7 @@ export function TopicPicker({ value, onSelect }: TopicPickerProps) {
           role="combobox"
           size="lg"
           aria-expanded={open}
-          className="max-w-xs justify-between border-base px-4"
+          className={"max-w-xs justify-between border-base px-4 " + buttonClass}
         >
           {value ?? t("component.topicPicker.pickLabel")}
           <div className="i-heroicons:chevron-up-down ml-2 h-4 w-4 shrink-0 opacity-50" />
