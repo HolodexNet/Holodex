@@ -15,6 +15,7 @@ import {
   selectedVideoSetReadonlyAtom,
   useVideoSelection,
 } from "@/hooks/useVideoSelection";
+import { isMobileAtom } from "@/hooks/useFrame";
 
 export type VideoCardType = VideoRef &
   Partial<VideoBase> &
@@ -85,6 +86,7 @@ export function VideoCard({
 
   const selectedSet = useAtomValue(selectedVideoSetReadonlyAtom);
   const { selectionMode, addVideo, removeVideo } = useVideoSelection();
+  const isMobile = useAtomValue(isMobileAtom);
 
   const goToVideoClickHandler = useCallback(
     (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -304,7 +306,10 @@ export function VideoCard({
           <Button
             variant="ghost"
             size="icon-lg"
-            className="absolute right-0 top-0 h-8 w-6 rounded-sm opacity-0 group-hover:opacity-100"
+            className={cn("absolute right-0 top-0 h-8 w-6 rounded-sm", {
+              "opacity-100": isMobile,
+              "opacity-0 group-hover:opacity-100": !isMobile,
+            })}
             onClickCapture={(e) => {
               e.preventDefault();
               e.stopPropagation();
