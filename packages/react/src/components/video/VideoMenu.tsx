@@ -19,12 +19,13 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useCopyToClipboard } from "usehooks-ts";
 import { useToast } from "@/shadcn/ui/use-toast";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { queueAtom } from "@/store/queue";
 import { VideoCardType } from "./VideoCard";
 import "./VideoMenu.css";
 import { useVideoSelection } from "@/hooks/useVideoSelection";
 import { TLDexLogo } from "../common/TLDexLogo";
+import { userAtom } from "@/store/auth";
 
 const LazyNewPlaylistDialog = lazy(
   () => import("@/components/playlist/NewPlaylistDialog"),
@@ -43,6 +44,7 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
   const { data, isLoading } = usePlaylistInclude(videoId, { enabled: isOpen });
+  const user = useAtomValue(userAtom);
   const { mutate } = usePlaylistVideoMutation();
   const [queue, setQueue] = useAtom(queueAtom);
 
@@ -111,36 +113,44 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                {data?.map(({ name, id }) => (
-                  <DropdownMenuItem
-                    key={id}
-                    onClick={() => mutate({ id, videoId })}
-                  >
-                    {name}
+                {!user ? (
+                  <DropdownMenuItem asChild>
+                    <Link to="/login">{t("component.mainNav.login")}</Link>
                   </DropdownMenuItem>
-                ))}
-                {data?.length ? <DropdownMenuSeparator /> : null}
-                {isLoading && (
-                  <DropdownMenuItem className="justify-center" disabled>
-                    <div className="i-lucide:loader-2 animate-spin leading-none" />
-                  </DropdownMenuItem>
-                )}
-                <Suspense
-                  fallback={
-                    <div className="i-lucide:loader-2 animate-spin leading-none" />
-                  }
-                >
-                  <LazyNewPlaylistDialog
-                    triggerElement={
+                ) : (
+                  <>
+                    {data?.map(({ name, id }) => (
                       <DropdownMenuItem
-                        onSelect={(event) => event.preventDefault()}
+                        key={id}
+                        onClick={() => mutate({ id, videoId })}
                       >
-                        {t("component.playlist.menu.new-playlist")}
+                        {name}
                       </DropdownMenuItem>
-                    }
-                    videoIds={[videoId]}
-                  />
-                </Suspense>
+                    ))}
+                    {data?.length ? <DropdownMenuSeparator /> : null}
+                    {isLoading && (
+                      <DropdownMenuItem className="justify-center" disabled>
+                        <div className="i-lucide:loader-2 animate-spin leading-none" />
+                      </DropdownMenuItem>
+                    )}
+                    <Suspense
+                      fallback={
+                        <div className="i-lucide:loader-2 animate-spin leading-none" />
+                      }
+                    >
+                      <LazyNewPlaylistDialog
+                        triggerElement={
+                          <DropdownMenuItem
+                            onSelect={(event) => event.preventDefault()}
+                          >
+                            {t("component.playlist.menu.new-playlist")}
+                          </DropdownMenuItem>
+                        }
+                        videoIds={[videoId]}
+                      />
+                    </Suspense>
+                  </>
+                )}
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>

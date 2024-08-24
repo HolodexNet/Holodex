@@ -41,6 +41,7 @@ export function usePlaylistInclude(
     queryFn: async () =>
       await client<PlaylistInclude[]>(`/api/v2/video-playlist/${videoId}`),
     ...options,
+    enabled: options?.enabled && client.loggedIn,
   });
 }
 

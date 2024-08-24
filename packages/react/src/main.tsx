@@ -30,7 +30,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const DevTools =
+const JotaiDevtools =
   process.env.NODE_ENV === "development"
     ? React.lazy(async () => {
         const [moduleExports, _] = await Promise.all([
@@ -64,7 +64,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         {process.env.NODE_ENV === "development" && (
           <Suspense>
             <ReactQueryDevtools position={"right"} buttonPosition="top-right" />
-            <DevTools position="top-right" />
+            <JotaiDevtools position="top-right" />
           </Suspense>
         )}
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>

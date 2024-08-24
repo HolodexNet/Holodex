@@ -17,6 +17,43 @@ const stringify = (obj: object) => {
   ).toString();
 };
 
+export class HTTPError<T = unknown> extends Error {
+  readonly data: T;
+  readonly res: Response;
+  readonly statusText: string;
+  readonly statusCode: number;
+
+  constructor({
+    data,
+    res,
+    message,
+  }: {
+    data: T;
+    res: Response;
+    message?: string;
+  }) {
+    super(message ?? `Oops, request failed with status ${res.status}`);
+    this.data = data;
+    this.statusText = res.statusText;
+    this.statusCode = res.status;
+    this.res = res;
+  }
+}
+
+async function handleResponse<T>(response: Response) {
+  return response.json().then((obj) => {
+    const data = obj as T;
+
+    if (!response.ok) {
+      const err = new HTTPError({ data, res: response });
+      console.error("API Error, try catching", response);
+      return Promise.reject(err);
+    }
+
+    return data;
+  });
+}
+
 export const createFetchClient = (token?: string | null) => {
   const fetchFn = function <APIResponseBodyType>(
     url: string,
@@ -91,39 +128,3 @@ export const createFetchClient = (token?: string | null) => {
 };
 
 export type FetchClient = ReturnType<typeof createFetchClient>;
-
-async function handleResponse<T>(response: Response) {
-  return response.json().then((obj) => {
-    const data = obj as T;
-
-    if (!response.ok) {
-      console.error("API Error", response);
-      return Promise.reject(new HTTPError({ data, res: response }));
-    }
-
-    return data;
-  });
-}
-
-export class HTTPError<T = unknown> extends Error {
-  readonly data: T;
-  readonly res: Response;
-  readonly statusText: string;
-  readonly statusCode: number;
-
-  constructor({
-    data,
-    res,
-    message,
-  }: {
-    data: T;
-    res: Response;
-    message?: string;
-  }) {
-    super(message ?? `Oops, request failed with status ${res.status}`);
-    this.data = data;
-    this.statusText = res.statusText;
-    this.statusCode = res.status;
-    this.res = res;
-  }
-}
