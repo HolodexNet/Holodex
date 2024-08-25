@@ -10,7 +10,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu";
@@ -63,20 +62,16 @@ export function UserMenu() {
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <div className="flex flex-col gap-1">
-            <DropdownMenuLabel className="overflow-hidden text-ellipsis p-0 pl-2">
+          <div className="flex flex-col gap-1 pl-4">
+            <div className="overflow-hidden text-ellipsis font-semibold">
               {user.username}
-            </DropdownMenuLabel>
-            <div className="flex flex-row gap-2 p-0 pl-2 text-sm">
-              <div
-                className={user.discord_id ? "text-secondary-11" : "text-base"}
-              >
-                <div className="i-mdi:discord" />
+            </div>
+            <div className="flex flex-row gap-2 text-sm">
+              <div className={user.discord_id ? "" : "saturate-0"}>
+                <div className="i-logos:discord-icon" />
               </div>
-              <div
-                className={user.google_id ? "text-secondary-11" : "text-base"}
-              >
-                <div className="i-mdi:google" />
+              <div className={user.google_id ? "" : "saturate-0"}>
+                <div className="i-logos:google-icon" />
               </div>
               {/* <div
                 className={user.twitter_id ? "text-secondary-11" : "text-base"}
@@ -84,11 +79,11 @@ export function UserMenu() {
                 <div className="i-mdi:twitter" />
               </div> */}
             </div>
-            <DropdownMenuLabel className="flex flex-row capitalize text-primary-11">
+            <div className="flex flex-row capitalize text-primary-11">
               <div className="i-mage:stars-c mr-1 animate-pulse"></div>
               {user.role === "user" ? "" : user.role}
               {user.contribution_count + " " + t("component.mainNav.points")}
-            </DropdownMenuLabel>
+            </div>
           </div>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="" />
