@@ -147,7 +147,13 @@ export function Sidebar() {
           </Tooltip>
           <Tooltip delayDuration={0}>
             <TooltipTrigger asChild>
-              <Button variant="ghost" className="p-2" size="icon-lg" asChild>
+              <Button
+                variant="ghost"
+                className="p-2"
+                size="icon-lg"
+                asChild
+                onClick={toggle}
+              >
                 <Link to="/settings">
                   <span className="i-heroicons:cog-6-tooth" />
                 </Link>
@@ -157,7 +163,13 @@ export function Sidebar() {
           </Tooltip>{" "}
           <Tooltip delayDuration={0}>
             <TooltipTrigger asChild>
-              <Button variant="ghost" className="p-2" size="icon-lg" asChild>
+              <Button
+                variant="ghost"
+                className="p-2"
+                size="icon-lg"
+                asChild
+                onClick={toggle}
+              >
                 <Link to="/about">
                   <span className="i-heroicons:question-mark-circle" />
                 </Link>
