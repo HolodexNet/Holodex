@@ -51,6 +51,21 @@
           <v-icon>{{ b.icon }}</v-icon>
         </v-btn>
       </template>
+      <v-tooltip bottom>
+        <template #activator="{ on, attrs }">
+          <v-btn
+            icon
+            :class="{ 'mx-1': $vuetify.breakpoint.mdAndDown }"
+            v-bind="attrs"
+            @click="toggleAutoHideToolbar"
+            v-on="on"
+          >
+            <v-icon>{{ mdiArrowCollapseUp }}</v-icon>
+          </v-btn>
+        </template>
+        <span>{{ $t("views.multiview.autoHideToolbar") }}</span>
+      </v-tooltip>
+
       <!-- Share button and dialog -->
       <v-menu
         v-model="shareDialog"
@@ -120,7 +135,7 @@
 
 <script>
 import copyToClipboard from "@/mixins/copyToClipboard";
-import { mdiLinkVariant, mdiClipboardPlusOutline } from "@mdi/js";
+import { mdiLinkVariant, mdiClipboardPlusOutline, mdiArrowCollapseUp } from "@mdi/js";
 import { encodeLayout } from "@/utils/mv-utils";
 import { mapState } from "vuex";
 
@@ -138,6 +153,7 @@ export default {
         return {
             mdiClipboardPlusOutline,
             mdiLinkVariant,
+            mdiArrowCollapseUp,
             shareDialog: false,
         };
     },
@@ -180,6 +196,10 @@ export default {
         },
         toggleMainNav() {
             return this.$store.commit("setNavDrawer", !this.$store.state.navDrawer);
+        },
+        toggleAutoHideToolbar() {
+            console.log("Test");
+            // TODO implement
         },
     },
 };
