@@ -86,7 +86,7 @@ export function ChannelCard({
     case "sm":
       return (
         <div
-          className="flex items-center gap-4 rounded-lg bg-base-3 p-4 hover:cursor-pointer"
+          className="flex items-center gap-4 rounded-lg bg-base-3 p-4 transition-all hover:cursor-pointer hover:bg-base-4"
           onClick={goToChannelClickHandler}
         >
           <Link to={channelHref} className="flex grow items-center gap-4">
@@ -144,7 +144,7 @@ export function ChannelCard({
       return (
         // Set min-height because react-virtuoso will break if the height is not fixed
         <div
-          className="group relative flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4 hover:cursor-pointer"
+          className="group relative flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4 transition-all hover:cursor-pointer hover:bg-base-4"
           onClick={goToChannelClickHandler}
         >
           <Link
