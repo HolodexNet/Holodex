@@ -21,15 +21,15 @@ export default function PlaylistEntry({
   const user = useAtomValue(userAtom);
 
   return (
-    <div className="flex items-center gap-4 rounded-lg bg-base-2 p-4 shadow-sm">
-      <div className="shrink-0">
+    <div className="flex items-center gap-4 rounded-lg bg-base-2 p-4 shadow-sm max-md:flex-col">
+      <div className="aspect-video shrink-0 max-md:w-full md:h-24">
         {video_ids && video_ids.length > 0 ? (
           <VideoThumbnail
-            className="aspect-video h-24 rounded-md object-cover"
+            className="h-full rounded-md object-cover"
             src={makeYtThumbnailUrl(video_ids[0], "sm")}
           />
         ) : (
-          <div className="flex aspect-video h-24 items-center justify-center rounded-md bg-base-5 p-4">
+          <div className="grid h-full place-content-center rounded-md bg-base-5 p-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="4em"
@@ -61,7 +61,7 @@ export default function PlaylistEntry({
           </div>
         )}
       </div>
-      <div className="grow">
+      <div className="w-full grow">
         <h3 className="mb-1 text-lg font-semibold">{name}</h3>
         <span className="text-sm text-base-10">
           {video_ids?.length || 0} {t("views.channel.video")}
@@ -71,11 +71,16 @@ export default function PlaylistEntry({
             " " +
             dayjs(updated_at).format("LLL")}
         </span>
-        <div className="mt-2 flex gap-2">
-          <Button size="sm" variant="primary" className="w-20">
+        <div className="mt-2 flex gap-2 max-md:justify-between">
+          <Button size="sm" variant="primary" className="w-full md:w-20">
             <span className="i-heroicons:play-solid" />
           </Button>
-          <Button size="sm" variant="outline" className="w-20" asChild>
+          <Button
+            size="sm"
+            variant="outline"
+            className="w-full md:w-20"
+            asChild
+          >
             <Link to={`/playlist/${id}`}>
               <span className="i-heroicons:pencil-square-solid mr-1" />
               {t("component.videoCard.edit")}

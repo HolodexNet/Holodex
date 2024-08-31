@@ -72,9 +72,11 @@ export function Playlists() {
           </div>
         </Card>
 
-        {playlists?.map((playlist) => (
-          <PlaylistEntry {...playlist} key={playlist.id} />
-        ))}
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:flex md:flex-col">
+          {playlists?.map((playlist) => (
+            <PlaylistEntry {...playlist} key={playlist.id} />
+          ))}
+        </div>
       </div>
 
       <Dialog
@@ -92,7 +94,7 @@ export function Playlists() {
             onChange={(e) => setNewPlaylistName(e.target.value)}
             placeholder={"Must Watch"}
           />
-          <DialogFooter>
+          <DialogFooter className="gap-y-2">
             <Button
               variant="outline"
               onClick={() => setIsNewPlaylistDialogOpen(false)}
