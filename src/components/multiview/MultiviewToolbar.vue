@@ -1,5 +1,10 @@
 <template>
-  <v-toolbar class="mv-toolbar flex-grow-0" style="right: 0;" height="64">
+  <v-toolbar
+    class="mv-toolbar flex-grow-0"
+    style="right: 0;"
+    height="64"
+    @mouseleave="hideToolbar"
+  >
     <v-app-bar-nav-icon @click="toggleMainNav" />
     <!-- Toolbar Live Video Selector -->
     <div
@@ -55,7 +60,7 @@
         <template #activator="{ on, attrs }">
           <v-btn
             icon
-            :class="{ 'mx-1': $vuetify.breakpoint.mdAndDown }"
+            class="responsive-pconly"
             v-bind="attrs"
             @click="toggleAutoHideToolbar"
             v-on="on"
@@ -155,6 +160,7 @@ export default {
             mdiLinkVariant,
             mdiArrowCollapseUp,
             shareDialog: false,
+            localAutoHide: false,
         };
     },
     computed: {
@@ -181,6 +187,15 @@ export default {
         collapseButtons() {
             return this.buttons.filter((btn) => btn.collapse);
         },
+        autoHideToolbar: {
+            get() {
+                return this.localAutoHide;
+            },
+            set(value) {
+                this.localAutoHide = value;
+                this.$emit("update:autoHideToolbar", value);
+            },
+        },
     },
     methods: {
         startCopyToClipboard(txt) {
@@ -197,9 +212,13 @@ export default {
         toggleMainNav() {
             return this.$store.commit("setNavDrawer", !this.$store.state.navDrawer);
         },
+        hideToolbar() {
+            if (this.localAutoHide) {
+                this.collapseToolbar = true;
+            }
+        },
         toggleAutoHideToolbar() {
-            console.log("Test");
-            // TODO implement
+            this.autoHideToolbar = !this.autoHideToolbar;
         },
     },
 };
@@ -214,5 +233,11 @@ export default {
 
 .mv-toolbar {
     z-index: 1;
+}
+
+.responsive-pconly {
+  @media (max-width: 1200px) {
+    display: none;
+  }
 }
 </style>

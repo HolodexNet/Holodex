@@ -4,8 +4,20 @@
     :class="{ 'mobile-helpers': $store.state.isMobile }"
     class="d-flex flex-column multiview"
   >
+    <!-- Hidden div for autohiding the Toolbar -->
+    <div
+      v-if="collapseToolbar && autoHideToolbar"
+      class="flex-grow-0 toolbar-placeholder"
+      style="position: absolute; opacity: 0; right: 0; z-index: 1; width: 100%; height: 64px;"
+      @mouseenter="collapseToolbar = false"
+    />
     <!-- Floating tool bar -->
-    <MultiviewToolbar v-show="!collapseToolbar" v-model="collapseToolbar" :buttons="buttons">
+    <MultiviewToolbar
+      v-show="!collapseToolbar"
+      v-model="collapseToolbar"
+      :buttons="buttons"
+      @update:autoHideToolbar="autoHideToolbar = $event"
+    >
       <template #left>
         <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
         <!-- Single Button video selector for xs displays -->
@@ -447,8 +459,9 @@ export default {
                     type: "twitch",
                 };
             }
+            // eslint-disable-next-line consistent-return
             return video;
-        }
+        },
     },
 };
 </script>
