@@ -113,7 +113,6 @@ export default {
     computed: {
         buckets() {
             const TIME_THRESHOLD = 40;
-            const MIN_BUCKET_SIZE = 1;
             const MIN_TIMESTAMP_OCCURENCE = 1;
             const VIDEO_START_TIMESTAMP = +new Date(
                 this.video.start_actual || this.video.available_at,
@@ -148,50 +147,48 @@ export default {
                 /**
                  * Process the bucket
                  */
-                if (subBucket.length >= MIN_BUCKET_SIZE) {
-                    // select floor median has the display time
-                    const th = Math.floor(subBucket.length / 3);
-                    const median = subBucket[th].time;
-                    // Find matching song around timestamp
-                    const matchingSong = this.video?.songs?.find(
-                        (song) => Math.abs(song.start - median) <= TIME_THRESHOLD,
-                    );
-                    if (!matchingSong) {
-                        // pick best comment to show
-                        const processed = subBucket
-                            .sort(
-                                (a, b) => b.occurence / b.text.length - a.occurence / a.text.length,
-                            ) // prioritize chapter comment
-                            .map((s) => s.text) // ParsedComment -> string
-                            .map(removePunctuations) // remove punctuations
-                            .map(removeStopWords) // remove stop words
-                            .map((c) => c.trim()) // strip white spaces
-                            .filter((c) => c.length > 1); // filter out clutter
+                // select floor median has the display time
+                const th = Math.floor(subBucket.length / 3);
+                const median = subBucket[th].time;
+                // Find matching song around timestamp
+                const matchingSong = this.video?.songs?.find(
+                    (song) => Math.abs(song.start - median) <= TIME_THRESHOLD,
+                );
+                if (!matchingSong) {
+                    // pick best comment to show
+                    const processed = subBucket
+                        .sort(
+                            (a, b) => b.occurence / b.text.length - a.occurence / a.text.length,
+                        ) // prioritize chapter comment
+                        .map((s) => s.text) // ParsedComment -> string
+                        .map(removePunctuations) // remove punctuations
+                        .map(removeStopWords) // remove stop words
+                        .map((c) => c.trim()) // strip white spaces
+                        .filter((c) => c.length > 1); // filter out clutter
 
-                        if (processed.length > 0) {
-                            let best = processed[0];
+                    if (processed.length > 0) {
+                        let best = processed[0];
 
-                            const stricter = processed
-                                .filter(filterByWordCount(2))
-                                .filter((c) => !/(?:clip\s?(?:it|this)|[!?]{3})/i.test(c));
-                            // console.log(stricter);
-                            if (stricter.length > 0) [best] = stricter;
+                        const stricter = processed
+                            .filter(filterByWordCount(2))
+                            .filter((c) => !/(?:clip\s?(?:it|this)|[!?]{3})/i.test(c));
+                        // console.log(stricter);
+                        if (stricter.length > 0) [best] = stricter;
 
-                            if (best.length > 60) best = `${best.slice(0, 60)}...`;
+                        if (best.length > 60) best = `${best.slice(0, 60)}...`;
 
-                            const medianMS = median * 1000;
-                            const absolute = new Date(
-                                VIDEO_START_TIMESTAMP + medianMS,
-                            ).toISOString();
-                            // console.log(best, processed);
-                            buckets.push({
-                                time: median,
-                                count: subBucket.length,
-                                best,
-                                display: formatDuration(medianMS),
-                                absolute,
-                            });
-                        }
+                        const medianMS = median * 1000;
+                        const absolute = new Date(
+                            VIDEO_START_TIMESTAMP + medianMS,
+                        ).toISOString();
+                        // console.log(best, processed);
+                        buckets.push({
+                            time: median,
+                            count: subBucket.length,
+                            best,
+                            display: formatDuration(medianMS),
+                            absolute,
+                        });
                     }
                 }
                 // clear and set a new bucket
@@ -202,7 +199,7 @@ export default {
             buckets.push(
                 ...(this.video.songs?.map((song) => ({
                     time: song.start,
-                    count: subBucket.length,
+                    count: 1,
                     song: {
                         ...song,
                         channel: this.video.channel,
