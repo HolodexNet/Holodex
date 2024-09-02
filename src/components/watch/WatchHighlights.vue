@@ -134,20 +134,16 @@ export default {
             parsed.sort((a, b) => a.time - b.time);
 
             const buckets = [];
-            let currentBucket = 0;
             let subBucket: ParsedComment[] = [];
 
             parsed.forEach((comment, index) => {
-                // put into curent subbucket if time is within 10 secs
+                subBucket.push(comment);
+                // go to next comment if it's within the threshold (saving in the same bucket)
                 if (
-                    comment.time - currentBucket <= TIME_THRESHOLD
-                    && index !== parsed.length - 1
+                    index !== parsed.length - 1
+                    && parsed[index + 1].time - comment.time <= TIME_THRESHOLD
                 ) {
-                    subBucket.push(comment);
                     return;
-                }
-                if (comment.time - currentBucket <= TIME_THRESHOLD) {
-                    subBucket.push(comment);
                 }
                 /**
                  * Process the bucket
@@ -199,9 +195,7 @@ export default {
                     }
                 }
                 // clear and set a new bucket
-                currentBucket = comment.time;
                 subBucket = [];
-                subBucket.push(comment);
             });
 
             // Render song item instead of text
