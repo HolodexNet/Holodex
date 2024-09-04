@@ -1,5 +1,10 @@
 <template>
-  <v-toolbar class="mv-toolbar flex-grow-0" style="right: 0;" height="64">
+  <v-toolbar
+    class="mv-toolbar flex-grow-0"
+    style="right: 0;"
+    height="64"
+    @mouseleave="hideToolbar"
+  >
     <v-app-bar-nav-icon @click="toggleMainNav" />
     <!-- Toolbar Live Video Selector -->
     <div
@@ -51,6 +56,21 @@
           <v-icon>{{ b.icon }}</v-icon>
         </v-btn>
       </template>
+      <v-tooltip bottom>
+        <template #activator="{ on, attrs }">
+          <v-btn
+            v-if="!$store.state.isMobile"
+            icon
+            v-bind="attrs"
+            @click="toggleAutoHideToolbar"
+            v-on="on"
+          >
+            <v-icon>{{ mdiArrowCollapseUp }}</v-icon>
+          </v-btn>
+        </template>
+        <span>{{ $t("views.multiview.autoHideToolbar") }}</span>
+      </v-tooltip>
+
       <!-- Share button and dialog -->
       <v-menu
         v-model="shareDialog"
@@ -120,7 +140,7 @@
 
 <script>
 import copyToClipboard from "@/mixins/copyToClipboard";
-import { mdiLinkVariant, mdiClipboardPlusOutline } from "@mdi/js";
+import { mdiLinkVariant, mdiClipboardPlusOutline, mdiArrowCollapseUp } from "@mdi/js";
 import { encodeLayout } from "@/utils/mv-utils";
 import { mapState } from "vuex";
 
@@ -138,7 +158,9 @@ export default {
         return {
             mdiClipboardPlusOutline,
             mdiLinkVariant,
+            mdiArrowCollapseUp,
             shareDialog: false,
+            localAutoHide: false,
         };
     },
     computed: {
@@ -165,6 +187,15 @@ export default {
         collapseButtons() {
             return this.buttons.filter((btn) => btn.collapse);
         },
+        autoHideToolbar: {
+            get() {
+                return this.localAutoHide;
+            },
+            set(value) {
+                this.localAutoHide = value;
+                this.$emit("update:autoHideToolbar", value);
+            },
+        },
     },
     methods: {
         startCopyToClipboard(txt) {
@@ -180,6 +211,16 @@ export default {
         },
         toggleMainNav() {
             return this.$store.commit("setNavDrawer", !this.$store.state.navDrawer);
+        },
+        hideToolbar() {
+            if (this.localAutoHide) {
+                setTimeout(() => {
+                    this.collapseToolbar = true;
+                }, 150);
+            }
+        },
+        toggleAutoHideToolbar() {
+            this.autoHideToolbar = !this.autoHideToolbar;
         },
     },
 };
