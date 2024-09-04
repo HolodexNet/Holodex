@@ -59,8 +59,8 @@
       <v-tooltip bottom>
         <template #activator="{ on, attrs }">
           <v-btn
+            v-if="!$store.state.isMobile"
             icon
-            class="responsive-pconly"
             v-bind="attrs"
             @click="toggleAutoHideToolbar"
             v-on="on"
@@ -233,11 +233,5 @@ export default {
 
 .mv-toolbar {
     z-index: 1;
-}
-
-.responsive-pconly {
-  @media (max-width: 1200px) {
-    display: none;
-  }
 }
 </style>
