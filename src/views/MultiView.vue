@@ -12,49 +12,51 @@
       @mouseenter="collapseToolbar = false"
     />
     <!-- Floating tool bar -->
-    <MultiviewToolbar
-      v-show="!collapseToolbar"
-      v-model="collapseToolbar"
-      :buttons="buttons"
-      @update:autoHideToolbar="autoHideToolbar = $event"
-    >
-      <template #left>
-        <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
-        <!-- Single Button video selector for xs displays -->
-        <v-btn
-          icon
-          large
-          class="d-flex"
-          @click="handleToolbarShowSelector"
-        >
-          <v-icon style="border-radius: 0 position: relative; margin-right: 3px; cursor: pointer" large>
-            {{ mdiCardPlus }}
-          </v-icon>
-        </v-btn>
-      </template>
-      <template #buttons>
-        <v-menu offset-y>
-          <template #activator="{ on, attrs }">
-            <v-btn
-              color="primary"
-              dark
-              v-bind="attrs"
-              icon
-              v-on="on"
-            >
-              <v-icon>{{ icons.mdiGridLarge }}</v-icon>
-            </v-btn>
-          </template>
-          <portal to="preset-dialog" :disabled="!showPresetSelector">
-            <preset-selector
-              :slim="!showPresetSelector"
-              @selected="handlePresetClicked"
-              @showAll="showPresetSelector = true"
-            />
-          </portal>
-        </v-menu>
-      </template>
-    </MultiviewToolbar>
+    <transition name="slide">
+      <MultiviewToolbar
+        v-show="!collapseToolbar"
+        v-model="collapseToolbar"
+        :buttons="buttons"
+        @update:autoHideToolbar="autoHideToolbar = $event"
+      >
+        <template #left>
+          <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
+          <!-- Single Button video selector for xs displays -->
+          <v-btn
+            icon
+            large
+            class="d-flex"
+            @click="handleToolbarShowSelector"
+          >
+            <v-icon style="border-radius: 0 position: relative; margin-right: 3px; cursor: pointer" large>
+              {{ mdiCardPlus }}
+            </v-icon>
+          </v-btn>
+        </template>
+        <template #buttons>
+          <v-menu offset-y>
+            <template #activator="{ on, attrs }">
+              <v-btn
+                color="primary"
+                dark
+                v-bind="attrs"
+                icon
+                v-on="on"
+              >
+                <v-icon>{{ icons.mdiGridLarge }}</v-icon>
+              </v-btn>
+            </template>
+            <portal to="preset-dialog" :disabled="!showPresetSelector">
+              <preset-selector
+                :slim="!showPresetSelector"
+                @selected="handlePresetClicked"
+                @showAll="showPresetSelector = true"
+              />
+            </portal>
+          </v-menu>
+        </template>
+      </MultiviewToolbar>
+    </transition>
     <!-- Multiview Cell Area Background -->
     <multiview-background
       :show-tips="layout.length === 0"
@@ -467,6 +469,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .multiview {
     width: 100%;
     height: 100%;
@@ -502,5 +505,20 @@ export default {
     div {
         margin-bottom: 10px;
     }
+}
+
+.slide-enter-active, .slide-leave-active {
+      transition: all 0.3s ease-out;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(-64px);
+  opacity: 0;
+}
+
+.slide-enter {
+    transform: translateY(-64px);
+    opacity: 1;
 }
 </style>

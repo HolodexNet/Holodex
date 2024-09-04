@@ -214,7 +214,9 @@ export default {
         },
         hideToolbar() {
             if (this.localAutoHide) {
-                this.collapseToolbar = true;
+                setTimeout(() => {
+                    this.collapseToolbar = true;
+                }, 150);
             }
         },
         toggleAutoHideToolbar() {
