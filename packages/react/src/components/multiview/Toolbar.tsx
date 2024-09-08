@@ -1,11 +1,11 @@
 import { Selector } from "./Selector";
+import { ToolButtonContainer } from "./ToolButtonContainer";
 
 export function Toolbar() {
   return (
-    <div className="flex items-center gap-1 px-2">
-      <div>
-        <Selector />
-      </div>
+    <div className="inline-flex w-full content-center justify-between bg-base-2 p-2">
+      <Selector />
+      <ToolButtonContainer />
     </div>
   );
 }
