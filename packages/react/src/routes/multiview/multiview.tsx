@@ -15,7 +15,9 @@ export function Multiview() {
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
-      <Selector />
+      <div id="multiview-banner" className="flex items-center gap-1 px-8">
+        <Selector />
+      </div>
     </>
   );
 }
