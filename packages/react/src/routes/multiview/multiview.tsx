@@ -1,3 +1,5 @@
+import { Selector } from "@/components/multiview/Selector";
+import { useFavorites } from "@/services/user.service";
 import { Helmet } from "react-helmet-async";
 
 // multiview skeleton
@@ -5,12 +7,15 @@ import { Helmet } from "react-helmet-async";
 // grid page for drag and drop
 
 export function Multiview() {
+  // remember current selection
+  const favorites = useFavorites();
+
   return (
     <>
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
-      <div>Placeholder</div>
+      <Selector />
     </>
   );
 }
