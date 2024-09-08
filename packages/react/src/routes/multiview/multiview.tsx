@@ -1,3 +1,4 @@
+import { Toolbar } from "@/components/multiview/Toolbar";
 import { Helmet } from "react-helmet-async";
 
 // multiview skeleton
@@ -10,7 +11,9 @@ export function Multiview() {
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
-      <div>Placeholder</div>
+      <div id="multiview-banner" className="flex items-center gap-1 px-8">
+        <Toolbar />
+      </div>
     </>
   );
 }
