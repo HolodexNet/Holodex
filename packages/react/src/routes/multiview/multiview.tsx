@@ -11,7 +11,10 @@ export function Multiview() {
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
-      <div id="multiview-banner" className="flex items-center gap-1 px-8">
+      <div
+        id="multiview-banner"
+        className="sticky top-0 z-20 flex justify-start gap-2 rounded-lg bg-base-2 p-2 text-base-11 transition-all md:mx-8 md:px-2"
+      >
         <Toolbar />
       </div>
     </>
