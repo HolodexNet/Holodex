@@ -7,21 +7,13 @@ import {
 } from "@/shadcn/ui/dropdown-menu";
 import { defaultOrgs } from "../../store/org";
 import { useLive } from "@/services/live.service";
-import { LiveChannelIcon } from "./LiveChannelIcon";
+import { LiveChannel } from "./LiveChannel";
 import { cn } from "../../lib/utils";
 
-// I need a way to get a list of data containing the option name
-// based on the option selected, a list of current streams should be displayed
-// we need a current selection to hold the data
 /**
- * Options beyond the existing orgs:
- * - favorites
- * - youtube url
- * - twitch url
- * - all vtubers
+ * ToDos:
+ * - select favourites
  */
-
-// temporarily we will just get the favourites option
 
 export function Selector() {
   // create a mock favourites object as an org
@@ -31,14 +23,14 @@ export function Selector() {
   // based on what the selection is -> use different methods to render title card?
   const [currentOrg, setCurrentOrg] = useState(Favorites);
   const [liveChannels, setLiveChannels] = useState<Live[]>([]);
-  const channels = useLive({ org: currentOrg.name });
+  const liveStreams = useLive({ org: currentOrg.name });
 
   useEffect(() => {
-    const data = channels.data;
+    const data = liveStreams.data;
     if (!data) return;
     setLiveChannels(data);
     console.log(data);
-  }, [channels.data]);
+  }, [liveStreams.data]);
 
   const onSelect = (org: Org) => {
     if (org.name === currentOrg.name) return;
@@ -70,12 +62,14 @@ export function Selector() {
         id="live-channel-container"
         className={cn("flex min-h-12 flex-nowrap gap-2 overflow-scroll", {})}
       >
-        {liveChannels.map((channel) => {
+        {liveChannels.map((live) => {
           return (
-            <LiveChannelIcon
-              key={channel.id}
-              imageLink={channel.channel.photo}
-              channelName={channel.channel.name}
+            <LiveChannel
+              key={live.id}
+              channelImgLink={live.channel.photo}
+              channelName={live.channel.name}
+              videoId={live.id}
+              topicId={live.topic_id!}
             />
           );
         })}
