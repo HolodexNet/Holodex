@@ -19,7 +19,6 @@ export function LiveChannelIcon({
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-}: LiveChannelIconProps) {
       <Avatar className="size-12">
         <AvatarImage src={imageLink} alt={`${channelName} user icon`} />
         <AvatarFallback>CN</AvatarFallback>
