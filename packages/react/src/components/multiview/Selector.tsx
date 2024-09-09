@@ -73,6 +73,7 @@ export function Selector() {
         {liveChannels.map((channel) => {
           return (
             <LiveChannelIcon
+              key={channel.id}
               imageLink={channel.channel.photo}
               channelName={channel.channel.name}
             />
