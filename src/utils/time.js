@@ -68,25 +68,29 @@ export function titleTimeString(available_at, lang ) {
 }
 
 export function formatDistance(time, lang, $t, allowNegative = true, now = dayjs()) {
-    let diff;
     if (!time) return "?";
-    const minutesdiff = now.diff(time, "minutes");
-    if (Math.abs(minutesdiff) < 1) return $t("time.soon");
-    if (!allowNegative && minutesdiff > 0) return $t("time.soon");
+    const minutesDiff = now.diff(time, "minutes");
+    if (Math.abs(minutesDiff) < 1) return $t("time.soon");
+    if (!allowNegative && minutesDiff > 0) return $t("time.soon");
     // if (Math.abs(now.diff(time, "days")) > 60) return localizedDayjs(time, lang).format("ll");
-    if (Math.abs(now.diff(time, "hour")) > 23) {
+    const hourDiff = now.diff(time, "hour");
+    if (hourDiff < -23) {
+        return $t("time.diff_future_date", [
+            localizedDayjs(time, lang).format("l"),
+            localizedDayjs(time, lang).format("LT"),
+        ]);
+    }
+    if (hourDiff > 23) {
         return `${localizedDayjs(time, lang).format("l")} (${localizedDayjs(time, lang).format("LT")})`;
     }
     const timeObj = localizedDayjs(time, lang);
     if (new Date(time) > Date.now()) {
-        diff = $t("time.diff_future_date", [
+        return $t("time.diff_future_date", [
             timeObj.fromNow(),
             timeObj.format(`${timeObj.isTomorrow() ? "ddd " : ""}LT`),
         ]);
-        return diff;
     }
-    diff = $t("time.distance_past_date", [localizedDayjs(time, lang).fromNow()]);
-    return diff;
+    return $t("time.distance_past_date", [localizedDayjs(time, lang).fromNow()]);
 }
 
 export function secondsToHuman(s) {
