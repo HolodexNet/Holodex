@@ -4,6 +4,7 @@ import { Separator } from "@/shadcn/ui/separator";
 import { useParams } from "react-router-dom";
 import { useVideoCardSizes } from "@/store/video";
 import PullToRefresh from "@/components/layout/PullToRefresh";
+import { useVideoFilter } from "@/hooks/useVideoFilter";
 
 export function LiveTab() {
   const { org } = useParams();
@@ -17,19 +18,25 @@ export function LiveTab() {
     { refetchInterval: 1000 * 60 * 5 },
   );
 
+  const liveFiltered = useVideoFilter(
+    live as Video[],
+    "stream_schedule",
+    "org",
+  );
+
   return (
     <>
       <PullToRefresh onRefresh={refetch}>
         <MainVideoListing
           isLoading={liveLoading}
           size={cardSize}
-          videos={live?.filter(({ status }) => status === "live") ?? []}
+          videos={liveFiltered?.filter(({ status }) => status === "live") ?? []}
         />
         <Separator className="mb-4 mt-2 w-full border-base-3 lg:mb-6 lg:mt-4" />
         <MainVideoListing
           isLoading={liveLoading}
           size={cardSize}
-          videos={live?.filter(({ status }) => status !== "live") ?? []}
+          videos={liveFiltered?.filter(({ status }) => status !== "live") ?? []}
         />
       </PullToRefresh>
     </>

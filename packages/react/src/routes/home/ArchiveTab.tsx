@@ -3,6 +3,7 @@ import { MainVideoListing } from "@/components/video/MainVideoListing";
 import { useParams } from "react-router-dom";
 import { useVideoCardSizes } from "@/store/video";
 import PullToRefresh from "@/components/layout/PullToRefresh";
+import { useVideoFilter } from "@/hooks/useVideoFilter";
 
 export function ArchiveTab() {
   const { org } = useParams();
@@ -27,12 +28,19 @@ export function ArchiveTab() {
       refetchInterval: 1000 * 60 * 5,
     },
   );
+
+  const archiveFiltered = useVideoFilter(
+    archives?.pages?.flatMap((x) => x.items) ?? [],
+    "clip",
+    "org",
+  );
+
   return (
     <PullToRefresh onRefresh={refetch}>
       <MainVideoListing
         isLoading={archiveLoading}
         size={cardSize}
-        videos={archives?.pages?.flatMap((x) => x.items) ?? []}
+        videos={archiveFiltered}
         fetchNextPage={fetchArchives}
         hasNextPage={hasArchiveNextPage}
         isFetchingNextPage={isFetchingArchiveNextPage}

@@ -5,6 +5,7 @@ import { clipLanguageAtom } from "@/store/settings";
 import { useParams } from "react-router-dom";
 import { useVideoCardSizes } from "@/store/video";
 import PullToRefresh from "@/components/layout/PullToRefresh";
+import { useVideoFilter } from "@/hooks/useVideoFilter";
 
 export function ClipsTab() {
   const { org } = useParams();
@@ -33,12 +34,18 @@ export function ClipsTab() {
     },
   );
 
+  const filteredClips = useVideoFilter(
+    clips?.pages?.flatMap((x) => x.items) ?? [],
+    "clip",
+    "org",
+  );
+
   return (
     <PullToRefresh onRefresh={refetch}>
       <MainVideoListing
         isLoading={clipLoading}
         size={cardSize}
-        videos={clips?.pages?.flatMap((x) => x.items) ?? []}
+        videos={filteredClips}
         fetchNextPage={fetchClips}
         hasNextPage={hasClipsNextPage}
         isFetchingNextPage={isFetchingClipsNextPage}
