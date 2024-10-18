@@ -14,15 +14,18 @@ const Checkbox = React.forwardRef<
       `peer h-4 w-4 shrink-0 rounded-sm border border-base-10 shadow 
       focus-visible:ring-primaryA-5 focus-visible:ring-offset-base-2 focus-visible:outline-none 
       disabled:cursor-not-allowed disabled:opacity-50 
-      data-[state=checked]:bg-primary-9 data-[state=checked]:text-primary-12 data-[state=checked]:border-base-12 `,
+      data-[state=checked]:bg-primary-9 data-[state=checked]:text-primary-12 data-[state=checked]:border-base-12 
+      data-[state=checked]:ring-2`,
       className
     )}
     {...props}
   >
     <CheckboxPrimitive.Indicator
-      className={cn("flex items-center justify-center text-current")}
+      className={cn(
+        "text-current dark:opacity-100 opacity-50 text-[11.5px] leading-[14px] text-white"
+      )}
     >
-      <div className="i-lucide:check text-sm"></div>
+      <div className="i-lsicon:check-correct-filled"></div>
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ))
