@@ -6,6 +6,8 @@ import { Checkbox } from "@/shadcn/ui/checkbox";
 import { Label } from "@/shadcn/ui/label";
 import {
   defaultOpenAtom,
+  filterDeadStreamsAtom,
+  filterLongStreamsAtom,
   hideCollabStreamsAtom,
   hidePlaceholderAtom,
   hideThumbnailAtom,
@@ -23,6 +25,13 @@ export function SettingsHomepage() {
   const [hideThumbnail, setHideThumbnail] = useAtom(hideThumbnailAtom);
   const [hideCollab, setHideCollab] = useAtom(hideCollabStreamsAtom);
   const [hidePlaceholder, setHidePlaceholder] = useAtom(hidePlaceholderAtom);
+
+  const [filterDeadStreams, setFilterDeadStreams] = useAtom(
+    filterDeadStreamsAtom,
+  );
+  const [filterLongStreams, setFilterLongStreams] = useAtom(
+    filterLongStreamsAtom,
+  );
 
   const defaultPages = [
     {
@@ -70,6 +79,16 @@ export function SettingsHomepage() {
       label: t("views.settings.hidePlaceholderStreams"),
       value: hidePlaceholder,
       onChange: () => setHidePlaceholder(!hidePlaceholder),
+    },
+    {
+      label: t("views.settings.filterDeadStreams"),
+      value: filterDeadStreams,
+      onChange: () => setFilterDeadStreams(!filterDeadStreams),
+    },
+    {
+      label: t("views.settings.filterLongStreams"),
+      value: filterLongStreams,
+      onChange: () => setFilterLongStreams(!filterLongStreams),
     },
   ] as const;
 

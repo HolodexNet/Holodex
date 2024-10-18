@@ -12,6 +12,7 @@ export interface HolodexSettings {
   gridDensity: number;
   defaultOpen: "Favorites" | "Home";
   hideCollabStreams: boolean;
+  filterLongStreams: boolean; // New setting
   filterDeadStreams: boolean;
   ignoredTopics: string[];
   blockedChannels: ShortChannel[];
@@ -24,11 +25,14 @@ export const settingsAtom = atomWithStorage<HolodexSettings>(
     englishName: false,
     clipLanguage: [],
     redirectMode: false,
+    // homepage settings
     hideThumbnail: false,
     hidePlaceholder: false,
+    // homepage settings
     gridDensity: 0,
     defaultOpen: "Home",
     hideCollabStreams: false,
+    filterLongStreams: true, // homepage settings
     filterDeadStreams: true,
     ignoredTopics: [],
     blockedChannels: [],
@@ -122,6 +126,16 @@ export const filterDeadStreamsAtom = atom(
     set(settingsAtom, {
       ...get(settingsAtom),
       filterDeadStreams: newValue,
+    });
+  },
+);
+
+export const filterLongStreamsAtom = atom(
+  (get) => get(settingsAtom).filterLongStreams,
+  (get, set, newValue: boolean) => {
+    set(settingsAtom, {
+      ...get(settingsAtom),
+      filterLongVideos: newValue,
     });
   },
 );

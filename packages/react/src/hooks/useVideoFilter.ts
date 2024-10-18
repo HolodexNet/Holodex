@@ -13,6 +13,10 @@ function filterDeadStreams(video: VideoBase, now: dayjs.Dayjs) {
   );
 }
 
+function filterLongVideos(video: VideoBase) {
+  return video.duration <= 24 * 60 * 60; // 24 hours in seconds
+}
+
 type PageContext = "org" | "favorites" | "search" | "watch" | "channel";
 
 export function useVideoFilter(
@@ -22,6 +26,7 @@ export function useVideoFilter(
   overrides?: Partial<{
     hideCollabStreams: boolean;
     filterDeadStreams: boolean;
+    filterLongVideos: boolean;
     ignoredTopics: string[];
   }>,
 ) {
@@ -47,6 +52,8 @@ export function useVideoFilter(
     const shouldFilterDeadStreams =
       type === "stream_schedule" &&
       (overrides?.filterDeadStreams ?? settings.filterDeadStreams);
+    const shouldFilterLongVideos =
+      overrides?.filterLongVideos ?? settings.filterLongStreams;
     const now = shouldFilterDeadStreams ? dayjs() : null;
 
     const filteredVideos = videos.filter((video) => {
@@ -79,10 +86,36 @@ export function useVideoFilter(
         keep = keep && filterDeadStreams(video, now);
       }
 
+      // Filter long videos
+      if (shouldFilterLongVideos) {
+        keep = keep && filterLongVideos(video);
+      }
+
       // Filter ignored topics
       const ignoredTopics = overrides?.ignoredTopics ?? settings.ignoredTopics;
       if (ignoredTopics.length > 0) {
         keep = keep && !ignoredTopics.includes(video.topic_id ?? "_N_A");
+      }
+
+      // filter clips whose channels and uploaders are all irrelevant to current context
+      const videoMentions = (video as Partial<Video>).mentions;
+      if ("clip" === type && videoMentions) {
+        keep =
+          keep && // don't keep if every video is invalid
+          ![...videoMentions, video.channel].every((mention) => {
+            // thunk => true if video invalid for page context:
+            const mentionBlocked = blockedSet.has(mention.id); // it has to be blocked
+            switch (pageContext) {
+              case "org":
+                return mentionBlocked || mention.org !== defaultOrg; // and it has to be relevant to the org
+              case "favorites":
+                return mentionBlocked || !favoritesSet.has(mention.id); // or not your favorites list.
+              case "channel":
+              case "watch":
+              case "search":
+                return !mentionBlocked; // or just be blocked.
+            }
+          });
       }
 
       return keep;

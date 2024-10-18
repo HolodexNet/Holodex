@@ -7,6 +7,8 @@ interface ChannelBase {
   english_name?: string;
   type: ChannelType;
   photo?: string;
+  org?: string;
+  suborg?: string;
 }
 
 interface Channel extends ChannelBase {

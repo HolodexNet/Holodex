@@ -365,6 +365,8 @@ views:
     hideFeaturesLabel: Hide Features
     showTimezonesOnHover: Show Timezones on hover
     orgs: Starred Orgs
+    filterDeadStreams: Hide Streams that don't go live for >2 hours
+    filterLongStreams: Hide Streams that are live for longer than 24 hours
   app:
     update_available: An update is available
     update_btn: Update

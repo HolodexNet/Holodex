@@ -58,7 +58,7 @@ interface Video extends VideoBase {
   sources?: Clip[];
   refers?: Clip[];
   simulcasts?: Clip[];
-  mentions?: ChannelBase[];
+  mentions?: ShortChannel[];
   comments?: CommentBase[];
   recommendations?: VideoBase[];
   live_tl_count?: {
