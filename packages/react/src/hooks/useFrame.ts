@@ -22,6 +22,7 @@ export const isSidebarFloatingAtom = atom(
 );
 
 export const isMobileAtom = atom(
+  /** TODO: at release uncomment this navigator */
   (get) => get(sidebarShouldBeFullscreenAtom), //&& /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 );
 

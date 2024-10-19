@@ -60,35 +60,32 @@ export function Sidebar() {
           <div className="mb-2">
             <OrgSelectorCombobox />
           </div>
-          {rankedOrgs.map((pinnedOrg) => (
-            <div key={pinnedOrg.name} className="space-y-1">
-              {/* {org === pinnedOrg && <hr className="border-base" />} */}
-
+          <div className="space-y-2">
+            <SidebarItem
+              key={"fav-sb"}
+              onClose={toggle}
+              label={"Favorites"}
+              href={`/favorites`}
+              icon={"i-ph:heart-fill"}
+            />
+            {rankedOrgs.map((pinnedOrg) => (
               <SidebarItem
+                key={pinnedOrg.name}
                 onClose={toggle}
                 label={pinnedOrg.name}
                 href={`/org/${pinnedOrg.name}`}
                 icon={pinnedOrg.icon ? undefined : "i-ph:placeholder-fill"}
                 image={getThumbnailForOrg(pinnedOrg.icon)}
               />
-              {org === pinnedOrg.name && (
-                <div className="w-full pl-6">
-                  <SidebarItem
-                    onClose={toggle}
-                    label={"Members"}
-                    href={`/org/${pinnedOrg.name}/channels`}
-                    icon="i-heroicons:identification"
-                  />
-                </div>
-              )}
+            ))}
+          </div>
 
-              {org === pinnedOrg.name && <hr className="border-base" />}
-            </div>
-          ))}
           <Link
             to="/settings/orgs"
             className={cn(
-              "w-full justify-start rounded-md px-4 py-2 text-center text-sm font-semibold tracking-tight text-base-9 transition-opacity duration-300 hover:bg-base-3",
+              `w-full justify-start rounded-md px-4 py-2 
+              text-center text-sm font-semibold tracking-tight text-base-9 
+              transition-opacity duration-300 hover:bg-base-3`,
               {
                 "visible opacity-70": fs,
                 "opacity-0 group-hover/sidebar:opacity-50 hover:!opacity-80":

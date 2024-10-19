@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { orgAtom } from "@/store/org";
 import { useAtom, useAtomValue } from "jotai";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import {
   Navigate,
@@ -25,6 +25,10 @@ import {
   isSidebarOpenAtom,
   sidebarShouldBeFullscreenAtom,
 } from "@/hooks/useFrame";
+
+const ChannelsOrg = lazy(() =>
+  import("../orgChannels").then((module) => ({ default: module.ChannelsOrg })),
+);
 
 export function Home() {
   const navigate = useNavigate();
@@ -61,6 +65,9 @@ export function Home() {
         </TabsContent>
         <TabsContent value="clips">
           <ClipsTab />
+        </TabsContent>
+        <TabsContent value="members">
+          <ChannelsOrg />
         </TabsContent>
       </Tabs>
     </>
@@ -102,6 +109,7 @@ function StickyTabsList({ tab }: { tab: string }) {
       <TabsTrigger value="clips">
         {t("views.home.recentVideoToggles.subber")}
       </TabsTrigger>
+      <TabsTrigger value="members">Members</TabsTrigger>
       <Separator orientation="vertical" className="relative h-auto" />
       {tab === "clips" && <ClipLanguageSelector />}
       <CardSizeToggle />
