@@ -103,12 +103,12 @@ export function Sidebar() {
         <div className="grow"></div>
         <hr className="mx-3 my-1 border-base" />
         <div className="flex flex-col space-y-1 px-3 pb-1">
-          <SidebarItem
+          {/* <SidebarItem
             label={t("component.mainNav.favorites")}
             icon="i-heroicons:heart"
             href="/favorites"
             onClose={toggle}
-          />
+          /> */}
           <SidebarItem
             label={t("component.mainNav.multiview")}
             icon="i-heroicons:rectangle-group"

@@ -8,6 +8,7 @@ import { TopicBadge } from "../topic/TopicBadge";
 import { ChannelSocials } from "./ChannelSocials";
 import { Link, useNavigate } from "react-router-dom";
 import { usePreferredName } from "@/store/settings";
+import React from "react";
 
 type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
   T,
@@ -27,6 +28,7 @@ interface ChannelCardProps extends PartialChannel {
   children?: ReactNode;
 }
 
+export const MemoizedChannelCard = React.memo(ChannelCard);
 export function ChannelCard({
   size,
   showSubscribers = true,

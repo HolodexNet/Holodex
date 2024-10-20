@@ -6,7 +6,9 @@ import { Frame } from "@/components/layout/Frame";
 import { NavigateToMusicdex } from "@/components/channel/NavigateToMusicdex";
 
 const Favorites = lazy(() =>
-  import("./favourites").then((module) => ({ default: module.Favorites })),
+  import("./favorites/favoritesHome").then((module) => ({
+    default: module.FavoritesHome,
+  })),
 );
 const Home = lazy(() =>
   import("./home/home").then((module) => ({ default: module.Home })),
@@ -117,7 +119,7 @@ export const routes = (
     <Route path="org/:org/channels" Component={ChannelsOrg} />
     <Route path="channel/:id" Component={Channel}>
       <Route index element={<ChannelVideos type="videos" />} />
-      <Route path="about" element={<ChannelAbout />} />
+      <Route path="about" Component={ChannelAbout} />
       <Route path="clips" element={<ChannelVideos type="clips" />} />
       <Route path="collabs" element={<ChannelVideos type="collabs" />} />
       <Route path="music" element={<NavigateToMusicdex />} />

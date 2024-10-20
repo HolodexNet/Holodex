@@ -1,5 +1,8 @@
 import { useClient } from "@/hooks/useClient";
+import { hidePlaceholderAtom } from "@/store/settings";
 import { useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
+import { CommonQueryConfig } from "./@types";
 
 interface UseLiveParams {
   channel_id?: string;
@@ -19,6 +22,13 @@ interface UseLiveParams {
   id?: string;
 }
 
+const STANDARD_CONFIG_LIVE_QUERY = {
+  refetchInterval: 3 * 60 * 1000, // 3 minutes
+  refetchIntervalInBackground: false,
+  refetchOnWindowFocus: true,
+  staleTime: 2.5 * 60 * 1000, // 2.5 minutes
+};
+
 export function useLive(params?: UseLiveParams, config?: CommonQueryConfig) {
   const client = useClient();
 
@@ -30,6 +40,24 @@ export function useLive(params?: UseLiveParams, config?: CommonQueryConfig) {
           ...params,
         },
       }),
+    ...STANDARD_CONFIG_LIVE_QUERY,
+    ...config,
+  });
+}
+
+export function useFavoriteLive(config?: CommonQueryConfig) {
+  const client = useClient();
+  const hidePlaceholder = useAtomValue(hidePlaceholderAtom); // Assume this hook exists to get user settings
+
+  return useQuery<Live[]>({
+    queryKey: ["favorite-live", hidePlaceholder, client.loggedIn],
+    queryFn: async () =>
+      await client.get<Live[]>("/api/v2/users/live", {
+        params: {
+          includePlaceholder: !hidePlaceholder ? 1 : 0,
+        },
+      }),
+    ...STANDARD_CONFIG_LIVE_QUERY,
     ...config,
   });
 }

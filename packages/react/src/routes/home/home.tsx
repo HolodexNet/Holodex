@@ -20,7 +20,6 @@ import { useVideoCardSizes } from "@/store/video";
 import { Button } from "@/shadcn/ui/button";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/shadcn/ui/separator";
-import { useIntersectionObserver } from "usehooks-ts";
 import {
   isSidebarOpenAtom,
   sidebarShouldBeFullscreenAtom,
@@ -56,7 +55,7 @@ export function Home() {
         <title>{currentOrg} - Holodex</title>
       </Helmet>
       <Tabs defaultValue={tab} onValueChange={setTab}>
-        <StickyTabsList tab={tab} />
+        <StickyTabsList tab={tab} fourthTab="Members" />
         <TabsContent value="live">
           <LiveTab />
         </TabsContent>
@@ -74,23 +73,31 @@ export function Home() {
   );
 }
 
-function StickyTabsList({ tab }: { tab: string }) {
+function StickyTabsList({
+  tab,
+  fourthTab,
+}: {
+  tab: string;
+  fourthTab: string;
+}) {
   const { t } = useTranslation();
-  const { isIntersecting: isStuckAtTop, ref } = useIntersectionObserver({
-    threshold: 1,
-    rootMargin: "-1px 0px 0px 0px",
-  });
+  // usehooks-ts way:
+  // const { isIntersecting: isStuckAtTop, ref } = useIntersectionObserver({
+  //   threshold: 1,
+  //   rootMargin: "-1px 0px 0px 0px",
+  // });
+  // react-use way:
 
   const [open] = useAtom(isSidebarOpenAtom);
   const [isFullScreen] = useAtom(sidebarShouldBeFullscreenAtom);
 
   return (
     <TabsList
-      ref={ref}
+      // ref={ref}
       // disable sticky when mobile panel is open and it should be fullscreen
       className={cn(
         "top-0 z-20 flex items-stretch justify-start overflow-x-auto rounded-none bg-base-2 p-2 transition-all md:px-10",
-        isStuckAtTop && "rounded-lg md:mx-8 md:px-2",
+        //isStuckAtTop && "rounded-lg md:mx-8 md:px-2",
         !open ? "sticky" : isFullScreen ? "" : "sticky",
       )}
     >
@@ -109,7 +116,7 @@ function StickyTabsList({ tab }: { tab: string }) {
       <TabsTrigger value="clips">
         {t("views.home.recentVideoToggles.subber")}
       </TabsTrigger>
-      <TabsTrigger value="members">Members</TabsTrigger>
+      <TabsTrigger value="members">{fourthTab}</TabsTrigger>
       <Separator orientation="vertical" className="relative h-auto" />
       {tab === "clips" && <ClipLanguageSelector />}
       <CardSizeToggle />

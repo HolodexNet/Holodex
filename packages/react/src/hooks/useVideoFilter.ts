@@ -21,7 +21,7 @@ type PageContext = "org" | "favorites" | "search" | "watch" | "channel";
 
 export function useVideoFilter(
   videos: VideoBase[] | undefined,
-  type: "stream_schedule" | "archive" | "clip",
+  videoContext: "stream_schedule" | "archive" | "clip",
   pageContext: PageContext,
   overrides?: Partial<{
     hideCollabStreams: boolean;
@@ -44,13 +44,13 @@ export function useVideoFilter(
     if (!videos) return [];
 
     const isStreamScheduleOrArchive =
-      type === "stream_schedule" || type === "archive";
+      videoContext === "stream_schedule" || videoContext === "archive";
     const isHideCollabStreamsConfigured =
       overrides?.hideCollabStreams ?? settings.hideCollabStreams;
     const shouldHideCollabStreams =
       isStreamScheduleOrArchive && isHideCollabStreamsConfigured;
     const shouldFilterDeadStreams =
-      type === "stream_schedule" &&
+      videoContext === "stream_schedule" &&
       (overrides?.filterDeadStreams ?? settings.filterDeadStreams);
     const shouldFilterLongVideos =
       overrides?.filterLongVideos ?? settings.filterLongStreams;
@@ -99,7 +99,7 @@ export function useVideoFilter(
 
       // filter clips whose channels and uploaders are all irrelevant to current context
       const videoMentions = (video as Partial<Video>).mentions;
-      if ("clip" === type && videoMentions) {
+      if (videoContext === "clip" && videoMentions) {
         keep =
           keep && // don't keep if every video is invalid
           ![...videoMentions, video.channel].every((mention) => {
@@ -122,7 +122,7 @@ export function useVideoFilter(
     });
 
     // Sort for stream schedule
-    if (type === "stream_schedule") {
+    if (videoContext === "stream_schedule") {
       filteredVideos.sort((a, b) => {
         if (a.available_at === b.available_at) return 0;
         return (a.available_at ?? "1990-01-01") >
@@ -135,7 +135,7 @@ export function useVideoFilter(
     return filteredVideos;
   }, [
     videos,
-    type,
+    videoContext,
     pageContext,
     settings,
     blockedSet,

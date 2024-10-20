@@ -93,6 +93,45 @@ export function useVideosV3(
   });
 }
 
+export function useFavoriteVideos(
+  params?: UseVideosParams,
+  config?: CommonQueryConfig,
+) {
+  const client = useClient();
+
+  return useInfiniteQuery({
+    queryKey: ["favorite-videos", params],
+    initialPageParam: { ts: new Date().getTime().toString(), offset: 0 },
+    queryFn: async ({ pageParam }) =>
+      (
+        await client.get<{ items: VideoBase[]; total: number }>(
+          "/api/v2/users/videos",
+          {
+            params: {
+              ...params,
+              from: params?.from ?? pageParam.ts,
+              to: params?.to,
+              offset: pageParam.offset,
+            },
+          },
+        )
+      ).items,
+    getNextPageParam(lastPage, allPages) {
+      const lastItem = lastPage[lastPage.length - 1];
+      if (!lastItem || lastItem.available_at == undefined) {
+        return null;
+      } else {
+        return {
+          ts: (new Date(lastItem.available_at).getTime() - 1).toString(),
+          offset: allPages.map((x) => x.length).reduce((a, b) => a + b, 0),
+        };
+      }
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    ...config,
+  });
+}
+
 export function useVideos(
   params?: Omit<UseVideosParams, "offset">,
   config?: CommonQueryConfig,
