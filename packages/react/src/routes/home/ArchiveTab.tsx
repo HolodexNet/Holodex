@@ -31,7 +31,7 @@ export function ArchiveTab() {
 
   const archiveFiltered = useVideoFilter(
     archives?.pages?.flatMap((x) => x.items) ?? [],
-    "clip",
+    "archive",
     "org",
   );
 

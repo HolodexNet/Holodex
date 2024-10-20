@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { OrgSelectorCombobox } from "../org/OrgPicker";
+import { OrgSelectorCombobox } from "../org/OrgSelectorCombobox";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { HTMLAttributes, useRef, useState } from "react";
+import { HTMLAttributes, useCallback, useRef, useState } from "react";
 import {
   isSidebarFloatingAtom,
   isMobileAtom,
@@ -33,9 +33,9 @@ export function Sidebar() {
   const toggle = useSetAtom(toggleSidebarAtom);
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
 
-  const handleClickOutside = () => {
+  const handleClickOutside = useCallback(() => {
     floating && open && setOpen(false);
-  };
+  }, [floating, open]);
 
   useOnClickOutside(ref, handleClickOutside);
 

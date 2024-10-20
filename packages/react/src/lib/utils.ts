@@ -146,3 +146,27 @@ export function idToVideoURL(id: string, link?: string) {
 export function videoURLtoID(url: string) {
   return VIDEO_URL_REGEX.exec(url)?.groups?.id;
 }
+
+type Nullish = null | undefined;
+
+type NonNullishProperties<T> = {
+  [K in keyof T]: T[K] extends Nullish ? never : K;
+}[keyof T];
+
+type OmitNullish<T> = Pick<T, NonNullishProperties<T>>;
+
+export function omitNullish<T extends object>(obj: T): OmitNullish<T> {
+  const result = {} as OmitNullish<T>;
+
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      const value = obj[key];
+      if (value !== null && value !== undefined) {
+        // This assertion is safe because we've checked that the value is not nullish
+        (result as unknown as Record<string, unknown>)[key] = value;
+      }
+    }
+  }
+
+  return result;
+}

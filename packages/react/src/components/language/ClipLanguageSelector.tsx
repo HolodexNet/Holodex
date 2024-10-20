@@ -60,6 +60,27 @@ export const ClipLanguageSelector: React.FC = () => {
           {/* <CommandInput placeholder={t("Search languages...")} /> */}
           <CommandList>
             <CommandGroup heading={t("views.settings.clipLanguageSelection")}>
+              <CommandItem disabled className="p-0">
+                {selectedLangs.length > 0 && (
+                  <div className="mb-1 flex w-full flex-wrap gap-1 border-b border-base-5 p-2 pt-0">
+                    {selectedLangs.map((langValue) => {
+                      const lang = CLIPPER_LANGS.find(
+                        (l) => l.value === langValue,
+                      );
+                      return (
+                        <Button
+                          key={langValue}
+                          variant="primary"
+                          size="sm"
+                          onClick={() => toggleLanguage(langValue)}
+                        >
+                          {lang?.text}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                )}
+              </CommandItem>
               {CLIPPER_LANGS.map((lang) => (
                 <CommandItem
                   key={lang.value}
@@ -79,23 +100,6 @@ export const ClipLanguageSelector: React.FC = () => {
             </CommandGroup>
           </CommandList>
         </Command>
-        {selectedLangs.length > 0 && (
-          <div className="flex flex-wrap gap-1 border-t border-base-5 p-2">
-            {selectedLangs.map((langValue) => {
-              const lang = CLIPPER_LANGS.find((l) => l.value === langValue);
-              return (
-                <Button
-                  key={langValue}
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => toggleLanguage(langValue)}
-                >
-                  {lang?.text}
-                </Button>
-              );
-            })}
-          </div>
-        )}
       </PopoverContent>
     </Popover>
   );

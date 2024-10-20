@@ -11,6 +11,7 @@ import { Helmet } from "react-helmet-async";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Separator } from "@/shadcn/ui/separator";
+import { FavoritesArchiveTab, FavoritesClipTab } from "./favoriteOtherTabs";
 
 export function FavoritesLive() {
   const { size: cardSize } = useVideoCardSizes(["list", "md", "lg"]);
@@ -70,8 +71,12 @@ export function FavoritesHome() {
         <TabsContent value="live">
           <FavoritesLive />
         </TabsContent>
-        <TabsContent value="archive">{/* <ArchiveTab /> */}</TabsContent>
-        <TabsContent value="clips">{/* <ClipsTab /> */}</TabsContent>
+        <TabsContent value="archive">
+          <FavoritesArchiveTab />
+        </TabsContent>
+        <TabsContent value="clips">
+          <FavoritesClipTab />
+        </TabsContent>
         <TabsContent value="members">
           <FavoritedChannels />
         </TabsContent>

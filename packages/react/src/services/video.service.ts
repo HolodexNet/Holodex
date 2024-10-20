@@ -1,5 +1,6 @@
 import { useClient } from "@/hooks/useClient";
 import { HTTPError } from "@/lib/fetch";
+import { omitNullish } from "@/lib/utils";
 import {
   UseQueryOptions,
   useInfiniteQuery,
@@ -53,17 +54,6 @@ function arrayToCommaSeparatedString(arr: string[] | string | undefined) {
   return Array.isArray(arr) ? arr.join(",") : arr;
 }
 
-function removeUndefinedProps<T extends object>(obj: T): Partial<T> {
-  for (const prop in obj) {
-    if (
-      Object.prototype.hasOwnProperty.call(obj, prop) &&
-      obj[prop] === undefined
-    ) {
-      delete obj[prop];
-    }
-  }
-  return obj;
-}
 export function useVideosV3(
   params?: Omit<UseVideosV3Params, "nextPage">,
   config?: CommonQueryConfig,
@@ -79,7 +69,7 @@ export function useVideosV3(
         approximateTotal: number;
         nextPage?: string;
       }>("/api/v3/videos", {
-        params: removeUndefinedProps({
+        params: omitNullish({
           ...params,
           status: arrayToCommaSeparatedString(params?.status),
           type: arrayToCommaSeparatedString(params?.type),
@@ -100,29 +90,28 @@ export function useFavoriteVideos(
   const client = useClient();
 
   return useInfiniteQuery({
-    queryKey: ["favorite-videos", params],
-    initialPageParam: { ts: new Date().getTime().toString(), offset: 0 },
+    queryKey: ["favorite-videos", params, params?.to],
+    initialPageParam: { ts: params?.to ?? new Date().toISOString(), offset: 0 },
     queryFn: async ({ pageParam }) =>
-      (
-        await client.get<{ items: VideoBase[]; total: number }>(
-          "/api/v2/users/videos",
-          {
-            params: {
-              ...params,
-              from: params?.from ?? pageParam.ts,
-              to: params?.to,
-              offset: pageParam.offset,
-            },
-          },
-        )
-      ).items,
-    getNextPageParam(lastPage, allPages) {
+      await client.get<VideoBase[]>("/api/v2/users/videos", {
+        params: omitNullish({
+          ...params,
+          status: arrayToCommaSeparatedString(params?.status),
+          type: arrayToCommaSeparatedString(params?.type),
+          lang: arrayToCommaSeparatedString(params?.lang),
+          include: arrayToCommaSeparatedString(params?.include),
+          from: params?.from,
+          to: params?.to ?? pageParam.ts,
+          offset: pageParam.offset,
+        }),
+      }),
+    getNextPageParam(lastPage, allPages, _, allParams) {
       const lastItem = lastPage[lastPage.length - 1];
       if (!lastItem || lastItem.available_at == undefined) {
         return null;
       } else {
         return {
-          ts: (new Date(lastItem.available_at).getTime() - 1).toString(),
+          ts: allParams[0].ts,
           offset: allPages.map((x) => x.length).reduce((a, b) => a + b, 0),
         };
       }
