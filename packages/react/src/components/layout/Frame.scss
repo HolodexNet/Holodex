@@ -6,6 +6,7 @@ $responsive-breakpoint: 768px;
 
 #layout {
   --header-height: #{$header-height};
+  --header-top: 0px;
   --header-height-clearance: calc(
     var(--header-height) + env(safe-area-inset-top, 0px)
   );
@@ -58,14 +59,14 @@ $responsive-breakpoint: 768px;
 
   &.header-hidden {
     --header-height-clearance: 0px;
-    grid-template-areas:
-      "sidebar content"
-      "sidebar content"
-      "sidebar selectionfooter"
-      "appfooter appfooter";
+    // grid-template-areas:
+    //   "sidebar header"
+    //   "sidebar content"
+    //   "sidebar selectionfooter"
+    //   "appfooter appfooter";
 
     > header {
-      display: none;
+      top: calc(-1 * var(--header-height));
     }
   }
 
@@ -83,6 +84,10 @@ $responsive-breakpoint: 768px;
   min-height: 100vh;
   max-width: 100dvw;
 
+  transition:
+    grid-template-rows 0.2s,
+    grid-template-columns 0.2s;
+
   grid-template-areas:
     "sidebar header"
     "sidebar content"
@@ -91,6 +96,10 @@ $responsive-breakpoint: 768px;
 
   > header {
     grid-area: header;
+
+    transition:
+      top 0.2s,
+      height 0.2s;
   }
 
   > aside#sidebar {

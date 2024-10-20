@@ -81,8 +81,8 @@ export function Controlbar({ video, url }: ControlbarProps) {
         <div
           className={
             theaterMode
-              ? "i-tabler:panorama-horizontal-off"
-              : "i-tabler:panorama-horizontal"
+              ? "i-hugeicons:square-arrow-shrink-01"
+              : "i-hugeicons:square-arrow-expand-01"
           }
         />
         <span className="hidden @screen-lg:block">
@@ -101,12 +101,12 @@ export function Controlbar({ video, url }: ControlbarProps) {
         <div className="i-lucide:arrow-down-right-square" />
         <span className="hidden @screen-lg:block">Mini Player</span>
       </Button>
-      <Button variant="ghost">
+      {/* <Button variant="ghost">
         <div className="i-heroicons:arrow-path" />
         <span className="hidden @screen-lg:block">
           {t("component.apiError.reload")}
         </span>
-      </Button>
+      </Button> */}
       <VideoMenu video={video} url={url}>
         <Button className="shrink-0" size="icon" variant="ghost">
           <div className="i-heroicons:ellipsis-vertical" />

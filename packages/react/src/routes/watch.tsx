@@ -8,6 +8,7 @@ import { PlayerRecommendations } from "@/components/player/PlayerRecommendations
 import { PlayerStats } from "@/components/player/PlayerStats";
 import { QueueList } from "@/components/player/QueueList";
 import { useIsLgAndUp } from "@/hooks/useBreakpoint";
+import { headerHiddenAtom } from "@/hooks/useFrame";
 import { cn, idToVideoURL } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
 import { useVideo } from "@/services/video.service";
@@ -20,7 +21,7 @@ import {
 } from "@/store/player";
 import { queueAtom } from "@/store/queue";
 import { clipLanguageQueryAtom } from "@/store/settings";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
@@ -64,6 +65,14 @@ export function Watch() {
 
   const url = idToVideoURL(id!, currentVideo?.link);
 
+  const makeHeaderHidden = useSetAtom(headerHiddenAtom);
+  useEffect(() => {
+    // hides the holodex default header
+    if (theaterMode) makeHeaderHidden(true);
+    return () => makeHeaderHidden(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [theaterMode]);
+
   useEffect(() => {
     setMiniPlayer(false);
   }, []);
@@ -84,7 +93,7 @@ export function Watch() {
             <div
               className={cn("flex w-full flex-col bg-base-3", [
                 theaterMode
-                  ? "aspect-video @screen-lg:h-[calc(100dvh_-_var(--header-height))]"
+                  ? "aspect-video @screen-lg:h-dvh"
                   : "overflow-hidden rounded-lg",
               ])}
             >
