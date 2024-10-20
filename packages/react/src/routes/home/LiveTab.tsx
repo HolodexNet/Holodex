@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useVideoCardSizes } from "@/store/video";
 import PullToRefresh from "@/components/layout/PullToRefresh";
 import { useVideoFilter } from "@/hooks/useVideoFilter";
+import { EmptyQuip } from "./EmptyQuip";
 
 export function LiveTab() {
   const { org } = useParams();
@@ -24,19 +25,24 @@ export function LiveTab() {
     "org",
   );
 
+  const nowLive = liveFiltered?.filter(({ status }) => status === "live") ?? [];
+  const upcoming =
+    liveFiltered?.filter(({ status }) => status !== "live") ?? [];
+
   return (
     <>
       <PullToRefresh onRefresh={refetch}>
         <MainVideoListing
           isLoading={liveLoading}
           size={cardSize}
-          videos={liveFiltered?.filter(({ status }) => status === "live") ?? []}
+          videos={nowLive}
         />
+        {!liveLoading && nowLive.length == 0 && <EmptyQuip />}
         <Separator className="mb-4 mt-2 w-full border-base-3 lg:mb-6 lg:mt-4" />
         <MainVideoListing
           isLoading={liveLoading}
           size={cardSize}
-          videos={liveFiltered?.filter(({ status }) => status !== "live") ?? []}
+          videos={upcoming}
         />
       </PullToRefresh>
     </>

@@ -12,17 +12,27 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Separator } from "@/shadcn/ui/separator";
 import { FavoritesArchiveTab, FavoritesClipTab } from "./favoriteOtherTabs";
+import { EmptyQuip } from "../home/EmptyQuip";
 
 export function FavoritesLive() {
+  const { t } = useTranslation();
+  const [randN] = useState(Math.floor(Math.random() * 100));
   const { size: cardSize } = useVideoCardSizes(["list", "md", "lg"]);
 
-  const { data: live, isLoading: liveLoading, refetch } = useFavoriteLive();
+  const {
+    data: liveOrUpcoming,
+    isLoading: liveLoading,
+    refetch,
+  } = useFavoriteLive();
 
-  const liveFiltered = useVideoFilter(
-    live as Video[],
+  const filtered = useVideoFilter(
+    liveOrUpcoming as Video[],
     "stream_schedule",
     "favorites",
   );
+
+  const nowLive = filtered?.filter(({ status }) => status === "live") ?? [];
+  const upcoming = filtered?.filter(({ status }) => status !== "live") ?? [];
 
   return (
     <>
@@ -30,13 +40,14 @@ export function FavoritesLive() {
         <MainVideoListing
           isLoading={liveLoading}
           size={cardSize}
-          videos={liveFiltered?.filter(({ status }) => status === "live") ?? []}
+          videos={nowLive}
         />
+        {!liveLoading && nowLive.length == 0 && <EmptyQuip />}
         <Separator className="mb-4 mt-2 w-full border-base-3 lg:mb-6 lg:mt-4" />
         <MainVideoListing
           isLoading={liveLoading}
           size={cardSize}
-          videos={liveFiltered?.filter(({ status }) => status !== "live") ?? []}
+          videos={upcoming}
         />
       </PullToRefresh>
     </>
