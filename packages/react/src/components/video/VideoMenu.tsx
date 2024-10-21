@@ -23,7 +23,10 @@ import { useAtom, useAtomValue } from "jotai";
 import { queueAtom } from "@/store/queue";
 import { VideoCardType } from "./VideoCard";
 import "./VideoMenu.css";
-import { useVideoSelection } from "@/hooks/useVideoSelection";
+import {
+  selectedVideoSetReadonlyAtom,
+  useVideoSelection,
+} from "@/hooks/useVideoSelection";
 import { TLDexLogo } from "../common/TLDexLogo";
 import { userAtom } from "@/store/auth";
 
@@ -39,15 +42,26 @@ interface VideoMenuProps {
 
 export function VideoMenu({ children, video, url }: VideoMenuProps) {
   const videoId = video.id;
+  // standard functionality of menu
   const { toast } = useToast();
-  const [, copy] = useCopyToClipboard();
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
-  const [queue, setQueue] = useAtom(queueAtom);
 
+  // Queueing behavior
+  const [queue, setQueue] = useAtom(queueAtom);
   const isQueued = queue.some(({ id }) => videoId === id);
+
   const isTwitch = url?.includes("twitch");
+  const isYoutube = url?.includes("youtu");
+
+  // Selection behavior
   const { addVideo, removeVideo, setSelectionMode } = useVideoSelection();
+  const isSelected = useAtomValue(selectedVideoSetReadonlyAtom).includes(
+    videoId,
+  );
+
+  const [, copy] = useCopyToClipboard();
+
   return (
     <DropdownMenu onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
@@ -78,7 +92,9 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
                 <div className="i-lucide:external-link" />
                 {isTwitch
                   ? t("views.watch.openOnTwitch")
-                  : t("views.settings.redirectModeLabel")}
+                  : isYoutube
+                    ? t("views.settings.redirectModeLabel")
+                    : "Open URL"}
               </Link>
             </DropdownMenuItem>
           )}
@@ -125,24 +141,30 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
           <DropdownMenuItem
             className="video-menu-item"
             onClick={() => {
-              addVideo(video as unknown as PlaceholderVideo);
-              setSelectionMode(true);
+              if (!isSelected) {
+                addVideo(video as unknown as PlaceholderVideo);
+                setSelectionMode(true);
+              } else {
+                removeVideo(videoId);
+              }
             }}
           >
             <div className="i-lucide:group" />
-            Add to Selection
+            {isSelected ? "Remove from Selection" : "Add to Selection"}
           </DropdownMenuItem>
-          {status === "upcoming" && (
+          {video.status === "upcoming" && (
             <DropdownMenuItem className="video-menu-item">
               <div className="i-heroicons:calendar" />
               {t("component.videoCard.googleCalendar")}
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem className="video-menu-item">
-            <TLDexLogo size={16} />
-            {t("component.videoCard.openClient")}
-          </DropdownMenuItem>
-          {status === "past" && (
+          {(video.status == "upcoming" || video.status === "live") && (
+            <DropdownMenuItem className="video-menu-item">
+              <TLDexLogo size={16} />
+              {t("component.videoCard.openClient")}
+            </DropdownMenuItem>
+          )}
+          {video.status === "past" && (
             <DropdownMenuItem className="video-menu-item">
               <div className="i-heroicons:document-arrow-up" />
               {t("component.videoCard.uploadScript")}
