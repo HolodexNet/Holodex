@@ -12,7 +12,7 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/shadcn/ui/popover";
 import { useTranslation } from "react-i18next";
 import { useAtom, useAtomValue } from "jotai/react";
 import { useSearchAutoCompleteMutation } from "@/services/search.service";
-import atomWithDebounce from "@/lib/atomWithDebounce";
+import atomWithDebounce from "@/lib/jotai/atomWithDebounce";
 import { useTopics } from "@/services/topics.service";
 import { siteIsSmallAtom } from "@/hooks/useFrame";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/shadcn/ui/drawer";

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { atomWithStorageBroadcast } from "@/lib/atomWithStorageBroadcast";
+import { atomWithStorageBroadcast } from "@/lib/jotai/atomWithStorageBroadcast";
 import { useAtom } from "jotai";
 import { GET_ON_INIT } from "@/lib/consts";
 

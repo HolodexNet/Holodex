@@ -1,6 +1,13 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
+/**
+ * Atom with storage broadcast. Use it for synchronizing state between tabs.
+ * @param key
+ * @param initialValue
+ * @param opts
+ * @returns
+ */
 export function atomWithStorageBroadcast<Value>(
   key: string,
   initialValue: Value,

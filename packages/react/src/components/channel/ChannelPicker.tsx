@@ -1,4 +1,4 @@
-import atomWithDebounce from "@/lib/atomWithDebounce";
+import atomWithDebounce from "@/lib/jotai/atomWithDebounce";
 import { useChannel } from "@/services/channel.service";
 import { useSearchAutoCompleteMutation } from "@/services/search.service";
 import { Button } from "@/shadcn/ui/button";

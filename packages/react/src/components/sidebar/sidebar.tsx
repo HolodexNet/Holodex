@@ -3,7 +3,7 @@ import { Button } from "@/shadcn/ui/button";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { OrgSelectorCombobox } from "../org/OrgSelectorCombobox";
 import { useTranslation } from "react-i18next";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { HTMLAttributes, useCallback, useRef, useState } from "react";
 import {
   isSidebarFloatingAtom,
@@ -19,12 +19,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
 import { orgRankingAtom } from "@/store/org";
 import { TLDexLogo } from "../common/TLDexLogo";
 import { getThumbnailForOrg } from "@/lib/thumb";
+import { useOrgs } from "@/services/orgs.service";
 
 export function Sidebar() {
   const { t } = useTranslation();
   const rankedOrgs = useAtomValue(orgRankingAtom);
   const [tldexOpen, setTldexOpen] = useState(false);
-  const { org } = useParams();
   const ref = useRef(null);
 
   const floating = useAtomValue(isSidebarFloatingAtom);
@@ -32,6 +32,7 @@ export function Sidebar() {
   const isMobile = useAtomValue(isMobileAtom);
   const toggle = useSetAtom(toggleSidebarAtom);
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
+  const { data: orgs, isError } = useOrgs({ enabled: open });
 
   const handleClickOutside = useCallback(() => {
     floating && open && setOpen(false);
@@ -225,18 +226,16 @@ function SidebarItem({
   return (
     <Button
       asChild
-      className={cn(
-        "w-full justify-start",
-        className,
-        { "text-base-12 font-semibold tracking-tight": isHere },
-        { "text-base-11 font-light": !isHere },
-      )}
+      className={cn("w-full justify-start", className, {
+        "text-base-12 font-semibold tracking-tight": isHere,
+        "text-base-11 font-light": !isHere,
+      })}
       variant={isHere ? "primary" : "ghost"}
       onClick={isMobile ? onClose : undefined}
     >
       <Link to={href}>
         {icon && <span className={icon}></span>}
-        {image && <img src={image} className="h-4 w-4" />}
+        {image && <img src={image} className="h-4 w-4 rounded-sm" />}
         {label}
       </Link>
     </Button>

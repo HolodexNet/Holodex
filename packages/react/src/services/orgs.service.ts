@@ -12,6 +12,7 @@ export function useOrgs(config?: CommonQueryConfig) {
         return r.json();
       }),
     placeholderData: defaultOrgs,
+    staleTime: 60 * 60 * 1000,
     ...config,
   });
 }

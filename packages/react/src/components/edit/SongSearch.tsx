@@ -10,7 +10,7 @@ import {
   CommandList,
 } from "@/shadcn/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
-import atomWithDebounce from "@/lib/atomWithDebounce";
+import atomWithDebounce from "@/lib/jotai/atomWithDebounce";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 import { localeAtom } from "@/store/i18n";

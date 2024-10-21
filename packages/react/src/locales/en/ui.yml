@@ -275,6 +275,7 @@ views:
       - "Vtubers are sleeping, time to watch clips!"
       - "In space, no one can hear a VTuber stream"
       - "No streams now, but imagine if there were!"
+      - "No one is live right now, but you can listen to some bangers on Musicdex!"
   library:
     savedVideosTitle: Saved Videos
     createYtPlaylistButton: Create YT Playlist ({0})
