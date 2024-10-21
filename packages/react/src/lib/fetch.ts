@@ -40,16 +40,17 @@ export class HTTPError<T = unknown> extends Error {
   }
 }
 
-async function handleResponse<T>(response: Response) {
+async function handleResponse<T>(response: Response): Promise<T> {
+  if (!response.ok) {
+    const err = new HTTPError({
+      res: response,
+      message: response.statusText,
+      data: response.body,
+    });
+    return Promise.reject(err);
+  }
   return response.json().then((obj) => {
     const data = obj as T;
-
-    if (!response.ok) {
-      const err = new HTTPError({ data, res: response });
-      console.error("API Error, try catching", response);
-      return Promise.reject(err);
-    }
-
     return data;
   });
 }
