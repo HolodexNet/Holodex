@@ -261,21 +261,13 @@ views:
       official: Archive
       subber: Clips
     noLiveStreams:
-      - "404: Streams Not Found"
-      - "The VTubers must be in another castle"
-      - "Stream machine broke"
-      - "Stealth: 100. Can't see any VTubers here"
       - "*Tumbleweed rolls across the screen*"
-      - "It's dangerous to go alone! But nobody is live right now"
-      - "The cake was a lie, and so were the streams"
-      - "VTubers.exe has stopped working"
+      - "Nobody is live right now"
       - "Seems like all the VTubers are busy touching grass"
-      - "Loading VTuber streams... yup got nothing"
       - "Time to watch the backlog, because no one's streaming"
       - "Vtubers are sleeping, time to watch clips!"
-      - "In space, no one can hear a VTuber stream"
-      - "No streams now, but imagine if there were!"
-      - "No one is live right now, but you can listen to some bangers on Musicdex!"
+      - "Vtubers doko?"
+      - "No one is live right now, go listen to some bangers on Musicdex!"
   library:
     savedVideosTitle: Saved Videos
     createYtPlaylistButton: Create YT Playlist ({0})
