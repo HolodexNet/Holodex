@@ -25,8 +25,8 @@ export const globalQueryClient = new QueryClient({
       persister: experimental_createPersister<PersistedQuery>({
         storage: newIdbStorage(createStore("holodex_queries", "qskvdb")),
         maxAge: 1000 * 60 * 60 * 12, // 12 hours
-        serialize: (persistedQuery) => persistedQuery,
-        deserialize: (cached) => cached,
+        // serialize: (persistedQuery) => persistedQuery,
+        // deserialize: (cached) => cached,
       }),
     },
   },
