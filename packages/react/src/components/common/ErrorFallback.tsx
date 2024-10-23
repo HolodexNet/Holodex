@@ -17,9 +17,13 @@ import {
   CollapsibleContent,
 } from "@/shadcn/ui/collapsible";
 import { useSetAtom, useAtom } from "jotai";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
-export function ErrorFallback({ error }: Partial<FallbackProps>) {
+export function ErrorFallback({
+  error,
+  resetErrorBoundary,
+}: Partial<FallbackProps>) {
   const { t } = useTranslation();
   const setUser = useSetAtom(userAtom);
   const [token, setToken] = useAtom(tokenAtom);
@@ -29,6 +33,20 @@ export function ErrorFallback({ error }: Partial<FallbackProps>) {
     setToken(null);
     setUser(null);
   }, [setToken, setUser]);
+
+  // Error fallback releases if you navigate away.
+  const location = useLocation();
+  const flag = useRef(0); // ← the "flag"
+  useEffect(() => {
+    if (flag.current) {
+      console.log("Releasing Error Fallback");
+      resetErrorBoundary?.();
+    } else
+      setTimeout(() => {
+        flag.current += 1;
+      }, 500);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   return (
     <div className="p-4 sm:p-8">
