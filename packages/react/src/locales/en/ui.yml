@@ -6,8 +6,9 @@ component:
     aboutPage: About page
     afterAboutPageHyperlink: .
     text: >-
-      There was an error retrieving content, please check <twitter></twitter> or
-      report an error through the <discord></discord>.
+      There was an error retrieving content, please check
+      <twitter>twitter</twitter> or report an error through the
+      <discord>discord</discord>.
     reload: Reload
     logoutAndClearCache: Logout / Clear cache
   channelList:
@@ -261,13 +262,13 @@ views:
       official: Archive
       subber: Clips
     noLiveStreams:
-      - "*Tumbleweed rolls across the screen*"
-      - "Nobody is live right now"
-      - "Seems like all the VTubers are busy touching grass"
-      - "Time to watch the backlog, because no one's streaming"
-      - "Vtubers are sleeping, time to watch clips!"
-      - "Vtubers doko?"
-      - "No one is live right now, go listen to some bangers on Musicdex!"
+      - '*Tumbleweed rolls across the screen*'
+      - Nobody is live right now
+      - Seems like all the VTubers are busy touching grass
+      - Time to watch the backlog, because no one's streaming
+      - Vtubers are sleeping, time to watch clips!
+      - Vtubers doko?
+      - No one is live right now, go listen to some bangers on Musicdex!
   library:
     savedVideosTitle: Saved Videos
     createYtPlaylistButton: Create YT Playlist ({0})

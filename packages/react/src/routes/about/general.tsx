@@ -2,11 +2,15 @@ import { AboutDescription } from "@/components/about/Description";
 import { AboutHeading } from "@/components/about/Heading";
 import StatComponent from "@/components/about/Stats";
 import { Loading } from "@/components/common/Loading";
+import { darkAtom } from "@/hooks/useTheme";
 import { useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 
 export function AboutGeneral() {
   const { t } = useTranslation();
+
+  const dark = useAtomValue(darkAtom);
 
   return (
     <article className="w-full @container">
@@ -31,6 +35,19 @@ export function AboutGeneral() {
           <small>{t("about.general.credits.addRequest")}</small>
         </li>
       </ul>
+      <AboutDescription>
+        {dark ? (
+          <img
+            src="https://developers.google.com/static/youtube/images/developed-with-youtube-sentence-case-light.png"
+            className="w-80"
+          ></img>
+        ) : (
+          <img
+            src="https://developers.google.com/static/youtube/images/developed-with-youtube-sentence-case-dark.png"
+            className="w-80"
+          ></img>
+        )}
+      </AboutDescription>
     </article>
   );
 }

@@ -3,6 +3,7 @@ import { useThemeInit } from "./hooks/useTheme";
 import { useSyncTFunction } from "./store/i18n";
 import { Suspense, useEffect } from "react";
 import { routes } from "./routes/router";
+import React from "react";
 
 export function App() {
   useThemeInit();

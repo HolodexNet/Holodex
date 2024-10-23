@@ -1,4 +1,4 @@
-import { useReportMutation } from "@/services/reports.service";
+import { useContactReportMutation } from "@/services/reports.service";
 import { Button } from "@/shadcn/ui/button";
 import {
   Form,
@@ -42,7 +42,7 @@ export function AboutFaqEmailForm() {
     },
   });
 
-  const { mutate } = useReportMutation({ type: "contact" });
+  const { mutate } = useContactReportMutation();
 
   return (
     <Form {...form}>

@@ -1,4 +1,5 @@
 import { GET_ON_INIT } from "@/lib/consts";
+import { atom } from "jotai";
 import { useAtom } from "jotai/react";
 import { atomWithStorage } from "jotai/utils";
 
@@ -26,3 +27,6 @@ export function useVideoCardSizes(allowedCardSizes: VideoCardSize[]) {
 
   return { size, setSize, nextSize, setNextSize };
 }
+
+// also acts as a Report is open indicator.
+export const videoReportAtom = atom<Video | null>(null);

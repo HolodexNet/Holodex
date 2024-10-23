@@ -15,7 +15,7 @@ import { Toaster } from "@/shadcn/ui/toaster";
 import { orgAtom } from "@/store/org";
 import { miniPlayerAtom } from "@/store/player";
 import clsx from "clsx";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Suspense, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -25,6 +25,8 @@ import { MiniPlayer } from "../player/MiniPlayer";
 import { Footer } from "./Footer";
 import SelectionFooter from "./SelectionFooter";
 import { selectionModeAtom } from "@/hooks/useVideoSelection";
+import { videoReportAtom } from "@/store/video";
+import React from "react";
 
 export function LocationAwareReactivity() {
   const location = useLocation();
@@ -50,6 +52,8 @@ export function LocationAwareReactivity() {
 
   return <></>;
 }
+
+const LazyVideoReportDialog = React.lazy(() => import("../video/VideoReport"));
 
 export function Frame() {
   console.log("rerendered frame!");
@@ -79,6 +83,8 @@ export function Frame() {
     return () => window.removeEventListener("resize", resize);
   }, []);
 
+  const [reportedVideo, setReportedVideo] = useAtom(videoReportAtom);
+
   return (
     <div className={mainClasses} id="layout">
       <LocationAwareReactivity />
@@ -92,6 +98,14 @@ export function Frame() {
         </ErrorBoundary>
       </main>
       <SelectionFooter />
+      {reportedVideo && (
+        <LazyVideoReportDialog
+          open={!!reportedVideo}
+          onOpenChange={() => setReportedVideo(null)}
+          video={reportedVideo}
+        />
+      )}
+
       {isMobile && <Footer />}
       {miniPlayer && <MiniPlayer />}
       <Toaster />

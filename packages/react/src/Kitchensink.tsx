@@ -8,6 +8,7 @@ import { Checkbox } from "./shadcn/ui/checkbox";
 export function Kitchensink() {
   const [count, setCount] = useState(0);
 
+  if (count) throw new Error("Test error");
   return (
     <div className="space-y-4 p-4">
       <h3>This page is for testing components and styling.</h3>
@@ -27,7 +28,9 @@ export function Kitchensink() {
       <h3>Color and variants:</h3>
       <div className="flex max-w-5xl flex-row flex-wrap items-start justify-start gap-4">
         <Button>Default button</Button>
-        <Button variant="ghost">Ghost button</Button>
+        <Button variant="ghost" onClick={() => setCount(count + 1)}>
+          Ghost button
+        </Button>
         <Button variant="outline">Outline button</Button>
         <Button variant="secondary">Secondary button</Button>
         <Button variant="link">Link button</Button>

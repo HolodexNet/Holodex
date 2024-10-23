@@ -1,63 +1,76 @@
+import { useClient } from "@/hooks/useClient";
 import { HTTPError } from "@/lib/fetch";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 
-type ReportOptions =
-  | {
-      type: "video";
-      videoId: string;
-    }
-  | {
-      type: "channel";
-      videoId?: never;
-    }
-  | {
-      type: "contact";
-      videoId?: never;
-    };
+// Video report types
+export type VideoReportReason =
+  | "Incorrect video topic"
+  | "Incorrect channel mentions"
+  | "This video does not belong to the org"
+  | "Low Quality/Misleading Content"
+  | "Violates the org's derivative work guidelines or inappropriate"
+  | "Other";
 
-export function useReportMutation(
-  { type, videoId }: ReportOptions,
-  options?: UseMutationOptions<
-    unknown,
-    HTTPError,
-    HolodexReportBody<typeof type>
-  >,
+export interface VideoReportEmbed {
+  fields: {
+    name: string;
+    value: string;
+  }[];
+}
+
+// Channel report types
+export interface ChannelReportEmbed {
+  fields: { name: string; value: string }[];
+}
+
+export interface ChannelReportBody {
+  embeds: ChannelReportEmbed[];
+}
+
+// Contact report types
+export interface ContactReportField {
+  name: string;
+  value: string;
+}
+
+export type ContactReportBody = ContactReportField[];
+
+// Function to create a video report mutation
+export function useVideoReportMutation(
+  videoId: string,
+  options?: UseMutationOptions<void, HTTPError, VideoReportEmbed>,
 ) {
-  let endpoint: string;
+  const client = useClient();
+  return useMutation<void, HTTPError, VideoReportEmbed>({
+    mutationFn: async (body) => {
+      return await client.post(`/api/v2/reports/video/${videoId}`, body);
+    },
+    ...options,
+  });
+}
 
-  switch (type) {
-    case "video":
-      endpoint = `/api/v2/reports/video/${videoId}`;
-      break;
+// Function to create a channel report mutation
+export function useChannelReportMutation(
+  options?: UseMutationOptions<void, HTTPError, ChannelReportBody>,
+) {
+  const client = useClient();
+  return useMutation<void, HTTPError, ChannelReportBody>({
+    mutationFn: async (body) => {
+      return client.post("/api/v2/reports/channel", body);
+    },
+    ...options,
+  });
+}
 
-    case "channel":
-      endpoint = "/api/v2/reports/channel";
-      break;
-
-    case "contact":
-      endpoint = "/api/v2/reports/contact";
-      break;
-
-    default:
-      throw new Error("Report type is not specified");
-  }
-
-  return useMutation<unknown, HTTPError, HolodexReportBody<typeof type>>({
-    mutationFn: async (body) =>
-      // use plain fetch cuz response is not json
-      {
-        const res = await fetch(endpoint, {
-          method: "POST",
-          body: JSON.stringify(body),
-        });
-        if (!res.ok)
-          return Promise.reject({
-            data: await res.text(),
-            statusText: res.statusText,
-            statusCode: res.status,
-            response: res,
-          });
-      },
+// Function to create a contact report mutation
+export function useContactReportMutation(
+  options?: UseMutationOptions<void, HTTPError, ContactReportBody>,
+) {
+  const client = useClient();
+  return useMutation<void, HTTPError, ContactReportBody>({
+    mutationFn: async (body) => {
+      return await client.post("/api/v2/reports/contact", body);
+    },
     ...options,
   });
 }

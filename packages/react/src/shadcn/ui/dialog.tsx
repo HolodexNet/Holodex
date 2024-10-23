@@ -11,6 +11,29 @@ const DialogTrigger = DialogPrimitive.Trigger
 
 const DialogPortal = DialogPrimitive.Portal
 
+const DialogClose = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Close>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>
+>(({ className, children, ...props }, ref) => (
+  <DialogPrimitive.Close
+    ref={ref}
+    className={cn(
+      "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-base-1 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-primary-7 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-primaryA-3 data-[state=open]:text-primary",
+      className
+    )}
+    {...props}
+  >
+    {children ? (
+      children
+    ) : (
+      <>
+        <div className="h-4 w-4 i-lucide:x"></div>
+        <span className="sr-only">Close</span>
+      </>
+    )}
+  </DialogPrimitive.Close>
+))
+
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
@@ -39,10 +62,6 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-base-1 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-primary-7 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-primaryA-3 data-[state=open]:text-primary">
-        <div className="h-4 w-4 i-lucide:x"></div>
-        <span className="sr-only">Close</span>
-      </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
 ))
@@ -113,4 +132,5 @@ export {
   DialogFooter,
   DialogTitle,
   DialogDescription,
+  DialogClose,
 }

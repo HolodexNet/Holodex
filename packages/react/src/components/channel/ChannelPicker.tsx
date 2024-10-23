@@ -22,6 +22,12 @@ import {
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+const { currentValueAtom, debouncedValueAtom } = atomWithDebounce(
+  "",
+  300,
+  true,
+);
+
 interface VtuberPickerProps<
   T extends FieldValues,
   FieldName extends FieldPath<T>,
@@ -31,12 +37,6 @@ interface VtuberPickerProps<
   value: FieldPathValue<T, FieldName>;
   onSelect: (value: SearchAutoCompleteChannel) => void;
 }
-
-const { currentValueAtom, debouncedValueAtom } = atomWithDebounce(
-  "",
-  300,
-  true,
-);
 
 export function ChannelPicker<
   T extends FieldValues,
@@ -59,8 +59,7 @@ export function ChannelPicker<
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          className="justify-between border-base-6 px-4 focus:border-blue-6"
-          size="lg"
+          className="justify-between border-base-6 pr-2 text-base-11 focus:border-blue-6"
           variant="outline"
           role="combobox"
         >

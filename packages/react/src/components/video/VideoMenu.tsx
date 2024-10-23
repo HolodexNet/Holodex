@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useCopyToClipboard } from "usehooks-ts";
 import { useToast } from "@/shadcn/ui/use-toast";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { queueAtom } from "@/store/queue";
 import { VideoCardType } from "./VideoCard";
 import "./VideoMenu.css";
@@ -29,6 +29,7 @@ import {
 } from "@/hooks/useVideoSelection";
 import { TLDexLogo } from "../common/TLDexLogo";
 import { userAtom } from "@/store/auth";
+import { videoReportAtom } from "@/store/video";
 
 const LazyNewPlaylistDialog = lazy(
   () => import("@/components/playlist/NewPlaylistDialog"),
@@ -61,6 +62,7 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
   );
 
   const [, copy] = useCopyToClipboard();
+  const setReportedVideo = useSetAtom(videoReportAtom);
 
   return (
     <DropdownMenu onOpenChange={setIsOpen}>
@@ -71,21 +73,25 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
           // className="border-base-5"
           className="tracking-tight"
         >
-          <DropdownMenuItem
-            className="video-menu-item"
-            onClick={() =>
-              setQueue((q) =>
-                isQueued ? q.filter(({ id }) => videoId !== id) : [...q, video],
-              )
-            }
-          >
-            <div
-              className={isQueued ? "i-lucide:list-x" : "i-lucide:list-plus"}
-            />
-            {isQueued
-              ? t("views.watch.removeFromQueue")
-              : t("views.watch.addToQueue")}
-          </DropdownMenuItem>
+          {isQueued ? (
+            <DropdownMenuItem
+              className="video-menu-item"
+              onClick={() =>
+                setQueue((q) => q.filter(({ id }) => videoId !== id))
+              }
+            >
+              <div className="i-lucide:list-x" />
+              {t("views.watch.removeFromQueue")}
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              className="video-menu-item"
+              onClick={() => setQueue((q) => [...q, video])}
+            >
+              <div className="i-lucide:list-plus" />
+              {t("views.watch.addToQueue")}
+            </DropdownMenuItem>
+          )}
           {url && (
             <DropdownMenuItem asChild>
               <Link className="video-menu-item" to={url} target="_blank">
@@ -138,20 +144,27 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
               </Link>
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem
-            className="video-menu-item"
-            onClick={() => {
-              if (!isSelected) {
+          {!isSelected && (
+            <DropdownMenuItem
+              className="video-menu-item"
+              onClick={() => {
                 addVideo(video as unknown as PlaceholderVideo);
                 setSelectionMode(true);
-              } else {
-                removeVideo(videoId);
-              }
-            }}
-          >
-            <div className="i-lucide:group" />
-            {isSelected ? "Remove from Selection" : "Add to Selection"}
-          </DropdownMenuItem>
+              }}
+            >
+              <div className="i-ph:selection-plus-bold" />
+              Add to Selection
+            </DropdownMenuItem>
+          )}
+          {isSelected && (
+            <DropdownMenuItem
+              className="video-menu-item"
+              onClick={() => removeVideo(videoId)}
+            >
+              <div className="i-ph:selection-slash-bold" />
+              Remove from Selections
+            </DropdownMenuItem>
+          )}
           {video.status === "upcoming" && (
             <DropdownMenuItem className="video-menu-item">
               <div className="i-heroicons:calendar" />
@@ -170,7 +183,12 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
               {t("component.videoCard.uploadScript")}
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem className="video-menu-item" onClick={() => {}}>
+          <DropdownMenuItem
+            className="video-menu-item"
+            onClick={() => {
+              setReportedVideo(video as unknown as Video);
+            }}
+          >
             <div className="i-heroicons:flag" />
             {t("component.reportDialog.title")}
           </DropdownMenuItem>
