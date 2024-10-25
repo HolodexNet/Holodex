@@ -29,7 +29,7 @@ export const SettingsTheme = () => {
   const [dark, setDark] = useAtom(darkAtom);
   const [primary, setPrimary] = useAtom(primaryAtom);
   const [secondary, setSecondary] = useAtom(secondaryAtom);
-  const { size, setSize } = useVideoCardSizes(["lg", "md", "sm"]);
+  const { size, setSize } = useVideoCardSizes(["lg", "md", "list"]);
   const [hideThumbnail, setHideThumbnail] = useAtom(hideThumbnailAtom);
   const [useENName, setUseENName] = useAtom(englishNameAtom);
 
@@ -45,7 +45,7 @@ export const SettingsTheme = () => {
       icon: "i-lucide:grid-3x3",
     },
     {
-      value: "sm",
+      value: "list",
       label: t("views.settings.gridSize.2"),
       icon: "i-lucide:list",
     },

@@ -40,9 +40,40 @@ High Constrast Color Theme management:
 */
 
 body {
-  --primary-fg: var(--primary-12);
-  --secondary-fg: var(--secondary-12);
+  --primary-fg: var(--primary-1);
+  --secondary-fg: var(--secondary-1);
 }
+
+body.dark {
+  background: 
+  radial-gradient(
+    circle at 20% 20%,
+    var(--primary-1) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 80% 80%,
+    var(--secondary-1) 0%,
+    transparent 50%
+  ),
+  var(--base-1);
+}
+
+body {
+  background: 
+  radial-gradient(
+    circle at 20% 20%,
+    var(--primary-1) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 80% 80%,
+    var(--secondary-1) 0%,
+    transparent 50%
+  ),
+  var(--base-1);
+}
+
 body.hc-secondary {
   --secondary-fg: var(--base-1)
 }

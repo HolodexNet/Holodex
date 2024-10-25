@@ -137,6 +137,7 @@ export function useThemeInit() {
 
   useEffect(() => {
     setCssVariable("base", BASE_MAPPING[primary] || primary);
+    setCssVariable("base", BASE_MAPPING[primary] || primary, true);
     setCssVariable("primary", primary);
     setCssVariable("primary", primary, true);
   }, [primary]);

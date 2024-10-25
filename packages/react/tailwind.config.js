@@ -33,6 +33,7 @@ function configureDefaultColorSpaceForTextOnSolid(level) {
     },
     secondaryA: { DEFAULT: `var(--secondary-a${level})` },
     base: { DEFAULT: `var(--base-${level})` },
+    baseA: { DEFAULT: `var(--baseA-${level})` },
   };
 }
 
@@ -63,6 +64,7 @@ const config = {
       colors: {
         muted: "var(--base-8)", // muted is the same as base-8
         base: getColorSpace("base"),
+        baseA: getColorSpace("baseA"),
         primary: getColorSpace("primary"),
         primaryA: getColorSpace("primaryA"),
         secondary: getColorSpace("secondary"),

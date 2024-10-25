@@ -54,7 +54,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
             {t("component.mainNav.back")}
           </Button>
         </div>
-        <div className="w-full rounded-lg bg-base-2 p-2 md:p-4 xl:p-8">
+        <div className="w-full rounded-lg bg-baseA-2 p-2 md:p-4 xl:p-8">
           <Suspense fallback={<Loading size="xl" />}>
             <Outlet />
           </Suspense>
