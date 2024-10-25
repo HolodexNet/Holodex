@@ -1,4 +1,4 @@
-import { useReportMutation } from "@/services/reports.service";
+import { useChannelReportMutation } from "@/services/reports.service";
 import { Button } from "@/shadcn/ui/button";
 import {
   Form,
@@ -35,24 +35,21 @@ export function ModifyInfoForm() {
   const form = useForm({
     defaultValues: formValues,
   });
-  const { mutate, isPending } = useReportMutation(
-    { type: "channel" },
-    {
-      onSuccess: () => {
-        console.log("Channel modify request has been sent successfully");
-        toast({
-          title: t("channelRequest.sendSuccess"),
-        });
-      },
-      onError: (err) => {
-        toast({
-          variant: "error",
-          title: t("channelRequest.sendError"),
-          description: err.message,
-        });
-      },
+  const { mutate, isPending } = useChannelReportMutation({
+    onSuccess: () => {
+      console.log("Channel modify request has been sent successfully");
+      toast({
+        title: t("channelRequest.sendSuccess"),
+      });
     },
-  );
+    onError: (err) => {
+      toast({
+        variant: "error",
+        title: t("channelRequest.sendError"),
+        description: err.message,
+      });
+    },
+  });
 
   const onSubmit: SubmitHandler<typeof formValues> = async ({
     channel,

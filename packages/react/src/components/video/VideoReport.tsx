@@ -298,7 +298,7 @@ export function ReportDialogMenu({
                 <FormField
                   control={form.control}
                   name="mentionedChannels"
-                  render={({ field }) => (
+                  render={() => (
                     <FormItem className="mt-4">
                       <FormLabel>Suggested Channel Mentions</FormLabel>
                       <FormControl>

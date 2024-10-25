@@ -20,10 +20,14 @@ export interface VideoReportEmbed {
 
 // Channel report types
 export interface ChannelReportEmbed {
+  title: string;
+  color: number; // hex to number
   fields: { name: string; value: string }[];
+  footer?: { text: string };
 }
 
 export interface ChannelReportBody {
+  content?: string;
   embeds: ChannelReportEmbed[];
 }
 

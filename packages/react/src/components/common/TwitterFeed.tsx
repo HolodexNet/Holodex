@@ -42,7 +42,7 @@ export function StatusTweetEmbed({
     fetch("https://ext.holodex.net/api/status")
       .then((res) => res.text())
       .then((url) => setTweetUrl(url.trim()))
-      .catch((err) => setError("Failed to load status"));
+      .catch(() => setError("Failed to load status"));
   }, []);
 
   // Create tweet embed when both tweet URL and Twitter script are ready

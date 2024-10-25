@@ -2,7 +2,6 @@ import { useClient } from "@/hooks/useClient";
 import { hidePlaceholderAtom } from "@/store/settings";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import { CommonQueryConfig } from "./@types";
 
 interface UseLiveParams {
   channel_id?: string;
