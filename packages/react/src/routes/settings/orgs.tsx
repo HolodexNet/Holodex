@@ -1,9 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import { useAtom } from "jotai";
-import { useTranslation } from "react-i18next";
-import { SettingsItem } from "@/components/settings/SettingsItem";
 import { useOrgs } from "@/services/orgs.service";
-import { orgRankingAtom } from "@/store/org";
 import {
   DndContext,
   closestCenter,
@@ -22,73 +18,6 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import type { Props as DndContextProps } from "@dnd-kit/core/dist/components/DndContext/DndContext.d.ts";
 import { ScrollArea } from "@/shadcn/ui/scroll-area";
-
-// const clamp = (number: number, boundOne: number, boundTwo?: number): number => {
-//   if (!boundTwo) {
-//     return Math.max(number, boundOne) === boundOne ? number : boundOne;
-//   } else if (Math.min(number, boundOne) === number) {
-//     return boundOne;
-//   } else if (Math.max(number, boundTwo) === number) {
-//     return boundTwo;
-//   }
-//   return number;
-// };
-
-// function swap<T>(array: T[], moveIndex: number, toIndex: number): T[] {
-//   /* #move - Moves an array item from one position in an array to another.
-
-//      Note: This is a pure function so a new array will be returned, instead
-//      of altering the array argument.
-
-//     Arguments:
-//     1. array     (Array<T>) : Array in which to move an item.         (required)
-//     2. moveIndex (number) : The index of the item to move.          (required)
-//     3. toIndex   (number) : The index to move item at moveIndex to. (required)
-//   */
-//   const item = array[moveIndex];
-//   const length = array.length;
-//   const diff = moveIndex - toIndex;
-
-//   if (diff > 0) {
-//     // move left
-//     return [
-//       ...array.slice(0, toIndex),
-//       item,
-//       ...array.slice(toIndex, moveIndex),
-//       ...array.slice(moveIndex + 1, length),
-//     ];
-//   } else if (diff < 0) {
-//     // move right
-//     const targetIndex = toIndex + 1;
-//     return [
-//       ...array.slice(0, moveIndex),
-//       ...array.slice(moveIndex + 1, targetIndex),
-//       item,
-//       ...array.slice(targetIndex, length),
-//     ];
-//   }
-//   return array;
-// }
-export function SettingsOrgs() {
-  const { t } = useTranslation();
-  const [rankedOrgs, setRankedOrgs] = useAtom(orgRankingAtom);
-
-  return (
-    <div className="flex flex-col">
-      <SettingsItem label={"Starred Organizations"} fullWidth>
-        <OrgReranker rankedOrgs={rankedOrgs} setRankedOrgs={setRankedOrgs} />
-        <button
-          className="mt-4 rounded-md bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600"
-          onClick={() => {
-            setRankedOrgs([]);
-          }}
-        >
-          Reset organization ranking
-        </button>
-      </SettingsItem>
-    </div>
-  );
-}
 
 export const OrgReranker = ({
   rankedOrgs,
@@ -156,38 +85,45 @@ export const OrgReranker = ({
   );
 
   return (
-    <div className="min-w-72 space-y-2">
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext
-          items={starredOrgs.map((org) => org.name)}
-          strategy={verticalListSortingStrategy}
+    <div className="grid min-w-72 grid-cols-1 gap-4 lg:grid-cols-2">
+      <div>
+        <div>
+          <h3 className="mb-2 text-center text-lg font-semibold text-base-11">
+            Starred
+          </h3>
+        </div>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
         >
-          {starredOrgs.map((org) => (
-            <SortableItem key={"draggable" + org.name} id={org.name}>
-              <div className="my-1 flex h-10 cursor-grab items-center justify-between rounded bg-primaryA-4 p-2">
-                <div className="i-mdi:drag mr-1"></div>
-                <span className="grow">{org.name}</span>
-                <button
-                  onClick={() => toggleStar(org, true)}
-                  className="text-yellow-500 hover:text-yellow-600"
-                >
-                  <div className="i-lucide:star-off text-lg" />
-                </button>
-              </div>
-            </SortableItem>
-          ))}
-        </SortableContext>
-      </DndContext>
+          <SortableContext
+            items={starredOrgs.map((org) => org.name)}
+            strategy={verticalListSortingStrategy}
+          >
+            {starredOrgs.map((org) => (
+              <SortableItem key={"draggable" + org.name} id={org.name}>
+                <div className="my-1 flex h-10 cursor-grab items-center justify-between rounded bg-primaryA-4 p-2">
+                  <div className="i-mdi:drag mr-1"></div>
+                  <span className="grow">{org.name}</span>
+                  <button
+                    onClick={() => toggleStar(org, true)}
+                    className="text-yellow-500 hover:text-yellow-600"
+                  >
+                    <div className="i-lucide:star-off text-lg" />
+                  </button>
+                </div>
+              </SortableItem>
+            ))}
+          </SortableContext>
+        </DndContext>
+      </div>
 
-      <div className="mt-4">
+      <div className="">
         <h3 className="mb-2 text-center text-lg font-semibold text-base-11">
           Other Organizations
         </h3>
-        <div className="flex h-9 w-full rounded-md rounded-b-none border border-base bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-primaryA-8">
+        <div className="flex h-9 w-full rounded-md rounded-b-none border border-base bg-transparent px-3 text-sm shadow-sm transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-primaryA-8">
           <input
             type="text"
             placeholder="Filter organizations..."
@@ -196,7 +132,7 @@ export const OrgReranker = ({
             className="w-full border-0 border-none border-transparent bg-transparent outline-none placeholder:text-base-8"
           />
         </div>
-        <ScrollArea className="h-[300px] rounded-md rounded-b rounded-t-none border border-base-5 px-1 md:h-[60vh]">
+        <ScrollArea className="h-60 rounded-md rounded-b rounded-t-none border border-base-5 px-1 md:h-80">
           {filteredUnstarredOrgs.map((org) => (
             <div
               key={"unstarred-" + org.name}

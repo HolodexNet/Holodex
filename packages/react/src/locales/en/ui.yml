@@ -326,7 +326,7 @@ views:
       Clicking on video thumbnails will open it in Youtube, clicking the video
       title will open on Holodex
     useEnglishNameLabel: Use English Name
-    useEnglishNameMsg: Uses English localized names for VTuber channels
+    useEnglishNameMsg: Use English localized names for VTuber channels
     hideVideoThumbnailsLabel: Hide Video Thumbnails
     hideVideoThumbnailsMsg: >-
       Hide video thumbnails, helps speed up loading time and less scrolling on
@@ -363,7 +363,7 @@ views:
     theme: Theme
     moreSettings: More Settings
     user: User & Account
-    homepage: Homepage & Filters
+    homepage: Content Preferences
     blockedChannels: Blocked Channels
     languageSearch: Search language...
     languageNotfound: No language found
@@ -376,6 +376,7 @@ views:
     orgs: Starred Orgs
     filterDeadStreams: Hide Streams that don't go live for >2 hours
     filterLongStreams: Hide Streams that are live for longer than 24 hours
+    appearance: Appearance
   app:
     update_available: An update is available
     update_btn: Update

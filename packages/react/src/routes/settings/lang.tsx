@@ -3,29 +3,31 @@ import TimezoneSelector from "@/components/settings/SettingsTimezonePicker";
 import { TL_LANGS } from "@/lib/consts";
 import { langs } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
-import { Checkbox } from "@/shadcn/ui/checkbox";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/shadcn/ui/command";
-import { Label } from "@/shadcn/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { clipLanguageAtom, englishNameAtom } from "@/store/settings";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Checkbox } from "@/shadcn/ui/checkbox";
+import { Label } from "@/shadcn/ui/label";
 
 export function SettingsLang() {
-  const [useENName, setUseENName] = useAtom(englishNameAtom);
   const [clipLangs, setClipLangs] = useAtom(clipLanguageAtom);
   const [langOpen, setLangOpen] = useState(false);
   const { i18n, t } = useTranslation();
+  const [useENName, setUseENName] = useAtom(englishNameAtom);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col space-y-6">
+      {/* Interface Language Section */}
       <SettingsItem label={t("views.settings.languageSettings")} fullWidth>
         <div className="flex flex-col gap-3">
           <Popover open={langOpen} onOpenChange={setLangOpen}>
@@ -52,28 +54,31 @@ export function SettingsLang() {
                 <CommandEmpty>
                   {t("views.settings.languageNotfound")}
                 </CommandEmpty>
-                <CommandGroup>
-                  {langs.map(({ val, display }) => (
-                    <CommandItem
-                      key={val}
-                      onSelect={() => {
-                        i18n.changeLanguage(val);
-                        setLangOpen(false);
-                      }}
-                    >
-                      <div
-                        className={cn(
-                          "i-lucide:check mr-2 h-4 w-4",
-                          val === i18n.language ? "opacity-100" : "opacity-0",
-                        )}
-                      />
-                      {display}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
+                <CommandList>
+                  <CommandGroup>
+                    {langs.map(({ val, display }) => (
+                      <CommandItem
+                        key={val}
+                        onSelect={() => {
+                          i18n.changeLanguage(val);
+                          setLangOpen(false);
+                        }}
+                      >
+                        <div
+                          className={cn(
+                            "i-lucide:check mr-2 h-4 w-4",
+                            val === i18n.language ? "opacity-100" : "opacity-0",
+                          )}
+                        />
+                        {display}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
               </Command>
             </PopoverContent>
           </Popover>
+          {/* Translation Credits */}
           <div className="flex items-center gap-1 text-xs text-base-11">
             <div className="i-heroicons:heart" />
             {langs.find(({ val }) => i18n.language === val)?.credit}
@@ -130,6 +135,8 @@ export function SettingsLang() {
           ))}
         </div>
       </SettingsItem>
+
+      {/* Regional Settings */}
       <SettingsItem label={t("views.settings.showTimezonesOnHover")} fullWidth>
         <TimezoneSelector />
       </SettingsItem>

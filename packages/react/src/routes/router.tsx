@@ -37,14 +37,16 @@ const SettingsUser = lazy(() =>
   import("./settings").then((module) => ({ default: module.SettingsUser })),
 );
 const SettingsHomepage = lazy(() =>
-  import("./settings").then((module) => ({ default: module.SettingsHomepage })),
+  import("./settings").then((module) => ({
+    default: module.SettingsContentPreferences,
+  })),
 );
-const SettingsBlocked = lazy(() =>
-  import("./settings").then((module) => ({ default: module.SettingsBlocked })),
-);
-const SettingsOrgs = lazy(() =>
-  import("./settings").then((module) => ({ default: module.SettingsOrgs })),
-);
+// const SettingsBlocked = lazy(() =>
+//   import("./settings").then((module) => ({ default: module.SettingsBlocked })),
+// );
+// const SettingsOrgs = lazy(() =>
+//   import("./settings").then((module) => ({ default: module.SettingsOrgs })),
+// );
 const Playlists = lazy(() =>
   import("./playlists").then((module) => ({ default: module.Playlists })),
 );
@@ -129,11 +131,11 @@ export const routes = (
     <Route path="settings" Component={Settings}>
       <Route index Component={SettingsLang} />
       <Route path="lang" Component={SettingsLang} />
-      <Route path="themes" Component={SettingsTheme} />
+      <Route path="appearance" Component={SettingsTheme} />
       <Route path="user" Component={SettingsUser} />
-      <Route path="homepage" Component={SettingsHomepage} />
-      <Route path="blocked" Component={SettingsBlocked} />
-      <Route path="orgs" Component={SettingsOrgs} />
+      <Route path="content" Component={SettingsHomepage} />
+      {/* <Route path="blocked" Component={SettingsBlocked} />
+      <Route path="orgs" Component={SettingsOrgs} /> */}
     </Route>
     <Route path="playlists" Component={Playlists} />
     <Route path="playlist/:id" Component={Playlist} />

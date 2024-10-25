@@ -20,8 +20,8 @@ export function Settings() {
       },
       {
         icon: "i-heroicons:moon",
-        href: "/settings/themes",
-        label: t("views.settings.theme"),
+        href: "/settings/appearance",
+        label: t("views.settings.appearance"),
       },
       {
         icon: "i-heroicons:user",
@@ -30,19 +30,19 @@ export function Settings() {
       },
       {
         icon: "i-heroicons:funnel",
-        href: "/settings/homepage",
+        href: "/settings/content",
         label: t("views.settings.homepage"),
       },
-      {
-        icon: "i-heroicons:star",
-        href: "/settings/orgs",
-        label: t("views.settings.orgs"),
-      },
-      {
-        icon: "i-heroicons:eye-slash",
-        href: "/settings/blocked",
-        label: t("views.settings.blockedChannels"),
-      },
+      // {
+      //   icon: "i-heroicons:star",
+      //   href: "/settings/orgs",
+      //   label: t("views.settings.orgs"),
+      // },
+      // {
+      //   icon: "i-heroicons:eye-slash",
+      //   href: "/settings/blocked",
+      //   label: t("views.settings.blockedChannels"),
+      // },
     ],
     [t],
   );
@@ -57,9 +57,7 @@ export function Settings() {
   );
 }
 
-export { SettingsBlocked } from "./blocked";
 export { SettingsLang } from "./lang";
-export { SettingsTheme } from "./theme";
+export { SettingsTheme } from "./appearance";
 export { SettingsUser } from "./user";
-export { SettingsHomepage } from "./homepage";
-export { SettingsOrgs } from "./orgs";
+export { SettingsContentPreferences } from "./content";
