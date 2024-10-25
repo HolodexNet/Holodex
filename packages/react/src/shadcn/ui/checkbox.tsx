@@ -24,9 +24,7 @@ const Checkbox = React.forwardRef<
       className={cn(
         "text-current dark:opacity-100 opacity-50 text-[11.5px] leading-[14px] text-white"
       )}
-    >
-      <div className="i-lsicon:check-correct-filled"></div>
-    </CheckboxPrimitive.Indicator>
+    ></CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ))
 Checkbox.displayName = CheckboxPrimitive.Root.displayName

@@ -2,12 +2,10 @@ import { SettingsItem } from "@/components/settings/SettingsItem";
 import {
   THEME_BASE_COLORS,
   THEME_COLORS,
-  baseAtom,
   darkAtom,
   primaryAtom,
   secondaryAtom,
 } from "@/hooks/useTheme";
-import { Badge } from "@/shadcn/ui/badge";
 import { Button } from "@/shadcn/ui/button";
 import {
   DropdownMenu,
@@ -17,7 +15,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu";
-import { Label } from "@/shadcn/ui/label";
 
 import { Switch } from "@/shadcn/ui/switch";
 import { useAtom } from "jotai";
@@ -26,7 +23,6 @@ import { useTranslation } from "react-i18next";
 export function SettingsTheme() {
   const { t } = useTranslation();
   const [dark, setDark] = useAtom(darkAtom);
-  const [base, setBase] = useAtom(baseAtom);
   const [primary, setPrimary] = useAtom(primaryAtom);
   const [secondary, setSecondary] = useAtom(secondaryAtom);
 
@@ -38,24 +34,14 @@ export function SettingsTheme() {
 
       <SettingsItem label={"Theme Colors"} fullWidth>
         <div className="flex flex-wrap gap-4">
-          <div className="flex w-full flex-col gap-2">
-            <Label className="text-base-11">Base Color</Label>
-            <ColorPicker
-              options={THEME_BASE_COLORS}
-              value={base}
-              onValueChange={setBase}
-            ></ColorPicker>
-          </div>
-          <div className="flex max-w-sm flex-col gap-2">
-            <Label className="text-base-11">Primary Color</Label>
+          <div className="flex max-w-20 flex-col gap-2">
             <ColorPicker
               options={THEME_COLORS.concat(THEME_BASE_COLORS)}
               value={primary}
               onValueChange={setPrimary}
             ></ColorPicker>
           </div>
-          <div className="flex max-w-sm flex-col gap-2">
-            <Label className="text-base-11">Secondary Color</Label>
+          <div className="flex max-w-20 flex-col gap-2">
             <ColorPicker
               options={THEME_COLORS.concat(THEME_BASE_COLORS)}
               value={secondary}
@@ -78,17 +64,19 @@ function ColorPicker({ options, value, onValueChange }: ColorPickerProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="max-w-sm">
-        <Button variant="ghost" className="h-10 w-[300px] justify-between pl-0">
+        <Button
+          variant="base-outline"
+          className="h-10 w-10 p-0 focus-visible:ring-0"
+        >
           <div
-            className="flex h-10 grow flex-col content-center justify-center rounded-md text-sm font-medium"
+            className="flex h-10 w-10 items-center justify-center rounded-md text-sm font-medium"
             style={{
               backgroundColor: `var(--${value}-9)`,
               color: `var(--${value}-12)`,
             }}
           >
-            <p>{value}</p>
+            <div className="i-lucide:chevron-down h-4 w-4 opacity-60"></div>
           </div>
-          <div className="i-lucide:chevron-down h-4 w-4 opacity-60"></div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="">
@@ -97,17 +85,19 @@ function ColorPicker({ options, value, onValueChange }: ColorPickerProps) {
         <div className="grid grid-cols-4 gap-2">
           {options.map((x) => {
             return (
-              <DropdownMenuItem key={x} onSelect={() => onValueChange(x)}>
-                <Badge
-                  variant="default"
-                  className="h-8 w-20"
+              <DropdownMenuItem
+                key={"color_" + x}
+                className="hover:bg-base-4"
+                onSelect={() => onValueChange(x)}
+              >
+                <div
+                  className="mr-2 size-4 rounded-full"
                   style={{
                     backgroundColor: `var(--${x}-9)`,
                     color: `var(--${x}-12)`,
                   }}
-                >
-                  {x}
-                </Badge>
+                ></div>
+                <span className="capitalize">{x}</span>
               </DropdownMenuItem>
             );
           })}

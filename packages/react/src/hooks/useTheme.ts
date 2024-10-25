@@ -31,6 +31,14 @@ export const THEME_COLORS = [
   "amber",
 ];
 
+export const THEME_DARK_FOREGROUND_TXT_COLORS = [
+  "sky",
+  "mint",
+  "lime",
+  "yellow",
+  "amber",
+];
+
 export const THEME_BASE_COLORS = [
   "gray",
   "mauve",
@@ -38,14 +46,45 @@ export const THEME_BASE_COLORS = [
   "sage",
   "olive",
   "sand",
-];
+] as const;
+
+export const BASE_MAPPING: Record<
+  (typeof THEME_COLORS)[number],
+  (typeof THEME_BASE_COLORS)[number]
+> = {
+  tomato: "mauve",
+  red: "mauve",
+  ruby: "mauve",
+  crimson: "mauve",
+  pink: "mauve",
+  plum: "mauve",
+  purple: "mauve",
+  violet: "mauve",
+  iris: "slate",
+  indigo: "slate",
+  blue: "slate",
+  sky: "slate",
+  cyan: "slate",
+  mint: "sage",
+  teal: "sage",
+  jade: "sage",
+  green: "sage",
+  grass: "olive",
+  lime: "olive",
+  yellow: "sand",
+  amber: "sand",
+  orange: "sand",
+  brown: "sand",
+  gold: "sand", // Not officially specified.
+  bronze: "sand", // Not officially specified.
+};
 
 /** STORE **/
-export const baseAtom = atomWithStorageBroadcast(
-  "theme-base",
-  "mauve",
-  GET_ON_INIT,
-);
+// export const baseAtom = atomWithStorageBroadcast(
+//   "theme-base",
+//   "mauve",
+//   GET_ON_INIT,
+// );
 export const primaryAtom = atomWithStorageBroadcast(
   "theme-primary",
   "blue",
@@ -91,16 +130,13 @@ const setCssVariable = (
  * @return {null} This function does not return any value.
  */
 export function useThemeInit() {
-  const [base] = useAtom(baseAtom);
+  // const [base] = useAtom(baseAtom);
   const [primary] = useAtom(primaryAtom);
   const [secondary] = useAtom(secondaryAtom);
   const [dark] = useAtom(darkAtom);
 
   useEffect(() => {
-    setCssVariable("base", base);
-  }, [base]); // This effect runs whenever the snapshot (and thus the state) changes
-
-  useEffect(() => {
+    setCssVariable("base", BASE_MAPPING[primary] || primary);
     setCssVariable("primary", primary);
     setCssVariable("primary", primary, true);
   }, [primary]);
@@ -111,9 +147,20 @@ export function useThemeInit() {
   }, [secondary]);
 
   useEffect(() => {
-    document.body.classList.remove("dark", "light");
+    document.body.classList.remove(
+      "dark",
+      "light",
+      "hc-primary",
+      "hc-secondary",
+    );
     document.body.classList.add(dark ? "dark" : "light");
-  }, [dark]);
+    if (dark) {
+      if (THEME_DARK_FOREGROUND_TXT_COLORS.includes(primary))
+        document.body.classList.add("hc-primary");
+      if (THEME_DARK_FOREGROUND_TXT_COLORS.includes(secondary))
+        document.body.classList.add("hc-secondary");
+    }
+  }, [dark, primary, secondary]);
 
   return null; // This component doesn't need to render anything visible
 }

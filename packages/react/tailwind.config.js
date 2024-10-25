@@ -23,6 +23,19 @@ function configureDefaultColorSpace(level) {
   };
 }
 
+function configureDefaultColorSpaceForTextOnSolid(level) {
+  return {
+    primary: { DEFAULT: `var(--primary-${level})`, solid: `var(--primary-fg)` },
+    primaryA: { DEFAULT: `var(--primary-a${level})` },
+    secondary: {
+      DEFAULT: `var(--secondary-${level})`,
+      solid: `var(--secondary-fg)`,
+    },
+    secondaryA: { DEFAULT: `var(--secondary-a${level})` },
+    base: { DEFAULT: `var(--base-${level})` },
+  };
+}
+
 /** @type {import('tailwindcss').Config} */
 const config = {
   darkMode: ["class"],
@@ -42,8 +55,8 @@ const config = {
     },
     extend: {
       borderColor: configureDefaultColorSpace(6),
-      backgroundColor: configureDefaultColorSpace(3),
-      textColor: configureDefaultColorSpace(11),
+      backgroundColor: configureDefaultColorSpaceForTextOnSolid(3),
+      textColor: configureDefaultColorSpaceForTextOnSolid(11),
       accentColor: configureDefaultColorSpace(9),
       outlineColor: configureDefaultColorSpace(7),
       ringColor: configureDefaultColorSpace(8),

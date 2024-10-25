@@ -4,7 +4,13 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { OrgSelectorCombobox } from "../org/OrgSelectorCombobox";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
-import { HTMLAttributes, useCallback, useRef, useState } from "react";
+import {
+  HTMLAttributes,
+  type ReactNode,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import {
   isSidebarFloatingAtom,
   isMobileAtom,
@@ -15,7 +21,6 @@ import {
 import { Logo } from "../header/Logo";
 import { MUSICDEX_URL } from "@/lib/consts";
 import { useOnClickOutside } from "usehooks-ts";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
 import { orgRankingAtom } from "@/store/org";
 import { TLDexLogo } from "../common/TLDexLogo";
 import { getThumbnailForOrg } from "@/lib/thumb";
@@ -128,74 +133,45 @@ export function Sidebar() {
             href="/playlists"
             onClose={toggle}
           />
+          <Button
+            className={cn("w-full justify-start", "font-light text-base-11")}
+            variant={"ghost"}
+            onClick={() => setTldexOpen((o) => !o)}
+          >
+            <TLDexLogo size={16}></TLDexLogo>
+            TLDex
+          </Button>
+          {tldexOpen && (
+            <div className="space-y-1 pl-2 animate-in zoom-in-75">
+              <SidebarItem
+                className=""
+                label={t("component.mainNav.tlclient")}
+                icon="i-heroicons:language"
+                href="/tlclient"
+                onClose={toggle}
+              />
+              <SidebarItem
+                className=""
+                label={t("component.mainNav.scriptEditor")}
+                icon="i-fluent:gantt-chart-16-regular"
+                href="/scripteditor"
+                onClose={toggle}
+              />
+            </div>
+          )}
+          <SidebarItem
+            label="Settings"
+            icon="i-heroicons:cog-6-tooth"
+            href="/settings"
+            onClose={toggle}
+          />
+          <SidebarItem
+            label="About"
+            icon="i-heroicons:question-mark-circle"
+            href="/about"
+            onClose={toggle}
+          />
         </div>
-        {/* Icon-only buttons row */}
-        <div className="flex justify-around pb-2 text-base-11">
-          <Tooltip delayDuration={0}>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="p-2"
-                size="icon-lg"
-                onClick={() => setTldexOpen(!tldexOpen)}
-              >
-                <TLDexLogo></TLDexLogo>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="top">TLdex</TooltipContent>
-          </Tooltip>
-          <Tooltip delayDuration={0}>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="p-2"
-                size="icon-lg"
-                asChild
-                onClick={isMobile ? toggle : undefined}
-              >
-                <Link to="/settings">
-                  <span className="i-heroicons:cog-6-tooth" />
-                </Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="top">Settings</TooltipContent>
-          </Tooltip>{" "}
-          <Tooltip delayDuration={0}>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="p-2"
-                size="icon-lg"
-                asChild
-                onClick={isMobile ? toggle : undefined}
-              >
-                <Link to="/about">
-                  <span className="i-heroicons:question-mark-circle" />
-                </Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="top">About</TooltipContent>
-          </Tooltip>
-        </div>
-        {/* TLDex submenu */}
-        {tldexOpen && (
-          <div className="space-y-1 px-3 pb-3">
-            <SidebarItem
-              className="text-base-11"
-              label={t("component.mainNav.tlclient")}
-              icon="i-heroicons:language"
-              href="/tlclient"
-              onClose={toggle}
-            />
-            <SidebarItem
-              className="text-base-11"
-              label={t("component.mainNav.scriptEditor")}
-              icon="i-fluent:gantt-chart-16-regular"
-              href="/scripteditor"
-              onClose={toggle}
-            />
-          </div>
-        )}
       </div>
     </aside>
   );
@@ -210,7 +186,7 @@ function SidebarItem({
 }: {
   className?: HTMLAttributes<HTMLButtonElement>["className"];
   onClose: () => void;
-  icon?: HTMLAttributes<HTMLSpanElement>["className"];
+  icon?: HTMLAttributes<HTMLSpanElement>["className"] | ReactNode;
   label: string;
   href: string;
   image?: string; // either an icon or a image should be supplied.
@@ -234,7 +210,8 @@ function SidebarItem({
       onClick={isMobile ? onClose : undefined}
     >
       <Link to={href}>
-        {icon && <span className={icon}></span>}
+        {icon && typeof icon === "string" && <span className={icon}></span>}
+        {icon && typeof icon === "object" && icon}
         {image && <img src={image} className="h-4 w-4 rounded-sm" />}
         {label}
       </Link>

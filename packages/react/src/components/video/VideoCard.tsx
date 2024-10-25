@@ -16,6 +16,7 @@ import {
   useVideoSelection,
 } from "@/hooks/useVideoSelection";
 import { isMobileAtom } from "@/hooks/useFrame";
+import { ChannelImg } from "../channel/ChannelImg";
 
 export type VideoCardType = VideoRef &
   Partial<VideoBase> &
@@ -257,10 +258,13 @@ export function VideoCard({
             className="shrink-0"
             onClick={(e) => onClick && onClick("channel", video, e)}
           >
-            <img
-              src={
-                video.channel.photo &&
-                resizeChannelPhoto(video.channel.photo, 64)
+            <ChannelImg
+              channelId={video.channel.id}
+              size={64}
+              fallbackPhoto={
+                video.channel.photo
+                  ? resizeChannelPhoto(video.channel.photo, 240)
+                  : undefined
               }
               className="h-8 w-8 rounded-full"
             />

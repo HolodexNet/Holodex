@@ -29,3 +29,59 @@
 .jotai-devtools-trigger-button {
   margin-top: 100px;
 }
+
+/*
+High Constrast Color Theme management: 
+  for the 10 and 9 levels of the bg palette,
+  we need to set the text color to dark variant
+ 
+  High contrast colors are defined in ./hooks/useTheme.ts
+  following: https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale#steps-910-solid-backgrounds
+*/
+
+body {
+  --primary-fg: var(--primary-12);
+  --secondary-fg: var(--secondary-12);
+}
+body.hc-secondary {
+  --secondary-fg: var(--base-1)
+}
+body.hc-primary {
+  --primary-fg: var(--base-1)
+}
+
+body.hc-primary .bg-primary-10.text-base-12,
+body.hc-primary .bg-primary-9.text-base-12,
+body.hc-secondary .bg-secondary-9.text-base-12,
+body.hc-secondary .bg-secondary-10.text-base-12 {
+  color: var(--base-1)
+}
+
+body.hc-primary .bg-primary-10.text-base-11,
+body.hc-primary .bg-primary-9.text-base-11,
+body.hc-secondary .bg-secondary-9.text-base-11,
+body.hc-secondary .bg-secondary-10.text-base-11 {
+  color: var(--base-2)
+}
+
+body.hc-secondary .bg-secondary-9.text-secondary-11,
+body.hc-secondary .bg-secondary-10.text-secondary-11 {
+  color: var(--secondary-2)
+}
+
+
+body.hc-secondary .bg-secondary-9.text-secondary-12,
+body.hc-secondary .bg-secondary-10.text-secondary-12 {
+  color: var(--secondary-1)
+}
+
+body.hc-primary .bg-primary-9.text-primary-11,
+body.hc-primary .bg-primary-10.text-primary-11 {
+  color: var(--primary-2)
+}
+
+
+body.hc-primary .bg-primary-9.text-primary-12,
+body.hc-primary .bg-primary-10.text-primary-12 {
+  color: var(--primary-1)
+}
