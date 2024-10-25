@@ -21,7 +21,9 @@ export function SettingsItem({
       >
         {label}
       </h3>
-      <div className={fullWidth ? "px-4" : ""}>{children}</div>
+      <div className="grid w-full gap-2 rounded-lg border border-base-6 bg-base-3 p-2 md:p-4">
+        {children}
+      </div>
     </div>
   );
 }
