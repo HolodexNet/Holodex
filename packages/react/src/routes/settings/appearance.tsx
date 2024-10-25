@@ -1,6 +1,14 @@
-import React from "react";
 import { SettingsItem } from "@/components/settings/SettingsItem";
+import {
+  THEME_BASE_COLORS,
+  THEME_COLORS,
+  darkAtom,
+  primaryAtom,
+  secondaryAtom,
+} from "@/hooks/useTheme";
 import { Button } from "@/shadcn/ui/button";
+import { Checkbox } from "@/shadcn/ui/checkbox";
+import { Label } from "@/shadcn/ui/label";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,143 +20,180 @@ import {
 import { cn } from "@/lib/utils";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
-import {
-  THEME_BASE_COLORS,
-  THEME_COLORS,
-  darkAtom,
-  primaryAtom,
-  secondaryAtom,
-} from "@/hooks/useTheme";
+import { useVideoCardSizes } from "@/store/video";
+import { hideThumbnailAtom, englishNameAtom } from "@/store/settings";
 
-const ThemeSettings = () => {
+export function SettingsTheme() {
   const { t } = useTranslation();
   const [dark, setDark] = useAtom(darkAtom);
   const [primary, setPrimary] = useAtom(primaryAtom);
   const [secondary, setSecondary] = useAtom(secondaryAtom);
+  const { size, setSize } = useVideoCardSizes(["lg", "md", "sm"]);
+  const [hideThumbnail, setHideThumbnail] = useAtom(hideThumbnailAtom);
+  const [useENName, setUseENName] = useAtom(englishNameAtom);
+
+  const gridSizes = [
+    {
+      value: "lg",
+      label: t("views.settings.gridSize.0"),
+      icon: "i-lucide:layout-grid",
+    },
+    {
+      value: "md",
+      label: t("views.settings.gridSize.1"),
+      icon: "i-lucide:grid-3x3",
+    },
+    {
+      value: "sm",
+      label: t("views.settings.gridSize.2"),
+      icon: "i-lucide:list",
+    },
+  ] as const;
 
   return (
-    <div className="space-y-6">
-      {/* Theme Mode Toggle */}
+    <div className="flex flex-col">
       <SettingsItem label={t("views.settings.darkModeLabel")} fullWidth>
-        <div className="flex w-full max-w-md items-center justify-between rounded-lg border border-base-6 bg-base-3 p-4">
-          <div className="flex items-center gap-3">
-            <div
-              className={cn(
-                "flex h-10 w-10 items-center justify-center rounded-full",
-                dark ? "bg-base-5" : "bg-primary-4",
-              )}
-            >
-              <div
-                className={cn(
-                  "h-5 w-5",
-                  dark
-                    ? "i-lucide:moon text-primary-11"
-                    : "i-lucide:sun text-primary-11",
-                )}
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-medium">
-                {dark ? "Dark Mode" : "Light Mode"}
-              </span>
-              <span className="text-sm text-base-11">
-                {dark ? "Easier on the eyes" : "Better contrast"}
-              </span>
-            </div>
-          </div>
+        <div className="flex items-center gap-3">
+          <div className={dark ? "i-lucide:moon" : "i-lucide:sun"} />
+          <Label>{dark ? "Dark Mode" : "Light Mode"}</Label>
+          <div className="flex grow" />
           <Button
             variant="outline"
-            size="lg"
+            size="icon"
             onClick={() => setDark(!dark)}
-            className={cn(
-              "h-10 w-16 transition-colors",
-              dark ? "bg-base-4" : "bg-primary-4",
-            )}
+            className={cn("size-10", dark && "bg-base-4")}
           >
-            <div
-              className={cn("h-5 w-5", dark ? "i-lucide:moon" : "i-lucide:sun")}
-            />
+            <div className={dark ? "i-lucide:moon" : "i-lucide:sun"} />
           </Button>
         </div>
       </SettingsItem>
 
-      {/* Color Pickers */}
       <SettingsItem label="Theme Colors" fullWidth>
-        <div className="grid gap-4 rounded-lg border border-base-6 bg-base-3 p-4">
-          <ColorPickerRow
-            label="Primary Color"
-            value={primary}
-            onChange={setPrimary}
-            options={THEME_COLORS.concat(THEME_BASE_COLORS)}
-          />
-          <div className="h-px bg-base-6" />
-          <ColorPickerRow
-            label="Secondary Color"
-            value={secondary}
-            onChange={setSecondary}
-            options={THEME_COLORS.concat(THEME_BASE_COLORS)}
-          />
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            <Label>Primary Color</Label>
+            <ColorPicker
+              options={THEME_COLORS.concat(THEME_BASE_COLORS)}
+              value={primary}
+              onValueChange={setPrimary}
+            />
+          </div>
+          <div className="flex items-center gap-4">
+            <Label>Secondary Color</Label>
+            <ColorPicker
+              options={THEME_COLORS.concat(THEME_BASE_COLORS)}
+              value={secondary}
+              onValueChange={setSecondary}
+            />
+          </div>
+        </div>
+      </SettingsItem>
+
+      <SettingsItem label={t("views.settings.gridSizeLabel")} fullWidth>
+        <div className="flex flex-col gap-2">
+          {gridSizes.map(({ label, value, icon }) => (
+            <div key={value} className="flex items-center gap-3">
+              <Checkbox
+                checked={size === value}
+                onCheckedChange={() => setSize(value)}
+                id={`gridSize-${value}`}
+              />
+              <Label
+                htmlFor={`gridSize-${value}`}
+                className={cn("flex cursor-pointer items-center gap-1", {
+                  "opacity-70": size !== value,
+                })}
+              >
+                <div className={icon}></div>
+                <span>{label}</span>
+              </Label>
+            </div>
+          ))}
+        </div>
+      </SettingsItem>
+
+      <SettingsItem label={t("views.settings.displayPreferences")} fullWidth>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <Checkbox
+              id="hide_thumbnails"
+              checked={hideThumbnail}
+              onCheckedChange={() => setHideThumbnail(!hideThumbnail)}
+            />
+            <Label
+              htmlFor="hide_thumbnails"
+              className={cn({ "opacity-70": !hideThumbnail })}
+            >
+              {t("views.settings.hideVideoThumbnailsLabel")}
+            </Label>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Checkbox
+              id="use_english_names"
+              checked={useENName}
+              onCheckedChange={(c) => setUseENName(!!c)}
+            />
+            <Label
+              htmlFor="use_english_names"
+              className={cn({ "opacity-70": !useENName })}
+            >
+              {t("views.settings.useEnglishNameMsg")}
+            </Label>
+          </div>
         </div>
       </SettingsItem>
     </div>
   );
-};
+}
 
-const ColorPickerRow = ({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
+interface ColorPickerProps {
   options: string[];
-}) => (
-  <div className="flex items-center justify-between">
-    <div className="flex items-center gap-3">
-      <div
-        className="h-10 w-10 rounded-full"
-        style={{ backgroundColor: `var(--${value}-9)` }}
-      />
-      <div className="flex flex-col">
-        <span className="font-medium">{label}</span>
-        <span className="text-sm capitalize text-base-11">{value}</span>
-      </div>
-    </div>
+  value: string;
+  onValueChange: (value: string) => void;
+}
+
+function ColorPicker({ options, value, onValueChange }: ColorPickerProps) {
+  return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className="max-w-sm">
         <Button
-          variant="outline"
-          className="h-10 w-24 justify-between bg-base-4"
+          variant="base-outline"
+          className="h-10 w-10 p-0 focus-visible:ring-0"
         >
           <div
-            className="h-4 w-4 rounded-full"
-            style={{ backgroundColor: `var(--${value}-9)` }}
-          />
-          <div className="i-lucide:chevron-down h-4 w-4 opacity-60" />
+            className="flex h-10 w-10 items-center justify-center rounded-md text-sm font-medium"
+            style={{
+              backgroundColor: `var(--${value}-9)`,
+              color: `var(--${value}-12)`,
+            }}
+          >
+            <div className="i-lucide:chevron-down h-4 w-4 opacity-60"></div>
+          </div>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-52">
+      <DropdownMenuContent>
         <DropdownMenuLabel>Select a color</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <div className="grid grid-cols-4 gap-1 p-1">
-          {options.map((color) => (
+        <div className="grid grid-cols-4 gap-2">
+          {options.map((x) => (
             <DropdownMenuItem
-              key={color}
-              className="flex h-10 w-10 items-center justify-center p-0 hover:bg-base-4"
-              onSelect={() => onChange(color)}
+              key={"color_" + x}
+              className="hover:bg-base-4"
+              onSelect={() => onValueChange(x)}
             >
               <div
-                className="h-6 w-6 rounded-full transition-transform hover:scale-110"
-                style={{ backgroundColor: `var(--${color}-9)` }}
-              />
+                className="mr-2 size-4 rounded-full"
+                style={{
+                  backgroundColor: `var(--${x}-9)`,
+                  color: `var(--${x}-12)`,
+                }}
+              ></div>
+              <span className="capitalize">{x}</span>
             </DropdownMenuItem>
           ))}
         </div>
       </DropdownMenuContent>
     </DropdownMenu>
-  </div>
-);
-
-export default ThemeSettings;
+  );
+}
