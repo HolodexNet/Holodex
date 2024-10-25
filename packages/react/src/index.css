@@ -43,7 +43,7 @@ body {
   --primary-fg: var(--primary-1);
   --secondary-fg: var(--secondary-1);
 }
-
+/* (fancy circle background)
 body.dark {
   background: 
   radial-gradient(
@@ -72,7 +72,7 @@ body {
     transparent 50%
   ),
   var(--base-1);
-}
+} */
 
 body.hc-secondary {
   --secondary-fg: var(--base-1)
