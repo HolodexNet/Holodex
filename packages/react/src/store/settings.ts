@@ -131,11 +131,11 @@ export const filterDeadStreamsAtom = atom(
 );
 
 export const filterLongStreamsAtom = atom(
-  (get) => get(settingsAtom).filterLongStreams,
+  (get) => get(settingsAtom).filterLongStreams ?? true,
   (get, set, newValue: boolean) => {
     set(settingsAtom, {
       ...get(settingsAtom),
-      filterLongVideos: newValue,
+      filterLongStreams: newValue,
     });
   },
 );

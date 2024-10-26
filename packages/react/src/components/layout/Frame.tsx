@@ -12,11 +12,11 @@ import {
 } from "@/hooks/useFrame";
 import { darkAtom } from "@/hooks/useTheme";
 import { Toaster } from "@/shadcn/ui/toaster";
-import { orgAtom } from "@/store/org";
+import { orgAtom, orgRankingAtom } from "@/store/org";
 import { miniPlayerAtom } from "@/store/player";
 import clsx from "clsx";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ErrorFallback } from "../common/ErrorFallback";
@@ -27,6 +27,8 @@ import SelectionFooter from "./SelectionFooter";
 import { selectionModeAtom } from "@/hooks/useVideoSelection";
 import { videoReportAtom } from "@/store/video";
 import React from "react";
+import { useOrgs } from "@/services/orgs.service";
+import { useTimeout } from "usehooks-ts";
 
 export function LocationAwareReactivity() {
   const location = useLocation();
@@ -49,6 +51,26 @@ export function LocationAwareReactivity() {
 
     indicatePageFullscreen(isFullscreen);
   }, [location.pathname, indicatePageFullscreen]);
+
+  return <></>;
+}
+
+export function GlobalReactivity() {
+  const [wait, setWait] = useState(false);
+  useTimeout(() => setWait(true), 1000);
+  const { data, isError } = useOrgs({ enabled: wait });
+  const updateOrgRanking = useSetAtom(orgRankingAtom);
+  useEffect(() => {
+    if (data && data.length > 0) {
+      console.log("updating org ranking");
+      updateOrgRanking((orgs: Org[]) => {
+        return orgs
+          .map((org) => data.find((x) => x.name === org.name))
+          .filter((x): x is Org => !!x);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   return <></>;
 }
@@ -109,6 +131,7 @@ export function Frame() {
       {isMobile && <Footer />}
       {miniPlayer && <MiniPlayer />}
       <Toaster />
+      <GlobalReactivity />
     </div>
   );
 }

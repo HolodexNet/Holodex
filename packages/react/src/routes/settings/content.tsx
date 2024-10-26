@@ -1,8 +1,5 @@
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { ChannelCard } from "@/components/channel/ChannelCard";
-import { Checkbox } from "@/shadcn/ui/checkbox";
-import { Label } from "@/shadcn/ui/label";
-import { cn } from "@/lib/utils";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import {
@@ -15,6 +12,7 @@ import {
 } from "@/store/settings";
 import { orgRankingAtom } from "@/store/org";
 import { OrgReranker } from "./orgs";
+import ToggleableFeatureGroup from "@/components/settings/ToggleableFeature";
 
 export function SettingsContentPreferences() {
   const { t } = useTranslation();
@@ -43,96 +41,62 @@ export function SettingsContentPreferences() {
     },
   ] as const;
 
+  const defaultPageFeatures = defaultPages.map(({ value, label, icon }) => ({
+    id: `defaultPage-${value}`,
+    checked: defaultOpen === value,
+    onCheckedChange: () => setDefaultOpen(value),
+    label,
+    variant: "icon" as const,
+    icon,
+  }));
+
+  const hideFeatures = [
+    {
+      id: "hide_collab",
+      checked: hideCollab,
+      onCheckedChange: () => setHideCollab(!hideCollab),
+      label: t("views.settings.hideCollabStreamsLabel"),
+      variant: "icon" as const,
+      icon: "i-lucide:users",
+    },
+    {
+      id: "hide_placeholder",
+      checked: hidePlaceholder,
+      onCheckedChange: () => setHidePlaceholder(!hidePlaceholder),
+      label: t("views.settings.hidePlaceholderStreams"),
+      variant: "icon" as const,
+      icon: "i-lucide:calendar",
+    },
+    {
+      id: "filter_dead_streams",
+      checked: filterDeadStreams,
+      onCheckedChange: () => setFilterDeadStreams(!filterDeadStreams),
+      label: t("views.settings.filterDeadStreams"),
+      variant: "icon" as const,
+      icon: "i-uil:bed",
+    },
+    {
+      id: "filter_long_streams",
+      checked: filterLongStreams,
+      onCheckedChange: () => setFilterLongStreams(!filterLongStreams),
+      label: t("views.settings.filterLongStreams"),
+      variant: "icon" as const,
+      icon: "i-solar:infinity-linear",
+    },
+  ];
+
   return (
     <div className="flex flex-col">
       <SettingsItem label={t("views.settings.defaultPage")} fullWidth>
-        <div className="flex flex-col gap-2">
-          {defaultPages.map(({ value, label, icon }) => (
-            <div
-              key={"defaultPage-" + value}
-              className="flex items-center gap-3"
-            >
-              <Checkbox
-                checked={defaultOpen === value}
-                onCheckedChange={() => setDefaultOpen(value)}
-                id={`defaultPage-${value}`}
-              />
-              <Label
-                htmlFor={`defaultPage-${value}`}
-                className={cn("flex cursor-pointer items-center gap-1", {
-                  "opacity-70": defaultOpen !== value,
-                })}
-              >
-                <div className={icon}></div>
-                <span>{label}</span>
-              </Label>
-            </div>
-          ))}
-        </div>
+        <ToggleableFeatureGroup features={defaultPageFeatures} />
       </SettingsItem>
 
       <SettingsItem label={t("views.settings.orgs")} fullWidth>
         <OrgReranker rankedOrgs={rankedOrgs} setRankedOrgs={setRankedOrgs} />
       </SettingsItem>
 
-      <SettingsItem label={t("views.settings.hideFeaturesLabel")} fullWidth>
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-3">
-            <Checkbox
-              id="hide_collab"
-              checked={hideCollab}
-              onCheckedChange={() => setHideCollab(!hideCollab)}
-            />
-            <Label
-              htmlFor="hide_collab"
-              className={cn({ "opacity-70": !hideCollab })}
-            >
-              {t("views.settings.hideCollabStreamsLabel")}
-            </Label>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Checkbox
-              id="hide_placeholder"
-              checked={hidePlaceholder}
-              onCheckedChange={() => setHidePlaceholder(!hidePlaceholder)}
-            />
-            <Label
-              htmlFor="hide_placeholder"
-              className={cn({ "opacity-70": !hidePlaceholder })}
-            >
-              {t("views.settings.hidePlaceholderStreams")}
-            </Label>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Checkbox
-              id="filter_dead_streams"
-              checked={filterDeadStreams}
-              onCheckedChange={() => setFilterDeadStreams(!filterDeadStreams)}
-            />
-            <Label
-              htmlFor="filter_dead_streams"
-              className={cn({ "opacity-70": !filterDeadStreams })}
-            >
-              {t("views.settings.filterDeadStreams")}
-            </Label>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Checkbox
-              id="filter_long_streams"
-              checked={filterLongStreams}
-              onCheckedChange={() => setFilterLongStreams(!filterLongStreams)}
-            />
-            <Label
-              htmlFor="filter_long_streams"
-              className={cn({ "opacity-70": !filterLongStreams })}
-            >
-              {t("views.settings.filterLongStreams")}
-            </Label>
-          </div>
-        </div>
+      <SettingsItem label={t("views.settings.videoFilter")} fullWidth>
+        <ToggleableFeatureGroup features={hideFeatures} showDividers />
       </SettingsItem>
 
       <SettingsItem label={t("views.settings.blockedChannels")} fullWidth>

@@ -17,6 +17,7 @@ import {
 } from "@/hooks/useVideoSelection";
 import { isMobileAtom } from "@/hooks/useFrame";
 import { ChannelImg } from "../channel/ChannelImg";
+import { tldexLanguageAtom } from "@/store/tldex";
 
 export type VideoCardType = VideoRef &
   Partial<VideoBase> &
@@ -203,6 +204,9 @@ export function VideoCard({
     [size, onClick, selectionMode, selectedSet, video.id],
   );
 
+  const tlLang = useAtomValue(tldexLanguageAtom);
+  const tlcount = video.live_tl_count?.[tlLang] ?? 0;
+
   const chName = usePreferredName(video.channel);
 
   return (
@@ -239,10 +243,19 @@ export function VideoCard({
           {video.songcount && (
             <span className="text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
               <div
-                className="i-lucide:music-4 inline-block align-middle"
-                style={{ fontSize: "11px", lineHeight: "1.25rem" }}
+                className="i-fluent:music-note-2-16-regular inline-block align-text-bottom"
+                // style={{ fontSize: "13px", lineHeight: "1.15rem" }}
               />
               &nbsp;{video.songcount}
+            </span>
+          )}
+          {tlcount > 0 && (
+            <span className="text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
+              <div
+                className="i-fluent:subtitles-16-regular inline-block align-text-bottom"
+                // style={{ fontSize: "13px", lineHeight: "1.15rem" }}
+              />
+              &nbsp;{tlcount}
             </span>
           )}
           {showDuration && <VideoCardDuration className="" {...video} />}

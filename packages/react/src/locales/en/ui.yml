@@ -371,7 +371,8 @@ views:
     defaultHomepage:
       lastVisitedOrgHome: Last Visited Org Home
       favoritesWhenLoggedIn: Favorites (When Logged In)
-    hideFeaturesLabel: Hide Features
+    hideFeaturesLabel: Advanced
+    videoFilter: Filter Videos
     showTimezonesOnHover: Show Timezones on hover
     orgs: Starred Orgs
     filterDeadStreams: Hide Streams that don't go live for >2 hours

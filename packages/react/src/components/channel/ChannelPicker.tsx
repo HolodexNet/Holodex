@@ -36,19 +36,27 @@ interface VtuberPickerProps<
   form?: UseFormReturn<T>;
   value: FieldPathValue<T, FieldName>;
   onSelect: (value: SearchAutoCompleteChannel) => void;
+  type?: "vtuber" | "any_channel" | "clipper";
 }
 
 export function ChannelPicker<
   T extends FieldValues,
   FieldName extends FieldPath<T>,
->({ name, form, value, onSelect }: VtuberPickerProps<T, FieldName>) {
+>({
+  name,
+  form,
+  value,
+  onSelect,
+  type = "vtuber",
+}: VtuberPickerProps<T, FieldName>) {
   const { t } = useTranslation();
   const currentValue = useAtomValue(currentValueAtom);
   const [debouncedValue, setDebouncedValue] = useAtom(debouncedValueAtom);
   const { data, mutate, isPending } = useSearchAutoCompleteMutation();
 
   useEffect(() => {
-    if (debouncedValue) mutate({ q: debouncedValue, n: 10, t: "vtuber" });
+    if (debouncedValue && debouncedValue.length > 1)
+      mutate({ q: debouncedValue, n: 10, t: type });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue]);
 
@@ -85,9 +93,16 @@ export function ChannelPicker<
             })}
           />
           <CommandList>
-            <CommandEmpty>{t("component.channelPicker.notFound")}</CommandEmpty>
+            {isPending && (
+              <div className="flex w-full">
+                <div className="i-lucide:loader-2 mx-auto animate-spin" />
+              </div>
+            )}
+            <CommandEmpty>
+              {!isPending && t("component.channelPicker.notFound")}
+            </CommandEmpty>
             <CommandGroup>
-              {data?.vtuber?.map((channel) => (
+              {data?.[type]?.map((channel) => (
                 <CommandItem
                   key={channel.id}
                   value={channel.name}
@@ -96,11 +111,6 @@ export function ChannelPicker<
                   {channel.name}
                 </CommandItem>
               ))}
-              {isPending && (
-                <CommandItem className="flex justify-center py-2" disabled>
-                  <div className="i-lucide:loader-2 animate-spin" />
-                </CommandItem>
-              )}
             </CommandGroup>
           </CommandList>
         </Command>

@@ -14,11 +14,11 @@ import {
 import { CLIPPER_LANGS } from "@/lib/consts";
 import { useAtomValue } from "jotai";
 import { userAtom } from "@/store/auth";
-import { tldexSettngsAtom } from "@/store/tldex";
+import { tldexLanguageAtom } from "@/store/tldex";
 
 export function VideoIdInput() {
   const [searchParams] = useSearchParams();
-  const tldexDefaults = useAtomValue(tldexSettngsAtom);
+  const liveTlLang = useAtomValue(tldexLanguageAtom);
   const id = searchParams.get("id") || "";
   const editorLanguage = searchParams.get("tleditor-language");
   const creditName = searchParams.get("caption-by");
@@ -26,7 +26,7 @@ export function VideoIdInput() {
 
   const [urlField, setUrlField] = useState<string>(id);
   const [language, setLanguage] = useState<string>(
-    editorLanguage || tldexDefaults.liveTlLang,
+    editorLanguage || liveTlLang,
   );
   const [caption, setCaption] = useState<string>(
     creditName || user?.username || "",

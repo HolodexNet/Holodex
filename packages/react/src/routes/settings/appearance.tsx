@@ -1,7 +1,5 @@
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { Button } from "@/shadcn/ui/button";
-import { Checkbox } from "@/shadcn/ui/checkbox";
-import { Label } from "@/shadcn/ui/label";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +21,7 @@ import {
 import { useVideoCardSizes } from "@/store/video";
 import { hideThumbnailAtom, englishNameAtom } from "@/store/settings";
 import { Separator } from "@/shadcn/ui/separator";
+import ToggleableFeatureGroup from "@/components/settings/ToggleableFeature";
 
 export const SettingsTheme = () => {
   const { t } = useTranslation();
@@ -50,6 +49,35 @@ export const SettingsTheme = () => {
       icon: "i-lucide:list",
     },
   ] as const;
+
+  const gridSizeFeatures = gridSizes.map(({ label, value, icon }) => ({
+    id: `gridSize-${value}`,
+    checked: size === value,
+    onCheckedChange: () => setSize(value),
+    label,
+    variant: "icon" as const,
+    icon,
+  }));
+
+  // Then the display preference features
+  const displayPreferenceFeatures = [
+    {
+      id: "hide_thumbnails",
+      checked: hideThumbnail,
+      onCheckedChange: () => setHideThumbnail(!hideThumbnail),
+      label: t("views.settings.hideVideoThumbnailsLabel"),
+      variant: "icon" as const,
+      icon: "i-lucide:image",
+    },
+    {
+      id: "use_english_names",
+      checked: useENName,
+      onCheckedChange: () => setUseENName(!useENName),
+      label: t("views.settings.useEnglishNameMsg"),
+      variant: "icon" as const,
+      icon: "i-lucide:languages",
+    },
+  ];
 
   return (
     <div className="space-y-6">
@@ -116,109 +144,16 @@ export const SettingsTheme = () => {
           options={THEME_COLORS.concat(THEME_BASE_COLORS)}
         />
       </SettingsItem>
-
       {/* Grid Size Selection */}
       <SettingsItem label={t("views.settings.gridSizeLabel")} fullWidth>
-        {gridSizes.map(({ label, value, icon }) => (
-          <div key={value} className="flex items-center gap-2">
-            <Label
-              htmlFor={`gridSize-${value}`}
-              className={cn("flex grow cursor-pointer items-center", {
-                "text-primary-11": size === value,
-                "text-base-11": size !== value,
-              })}
-            >
-              <div
-                className={cn(
-                  "mr-2 flex h-10 w-10 items-center justify-center rounded-lg",
-                  size === value ? "bg-primary-4" : "bg-base-4",
-                )}
-              >
-                <div
-                  className={cn(
-                    icon,
-                    "h-5 w-5",
-                    size === value ? "text-primary-11" : "text-base-11",
-                  )}
-                />
-              </div>
-              {label}
-            </Label>
-            <Checkbox
-              id={`gridSize-${value}`}
-              checked={size === value}
-              onCheckedChange={() => setSize(value)}
-              className="hidden h-6 w-6"
-            />
-          </div>
-        ))}
+        <ToggleableFeatureGroup features={gridSizeFeatures} />
       </SettingsItem>
-
       {/* Display Preferences */}
-      <SettingsItem label={t("views.settings.displayPreferences")} fullWidth>
-        <div className="flex items-center gap-4">
-          <div
-            className={cn(
-              "flex h-10 w-10 items-center justify-center rounded-lg",
-              hideThumbnail ? "bg-primary-4" : "bg-base-4",
-            )}
-          >
-            <div
-              className={cn(
-                "i-lucide:image h-5 w-5",
-                hideThumbnail ? "text-primary-11" : "text-base-11",
-              )}
-            />
-          </div>
-          <Label
-            htmlFor="hide_thumbnails"
-            className={cn("flex grow cursor-pointer", {
-              "text-primary-11": hideThumbnail,
-              "text-base-11": !hideThumbnail,
-            })}
-          >
-            {t("views.settings.hideVideoThumbnailsLabel")}
-          </Label>
-          <Checkbox
-            id="hide_thumbnails"
-            checked={hideThumbnail}
-            onCheckedChange={() => setHideThumbnail(!hideThumbnail)}
-            className="h-6 w-6"
-          />
-        </div>
-
-        <div className="h-px bg-base-6" />
-
-        <div className="flex items-center gap-4">
-          <div
-            className={cn(
-              "flex h-10 w-10 items-center justify-center rounded-lg",
-              useENName ? "bg-primary-4" : "bg-base-4",
-            )}
-          >
-            <div
-              className={cn(
-                "i-lucide:languages h-5 w-5",
-                useENName ? "text-primary-11" : "text-base-11",
-              )}
-            />
-          </div>
-          <Label
-            htmlFor="use_english_names"
-            className={cn("flex grow cursor-pointer", {
-              "text-primary-11": useENName,
-              "text-base-11": !useENName,
-            })}
-          >
-            {t("views.settings.useEnglishNameMsg")}
-          </Label>
-          <Checkbox
-            id="use_english_names"
-            checked={useENName}
-            onCheckedChange={(c) => setUseENName(!!c)}
-            className="h-6 w-6"
-          />
-        </div>
+      <SettingsItem label={t("views.settings.hideFeaturesLabel")} fullWidth>
+        <ToggleableFeatureGroup
+          features={displayPreferenceFeatures}
+          showDividers
+        />
       </SettingsItem>
     </div>
   );

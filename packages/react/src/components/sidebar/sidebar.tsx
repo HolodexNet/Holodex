@@ -24,7 +24,6 @@ import { useOnClickOutside } from "usehooks-ts";
 import { orgRankingAtom } from "@/store/org";
 import { TLDexLogo } from "../common/TLDexLogo";
 import { getThumbnailForOrg } from "@/lib/thumb";
-import { useOrgs } from "@/services/orgs.service";
 
 export function Sidebar() {
   const { t } = useTranslation();
@@ -37,7 +36,6 @@ export function Sidebar() {
   const isMobile = useAtomValue(isMobileAtom);
   const toggle = useSetAtom(toggleSidebarAtom);
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
-  const { data: orgs, isError } = useOrgs({ enabled: open });
 
   const handleClickOutside = useCallback(() => {
     floating && open && setOpen(false);
@@ -87,7 +85,7 @@ export function Sidebar() {
           </div>
 
           <Link
-            to="/settings/orgs"
+            to="/settings/content"
             className={cn(
               `w-full justify-start rounded-md px-4 py-2 
               text-center text-sm font-semibold tracking-tight text-base-9 

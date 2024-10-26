@@ -19,8 +19,10 @@ import { LanguagePicker } from "./LanguagePicker";
 
 const formValues = {
   channel: {
+    id: "",
     name: "",
     link: "",
+    type: "",
   },
   language: "",
   org: "",
@@ -119,6 +121,7 @@ export function ModifyInfoForm() {
     });
   };
 
+  const channelType = form.watch("channel.type");
   return (
     <Form {...form}>
       <form
@@ -127,7 +130,7 @@ export function ModifyInfoForm() {
       >
         <FormField
           control={form.control}
-          name="channel.name"
+          name="channel.id"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Channel</FormLabel>
@@ -136,12 +139,15 @@ export function ModifyInfoForm() {
                   form={form}
                   value={field.value}
                   name="channel.name"
-                  onSelect={({ name, id }) => {
+                  type="any_channel"
+                  onSelect={({ name, id, type }) => {
+                    form.setValue("channel.id", id);
                     form.setValue("channel.name", name);
                     form.setValue(
                       "channel.link",
                       `https://www.youtube.com/channel/${id}`,
                     );
+                    form.setValue("channel.type", type); // need to modify server to emit this.
                   }}
                 />
               </FormControl>
@@ -149,35 +155,41 @@ export function ModifyInfoForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="language"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("channelRequest.ChannelLanguageLabel")}</FormLabel>
-              <FormControl>
-                <LanguagePicker name="language" form={form} field={field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="org"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("channelRequest.VtuberGroupLabel")}</FormLabel>
-              <FormControl>
-                <Input placeholder="Hololive, Nijisanji, ..." {...field} />
-              </FormControl>
-              <FormDescription>
-                {t("channelRequest.VtuberGroupHint")}
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {channelType === "subber" && (
+          <FormField
+            control={form.control}
+            name="language"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t("channelRequest.ChannelLanguageLabel")}
+                </FormLabel>
+                <FormControl>
+                  <LanguagePicker name="language" form={form} field={field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+        {channelType === "vtuber" && (
+          <FormField
+            control={form.control}
+            name="org"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("channelRequest.VtuberGroupLabel")}</FormLabel>
+                <FormControl>
+                  <Input placeholder="Hololive, Nijisanji, ..." {...field} />
+                </FormControl>
+                <FormDescription>
+                  {t("channelRequest.VtuberGroupHint")}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         <FormField
           control={form.control}
           name="twitter"

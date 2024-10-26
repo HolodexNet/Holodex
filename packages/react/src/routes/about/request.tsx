@@ -46,6 +46,7 @@ export function AboutRequest() {
           </RequestTypeRadioButton>
         </Label>
       </RadioGroup>
+      <div>{/* Making some space  */}</div>
       {type === "addVtuber" && <AddVtuberForm />}
       {type === "addSubber" && <AddSubberForm />}
       {type === "modifyInfo" && <ModifyInfoForm />}
