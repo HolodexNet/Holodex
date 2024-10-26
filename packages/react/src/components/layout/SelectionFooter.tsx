@@ -74,7 +74,7 @@ const SelectionFooter = () => {
   return (
     <footer
       id="selectionFooter"
-      className="sticky bottom-0 right-0 flex bg-base-3 p-1 shadow-lg"
+      className="sticky bottom-0 right-0 flex border-t border-base-6 bg-base-3 p-1 shadow-lg"
       style={{ bottom: "var(--footer-height-clearance)" }}
     >
       <SelectedVideosModal

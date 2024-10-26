@@ -1,6 +1,5 @@
 import { Loading } from "@/components/common/Loading";
 import { VideoEditTopic } from "@/components/edit/VideoEditTopic";
-import { siteIsSmallAtom } from "@/hooks/useFrame";
 import { useVideo } from "@/services/video.service";
 import {
   ResizableHandle,
@@ -9,7 +8,6 @@ import {
 } from "@/shadcn/ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { TypographyH3 } from "@/shadcn/ui/typography";
-import { useAtomValue } from "jotai";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
@@ -18,15 +16,16 @@ import "./editVideo.scss";
 import { VideoEditMusic } from "@/components/edit/VideoEditMusic";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { idToVideoURL } from "@/lib/utils";
+import { Button } from "@/shadcn/ui/button";
 
 export function EditVideo() {
   const { id } = useParams();
   const { t } = useTranslation();
-  const siteIsSmall = useAtomValue(siteIsSmallAtom);
   const { data, error, isPending, isSuccess } = useVideo<PlaceholderVideo>({
     id: id!,
   });
   const [tab, setTab] = useState("topic");
+  const [isHorizontal, setIsHorizontal] = useState(true); // Add this state
 
   return (
     <>
@@ -35,7 +34,8 @@ export function EditVideo() {
         <div className="container"></div>
         <ResizablePanelGroup
           className="container min-h-[90vh]"
-          direction={siteIsSmall ? "vertical" : "horizontal"}
+          direction={isHorizontal ? "vertical" : "horizontal"}
+          // it's talking about content direction, not the direction of the splitter.
         >
           <ResizablePanel minSize={10} defaultSize={20}>
             {isSuccess && data && (
@@ -47,10 +47,22 @@ export function EditVideo() {
           </ResizablePanel>
           <ResizableHandle withHandle />
           <ResizablePanel className="px-4">
-            <TypographyH3 className="mb-4 mt-2">
-              Editing: {data?.title}
-            </TypographyH3>
-
+            <div className="mb-4 mt-2 flex items-center gap-4">
+              <Button
+                variant="base-outline"
+                size="icon-lg"
+                onClick={() => setIsHorizontal(!isHorizontal)}
+              >
+                <div
+                  className={
+                    isHorizontal
+                      ? "i-mingcute:rotate-to-vertical-line -rotate-180 -scale-x-100"
+                      : "i-mingcute:rotate-to-vertical-line rotate-90 "
+                  }
+                />
+              </Button>
+              <TypographyH3>Editing: {data?.title}</TypographyH3>
+            </div>
             {isPending || error ? (
               <Loading size="lg" error={error} />
             ) : (
@@ -62,7 +74,7 @@ export function EditVideo() {
               >
                 <TabsList className="w-full justify-start">
                   <TabsTrigger value="topic">
-                    {t("views.editor.changeTopic.title")} /
+                    {t("views.editor.changeTopic.title")} /{" "}
                     {t("views.editor.channelMentions.title")}
                   </TabsTrigger>
                   <TabsTrigger value="music">
