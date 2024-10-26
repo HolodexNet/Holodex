@@ -71,9 +71,10 @@ export function VideoCard({
       ? video.link
       : `/watch/${video.id}`;
   const videoIsPlaceholder = video.type === "placeholder";
-  const thumbnailSrc = videoIsPlaceholder
-    ? video.thumbnail
-    : makeYtThumbnailUrl(video.id, size);
+  const thumbnailSrc =
+    videoIsPlaceholder && video.thumbnail
+      ? `/statics/thumbnail/maxres/${btoa(video.thumbnail).replace("+", "-").replace("/", "_").replace(/=+$/, "")}.jpg`
+      : makeYtThumbnailUrl(video.id, size);
 
   const externalLink = videoIsPlaceholder
     ? video.link

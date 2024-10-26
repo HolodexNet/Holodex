@@ -7,6 +7,12 @@ import { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { HTTPError } from "@/lib/fetch";
 
+/**
+ * Provides an interface to interact with the chat database of a video.
+ *
+ * @param roomId the roomId of the chat room.
+ * @returns an object with various functions to interact with the chat database.
+ */
 export function useChatDB(roomId: RoomIDString) {
   const queryClient = useQueryClient();
   const client = useClient();
@@ -96,6 +102,7 @@ export function useChatDB(roomId: RoomIDString) {
    * @param message the message content.
    */
   function addMessage(message: ParsedMessage) {
+    // Note: setQueryData's updater must return immutable data.
     queryClient.setQueryData<ParsedMessage[]>(queryKey, (prev) =>
       [...(prev ?? []), message].sort(ParsedMessageComparator),
     );
@@ -112,6 +119,7 @@ export function useChatDB(roomId: RoomIDString) {
    * @param messages the messages to add.
    */
   function addMessages(messages: ParsedMessage[]) {
+    // Note: setQueryData's updater must return immutable data.
     queryClient.setQueryData<ParsedMessage[]>(queryKey, (prev) =>
       [...(prev ?? []), ...messages].sort(ParsedMessageComparator),
     );

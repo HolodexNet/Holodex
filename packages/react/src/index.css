@@ -116,3 +116,8 @@ body.hc-primary .bg-primary-9.text-primary-12,
 body.hc-primary .bg-primary-10.text-primary-12 {
   color: var(--primary-1)
 }
+
+
+.tlmsg img {
+  @apply inline-block
+}

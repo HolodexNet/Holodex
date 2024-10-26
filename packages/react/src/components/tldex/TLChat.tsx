@@ -2,14 +2,12 @@ import { useSocket } from "@/hooks/useSocket";
 import { formatDuration } from "@/lib/time";
 import { cn, getChannelPhoto } from "@/lib/utils";
 import { Badge } from "@/shadcn/ui/badge";
-import { Button } from "@/shadcn/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { playerRefAtom } from "@/store/player";
 import { tldexBlockedAtom, tldexSettingsAtom } from "@/store/tldex";
 import { useAtom, useAtomValue } from "jotai";
 import { DetailedHTMLProps, HTMLAttributes, forwardRef, useMemo } from "react";
-import { Link } from "react-router-dom";
 import { Virtuoso } from "react-virtuoso";
+import "./tlchat.css";
 
 interface TLChatProps {
   videoId: string;
@@ -23,6 +21,16 @@ export function TLChat({ videoId }: TLChatProps) {
   );
   const { chatDB } = useSocket(roomID);
 
+  const processedMessages = useMemo(() => {
+    return chatDB.messages?.map((msg, i, arr) => ({
+      ...msg,
+      showHeader:
+        i === 0 || // This condition checks if the current message is the first one in the array.
+        arr[i - 1]?.name !== msg.name || // This condition checks if the previous message's name is different from the current message's name.
+        (i > 5 && arr[i - 5]?.name === msg.name), // This condition checks if the message 5 positions back in the array has the same name as the current message
+    }));
+  }, [chatDB.messages]);
+
   return (
     <Virtuoso
       components={{ Item: TLChatItem }}
@@ -32,8 +40,10 @@ export function TLChat({ videoId }: TLChatProps) {
       alignToBottom
       followOutput="smooth"
       startReached={() => chatDB.loadMessages({ partial: 30 })}
-      data={chatDB.messages}
-      itemContent={(_, message) => <TLChatMessage {...message} />}
+      data={processedMessages}
+      itemContent={(idx, { key, ...message }, ctx) => (
+        <TLChatMessage {...message} key={key} />
+      )}
     />
   );
 }
@@ -59,59 +69,80 @@ function TLChatMessage({
   is_vtuber,
   is_moderator,
   channel_id,
-}: ParsedMessage) {
+  showHeader,
+}: ParsedMessage & { showHeader?: boolean }) {
   const playerRef = useAtomValue(playerRefAtom);
   const [blocked, setBlocked] = useAtom(tldexBlockedAtom);
-  const isBlocked = blocked.includes(name);
-
+  if (blocked.includes(name)) return null;
   return (
     <div
       className="flex flex-col p-1 px-2 hover:cursor-pointer hover:bg-base-4"
       onClick={() => playerRef?.seekTo(video_offset, "seconds")}
     >
-      <Popover>
-        <PopoverTrigger onClick={(e) => e.stopPropagation()}>
-          <div
-            className={cn("group flex items-center gap-2 text-base-11", {
-              "text-primary": is_owner,
-              "text-secondary": is_verified || is_moderator || is_vtuber,
-            })}
-          >
-            {is_vtuber && channel_id && (
-              <img
-                className="h-8 w-8 rounded-full"
-                src={getChannelPhoto(channel_id, 28)}
-              />
-            )}
-            <div className="flex flex-col">
-              <div className="flex gap-1">
-                {is_vtuber && (
-                  <Badge
-                    size="sm"
-                    variant="outline"
-                    className="py-1/2 border-base px-1 text-[0.6rem] text-base-11"
-                  >
-                    VTuber
-                  </Badge>
-                )}
-                {is_moderator && (
-                  <Badge
-                    size="sm"
-                    variant="outline"
-                    className="py-1/2 border-base px-1 text-[0.6rem] text-base-11"
-                  >
-                    Moderator
-                  </Badge>
-                )}
-              </div>
-              <span className="line-clamp-1 whitespace-nowrap text-sm group-hover:underline">
-                {name}
-                {is_verified && <span className="ml-2">✓</span>}
-              </span>
+      {showHeader && (
+        <div
+          className={cn("group flex items-center gap-2 text-base-11", {
+            "text-primary": is_owner,
+            "text-secondary":
+              !is_owner && (is_verified || is_moderator || is_vtuber),
+          })}
+        >
+          {is_vtuber && channel_id && (
+            <img
+              className="h-8 w-8 rounded-full"
+              src={getChannelPhoto(channel_id, 28)}
+            />
+          )}
+          <div className="flex flex-col">
+            <div className="flex gap-1">
+              {is_vtuber && (
+                <Badge
+                  size="sm"
+                  variant="outline"
+                  className="border-base px-1 py-0.5 text-[0.6rem] text-base-11"
+                >
+                  VTuber
+                </Badge>
+              )}
+              {is_moderator && (
+                <Badge
+                  size="sm"
+                  variant="outline"
+                  className="border-base px-1 py-0.5 text-[0.6rem] text-base-11"
+                >
+                  Mod
+                </Badge>
+              )}
             </div>
+            <span className="line-clamp-1 whitespace-nowrap text-sm">
+              {name}
+              {is_verified && <span className="ml-2">✓</span>}
+            </span>
           </div>
-        </PopoverTrigger>
-        <PopoverContent>
+        </div>
+      )}
+      <div className="break-words">
+        <span className="mr-2 whitespace-nowrap text-xs text-base-11">
+          {formatDuration(video_offset * 1000)}
+        </span>
+        {parsed ? (
+          <span
+            // eslint-disable-next-line tailwindcss/no-custom-classname
+            className="tlmsg"
+            dangerouslySetInnerHTML={{ __html: parsed }}
+          />
+        ) : (
+          message
+        )}
+      </div>
+    </div>
+  );
+}
+
+/**!SECTION
+ * 
+ * 
+ *         <PopoverContent>
           <div className="flex flex-col items-center gap-2">
             <span className="font-bold text-base-12">{name}</span>
             {channel_id && (
@@ -147,17 +178,4 @@ function TLChatMessage({
             </Button>
           </div>
         </PopoverContent>
-      </Popover>
-      <div className="break-words">
-        <span className="mr-2 whitespace-nowrap text-xs text-base-11">
-          {formatDuration(video_offset * 1000)}
-        </span>
-        {parsed ? (
-          <span dangerouslySetInnerHTML={{ __html: parsed }} />
-        ) : (
-          message
-        )}
-      </div>
-    </div>
-  );
-}
+ */
