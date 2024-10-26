@@ -110,7 +110,7 @@ export const OrgReranker = ({
                     onClick={() => toggleStar(org, true)}
                     className="text-yellow-500 hover:text-yellow-600"
                   >
-                    <div className="i-lucide:star-off text-lg" />
+                    <div className="i-fluent:star-off-16-regular text-lg" />
                   </button>
                 </div>
               </SortableItem>
@@ -143,7 +143,7 @@ export const OrgReranker = ({
                 onClick={() => toggleStar(org)}
                 className="text-gray-500 hover:text-gray-600"
               >
-                <div className="i-lucide:star text-lg" />
+                <div className="i-heroicons:star text-lg" />
               </button>
             </div>
           ))}{" "}

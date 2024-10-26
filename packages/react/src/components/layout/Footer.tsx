@@ -19,11 +19,6 @@ export const Footer = () => {
         openSidebar();
       },
     },
-    // {
-    //   icon: "i-heroicons:user-group",
-    //   label: t("component.mainNav.channels"),
-    //   href: `/org/${org}/channels`,
-    // },
     {
       icon: "i-heroicons:heart",
       label: t("component.mainNav.favorites"),

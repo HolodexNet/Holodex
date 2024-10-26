@@ -34,7 +34,7 @@ export function VideoEditTopic({ video }: { video: Video }) {
           variant="outline"
           className={clsx({ "ml-2": true, "opacity-60": !video.topic_id })}
         >
-          <div className="i-ion:pound mr-2 text-xs"></div>
+          <div className="i-lucide:tag mr-2 text-xs"></div>
           {video.topic_id || "?"}
         </Badge>
       </TypographyLarge>

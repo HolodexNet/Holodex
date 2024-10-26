@@ -1,69 +1,38 @@
 import { AboutFaqEmailForm } from "@/components/about/EmailForm";
 import { AboutHeading } from "@/components/about/Heading";
-import { Button } from "@/shadcn/ui/button";
+import { StyledExternalLink } from "@/routes/about/general";
 import { useTranslation } from "react-i18next";
 
 export function ContactList() {
   const { t } = useTranslation();
-
+  const contactLinks = [
+    {
+      className:
+        "border-blue-11 hover:bg-blue-4 hover:border-blue-11 text-blue-11 max-w-xs",
+      href: "https://twitter.com/messages/compose?recipient_id=1320894663084048384&text=Hello",
+      icon: "i-logos:twitter",
+      label: t("about.contact.twitter"),
+    },
+    {
+      className:
+        "border-violet-10 hover:bg-violet-4 hover:border-violet-10 text-violet-10 max-w-xs",
+      href: "https://discord.gg/A24AbzgvRJ",
+      icon: "i-logos:discord-icon",
+      label: t("about.contact.discord"),
+    },
+  ];
   return (
     <div>
       <AboutHeading>Get in touch</AboutHeading>
       <p className="my-2 max-w-[700px] text-gray-500 dark:text-gray-400">
         Have a question or want to work together? We'd love to hear from you.
       </p>
-      <div className="grid w-full max-w-md grid-cols-1 gap-4 sm:grid-cols-2">
-        <Button asChild variant="link" className="w-full justify-start">
-          <a
-            href="https://twitter.com/messages/compose?recipient_id=1320894663084048384&text=Hello"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="i-logos:twitter" />
-            {t("about.contact.twitter")}
-          </a>
-        </Button>
-        <Button asChild variant="link" className="w-full justify-start">
-          <a
-            href="https://twitter.com/messages/compose?recipient_id=1320894663084048384&text=Hello"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="i-logos:discord-icon" />
-            {t("about.contact.discord")}
-          </a>
-        </Button>
+      <div className="flex flex-wrap gap-2">
+        {contactLinks.map((link, index) => (
+          <StyledExternalLink key={index} {...link} />
+        ))}
       </div>
       <div className="h-4"></div>
-      {/* <AboutHeading>{t("about.contact.discord")}</AboutHeading>
-      <Link to="https://discord.gg/A24AbzgvRJ" target="_blank">
-        <img
-          src="https://discordapp.com/api/guilds/796190073271353385/widget.png?style=banner2"
-          width="280"
-          className="rounded"
-        />
-      </Link>
-      <AboutHeading>{t("about.contact.twitter")}</AboutHeading>
-      <div className="flex gap-2">
-        <Link
-          to="https://twitter.com/intent/follow?original_referer=https://holodex.net%2F&ref_src=twsrc%5Etfw%7Ctwcamp%5Ebuttonembed%7Ctwterm%5Efollow%7Ctwgr%5Eholodex&screen_name=holodex"
-          target="_blank"
-        >
-          <img
-            alt="Twitter Follow"
-            src="https://img.shields.io/twitter/follow/holodex?color=%231d9bf0&logoColor=%231d9bf0"
-          />
-        </Link>
-        <Link
-          to="https://twitter.com/messages/compose?recipient_id=1320894663084048384&text=Hello"
-          target="_blank"
-        >
-          <img
-            alt="Twitter Message"
-            src="https://img.shields.io/twitter/url?label=Message%20%40Holodex&style=social&url=https%3A%2F%2Fholodex.net"
-          />
-        </Link>
-      </div> */}
       <AboutHeading>{t("about.contact.email")}</AboutHeading>
       <AboutFaqEmailForm />
     </div>

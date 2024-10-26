@@ -23,7 +23,7 @@ src_directory = './src'  # Replace with your src directory path
 extracted_icons = extract_icons(src_directory)
 
 # Print the extracted icons and their associated files
-for icon, files in sorted(extracted_icons.items()):
+for icon, files in sorted(extracted_icons.items(), key=lambda entry: entry[0].split(":")[1]):
     print(f"Icon: {icon}")
     for file in sorted(files):
         print(f"  - {file}")
@@ -31,7 +31,7 @@ for icon, files in sorted(extracted_icons.items()):
 
 # Write the icons and their files to a text file
 with open('extracted_icons_with_files.txt', 'w') as f:
-    for icon, files in sorted(extracted_icons.items()):
+    for icon, files in sorted(extracted_icons.items(), key=lambda entry: entry[0].split(":")[1]):
         f.write(f"Icon: {icon}\n")
         for file in sorted(files):
             f.write(f"  - {file}\n")

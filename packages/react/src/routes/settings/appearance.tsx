@@ -98,8 +98,8 @@ export const SettingsTheme = () => {
                 className={cn(
                   "h-5 w-5",
                   dark
-                    ? "i-lucide:moon text-primary-11"
-                    : "i-lucide:sun text-primary-11",
+                    ? "i-heroicons:moon text-primary-11"
+                    : "i-heroicons:sun text-primary-11",
                 )}
               />
             </div>
@@ -124,7 +124,7 @@ export const SettingsTheme = () => {
             <div
               className={cn(
                 "block w-5",
-                dark ? "i-lucide:moon" : "i-lucide:sun",
+                dark ? "i-heroicons:moon" : "i-heroicons:sun",
               )}
             />
           </Button>

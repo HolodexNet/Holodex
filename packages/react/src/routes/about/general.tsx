@@ -3,6 +3,7 @@ import { AboutHeading } from "@/components/about/Heading";
 import StatComponent from "@/components/about/Stats";
 import { Loading } from "@/components/common/Loading";
 import { darkAtom } from "@/hooks/useTheme";
+import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
@@ -121,7 +122,7 @@ function StatsBlock() {
   );
 }
 
-const QuickLinks = () => {
+export const QuickLinks = () => {
   const { t } = useTranslation();
 
   const quickLinks = [
@@ -163,24 +164,43 @@ const QuickLinks = () => {
   ];
 
   return (
-    <div className="flex w-full flex-wrap gap-4 rounded-lg bg-gray-2 p-4">
+    <div className="flex w-full flex-wrap gap-4 rounded-lg bg-base-2 p-4">
       {quickLinks.map((link, index) => (
-        <a
-          key={index}
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`
-            flex grow basis-1 items-center gap-2 rounded-lg border-2 px-4
-            py-2 transition-all duration-300 ease-in-out
-            ${link.className}
-            focus:outline-none focus:ring-2 focus:ring-gray-8 focus:ring-offset-2
-          `}
-        >
-          <span className={link.icon}></span>
-          <span>{link.label}</span>
-        </a>
+        <StyledExternalLink key={index} {...link} />
       ))}
     </div>
+  );
+};
+
+interface StyledExternalLinkProps {
+  href: string;
+  icon: string;
+  label: string;
+  className?: string;
+}
+
+export const StyledExternalLink = ({
+  href,
+  icon,
+  label,
+  className,
+}: StyledExternalLinkProps) => {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        `
+        flex grow basis-1 items-center gap-2 rounded-lg border-2 px-4
+        py-2 transition-all duration-300 ease-in-out
+        focus:outline-none focus:ring-2 focus:ring-base-8 focus:ring-offset-2
+      `,
+        className,
+      )}
+    >
+      <span className={icon}></span>
+      <span>{label}</span>
+    </a>
   );
 };

@@ -43,7 +43,7 @@ export function ChannelMenu({
             });
           }}
         >
-          <div className="i-heroicons:link" />
+          <div className="i-heroicons:link-20-solid" />
           {t("component.videoCard.copyLink")}
         </DropdownMenuItem>
         <DropdownMenuItem
