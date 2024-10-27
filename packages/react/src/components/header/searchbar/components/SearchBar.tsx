@@ -4,13 +4,19 @@ import { cn } from "@/lib/utils";
 import {
   queryAtom,
   splitQueryAtom,
-  useAutocomplete,
+  useSearchboxAutocomplete,
 } from "../hooks/useAutocomplete";
 import { useAtom } from "jotai";
 import { JSON_SCHEMA, QueryItem } from "../types";
 import { QueryBadge } from "./QueryBadge";
 import { useTranslation } from "react-i18next";
-import { HTMLAttributes, useRef, useState, useCallback } from "react";
+import {
+  HTMLAttributes,
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import { AutocompleteDropdownItem } from "./AutocompleteDropdownItem";
 import { Popover, PopoverTrigger } from "@/shadcn/ui/popover";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
@@ -24,7 +30,11 @@ export function SearchBar({
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useAtom(queryAtom);
   const [queryPieces, setQueryPieces] = useAtom(splitQueryAtom);
-  const { search, updateSearch, queryState, autocomplete } = useAutocomplete();
+  const { search, updateSearch, autocomplete } = useSearchboxAutocomplete();
+
+  useEffect(() => {
+    console.log(query);
+  }, [query]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {

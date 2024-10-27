@@ -7,11 +7,14 @@ import { JSON_SCHEMA, QueryItem } from "../types";
 import { useClientAutocomplete } from "./useClientAutocomplete";
 import { useServerAutocomplete } from "./useServerAutocomplete";
 
+/**
+ * The current searchbar query content.
+ */
 export const queryAtom = atom([] as QueryItem[]);
 
 export const splitQueryAtom = splitAtom(queryAtom);
 
-export function useAutocomplete() {
+export function useSearchboxAutocomplete() {
   const { t } = useTranslation();
 
   const query = useAtomValue(queryAtom);
@@ -36,7 +39,7 @@ export function useAutocomplete() {
   );
 
   // server autocomplete: (async response fetched from serverside autocomplete depending on search)
-  const { data: serverAC, ...queryState } = useServerAutocomplete(
+  const { data: serverAC, ...autocompleteQueryState } = useServerAutocomplete(
     searchCategory,
     searchString,
   );
@@ -44,7 +47,7 @@ export function useAutocomplete() {
   const clientAC = useClientAutocomplete(searchCategory, searchString, t);
 
   // client autocomplete: (sync response from client autocomplete depending on search and inverted_lang_index)
-  const autocomplete = useMemo(() => {
+  const autocomplete: QueryItem[] = useMemo(() => {
     const out = { ...serverAC, ...clientAC };
 
     // order them by category:
@@ -77,5 +80,5 @@ export function useAutocomplete() {
   }, [clientAC, query, serverAC]);
   // autocomplete_items: (merged autocomplete options, but grouped by category, also depending on query to remove selected items from dropdown)
 
-  return { search, updateSearch, queryState, autocomplete };
+  return { search, updateSearch, autocompleteQueryState, autocomplete };
 }

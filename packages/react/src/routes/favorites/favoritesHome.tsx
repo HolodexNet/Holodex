@@ -75,7 +75,7 @@ export function FavoritesHome() {
   return (
     <>
       <Helmet>
-        <title>Favorites - Holodex</title>
+        <title>{t("component.mainNav.favorites")} - Holodex</title>
       </Helmet>
       <Tabs defaultValue={tab} onValueChange={setTab}>
         <StickyTabsList tab={tab} fourthTab="Oshis" />
