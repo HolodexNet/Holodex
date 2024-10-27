@@ -72,7 +72,7 @@ export function Header({ id }: HeaderProps) {
               className="ml-2 text-lg text-base-10"
               onClick={() => setIsSearching(false)}
             >
-              <div className="i-heroicons:x-mark h-8 w-8" />
+              <div className="i-lucide:x h-8 w-8" />
             </Button>
           </div>
         ) : (

@@ -65,7 +65,7 @@ export function SettingsContentPreferences() {
       onCheckedChange: () => setHidePlaceholder(!hidePlaceholder),
       label: t("views.settings.hidePlaceholderStreams"),
       variant: "icon" as const,
-      icon: "i-lucide:calendar",
+      icon: "i-tabler:calendar-event",
     },
     {
       id: "filter_dead_streams",

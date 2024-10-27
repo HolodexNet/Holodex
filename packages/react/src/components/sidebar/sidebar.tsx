@@ -56,7 +56,7 @@ export function Sidebar() {
           <div className="flex grow" />
           <Button
             variant="ghost"
-            className="i-heroicons:x-mark p-4 md:hidden"
+            className="i-lucide:x p-4 md:hidden"
             onClick={toggle}
           />
         </div>

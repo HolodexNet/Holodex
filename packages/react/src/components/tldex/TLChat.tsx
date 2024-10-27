@@ -41,7 +41,7 @@ export function TLChat({ videoId }: TLChatProps) {
       followOutput="smooth"
       startReached={() => chatDB.loadMessages({ partial: 30 })}
       data={processedMessages}
-      itemContent={(idx, { key, ...message }, ctx) => (
+      itemContent={(_, { key, ...message }) => (
         <TLChatMessage {...message} key={key} />
       )}
     />

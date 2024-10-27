@@ -14,7 +14,7 @@ def extract_icons(directory):
                     content = f.read()
                     matches = re.findall(pattern, content)
                     for match in matches:
-                        icons[match].add(file_path)
+                        icons[match].add(file_path.replace("\\", "/"))
     
     return icons
 

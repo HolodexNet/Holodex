@@ -108,7 +108,7 @@ export default function IndividualPlaylist({ playlist }: Props) {
                   variant="ghost"
                   onClick={() => setRenaming((prev) => !prev)}
                 >
-                  <span className="i-heroicons:pencil-solid" />
+                  <span className="i-lucide:edit-3" />
                 </Button>
               ) : null}
             </div>
@@ -142,15 +142,16 @@ export default function IndividualPlaylist({ playlist }: Props) {
                     }
                   >
                     {/* todo: intl this */}
-                    <span className="i-lucide:save" /> Save Changes
+                    <span className="i-fluent:save-20-filled" /> Save Changes
                   </Button>
                   {editedPlaylist !== null ? (
                     <Button
                       size="icon"
                       variant="ghost"
+                      title="Reset"
                       onClick={() => setEditedPlaylist(null)}
                     >
-                      <span className="i-heroicons:arrow-path-solid" />
+                      <span className="i-fluent:arrow-reset-20-filled" />
                     </Button>
                   ) : null}
                 </>
@@ -177,7 +178,7 @@ export default function IndividualPlaylist({ playlist }: Props) {
                   variant="ghost"
                   onClick={() => deleteVideo(index)}
                 >
-                  <span className="i-heroicons:x-mark" />
+                  <span className="i-lucide:x" />
                 </Button>
                 <Button
                   size="icon"

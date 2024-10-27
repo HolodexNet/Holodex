@@ -137,7 +137,7 @@ export const QuickLinks = () => {
       className:
         "border-blue-11 hover:bg-blue-4 hover:border-blue-11 text-blue-11",
       href: "https://twitter.com/holodex",
-      icon: "i-lucide:twitter",
+      icon: "i-tabler:brand-twitter",
       label: t("about.quicklink.twitter"),
     },
     {
@@ -151,7 +151,7 @@ export const QuickLinks = () => {
       className:
         "border-orange-10 hover:bg-orange-4 hover:border-orange-10 text-orange-10",
       href: "https://docs.holodex.net/",
-      icon: "i-lucide:file-code",
+      icon: "i-mdi:cloud-json",
       label: t("about.quicklink.apiDocs"),
     },
     {

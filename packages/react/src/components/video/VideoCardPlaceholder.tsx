@@ -71,13 +71,13 @@ export default function VideoCardPlaceholder({
           </div>
         </div>
         <div className="grid gap-4 px-4 pb-4">
-          <Button size="lg" variant="default" className="" asChild>
+          <Button size="lg" variant="default" className="h-12 py-4" asChild>
             <a href={video.link} target="_blank" rel="noopener noreferrer">
               <div
                 className={
                   video.placeholderType === "scheduled-yt-stream"
-                    ? "i-logos:youtube-icon mr-2"
-                    : "i-heroicons:arrow-top-right-on-square mr-2"
+                    ? "i-logos:youtube-icon mr-1"
+                    : "i-heroicons:arrow-top-right-on-square mr-1"
                 }
               />
               {video.placeholderType === "scheduled-yt-stream"
@@ -88,28 +88,25 @@ export default function VideoCardPlaceholder({
             </a>
           </Button>
           <div className="flex flex-row">
-            <div className="grow">
-              <p>{t("component.placeholderVideo.creditTitleText")}</p>
-              {video.credits?.discord && (
-                <p>
-                  {t("component.placeholderVideo.discordCredit", {
-                    user: video.credits.discord.user,
-                    guild: (
-                      <strong>
-                        <a
-                          href={`https://discord.gg/${video.credits.discord.link}`}
-                          className="inline-block"
-                        >
-                          <div className="i-logos:discord-icon mr-1 inline-block" />
-                          {video.credits.discord.guildName}
-                        </a>
-                      </strong>
-                    ),
-                  })}
-                </p>
-              )}
+            <div className="grow text-sm text-muted">
+              {t("component.placeholderVideo.creditTitleText")}{" "}
+              {video.credits?.discord &&
+                t("component.placeholderVideo.discordCredit", {
+                  user: video.credits.discord.user,
+                  guild: (
+                    <strong>
+                      <a
+                        href={`https://discord.gg/${video.credits.discord.link}`}
+                        className="inline-block"
+                      >
+                        <div className="i-logos:discord-icon mr-1 inline-block" />
+                        {video.credits.discord.guildName}
+                      </a>
+                    </strong>
+                  ),
+                })}
               {video.credits?.datasource && (
-                <p>
+                <span>
                   {t("component.placeholderVideo.datasourceCredit", {
                     0: video.credits.datasource.name,
                   })}
@@ -119,10 +116,10 @@ export default function VideoCardPlaceholder({
                       {video.credits.datasource.link}
                     </a>
                   </strong>
-                </p>
+                </span>
               )}
               {video.credits?.bot && (
-                <p>
+                <span>
                   {t("component.placeholderVideo.botCredit", {
                     0: video.credits.bot.name,
                     1: video.credits.bot.user,
@@ -133,14 +130,14 @@ export default function VideoCardPlaceholder({
                       {video.credits.bot.link}
                     </a>
                   </strong>
-                </p>
+                </span>
               )}
               {video.credits?.editor && (
-                <p>
+                <span>
                   {t("component.placeholderVideo.editorCredit", {
                     0: video.credits.editor.name,
                   })}
-                </p>
+                </span>
               )}
             </div>
             {user && user.role !== "user" && (

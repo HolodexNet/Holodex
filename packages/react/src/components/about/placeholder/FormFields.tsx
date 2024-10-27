@@ -178,13 +178,14 @@ export const FormChannelPicker = ({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
+        <FormItem className="flex flex-col space-y-2">
+          <FormLabel className="leading-normal">{label}</FormLabel>
           <FormControl>
             <ChannelPicker
               {...props}
               value={field.value}
               onSelect={({ id }) => field.onChange(id)}
+              type="vtuber"
             />
           </FormControl>
           <FormMessage />
