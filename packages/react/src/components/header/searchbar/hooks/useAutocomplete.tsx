@@ -104,6 +104,13 @@ function useClientSuggestions(
   searchString: string,
   t: TFunction<"translation", undefined>,
 ): QueryItem[] {
+  console.log(
+    "client suggestions",
+    "searchCategory",
+    searchCategory,
+    "searchString",
+    searchString,
+  );
   const { data: orgs } = useOrgs({ enabled: !!searchString });
 
   return useMemo(() => {
@@ -134,8 +141,14 @@ function useClientSuggestions(
     }
 
     // Handle category-specific static suggestions that only show up when a category is specified
-    if (searchCategory && STATIC_SUGGESTIONS[searchCategory]) {
+    else if (searchCategory && STATIC_SUGGESTIONS[searchCategory]) {
       suggestions.push(...STATIC_SUGGESTIONS[searchCategory]);
+    } else if (searchCategory) {
+      suggestions.push({
+        type: searchCategory,
+        value: searchString,
+        text: searchString,
+      });
     }
 
     // Handle general search when no category is specified
@@ -147,12 +160,13 @@ function useClientSuggestions(
           text: searchString,
         });
       }
-
       // Add category suggestions
       const categoryAutofill = FIRST_SEARCH.filter(
         (x) =>
           !searchString ||
-          t(`search.class.${x.type}`, x.type).startsWith(searchString),
+          t(`search.class.${x.type}`, { defaultValue: x.type }).startsWith(
+            searchString,
+          ),
       );
       suggestions.push(...categoryAutofill);
     }
@@ -189,7 +203,7 @@ export function useSearchboxAutocomplete() {
   );
   const clientSuggestions = useClientSuggestions(
     searchCategory,
-    searchString,
+    searchString ?? "",
     t,
   );
 
@@ -217,6 +231,7 @@ export function useSearchboxAutocomplete() {
       .filter((x): x is QueryItem => x !== null);
   }, [serverSuggestions, clientSuggestions, query]);
 
+  console.log("autocomplete", autocomplete);
   return {
     search,
     updateSearch,

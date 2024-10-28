@@ -1,8 +1,8 @@
 import { defineConfig, PluginOption } from "vite";
 
 // Faster React using swc apparently, but can't use it atm.
-// import react from "@vitejs/plugin-react";
-import react from "@vitejs/plugin-react-swc"; //currently borked.
+import react from "@vitejs/plugin-react";
+// import react from "@vitejs/plugin-react-swc"; //currently borked.
 /* sadly broken due to https://github.com/pmndrs/swc-jotai/issues/22 */
 
 import yaml from "@rollup/plugin-yaml";
@@ -67,12 +67,13 @@ export default defineConfig({
       port: 9821,
     }) as unknown as PluginOption,
     react({
-      /* top part babel is for standard plugin-react, bottom part is for plugin-react-swc. */
-      // babel: {
-      //   presets: ["jotai/babel/preset"],
-      // },
-      plugins: [["@swc-jotai/debug-label", {}]],
-      devTarget: "esnext", // SWC only.
+      /* top part babel is for standard plugin-react,  */
+      babel: {
+        presets: ["jotai/babel/preset"],
+      },
+      /* bottom part is for plugin-react-swc. */
+      // plugins: [["@swc-jotai/debug-label", {}]],
+      // devTarget: "esnext", // SWC only.
     }),
     UnoCSS({ presets: [presetIcons()] }),
     yaml() as unknown as PluginOption,

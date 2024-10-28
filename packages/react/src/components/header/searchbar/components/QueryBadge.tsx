@@ -1,13 +1,17 @@
 import * as React from "react";
 import { Badge } from "@/shadcn/ui/badge";
 import { QueryItem } from "../types";
-import { PrimitiveAtom, useAtomValue, useSetAtom } from "jotai";
-import { splitQueryAtom } from "../hooks/useAutocomplete";
+import { PrimitiveAtom, useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 
-export function QueryBadge({ item }: { item: PrimitiveAtom<QueryItem> }) {
+export function QueryBadge({
+  item,
+  onRemoveItem,
+}: {
+  item: PrimitiveAtom<QueryItem>;
+  onRemoveItem: () => void;
+}) {
   const queryItem = useAtomValue(item);
-  const querySplitItemAction = useSetAtom(splitQueryAtom);
   const { t } = useTranslation();
   const categoryName = React.useCallback(
     (query: QueryItem) => {
@@ -45,14 +49,14 @@ export function QueryBadge({ item }: { item: PrimitiveAtom<QueryItem> }) {
         className="ml-1 rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            querySplitItemAction({ type: "remove", atom: item });
+            onRemoveItem();
           }
         }}
         onMouseDown={(e) => {
           e.preventDefault();
           e.stopPropagation();
         }}
-        onClick={() => querySplitItemAction({ type: "remove", atom: item })}
+        onClick={onRemoveItem}
       >
         <div className="i-lucide:x h-3 w-3 text-sm text-base-8 hover:text-base-11"></div>
       </button>

@@ -2,7 +2,6 @@ import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { HelmetProvider } from "react-helmet-async";
-import { ErrorBoundary } from "react-error-boundary";
 import "./index.css";
 import "uno.css";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -13,7 +12,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import localizedFormat from "dayjs/plugin/localizedFormat";
-import { ErrorFallback } from "./components/common/ErrorFallback";
 import { App } from "./App";
 import { TooltipProvider } from "./shadcn/ui/tooltip";
 import { globalQueryClient } from "./lib/query";
@@ -59,14 +57,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           </Suspense>
         )}
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          <ErrorBoundary
+          {/* <ErrorBoundary
             FallbackComponent={ErrorFallback}
             onReset={() => window.location.reload()}
-          >
-            <TooltipProvider>
-              <App />
-            </TooltipProvider>
-          </ErrorBoundary>
+          > */}
+          <TooltipProvider>
+            <App />
+          </TooltipProvider>
+          {/* </ErrorBoundary> */}
         </GoogleOAuthProvider>
       </QueryClientProvider>
     </HelmetProvider>

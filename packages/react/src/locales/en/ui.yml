@@ -262,12 +262,9 @@ views:
       official: Archive
       subber: Clips
     noLiveStreams:
-      - '*Tumbleweed rolls across the screen*'
-      - Nobody is live right now
       - Seems like all the VTubers are busy touching grass
       - Time to watch the backlog, because no one's streaming
       - Vtubers are sleeping, time to watch clips!
-      - Vtubers doko?
       - No one is live right now, go listen to some bangers on Musicdex!
   library:
     savedVideosTitle: Saved Videos

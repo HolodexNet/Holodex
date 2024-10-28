@@ -67,6 +67,15 @@ function split(input: Readonly<string>, separator: RegExp, limit: number = -1) {
   return output;
 }
 
+/**
+ * Split a search term into a SearchableCategory and the search value.
+ * If the q_class is invalid, returns undefined for the category.
+ *
+ * Used for splitting out search terms intelligently from the searchbar.
+ * @param {string} term - The search term, e.g. "org:hololive"
+ * @param {Record<string, keyof typeof JSON_SCHEMA>} langCategoryReversemapClass
+ * @return {[SearchableCategory | undefined, string]} - [category, value]
+ */
 export function splitSearchClassTerms(
   term: string,
   langCategoryReversemapClass: Record<string, keyof typeof JSON_SCHEMA>,
@@ -242,28 +251,25 @@ export async function getQueryFromQueryModel(
   return await gen2array(generator());
 }
 
-// type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 // export function useSearch(
-//   queryModel: MaybeRef<VideoQueryModel>,
-//   queryContainer: MaybeRef<WithOptional<VideoQueryContainer, "query">>,
-//   // options: Ref<Partial<UseQueryOptions>>
+//   queryModel: VideoQueryModel,
+//   queryContainer: WithOptional<VideoQueryContainer, "query">,
 // ) {
-//   const query = computed(() => {
-//     const qC = get(queryContainer);
-//     qC.query = sanitizeQueryModel(get(queryModel));
+//   // Create the query container with sanitized model
+//   const finalQueryContainer = {
+//     ...queryContainer,
+//     query: sanitizeQueryModel(queryModel),
+//   };
 
-//     return qC;
+//   return useQuery({
+//     queryKey: ["search", finalQueryContainer] as const,
+//     queryFn: async ({ queryKey }) => {
+//       const [_, queryParams] = queryKey;
+//       return (await backendApi.searchV3(queryParams)).data;
+//     },
+//     staleTime: 10 * 60 * 1000, // 10 minutes
+//     cacheTime: 12 * 60 * 1000, // 12 minutes,
+//     enabled: true,
 //   });
-
-//   return useQuery(
-//     ["search", query] as const,
-//     async (key) => {
-//       return (await backendApi.searchV3(key.queryKey[1] as any)).data;
-//     },
-//     {
-//       enabled: true,
-//       staleTime: 10 * 60 * 1000, // 10min.
-//       cacheTime: 12 * 60 * 1000, // 12min.
-//     },
-//   );
 // }

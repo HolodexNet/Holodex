@@ -10,16 +10,13 @@ import { useAtom } from "jotai";
 import { JSON_SCHEMA, QueryItem } from "../types";
 import { QueryBadge } from "./QueryBadge";
 import { useTranslation } from "react-i18next";
-import {
-  HTMLAttributes,
-  useRef,
-  useState,
-  useCallback,
-  useEffect,
-} from "react";
+import { HTMLAttributes, useRef, useState, useCallback } from "react";
 import { AutocompleteDropdownItem } from "./AutocompleteDropdownItem";
 import { Popover, PopoverTrigger } from "@/shadcn/ui/popover";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { getQueryModelFromQuery } from "../helper";
+import { useNavigate } from "react-router-dom";
+import { stringify } from "picoquery";
 
 export function SearchBar({
   className,
@@ -31,10 +28,7 @@ export function SearchBar({
   const [query, setQuery] = useAtom(queryAtom);
   const [queryPieces, setQueryPieces] = useAtom(splitQueryAtom);
   const { search, updateSearch, autocomplete } = useSearchboxAutocomplete();
-
-  useEffect(() => {
-    console.log(query);
-  }, [query]);
+  const navigate = useNavigate();
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -86,6 +80,16 @@ export function SearchBar({
     [query, updateSearch, t, setQuery, setQueryPieces],
   );
 
+  const doSearch = useCallback(() => {
+    if (query.length > 0) {
+      const qm = getQueryModelFromQuery(query);
+      navigate({
+        pathname: "/search",
+        search: "?" + stringify(qm),
+      });
+    }
+  }, [navigate, query]);
+
   return (
     <Command
       onKeyDown={handleKeyDown}
@@ -102,7 +106,15 @@ export function SearchBar({
           <div className="group rounded-md bg-base-2 p-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:bg-base-3">
             <div className="flex flex-wrap gap-1">
               {queryPieces.map((queryItem, i) => {
-                return <QueryBadge item={queryItem} key={"badge" + i} />;
+                return (
+                  <QueryBadge
+                    item={queryItem}
+                    key={"badge" + i}
+                    onRemoveItem={() => {
+                      setQueryPieces({ type: "remove", atom: queryItem });
+                    }}
+                  />
+                );
               })}
               {/* Avoid having the "Search" Icon */}
               <CommandPrimitive.Input
@@ -114,6 +126,11 @@ export function SearchBar({
                 onFocus={() => setOpen(true)}
                 placeholder={t("component.search.searchLabel")}
                 className="ml-2 flex-1 bg-transparent outline-none placeholder:text-base-8"
+              />
+              <button
+                className="i-carbon-search text-base-11 opacity-0 group-focus-within:opacity-100"
+                tabIndex={3}
+                onClick={() => doSearch()}
               />
             </div>
           </div>

@@ -108,30 +108,35 @@ export function Frame() {
   const [reportedVideo, setReportedVideo] = useAtom(videoReportAtom);
 
   return (
-    <div className={mainClasses} id="layout">
-      <LocationAwareReactivity />
-      <Sidebar />
-      <Header id="header" />
-      <main className="">
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Suspense fallback={<Loading size="xl" />}>
-            <Outlet />
-          </Suspense>
-        </ErrorBoundary>
-      </main>
-      <SelectionFooter />
-      {reportedVideo && (
-        <LazyVideoReportDialog
-          open={!!reportedVideo}
-          onOpenChange={() => setReportedVideo(null)}
-          video={reportedVideo}
-        />
-      )}
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onReset={() => window.location.reload()}
+    >
+      <div className={mainClasses} id="layout">
+        <LocationAwareReactivity />
+        <Sidebar />
+        <Header id="header" />
+        <main className="">
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<Loading size="xl" />}>
+              <Outlet />
+            </Suspense>
+          </ErrorBoundary>
+        </main>
+        <SelectionFooter />
+        {reportedVideo && (
+          <LazyVideoReportDialog
+            open={!!reportedVideo}
+            onOpenChange={() => setReportedVideo(null)}
+            video={reportedVideo}
+          />
+        )}
 
-      {isMobile && <Footer />}
-      {miniPlayer && <MiniPlayer />}
-      <Toaster />
-      <GlobalReactivity />
-    </div>
+        {isMobile && <Footer />}
+        {miniPlayer && <MiniPlayer />}
+        <Toaster />
+        <GlobalReactivity />
+      </div>
+    </ErrorBoundary>
   );
 }
