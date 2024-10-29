@@ -98,12 +98,16 @@ const ResetClientPage = lazy(() =>
 );
 const Playlist = lazy(() => import("./playlist"));
 
+const Search = lazy(() =>
+  import("./search").then((module) => ({ default: module.Search })),
+);
+
 const store = getDefaultStore();
 
 export const routes = (
   <Route path="/" Component={Frame}>
     <Route path="favorites" Component={Favorites} />
-    <Route path="search" element={<div>Search</div>} />
+    <Route path="search" Component={Search} />
     <Route path="org/:org" Component={Home} />
     <Route
       path="channels"

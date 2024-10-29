@@ -129,7 +129,7 @@ export type VideoQueryModel = {
 
 export interface VideoQueryContainer {
   tags?: string[];
-  query?: VideoQueryModel;
+  q?: VideoQueryModel;
   facet?: string[];
   pagination: {
     sort: (typeof SORT_OPTIONS)[number];

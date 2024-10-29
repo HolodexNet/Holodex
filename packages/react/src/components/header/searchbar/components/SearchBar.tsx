@@ -7,7 +7,7 @@ import {
   useSearchboxAutocomplete,
 } from "../hooks/useAutocomplete";
 import { useAtom } from "jotai";
-import { JSON_SCHEMA, QueryItem } from "../types";
+import { JSON_SCHEMA, QueryItem, VideoQueryContainer } from "../types";
 import { QueryBadge } from "./QueryBadge";
 import { useTranslation } from "react-i18next";
 import { HTMLAttributes, useRef, useState, useCallback } from "react";
@@ -83,9 +83,15 @@ export function SearchBar({
   const doSearch = useCallback(() => {
     if (query.length > 0) {
       const qm = getQueryModelFromQuery(query);
+      if (!qm) return;
       navigate({
         pathname: "/search",
-        search: "?" + stringify(qm),
+        search:
+          "?" +
+          stringify({
+            q: qm,
+            pagination: { size: 24, sort: "latest" },
+          } satisfies VideoQueryContainer),
       });
     }
   }, [navigate, query]);
