@@ -25,24 +25,17 @@ export function useSearch(queryContainer: VideoQueryContainer | undefined) {
 
   return useInfiniteQuery({
     initialPageParam: undefined as string[] | undefined,
-    queryKey: [
-      "search",
-      queryContainer?.q,
-      queryContainer?.pagination.sort,
-      queryContainer?.pagination.sort,
-    ],
+    queryKey: ["search", queryContainer?.q, queryContainer?.sort],
     async queryFn({ pageParam }) {
       let newQ;
       if (pageParam) {
         newQ = {
           ...queryContainer,
-          pagination: {
-            ...queryContainer?.pagination,
-            search_after: pageParam,
-          },
+          search_after: pageParam,
+          limit: 24,
         };
       } else {
-        newQ = queryContainer;
+        newQ = { ...queryContainer, limit: 24 };
       }
 
       return await client.post<SearchResponse<PlaceholderVideo>, typeof newQ>(

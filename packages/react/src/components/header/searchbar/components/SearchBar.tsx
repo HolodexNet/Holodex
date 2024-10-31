@@ -90,7 +90,7 @@ export function SearchBar({
           "?" +
           stringify({
             q: qm,
-            pagination: { size: 24, sort: "latest" },
+            sort: "latest",
           } satisfies VideoQueryContainer),
       });
     }
@@ -163,7 +163,7 @@ export function SearchBar({
                     "0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)",
                 }}
               >
-                <CommandGroup heading={t("search.menu_header_text")} />
+                <CommandGroup heading={t("search.options_menu_header")} />
                 <hr className="h-px border-base-5" />
                 <CommandGroup className="h-full overflow-auto">
                   {autocomplete.map((item) => {

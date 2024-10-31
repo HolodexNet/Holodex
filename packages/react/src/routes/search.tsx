@@ -5,8 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 import { parse } from "picoquery";
 import { VideoQueryContainer } from "@/components/header/searchbar/types";
 import { useSearch } from "@/services/search.service";
-import { MainVideoListing } from "@/components/video/MainVideoListing";
 import { useVideoCardSizes } from "@/store/video";
+import { MainVideoListing } from "@/components/video/MainVideoListing";
 
 export function Search() {
   const { t } = useTranslation();
@@ -16,7 +16,7 @@ export function Search() {
 
   useEffect(() => {
     if (search) {
-      const parsed = parse(search) as unknown as VideoQueryContainer;
+      const parsed = parse(search.slice(1)) as unknown as VideoQueryContainer;
 
       setQueryModel(parsed);
     }
@@ -56,7 +56,12 @@ export function Search() {
       <Helmet>
         <title>{t("component.search.searchLabel")} - Holodex</title>
       </Helmet>
-      <div>Hello world</div>
+      <div className="container">
+        <code className="text-sm text-base-5">
+          {JSON.stringify(queryModel, null, 2)}
+        </code>
+      </div>
+
       <MainVideoListing
         videos={videos}
         hasNextPage={hasNextPage}

@@ -1008,6 +1008,6 @@ search:
       one: Exactly one song
       many: More than one song
   guide_btn: Guide
-  menu_header_text: Search Options
+  options_menu_header: Search Options
 channelPicker:
   search: Search channel...

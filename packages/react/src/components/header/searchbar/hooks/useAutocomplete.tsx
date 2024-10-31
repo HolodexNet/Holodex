@@ -231,7 +231,7 @@ export function useSearchboxAutocomplete() {
       .filter((x): x is QueryItem => x !== null);
   }, [serverSuggestions, clientSuggestions, query]);
 
-  console.log("autocomplete", autocomplete);
+  // console.log("autocomplete", autocomplete);
   return {
     search,
     updateSearch,

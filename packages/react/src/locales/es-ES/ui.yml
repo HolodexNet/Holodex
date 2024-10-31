@@ -417,3 +417,40 @@ about:
     title: Marcadores
 channelRequest:
   Comments: Comentarios
+search:
+  class:
+    search: buscar
+    org: organización
+    vtuber: vtuber
+    type: tipo
+    topic: tema
+    lang: idioma
+    has_song: tiene_canción
+    description: descripción
+    advanced: avanzado
+    from: desde
+    to: hasta
+  class_explanation:
+    vtuber: Encontrar clips/directos con...
+    org: Con vtubers de la organización...
+    search: Buscar texto en título y campos comunes...
+    type: Buscar por clip o directo
+    topic: Buscar por tema del directo
+    lang: Idioma del clipper
+    has_song: Presencia de canciones en Musicdex
+    description: Buscar en la descripción del video
+    advanced: Búsqueda Avanzada (ver guía de uso)
+    from: AAAA-MM-DD hh:mm ±00
+    to: AAAA-MM-DD hh:mm ±00
+  class_values:
+    type:
+      clip: Clip
+      stream: Directo
+      placeholder: Marcador
+    has_song:
+      none: Sin canciones etiquetadas
+      non-zero: Tiene canciones etiquetadas
+      one: Exactamente una canción
+      many: Más de una canción
+  guide_btn: Guía
+  options_menu_header: Opciones de Búsqueda

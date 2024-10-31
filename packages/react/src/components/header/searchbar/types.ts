@@ -131,13 +131,10 @@ export interface VideoQueryContainer {
   tags?: string[];
   q?: VideoQueryModel;
   facet?: string[];
-  pagination: {
-    sort: (typeof SORT_OPTIONS)[number];
-    // pit?: string; // point-in-time Elastic object
-    search_after?: unknown[]; // [value, shard_doc]
-    // offset: number;
-    size: number;
-  };
+  sort: (typeof SORT_OPTIONS)[number];
+  search_after?: unknown[]; // [value, shard_doc]
+  // offset: number;
+  // limit: number;
 }
 
 export const SORT_OPTIONS = [
