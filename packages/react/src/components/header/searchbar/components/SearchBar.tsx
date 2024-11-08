@@ -1,5 +1,5 @@
 import { CommandList, Command as CommandPrimitive } from "cmdk";
-import { Command, CommandGroup } from "@/shadcn/ui/command";
+import { Command, CommandGroup, CommandShortcut } from "@/shadcn/ui/command";
 import { cn } from "@/lib/utils";
 import {
   queryAtom,
@@ -29,28 +29,6 @@ export function SearchBar({
   const [queryPieces, setQueryPieces] = useAtom(splitQueryAtom);
   const { search, updateSearch, autocomplete } = useSearchboxAutocomplete();
   const navigate = useNavigate();
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      const input = inputRef.current;
-      if (input) {
-        if (e.key === "Delete" || e.key === "Backspace") {
-          if (input.value === "") {
-            setQuery((prev) => {
-              const newSelected = [...prev];
-              newSelected.pop();
-              return newSelected;
-            });
-          }
-        }
-        // This is not a default behaviour of the <input /> field
-        if (e.key === "Escape") {
-          input.blur();
-        }
-      }
-    },
-    [setQuery],
-  );
 
   const handleItemSelect = useCallback(
     (item: QueryItem) => {
@@ -96,6 +74,33 @@ export function SearchBar({
     }
   }, [navigate, query]);
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      const input = inputRef.current;
+      if (input) {
+        if (e.key === "Delete" || e.key === "Backspace") {
+          if (input.value === "") {
+            setQuery((prev) => {
+              const newSelected = [...prev];
+              newSelected.pop();
+              return newSelected;
+            });
+          }
+        }
+        // This is not a default behaviour of the <input /> field
+        if (e.key === "Escape") {
+          input.blur();
+        }
+        if (e.key === "Enter" && e.shiftKey) {
+          e.preventDefault();
+          e.stopPropagation();
+          doSearch();
+        }
+      }
+    },
+    [doSearch, setQuery],
+  );
+
   return (
     <Command
       onKeyDown={handleKeyDown}
@@ -110,7 +115,7 @@ export function SearchBar({
       >
         <PopoverTrigger asChild>
           <div className="group rounded-md bg-base-2 p-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:bg-base-3">
-            <div className="flex flex-wrap gap-1">
+            <label className="flex flex-wrap items-center gap-1">
               {queryPieces.map((queryItem, i) => {
                 return (
                   <QueryBadge
@@ -133,12 +138,21 @@ export function SearchBar({
                 placeholder={t("component.search.searchLabel")}
                 className="ml-2 flex-1 bg-transparent outline-none placeholder:text-base-8"
               />
-              <button
-                className="i-carbon-search text-base-11 opacity-0 group-focus-within:opacity-100"
-                tabIndex={3}
-                onClick={() => doSearch()}
-              />
-            </div>
+              <div className="ml-auto flex flex-row opacity-0 group-focus-within:opacity-100 ">
+                <CommandShortcut className="pointer-events-none  ">
+                  Shift⏎
+                </CommandShortcut>
+                <button
+                  type="submit"
+                  className="-my-2 -mr-1 flex size-8 items-center rounded-md text-base-11 transition-all hover:bg-base-5 hover:text-primary-11"
+                  disabled={query.length === 0}
+                  onClick={() => doSearch()}
+                  onSubmit={() => doSearch()}
+                >
+                  <div className="i-carbon:search mx-auto"></div>
+                </button>
+              </div>
+            </label>
           </div>
         </PopoverTrigger>
         <PopoverPrimitive.Portal>

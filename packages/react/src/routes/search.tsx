@@ -21,14 +21,17 @@ import {
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 } from "@/shadcn/ui/pagination";
-import { cn } from "@/lib/utils";
+import generatePageNumbers, { cn } from "@/lib/utils";
 import { SearchBar } from "@/components/header/searchbar/components/SearchBar";
 import { type SearchTotalHits } from "@elastic/elasticsearch/lib/api/types";
 
-const ITEMS_PER_PAGE = 24;
+const ITEMS_PER_PAGE = 25;
 
 function elasticSearchTotalToValue(total?: number | SearchTotalHits) {
   if (total === undefined) {
@@ -52,7 +55,6 @@ export default function Search() {
     nextSize,
     setNextSize,
   } = useVideoCardSizes(["list", "md", "lg"]);
-  const [searchInput, setSearchInput] = useState("");
 
   // Calculate offset based on current page
   const offset = useMemo(
@@ -79,7 +81,7 @@ export default function Search() {
   );
 
   const videos = useMemo(
-    () => data?.hits.hits.map((hit) => hit._source) ?? [],
+    () => data?.hits.hits.map((hit) => hit._source!) ?? [],
     [data?.hits.hits],
   );
 
@@ -95,46 +97,16 @@ export default function Search() {
   };
 
   const handlePageChange = (targetPage: number) => {
+    console.log("page changed", targetPage);
     setCurrentPage(targetPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Generate array of page numbers to display
-  const pageNumbers = useMemo(() => {
-    const pages: number[] = [];
-    const maxPagesToShow = 5;
-
-    if (totalPages <= maxPagesToShow) {
-      // Show all pages if total is less than max
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      // Always show first page
-      pages.push(1);
-
-      if (currentPage > 3) {
-        pages.push(-1); // Add ellipsis
-      }
-
-      // Show pages around current page
-      const start = Math.max(2, currentPage - 1);
-      const end = Math.min(totalPages - 1, currentPage + 1);
-
-      for (let i = start; i <= end; i++) {
-        pages.push(i);
-      }
-
-      if (currentPage < totalPages - 2) {
-        pages.push(-1); // Add ellipsis
-      }
-
-      // Always show last page
-      pages.push(totalPages);
-    }
-
-    return pages;
-  }, [currentPage, totalPages]);
+  const pageNumbers = useMemo(
+    () => (totalPages > 0 ? generatePageNumbers(currentPage, totalPages) : []),
+    [currentPage, totalPages],
+  );
 
   if (status === "error") {
     return <div className="container p-4">{t("component.apiError.title")}</div>;
@@ -206,6 +178,7 @@ export default function Search() {
               videos={videos}
               size={cardSize}
               className="mb-4"
+              nonVirtual
             />
 
             {/* Pagination */}
@@ -214,21 +187,16 @@ export default function Search() {
                 <PaginationContent>
                   {/* Previous Page Button */}
                   <PaginationItem>
-                    <Button
-                      variant="outline"
-                      size="sm"
+                    <PaginationPrevious
+                      isActive={currentPage > 1}
                       onClick={() => handlePageChange(currentPage - 1)}
-                      disabled={currentPage === 1}
-                    >
-                      Previous
-                    </Button>
+                    />
                   </PaginationItem>
-
                   {/* Page Numbers */}
                   {pageNumbers.map((pageNum, idx) => (
-                    <PaginationItem key={idx}>
+                    <PaginationItem key={`page-${pageNum}-${idx}`}>
                       {pageNum === -1 ? (
-                        <span className="px-4">...</span>
+                        <PaginationEllipsis />
                       ) : (
                         <PaginationLink
                           onClick={() => handlePageChange(pageNum)}
@@ -239,21 +207,18 @@ export default function Search() {
                       )}
                     </PaginationItem>
                   ))}
-
                   {/* Next Page Button */}
                   <PaginationItem>
-                    <Button
-                      variant="outline"
-                      size="sm"
+                    <PaginationNext
                       onClick={() => handlePageChange(currentPage + 1)}
-                      disabled={currentPage === totalPages || !videos.length}
-                    >
-                      Next
-                    </Button>
+                      isActive={currentPage <= totalPages}
+                    />
                   </PaginationItem>
                 </PaginationContent>
               </Pagination>
             )}
+
+            {/* {<pre>{JSON.stringify(pageNumbers, null, 2)}</pre>} */}
           </>
         )}
       </div>

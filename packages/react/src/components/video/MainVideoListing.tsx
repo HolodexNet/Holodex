@@ -13,6 +13,7 @@ interface MainVideoListingProps {
   isLoading?: boolean;
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
+  nonVirtual?: boolean;
 }
 
 export function MainVideoListing({
@@ -23,6 +24,7 @@ export function MainVideoListing({
   hasNextPage,
   isFetchingNextPage,
   isLoading,
+  nonVirtual,
 }: MainVideoListingProps) {
   const listClassName = useMemo(
     () =>
@@ -40,6 +42,43 @@ export function MainVideoListing({
     [size, className],
   );
 
+  if (isLoading) {
+    return (
+      <div className={listClassName}>
+        {Array.from({ length: 6 }).map((_, index) => (
+          <SkeletonVideoCard key={`skeleton-${index}`} />
+        ))}
+      </div>
+    );
+  }
+
+  // If nonVirtual is true, render a simple grid
+  if (nonVirtual) {
+    return (
+      <div className={listClassName}>
+        {videos?.map((video, idx) => (
+          <MemoizedVideoCard
+            key={`videocard-${idx}-${video.id}`}
+            video={video}
+            size={size}
+          />
+        ))}
+        {isFetchingNextPage && hasNextPage && (
+          <div className="col-span-full flex justify-center py-4">
+            <VirtuosoLoadingFooter
+              context={{
+                size: "sm",
+                isLoading: true,
+                hasNextPage: true,
+                loadMore: fetchNextPage,
+                autoload: !!fetchNextPage,
+              }}
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
   // const Footer = () =>
   //   (isLoading || isFetchingNextPage) && (
   //     <div className={listClassName}>
@@ -52,19 +91,15 @@ export function MainVideoListing({
   return (
     <VirtuosoGrid
       useWindowScroll
-      data={isLoading ? ([1, 2, 3, 4, 5, 6] as unknown as VideoBase[]) : videos}
+      data={videos ?? []}
       listClassName={listClassName}
-      itemContent={(index, video) =>
-        isLoading ? (
-          <SkeletonVideoCard key={`placeholder-${index}`} />
-        ) : (
-          <MemoizedVideoCard
-            key={`video-${video.id}`}
-            video={video}
-            size={size}
-          />
-        )
-      }
+      itemContent={(idx, video) => (
+        <MemoizedVideoCard
+          key={`videocard-${idx}-${video.id}`}
+          video={video}
+          size={size}
+        />
+      )}
       endReached={async () => {
         if (hasNextPage && !isFetchingNextPage && !isLoading) {
           await fetchNextPage?.();

@@ -170,3 +170,74 @@ export function omitNullish<T extends object>(obj: T): OmitNullish<T> {
 
   return result;
 }
+
+/**
+ * Generates an array of page numbers for pagination navigation.
+ * The array includes the current page and surrounding pages, with ellipsis (-1)
+ * where pages are skipped. Always includes first and last pages.
+ *
+ * Example outputs:
+ * - For 3 total pages: [1, 2, 3]
+ * - For current page 1 of 10: [1, 2, 3, -1, 10]
+ * - For current page 5 of 10: [1, -1, 4, 5, 6, -1, 10]
+ * - For current page 10 of 10: [1, -1, 8, 9, 10]
+ *
+ * @param currentPage - The currently active page number (1-based)
+ * @param totalPages - The total number of pages available
+ * @param maxPagesToShow - Maximum number of page numbers to display (default: 5)
+ * @returns Array of page numbers, with -1 representing ellipsis
+ * @throws Error if currentPage or totalPages are less than 1
+ */
+export function generatePageNumbers(
+  currentPage: number,
+  totalPages: number,
+  maxPagesToShow: number = 5,
+): number[] {
+  // Input validation
+  if (currentPage < 1 || totalPages < 1) {
+    throw new Error("Current page and total pages must be greater than 0");
+  }
+  if (currentPage > totalPages) {
+    throw new Error("Current page cannot be greater than total pages");
+  }
+
+  const pages: number[] = [];
+
+  // Case 1: Show all pages if total is less than or equal to max
+  if (totalPages <= maxPagesToShow) {
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
+  // Case 2: Need to show selective pages with possible ellipsis
+  // Always show first page
+  pages.push(1);
+
+  // Add leading ellipsis if current page is far from start
+  if (currentPage > 3) {
+    pages.push(-1);
+  }
+
+  // Show pages around current page
+  const start = Math.max(2, currentPage - 1);
+  const end = Math.min(totalPages - 1, currentPage + 1);
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+
+  // Add trailing ellipsis if current page is far from end
+  if (currentPage < totalPages - 2) {
+    pages.push(-1);
+  }
+
+  // Always show last page
+  if (pages[pages.length - 1] !== totalPages) {
+    pages.push(totalPages);
+  }
+
+  return pages;
+}
+
+export default generatePageNumbers;

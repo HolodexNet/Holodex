@@ -128,7 +128,7 @@ export function getQueryModelFromQuery(
       }
     } else return; //ignore.
   });
-  return vqm;
+  return sanitizeQueryModel(vqm);
 }
 
 async function gen2array<T>(gen: AsyncIterable<T>): Promise<T[]> {

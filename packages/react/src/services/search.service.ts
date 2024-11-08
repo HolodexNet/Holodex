@@ -31,7 +31,7 @@ export function useSearch(
       const newQ = {
         ...queryContainer,
         offset: offset ?? 0,
-        limit: 24,
+        limit: 25,
       };
       return await client.post<SearchResponse<PlaceholderVideo>, typeof newQ>(
         "/api/v3/search/videoSearch",
