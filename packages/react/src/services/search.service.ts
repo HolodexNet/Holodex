@@ -1,8 +1,8 @@
 import { VideoQueryContainer } from "@/components/header/searchbar/types";
 import { useClient } from "@/hooks/useClient";
 import { HTTPError } from "@/lib/fetch";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
-import { type SearchResponse } from "elasticsearch";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { type SearchResponse } from "@elastic/elasticsearch/lib/api/types";
 interface SearchAutoCompleteParams {
   q?: string;
   t?: SearchAutoCompleteType[] | SearchAutoCompleteType;
@@ -20,32 +20,23 @@ export function useSearchAutoCompleteMutation() {
   });
 }
 
-export function useSearch(queryContainer: VideoQueryContainer | undefined) {
+export function useSearch(
+  queryContainer: VideoQueryContainer | undefined,
+  offset?: number,
+) {
   const client = useClient();
-
-  return useInfiniteQuery({
-    initialPageParam: undefined as string[] | undefined,
-    queryKey: ["search", queryContainer?.q, queryContainer?.sort],
-    async queryFn({ pageParam }) {
-      let newQ;
-      if (pageParam) {
-        newQ = {
-          ...queryContainer,
-          search_after: pageParam,
-          limit: 24,
-        };
-      } else {
-        newQ = { ...queryContainer, limit: 24 };
-      }
-
+  return useQuery({
+    queryKey: ["search", queryContainer?.q, queryContainer?.sort, offset],
+    async queryFn() {
+      const newQ = {
+        ...queryContainer,
+        offset: offset ?? 0,
+        limit: 24,
+      };
       return await client.post<SearchResponse<PlaceholderVideo>, typeof newQ>(
         "/api/v3/search/videoSearch",
         newQ,
       );
-    },
-    getNextPageParam: (lastPage, _) => {
-      return lastPage?.hits?.hits?.[lastPage?.hits?.hits?.length ?? 1 - 1]
-        ?.sort;
     },
     enabled: !!queryContainer,
   });
