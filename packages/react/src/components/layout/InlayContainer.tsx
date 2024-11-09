@@ -43,16 +43,18 @@ export function InlayContainer({ routes }: InlayContainerProps) {
           "flex flex-col gap-4": itemSelected,
         })}
       >
-        <div className="block w-full rounded-lg bg-base-2 p-2 md:hidden">
+        <div className="flex w-full flex-row items-center rounded-lg bg-base-2 p-2 md:hidden">
           <Button
             size="lg"
             variant="link"
-            className="w-full justify-start px-2"
+            className="w-12 justify-start px-2"
             onClick={() => navigate(-1)}
           >
             <div className="i-heroicons:chevron-left" />
-            {t("component.mainNav.back")}
           </Button>
+          <h2 className="mr-12 flex-1 text-center text-lg font-semibold md:text-2xl">
+            {routes.find(({ href }) => href === location.pathname)?.label}
+          </h2>
         </div>
         <div className="w-full rounded-lg bg-baseA-2 p-2 md:p-4 xl:p-8">
           <Suspense fallback={<Loading size="xl" />}>

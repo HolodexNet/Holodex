@@ -15,7 +15,7 @@ export function SettingsItem({
     <div className="my-2 flex flex-wrap justify-between gap-4 first:mt-0 last:mb-4 last:border-b-0">
       <h3
         className={
-          "mb-2 mt-3 text-2xl tracking-tight md:text-3xl " +
+          "mb-2 mt-3 text-2xl tracking-tight md:text-3xl ml-4 md:ml-0" +
           (fullWidth && " w-full")
         }
       >
