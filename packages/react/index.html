@@ -2,16 +2,52 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" href="public/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      href="/img/icons/apple-touch-icon-152x152.png"
+    />
+    <meta
+      name="msapplication-TileImage"
+      content="/img/icons/mstile-150x150.png"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#e3e3e3"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#151515"
+    />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+      content="viewport-fit=cover,initial-scale=1.0,width=device-width,user-scalable=no,maximum-scale=1.0"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
     />
     <title>Holodex</title>
+    <script>
+      let dark = window.localStorage.getItem("theme-dark");
+      if (
+        dark === "true" ||
+        (dark === null &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      )
+        document.documentElement.style.backgroundColor = "#131313";
+      else document.documentElement.style.backgroundColor = "#e3e3e3";
+    </script>
   </head>
-
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="src/main.tsx"></script>
   </body>
 </html>

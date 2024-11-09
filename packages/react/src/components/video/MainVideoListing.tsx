@@ -33,8 +33,8 @@ export function MainVideoListing({
         {
           "grid-cols-1 gap-1": size === "list",
           "grid-cols-[repeat(auto-fill,minmax(340px,1fr))]": size === "lg",
-          "grid-cols-[repeat(auto-fill,minmax(220px,1fr))]": size === "md",
-          "grid-cols-[repeat(auto-fill,minmax(180px,1fr))]": size === "sm",
+          "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]": size === "md",
+          "grid-cols-[repeat(auto-fill,minmax(190px,1fr))]": size === "sm",
           "grid-cols-[repeat(auto-fill,minmax(160px,1fr))]": size === "xs",
         },
         className,
@@ -79,14 +79,6 @@ export function MainVideoListing({
       </div>
     );
   }
-  // const Footer = () =>
-  //   (isLoading || isFetchingNextPage) && (
-  //     <div className={listClassName}>
-  //       {Array.from({ length: 8 }).map((_, index) => (
-  //         <SkeletonVideoCard key={`placeholder-${index}`} />
-  //       ))}
-  //     </div>
-  //   );
 
   return (
     <VirtuosoGrid
