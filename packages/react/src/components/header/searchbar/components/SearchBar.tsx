@@ -114,7 +114,7 @@ export function SearchBar({
         }}
       >
         <PopoverTrigger asChild>
-          <div className="group rounded-md bg-base-2 p-2 text-sm ring-offset-base-2 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:bg-base-3">
+          <div className="group rounded-md bg-base-2 p-2 text-sm ring-offset-base-2 focus-within:bg-base-3 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:bg-base-3">
             <label className="flex flex-wrap items-center gap-1">
               {queryPieces.map((queryItem, i) => {
                 return (
@@ -139,8 +139,9 @@ export function SearchBar({
                 className="ml-2 flex-1 bg-transparent outline-none placeholder:text-base-8"
               />
               <div className="ml-auto flex flex-row opacity-0 group-focus-within:opacity-100 ">
-                <CommandShortcut className="pointer-events-none  ">
-                  Shift⏎
+                <CommandShortcut className="pointer-events-none opacity-80">
+                  <span className="mr-1 rounded-sm bg-base-4 p-0.5">⇪</span>
+                  <span className="rounded-sm bg-base-4 p-0.5">↵</span>
                 </CommandShortcut>
                 <button
                   type="submit"
@@ -177,9 +178,21 @@ export function SearchBar({
                     "0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)",
                 }}
               >
-                <CommandGroup heading={t("search.options_menu_header")} />
-                <hr className="h-px border-base-5" />
-                <CommandGroup className="h-full overflow-auto">
+                <CommandGroup
+                  className="h-full overflow-auto"
+                  heading={
+                    <div>
+                      {t("search.options_menu_header")}
+                      <span className="float-right">
+                        <CommandShortcut className="pointer-events-none opacity-80">
+                          <span className="mr-1 rounded-sm bg-base-4 p-0.5">
+                            ↕
+                          </span>
+                        </CommandShortcut>
+                      </span>
+                    </div>
+                  }
+                >
                   {autocomplete.map((item) => {
                     return (
                       <AutocompleteDropdownItem

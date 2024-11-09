@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Badge } from "@/shadcn/ui/badge";
 import { QueryItem } from "../types";
 import { PrimitiveAtom, useAtomValue } from "jotai";
@@ -13,30 +12,6 @@ export function QueryBadge({
 }) {
   const queryItem = useAtomValue(item);
   const { t } = useTranslation();
-  const categoryName = React.useCallback(
-    (query: QueryItem) => {
-      return t(`search.class.${query.type}`, query.type);
-    },
-    [t],
-  );
-
-  // const categoryExplanation = React.useCallback(
-  //   (query: QueryItem) => {
-  //     return t(`search.class_explanation.${query.type}`, " ");
-  //   },
-  //   [t],
-  // );
-
-  const categoryValue = React.useCallback(
-    (query: QueryItem) => {
-      return query.text === "$t"
-        ? t(`search.class_values.${query.type}.${query.value}`, " ")
-        : query.text === "?"
-          ? query.value
-          : query.text;
-    },
-    [t],
-  );
 
   return (
     <Badge
@@ -44,7 +19,13 @@ export function QueryBadge({
       variant="primary"
       className="px-1 font-normal tracking-tight"
     >
-      {categoryName(queryItem)}: {categoryValue(queryItem)}
+      {t(`search.class.${queryItem.type}`, queryItem.type)}
+      {": "}
+      {queryItem.text === "$t"
+        ? t(`search.class_values.${queryItem.type}.${queryItem.value}`, " ")
+        : queryItem.text === "?"
+          ? queryItem.value
+          : queryItem.text}
       <button
         className="ml-1 rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
         onKeyDown={(e) => {
