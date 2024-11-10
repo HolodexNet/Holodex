@@ -1,7 +1,7 @@
 import React, { lazy } from "react";
 import { Route, Navigate } from "react-router-dom";
 import { getDefaultStore } from "jotai";
-import { orgAtom } from "@/store/org";
+import { mostRecentOrgAtom } from "@/store/org";
 import { Frame } from "@/components/layout/Frame";
 import { NavigateToMusicdex } from "@/components/channel/NavigateToMusicdex";
 
@@ -111,7 +111,9 @@ export const routes = (
     <Route path="org/:org" Component={Home} />
     <Route
       path="channels"
-      element={<Navigate to={`/org/${store.get(orgAtom)}/channels`} />}
+      element={
+        <Navigate to={`/org/${store.get(mostRecentOrgAtom)}/channels`} />
+      }
     />
     <Route path="org404" element={<div>OrgNotFound</div>} />
     <Route

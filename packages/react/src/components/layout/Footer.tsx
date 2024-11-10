@@ -1,14 +1,12 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAtomValue, useSetAtom } from "jotai";
-import { orgAtom } from "@/store/org";
+import { useSetAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { openSidebarAtom } from "@/hooks/useFrame";
 
 export const Footer = () => {
   const { t } = useTranslation();
-  const org = useAtomValue(orgAtom);
   const openSidebar = useSetAtom(openSidebarAtom);
 
   const navItems = [

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -13,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shadcn/ui/select";
-import { orgAtom } from "@/store/org";
 import { ChannelCard } from "@/components/channel/ChannelCard";
 import { Button } from "@/shadcn/ui/button";
 import { cn } from "@/lib/utils";
@@ -97,7 +96,6 @@ const GroupComponent: React.FC<{
 export function ChannelsOrg() {
   const { t } = useTranslation();
   const { org } = useParams();
-  const currentOrg = useAtomValue(orgAtom);
 
   const [displayStyle, setDisplayStyle] = useAtom(orgChannelDisplayStyleAtom);
   const [sortBy, setSortBy] = useAtom(orgChannelSortByAtom);
@@ -144,7 +142,7 @@ export function ChannelsOrg() {
     <>
       <Helmet>
         <title>
-          {currentOrg} {t("component.mainNav.channels")} - Holodex
+          TODO PUT CURRENT ORG HERE {t("component.mainNav.channels")} - Holodex
         </title>
       </Helmet>
       <div className="h-full w-full px-4 md:p-8">

@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
-import { orgAtom } from "@/store/org";
-import { useAtom, useAtomValue } from "jotai";
+import { mostRecentOrgAtom } from "@/store/org";
+import { useAtom, useSetAtom } from "jotai";
 import { lazy, useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import {
@@ -34,12 +34,19 @@ export function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useTranslation();
   const { org } = useParams();
-  const currentOrg = useAtomValue(orgAtom);
+  const setMostRecentOrg = useSetAtom(mostRecentOrgAtom);
   const [tab, setTab] = useState(searchParams.get("tab") ?? "live");
 
+  if (!org) {
+    // it's weird ther's no org.
+    navigate("/org/Hololive", { replace: true });
+  }
+
   useEffect(() => {
-    navigate(`/org/${currentOrg}`, { replace: true });
-  }, [currentOrg, navigate]);
+    if (!org) navigate("/org/Hololive", { replace: true });
+    else setMostRecentOrg(org);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [org]);
 
   useEffect(() => {
     console.log(`tab changed ${tab}`);
@@ -52,7 +59,7 @@ export function Home() {
   return (
     <>
       <Helmet>
-        <title>{currentOrg} - Holodex</title>
+        <title>{org} - Holodex</title>
       </Helmet>
       <Tabs defaultValue={tab} onValueChange={setTab}>
         <StickyTabsList tab={tab} fourthTab="Members" />

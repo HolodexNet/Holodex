@@ -2,7 +2,7 @@ import { useAtomValue } from "jotai";
 import { useMemo } from "react";
 import dayjs from "dayjs";
 import { settingsAtom, blockedSetAtom } from "@/store/settings";
-import { orgAtom } from "@/store/org";
+import { mostRecentOrgAtom } from "@/store/org";
 import { useFavorites } from "@/services/user.service";
 
 function filterDeadStreams(video: VideoBase, now: dayjs.Dayjs) {
@@ -32,7 +32,7 @@ export function useVideoFilter(
 ) {
   const settings = useAtomValue(settingsAtom);
   const blockedSet = useAtomValue(blockedSetAtom);
-  const defaultOrg = useAtomValue(orgAtom);
+  const defaultOrg = useAtomValue(mostRecentOrgAtom);
   const { data: favorites } = useFavorites();
 
   const favoritesSet = useMemo(

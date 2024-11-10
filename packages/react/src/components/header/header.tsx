@@ -3,12 +3,10 @@ import {
   isSidebarOpenAtom,
   toggleSidebarAtom,
 } from "@/hooks/useFrame";
-import { darkAtom } from "@/hooks/useTheme";
 import { Button } from "@/shadcn/ui/button";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import { useSetAtom } from "jotai/react";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { SearchBar } from "./searchbar/components/SearchBar";
 import clsx from "clsx";
@@ -24,12 +22,11 @@ interface HeaderProps
 }
 
 export function Header({ id }: HeaderProps) {
-  const { t } = useTranslation();
-  const [dark, toggle] = useAtom(darkAtom);
   const frameToggleSidebar = useSetAtom(toggleSidebarAtom);
   const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
   const [isSearching, setIsSearching] = useState(false);
+  const path = useLocation().pathname;
 
   return (
     <header id={id} className="flex items-center gap-1 px-2">
@@ -62,31 +59,38 @@ export function Header({ id }: HeaderProps) {
 
       <div className="hidden grow md:flex" />
 
-      {isMobile || isSearching ? (
-        isSearching ? (
-          <div className="mt-3 flex w-full items-start self-start">
-            <SearchBar className="shrink grow" autoFocus />
-            <Button
-              size="icon"
-              variant="ghost"
-              className="ml-2 text-lg text-base-10"
-              onClick={() => setIsSearching(false)}
-            >
-              <div className="i-lucide:x h-8 w-8" />
-            </Button>
-          </div>
-        ) : (
-          <Button
-            size="icon"
-            variant="ghost"
-            className="ml-auto h-12 w-12 text-xl text-base-10"
-            onClick={() => setIsSearching(true)}
-          >
-            <div className="i-heroicons:magnifying-glass h-8 w-8" />
-          </Button>
-        )
-      ) : (
-        <SearchBar className="mt-3 max-w-lg self-start md:mr-1 lg:mr-2" />
+      {path !== "/search" && (
+        <>
+          {/* Mobile-specific search bar */}
+          {isMobile &&
+            (isSearching ? (
+              <div className="mt-3 flex w-full items-start self-start">
+                <SearchBar className="shrink grow" autoFocus />
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="ml-2 text-lg text-base-10"
+                  onClick={() => setIsSearching(false)}
+                >
+                  <div className="i-lucide:x h-8 w-8" />
+                </Button>
+              </div>
+            ) : (
+              <Button
+                size="icon"
+                variant="ghost"
+                className="ml-auto h-12 w-12 text-xl text-base-10"
+                onClick={() => setIsSearching(true)}
+              >
+                <div className="i-heroicons:magnifying-glass h-8 w-8" />
+              </Button>
+            ))}
+
+          {/* Desktop-specific search bar */}
+          {!isMobile && (
+            <SearchBar className="mt-3 max-w-lg self-start md:mr-1 lg:mr-2" />
+          )}
+        </>
       )}
 
       {!isSearching && <UserMenu />}

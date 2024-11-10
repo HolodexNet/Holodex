@@ -28,8 +28,7 @@ import { Textarea } from "@/shadcn/ui/textarea";
 import { Button } from "@/shadcn/ui/button";
 import { Alert, AlertDescription } from "@/shadcn/ui/alert";
 import { useToast } from "@/shadcn/ui/use-toast";
-import { useAtomValue } from "jotai";
-import { orgAtom } from "@/store/org";
+import { useParams } from "react-router-dom";
 
 const formSchema = z.object({
   reasons: z.array(z.string()).min(1, {
@@ -64,7 +63,7 @@ export function ReportDialogMenu({
 }: ReportDialogMenuProps) {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const currentOrg = useAtomValue(orgAtom);
+  const currentOrg = useParams()?.org;
   const [selectedChannels, setSelectedChannels] = useState<
     SearchAutoCompleteChannel[]
   >([]);
@@ -112,7 +111,7 @@ export function ReportDialogMenu({
       orgRequired: false,
     },
     {
-      value: "This video does not belong to the org",
+      value: `This video does not belong to the org [${currentOrg}]`,
       label: t("component.reportDialog.reasons.6", {
         type: video.type,
         org: currentOrg,

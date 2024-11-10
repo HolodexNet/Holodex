@@ -12,7 +12,7 @@ import {
 } from "@/hooks/useFrame";
 import { darkAtom } from "@/hooks/useTheme";
 import { Toaster } from "@/shadcn/ui/toaster";
-import { orgAtom, orgRankingAtom } from "@/store/org";
+import { mostRecentOrgAtom, orgRankingAtom } from "@/store/org";
 import { miniPlayerAtom } from "@/store/player";
 import clsx from "clsx";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -29,19 +29,24 @@ import { videoReportAtom } from "@/store/video";
 import React from "react";
 import { useOrgs } from "@/services/orgs.service";
 import { useTimeout } from "usehooks-ts";
+import { defaultOpenAtom } from "@/store/settings";
 
 export function LocationAwareReactivity() {
   const location = useLocation();
   const navigate = useNavigate();
-  const org = useAtomValue(orgAtom);
+  const org = useAtomValue(mostRecentOrgAtom);
+  const defaultOpen = useAtomValue(defaultOpenAtom);
   const indicatePageFullscreen = useSetAtom(indicatePageFullscreenAtom);
 
   useEffect(() => {
     if (location.pathname === "/") {
+      if (defaultOpen === "Favorites") {
+        navigate("/favorites", { replace: true });
+      }
       console.log("redirecting to org", org);
       navigate(`/org/${org}`, { replace: true });
     }
-  }, [location.pathname, navigate, org]);
+  }, [defaultOpen, location.pathname, navigate, org]);
 
   useEffect(() => {
     const isFullscreen =

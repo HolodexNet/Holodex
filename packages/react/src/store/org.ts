@@ -1,5 +1,4 @@
 import { GET_ON_INIT } from "@/lib/consts";
-import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 export const defaultOrgs = [
@@ -17,9 +16,9 @@ export const orgRankingAtom = atomWithStorage<Org[]>(
   GET_ON_INIT,
 );
 
-export const currentOrgAtom = atomWithStorage<Org>("org", {
-  name: "Hololive",
-  short: "Holo",
-});
-
-export const orgAtom = atom((get) => get(currentOrgAtom).name);
+export const mostRecentOrgAtom = atomWithStorage(
+  "last_org",
+  "Hololive",
+  undefined,
+  GET_ON_INIT,
+);
