@@ -112,6 +112,21 @@ export function Frame() {
 
   const [reportedVideo, setReportedVideo] = useAtom(videoReportAtom);
 
+  useEffect(() => {
+    // wtf is this code block? it's to fix a pointerEvents:none issue with the document body when ShadCN/radix Dialog is open.
+    // https://github.com/radix-ui/primitives/issues/2122
+    if (reportedVideo) {
+      // Pushing the change to the end of the call stack
+      const timer = setTimeout(() => {
+        document.body.style.pointerEvents = "";
+      }, 0);
+
+      return () => clearTimeout(timer);
+    } else {
+      document.body.style.pointerEvents = "auto";
+    }
+  }, [reportedVideo]);
+
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
@@ -132,7 +147,7 @@ export function Frame() {
         {reportedVideo && (
           <LazyVideoReportDialog
             open={!!reportedVideo}
-            onOpenChange={() => setReportedVideo(null)}
+            onOpenChange={(x) => !x && setReportedVideo(null)}
             video={reportedVideo}
           />
         )}

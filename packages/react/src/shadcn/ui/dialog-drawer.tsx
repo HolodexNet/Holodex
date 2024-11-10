@@ -25,12 +25,13 @@ import {
 } from "./drawer"
 import { useAtomValue } from "jotai"
 import { isMobileAtom } from "@/hooks/useFrame"
+import { DialogProps } from "@radix-ui/react-dialog"
 
 interface BaseProps {
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
-interface RootCredenzaProps extends BaseProps {
+interface RootCredenzaProps extends BaseProps, DialogProps {
   open?: boolean
   onOpenChange?: (open: boolean) => void
 }

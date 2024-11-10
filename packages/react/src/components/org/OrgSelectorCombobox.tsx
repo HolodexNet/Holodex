@@ -27,15 +27,15 @@ export function OrgSelectorCombobox({
   const [value, setValue] = React.useState(org?.name || "");
 
   // Use the useOrgs API service to fetch organizations
-  const { data: orgs, isError } = useOrgs({ enabled: open });
+  const { data: orgs, isError, refetch } = useOrgs({ enabled: open });
 
   if (isError) {
-    return <div>Error fetching organizations</div>;
+    return <div onClick={() => refetch()}>Connection Error</div>;
   }
 
   // If orgs is undefined or empty, show a loading state or empty state
   if (!orgs || orgs.length === 0) {
-    return <div>Loading organizations...</div>;
+    return <div>Loading...</div>;
   }
 
   return (
