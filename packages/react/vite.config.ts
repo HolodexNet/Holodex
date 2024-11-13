@@ -11,6 +11,7 @@ import UnoCSS from "unocss/vite";
 import presetIcons from "@unocss/preset-icons";
 import { fileURLToPath, URL } from "url";
 import bundleAnalyzer from "rollup-plugin-bundle-analyzer";
+import BuildInfo from "unplugin-info/vite";
 // import react from "@vitejs/plugin-react";
 
 // yeah idk why there's a lot of typescript errors in this file.
@@ -60,6 +61,36 @@ export default defineConfig({
     },
   },
   plugins: [
+    BuildInfo({
+      git: {
+        // Gets whether this represents a clean working branch.
+        isClean: async (git) => {
+          const status = await git.status();
+          return status.isClean();
+        },
+        commitsSinceLastTag: async (git) => {
+          // Get all tags sorted by date (newest first)
+          const tags = await git.tags();
+
+          if (tags.all.length === 0) {
+            // If no tags exist, return total number of commits
+            const log = await git.log();
+            return log.total;
+          }
+
+          // Get the most recent tag
+          const latestTag = tags.latest;
+
+          // Count commits between latest tag and HEAD
+          const logResult = await git.log({
+            from: latestTag,
+            to: "HEAD",
+          });
+
+          return logResult.total;
+        },
+      },
+    }),
     bundleAnalyzer({
       analyzerMode: process.env["HOME"]?.includes("/home/holodex")
         ? "static" // don't use server mode when compiling on the linux server

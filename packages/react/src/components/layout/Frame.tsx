@@ -30,6 +30,14 @@ import React from "react";
 import { useOrgs } from "@/services/orgs.service";
 import { useTimeout } from "usehooks-ts";
 import { defaultOpenAtom } from "@/store/settings";
+//@ts-expect-error commitssincelasttag
+import {
+  abbreviatedSha,
+  committerDate,
+  lastTag,
+  commitsSinceLastTag,
+} from "~build/git";
+import dayjs from "dayjs";
 
 export function LocationAwareReactivity() {
   const location = useLocation();
@@ -142,6 +150,12 @@ export function Frame() {
               <Outlet />
             </Suspense>
           </ErrorBoundary>
+          <div className="mt-16 text-center text-sm text-base-7">
+            © 2020 Holodex v{lastTag}.{commitsSinceLastTag}
+            <small className="ml-2 opacity-50">
+              {abbreviatedSha} / {dayjs(new Date(committerDate)).format("lll")}
+            </small>
+          </div>
         </main>
         <SelectionFooter />
         {reportedVideo && (

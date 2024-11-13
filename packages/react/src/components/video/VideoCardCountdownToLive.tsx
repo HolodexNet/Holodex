@@ -14,28 +14,37 @@ const incr = 0;
 
 interface LiveCounterProps {
   viewers?: number;
+  start_date?: string;
   className?: string;
 }
 
-const LiveCounter = React.memo(({ viewers, className }: LiveCounterProps) => {
-  const { t } = useTranslation();
+const LiveCounter = React.memo(
+  ({ viewers, className, start_date }: LiveCounterProps) => {
+    const { t } = useTranslation();
 
-  return (
-    <div className={cn("flex gap-1 text-base-11", className)}>
-      <span className="text-red-500">{t("component.videoCard.liveNow")}</span>
-      {viewers && (
-        <>
-          <span>/</span>
-          <span>
-            {t("component.videoCard.watching", {
-              0: formatCount(viewers),
-            })}
+    return (
+      <div className={cn("flex gap-1 text-base-11", className)}>
+        {start_date || viewers ? (
+          <span className="text-red-500">
+            {t("component.videoCard.liveNow")}
           </span>
-        </>
-      )}
-    </div>
-  );
-});
+        ) : (
+          <span className="capitalize text-secondary-10">{t("time.soon")}</span>
+        )}
+        {start_date && viewers && viewers > 0 ? (
+          <>
+            <span>/</span>
+            <span>
+              {t("component.videoCard.watching", {
+                0: formatCount(viewers),
+              })}
+            </span>
+          </>
+        ) : null}
+      </div>
+    );
+  },
+);
 
 interface TimeTooltipProps {
   id: string;
@@ -89,7 +98,13 @@ export function VideoCardCountdownToLive({
 
   // Early return for live videos
   if (video.status === "live") {
-    return <LiveCounter viewers={video.live_viewers} className={className} />;
+    return (
+      <LiveCounter
+        viewers={video.live_viewers}
+        start_date={video.start_actual}
+        className={className}
+      />
+    );
   }
 
   // Handle upcoming videos

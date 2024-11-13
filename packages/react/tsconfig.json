@@ -44,6 +44,7 @@
       "@types/wicg-file-system-access",
       "@types/node",
       "vite/client",
+      "unplugin-info/client"
     ]
   },
   "include": [

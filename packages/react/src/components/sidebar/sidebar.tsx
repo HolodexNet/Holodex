@@ -3,7 +3,13 @@ import { Button } from "@/shadcn/ui/button";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { OrgSelectorCombobox } from "../org/OrgSelectorCombobox";
 import { useTranslation } from "react-i18next";
-import { Link, useLocation } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import {
   HTMLAttributes,
   type ReactNode,
@@ -36,6 +42,23 @@ export function Sidebar() {
   const isMobile = useAtomValue(isMobileAtom);
   const toggle = useSetAtom(toggleSidebarAtom);
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
+  const navigate = useNavigate();
+  const org = useParams().org;
+  const [params] = useSearchParams();
+
+  const setOrg = useCallback(
+    (org?: Org) => {
+      navigate({
+        pathname: `/org/${org?.name}`,
+        search: ["members", "live", "clips", "archive"].includes(
+          params.get("tab") || "",
+        )
+          ? `?tab=${params.get("tab")}`
+          : "",
+      });
+    },
+    [navigate, params],
+  );
 
   const handleClickOutside = useCallback(() => {
     floating && open && setOpen(false);
@@ -62,7 +85,7 @@ export function Sidebar() {
         </div>
         <div className="group/sidebar flex grow flex-col space-y-1 px-3 py-2">
           <div className="mb-2">
-            <OrgSelectorCombobox />
+            <OrgSelectorCombobox setOrg={setOrg} />
           </div>
           <div className="space-y-2">
             <SidebarItem

@@ -139,6 +139,7 @@
     "typescript-plugin-css-modules": "^5.1.0",
     "unocss": "^0.61.3",
     "unocss-preset-autoprefixer": "^0.0.7",
+    "unplugin-info": "^1.2.1",
     "vite": "^5.3.4"
   }
 }

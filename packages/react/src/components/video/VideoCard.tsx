@@ -199,7 +199,7 @@ export function VideoCard({
           "line-clamp-2 pr-4 text-sm font-bold md:text-[1rem] md:leading-6",
       ]),
       channelLink:
-        "line-clamp-1 text-xs text-base-11 hover:text-base-12 @lg:text-sm",
+        "line-clamp-1 text-xs text-primary-11 hover:text-primary-12 @lg:text-sm",
       scheduleText: "text-sm @lg:text-sm text-base-11",
     }),
     [size, onClick, selectionMode, selectedSet, video.id],
