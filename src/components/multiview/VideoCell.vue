@@ -197,7 +197,7 @@ export default {
             }
         },
         onPlayPause(paused = false) {
-            if (this.ytPlayer) {
+            if (this.ytPlayer && (!this.ytPlayer.getVideoData().isLive || this.ytPlayer.getVideoData().allowLiveDvr)) {
                 setTimeout(() => {
                     const recheck = this.ytPlayer.getPlayerState() === 2;
                     this.updatePausedState(recheck);
