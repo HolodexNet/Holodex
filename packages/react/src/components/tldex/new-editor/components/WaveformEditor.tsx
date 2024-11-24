@@ -4,15 +4,14 @@ import { useTimelineRendererBase } from "../hooks/timeline";
 import { playerRefAtom, videoStatusAtomFamily } from "@/store/player";
 import { useAtomValue } from "jotai";
 
-import { waveformAtom } from "../atoms/waveformAtoms";
+import { normalizedLoudnessAtom } from "../atoms/waveformAtoms";
 import "./WaveformEditor.scss";
 
-import React from "react";
-import { Rnd } from "react-rnd";
-import { subtitleManagerAtom, useSpecificSubtitle } from "../hooks/subtitles";
+import { subtitleManagerAtom } from "../hooks/subtitles";
+import { RndSubtitle } from "./RndSubtitle";
 
 export const WaveformEditor = ({ videoId }: { videoId: string }) => {
-  const waveform = useAtomValue(waveformAtom);
+  const waveform = useAtomValue(normalizedLoudnessAtom);
   const player = useAtomValue(playerRefAtom);
   const videoStatusAtom = videoStatusAtomFamily(videoId);
   const videoStatus = useAtomValue(videoStatusAtom);
@@ -69,87 +68,5 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
         </div>
       </div>
     </div>
-  );
-};
-
-interface RndSubtitleProps {
-  subtitleId: string;
-  startTime: number;
-  endTime: number;
-  containerWidth: number;
-}
-
-export const RndSubtitle: React.FC<RndSubtitleProps> = ({
-  subtitleId,
-  startTime,
-  endTime,
-  containerWidth,
-}) => {
-  const [subtitle, edit] = useSpecificSubtitle(subtitleId);
-
-  const timeToPosition = (time: number) => {
-    const timeRange = endTime - startTime;
-    const position = ((time - startTime) / timeRange) * containerWidth;
-    return position;
-  };
-
-  const positionToTime = (position: number) => {
-    const timeRange = endTime - startTime;
-    const time = (position / containerWidth) * timeRange + startTime;
-    return Math.max(startTime, Math.min(time, endTime));
-  };
-
-  const handleDrag = (_: unknown, d: { x: number; y: number }) => {
-    const newStartTime = positionToTime(d.x);
-    edit({
-      type: "UPDATE_SUBTITLE",
-      payload: {
-        ...subtitle,
-        video_offset: newStartTime,
-        end: newStartTime + subtitle.duration / 1000,
-      },
-    });
-  };
-
-  const handleResize = (_: unknown, _direction: string, ref: HTMLElement) => {
-    const newWidth = ref.offsetWidth;
-    const newDuration =
-      (newWidth / containerWidth) * (endTime - startTime) * 1000;
-    edit({
-      type: "UPDATE_SUBTITLE",
-      payload: {
-        ...subtitle,
-        duration: newDuration,
-        end: subtitle.video_offset + newDuration / 1000,
-      },
-    });
-  };
-
-  return (
-    <Rnd
-      position={{
-        x: timeToPosition(subtitle.video_offset),
-        y: 15,
-      }}
-      size={{
-        width:
-          timeToPosition(
-            subtitle.video_offset + (subtitle.duration || 3000) / 1000,
-          ) - timeToPosition(subtitle.video_offset),
-        height: 30,
-      }}
-      onDragStop={handleDrag}
-      onResize={handleResize}
-      bounds="parent"
-      className="border border-x-2 border-primary-9"
-      enableResizing={{ left: true, right: true }}
-    >
-      <div
-        className="h-full w-full cursor-move text-wrap bg-base-3 text-base-12 opacity-80 bg-blend-multiply"
-        title={subtitle.message}
-      >
-        <span className="truncate text-xs text-white">{subtitle.message}</span>
-      </div>
-    </Rnd>
   );
 };

@@ -158,7 +158,46 @@ export const waveformGeneratorStateAtom = atom<WaveformGeneratorState>({
   format: null,
 });
 
+// Utility function to get min value from array of tuples
+const getMin = (data: [number, number][]) => {
+  return Math.min(...data.map(([_, value]) => value));
+};
+
+// Utility function to get max value from array of tuples
+const getMax = (data: [number, number][]) => {
+  return Math.max(...data.map(([_, value]) => value));
+};
+
+// <time, negative db loudness>
 export const waveformAtom = atom<[number, number][]>([]);
+
+// <time, normalized loudness>
+export const normalizedLoudnessAtom = atom<[number, number][]>((get) => {
+  const waveform = get(waveformAtom);
+
+  // If no data, return empty array
+  if (waveform.length === 0) return [];
+
+  const EPSILON = 1e-10;
+
+  // Convert each RMS dB value to amplitude
+  // amplitude = 10^((dB + epsilon) / 20)
+  const amplitudes = waveform.map(([time, db]) => {
+    const amplitude = Math.pow(10, (db + EPSILON) / 20);
+    return [time, amplitude] as [number, number];
+  });
+
+  // Get min and max for normalization
+  const minAmplitude = getMin(amplitudes);
+  const maxAmplitude = getMax(amplitudes);
+  const range = maxAmplitude - minAmplitude + EPSILON; // Add epsilon to prevent division by zero
+
+  // Normalize values to 0-1 range
+  return amplitudes.map(([time, amplitude]) => {
+    const normalized = (amplitude - minAmplitude) / range;
+    return [time, normalized] as [number, number];
+  });
+});
 
 // Action atom to trigger waveform generation
 

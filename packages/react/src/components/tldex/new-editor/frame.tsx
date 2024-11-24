@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./frame.css";
-import { useBeforeUnload, useBlocker, useNavigate } from "react-router-dom";
+import { useBeforeUnload, useNavigate } from "react-router-dom";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { idToVideoURL } from "@/lib/utils";
@@ -17,12 +17,13 @@ import { clientAtom } from "@/hooks/useClient";
 import { useQuery } from "@tanstack/react-query";
 import { getSubtitlesForVideo, subtitleManagerAtom } from "./hooks/subtitles";
 import { TLEditorHeader } from "./TLEditorHeader";
+import { useNavBlocker } from "@/hooks/useBlock";
 
 export function TLEditorFrame() {
   const {
     id,
     currentVideo,
-    isPending: isVideoPending,
+    isPending: isVideoPending, // download progress pending
     editorLanguage,
   } = useScriptEditorParams();
   const makeHeaderHide = useSetAtom(headerHiddenAtom);
@@ -60,20 +61,19 @@ export function TLEditorFrame() {
   }, [isSuccess, script]);
 
   // Prevent soft navigation within the SPA
-  const blocker = useBlocker(isBlocking);
-
-  useEffect(() => {
-    if (blocker.state === "blocked") {
+  useNavBlocker({
+    enabled: isBlocking,
+    onBlock(control) {
       const proceed = window.confirm(
         "Are you sure you want to leave? You may lose unsaved changes.",
       );
       if (proceed) {
-        blocker.proceed();
+        control.confirm();
       } else {
-        blocker.reset();
+        control.cancel();
       }
-    }
-  }, [blocker]);
+    },
+  });
 
   // Prevent hard refresh and closing tab
   const handleBeforeUnload = useCallback(
