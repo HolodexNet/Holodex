@@ -40,17 +40,17 @@
   grid-template-rows: max-content 1fr 150px;
   height: 100%;
   grid-template-areas:
-    "header"
-    "content"
+    "tl-head"
+    "tl-content"
     "waveform";
 }
 
 .tl-frame .header {
-  grid-area: header;
+  grid-area: tl-head;
 }
 
 .tl-frame .content {
-  grid-area: content;
+  grid-area: tl-content;
 }
 
 .tl-frame .sidebar {

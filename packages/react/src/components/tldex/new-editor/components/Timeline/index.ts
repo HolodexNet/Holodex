@@ -1,3 +1,4 @@
+import { formatDuration } from "@/lib/time";
 import bs from "binary-search";
 
 export interface TimelineOptions {
@@ -73,7 +74,7 @@ export class Timeline {
     private onTimeSet: (time: number) => void, // a callback to set the player time, but don't necessarily need to start playback
     private onTimeSetAndPlay: (time: number) => void, // a callback to set the player time and start playback
   ) {
-    console.log("[TimelineClaude] Creating Timeline");
+    console.log("[Timeline] Creating Timeline");
     console.log(canvas, bgCanvas);
 
     // this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -93,6 +94,7 @@ export class Timeline {
     this.ctx = ctx;
     this.bgCtx = bgCtx;
     this.endTime = endTime;
+    console.log("[Timeline] endTime", endTime);
 
     this.setupCanvasSize();
     this.minimumZoomLevel = this.canvas.width / endTime;
@@ -163,7 +165,7 @@ export class Timeline {
   }
 
   private setZoom(newZoom: number) {
-    console.log("[TimelineClaude] Setting zoom level to", newZoom);
+    console.log("[Timeline] Setting zoom level to", newZoom);
     this.zoomLevel = Math.min(
       Math.max(this.minimumZoomLevel, newZoom),
       this.maximumZoomLevel,
@@ -205,7 +207,7 @@ export class Timeline {
 
         this.bgCtx.fillStyle = this.options.colors.text;
         this.bgCtx.textAlign = "left";
-        this.bgCtx.fillText(time.toFixed(1), x + 2, 10);
+        this.bgCtx.fillText(formatDuration(time * 1000), x + 2, 10);
 
         for (let j = 1; j < 5; j++) {
           const minorX = x + j * minorSpacing;
@@ -218,6 +220,7 @@ export class Timeline {
     }
 
     this.bgCtx.stroke();
+    this.drawWaveform();
   }
 
   private drawWaveform() {
@@ -318,8 +321,11 @@ export class Timeline {
     this.ctx.fillRect(thumbX, y, thumbWidth, Timeline.SCROLL_BAR_HEIGHT);
   }
 
-  public setData(alignments: ParsedScripterMessage[]) {
-    this.blocks = alignments.map((a) => this.createBlock(a));
+  public setData(subs: ParsedScripterMessage[]) {
+    this.blocks = subs.map(this.createBlock);
+    this.subtitleBlocks = subs;
+    this.cancelAnimation();
+    this.animate();
   }
 
   public cancelAnimation() {

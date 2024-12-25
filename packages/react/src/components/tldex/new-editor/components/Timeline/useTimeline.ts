@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { useSyncExternalStore } from "react";
 import { Timeline, TimelineOptions } from ".";
 import ReactPlayer from "react-player";
@@ -78,7 +78,7 @@ class TimelineStore {
 
   private updateSelectedArea = (begin: number, end: number) => {
     this.state = { ...this.state, selectedArea: { begin, end } };
-    this.emit();
+    // this.emit();
   };
 
   private setTime = (time: number) => {
@@ -128,15 +128,20 @@ export const useTimeline = (
   totalDuration: number,
   options: TimelineOptions,
 ) => {
-  console.log("[TimelineClaude] useTimeline called", canvas, bgCanvas, player);
-  const store = React.useMemo(
+  // console.log("[TimelineClaude] useTimeline called", canvas, bgCanvas, player);
+  useEffect(() => {
+    console.log("[TimelineClaude] useEffect called, playerupdated");
+  }, [canvas, bgCanvas, player]);
+
+  const store = useMemo(
     () => new TimelineStore(canvas, bgCanvas, player, totalDuration, options),
-    [canvas, bgCanvas, player, totalDuration, options],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [canvas, bgCanvas, player, totalDuration],
   );
 
   React.useEffect(() => {
     return () => store.destroy();
-  }, [store]);
+  }, []);
 
   return {
     ...useSyncExternalStore(store.subscribe, store.getSnapshot),

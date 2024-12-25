@@ -67,6 +67,7 @@ $responsive-breakpoint: 768px;
 
     > header {
       top: calc(-1 * var(--header-height));
+      overflow: hidden;
     }
   }
 

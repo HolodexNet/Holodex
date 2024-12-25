@@ -1,10 +1,10 @@
-import { formatDuration } from "@/lib/time";
 import { useRef, useEffect } from "react";
 import { useAtomValue } from "jotai";
 import { playerRefAtom, videoStatusAtomFamily } from "@/store/player";
 import { normalizedLoudnessAtom } from "../atoms/waveformAtoms";
 import { useTimeline } from "./Timeline/useTimeline";
 import "./WaveformEditor.scss";
+import { subtitleManagerAtom } from "../hooks/subtitles";
 
 const DEFAULT_COLORS = {
   selected: "#3b82f6", // Bright blue - stands out for selection
@@ -19,10 +19,17 @@ const DEFAULT_COLORS = {
   timeCursor: "#ef4444", // Bright red - clear position indicator
   timeGrid: "#334155", // Dark slate - subtle grid lines
 };
+const OPTIONS = {
+  autoScroll: true,
+  colors: DEFAULT_COLORS,
+};
+
 export const WaveformEditor = ({ videoId }: { videoId: string }) => {
   const waveform = useAtomValue(normalizedLoudnessAtom);
   const player = useAtomValue(playerRefAtom);
   const videoStatus = useAtomValue(videoStatusAtomFamily(videoId));
+
+  const { subtitles } = useAtomValue(subtitleManagerAtom);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const bgCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -33,10 +40,7 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
     bgCanvasRef.current!,
     player!,
     videoStatus.duration,
-    {
-      autoScroll: true,
-      colors: DEFAULT_COLORS,
-    },
+    OPTIONS,
   );
 
   useEffect(() => {
@@ -44,6 +48,12 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
       timeline.loadWaveform(waveform);
     }
   }, [waveform, timeline]);
+
+  useEffect(() => {
+    if (subtitles) {
+      timeline.setData(subtitles);
+    }
+  }, [subtitles, timeline]);
 
   return (
     <div className="flex w-full flex-col flex-nowrap">
@@ -61,28 +71,23 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
           }}
         />
       </div>
-      <div
-        className="relative max-w-full shrink overflow-hidden"
-        ref={containerRef}
-      >
+      <div className="relative h-24 max-w-full shrink" ref={containerRef}>
         <canvas
-          className="w-full"
-          style={{ height: "130px" }}
-          ref={canvasRef}
-        />
-        <canvas
-          className="absolute left-0 top-0 w-full"
-          style={{ height: "130px" }}
+          className="absolute left-0 top-0 h-full w-full"
           ref={bgCanvasRef}
         />
-        <div className="pointer-events-none absolute z-10 -mt-10 flex w-full justify-between text-xs">
+        <canvas
+          className="absolute left-0 top-0 h-full w-full"
+          ref={canvasRef}
+        />
+        {/* <div className="pointer-events-none absolute z-10 -mt-10 flex w-full justify-between text-xs">
           <span>
             {formatDuration((timeline.selectedArea?.begin ?? 0) * 1000)}
           </span>
           <span>
             {formatDuration((timeline.selectedArea?.end ?? 0) * 1000)}
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

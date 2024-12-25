@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSubtitlesForVideo, subtitleManagerAtom } from "./hooks/subtitles";
 import { TLEditorHeader } from "./TLEditorHeader";
 import { useNavBlocker } from "@/hooks/useBlock";
+import { playerRefAtom } from "@/store/player";
 
 export function TLEditorFrame() {
   const {
@@ -55,7 +56,7 @@ export function TLEditorFrame() {
   useEffect(() => {
     if (isSuccess) {
       console.log("Subtitles loaded:", script);
-      subtitleDispatch({ type: "ADD_SUBTITLES", payload: script });
+      subtitleDispatch({ type: "SET_SUBTITLES", payload: script });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, script]);
@@ -107,27 +108,31 @@ export function TLEditorFrame() {
   }, [navigate]);
 
   return (
-    <div className="absolute h-full w-full">
-      <div className="tl-frame inset-0 p-4">
-        <TLEditorHeader onSave={handleSave} onExit={handleExit} />
-        {!id && !currentVideo && <VideoIdInput />}
-        {id && (isVideoPending || isScriptLoading) && <Loading size="md" />}
-        {id && currentVideo && <TLEditorContent />}
-      </div>
+    // <div className="h-full w-full">
+    <div className="tl-frame p-4">
+      <TLEditorHeader onSave={handleSave} onExit={handleExit} />
+      {!id && !currentVideo && <VideoIdInput />}
+      {id && (isVideoPending || isScriptLoading) && <Loading size="md" />}
+      {id && currentVideo && <TLEditorContent />}
     </div>
+    // </div>
   );
 }
 // TLEditorContent.tsx
 export function TLEditorContent() {
-  const { currentVideo, id } = useScriptEditorParams();
-
+  const { id } = useScriptEditorParams();
+  const setPlayerRef = useSetAtom(playerRefAtom);
   return (
     <>
       <PanelGroup direction="horizontal" className="content">
         <Panel defaultSize={60} minSize={40}>
           <div className="flex size-full flex-col">
             <div className="flex-1 overflow-hidden rounded">
-              <PlayerWrapper id={id || "x"} url={idToVideoURL(id || "x")} />
+              <PlayerWrapper
+                id={id || "x"}
+                customSetPlayerRef={setPlayerRef}
+                url={idToVideoURL(id || "x")}
+              />
             </div>
             <div className="h-[60px]">
               <Menubar>

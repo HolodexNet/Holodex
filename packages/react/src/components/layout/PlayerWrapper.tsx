@@ -4,7 +4,7 @@ import {
   videoPlayerRefAtomFamily,
   videoStatusAtomFamily,
 } from "@/store/player";
-import { useAtom, useSetAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import React, { useCallback } from "react";
 import type { OnProgressProps } from "react-player/base";
 import ReactPlayer from "react-player";
@@ -23,7 +23,7 @@ interface IPlayerWrapper {
 export const PlayerWrapper = React.memo(
   ({ id, url, customSetPlayerRef }: IPlayerWrapper) => {
     const playerRefAtom = videoPlayerRefAtomFamily(id);
-    const [playerRef, setPlayerRef] = useAtom(playerRefAtom);
+    const setPlayerRef = useSetAtom(playerRefAtom);
 
     const videoStatusAtom = videoStatusAtomFamily(id || "x");
     const playingVideoStateSetter = useSetAtom(videoStatusAtom);
