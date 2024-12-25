@@ -1,31 +1,28 @@
 import React from "react";
-import { useAtomValue, useStore } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@/shadcn/ui/button";
 import { formatDuration } from "@/lib/time";
 import { Textarea } from "@/shadcn/ui/textarea";
-import {
-  intervalTreeAtom,
-  intervalTreeBumpAtom,
-  subtitleAtomsMap,
-  useSpecificSubtitle,
-} from "../hooks/subtitles";
+
 import { nanoid } from "nanoid";
 import { useScriptEditorParams } from "../useScriptEditorParams";
 import { videoStatusAtomFamily } from "@/store/player";
 import clsx from "clsx";
+import { subtitleManagerAtom } from "../hooks/subtitles";
 
 const SubtitleTimeline = () => {
   const { id } = useScriptEditorParams();
-  const intervalTree = useAtomValue(intervalTreeAtom);
+  const manager = useAtomValue(subtitleManagerAtom);
   const videoStatusAtom = videoStatusAtomFamily(id!);
-  const bump = useAtomValue(intervalTreeBumpAtom); // bump is used to force re-render
   return (
     <div className="h-full overflow-y-auto bg-base-2">
-      {intervalTree.items.map((subtitleAtom, index, arr) => (
+      {manager.subtitles.map((subtitle, index, arr) => (
         <SubtitleItem
-          key={"editor" + subtitleAtom.value}
-          subtitleId={subtitleAtom.value}
-          nextSubtitleId={arr[index + 1]?.value}
+          key={"editor" + subtitle.id}
+          subtitleId={subtitle.id}
+          subtitle={subtitle}
+          nextSubtitleId={arr[index + 1]?.id}
+          nextSubtitle={arr[index + 1]}
           videoStatusAtom={videoStatusAtom}
         />
       ))}
@@ -35,22 +32,29 @@ const SubtitleTimeline = () => {
 
 interface SubtitleItemProps {
   subtitleId: string;
+  subtitle: ParsedScripterMessage;
   nextSubtitleId?: string;
+  nextSubtitle?: ParsedScripterMessage;
   videoStatusAtom: ReturnType<typeof videoStatusAtomFamily>;
 }
 
 const SubtitleItem = React.memo(
-  ({ subtitleId, nextSubtitleId, videoStatusAtom }: SubtitleItemProps) => {
-    const [subtitle, dispatch] = useSpecificSubtitle(subtitleId);
-    const store = useStore();
+  ({
+    // subtitleId, (it's not used i guess)
+    subtitle,
+    nextSubtitle,
+    nextSubtitleId,
+    videoStatusAtom,
+  }: SubtitleItemProps) => {
+    const dispatch = useSetAtom(subtitleManagerAtom);
+    // const store = useStore();
     const { creditName } = useScriptEditorParams();
     const { progress } = useAtomValue(videoStatusAtom);
 
     const handleMerge = () => {
-      if (nextSubtitleId) {
-        const nsatom = subtitleAtomsMap.get(nextSubtitleId);
-        const nextSubtitle = !!nsatom && store.get(nsatom);
-        if (!nextSubtitle) return;
+      if (nextSubtitleId && nextSubtitle) {
+        // const nsatom = subtitleAtomsMap.get(nextSubtitleId);
+        // const nextSubtitle = !!nsatom && store.get(nsatom);
         const mergedMessage = `${subtitle.message} ${nextSubtitle.message}`;
         const mergedDuration =
           nextSubtitle.video_offset -
@@ -72,8 +76,6 @@ const SubtitleItem = React.memo(
     };
 
     const handleAddSubtitle = () => {
-      const nsatom = !!nextSubtitleId && subtitleAtomsMap.get(nextSubtitleId);
-      const nextSubtitle = !!nsatom && store.get(nsatom);
       const nextSubtitleOffset = !!nextSubtitle && nextSubtitle.video_offset;
       const newOffset = nextSubtitleOffset
         ? (subtitle.video_offset + nextSubtitleOffset) / 2

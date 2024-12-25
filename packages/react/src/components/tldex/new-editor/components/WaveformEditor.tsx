@@ -1,44 +1,61 @@
 import { formatDuration } from "@/lib/time";
-import { useTimelineRendererBase } from "../hooks/timeline";
-
-import { playerRefAtom, videoStatusAtomFamily } from "@/store/player";
+import { useRef, useEffect } from "react";
 import { useAtomValue } from "jotai";
-
+import { playerRefAtom, videoStatusAtomFamily } from "@/store/player";
 import { normalizedLoudnessAtom } from "../atoms/waveformAtoms";
+import { useTimeline } from "./Timeline/useTimeline";
 import "./WaveformEditor.scss";
 
-import { subtitleManagerAtom } from "../hooks/subtitles";
-import { RndSubtitle } from "./RndSubtitle";
-
+const DEFAULT_COLORS = {
+  selected: "#3b82f6", // Bright blue - stands out for selection
+  active: "#22c55e", // Vibrant green - clear activity indicator
+  hover: "#64748b", // Muted slate - subtle hover state
+  default: "#475569", // Darker slate - unselected items
+  background: "#0f172a", // Deep navy - dark background
+  text: "#e2e8f0", // Light gray - readable text
+  tooltip: "#94a3b8", // Medium slate - tooltip background
+  scrollTrack: "#1e293b", // Slightly lighter than background
+  scrollThumb: "#475569", // Visible but not distracting
+  timeCursor: "#ef4444", // Bright red - clear position indicator
+  timeGrid: "#334155", // Dark slate - subtle grid lines
+};
 export const WaveformEditor = ({ videoId }: { videoId: string }) => {
   const waveform = useAtomValue(normalizedLoudnessAtom);
   const player = useAtomValue(playerRefAtom);
-  const videoStatusAtom = videoStatusAtomFamily(videoId);
-  const videoStatus = useAtomValue(videoStatusAtom);
+  const videoStatus = useAtomValue(videoStatusAtomFamily(videoId));
 
-  const { canvasCbRef, containerRef, startTime, endTime, containerSize } =
-    useTimelineRendererBase(waveform, videoStatus);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const bgCanvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const { intervalTree } = useAtomValue(subtitleManagerAtom);
-  const currentSubs = intervalTree.search([startTime - 20, endTime + 20]);
+  const timeline = useTimeline(
+    canvasRef.current!,
+    bgCanvasRef.current!,
+    player!,
+    videoStatus.duration,
+    {
+      autoScroll: true,
+      colors: DEFAULT_COLORS,
+    },
+  );
+
+  useEffect(() => {
+    if (waveform) {
+      timeline.loadWaveform(waveform);
+    }
+  }, [waveform, timeline]);
 
   return (
-    <div
-      className="flex w-full flex-col flex-nowrap"
-      // style={{ height: "200px" }}
-    >
-      {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
+    <div className="flex w-full flex-col flex-nowrap">
       <div className="slider-container">
         <input
           type="range"
           min="0"
           max={videoStatus.duration}
           value={videoStatus.progress || 0}
-          // eslint-disable-next-line tailwindcss/no-custom-classname
           className="timeline-slider"
           step="0.1"
           onChange={(e) => {
-            console.log(e);
             const newTime = parseFloat(e.target.value);
             player?.seekTo(newTime);
           }}
@@ -48,23 +65,23 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
         className="relative max-w-full shrink overflow-hidden"
         ref={containerRef}
       >
-        {currentSubs.map((id) => (
-          <RndSubtitle
-            key={"sub-track" + id}
-            subtitleId={id}
-            startTime={startTime}
-            endTime={endTime}
-            containerWidth={containerSize.width}
-          />
-        ))}
         <canvas
           className="w-full"
           style={{ height: "130px" }}
-          ref={canvasCbRef}
+          ref={canvasRef}
+        />
+        <canvas
+          className="absolute left-0 top-0 w-full"
+          style={{ height: "130px" }}
+          ref={bgCanvasRef}
         />
         <div className="pointer-events-none absolute z-10 -mt-10 flex w-full justify-between text-xs">
-          <span>{formatDuration(startTime * 1000)}</span>
-          <span>{formatDuration(endTime * 1000)}</span>
+          <span>
+            {formatDuration((timeline.selectedArea?.begin ?? 0) * 1000)}
+          </span>
+          <span>
+            {formatDuration((timeline.selectedArea?.end ?? 0) * 1000)}
+          </span>
         </div>
       </div>
     </div>
