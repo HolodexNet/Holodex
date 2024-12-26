@@ -12,7 +12,7 @@ export interface HolodexSettings {
   gridDensity: number;
   defaultOpen: "Favorites" | "Home";
   hideCollabStreams: boolean;
-  filterLongStreams: boolean; // New setting
+  filterLongStreams: boolean; // New setting, filters streams that are live for >24hr
   filterDeadStreams: boolean;
   ignoredTopics: string[];
   blockedChannels: ShortChannel[];

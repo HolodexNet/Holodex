@@ -66,7 +66,13 @@ const TimeTooltip = ({
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <span className={cn("text-base-11", { italic: isLikely }, className)}>
+        <span
+          className={cn(
+            "text-base-11",
+            isLikely && "italic hover:animate-pulse",
+            className,
+          )}
+        >
           {children}
         </span>
       </TooltipTrigger>
@@ -114,7 +120,7 @@ export function VideoCardCountdownToLive({
   ) {
     const tick = dayjs(video.start_scheduled);
     const countdownText = t("time.diff_future_date", {
-      0: tick.fromNow(false) + (video.certainty === "likely" ? "?" : ""),
+      0: tick.fromNow(false) + (video.certainty === "likely" ? "??" : ""),
       1: tick.format("hh:mm A"),
     });
 

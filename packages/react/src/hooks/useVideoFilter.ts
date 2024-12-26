@@ -14,7 +14,13 @@ function filterDeadStreams(video: VideoBase, now: dayjs.Dayjs) {
 }
 
 function filterLongVideos(video: VideoBase) {
-  return video.duration <= 24 * 60 * 60; // 24 hours in seconds
+  if (video.status === "live") {
+    return (
+      Math.abs(dayjs(video.available_at).diff(dayjs())) < 24 * 60 * 60 * 1000
+    );
+  } else {
+    return video.duration <= 24 * 60 * 60;
+  }
 }
 
 type PageContext = "org" | "favorites" | "search" | "watch" | "channel";
