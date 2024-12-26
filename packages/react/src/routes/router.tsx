@@ -19,7 +19,9 @@ const ChannelsOrg = lazy(() =>
 const Channel = lazy(() =>
   import("./channel").then((module) => ({ default: module.Channel })),
 );
-const ChannelVideos = lazy(() => import("./channel/ChannelVideos"));
+const ChannelVideos = lazy(() =>
+  import("./channel").then((module) => ({ default: module.ChannelVideos })),
+);
 const ChannelAbout = lazy(() => import("./channel/ChannelAbout"));
 const EditVideo = lazy(() =>
   import("./editVideo").then((module) => ({ default: module.EditVideo })),

@@ -19,6 +19,8 @@ import {
   useParams,
 } from "react-router-dom";
 
+export { default as ChannelVideos } from "./channel/ChannelVideos";
+
 export type ChannelOutletContext = {
   id: string;
   channel: Channel;
