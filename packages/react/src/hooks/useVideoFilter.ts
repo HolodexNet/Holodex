@@ -16,7 +16,12 @@ function filterDeadStreams(video: VideoBase, now: dayjs.Dayjs) {
 function filterLongVideos(video: VideoBase) {
   if (video.status === "live") {
     return (
-      Math.abs(dayjs(video.available_at).diff(dayjs())) < 24 * 60 * 60 * 1000
+      Math.abs(
+        dayjs(
+          video.start_actual ?? video.start_scheduled ?? video.available_at,
+        ).diff(dayjs()),
+      ) <
+      24 * 60 * 60 * 1000
     );
   } else {
     return video.duration <= 24 * 60 * 60;
