@@ -58,7 +58,7 @@ export function OrgSelectorCombobox({
       <PopoverContent className="max-w-[80vw] p-0">
         <Command>
           <CommandInput placeholder={t("Search organization...")} />
-          <CommandList>
+          <CommandList className="max-h-96 sm:max-h-96 lg:max-h-[min(480px,50vh)]">
             <CommandEmpty>{t("No organization found.")}</CommandEmpty>
             <CommandGroup>
               {orgs.map((org) => (
@@ -70,17 +70,17 @@ export function OrgSelectorCombobox({
                     setOrg?.(org);
                   }}
                 >
-                  <div
-                    className={cn(
-                      "i-lucide:check mr-2 h-4 w-4",
-                      value === org.name ? "opacity-100" : "opacity-0",
-                    )}
-                  />
                   <img
                     className="mr-2 h-8 w-8 rounded-full"
                     src={getThumbnailForOrg(org.icon)}
                   ></img>
                   {org.name}
+                  <div
+                    className={cn(
+                      "i-lucide:check ml-auto h-4 w-4",
+                      value === org.name ? "opacity-100" : "opacity-0",
+                    )}
+                  />
                 </CommandItem>
               ))}
             </CommandGroup>
