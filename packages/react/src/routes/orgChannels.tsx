@@ -46,16 +46,6 @@ const sortOptions: { value: SortOption; label: string; icon: string }[] = [
   },
 ];
 
-// Channel component
-// const ChannelComponent: React.FC<{
-//   channel: Channel;
-//   displayStyle: DisplayStyle;
-// }> = ({ channel, displayStyle }) => {
-//   return (
-//     <ChannelCard size={displayStyle === "grid" ? "lg" : "sm"} {...channel} />
-//   );
-// };
-
 // Group component
 const GroupComponent: React.FC<{
   group: string;
