@@ -385,7 +385,7 @@ views:
   about:
     add_my_channel: Channel Request
   watch:
-    theaterMode: Theater Mode (alt + t)
+    theaterMode: Theater Mode
     mentionIconLabel: MENTIONS
     chat:
       loading: Loading Chat...
