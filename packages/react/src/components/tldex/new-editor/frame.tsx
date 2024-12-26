@@ -6,7 +6,7 @@ import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { idToVideoURL } from "@/lib/utils";
 import { useAtomValue, useSetAtom } from "jotai";
 import { headerHiddenAtom } from "@/hooks/useFrame";
-import SubtitleTimeline from "./components/SubtitleTimeline";
+import SubtitleList from "./components/SubtitleList";
 import { WaveformEditor } from "./components/WaveformEditor";
 import { WaveformLoadingButton } from "./WaveformLoadingButton";
 import { Menubar } from "@/shadcn/ui/menubar";
@@ -143,7 +143,7 @@ export function TLEditorContent() {
         </Panel>
         <PanelResizeHandle className="w-2 hover:bg-base-4" />
         <Panel defaultSize={40} minSize={20}>
-          <SubtitleTimeline />
+          <SubtitleList />
         </Panel>
       </PanelGroup>
       <WaveformEditor videoId={id!} />

@@ -29,7 +29,7 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
   const player = useAtomValue(playerRefAtom);
   const videoStatus = useAtomValue(videoStatusAtomFamily(videoId));
 
-  const { subtitles } = useAtomValue(subtitleManagerAtom);
+  const manager = useAtomValue(subtitleManagerAtom);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const bgCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -41,6 +41,7 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
     player!,
     videoStatus.duration,
     OPTIONS,
+    manager.subtitles,
   );
 
   useEffect(() => {
@@ -50,10 +51,15 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
   }, [waveform, timeline]);
 
   useEffect(() => {
-    if (subtitles) {
-      timeline.setData(subtitles);
+    if (manager.subtitles && manager.subtitles.length > 0) {
+      console.log(
+        "[WaveformEditor] Setting manager.subtitles",
+        manager.subtitles,
+      );
+
+      timeline.setData(manager.subtitles);
     }
-  }, [subtitles, timeline]);
+  }, [manager.subtitles, timeline]);
 
   return (
     <div className="flex w-full flex-col flex-nowrap">

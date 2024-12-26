@@ -10,7 +10,7 @@ import { videoStatusAtomFamily } from "@/store/player";
 import clsx from "clsx";
 import { subtitleManagerAtom } from "../hooks/subtitles";
 
-const SubtitleTimeline = () => {
+const SubtitleList = () => {
   const { id } = useScriptEditorParams();
   const manager = useAtomValue(subtitleManagerAtom);
   const videoStatusAtom = videoStatusAtomFamily(id!);
@@ -166,4 +166,4 @@ const SubtitleItem = React.memo(
   },
 );
 
-export default SubtitleTimeline;
+export default SubtitleList;

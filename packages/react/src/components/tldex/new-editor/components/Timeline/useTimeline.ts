@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useSyncExternalStore } from "react";
 import { Timeline, TimelineOptions } from ".";
 import ReactPlayer from "react-player";
@@ -29,6 +29,7 @@ class TimelineStore {
     player: ReactPlayer,
     totalDuration: number,
     options: TimelineOptions,
+    subs: ParsedScripterMessage[],
   ) {
     // this.canvas = canvas;
     // this.bgCanvas = bgCanvas;
@@ -47,7 +48,7 @@ class TimelineStore {
     this.timeline = new Timeline(
       this.canvas,
       this.bgCanvas,
-      this.state.subtitleBlocks,
+      this.state.subtitleBlocks || subs,
       totalDuration,
       () => ({ currentTime: this.player.getCurrentTime() }),
       this.updateSubtitles,
@@ -106,19 +107,20 @@ class TimelineStore {
     return this.state;
   };
 
-  setData(blocks: ParsedScripterMessage[]) {
+  setData = (blocks: ParsedScripterMessage[]) => {
+    console.log("[TimelineStore] setData called", blocks, this.timeline);
     this.timeline?.setData(blocks);
-  }
+  };
 
-  loadWaveform(data: [number, number][]) {
+  loadWaveform = (data: [number, number][]) => {
     this.timeline?.loadWaveform(data);
-  }
+  };
 
-  destroy() {
+  destroy = () => {
     this.timeline?.destroy();
     this.timeline = null;
     this.listeners.clear();
-  }
+  };
 }
 
 export const useTimeline = (
@@ -127,6 +129,7 @@ export const useTimeline = (
   player: ReactPlayer,
   totalDuration: number,
   options: TimelineOptions,
+  subs: ParsedScripterMessage[],
 ) => {
   // console.log("[TimelineClaude] useTimeline called", canvas, bgCanvas, player);
   useEffect(() => {
@@ -134,14 +137,15 @@ export const useTimeline = (
   }, [canvas, bgCanvas, player]);
 
   const store = useMemo(
-    () => new TimelineStore(canvas, bgCanvas, player, totalDuration, options),
+    () =>
+      new TimelineStore(canvas, bgCanvas, player, totalDuration, options, subs),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [canvas, bgCanvas, player, totalDuration],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => store.destroy();
-  }, []);
+  }, [store]);
 
   return {
     ...useSyncExternalStore(store.subscribe, store.getSnapshot),
@@ -149,3 +153,33 @@ export const useTimeline = (
     loadWaveform: store.loadWaveform,
   };
 };
+
+// const registry = new FinalizationRegistry<() => void>((cleanupRef) => {
+//   cleanupRef.current && cleanupRef.current(); // cleanup on unmount
+// });
+
+// export default function useMemoCleanup<T, X>(
+//   callback: () => [T, () => void],
+//   deps: X,
+// ) {
+//   const cleanupRef = useRef<() => void>(null); // holds a cleanup value
+//   const unmountRef = useRef(false); // the GC-triggering candidate
+
+//   if (!unmountRef.current) {
+//     unmountRef.current = true;
+//     // this works since refs are preserved for the component's lifetime
+//     registry.register(unmountRef, cleanupRef);
+//   }
+
+//   const returned = useMemo(() => {
+//     cleanupRef.current?.();
+//     cleanupRef.current = null;
+
+//     const [returned, cleanup] = callback();
+//     cleanupRef.current = typeof cleanup === "function" ? cleanup : null;
+
+//     return returned;
+//   }, deps);
+
+//   return returned;
+// }

@@ -96,9 +96,10 @@ export class Timeline {
     this.endTime = endTime;
     console.log("[Timeline] endTime", endTime);
 
-    this.setupCanvasSize();
     this.minimumZoomLevel = this.canvas.width / endTime;
     this.maximumZoomLevel = 13 * endTime;
+
+    this.setupCanvasSize();
     this.zoomLevel = this.minimumZoomLevel;
 
     this.setData(subtitleBlocks);
@@ -117,17 +118,25 @@ export class Timeline {
         canvas.width = width;
         canvas.height = Timeline.TIMELINE_HEIGHT;
       });
+
+      this.minimumZoomLevel = this.canvas.width / this.endTime;
+      this.maximumZoomLevel = 13 * this.endTime;
+      this.zoomLevel = Math.min(
+        Math.max(this.minimumZoomLevel, this.zoomLevel),
+        this.maximumZoomLevel,
+      );
+      this.drawBackground();
     };
 
     updateSize();
     window.addEventListener("resize", updateSize);
   }
 
-  private createBlock(message: ParsedScripterMessage): TimelineBlock {
+  private createBlock = (message: ParsedScripterMessage): TimelineBlock => {
     const block: TimelineBlock = {
       x: message.video_offset * this.zoomLevel,
       y: Timeline.LINE_HEIGHT,
-      width: (message.duration || 0) * this.zoomLevel,
+      width: ((message.duration || 0) / 1000) * this.zoomLevel,
       text: message.message,
       selected: false,
       active: false,
@@ -162,7 +171,7 @@ export class Timeline {
     };
 
     return block;
-  }
+  };
 
   private setZoom(newZoom: number) {
     console.log("[Timeline] Setting zoom level to", newZoom);
@@ -322,10 +331,9 @@ export class Timeline {
   }
 
   public setData(subs: ParsedScripterMessage[]) {
-    this.blocks = subs.map(this.createBlock);
     this.subtitleBlocks = subs;
-    this.cancelAnimation();
-    this.animate();
+    this.blocks = subs.map(this.createBlock);
+    this.startAnimation();
   }
 
   public cancelAnimation() {
@@ -372,13 +380,14 @@ export class Timeline {
     this.shift = Math.min(maxShift, Math.max(minShift, this.shift));
   }
 
-  private setupEventListeners() {
+  private setupEventListeners = () => {
+    console.log("[Timeline] Setting up event listeners");
     this.canvas.addEventListener("mousemove", this.handleMouseMove);
     this.canvas.addEventListener("mousedown", this.handleMouseDown);
     this.canvas.addEventListener("mouseup", this.handleMouseUp);
     this.canvas.addEventListener("wheel", this.handleWheel);
     this.canvas.addEventListener("dblclick", this.handleDoubleClick);
-  }
+  };
 
   private handleMouseMove = (e: MouseEvent) => {
     const rect = this.canvas.getBoundingClientRect();
@@ -406,17 +415,21 @@ export class Timeline {
     this.isMouseDown = true;
 
     if (y >= this.canvas.height - Timeline.SCROLL_BAR_HEIGHT) {
+      console.log("[Timeline] [handleMouseDown] Scrolling on the scrollbar");
       this.scrolling = true;
     } else {
       const block = this.findBlockAtPosition(x, y);
       if (block) {
         const [index, edge] = this.getBlockAndEdge(block, x);
         if (edge) {
+          console.log("[Timeline] [handleMouseDown] Resizing block");
           this.startResizing(index, edge);
         } else {
+          console.log("[Timeline] [handleMouseDown] Moving block");
           this.startMoving(index);
         }
       } else {
+        console.log("[Timeline] [handleMouseDown] No block found, swiping");
         this.swiping = true;
         this.lastX = x;
       }
@@ -479,7 +492,10 @@ export class Timeline {
     }
   };
 
-  private findBlockAtPosition(x: number, y: number): TimelineBlock | undefined {
+  private findBlockAtPosition = (
+    x: number,
+    y: number,
+  ): TimelineBlock | undefined => {
     return this.blocks.find((block) => {
       const blockX = block.x + this.shift;
       return (
@@ -489,7 +505,7 @@ export class Timeline {
         y <= block.y + Timeline.TRACK_HEIGHT
       );
     });
-  }
+  };
 
   private getBlockAndEdge(
     block: TimelineBlock,
@@ -540,10 +556,10 @@ export class Timeline {
       this.currentBlock.x / this.zoomLevel;
     this.currentBlock.message.end =
       this.currentBlock.message.video_offset +
-      (this.currentBlock.message.duration || 0);
+      (this.currentBlock.message.duration || 0) / 1000;
   }
 
-  private handleBlockResize(x: number) {
+  private handleBlockResize = (x: number) => {
     if (!this.currentBlock || !this.resizeEdge) return;
 
     const blockX = this.currentBlock.x + this.shift;
@@ -551,11 +567,12 @@ export class Timeline {
 
     if (this.resizeEdge === "right") {
       this.currentBlock.width = Math.max(10, dx);
+
       this.currentBlock.message.duration =
-        this.currentBlock.width / this.zoomLevel;
+        (this.currentBlock.width * 1000) / this.zoomLevel;
       this.currentBlock.message.end =
         this.currentBlock.message.video_offset +
-        this.currentBlock.message.duration;
+        this.currentBlock.message.duration / 1000;
     } else {
       const originalRight = this.currentBlock.x + this.currentBlock.width;
       const newX = Math.max(0, x - this.shift);
@@ -565,22 +582,22 @@ export class Timeline {
       this.currentBlock.message.video_offset =
         this.currentBlock.x / this.zoomLevel;
       this.currentBlock.message.duration =
-        this.currentBlock.width / this.zoomLevel;
+        (this.currentBlock.width * 1000) / this.zoomLevel;
       this.currentBlock.message.end =
         this.currentBlock.message.video_offset +
-        this.currentBlock.message.duration;
+        this.currentBlock.message.duration / 1000;
     }
-  }
-  private handleSwipe(x: number) {
+  };
+  private handleSwipe = (x: number) => {
     const dx = x - this.lastX;
     this.shift += dx;
     this.checkShift();
     this.drawBackground();
     // this.changeShift(this.shift);
     this.lastX = x;
-  }
+  };
 
-  private updateHoverStates(x: number, y: number) {
+  private updateHoverStates = (x: number, y: number) => {
     let hoveredBlock: TimelineBlock | undefined;
     let hoveredIndex = -1;
 
@@ -607,40 +624,42 @@ export class Timeline {
     }
 
     this.hoveredBlockIndex = hoveredIndex;
-  }
+  };
 
-  private getEdgeAtPosition(
+  private getEdgeAtPosition = (
     block: TimelineBlock,
     x: number,
-  ): "left" | "right" | null {
+  ): "left" | "right" | null => {
     const blockX = block.x + this.shift;
     const edgeThreshold = 5;
 
     if (Math.abs(x - blockX) <= edgeThreshold) return "left";
     if (Math.abs(x - (blockX + block.width)) <= edgeThreshold) return "right";
     return null;
-  }
+  };
 
-  private finalizeBlockChange() {
+  private finalizeBlockChange = () => {
     if (!this.currentBlock || this.currentBlockIndex === -1) return;
 
     const blocks = this.blocks.map((b) => b.message);
 
     this.updateSubtitles(blocks);
-  }
+  };
 
-  private startAnimation() {
+  private startAnimation = () => {
+    this.cancelAnimation();
     this.animate();
-  }
+  };
 
   private lastX = 0;
 
-  public destroy() {
+  public destroy = () => {
+    console.log("[Timeline] Deleting event listeners");
     this.cancelAnimation();
     this.canvas.removeEventListener("mousemove", this.handleMouseMove);
     this.canvas.removeEventListener("mousedown", this.handleMouseDown);
     this.canvas.removeEventListener("mouseup", this.handleMouseUp);
     this.canvas.removeEventListener("wheel", this.handleWheel);
     this.canvas.removeEventListener("dblclick", this.handleDoubleClick);
-  }
+  };
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Rnd } from "react-rnd";
-import { useSpecificSubtitle } from "../hooks/subtitles";
+import { useSpecificSubtitle } from "../../hooks/subtitles";
 
 /**
  * Properties for the RndSubtitle component.
