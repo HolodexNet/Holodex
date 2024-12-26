@@ -47,18 +47,14 @@ const sortOptions: { value: SortOption; label: string; icon: string }[] = [
 ];
 
 // Channel component
-const ChannelComponent: React.FC<{
-  channel: Channel;
-  displayStyle: DisplayStyle;
-}> = ({ channel, displayStyle }) => {
-  return (
-    <ChannelCard
-      size={displayStyle === "grid" ? "lg" : "sm"}
-      {...channel}
-      key={`channel-${channel.id}`}
-    />
-  );
-};
+// const ChannelComponent: React.FC<{
+//   channel: Channel;
+//   displayStyle: DisplayStyle;
+// }> = ({ channel, displayStyle }) => {
+//   return (
+//     <ChannelCard size={displayStyle === "grid" ? "lg" : "sm"} {...channel} />
+//   );
+// };
 
 // Group component
 const GroupComponent: React.FC<{
@@ -72,10 +68,11 @@ const GroupComponent: React.FC<{
       {displayStyle === "grid" ? (
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-4">
           {channels.map((channel) => (
-            <ChannelComponent
+            <ChannelCard
               key={channel.id}
-              channel={channel}
-              displayStyle={displayStyle}
+              {...channel}
+              variant="card"
+              size="lg"
             />
           ))}
         </div>
@@ -83,7 +80,12 @@ const GroupComponent: React.FC<{
         <div className="space-y-2">
           {channels.map((channel) => (
             <div key={channel.id} className="py-1">
-              <ChannelComponent channel={channel} displayStyle={displayStyle} />
+              <ChannelCard
+                key={channel.id}
+                {...channel}
+                variant="list"
+                size="sm"
+              />
             </div>
           ))}
         </div>

@@ -22,6 +22,7 @@ type PartialChannel = WithNonOptional<
 
 interface ChannelCardProps extends PartialChannel {
   size: "xs" | "sm" | "md" | "lg";
+  variant: "card" | "list";
   showSubscribers?: boolean;
   showVideoCount?: boolean;
   showClipCount?: boolean;
@@ -31,6 +32,7 @@ interface ChannelCardProps extends PartialChannel {
 export const MemoizedChannelCard = React.memo(ChannelCard);
 export function ChannelCard({
   size,
+  variant,
   showSubscribers = true,
   showVideoCount,
   showClipCount,
@@ -83,17 +85,19 @@ export function ChannelCard({
     english_name,
   });
 
-  switch (size) {
-    case "xs":
-    case "sm":
+  switch (variant) {
+    case "list":
       return (
         <div
-          className="flex items-center gap-4 rounded-lg bg-base-3 p-4 transition-all hover:cursor-pointer hover:bg-base-4"
+          className="flex items-center gap-2 rounded-lg bg-base-3 p-2 transition-all hover:cursor-pointer hover:bg-base-4 md:gap-4 md:p-4"
           onClick={goToChannelClickHandler}
         >
-          <Link to={channelHref} className="flex grow items-center gap-4">
+          <Link
+            to={channelHref}
+            className="flex grow items-center gap-2 md:gap-4"
+          >
             <ChannelImg
-              className={`h-12 w-12 ${inactive && "opacity-80 saturate-50"}`}
+              className={`h-12 w-auto md:h-20 lg:h-full ${inactive && "opacity-80 saturate-50"}`}
               channelId={id}
             />
             <div className="flex flex-col overflow-hidden">
@@ -142,7 +146,7 @@ export function ChannelCard({
         </div>
       );
 
-    case "lg":
+    case "card":
       return (
         // Set min-height because react-virtuoso will break if the height is not fixed
         <div
