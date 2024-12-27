@@ -132,12 +132,15 @@ export default {
     methods: {
         async getAutocomplete(query) {
             // this.isLoading = true;
-            const res = await this.searchAutocomplete(query, "ja_jp");
-            const resEn = await this.searchAutocomplete(query, "en_us");
+            const res = await this.searchAutocompleteAlternative(query, "JP");
+            const resEn = await this.searchAutocompleteAlternative(query, "US");
+            // const res = await this.searchAutocomplete(query, "ja_jp");
+            // const resEn = await this.searchAutocomplete(query, "en_us");
             const lookupEn = resEn.results || [];
             console.log(lookupEn);
             const fnLookupFn = (id, name, altName) => {
                 const foundEn = lookupEn.find((x) => x.trackId === id);
+                if (!foundEn) return altName || name;
                 const possibleNames = [foundEn.trackCensoredName?.toUpperCase(), foundEn.trackName.toUpperCase()];
                 if (foundEn && !possibleNames.includes(name.toUpperCase()) && compareTwoStrings(foundEn.trackName, name) < 0.75) {
                     return `${name} / ${foundEn.trackCensoredName || foundEn.trackName}`;
@@ -250,6 +253,16 @@ export default {
                 country: "JP",
                 limit: 3,
                 lang,
+            });
+        },
+
+        async searchAutocompleteAlternative(query, country = "JP") {
+            return jsonp("https://itunes.apple.com/search", {
+                term: query,
+                entity: "musicTrack",
+                country,
+                limit: 3,
+                lang: "ja_jp",
             });
         },
 
