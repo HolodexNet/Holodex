@@ -157,13 +157,14 @@ export default {
             this.isLoading = true;
             const [md, res, resEn] = await Promise.all([
                 this.searchMusicdex(query),
-                this.searchRegions(query, "ja_jp"),
-                this.searchRegions(query, "en_us"),
+                this.searchRegionsAlternative(query, "JP"),  // this.searchRegions(query, "ja_jp"),
+                this.searchRegionsAlternative(query, "US"),  // this.searchRegions(query, "en_us"),
             ]);
             const lookupEn = resEn || [];
             console.log(lookupEn);
             const fnLookupFn = (id, name, altName) => {
                 const foundEn = lookupEn.find((x) => x.trackId === id);
+                if (!foundEn) return altName || name;
                 const possibleNames = [
                     foundEn.trackCensoredName?.toUpperCase(),
                     foundEn.trackName.toUpperCase(),
@@ -226,6 +227,22 @@ export default {
             let parsedIDs = [];
             for (const r of regions) {
                 const queryed = await this.searchAutocomplete(query, lang, r);
+                const currentSongs = queryed.results || [];
+                for (const song of currentSongs) {
+                    if (!parsedIDs.includes(song.trackId)) {
+                        parsedIDs.push(song.trackId)
+                        regionSongs.push(song)
+                    }
+                }
+            };
+            return regionSongs;
+        },
+        async searchRegionsAlternative(query, lang = "JP", regions: Array<String> = ["ja_jp", 'en_us']) {
+            // Order langs by highest to lowest priority; missing IDs will merge in.
+            const regionSongs = [];
+            let parsedIDs = [];
+            for (const r of regions) {
+                const queryed = await this.searchAutocomplete(query, r, lang);
                 const currentSongs = queryed.results || [];
                 for (const song of currentSongs) {
                     if (!parsedIDs.includes(song.trackId)) {
