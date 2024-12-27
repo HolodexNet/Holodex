@@ -4,7 +4,7 @@ import { FancyMultiSelect } from "./shadcn/ui/fancy-multiselect";
 import { Switch } from "./shadcn/ui/switch";
 import { Label } from "./shadcn/ui/label";
 import { Checkbox } from "./shadcn/ui/checkbox";
-import DemoTimeline from "./components/tldex/new-editor/components/Timeline/DemoTimeline";
+// import DemoTimeline from "./components/tldex/new-editor/components/Timeline/DemoTimeline";
 
 export function Kitchensink() {
   const [count, setCount] = useState(0);
@@ -116,7 +116,7 @@ export function Kitchensink() {
 
       {/* <WaveformTestPage /> */}
 
-      <DemoTimeline />
+      {/* <DemoTimeline /> */}
     </div>
   );
 }
