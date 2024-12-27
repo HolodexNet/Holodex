@@ -54,6 +54,12 @@ function arrayToCommaSeparatedString(arr: string[] | string | undefined) {
   return Array.isArray(arr) ? arr.join(",") : arr;
 }
 
+export type VideoServiceResponse<VideoType> = {
+  items: VideoType[];
+  approximateTotal: number;
+  nextPage?: string;
+};
+
 export function useVideosV3(
   params?: Omit<UseVideosV3Params, "nextPage">,
   config?: CommonQueryConfig,

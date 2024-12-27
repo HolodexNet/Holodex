@@ -30,11 +30,11 @@ import React from "react";
 import { useOrgs } from "@/services/orgs.service";
 import { useTimeout } from "usehooks-ts";
 import { defaultOpenAtom } from "@/store/settings";
-//@ts-expect-error commitssincelasttag
 import {
   abbreviatedSha,
   committerDate,
   lastTag,
+  //@ts-expect-error commitssincelasttag
   commitsSinceLastTag,
 } from "~build/git";
 import dayjs from "dayjs";

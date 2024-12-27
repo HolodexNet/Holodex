@@ -2,6 +2,7 @@ import { useClient } from "@/hooks/useClient";
 import { hidePlaceholderAtom } from "@/store/settings";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
+import { VideoServiceResponse } from "./video.service";
 
 interface UseLiveParams {
   channel_id?: string;
@@ -31,12 +32,13 @@ const STANDARD_CONFIG_LIVE_QUERY = {
 export function useLive(params?: UseLiveParams, config?: CommonQueryConfig) {
   const client = useClient();
 
-  return useQuery<Live[]>({
+  return useQuery({
     queryKey: ["live", params],
     queryFn: async () =>
-      await client<Live[]>("/api/v2/live", {
+      await client<VideoServiceResponse<Live>>("/api/v3/live", {
         params: {
           ...params,
+          limit: 3000,
         },
       }),
     ...STANDARD_CONFIG_LIVE_QUERY,

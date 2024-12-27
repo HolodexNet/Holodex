@@ -19,6 +19,7 @@ export function FavoritedChannels() {
           data={favChannels?.flat() ?? []}
           itemContent={(_, channel) => (
             <MemoizedChannelCard
+              variant="card"
               key={"fav_card_" + channel.id}
               size="lg"
               {...channel}

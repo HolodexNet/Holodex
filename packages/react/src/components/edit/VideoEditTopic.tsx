@@ -70,6 +70,7 @@ export function VideoEditTopic({ video }: { video: Video }) {
           key={channel.id}
           {...channel}
           size="xs"
+          variant="list"
           showSubscribers={false}
         >
           <Button

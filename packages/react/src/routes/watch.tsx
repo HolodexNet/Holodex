@@ -133,7 +133,7 @@ export function Watch() {
                 "px-4 @screen-lg:px-8 pb-8": theaterMode,
               })}
             >
-              {channel && <ChannelCard size="xs" {...channel} />}
+              {channel && <ChannelCard size="xs" variant="list" {...channel} />}
               {!currentVideo?.link?.includes("twitch") &&
                 currentVideo?.description && (
                   <PlayerDescription description={currentVideo.description} />

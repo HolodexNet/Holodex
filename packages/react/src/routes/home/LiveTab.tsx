@@ -20,7 +20,7 @@ export function LiveTab() {
   );
 
   const liveFiltered = useVideoFilter(
-    live as Video[],
+    live?.items as Video[],
     "stream_schedule",
     "org",
   );

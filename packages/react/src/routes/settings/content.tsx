@@ -104,7 +104,12 @@ export function SettingsContentPreferences() {
           {blockedChannels.length ? (
             <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))]">
               {blockedChannels.map((channel) => (
-                <ChannelCard key={channel.id} size="lg" {...channel} />
+                <ChannelCard
+                  variant="card"
+                  key={channel.id}
+                  size="lg"
+                  {...channel}
+                />
               ))}
             </div>
           ) : (

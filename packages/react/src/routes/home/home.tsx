@@ -124,9 +124,11 @@ function StickyTabsList({
         {t("views.home.recentVideoToggles.subber")}
       </TabsTrigger>
       <TabsTrigger value="members">{fourthTab}</TabsTrigger>
-      <Separator orientation="vertical" className="relative h-auto" />
+      <Separator orientation="vertical" className="relative h-10" />
+      {/* The h-10 on this separator is actually load bearing - it maintains the height of the whole tab list */}
+      {/* Optional Control Buttons */}
       {tab === "clips" && <ClipLanguageSelector />}
-      <CardSizeToggle />
+      {tab !== "members" && <CardSizeToggle />}
     </TabsList>
   );
 }
