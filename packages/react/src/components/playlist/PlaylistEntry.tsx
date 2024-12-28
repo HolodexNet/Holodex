@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
-import { makeYtThumbnailUrl } from "@/lib/utils";
+import { makeThumbnailUrl } from "@/lib/utils";
 import { localeAtom } from "@/store/i18n";
 import { userAtom } from "@/store/auth";
 import { Button } from "@/shadcn/ui/button";
@@ -26,7 +26,7 @@ export default function PlaylistEntry({
         {video_ids && video_ids.length > 0 ? (
           <VideoThumbnail
             className="h-full rounded-md object-cover"
-            src={makeYtThumbnailUrl(video_ids[0], "sm")}
+            src={makeThumbnailUrl(video_ids[0], "sm")}
           />
         ) : (
           <div className="grid h-full place-content-center rounded-md bg-base-5 p-4">

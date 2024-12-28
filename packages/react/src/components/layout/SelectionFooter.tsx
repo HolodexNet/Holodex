@@ -12,7 +12,7 @@ import {
 import { useVideoSelection } from "@/hooks/useVideoSelection";
 import { siteIsSmallAtom } from "@/hooks/useFrame";
 import { useTranslation } from "react-i18next";
-import { makeYtThumbnailUrl } from "@/lib/utils";
+import { makeThumbnailUrl } from "@/lib/utils";
 import { VideoThumbnail } from "../video/VideoThumbnail";
 import { SelectionEditShortcuts } from "../edit/selection/SelectionEditShortcuts";
 import SelectionFooterTopicPicker from "../edit/selection/SelectionFooterTopicPicker";
@@ -29,9 +29,7 @@ const SelectedVideosModal = ({
 
   const getThumbnailSrc = (video: PlaceholderVideo) => {
     const size = isSmall ? "sm" : "md";
-    return video.type === "placeholder"
-      ? video.thumbnail
-      : makeYtThumbnailUrl(video.id, size);
+    return makeThumbnailUrl(video.id, size, video.thumbnail);
   };
 
   return (
@@ -47,6 +45,7 @@ const SelectedVideosModal = ({
             <div>
               <h3 className="font-semibold">{video.title}</h3>
               <p className="text-sm text-gray-500">{}</p>
+              {/*  what was i doing here again why is this block empty ^ */}
             </div>
           </div>
         ))}

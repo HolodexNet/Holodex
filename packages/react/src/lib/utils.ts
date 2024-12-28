@@ -11,6 +11,47 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/**
+ * Generates a thumbnail URL for a given video ID and size.
+ *
+ * If the video ID is a YouTube video, it will use the YouTube thumbnail URL.
+ * If the video ID is a Twitch video, it will use the Twitch thumbnail URL.
+ * If the `thumbnail` param is provided, it will use the thumbnail URL.
+ *
+ * @param id - the video ID
+ * @param size - the size of the thumbnail
+ * @param thumbnail - the thumbnail URL (optional)
+ * @returns a string representing the thumbnail URL
+ */
+export function makeThumbnailUrl(
+  id: string,
+  size: VideoCardSize,
+  thumbnail?: string,
+) {
+  let remoteThumbnail = thumbnail;
+  if (id.startsWith("tw:")) {
+    remoteThumbnail = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${id.split(":")[1]}-1920x1080.jpg`;
+  }
+
+  if (remoteThumbnail)
+    switch (size) {
+      case "xs":
+      case "sm":
+      case "list":
+        return `/statics/thumbnail/default/${btoa(remoteThumbnail).replace("+", "-").replace("/", "_").replace(/=+$/, "")}.jpg`;
+      case "md":
+      case "lg":
+        return `/statics/thumbnail/maxres/${btoa(remoteThumbnail).replace("+", "-").replace("/", "_").replace(/=+$/, "")}.jpg`;
+    }
+  return makeYtThumbnailUrl(id, size);
+}
+
+/**
+ * Makes a YouTube thumbnail URL for a given video ID and size.
+ * @param id YouTube video ID
+ * @param size size of the thumbnail
+ * @returns an array of URLs in order of preference. If the webp version is not available, it will fallback to the jpg version.
+ */
 export function makeYtThumbnailUrl(id: string, size: VideoCardSize) {
   switch (size) {
     case "xs":

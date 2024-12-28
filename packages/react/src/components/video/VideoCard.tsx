@@ -3,7 +3,7 @@ import { formatDuration } from "@/lib/time";
 import { Button } from "@/shadcn/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { VideoMenu } from "./VideoMenu";
-import { cn, makeYtThumbnailUrl, resizeChannelPhoto } from "@/lib/utils";
+import { cn, makeThumbnailUrl, resizeChannelPhoto } from "@/lib/utils";
 import React, { Suspense, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDuration } from "@/hooks/useDuration";
@@ -71,10 +71,7 @@ export function VideoCard({
       ? video.link
       : `/watch/${video.id}`;
   const videoIsPlaceholder = video.type === "placeholder";
-  const thumbnailSrc =
-    videoIsPlaceholder && video.thumbnail
-      ? `/statics/thumbnail/maxres/${btoa(video.thumbnail).replace("+", "-").replace("/", "_").replace(/=+$/, "")}.jpg`
-      : makeYtThumbnailUrl(video.id, size);
+  const thumbnailSrc = makeThumbnailUrl(video.id, size, video.thumbnail);
 
   const externalLink = videoIsPlaceholder
     ? video.link
