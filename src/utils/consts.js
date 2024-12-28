@@ -142,7 +142,7 @@ export const TL_LANGS = Object.freeze([
 export const langConversion = Object.freeze({
     "lol-PEKO": "en",
     "lol-UWU": "en",
-    "zh": "zh-Hant",
+    zh: "zh-Hant",
     "zh-CN": "zh-Hans",
 });
 

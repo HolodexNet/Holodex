@@ -55,7 +55,7 @@ export function localizedDayjs(time, lang) {
     return dayjs(time);
 }
 
-export function titleTimeString(available_at, lang ) {
+export function titleTimeString(available_at, lang) {
     const ts = localizedDayjs(available_at, lang);
     const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
     const ts2 = ts
