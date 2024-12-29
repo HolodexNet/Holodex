@@ -3,6 +3,7 @@ import type { LayoutItem } from "@/external/vue-grid-layout/src/helpers/utils";
 import { getFirstCollision } from "@/external/vue-grid-layout/src/helpers/utils";
 import {
  getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout,
+ generateContentId,
 } from "@/utils/mv-utils";
 import type { Content } from "@/utils/mv-utils";
 import api from "@/utils/backend-api";
@@ -128,7 +129,6 @@ const mutations = {
     },
     addLayoutItem(state) {
         // Increment the counter to ensure key is always unique.
-        state.index = new Date().getTime();
         let newLayoutItem: LayoutItem;
 
         // try to find a good location for it:
@@ -140,7 +140,7 @@ const mutations = {
                     y,
                     w: 4,
                     h: 6,
-                    i: state.index,
+                    i: generateContentId(),
                     isResizable: true,
                     isDraggable: true,
                 };
@@ -158,7 +158,7 @@ const mutations = {
                 y: 24, // puts it at the bottom
                 w: 4,
                 h: 6,
-                i: state.index,
+                i: generateContentId(),
                 isResizable: true,
                 isDraggable: true,
             };
