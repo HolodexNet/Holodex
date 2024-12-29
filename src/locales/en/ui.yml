@@ -87,6 +87,15 @@ component:
   relatedVideo:
     clipsLabel: clips
     simulcastsLabel: simulcasts
+    simulcasts:
+      linkToMultiview:
+        tooltip: Open all Simulcasts in Multiview
+        error:
+          layoutBuildFailure: >-
+            An error occurred while creating the Multiview link.
+            Please file a bug report for this on GitHub or via the Discord.
+          noDefaultLayout: Multiview does not have a layout for {videoCount} videos.
+          noSimulcasts: There are no simulcasts for this video.
     refersLabel: refers
     sourcesLabel: sources
     songsLabel: songs

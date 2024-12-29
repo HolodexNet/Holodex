@@ -56,6 +56,33 @@
             {{ hidden[relation] ? "＋" : "－" }} {{ related[relation].length }} {{ relationI18N(relation) }}
           </a>
           <v-spacer />
+          <v-tooltip
+            v-if="relation === 'simulcasts'"
+            top
+          >
+            <template #activator="{ on, attrs }">
+              <span v-bind="attrs" v-on="on">
+                <v-btn
+                  icon
+                  tile
+                  :disabled="!simulcastMultiviewLink.ok"
+                  small
+                  class="mr-2"
+                  :to="simulcastMultiviewLink.url"
+                >
+                  <v-icon small>
+                    {{ icons.mdiViewDashboard }}
+                  </v-icon>
+                </v-btn>
+              </span>
+            </template>
+            <span v-if="simulcastMultiviewLink.ok">
+              {{ $t('component.relatedVideo.simulcasts.linkToMultiview.tooltip') }}
+            </span>
+            <span v-if="!simulcastMultiviewLink.ok">
+              {{ $t(`component.relatedVideo.simulcasts.linkToMultiview.error.${simulcastMultiviewLink.error.reason}`, simulcastMultiviewLink.error.i18nParameters) }}
+            </span>
+          </v-tooltip>
           <v-btn
             :key="`playlist-btn-${relation}`"
             icon
@@ -100,6 +127,8 @@ import filterVideos from "@/mixins/filterVideos";
 import { mdiTimerOutline } from "@mdi/js";
 import { videoTemporalComparator } from "@/utils/functions";
 import { musicdexURL } from "@/utils/consts";
+import { decodeLayout, encodeLayout } from "@/utils/mv-utils";
+import { mapState } from "vuex";
 
 export default {
     name: "WatchSideBar",
@@ -130,6 +159,7 @@ export default {
         };
     },
     computed: {
+        ...mapState("multiview", ["autoLayout"]),
         // totalRelations() {
         //     return Object.values(this.related).map(r => r.length).reduce((a, b) => a+b);
         // }
@@ -159,6 +189,94 @@ export default {
                     .sort((a, b) => a.start - b.start);
             }
             return [];
+        },
+        simulcastMultiviewLink() {
+            if (!this.related.simulcasts.length) {
+                // There's no simulcasts so let's not make a URL
+                return {
+                    ok: false,
+                    error: {
+                        reason: "noSimulcasts",
+                        i18nParameters: {},
+                    },
+                };
+            }
+
+            const defaultLayoutString = this.autoLayout[this.related.simulcasts.length + 1];
+            if (!defaultLayoutString) {
+                // We do not have a default layout for the total amount of streams
+                // TODO: We could auto-generate a layout in this case
+                return {
+                    ok: false,
+                    error: {
+                        reason: "noDefaultLayout",
+                        i18nParameters: {
+                            videoCount: this.related.simulcasts.length + 1,
+                        },
+                    },
+                };
+            }
+
+            const { layout, content } = decodeLayout(defaultLayoutString);
+            if (!layout) {
+                console.warn("Unable to decode the default layout.");
+                // TODO: We could auto-generate a layout in this case as well
+                return {
+                    ok: false,
+                    error: {
+                        reason: "layoutBuildFailure",
+                        i18nParameters: {},
+                    },
+                };
+            }
+
+            const allSimulcastVideos = [
+                {
+                    type: "video",
+                    id: this.video.id,
+                },
+                ...this.related.simulcasts.map((simulcast) => ({
+                    type: "video",
+                    id: simulcast.id,
+                })),
+            ];
+
+            // Fill in blank spaces in the layout with the simulcast videos in order.
+            // This is for the case where the default layout already has chat boxes specified in content.
+            const filledContents = layout.map((_, i) => content[i] ?? allSimulcastVideos.shift());
+
+            if (allSimulcastVideos.length) {
+                console.warn(`Expected all videos to be placeable in default, but ${allSimulcastVideos.length} were not able to be placed.`);
+                return {
+                    ok: false,
+                    error: {
+                        reason: "layoutBuildFailure",
+                        i18nParameters: {},
+                    },
+                };
+            }
+
+            const layoutURIComponent = encodeLayout({
+                layout,
+                contents: filledContents,
+                includeVideo: true,
+            });
+
+            if (!layoutURIComponent || layoutURIComponent === "error") {
+                console.warn("Unable to encode a layout with the filled contents.");
+                return {
+                    ok: false,
+                    error: {
+                        reason: "layoutBuildFailure",
+                        i18nParameters: {},
+                    },
+                };
+            }
+
+            return {
+                ok: true,
+                url: `/multiview/${encodeURIComponent(layoutURIComponent)}`,
+            };
         },
     },
     // mounted() {
