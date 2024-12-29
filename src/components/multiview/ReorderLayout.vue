@@ -18,7 +18,7 @@
             class="layout-preview-cell"
             :style="getStyle(l)"
             @dragover="onDragOver"
-            @drop="onDrop($event, l.i)"
+            @drop="onDrop($event, idx)"
           >
             <div
               v-if="content && content[l.i]"
@@ -135,9 +135,9 @@ export default {
             const unitX = x / (width / 24);
             const unitY = y / (height / 24);
             // Find intersecting cell
-            const dropCell = this.layout.find((l) => unitX >= l.x && unitX < (l.x + l.w) && unitY >= l.y && unitY < (l.y + l.h));
-            if (dropCell) {
-                this.$store.commit("multiview/swapGridPosition", { id1: startIdx, id2: dropCell.i });
+            const dropCellIdx = this.layout.findIndex((l) => unitX >= l.x && unitX < (l.x + l.w) && unitY >= l.y && unitY < (l.y + l.h));
+            if (dropCellIdx !== undefined) {
+                this.$store.commit("multiview/swapGridPosition", { id1: startIdx, id2: dropCellIdx });
             }
             this.draggingIdx = -1;
         },
