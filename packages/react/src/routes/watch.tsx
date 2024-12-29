@@ -3,8 +3,9 @@ import { ChatModal } from "@/components/chat/ChatModal";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { ChatCard } from "@/components/player/ChatCard";
 import { Controlbar } from "@/components/player/Controlbar";
-import { PlayerDescription } from "@/components/player/PlayerDescription";
-import { PlayerRecommendations } from "@/components/player/PlayerRecommendations";
+import { Mentions } from "@/components/player/MentionsCard";
+import { PlayerDescription as Description } from "@/components/player/PlayerDescription";
+import { PlayerRecommendations as Recommendations } from "@/components/player/PlayerRecommendations";
 import { PlayerStats } from "@/components/player/PlayerStats";
 import { QueueList } from "@/components/player/QueueList";
 import { useIsLgAndUp } from "@/hooks/useBreakpoint";
@@ -50,7 +51,7 @@ export function Watch() {
     enabled: !!currentVideo,
     placeholderData: () => {
       if (location.state?.video && location.state?.video.channel)
-        return location.state?.video;
+        return location.state?.video.channel;
     },
   });
 
@@ -134,12 +135,15 @@ export function Watch() {
               })}
             >
               {channel && <ChannelCard size="xs" variant="list" {...channel} />}
+              {currentVideo?.mentions && (
+                <Mentions mentions={currentVideo.mentions} />
+              )}
               {!currentVideo?.link?.includes("twitch") &&
                 currentVideo?.description && (
-                  <PlayerDescription description={currentVideo.description} />
+                  <Description description={currentVideo.description} />
                 )}
               <div className="flex @screen-lg:hidden">
-                <PlayerRecommendations {...currentVideo} />
+                <Recommendations {...currentVideo} />
               </div>
             </div>
           </div>
@@ -156,7 +160,7 @@ export function Watch() {
                   <ChatCard {...currentVideo} />
                 </div>
               )}
-              <PlayerRecommendations {...currentVideo} />
+              <Recommendations {...currentVideo} />
             </div>
           )}
         </div>

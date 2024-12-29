@@ -97,7 +97,7 @@ export function ChannelCard({
             className="flex grow items-center gap-2 md:gap-4"
           >
             <ChannelImg
-              className={`h-12 w-auto md:h-20 lg:h-full ${inactive && "opacity-80 saturate-50"}`}
+              className={`h-12 w-auto md:h-20 lg:h-24 ${inactive && "opacity-80 saturate-50"}`}
               channelId={id}
             />
             <div className="flex flex-col overflow-hidden">
