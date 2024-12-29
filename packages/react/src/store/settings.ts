@@ -1,6 +1,7 @@
 import { GET_ON_INIT } from "@/lib/consts";
 import { atom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+import { useCallback } from "react";
 
 // Define the interface for the new settings state
 export interface HolodexSettings {
@@ -59,6 +60,18 @@ export function usePreferredName({
   const useEnglishName = useAtomValue(englishNameAtom);
 
   return useEnglishName ? english_name || name : name;
+}
+
+export function useNamePrefFn() {
+  const useEnglishName = useAtomValue(englishNameAtom);
+
+  const prefFn = useCallback(
+    ({ name, english_name }: { name?: string; english_name?: string }) =>
+      useEnglishName ? english_name || name : name,
+    [useEnglishName],
+  );
+
+  return prefFn;
 }
 
 export const clipLanguageAtom = atom(
