@@ -27,6 +27,107 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
 
+const TheaterModeChat = ({
+  currentVideo,
+}: {
+  currentVideo: PlaceholderVideo;
+}) => {
+  const [chatOpen] = useAtom(chatOpenAtom);
+  const [tlOpen] = useAtom(tlOpenAtom);
+
+  if (!currentVideo || (!chatOpen && !tlOpen)) return null;
+
+  return (
+    <div className="hidden min-w-[24rem] @screen-lg:flex">
+      <ChatCard {...currentVideo} />
+    </div>
+  );
+};
+
+const VideoContent = ({
+  currentVideo,
+  url,
+  chatPos,
+}: {
+  currentVideo?: PlaceholderVideo;
+  url: string;
+  chatPos?: "left" | "right";
+}) => {
+  const [miniPlayer] = useAtom(miniPlayerAtom);
+  const theaterMode = useAtomValue(theaterModeAtom);
+
+  if (miniPlayer || !currentVideo) return null;
+
+  return (
+    <div
+      className={cn("flex h-full w-full", {
+        "flex-row-reverse": chatPos === "left",
+      })}
+    >
+      <div className="grow">
+        <PlayerWrapper id={currentVideo?.id} url={url} />
+      </div>
+      {theaterMode && <TheaterModeChat currentVideo={currentVideo} />}
+    </div>
+  );
+};
+
+const UnderVideoInfo = ({
+  currentVideo,
+  channel,
+}: {
+  currentVideo?: PlaceholderVideo;
+  channel?: Channel;
+}) => {
+  const theaterMode = useAtomValue(theaterModeAtom);
+
+  const contentClasses = cn("flex flex-col gap-4", {
+    "px-4 @screen-lg:px-8 pb-8": theaterMode,
+  });
+
+  return (
+    <div className={contentClasses}>
+      {channel && <ChannelCard size="xs" variant="list" {...channel} />}
+      {currentVideo?.mentions && <Mentions mentions={currentVideo.mentions} />}
+      {!currentVideo?.link?.includes("twitch") && currentVideo?.description && (
+        <Description description={currentVideo.description} />
+      )}
+      <div className="flex @screen-lg:hidden">
+        <Recommendations {...currentVideo} />
+      </div>
+    </div>
+  );
+};
+
+const VideoAsideLists = ({
+  currentVideo,
+}: {
+  currentVideo?: PlaceholderVideo;
+}) => {
+  const [chatOpen] = useAtom(chatOpenAtom);
+  const [tlOpen] = useAtom(tlOpenAtom);
+  const theaterMode = useAtomValue(theaterModeAtom);
+  const queue = useAtomValue(queueAtom);
+
+  if (theaterMode) return null;
+
+  return (
+    <div className="hidden w-96 shrink-0 flex-col gap-4 @screen-lg:flex">
+      {!!queue.length && <QueueList currentId={currentVideo?.id} />}
+      {(currentVideo?.type === "stream" || currentVideo?.status === "live") && (
+        <div
+          className={cn("overflow-hidden", {
+            "h-[80vh] max-h-[80vh]": chatOpen || tlOpen,
+          })}
+        >
+          <ChatCard {...currentVideo} />
+        </div>
+      )}
+      <Recommendations {...currentVideo} />
+    </div>
+  );
+};
+
 export function Watch() {
   const location = useLocation();
   const { id } = useParams();
@@ -42,41 +143,53 @@ export function Watch() {
       refetchOnMount: true,
       staleTime: 30 * 1000,
       placeholderData: () => {
-        if (location.state?.video && location.state?.video.channel)
-          return location.state?.video;
+        if (location.state?.video?.channel) return location.state.video;
       },
     },
   );
+
   const { data: channel } = useChannel(currentVideo?.channel.id ?? "", {
     enabled: !!currentVideo,
     placeholderData: () => {
-      if (location.state?.video && location.state?.video.channel)
-        return location.state?.video.channel;
+      if (location.state?.video?.channel) return location.state.video.channel;
     },
   });
 
-  const queue = useAtomValue(queueAtom);
   const [miniPlayer, setMiniPlayer] = useAtom(miniPlayerAtom);
   const theaterMode = useAtomValue(theaterModeAtom);
-  const [chatOpen, setChatOpen] = useAtom(chatOpenAtom);
-  const [tlOpen, setTLOpen] = useAtom(tlOpenAtom);
   const chatPos = useAtomValue(chatPosAtom);
-
   const smOrMd = !useIsLgAndUp();
+  const tlOpen = useAtomValue(tlOpenAtom);
+  const chatOpen = useAtomValue(chatOpenAtom);
 
   const url = idToVideoURL(id!, currentVideo?.link);
 
   const makeHeaderHidden = useSetAtom(headerHiddenAtom);
   useEffect(() => {
-    // hides the holodex default header
     if (theaterMode) makeHeaderHidden(true);
     return () => makeHeaderHidden(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theaterMode]);
 
   useEffect(() => {
     setMiniPlayer(false);
   }, []);
+
+  const regularMode = !theaterMode;
+
+  const containerClasses = cn(
+    "mx-auto flex w-full gap-8",
+    regularMode && " max-w-screen-2xl p-4 pt-2", // padding around the container + a max width for regular mode container.
+  );
+
+  const playerContainerClasses = cn(
+    "flex w-full flex-col bg-base-3",
+    theaterMode && "aspect-video @screen-lg:h-dvh", // equal to screen height when theater mode
+    regularMode && "overflow-hidden rounded-lg",
+  );
+
+  const titleSectionClasses = cn("flex flex-col gap-1", {
+    "px-4 @screen-lg:px-8 py-4": theaterMode,
+  });
 
   return (
     <>
@@ -84,86 +197,32 @@ export function Watch() {
         <title>{currentVideo?.title}</title>
         <meta name="description" content={currentVideo?.description} />
       </Helmet>
+
       <div className="flex h-full w-full @container">
-        <div
-          className={cn("mx-auto flex w-full gap-8", {
-            " p-4 pt-2 max-w-screen-2xl": !theaterMode,
-          })}
-        >
-          <div className={cn("flex w-full flex-col gap-4")}>
-            <div
-              className={cn("flex w-full flex-col bg-base-3", [
-                theaterMode
-                  ? "aspect-video @screen-lg:h-dvh"
-                  : "overflow-hidden rounded-lg",
-              ])}
-            >
-              {!miniPlayer && currentVideo && (
-                <div
-                  className={cn("flex h-full w-full", {
-                    "flex-row-reverse": chatPos === "left",
-                  })}
-                >
-                  <div className="grow">
-                    <PlayerWrapper
-                      id={currentVideo?.id}
-                      url={url}
-                      // className="h-full w-full"
-                      // style={{ aspectRatio: theaterMode ? "" : "16 / 9" }}
-                    />
-                  </div>
-                  {theaterMode && currentVideo && (chatOpen || tlOpen) && (
-                    <div className="hidden min-w-[24rem] @screen-lg:flex">
-                      <ChatCard {...currentVideo} />
-                    </div>
-                  )}
-                </div>
-              )}
+        <div className={containerClasses}>
+          {/* Container adds padding and width constraint */}
+          <div className="flex w-full flex-col gap-4">
+            <div className={playerContainerClasses}>
+              <VideoContent
+                currentVideo={currentVideo}
+                url={url}
+                chatPos={chatPos}
+              />
               {currentVideo && <Controlbar video={currentVideo} url={url} />}
             </div>
-            <div
-              className={cn("flex flex-col gap-1", {
-                "px-4 @screen-lg:px-8 py-4": theaterMode,
-              })}
-            >
+
+            <div className={titleSectionClasses}>
               <h2 className="text-xl font-bold">{currentVideo?.title}</h2>
               {currentVideo && <PlayerStats {...currentVideo} />}
             </div>
-            <div
-              className={cn("flex flex-col gap-4", {
-                "px-4 @screen-lg:px-8 pb-8": theaterMode,
-              })}
-            >
-              {channel && <ChannelCard size="xs" variant="list" {...channel} />}
-              {currentVideo?.mentions && (
-                <Mentions mentions={currentVideo.mentions} />
-              )}
-              {!currentVideo?.link?.includes("twitch") &&
-                currentVideo?.description && (
-                  <Description description={currentVideo.description} />
-                )}
-              <div className="flex @screen-lg:hidden">
-                <Recommendations {...currentVideo} />
-              </div>
-            </div>
+
+            <UnderVideoInfo currentVideo={currentVideo} channel={channel} />
           </div>
-          {!theaterMode && (
-            <div className="hidden w-96 shrink-0 flex-col gap-4 @screen-lg:flex">
-              {!!queue.length && <QueueList currentId={currentVideo?.id} />}
-              {(currentVideo?.type === "stream" ||
-                currentVideo?.status === "live") && (
-                <div
-                  className={cn("overflow-hidden", {
-                    "h-[80vh] max-h-[80vh]": chatOpen || tlOpen,
-                  })}
-                >
-                  <ChatCard {...currentVideo} />
-                </div>
-              )}
-              <Recommendations {...currentVideo} />
-            </div>
-          )}
+
+          <VideoAsideLists currentVideo={currentVideo} />
         </div>
+
+        {/* Mobile Chat Hover */}
         {currentVideo && smOrMd && (
           <ChatModal
             tlOpen={tlOpen}

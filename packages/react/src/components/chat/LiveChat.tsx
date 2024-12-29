@@ -28,8 +28,8 @@ export function LiveChat({
 
   if (needExtension)
     return (
-      <div className="flex h-full items-center justify-center p-4">
-        <span className="text-center text-sm">
+      <div className="flex h-full w-full items-center justify-center p-4 ">
+        <span className="max-w-40 text-center text-sm">
           {t("views.watch.chat.archiveNeedExtension", {
             0: (
               <Link

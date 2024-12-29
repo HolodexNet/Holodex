@@ -30,7 +30,7 @@ export function Controlbar({ video, url }: ControlbarProps) {
   const [tlOpen, setTlOpen] = useAtom(tlOpenAtom);
 
   return (
-    <div className="flex flex-col border-t-[1px] border-base">
+    <div className="">
       <HighlightBar video={video} />
       <div className="flex shrink-0 items-center gap-0 overflow-x-auto px-4 pb-2 text-base-11 @screen-lg:gap-2">
         <Button
@@ -41,6 +41,9 @@ export function Controlbar({ video, url }: ControlbarProps) {
         >
           <div className="i-heroicons:arrow-left" />
         </Button>
+        <div className="mx-auto">
+          {/* Separator - pushes everything to the right */}
+        </div>
         <Button
           title={t("views.watch.chat.showTLBtn")}
           className="flex @screen-lg:hidden"
@@ -76,7 +79,7 @@ export function Controlbar({ video, url }: ControlbarProps) {
           </Button>
         )}
         <Button
-          className="ml-auto whitespace-nowrap"
+          className="whitespace-nowrap"
           variant="ghost"
           onClick={() => setTheaterMode((v) => !v)}
         >
