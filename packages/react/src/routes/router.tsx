@@ -99,6 +99,11 @@ const ResetClientPage = lazy(() =>
   import("./debug").then((module) => ({ default: module.ResetClientPage })),
 );
 const Playlist = lazy(() => import("./playlist"));
+const Multiview = lazy(() =>
+  import("./multiview/multiview").then((module) => ({
+    default: module.Multiview,
+  })),
+);
 
 const Search = lazy(() =>
   import("./search").then((module) => ({ default: module.Search })),
@@ -158,6 +163,7 @@ export const routes = (
       <Route path="contact" Component={AboutContact} />
       <Route path="privacy" Component={AboutPrivacy} />
     </Route>
+    <Route path="multiview" Component={Multiview} />
     <Route path="kitchensink" Component={Kitchensink} />
     <Route path="login" Component={Login} />
     <Route path="tlclient" element={<div>Translation Client</div>} />
