@@ -146,7 +146,7 @@ const mutations = {
         const groupName = `${group.title}`.toLowerCase();
         const orgName = `${group.org}`;
         if (!state.hiddenGroups) Vue.set(state, "hiddenGroups", {});
-        if (!state.hiddenGroups[orgName]) Vue.set(state.hiddenGroups, `${orgName}`, [])
+        if (!state.hiddenGroups[orgName]) Vue.set(state.hiddenGroups, `${orgName}`, []);
 
         // determine to add or subtract:
         if (state.hiddenGroups[orgName].includes(groupName)) {

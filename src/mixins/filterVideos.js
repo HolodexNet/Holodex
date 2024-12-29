@@ -14,8 +14,8 @@ export default {
             const favoriteChannels = this.$store.getters["favorites/favoriteChannelIDs"];
             // eslint-disable-next-line no-param-reassign
             forOrg ||= this.$store.state.currentOrg.name;
-            let hiddenGroups = this.$store.state.settings.hiddenGroups;
-            const validOrgs = Object.keys(hiddenGroups)
+            const { hiddenGroups } = this.$store.state.settings;
+            const validOrgs = Object.keys(hiddenGroups);
             const orgGroupsHidden = validOrgs.includes(v.channel.org);
 
             let keep = true;
@@ -32,8 +32,8 @@ export default {
             // TODO: Update to suport hideViaGroup: mentions needs suborg field on API
             if (!isFavoritedOrInOrg) {
                 keep &&= !hideCollabs && !v.mentions?.every(
-                    ({ id, org, suborg }) => (blockedChannels.has(id) || 
-                    (hideGroups && validOrgs.includes(org) && hiddenGroups[org].includes((`${suborg}`).slice(2) || "Other"))
+                    ({ id, org, suborg }) => (blockedChannels.has(id)
+                    || (hideGroups && validOrgs.includes(org) && hiddenGroups[org].includes((`${suborg}`).slice(2) || "Other"))
                     || (org !== forOrg && !favoriteChannels.has(id))),
                 );
             }
@@ -49,7 +49,7 @@ export default {
             if (hideMissing) {
                 keep &&= v.status !== "missing";
             }
-            
+
             if (hideGroups) {
                 if (orgGroupsHidden) {
                     keep &&= !hideViaGroup;
