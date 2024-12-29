@@ -1,6 +1,5 @@
 import { useAuth } from "@/hooks/useAuth";
 import { userAtom } from "@/store/auth";
-import { GearIcon, CalendarIcon, ExitIcon } from "@radix-ui/react-icons";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,20 +20,25 @@ export function UserMenu() {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
-  const mockUserMenuItems = [
+  const userMenuItems = [
     {
       key: "settings",
       value: "Settings",
       fn: () => navigate("/settings/user"),
-      icon: <GearIcon />,
+      icon: <div className="i-heroicons:cog-6-tooth"></div>,
     },
     {
       key: "iCalFeed",
       value: "ICal Feed",
       fn: () => console.log("iCalFeed"),
-      icon: <CalendarIcon />,
+      icon: <div className="i-heroicons:calendar"></div>,
     },
-    { key: "logout", value: "Logout", fn: logout, icon: <ExitIcon /> },
+    {
+      key: "logout",
+      value: "Logout",
+      fn: logout,
+      icon: <div className="i-heroicons:arrow-up-tray"></div>,
+    },
   ];
 
   if (!user) {
@@ -80,14 +84,16 @@ export function UserMenu() {
               </div> */}
             </div>
             <div className="flex flex-row capitalize text-primary-11">
-              <div className="i-mage:stars-c mr-1 animate-pulse"></div>
               {user.role === "user" ? "" : user.role}
+
+              <div className="i-mage:stars-c mx-1 animate-pulse"></div>
+
               {user.contribution_count + " " + t("component.mainNav.points")}
             </div>
           </div>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="" />
-        {mockUserMenuItems.map((item) => {
+        {userMenuItems.map((item) => {
           return (
             <UserMenuItem
               key={item.key + item.value}

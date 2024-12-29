@@ -83,6 +83,7 @@ const UnderVideoInfo = ({
 
   const contentClasses = cn("flex flex-col gap-4", {
     "px-4 @screen-lg:px-8 pb-8": theaterMode,
+    // when it is in theater mode, we need to add padding because the global container has no padding
   });
 
   return (
@@ -106,10 +107,7 @@ const VideoAsideLists = ({
 }) => {
   const [chatOpen] = useAtom(chatOpenAtom);
   const [tlOpen] = useAtom(tlOpenAtom);
-  const theaterMode = useAtomValue(theaterModeAtom);
   const queue = useAtomValue(queueAtom);
-
-  if (theaterMode) return null;
 
   return (
     <div className="hidden w-96 shrink-0 flex-col gap-4 @screen-lg:flex">
@@ -219,7 +217,7 @@ export function Watch() {
             <UnderVideoInfo currentVideo={currentVideo} channel={channel} />
           </div>
 
-          <VideoAsideLists currentVideo={currentVideo} />
+          {theaterMode && <VideoAsideLists currentVideo={currentVideo} />}
         </div>
 
         {/* Mobile Chat Hover */}

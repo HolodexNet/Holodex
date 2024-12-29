@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { atom, useAtomValue } from "jotai";
 import { splitAtom } from "jotai/utils";
 import { useMemo, useState } from "react";
@@ -176,7 +176,14 @@ function useClientSuggestions(
 }
 
 // Main Hook
-export function useSearchboxAutocomplete() {
+export interface UseSearchboxAutocompleteResult {
+  search: string; // the current searchbox value
+  updateSearch: (val: string) => void; // the setter on the search state
+  autocompleteQueryState: Omit<UseQueryResult<QueryItem[], unknown>, "data">;
+  autocomplete: QueryItem[]; // server-side autocomplete response
+}
+
+export function useSearchboxAutocomplete(): UseSearchboxAutocompleteResult {
   const { t } = useTranslation();
   const query = useAtomValue(queryAtom);
   const [search, updateSearch] = useState("");
