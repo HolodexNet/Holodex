@@ -164,6 +164,7 @@ export default {
             mdiRewind10,
             mdiLinkVariant,
 
+            lastSyncTimeMillis: Date.now(),
             paused: true,
             hovering: false,
             hoverTs: 0,
@@ -318,14 +319,21 @@ export default {
         sync() {
             if (!this.$parent?.$refs?.videoCell || !this.hasVideosToSync) return;
 
+            // Calculate the time delta between this `sync` call and the previous.
+            const currentSyncTimeMillis = Date.now();
+            const syncDeltaTime = (currentSyncTimeMillis - this.lastSyncTimeMillis) / 1000;
+            this.lastSyncTimeMillis = currentSyncTimeMillis;
+
             // Find start time if first initialization
             if (this.currentTs <= 0 || this.currentTs < this.minTs || this.currentTs > this.maxTs) {
                 this.currentTs = this.findStartTime();
+            } else if (!this.paused) {
+                // Update currentTs by delta if we are not paused
+                this.currentTs = Math.min(Math.max(this.currentTs + syncDeltaTime, this.minTs), this.maxTs);
             }
+
             // Max second desync, before it forces resync
             const DELTA_THRESHOLD = 1.5;
-            // current player states
-            const states = [];
             // DEBUG TOOL: current video deltas (diff between currentTs/true time)
             // const deltas = [];
             this.$parent.$refs.videoCell
@@ -353,10 +361,6 @@ export default {
                         cell.seekTo(expectedDuration);
                     }
                 });
-            // Wait for all videos to exit buffering state (3) to increment currentTs, if not paused
-            if (!states.includes(3) && !this.paused) {
-                this.currentTs = Math.min(Math.max(this.currentTs + 0.5, this.minTs), this.maxTs);
-            }
             // console.log("deltas: ", deltas);
         },
         // Find a start time from current player times or use minTs
