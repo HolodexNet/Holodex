@@ -243,7 +243,7 @@ export default {
 
             // Fill in blank spaces in the layout with the simulcast videos in order.
             // This is for the case where the default layout already has chat boxes specified in content.
-            const filledContents = layout.map((_, i) => content[i] ?? allSimulcastVideos.shift());
+            const filledContents = Object.fromEntries(layout.map(({ i }) => [i, content[i] ?? allSimulcastVideos.shift()]));
 
             if (allSimulcastVideos.length) {
                 console.warn(`Expected all videos to be placeable in default, but ${allSimulcastVideos.length} were not able to be placed.`);
