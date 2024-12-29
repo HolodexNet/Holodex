@@ -2,7 +2,7 @@
   <div>
     <template v-if="video.songcount">
       <span class="lightup d-flex">
-        <a class="d-block text-overline mx-2 my-1" @click="toggleExpansion('songs')">
+        <a class="d-block text-overline mx-2 my-1 pr-2" @click="toggleExpansion('songs')">
           {{ hidden.songs ? "＋" : "－" }} {{ video.songcount }} {{ relationI18N("songs") }}
         </a>
         <v-spacer />
@@ -10,7 +10,7 @@
           icon
           small
           tile
-          class="mr-2"
+          class="mr-2 my-1"
           @click="showDetailed = !showDetailed"
         >
           <v-icon small> {{ mdiTimerOutline }} </v-icon>
@@ -19,7 +19,7 @@
           icon
           small
           tile
-          class="mr-2"
+          class="mr-2 my-1"
           @click="addToMusicPlaylist"
         >
           <v-icon small> {{ icons.mdiMusic }} </v-icon>
@@ -50,7 +50,7 @@
         <div :key="`band${relation}`" class="lightup d-flex">
           <a
             :key="`${relation}-title`"
-            class="d-block text-overline mx-2 my-1"
+            class="d-block text-overline mx-2 my-1 pr-2"
             @click="toggleExpansion(relation)"
           >
             {{ hidden[relation] ? "＋" : "－" }} {{ related[relation].length }} {{ relationI18N(relation) }}
@@ -67,7 +67,7 @@
                   tile
                   :disabled="!simulcastMultiviewLink.ok"
                   small
-                  class="mr-2"
+                  class="mr-2 my-1"
                   :to="simulcastMultiviewLink.url"
                 >
                   <v-icon small>
@@ -88,7 +88,7 @@
             icon
             tile
             small
-            class="mr-2"
+            class="mr-2 my-1"
             @click="addToPlaylist(related[relation])"
           >
             <v-icon small>
