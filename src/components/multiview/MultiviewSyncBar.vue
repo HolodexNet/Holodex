@@ -30,6 +30,34 @@
             {{ icons.mdiCog }}
           </v-icon>
         </v-btn>
+        <v-menu top offset-y>
+          <template #activator="{ on }">
+            <v-btn
+              icon
+              v-on="on"
+            >
+              <v-icon small>
+                {{ mdiPlaySpeed }}
+              </v-icon>
+            </v-btn>
+          </template>
+          <v-list dense>
+            <v-list-item
+              v-for="availablePlaybackRate in availablePlaybackRates"
+              :key="`playbackRateSelector-${availablePlaybackRate}`"
+              @click="playbackRate = availablePlaybackRate"
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon v-if="playbackRate === availablePlaybackRate">
+                  {{ icons.mdiCheck }}
+                </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                {{ availablePlaybackRate }}
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-menu>
         <v-btn icon @click="onShareClick">
           <v-icon small>
             {{ mdiLinkVariant }}
@@ -148,7 +176,7 @@ import Vue from "vue";
 import throttle from "lodash-es/throttle";
 import copyToClipboard from "@/mixins/copyToClipboard";
 import {
-    mdiPause, mdiFastForward10, mdiRewind10, mdiLinkVariant,
+    mdiPause, mdiFastForward10, mdiRewind10, mdiLinkVariant, mdiPlaySpeed,
 } from "@mdi/js";
 import { encodeLayout } from "@/utils/mv-utils";
 import ChannelImg from "../channel/ChannelImg.vue";
@@ -163,13 +191,16 @@ export default {
             mdiFastForward10,
             mdiRewind10,
             mdiLinkVariant,
+            mdiPlaySpeed,
 
+            availablePlaybackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
             lastSyncTimeMillis: Date.now(),
             paused: true,
             hovering: false,
             hoverTs: 0,
             currentTs: 0,
             currentProgressByVideo: {},
+            playbackRate: 1,
             timeTooltipLeft: 0,
             timeTooltipText: "",
             timer: null,
@@ -267,6 +298,16 @@ export default {
                     else this.setTime(this.currentTs);
                 });
         },
+        playbackRate(playbackRate) {
+            this.$parent.$refs.videoCell
+                .forEach((cell) => {
+                    const { video } = cell;
+                    const olVideo = video && this.overlapVideos.find((v) => v.id === video.id);
+                    if (olVideo) {
+                        cell.setPlaybackRate(playbackRate);
+                    }
+                });
+        },
     },
     mounted() {
         this.startTimer();
@@ -329,11 +370,11 @@ export default {
                 this.currentTs = this.findStartTime();
             } else if (!this.paused) {
                 // Update currentTs by delta if we are not paused
-                this.currentTs = Math.min(Math.max(this.currentTs + syncDeltaTime, this.minTs), this.maxTs);
+                this.currentTs = Math.min(Math.max(this.currentTs + syncDeltaTime * this.playbackRate, this.minTs), this.maxTs);
             }
 
             // Max second desync, before it forces resync
-            const DELTA_THRESHOLD = 1.5;
+            const DELTA_THRESHOLD = 1.5 * this.playbackRate;
             // DEBUG TOOL: current video deltas (diff between currentTs/true time)
             // const deltas = [];
             this.$parent.$refs.videoCell
@@ -359,6 +400,7 @@ export default {
                     } else if (expectedDuration > 0 && delta > DELTA_THRESHOLD) {
                         cell.setPlaying(!this.paused);
                         cell.seekTo(expectedDuration);
+                        cell.setPlaybackRate(this.playbackRate);
                     }
                 });
             // console.log("deltas: ", deltas);
