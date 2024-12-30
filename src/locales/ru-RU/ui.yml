@@ -62,8 +62,6 @@ component:
     uploadScript: Загрузить TL Скрипт
   videoDescription:
     description: Описание
-  video:
-    comment: { }
   description:
     showLess: Свернуть
     showMore: Ещё
