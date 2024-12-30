@@ -23,14 +23,13 @@ export function Selector() {
   // based on what the selection is -> use different methods to render title card?
   const [currentOrg, setCurrentOrg] = useState(Favorites);
   const [liveChannels, setLiveChannels] = useState<Live[]>([]);
-  const liveStreams = useLive({ org: currentOrg.name });
+  const { data } = useLive({ org: currentOrg.name });
 
   useEffect(() => {
-    const data = liveStreams.data;
     if (!data) return;
-    setLiveChannels(data);
+    setLiveChannels(data.items);
     console.log(data);
-  }, [liveStreams.data]);
+  }, [data]);
 
   const onSelect = (org: Org) => {
     if (org.name === currentOrg.name) return;

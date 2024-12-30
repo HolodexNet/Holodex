@@ -23,12 +23,12 @@ declare module "*.module.styl" {
   export default classes;
 }
 
-declare module "jsonp-es6";
-
-import "react-router-dom";
-
-declare module "react-router-dom" {
-  export interface LinkProps {
-    dataBehavior?: string; // Add your custom attribute here
-  }
+declare module "jsonp-es6" {
+  /**
+   * Makes a JSONP request to the specified URL with the given parameters
+   * @param url The base URL to make the request to
+   * @param params Request query parameters
+   * @returns A promise that resolves with the JSONP response
+   */
+  export default function jsonp<T>(url: string, body?: Record): Promise<T>;
 }
