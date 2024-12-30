@@ -2,8 +2,29 @@
 
 ##### Unreleased
 
-- **Development of Vue3-powered Holodex (release 3.0 ?!?!) is completely scrapped**. We're making it in **react** instead. If you like to influence how it looks, now is the best time to let us know.
-- If you are a **React UI engineer/designer** and would like to contribute to Holodex, drop by our discord!
+- If you are a **React UI engineer/designer** and would like to contribute to Holodex v3 React development, drop by our discord!
+
+### 2.39 Holodex [*December 30th, 2024*]
+
+Merry Christmas and Happy New Year!
+
+It's been a quiet year for us at Holodex, but we're excited to welcome the new year with some contributor fixes!
+
+Changes to v2 since August 5th:
+
+#### MultiView Improvements
+- Added playback rate controls to archive sync (0.25x-2x) (@meiamsome)
+- Fixed iframe reloads and component remounting issues (@meiamsome)
+- Improved layout persistence and content ID generation (@meiamsome)
+- Added simulcast multiview link in watch page (@meiamsome)
+- Enhanced archive sync timing and delta calculations (@meiamsome)
+
+#### UI
+- Improved highlights detection and processing (Edward)
+- Added "Starts" label for future stream dates (Flaming Sarge)
+- Enhanced music search translations (Nelo)
+- Turned off the annoying update popup (Nelo)
+
 
 ### 2.38 Holodex [*November 14th, 2023*]
 - TY Livia for:
