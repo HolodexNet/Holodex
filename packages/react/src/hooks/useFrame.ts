@@ -87,6 +87,6 @@ export const closeSidebarAtom = atom(null, (_, set) => {
 export const headerHiddenAtom = atom(false);
 
 export const calendarDialogAtom = atom({
-  open: true,
+  open: false,
   initialQuery: [],
 });
