@@ -132,9 +132,8 @@ function StickyTabsList({
       {/* Optional Control Buttons */}
       {tab === "clips" && <ClipLanguageSelector />}
       {tab !== "members" && <CardSizeToggle />}
-      {(user?.role === "admin" || user?.role === "editor") && (
-        <EditingStateToggle />
-      )}
+      {(user?.role === "admin" || user?.role === "editor") &&
+        tab != "members" && <EditingStateToggle />}
     </TabsList>
   );
 }

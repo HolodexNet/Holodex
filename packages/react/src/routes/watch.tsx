@@ -6,8 +6,9 @@ import { Controlbar } from "@/components/player/Controlbar";
 import { Mentions } from "@/components/player/MentionsCard";
 import { PlayerDescription as Description } from "@/components/player/PlayerDescription";
 import { PlayerRecommendations as Recommendations } from "@/components/player/PlayerRecommendations";
-import { PlayerStats } from "@/components/player/PlayerStats";
+import { VideoStats } from "@/components/player/PlayerStats";
 import { QueueList } from "@/components/player/QueueList";
+import Comments from "@/components/watch/Comments";
 import { useIsLgAndUp } from "@/hooks/useBreakpoint";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import { cn, idToVideoURL } from "@/lib/utils";
@@ -96,6 +97,7 @@ const UnderVideoInfo = ({
       <div className="flex @screen-lg:hidden">
         <Recommendations {...currentVideo} />
       </div>
+      <Comments video={currentVideo} />
     </div>
   );
 };
@@ -211,7 +213,7 @@ export function Watch() {
 
             <div className={titleSectionClasses}>
               <h2 className="text-xl font-bold">{currentVideo?.title}</h2>
-              {currentVideo && <PlayerStats {...currentVideo} />}
+              {currentVideo && <VideoStats {...currentVideo} />}
             </div>
 
             <UnderVideoInfo currentVideo={currentVideo} channel={channel} />

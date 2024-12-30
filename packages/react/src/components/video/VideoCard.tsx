@@ -217,7 +217,7 @@ export function VideoCard({
         {(size == "lg" || size == "md") && video.channel && (
           <Link
             to={`/channel/${video.channel.id}`}
-            dataBehavior="channelLink"
+            databehavior="channelLink"
             className="shrink-0"
             onClick={(e) =>
               onClick ? onClick("channel", video, e) : goToVideoClickHandler(e)
@@ -258,7 +258,7 @@ export function VideoCard({
           {video.channel && (
             <Link
               className={videoCardClasses.channelLink}
-              dataBehavior="channelLink"
+              databehavior="channelLink"
               to={`/channel/${video.channel.id}`}
               onClick={(e) => onClick && onClick("channel", video, e)}
             >

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useVideoCardSizes } from "@/store/video";
 import PullToRefresh from "@/components/layout/PullToRefresh";
 import { useVideoFilter } from "@/hooks/useVideoFilter";
+import { ClipLanguageSelector } from "@/components/language/ClipLanguageSelector";
 
 export function ClipsTab() {
   const { org } = useParams();
@@ -39,6 +40,22 @@ export function ClipsTab() {
     "clip",
     "org",
   );
+
+  if (clipLangs.length === 0)
+    return (
+      <div className="gap-4 px-4 py-2 @container md:px-8">
+        <div>No language selected</div>
+
+        <ClipLanguageSelector />
+      </div>
+    );
+
+  if (!filteredClips.length)
+    return (
+      <div className="gap-4 px-4 py-2 @container md:px-8">
+        <div>No clips for languages: {clipLangs.join(", ")}</div>
+      </div>
+    );
 
   return (
     <PullToRefresh onRefresh={refetch}>

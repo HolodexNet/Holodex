@@ -7,7 +7,7 @@ import { localeAtom } from "@/store/i18n";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 
-export function PlayerStats({
+export function VideoStats({
   type,
   status,
   topic_id,
