@@ -73,7 +73,7 @@ export function broadcastQueryClient({
             queryKey,
             queryHash,
           },
-          state
+          state,
         );
       } else if (type === "removed") {
         const query = queryCache.get(queryHash);

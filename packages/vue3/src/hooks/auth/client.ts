@@ -15,7 +15,7 @@ export function useClient() {
 
   const AxiosInstance = function <T>(
     url: string,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>> {
     const configWithUser: AxiosRequestConfig = {
       baseURL: BASE_URL,

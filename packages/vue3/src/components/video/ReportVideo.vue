@@ -165,7 +165,7 @@ export default defineComponent({
               value: this.comments ? this.comments : "No comment",
             },
           ],
-          this.site.jwtToken || ""
+          this.site.jwtToken || "",
         )
         .then(() => {
           this.showReportDialog = false;

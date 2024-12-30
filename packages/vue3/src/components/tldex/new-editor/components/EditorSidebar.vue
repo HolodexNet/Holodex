@@ -76,7 +76,7 @@ const currentMessageIndexes = computed(() => {
     let highIdx = sorted.gt(
       messages.value || [],
       { video_offset: elapsed } as any,
-      ChatDB.ParsedMessageOFFSETComparator
+      ChatDB.ParsedMessageOFFSETComparator,
     );
     if (highIdx == -1) highIdx = messages.value.length;
     const out: number[] = [];
@@ -90,7 +90,7 @@ const currentMessageIndexes = computed(() => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           messages.value[idx],
           elapsed,
-          absolute
+          absolute,
         )
       ) {
         // console.log(idx);
@@ -108,7 +108,7 @@ const { containerProps, wrapperProps, scrollTo, list } = useVirtualList(
   {
     itemHeight: 64,
     overscan: 4,
-  }
+  },
 );
 
 onClickOutside(containerProps.ref, () => (focused.value = undefined), {
@@ -123,7 +123,7 @@ watch(
       scrollTo(Math.max(0, currentMessageIndexes.value?.[0] - 1));
     }
   },
-  { deep: true }
+  { deep: true },
 );
 </script>
 <style lang="scss">

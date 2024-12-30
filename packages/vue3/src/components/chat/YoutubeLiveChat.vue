@@ -20,7 +20,7 @@ function updateFrameTime(t: number) {
   if (props.archive && props.channelId) {
     ytChat.value?.contentWindow?.postMessage(
       { "yt-player-video-progress": t },
-      "*"
+      "*",
     );
   }
 }
@@ -29,7 +29,7 @@ watch(
   () => props.currentTime,
   (t) => {
     updateFrameTime(t || 0);
-  }
+  },
 );
 const liveChatUrl = computed(() => {
   console.log("archive", props.archive);

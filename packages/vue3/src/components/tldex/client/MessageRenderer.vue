@@ -126,7 +126,7 @@ export default defineComponent({
     function openBlockDialog(
       name: string,
       channel_id?: string,
-      is_vtuber?: boolean
+      is_vtuber?: boolean,
     ) {
       channelBlock.value.showBlockChannelDialog = true;
       channelBlock.value.channel_id = channel_id;

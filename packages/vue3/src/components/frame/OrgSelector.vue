@@ -210,7 +210,7 @@ export default defineComponent({
       let list = (this.orgs.data.value || []).slice();
       if (this.search) {
         list = list.filter((x) =>
-          x.name.toLowerCase().includes(this.search.toLowerCase())
+          x.name.toLowerCase().includes(this.search.toLowerCase()),
         );
       }
       list.sort((a, b) => {

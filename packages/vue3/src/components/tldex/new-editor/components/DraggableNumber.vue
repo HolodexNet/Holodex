@@ -28,7 +28,7 @@ const props = withDefaults(
     scale: 0.1,
     vertical: false,
     horizontal: true,
-  }
+  },
 );
 const emit = defineEmits<{ change: [diffSeconds: number] }>();
 
@@ -39,7 +39,7 @@ const rendered = computed(() => {
   return props.formatter(
     dragStartPos.value == undefined
       ? modelValue.value
-      : +dragInProgressValue.value.toFixed(props.precision)
+      : +dragInProgressValue.value.toFixed(props.precision),
   );
 });
 function start(e: MouseEvent) {
@@ -59,7 +59,7 @@ function start(e: MouseEvent) {
       "+",
       dragStartPos.value * props.scale,
       "=",
-      newValue
+      newValue,
     );
     dragInProgressValue.value = props.negativeOk
       ? newValue

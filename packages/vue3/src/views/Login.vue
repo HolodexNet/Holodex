@@ -158,7 +158,7 @@ watch(
   () => site.user,
   () => {
     editUsernameInput.value = site.user?.username;
-  }
+  },
 );
 const { t } = useI18n();
 
@@ -179,9 +179,9 @@ async function loginDiscord() {
   // {token_type: "Bearer", access_token: "<SOMEACCESSTOKEN>", expires_in: "604800", scope: "identify"}
   open(
     `https://discord.com/api/oauth2/authorize?client_id=793619250115379262&redirect_uri=${encodeURIComponent(
-      redirectUri
+      redirectUri,
     )}&response_type=token&scope=identify`,
-    onDiscordSuccess
+    onDiscordSuccess,
   );
 }
 

@@ -22,7 +22,7 @@ interface TimelineResources {
 export function useTimelineRendererBase(
   list: Ref<ParsedMessage[]>,
   waveform: Ref<[number, number][] | undefined>,
-  currentTime: Ref<number>
+  currentTime: Ref<number>,
 ): TimelineResources {
   const canvasRef = ref<HTMLCanvasElement | null>(null);
   const containerRef = ref<HTMLElement | null>(null);
@@ -77,19 +77,19 @@ export function useTimelineRendererBase(
         endTime.value = x.endTime;
       }
     },
-    { flush: "sync" }
+    { flush: "sync" },
   );
 
   const currentSubs = computed(() => {
     const lower = gte(
       allSubs.value,
       { video_offset: startTime.value - 10 } as any,
-      ChatDB.ParsedMessageOFFSETComparator
+      ChatDB.ParsedMessageOFFSETComparator,
     );
     const upper = gte(
       allSubs.value,
       { video_offset: endTime.value + 10 } as any,
-      ChatDB.ParsedMessageOFFSETComparator
+      ChatDB.ParsedMessageOFFSETComparator,
     );
     // console.log(
     //   lower,

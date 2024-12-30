@@ -42,7 +42,7 @@ type SocketIOEvents = [
   "connect_timeout",
   "connecting",
   "ping",
-  "pong"
+  "pong",
 ][number];
 
 interface SubscribeErrorPayload {
@@ -94,7 +94,7 @@ export const useSocket = defineStore(
         path: "/api/socket.io/",
         secure: true,
         autoConnect: false,
-      }
+      },
     );
 
     const chatDB = reactive(new ChatDB());
@@ -114,7 +114,7 @@ export const useSocket = defineStore(
           subscribedRooms.size,
           "rooms active",
           [...subscribedRooms.values()],
-          roomReferenceCounter
+          roomReferenceCounter,
         );
       }
     }, IDLE_DISCONNECT_TIME);
@@ -137,7 +137,7 @@ export const useSocket = defineStore(
     function _handleMessage(
       room: RoomIDString,
       payload: TldexPayload,
-      video_id?: string
+      video_id?: string,
     ) {
       if ("message" in payload) {
         const parsed = toParsedMessage(payload, video_id);
@@ -151,7 +151,7 @@ export const useSocket = defineStore(
         // Already subscribed
         roomReferenceCounter.set(
           roomKey,
-          (roomReferenceCounter.get(roomKey) || 0) + 1
+          (roomReferenceCounter.get(roomKey) || 0) + 1,
         );
         return;
       }
@@ -203,5 +203,5 @@ export const useSocket = defineStore(
   {
     share: { enable: false },
     persistedState: { persist: false },
-  }
+  },
 );

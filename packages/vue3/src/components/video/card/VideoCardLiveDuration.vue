@@ -20,14 +20,14 @@ export default defineComponent({
     const { t } = useI18n();
     const { now, pause, resume } = useNow({ interval: 1000, controls: true });
     const shouldTick = computed(
-      () => props.video.start_actual && props.video.status === "live"
+      () => props.video.start_actual && props.video.status === "live",
     );
     watchEffect(() => {
       shouldTick.value ? resume() : pause();
     });
 
     const startActual = computed(
-      () => dayjs(props.video.start_actual).unix() * 1000
+      () => dayjs(props.video.start_actual).unix() * 1000,
     );
     const formatted = computed(() => {
       if (props.video.start_actual && props.video.status === "live") {

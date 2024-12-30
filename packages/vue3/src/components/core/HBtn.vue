@@ -20,7 +20,7 @@
     > -->
     <h-icon
       v-if="icon"
-      :class="{[icon!]: icon, '-ml-1 mr-1': $slots.default}"
+      :class="{ [icon!]: icon, '-ml-1 mr-1': $slots.default }"
     />
     <slot />
     <!-- </component> -->
@@ -147,7 +147,7 @@ export default defineComponent({
     const isHovered = useElementHover(activator);
 
     const showTooltip = computed(
-      () => isHovered.value || focused.value || isTouched.value
+      () => isHovered.value || focused.value || isTouched.value,
     );
     const middleware = computed(() => [shift(), flip(), offset(2)]);
     const { x, y, strategy, floatingStyles } = useFloating(
@@ -161,7 +161,7 @@ export default defineComponent({
         },
         placement: props.tooltipPlacement,
         middleware,
-      }
+      },
     );
     // const floatingStyle: any = computed(() => ({
     //   // ...(props.transform

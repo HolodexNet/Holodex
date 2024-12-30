@@ -60,7 +60,7 @@ const tldexStore = useTLStore();
 const listRenderer = ref<typeof MessageRenderer>();
 
 const roomID: ComputedRef<RoomIDString> = computed(
-  () => `${props.videoId}/${props.lang}` satisfies RoomIDString
+  () => `${props.videoId}/${props.lang}` satisfies RoomIDString,
 );
 const messages = computed(() => chatDB.rooms.get(roomID.value)?.messages || []);
 const state = computed(() => chatDB.rooms.get(roomID.value)?.state);
@@ -79,7 +79,7 @@ const currentMessageIndexes = computed(() => {
     let highIdx = sorted.gt(
       chatDB.rooms.get(room)?.messages || [],
       { timestamp: (absolute || -1) * 1000 } as any,
-      ChatDB.ParsedMessageComparator
+      ChatDB.ParsedMessageComparator,
     );
     if (highIdx == -1) highIdx = chatDB.rooms.get(room)?.messages.length || -1;
     const out: number[] = [];
@@ -93,7 +93,7 @@ const currentMessageIndexes = computed(() => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           chatDB.rooms.get(room)!.messages[idx],
           elapsed,
-          absolute
+          absolute,
         )
       ) {
         console.log(idx);

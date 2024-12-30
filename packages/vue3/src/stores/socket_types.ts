@@ -70,7 +70,7 @@ export function roomToLang(room: RoomIDString): TLLanguageCode {
  */
 export function toParsedMessage(
   msg: TLDexMessage,
-  video_id?: string
+  video_id?: string,
 ): ParsedMessage {
   msg.timestamp = +msg.timestamp;
   const parsed: ParsedMessage = {

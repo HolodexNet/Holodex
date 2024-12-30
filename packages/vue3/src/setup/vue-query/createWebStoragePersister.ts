@@ -96,7 +96,7 @@ export function createWebStoragePersister({
 
 function throttle<TArgs extends any[]>(
   func: (...args: TArgs) => any,
-  wait = 100
+  wait = 100,
 ) {
   let timer: ReturnType<typeof setTimeout> | null = null;
   let params: TArgs;

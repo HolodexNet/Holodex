@@ -20,7 +20,7 @@ export function useThemeInitialization() {
     () => {
       console.log("Applying Color Cache to Themes...");
       daisyTheme.set({ theme: theme.outputCache[1] });
-    }
+    },
   );
 
   return { theme };

@@ -16,11 +16,11 @@ export default function useOrgRouteParamSync(): Ref<Org> {
       if (route.name === "Search") return; // ignore
       if (site.currentOrg.name !== route.params.org)
         router.push({ params: { org: site.currentOrg.name } });
-    }
+    },
   );
   const orgs = useOrgList({
     enabled: computed(
-      () => !!route.params.org && route.params.org !== site.currentOrg.name
+      () => !!route.params.org && route.params.org !== site.currentOrg.name,
     ),
     refetchInterval: false,
   });

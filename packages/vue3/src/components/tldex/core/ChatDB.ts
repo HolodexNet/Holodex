@@ -39,7 +39,7 @@ interface RoomInfo {
 export function isMessageCurrent(
   message: ParsedMessage,
   elapsed?: number,
-  absolute?: number
+  absolute?: number,
 ): boolean {
   const duration = +(message.duration || 4000) / 1000;
   if (message.video_offset && elapsed) {
@@ -143,7 +143,7 @@ export class ChatDB {
     console.log("sorting...", room);
 
     (this.rooms.get(room)!.messages as ParsedMessage[]).sort(
-      ChatDB.ParsedMessageComparator
+      ChatDB.ParsedMessageComparator,
     );
   }
 
@@ -157,7 +157,7 @@ export class ChatDB {
     sorted.add(
       this.rooms.get(room)!.messages as ParsedMessage[],
       message,
-      ChatDB.ParsedMessageComparator
+      ChatDB.ParsedMessageComparator,
     );
     // if (!ChatDB.checkArrayIsUnique(this.rooms.get(room) as ParsedMessage[])) {
     //   this.rooms.set(
@@ -195,7 +195,7 @@ export class ChatDB {
       const videoId = roomToVideoID(room);
       this.videoToRoomMap.set(
         videoId,
-        new Set([room, ...(this.videoToRoomMap.get(videoId)?.values() ?? [])])
+        new Set([room, ...(this.videoToRoomMap.get(videoId)?.values() ?? [])]),
       );
     }
   }
@@ -209,7 +209,7 @@ export class ChatDB {
   updateRoomElapsed(
     video_id: string,
     elapsed: number,
-    absolute: number | undefined
+    absolute: number | undefined,
   ) {
     // const now = { elapsed, absolute };
     this.videoToRoomMap.get(video_id)?.forEach((room) => {
@@ -230,7 +230,7 @@ export class ChatDB {
   loadMessages(
     room: RoomIDString,
     preferences: TLDexStoreState,
-    partial?: number
+    partial?: number,
   ) {
     console.log("[Load message] room:", room, "partial:", partial);
     this.createRoomStateIfNotExists(room);
@@ -257,7 +257,7 @@ export class ChatDB {
       .then(({ data }: { data: TLDexMessage[] }) => {
         this.addMessages(
           room,
-          data.map((x) => toParsedMessage(x, videoId))
+          data.map((x) => toParsedMessage(x, videoId)),
         );
         this.rooms.get(room)!.state = {
           completed: data.length !== countToLoad,

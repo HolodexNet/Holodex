@@ -23,7 +23,7 @@ function genTheme(new_theme: object, prefix = "-"): string {
     .map((key: string) =>
       typeof get(key) === "object"
         ? genTheme(get(key), `${key}`)
-        : `${key}: ${get(key)};`
+        : `${key}: ${get(key)};`,
     )
     .join("\n");
 }

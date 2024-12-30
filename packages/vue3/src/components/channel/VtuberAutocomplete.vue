@@ -84,7 +84,7 @@ export default defineComponent({
         ? (props.modelValue as any[]) ?? []
         : props.modelValue
         ? [props.modelValue]
-        : []
+        : [],
     );
 
     watchDebounced(
@@ -96,7 +96,7 @@ export default defineComponent({
           const x = await backendApi.searchV3Autocomplete(
             newValue,
             props.type,
-            10
+            10,
           );
 
           // column `type` is unavailable here, but it's useless.
@@ -106,7 +106,7 @@ export default defineComponent({
           options.value = [];
         }
       },
-      { debounce: 200, immediate: false }
+      { debounce: 200, immediate: false },
     );
 
     const scrollIntoView = function (n: number) {
@@ -114,7 +114,7 @@ export default defineComponent({
       console.log(
         (
           (autocomplete as any).value.$el as unknown as HTMLElement
-        )?.getElementsByClassName("dropdown-opt")
+        )?.getElementsByClassName("dropdown-opt"),
       );
       if (n < 0) n = 0;
       const el = ((autocomplete as any).value.$el as unknown as HTMLElement)

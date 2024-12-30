@@ -59,7 +59,7 @@
           name="dropdown"
           :active="activeIndex"
           :up="dropUp"
-          :select="(item: any) => $emit('select', {item: item})"
+          :select="(item: any) => $emit('select', { item: item })"
         />
       </div>
     </h-menu>
@@ -151,7 +151,7 @@ export default defineComponent({
     const searchContent: WritableComputedRef<string> | Ref<string> = useVModel(
       props,
       "search",
-      emit
+      emit,
     );
     const currentValue = useRange(computed(() => props.options.length));
 

@@ -81,7 +81,7 @@ export const useThemeStore = defineStore("site-theme", {
           ...this.colors,
           ...DaisyDefaults,
         },
-        this.dark
+        this.dark,
       );
 
       const out: [any, Record<DaisyColorShorthand, string>] = [

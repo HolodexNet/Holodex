@@ -34,7 +34,7 @@ const categoryValue = computed(() => {
   if (props.item.type === "vtuber" && props.item._raw && props.item._raw.name) {
     return langPrefs.preferredLocaleFn(
       props.item._raw.english_name,
-      props.item._raw.name
+      props.item._raw.name,
     );
   }
   return props.item.text === "$t"

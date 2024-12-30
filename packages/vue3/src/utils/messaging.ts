@@ -24,7 +24,7 @@ export const setCookieJWT = (jwt: string) => {
     if (jwt) {
       const { exp } = jwtDecode(jwt) as any;
       document.cookie = `HOLODEX_JWT=${jwt};expires=${new Date(
-        exp * 1000
+        exp * 1000,
       ).toUTCString()};domain=.holodex.net;path=/`;
     } else {
       document.cookie = "HOLODEX_JWT=;-1;domain=.holodex.net;path=/";

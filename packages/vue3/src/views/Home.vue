@@ -3,7 +3,7 @@
     <h-tab
       :active="currentTab === 0"
       class="shrink"
-      style="text-overflow: ''; white-space: nowrap; overflow: hidden"
+      style="text-overflow: &quot;&quot;; white-space: nowrap; overflow: hidden"
       @click="() => updateTab(0)"
     >
       {{ liveUpcomingHeaderSplit[1] }}
@@ -129,7 +129,7 @@ watch(
           favorites: props.favorites,
         } as FavLookup)
       : ({ org: pageOrg.value.name } as OrgLookup);
-  }
+  },
 );
 
 // const settings = useSettingsStore();
@@ -219,12 +219,12 @@ watch(
     params.page = `${currentPage.value}`;
     if (lookupState.value.pagination)
       lookupState.value.pagination.offset = (currentPage.value - 1) * perPage;
-  }
+  },
 );
 // Reset to first tab when path changes
 watch(
   () => route.path,
-  () => updateTab(0, false)
+  () => updateTab(0, false),
 );
 // const isLoading = computed(
 //   () => videoQuery?.isLoading.value || videoQuery?.isFetching.value

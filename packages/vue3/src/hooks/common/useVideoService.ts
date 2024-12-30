@@ -10,13 +10,13 @@ export function useVideoFormat(video: MaybeRef<Video | undefined>) {
   const preferredChannelName = computed(() => {
     return langStore.preferredLocaleFn(
       get(video)?.channel.english_name,
-      get(video)?.channel.name
+      get(video)?.channel.name,
     );
   });
 
   const preferredTitle = computed(() => {
     return decodeHTMLEntities(
-      langStore.preferredLocaleFn(get(video)?.title, get(video)?.jp_name)
+      langStore.preferredLocaleFn(get(video)?.title, get(video)?.jp_name),
     );
   });
 

@@ -10,9 +10,9 @@
       >
         {{ arr[0] || "Unnamed Group" }}
       </div>
-      <template v-for="(channel, idx) in (arr[1] as any)" :key="channel.id">
+      <template v-for="(channel, idx) in arr[1] as any" :key="channel.id">
         <channel-card
-          v-if="idx < 20 && group as number < 2"
+          v-if="idx < 20 && (group as number) < 2"
           :channel="channel"
           :variant="variant"
           :slim="slim"
@@ -49,7 +49,7 @@
       </template>
     </template>
   </div>
-  <query-status v-if="!!query" :query="(resp as any)" />
+  <query-status v-if="!!query" :query="resp as any" />
 </template>
 <script lang="ts">
 import { useChannels } from "@/services/channel";
@@ -86,7 +86,7 @@ export default defineComponent({
   setup(props) {
     const respChannels = useChannels(
       computed(() => props.query || {}),
-      computed(() => props.channels === undefined)
+      computed(() => props.channels === undefined),
     );
 
     const groupKey = computed(() => {
@@ -105,10 +105,10 @@ export default defineComponent({
               v,
               i,
               a,
-              k = groupKey.value === "none" ? "*" : v[groupKey.value] || ""
+              k = groupKey.value === "none" ? "*" : v[groupKey.value] || "",
             ) => ((r[k] || (r[k] = [])).push(v), r),
-            {} as Record<string, FullChannel[]>
-          )
+            {} as Record<string, FullChannel[]>,
+          ),
         );
       if (respChannels.data.value)
         return Object.entries(
@@ -121,10 +121,10 @@ export default defineComponent({
                 v,
                 i,
                 a,
-                k = groupKey.value === "none" ? "*" : v[groupKey.value] || ""
+                k = groupKey.value === "none" ? "*" : v[groupKey.value] || "",
               ) => ((r[k] || (r[k] = [])).push(v), r),
-              {} as Record<string, FullChannel[]>
-            )
+              {} as Record<string, FullChannel[]>,
+            ),
         );
       return [["", []]];
     });

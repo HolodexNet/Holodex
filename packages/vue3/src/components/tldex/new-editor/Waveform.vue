@@ -9,7 +9,11 @@
         :value="room?.elapsed || 0"
         class="timeline-slider"
         step="0.01"
-        @input="(t) => t.target && player.player.seekTo(+(t.target as HTMLInputElement).value)"
+        @input="
+          (t) =>
+            t.target &&
+            player.player.seekTo(+(t.target as HTMLInputElement).value)
+        "
       />
     </div>
     <div ref="containerRef" class="grow-1 shrink-1 relative">
@@ -77,7 +81,7 @@ const emits = defineEmits<{ sortMessages: [] }>();
 
 const duration = asyncComputed(
   async () => await props.player.player.getDuration(),
-  undefined
+  undefined,
 );
 
 const {
@@ -115,7 +119,7 @@ const recomputedWave = computed<typeof waveform.value>(
     waveform.value?.map(([a, b]) => [
       a,
       Math.floor(Math.pow((Math.max(b, -60) + 60) / 60, 3) * 100),
-    ]) || []
+    ]) || [],
 );
 
 const {
@@ -138,7 +142,7 @@ const {
       console.log("New Timeline seek", v);
       props.player.player.seekTo(v);
     },
-  })
+  }),
 );
 
 // Object dragging support for handlers:
@@ -162,7 +166,7 @@ function start(handle: "start" | "duration" | "both", item: ParsedMessage) {
         // duration should stay unchanged, so:
         item.duration = Math.max(
           400,
-          initDuration - (newValue - initStart) * 1000
+          initDuration - (newValue - initStart) * 1000,
         );
       }
     }

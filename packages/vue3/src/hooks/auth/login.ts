@@ -34,7 +34,7 @@ export function useClientLogin() {
 
   async function onDiscordSuccess(
     err: any,
-    { access_token }: { access_token: string }
+    { access_token }: { access_token: string },
   ) {
     if (err) return onFailure(err);
     try {

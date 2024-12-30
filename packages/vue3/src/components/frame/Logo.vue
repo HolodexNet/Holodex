@@ -31,13 +31,15 @@ export default {
 <style>
 .l_loading #tri1 {
   @apply brightness-150;
-  animation: bounce 0.5s ease-in-out infinite alternate,
+  animation:
+    bounce 0.5s ease-in-out infinite alternate,
     stroke-move 8s linear infinite;
 }
 
 .l_loading #tri2 {
   @apply brightness-150;
-  animation: bounce 0.5s ease-in-out infinite alternate,
+  animation:
+    bounce 0.5s ease-in-out infinite alternate,
     stroke-move 8s linear infinite;
   animation-delay: 250ms;
 }

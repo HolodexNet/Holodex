@@ -36,13 +36,13 @@ interface VideoApiQuery {
 
 export function useVideos(
   query: Ref<Partial<VideoApiQuery>>,
-  config: QueryConfig<Video[]>
+  config: QueryConfig<Video[]>,
 ) {
   return useQuery(
     ["videos", query],
     async () => {
       const { data } = await axiosInstance_v2.get(
-        `/videos?${stringifyQuery(query.value)}`
+        `/videos?${stringifyQuery(query.value)}`,
       );
       return data
         .map((data: any) => {
@@ -59,7 +59,7 @@ export function useVideos(
         })
         .filter(filterDeadStreams);
     },
-    config
+    config,
   );
 }
 
@@ -109,13 +109,13 @@ interface VideoByIdApiQuery {
 export function useVideoById(
   id: MaybeRef<string>,
   query: Ref<Partial<VideoByIdApiQuery>>,
-  config: QueryConfig<Video>
+  config: QueryConfig<Video>,
 ) {
   return useQuery<ExtendedVideo>(
     ["video", id, query],
     async (e) => {
       const { data } = await axiosInstance_v2.get<ExtendedVideo>(
-        `/videos/${unref(id)}?${stringifyQuery(query.value)}`
+        `/videos/${unref(id)}?${stringifyQuery(query.value)}`,
       );
       if (data.available_at)
         data.available_at = dayjs(data.available_at).valueOf();
@@ -127,7 +127,7 @@ export function useVideoById(
 
       return data;
     },
-    config
+    config,
   );
 }
 // export function useVideosInfinite(
@@ -197,7 +197,7 @@ function filterDeadStreams(video: Video) {
 
 export function useVideoListDatasource(
   q: Ref<VideoListLookup>,
-  config: Ref<QueryConfig<{ items: Video[]; total?: number }>>
+  config: Ref<QueryConfig<{ items: Video[]; total?: number }>>,
 ) {
   const langs = useLangStore();
   const settings = useSettingsStore();
@@ -211,7 +211,7 @@ export function useVideoListDatasource(
           : "/users/videos"
         : q.value.type === "stream_schedule"
         ? "/live" // stream schedule goes 'live'
-        : "/videos" // all others go into /videos
+        : "/videos", // all others go into /videos
   );
 
   // video probe:
@@ -295,7 +295,7 @@ export function useVideoListDatasource(
 
   const queryCfg = reactive({
     refetchInterval: computed(() =>
-      q.value.type === "stream_schedule" ? 3 * 60 * 1000 : false
+      q.value.type === "stream_schedule" ? 3 * 60 * 1000 : false,
     ),
     // This behavior is really bad, sends a lot of requests if it errors
     // refetchOnWindowFocus: computed(() =>
@@ -303,7 +303,7 @@ export function useVideoListDatasource(
     // ),
     staleTime: computed(
       () =>
-        q.value.type === "stream_schedule" ? 2.5 * 60 * 1000 : 5 * 60 * 1000 // only Live needs 2.5 min invalidation.
+        q.value.type === "stream_schedule" ? 2.5 * 60 * 1000 : 5 * 60 * 1000, // only Live needs 2.5 min invalidation.
     ),
     enabled: computed(() => unref(config.value.enabled)),
     refetchOnWindowFocus: true,

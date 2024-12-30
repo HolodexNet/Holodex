@@ -19,7 +19,7 @@ export function useFavoritesList() {
       enabled: true,
       staleTime: 8 * 60 * 60 * 1000, // 8 hours.
       cacheTime: 24 * 60 * 60 * 1000, // 1 day.
-    }
+    },
   );
 }
 
@@ -47,7 +47,7 @@ export function useFavoritesPatcher() {
         op: "add" | "remove";
         channel_id: string;
         channelTemp?: ShortChannel;
-      }[]
+      }[],
     ) => {
       return backendApi.patchFavorites(user.jwtToken, operations);
     },
@@ -55,7 +55,7 @@ export function useFavoritesPatcher() {
       onSettled: (data, error, variables, context) => {
         console.log(data, error, variables, context);
         const canOptimize = variables.every(
-          (v) => v.op === "remove" || v.channelTemp
+          (v) => v.op === "remove" || v.channelTemp,
         );
         if (canOptimize) {
           queryClient.setQueriesData(["favorites"], (currentFaves) => {
@@ -71,7 +71,7 @@ export function useFavoritesPatcher() {
                 newFaves.splice(
                   // delete 1
                   newFaves.findIndex((o) => o.id === x.channel_id),
-                  1
+                  1,
                 );
               }
             });
@@ -83,6 +83,6 @@ export function useFavoritesPatcher() {
           queryClient.invalidateQueries(["favorites"]);
         }
       },
-    }
+    },
   );
 }

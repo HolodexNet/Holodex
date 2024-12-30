@@ -26,7 +26,7 @@ export default defineComponent({
       const externalScript = document.createElement("script");
       externalScript.setAttribute(
         "src",
-        "https://platform.twitter.com/widgets.js"
+        "https://platform.twitter.com/widgets.js",
       );
       externalScript.setAttribute("async", "true");
       document.head.appendChild(externalScript);

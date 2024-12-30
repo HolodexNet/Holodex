@@ -39,7 +39,7 @@ const floating = ref<HTMLElement | null>(null);
 const { focused } = useFocus(activator);
 const isHovered = useElementHover(activator);
 const showTooltip = computed(
-  () => isHovered.value || focused.value || isTouched.value
+  () => isHovered.value || focused.value || isTouched.value,
 );
 
 // TODO: switch to HTMLAttributes & ReservedProps on version vue v3.3
@@ -121,7 +121,7 @@ const floatingStyle: any = computed(() => ({
   right: "auto",
   bottom: "auto",
   transform: `translate(${Math.round(x.value || 0)}px,${Math.round(
-    y.value || 0
+    y.value || 0,
   )}px)`,
   // }
   // : {

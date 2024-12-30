@@ -18,7 +18,7 @@
     </div>
     <video-card-grid hide-divider>
       <template v-for="hit in resp.data.value?.hits.hits || []">
-        <video-card :video="(hit._source as any)" />
+        <video-card :video="hit._source as any" />
       </template>
     </video-card-grid>
   </div>
@@ -53,12 +53,12 @@ watch(
   async () => {
     if (route.query) {
       query.value = await getQueryFromQueryModel(
-        route.query as unknown as VideoQueryModel
+        route.query as unknown as VideoQueryModel,
       );
       console.log(JSON.stringify(route.query));
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 const container: Ref<VideoQueryContainer> = ref({
@@ -70,6 +70,6 @@ const container: Ref<VideoQueryContainer> = ref({
 
 const resp = useSearch(
   toRef(route, "query") as unknown as Ref<VideoQueryModel>,
-  container
+  container,
 );
 </script>

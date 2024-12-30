@@ -18,7 +18,7 @@
       <div
         v-if="
           !selection.selectedVideos.find(
-            (x) => x.type == 'clip' || x.type == 'placeholder'
+            (x) => x.type == 'clip' || x.type == 'placeholder',
           ) && selection.selectedVideos.length > 1
         "
         class="peer btn-outline btn-secondary btn-xs btn bg-bgColor-400"

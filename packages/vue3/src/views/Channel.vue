@@ -104,7 +104,7 @@ export default defineComponent({
       () => channel.data.value,
       () => {
         selection.context.pageChannel = channel.data.value;
-      }
+      },
     );
 
     const display = useDisplay();
@@ -131,7 +131,7 @@ export default defineComponent({
         return "";
       }
       const { /*mobile, tablet, tv,*/ banner } = getBannerImages(
-        this.channel.banner
+        this.channel.banner,
       );
       // const banners = {
       //   xs: mobile,
@@ -196,7 +196,7 @@ export default defineComponent({
       const settings = useSettingsStore();
       this.isBlocked
         ? (settings.blockedChannels = settings.blockedChannels.filter(
-            (x) => x.id !== this.id
+            (x) => x.id !== this.id,
           ))
         : useSettingsStore().blockedChannels.push({
             id: this.id,

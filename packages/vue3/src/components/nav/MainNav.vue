@@ -19,7 +19,12 @@
           <logo width="32" height="32" :loading="loading > 0" />
         </router-link>
         <OrgSelector
-          @changed="(org: Org, close?: Function) => {site.currentOrg = org; close && close();}"
+          @changed="
+            (org: Org, close?: Function) => {
+              site.currentOrg = org;
+              close && close();
+            }
+          "
         />
       </div>
       <!-- </v-toolbar-title> -->

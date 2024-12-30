@@ -17,6 +17,6 @@ declare module "html-linkify" {
    */
   export default function linkify(
     text: string,
-    options: { attributes: Record<string, string>; escape?: boolean }
+    options: { attributes: Record<string, string>; escape?: boolean },
   ): string;
 }

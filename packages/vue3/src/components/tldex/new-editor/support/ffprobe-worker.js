@@ -40,7 +40,7 @@ onmessage = async (event) => {
       "-of",
       "csv=p=0",
       "-i",
-      `amovie=${name}.${inType},aresample=48000,asetnsamples=4800,astats=metadata=1:reset=1`
+      `amovie=${name}.${inType},aresample=48000,asetnsamples=4800,astats=metadata=1:reset=1`,
     );
     // -f lavfi -i amovie=input.aac,astats=metadata=1:reset=1 -show_entries frame=pkt_pts_time:frame_tags=lavfi.astats.Overall.RMS_level,lavfi.astats.1.RMS_level,lavfi.astats.2.RMS_level -of
 

@@ -65,7 +65,7 @@
     /> -->
     <h-input
       title="Create Placeholder into Channel:"
-      :error="result.$errors.find((x:any) => x.name === 'channel')?.message"
+      :error="result.$errors.find((x: any) => x.name === 'channel')?.message"
     >
       <template #input><vtuber-autocomplete v-model="data.channel" /></template>
     </h-input>
@@ -73,7 +73,7 @@
       v-model="data.videoTitle"
       title="Video/Event Title"
       explanation="The title of placeholder"
-      :error="result.$errors.find((x:any) => x.name === 'videoTitle')?.message"
+      :error="result.$errors.find((x: any) => x.name === 'videoTitle')?.message"
     />
     <h-input
       v-model="data.videoTitleJP"
@@ -86,7 +86,7 @@
       title="Source URL"
       explanation="Link to more detail about the event. eg. URL to twitter schedule
             post or twitch channel, or link to a concert page"
-      :error="result.$errors.find((x:any) => x.name === 'sourceUrl')?.message"
+      :error="result.$errors.find((x: any) => x.name === 'sourceUrl')?.message"
     />
     <h-input
       v-model="data.thumbnail"
@@ -169,7 +169,7 @@
       <div class="flex w-min flex-col gap-2">
         <h-input
           title="Timezone"
-          :error="result.$errors.find((x:any) => x.name === 'time')?.message"
+          :error="result.$errors.find((x: any) => x.name === 'time')?.message"
         >
           <template #input>
             <select
@@ -204,11 +204,7 @@
       </div>
       <div class="form-control mx-auto hidden w-full max-w-xs lg:block">
         <label class="label"><span class="label-text">Preview:</span></label>
-        <video-card
-          :video="(videoObj as any)"
-          include-channel
-          class="max-w-xs"
-        />
+        <video-card :video="videoObj as any" include-channel class="max-w-xs" />
         <div class="i-heroicons:clock" />
         <p class="whitespace-pre text-xs">
           {{ absoluteTimeString }}
@@ -218,7 +214,7 @@
     <div class="form-control my-2 block w-full max-w-xs lg:hidden">
       <div class="divider">Preview</div>
       <video-card
-        :video="(videoObj as any)"
+        :video="videoObj as any"
         disable-default-click
         include-channel
         class="max-w-xs"
@@ -282,7 +278,7 @@ export default defineComponent({
       requiredRule: (v: any) => !!v,
       linkRule: (v: any) =>
         !!v.match(
-          /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
+          /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/,
         ),
       timeRule: (v) => dayjs(v).isValid(),
     };
@@ -315,7 +311,7 @@ export default defineComponent({
       rules,
       reactive({
         autoTest: true,
-      })
+      }),
     );
 
     const langStore = useLangStore();
@@ -472,7 +468,7 @@ export default defineComponent({
           .addPlaceholderStream(
             body,
             this.site.jwtToken,
-            this.$route.query?.token
+            this.$route.query?.token,
           )
           .then(() => {
             this.toast({

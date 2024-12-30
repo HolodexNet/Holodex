@@ -16,6 +16,6 @@ export function useOrgList(config: QueryConfig<Org[]>) {
     async () => {
       return backendApi.orgs();
     },
-    { ...(STATIC_QUERY_OPTIONS as any), ...config }
+    { ...(STATIC_QUERY_OPTIONS as any), ...config },
   );
 }

@@ -530,7 +530,12 @@
           "
           :colors-default="[]"
           sucker-hide
-          @change-color="({hex}: any) => colourPick === 1 ? (profile[profileIdx].CC = hex) : (profile[profileIdx].OC = hex)"
+          @change-color="
+            ({ hex }: any) =>
+              colourPick === 1
+                ? (profile[profileIdx].CC = hex)
+                : (profile[profileIdx].OC = hex)
+          "
         />
         <v-card-title :style="textStyle" style="font-weight: bold">
           {{ $t("views.tlClient.pangram") }}
@@ -1061,7 +1066,7 @@ export default defineComponent({
       this.rerenderTimeline();
       if (!this.$route?.query?.video) return;
       this.activeURLStream = videoCodeParser(
-        this.$route?.query?.video as string
+        this.$route?.query?.video as string,
       );
       this.modalNexus = true;
       this.modalMode = 5;
@@ -1134,7 +1139,7 @@ export default defineComponent({
       for (; this.entries.length > 0; ) {
         const tempEntries = this.entries.splice(0, 1)[0];
         let checkNew = this.transactionLog.filter(
-          (e) => e.id === tempEntries.id
+          (e) => e.id === tempEntries.id,
         );
         if (checkNew.length === 0) {
           this.transactionLog.push({
@@ -1145,11 +1150,11 @@ export default defineComponent({
           checkNew = checkNew.filter((e) => e.type === "Change");
           if (checkNew.length === 0) {
             this.transactionLog = this.transactionLog.filter(
-              (e) => e.id !== tempEntries.id
+              (e) => e.id !== tempEntries.id,
             );
           } else {
             this.transactionLog = this.transactionLog.filter(
-              (e) => e.id !== tempEntries.id
+              (e) => e.id !== tempEntries.id,
             );
             this.transactionLog.push({
               type: "Delete",
@@ -1222,7 +1227,7 @@ export default defineComponent({
                   id: entry.id,
                   name: this.user.username,
                   timestamp: Math.floor(
-                    this.videoData.start_actual + entry.Time
+                    this.videoData.start_actual + entry.Time,
                   ),
                   message: entry.SText,
                   duration: Math.floor(entry.Duration),
@@ -1238,7 +1243,7 @@ export default defineComponent({
                   tempid: entry.id,
                   name: this.user.username,
                   timestamp: Math.floor(
-                    this.videoData.start_actual + entry.Time
+                    this.videoData.start_actual + entry.Time,
                   ),
                   message: entry.SText,
                   duration: Math.floor(entry.Duration),
@@ -1254,7 +1259,7 @@ export default defineComponent({
             this.jwt,
             processedLog,
             this.TLLang.value,
-            this.editorMode
+            this.editorMode,
           );
         } else {
           backendApi
@@ -1263,7 +1268,7 @@ export default defineComponent({
               this.jwt,
               processedLog,
               this.TLLang.value,
-              this.editorMode
+              this.editorMode,
             )
             .then(({ status, data }) => {
               if (status === 200) {
@@ -1286,7 +1291,7 @@ export default defineComponent({
                         }
                       }
                     }
-                  }
+                  },
                 );
               }
             })
@@ -1322,9 +1327,12 @@ export default defineComponent({
           return;
       }
       if (nowFreeze - lastTime < this.refreshRate) {
-        setTimeout(() => {
-          this.proceedTimer(nowFreeze);
-        }, this.refreshRate - nowFreeze + lastTime);
+        setTimeout(
+          () => {
+            this.proceedTimer(nowFreeze);
+          },
+          this.refreshRate - nowFreeze + lastTime,
+        );
       } else {
         this.proceedTimer(nowFreeze);
       }
@@ -1450,7 +1458,7 @@ export default defineComponent({
           default:
             this.player.seekTo(
               this.player.getCurrentTime() + time / 1000,
-              true
+              true,
             );
             break;
         }
@@ -1527,7 +1535,7 @@ export default defineComponent({
     shiftProfileUp() {
       if (this.profileIdx > 1) {
         this.profileContainer = JSON.parse(
-          JSON.stringify(this.profile[this.profileIdx - 1])
+          JSON.stringify(this.profile[this.profileIdx - 1]),
         );
         this.profile[this.profileIdx - 1] = this.profile[this.profileIdx];
         this.profile[this.profileIdx] = this.profileContainer;
@@ -1539,7 +1547,7 @@ export default defineComponent({
     shiftProfileDown() {
       if (this.profileIdx !== 0 && this.profileIdx < this.profile.length - 1) {
         this.profileContainer = JSON.parse(
-          JSON.stringify(this.profile[this.profileIdx + 1])
+          JSON.stringify(this.profile[this.profileIdx + 1]),
         );
         this.profile[this.profileIdx + 1] = this.profile[this.profileIdx];
         this.profile[this.profileIdx] = this.profileContainer;
@@ -1792,7 +1800,7 @@ export default defineComponent({
             n: "HolodexSync",
             d: timestamp,
           },
-          this.IFOrigin
+          this.IFOrigin,
         );
       }
     },
@@ -1821,7 +1829,7 @@ export default defineComponent({
             n: "HolodexSync",
             d: Mode,
           },
-          this.IFOrigin
+          this.IFOrigin,
         );
       }
     },
@@ -1832,7 +1840,7 @@ export default defineComponent({
             n: "HolodexSync",
             d: "s",
           },
-          this.IFOrigin
+          this.IFOrigin,
         );
       }
     },
@@ -1843,7 +1851,7 @@ export default defineComponent({
             n: "HolodexSync",
             d: "p",
           },
-          this.IFOrigin
+          this.IFOrigin,
         );
       }
     },
@@ -1854,7 +1862,7 @@ export default defineComponent({
             n: "HolodexSync",
             d: "w",
           },
-          this.IFOrigin
+          this.IFOrigin,
         );
       }
     },
@@ -1995,7 +2003,7 @@ export default defineComponent({
     //= =----------------------- ENTRY CONTROLLER ------------------------
     deleteEntry() {
       const tempEntries = JSON.parse(
-        JSON.stringify(this.entries[this.selectedEntry])
+        JSON.stringify(this.entries[this.selectedEntry]),
       );
       this.displayEntry = -1;
       this.timecardIdx = [];
@@ -2013,11 +2021,11 @@ export default defineComponent({
         checkNew = checkNew.filter((e) => e.type === "Change");
         if (checkNew.length === 0) {
           this.transactionLog = this.transactionLog.filter(
-            (e) => e.id !== tempEntries.id
+            (e) => e.id !== tempEntries.id,
           );
         } else {
           this.transactionLog = this.transactionLog.filter(
-            (e) => e.id !== tempEntries.id
+            (e) => e.id !== tempEntries.id,
           );
           this.transactionLog.push({
             type: "Delete",
@@ -2119,7 +2127,7 @@ export default defineComponent({
         Stemp = `0${Stemp}`;
       }
       Stemp = `${Stemp}:${`0${M.toString()}`.slice(
-        -2
+        -2,
       )}:${`0${Sec.toString()}`.slice(-2)}.${MS}`;
 
       if (Full) {
@@ -2191,10 +2199,10 @@ export default defineComponent({
             this.secToTimeString(
               x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar,
               false,
-              false
+              false,
             ),
             (x * this.secToPx) / 10 + 5,
-            this.barHeight
+            this.barHeight,
           );
         }
 
@@ -2211,10 +2219,10 @@ export default defineComponent({
               this.secToTimeString(
                 x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar,
                 false,
-                false
+                false,
               ),
               (x * this.secToPx) / 10 + 5,
-              this.barHeight
+              this.barHeight,
             );
           } else {
             ctx.beginPath();
@@ -2237,10 +2245,10 @@ export default defineComponent({
               this.secToTimeString(
                 x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar,
                 false,
-                false
+                false,
               ),
               (x * this.secToPx) / 10 + 5,
-              this.barHeight
+              this.barHeight,
             );
           } else if (x % 2 === 0) {
             ctx.beginPath();
@@ -2541,13 +2549,13 @@ export default defineComponent({
         })
         .then(({ data }) => {
           this.tlList = Array.from(
-            new Set(data.map((e: { name: any }) => e.name))
+            new Set(data.map((e: { name: any }) => e.name)),
           );
           this.tlList.unshift("None");
           const fetchChat = data
             .filter(
               (e: { timestamp: number }) =>
-                e.timestamp >= this.videoData.start_actual
+                e.timestamp >= this.videoData.start_actual,
             )
             .map((e: { timestamp: number }) => {
               e.timestamp -= this.videoData.start_actual;
@@ -2600,7 +2608,7 @@ export default defineComponent({
       ).data
         .filter(
           (e: { timestamp: number }) =>
-            e.timestamp >= this.videoData.start_actual
+            e.timestamp >= this.videoData.start_actual,
         )
         .map((e: { timestamp: number }) => {
           e.timestamp -= this.videoData.start_actual;
@@ -2663,7 +2671,7 @@ export default defineComponent({
       ).data
         .filter(
           (e: { timestamp: number }) =>
-            e.timestamp >= this.videoData.start_actual
+            e.timestamp >= this.videoData.start_actual,
         )
         .map((e: { timestamp: number }) => {
           e.timestamp -= this.videoData.start_actual;
@@ -2709,7 +2717,7 @@ export default defineComponent({
         this.$router.push("/login");
       } else if (check.data && check.data.id) {
         console.log(
-          "Seems to be logged in correctly? (yeah we're not too sure get over it)"
+          "Seems to be logged in correctly? (yeah we're not too sure get over it)",
         );
         // this.$store.commit("setUser", {
         //   user: check.data,
@@ -2731,7 +2739,7 @@ export default defineComponent({
       for (; this.entries.length > 0; ) {
         const tempEntries = this.entries.splice(0, 1)[0];
         let checkNew = this.transactionLog.filter(
-          (e) => e.id === tempEntries.id
+          (e) => e.id === tempEntries.id,
         );
         if (checkNew.length === 0) {
           this.transactionLog.push({
@@ -2742,11 +2750,11 @@ export default defineComponent({
           checkNew = checkNew.filter((e) => e.type === "Change");
           if (checkNew.length === 0) {
             this.transactionLog = this.transactionLog.filter(
-              (e) => e.id !== tempEntries.id
+              (e) => e.id !== tempEntries.id,
             );
           } else {
             this.transactionLog = this.transactionLog.filter(
-              (e) => e.id !== tempEntries.id
+              (e) => e.id !== tempEntries.id,
             );
             this.transactionLog.push({
               type: "Delete",
@@ -2822,7 +2830,7 @@ export default defineComponent({
         ).data
           .filter(
             (e: { timestamp: number }) =>
-              e.timestamp >= this.videoData.start_actual
+              e.timestamp >= this.videoData.start_actual,
           )
           .map((e: { timestamp: number }) => {
             e.timestamp -= this.videoData.start_actual;

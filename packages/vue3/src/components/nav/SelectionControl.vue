@@ -183,7 +183,7 @@ export default defineComponent({
         if (v === 0) {
           showVideos.value = false;
         }
-      }
+      },
     );
     return { selection, showVideos };
   },

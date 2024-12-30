@@ -276,7 +276,7 @@ export default defineComponent({
       console.log("sort favorites", this.favorites.data.value);
       return localSortChannels(
         this.favorites.data.value || [],
-        this.currentSortValue.query_value
+        this.currentSortValue.query_value,
       );
     },
     isLoggedIn() {

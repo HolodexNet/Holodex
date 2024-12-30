@@ -40,7 +40,7 @@ interface CreateComponentOptions {
  */
 export function mount(
   component: any,
-  { props, children, element, app }: CreateComponentOptions = {}
+  { props, children, element, app }: CreateComponentOptions = {},
 ) {
   let el: HTMLElement | undefined = element;
 
@@ -86,7 +86,7 @@ export const useConfirm = (globalProps: UseConfirmOptions) => {
       const { cancelFn, confirmFn, ...props } = Object.assign(
         {},
         globalProps,
-        options
+        options,
       );
       const opts: UseConfirmOptions = props;
 

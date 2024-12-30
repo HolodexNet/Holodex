@@ -5,7 +5,7 @@ import querystring from "./detectors/querystring";
 
 export function guessUserLanguage(
   checkOnlyQueryString: boolean,
-  defaultLang?: SupportedLangCodes
+  defaultLang?: SupportedLangCodes,
 ): SupportedLangCodes {
   const qsCode = querystring.lookup({ lookupQuerystring: "lang" });
   const browserCode = checkOnlyQueryString ? undefined : navigator.lookup();

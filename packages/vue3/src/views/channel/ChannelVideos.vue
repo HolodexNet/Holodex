@@ -50,28 +50,28 @@ const dsConfig: Ref<VideoListLookup> = computed(
         "videos",
       filter: undefined, // to, from
       pagination: { limit: 24, offset: (page.value - 1) * 24 },
-    } as VideoListLookup)
+    }) as VideoListLookup,
 );
 
 watch(
   () => dsConfig.value,
   () => {
     console.log(dsConfig.value, route.name);
-  }
+  },
 );
 
 watch(
   () => page.value,
   () => {
     grid.value && grid.value.scrollIntoView({ behavior: "smooth" });
-  }
+  },
 );
 
 watch(
   () => route.name,
   () => {
     page.value = 1;
-  }
+  },
 );
 
 const videoQuery = useVideoListDatasource(dsConfig, ref({ enabled: true }));

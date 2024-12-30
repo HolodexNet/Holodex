@@ -14,7 +14,7 @@ function filterDeadStreams(video: Video, now: Dayjs) {
 export function useVideoFilter(
   videoList: Ref<{ items: Video[] } | undefined>,
   q: Ref<VideoListLookup>,
-  overrides?: Ref<Partial<VideoListFilters>>
+  overrides?: Ref<Partial<VideoListFilters>>,
 ): ComputedRef<Video[]> {
   const settings = useSettingsStore();
   const favesList = useFavoritesIDSet();

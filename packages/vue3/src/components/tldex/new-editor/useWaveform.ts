@@ -45,7 +45,7 @@ type ProtoConnection = ProtoframePubsub<{
 
 export function useWaveformGenerator() {
   const worker = new Worker(
-    new URL("./support/ffprobe-worker.js", import.meta.url)
+    new URL("./support/ffprobe-worker.js", import.meta.url),
   );
 
   const client = ref<ProtoConnection>();
@@ -65,7 +65,7 @@ export function useWaveformGenerator() {
     const iframe = document.getElementsByTagName("iframe")[0];
     const iframeCommunicationBus = ProtoframePubsub.parent(
       ytAudioDLProtocol,
-      iframe as HTMLIFrameElement
+      iframe as HTMLIFrameElement,
     );
     ProtoframePubsub.connect(iframeCommunicationBus).then(
       () => {
@@ -81,7 +81,7 @@ export function useWaveformGenerator() {
             error_message.value =
               "Fetch Audio Failed, could not download appropriate audio from Youtube";
             console.error("fetchAudio failed", err);
-          }
+          },
         );
 
         iframeCommunicationBus.handleTell("fetchAudioComplete", (res) => {
@@ -100,12 +100,12 @@ export function useWaveformGenerator() {
             progress.value = Math.round(percentage);
             totalSize.value = total;
             console.log(percentage, "% of", total);
-          }
+          },
         );
       },
       () => {
         console.error("Failed to connect");
-      }
+      },
     );
   }
 
@@ -149,7 +149,7 @@ export function useWaveformGenerator() {
     }
     worker.postMessage(
       { name: "test", inType: "webm", outType: "n/a", buffer: obj.buffer },
-      [obj.buffer]
+      [obj.buffer],
     );
     console.log("Transcoding started");
     stage.value = "transcoding";

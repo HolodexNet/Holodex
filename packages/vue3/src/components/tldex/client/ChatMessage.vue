@@ -93,7 +93,7 @@ export default defineComponent({
       inject("highlightedIndexes");
 
     const hlclass = computed(() =>
-      highlightedIndex?.value.includes(props.index) ? "highlighted" : ""
+      highlightedIndex?.value.includes(props.index) ? "highlighted" : "",
     );
     return { tldexStore, favList, openBlockDialog, hlclass };
   },

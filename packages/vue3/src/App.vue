@@ -34,7 +34,7 @@ import { usePages } from "./components/frame/usePages";
 const pages = usePages();
 
 const SelectionPanel = defineAsyncComponent(
-  () => import("@/components/nav/SelectionControl.vue")
+  () => import("@/components/nav/SelectionControl.vue"),
 );
 
 // a XOR variable defining whether or not user has toggled the sidebar
@@ -87,7 +87,7 @@ const currentPlaylistState = storeToRefs(usePlaylistState());
 
 // /* Configure global playlist video ID cache */
 const currentPlaylistQuery = usePlaylist(
-  currentPlaylistState.currentPlaylistId
+  currentPlaylistState.currentPlaylistId,
 );
 
 provide(CURRENT_PLAYLIST_PROVIDE_KEY, currentPlaylistQuery);

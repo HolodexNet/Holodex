@@ -231,7 +231,7 @@ export default defineComponent({
       // clear ^
       const [search_class, search_term] = splitSearchClassTerms(
         newValue,
-        langCategoryReversemapClass.value
+        langCategoryReversemapClass.value,
       );
       console.log(search_class, search_term);
 
@@ -242,7 +242,7 @@ export default defineComponent({
             ?.filter(
               (x) =>
                 x.name.toLowerCase().includes(lower_search_term) ||
-                x.name_jp?.toLowerCase().includes(lower_search_term)
+                x.name_jp?.toLowerCase().includes(lower_search_term),
             )
             ?.slice(0, search_class === "org" ? 20 : 5) // only give 5 suggestions when searching broadly.
             ?.map((x) => ({
@@ -256,7 +256,7 @@ export default defineComponent({
 
       if (search_class === undefined) {
         const categoryAutofill = FIRST_SEARCH.filter((x) =>
-          t(`search.class.${x.type}`, x.type).startsWith(search_term)
+          t(`search.class.${x.type}`, x.type).startsWith(search_term),
         );
 
         const ok = JSON_SCHEMA.search.suggestionOK?.(query.value);
@@ -341,7 +341,7 @@ export default defineComponent({
       async (newValue) => {
         const [search_class, search_term] = splitSearchClassTerms(
           newValue,
-          langCategoryReversemapClass.value
+          langCategoryReversemapClass.value,
         );
         if (
           search_term.length >= 1 &&
@@ -354,7 +354,7 @@ export default defineComponent({
           const x = await api.searchV3Autocomplete(
             search_term,
             search_class,
-            search_class ? 15 : undefined
+            search_class ? 15 : undefined,
           );
 
           ac_opts.vtuber =
@@ -379,7 +379,7 @@ export default defineComponent({
         }
         // alternate provision:
       },
-      { debounce: 200, immediate: false }
+      { debounce: 200, immediate: false },
     );
 
     const dropdown = computed(() => {
@@ -400,12 +400,12 @@ export default defineComponent({
       async () => {
         if (route.query) {
           query.value = await getQueryFromQueryModel(
-            route.query as unknown as VideoQueryModel
+            route.query as unknown as VideoQueryModel,
           );
           console.log(JSON.stringify(route.query));
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     return {
@@ -435,8 +435,8 @@ export default defineComponent({
         ? this.dropdown.filter(
             (dd) =>
               !this.query.find(
-                (qq) => qq.type == dd.type && qq.value == dd.value
-              )
+                (qq) => qq.type == dd.type && qq.value == dd.value,
+              ),
           )
         : FIRST_SEARCH;
     },
@@ -486,7 +486,7 @@ export default defineComponent({
       if (query.type === "vtuber" && query._raw && query._raw.name) {
         return this.langPrefs.preferredLocaleFn(
           query._raw.english_name,
-          query._raw.name
+          query._raw.name,
         );
       }
       return query.text === "$t"
@@ -514,7 +514,7 @@ export default defineComponent({
         if (item.replace)
           this.query.splice(
             this.query.findIndex(({ type }) => type === item.type),
-            1
+            1,
           );
 
         this.query.push(item);

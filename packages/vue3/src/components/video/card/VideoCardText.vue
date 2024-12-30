@@ -48,7 +48,7 @@
                 {{
                   langStore.preferredLocaleFn(
                     mention.english_name,
-                    mention.name
+                    mention.name,
                   )
                 }}
               </div>
@@ -86,7 +86,7 @@
                 "component.videoCard.clips",
                 typeof video.clips === "object"
                   ? video.clips.length
-                  : +video.clips
+                  : +video.clips,
               )
             }}
           </span>
@@ -138,7 +138,7 @@ export default defineComponent({
 
     const isMobile = display.mobile;
     const { preferredTitle, preferredChannelName, langStore } = useVideoFormat(
-      computed(() => props.video)
+      computed(() => props.video),
     );
     const lang = computed(() => langStore.lang);
     const { t } = useI18n();

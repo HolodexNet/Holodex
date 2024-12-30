@@ -58,7 +58,7 @@ watch(
       console.log("ESC listener detached");
       document.removeEventListener("keydown", handleKeydown);
     }
-  }
+  },
 );
 </script>
 <style lang="scss" scoped>

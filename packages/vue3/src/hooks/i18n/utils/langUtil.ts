@@ -147,7 +147,7 @@ export class LanguageUtil {
   toResolveHierarchy(code, fallbackCode) {
     const fallbackCodes = this.getFallbackCodes(
       fallbackCode || this.options.fallbackLng || [],
-      code
+      code,
     );
 
     const codes = [];
@@ -157,7 +157,7 @@ export class LanguageUtil {
         codes.push(c);
       } else {
         console.warn(
-          `rejecting language code not found in supportedLngs: ${c}`
+          `rejecting language code not found in supportedLngs: ${c}`,
         );
       }
     };

@@ -74,7 +74,7 @@ async function updatePlayerState() {
       t,
       props.video.available_at
         ? props.video.available_at.valueOf() / 1000 + t
-        : undefined
+        : undefined,
     );
     muted.value = m;
     volume.value = v;
@@ -87,7 +87,7 @@ useEventListener(document, "click", (evt: MouseEvent) => {
     (evt.target as HTMLElement)?.matches?.(".timestamp-link, .timestamp-link *")
   ) {
     const x = (evt.target as HTMLElement).closest(
-      "[data-time][data-video]"
+      "[data-time][data-video]",
     ) as HTMLElement;
     if (x) {
       const { time, video: vid } = x.dataset;
@@ -104,7 +104,7 @@ watchEffect(async (onCleanup) => {
   if (!props.disableReactiveVariable) {
     timer.value = setInterval(
       updatePlayerState,
-      props.refreshIntervalMs || 500
+      props.refreshIntervalMs || 500,
     );
   }
   onCleanup(() => {

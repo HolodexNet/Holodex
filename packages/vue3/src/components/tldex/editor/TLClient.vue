@@ -353,7 +353,7 @@
                         small
                         @click="
                           profileStore.deleteProfile(
-                            profileStore.activeProfileIdx
+                            profileStore.activeProfileIdx,
                           )
                         "
                       >
@@ -589,7 +589,7 @@ export default defineComponent({
     this.init();
     if (localStorage.getItem("Holodex-TLClient")) {
       const defaultSetting = JSON.parse(
-        localStorage.getItem("Holodex-TLClient") as any
+        localStorage.getItem("Holodex-TLClient") as any,
       );
       if (defaultSetting.tlChatHeight) {
         this.tlChatHeight = defaultSetting.tlChatHeight;
@@ -619,7 +619,7 @@ export default defineComponent({
       this.activeChat[idx].iframeElement = event.target as HTMLIFrameElement;
       const client: ProtoConnection = ProtoframePubsub.parent(
         tlsyncProtocol,
-        event.target as HTMLIFrameElement
+        event.target as HTMLIFrameElement,
       );
       ProtoframePubsub.connect(client).then(
         () => {
@@ -627,7 +627,7 @@ export default defineComponent({
             .ask(
               "initiate",
               { info: "TLclient requesting connect w/ Holodex+ TLSYNC Relay" },
-              1000
+              1000,
             )
             .then(
               (res) => {
@@ -642,19 +642,19 @@ export default defineComponent({
               (reason) => {
                 console.error(
                   "Connected to Protoframe within Youtube Chat Iframe, timed out waiting for INIT response.",
-                  reason
+                  reason,
                 );
                 this.activeChat[idx].connected = false;
                 this.activeChat[idx].client = client;
-              }
+              },
             );
         },
         (reason) => {
           console.error(
             "Failed to connect to Protoframe within Youtube Chat:",
-            reason
+            reason,
           );
-        }
+        },
       );
     },
     addEntry() {
@@ -732,7 +732,7 @@ export default defineComponent({
     addProfile() {
       let profileName = prompt(
         this.$t("views.tlClient.addProfilePanel.title"),
-        this.$t("views.tlClient.addProfilePanel.inputLabel")
+        this.$t("views.tlClient.addProfilePanel.inputLabel"),
       )?.trim();
       if (!profileName) {
         profileName = `Profile ${this.profileStore.profiles.length}`;
@@ -782,7 +782,7 @@ export default defineComponent({
       switch (s.slice(0, 3)) {
         case "YT_":
           return `https://www.youtube.com/live_chat?v=${s.slice(
-            3
+            3,
           )}&embed_domain=${window.location.hostname}`;
 
         case "TW_":
@@ -799,7 +799,7 @@ export default defineComponent({
         this.$t("views.tlClient.loadChatPanel.title") +
           ": " +
           this.$t("views.tlClient.loadChatPanel.inputLabel"),
-        "https://youtube.com/watch?v=..."
+        "https://youtube.com/watch?v=...",
       );
       if (res) {
         this.loadChat(res);
@@ -851,7 +851,7 @@ export default defineComponent({
           JSON.stringify({
             tlChatHeight: this.tlChatHeight,
             videoWidth: this.videoWidth,
-          })
+          }),
         );
       }
     },
@@ -873,7 +873,7 @@ export default defineComponent({
         JSON.stringify({
           tlChatHeight: this.tlChatHeight,
           videoWidth: this.videoWidth,
-        })
+        }),
       );
     },
     resizeMouseMove(event: any) {
@@ -909,7 +909,7 @@ export default defineComponent({
       } else if (check.data && check.data.id) {
         if (this.$route.query.video) {
           this.mainStreamLink = videoCodeParser(
-            this.$route.query.video as string
+            this.$route.query.video as string,
           );
         }
       }
@@ -941,8 +941,10 @@ export default defineComponent({
   position: relative;
   text-align: end;
   width: 100%;
-  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
-    0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.14),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.12);
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.0333333333em;

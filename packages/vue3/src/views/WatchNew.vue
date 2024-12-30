@@ -114,7 +114,7 @@ const clipLangRef = computed(() => ({
   c: "1",
 }));
 const id = computed(() =>
-  route.name === "Watch" ? (route.params.id as string) : ""
+  route.name === "Watch" ? (route.params.id as string) : "",
 );
 const { data: video, isLoading } = useVideoById(id, clipLangRef, {
   enabled: computed(() => !!id.value),
@@ -132,7 +132,7 @@ watch(
   () => {
     selection.context.pageVideo = video.value;
     selection.context.pageChannel = video.value?.channel;
-  }
+  },
 );
 
 /**

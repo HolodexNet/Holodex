@@ -28,13 +28,13 @@ export function usePlaylistList() {
       enabled: true,
       staleTime: 10 * 60 * 1000,
       cacheTime: 24 * 60 * 60 * 1000,
-    }
+    },
   );
 }
 
 export function usePlaylist(
   id?: MaybeRef<string | number | undefined>,
-  confs?: QueryConfig<Playlist>
+  confs?: QueryConfig<Playlist>,
 ) {
   if (!id) {
     id = storeToRefs(usePlaylistState()).currentPlaylistId;
@@ -55,7 +55,7 @@ export function usePlaylist(
       staleTime: 40 * 60 * 1000,
       cacheTime: 24 * 60 * 60 * 1000,
       ...confs,
-    }
+    },
   );
 }
 
@@ -88,7 +88,7 @@ export function usePlaylistPatcher() {
             videos: [],
             video_ids: playlist.videos?.map((x) => x.id) || [],
           },
-          user.jwtToken
+          user.jwtToken,
         )
       ).data;
 
@@ -103,7 +103,7 @@ export function usePlaylistPatcher() {
           queryClient.invalidateQueries(["playlist", data]);
         }
       },
-    }
+    },
   );
 }
 

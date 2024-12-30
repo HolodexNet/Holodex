@@ -72,7 +72,7 @@ export function formatDistance(
   lang,
   $t,
   allowNegative = true,
-  now = dayjs()
+  now = dayjs(),
 ) {
   let diff;
   if (!time) return "?";
@@ -83,7 +83,7 @@ export function formatDistance(
   if (Math.abs(now.diff(time, "hour")) > 23) {
     return `${localizedDayjs(time, lang).format("l")} (${localizedDayjs(
       time,
-      lang
+      lang,
     ).format("LT")})`;
   }
   const timeObj = localizedDayjs(time, lang);

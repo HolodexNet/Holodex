@@ -24,6 +24,6 @@ const { stop } = useIntersectionObserver(
       stop();
     }
   },
-  propsWithDefault.value
+  propsWithDefault.value,
 );
 </script>

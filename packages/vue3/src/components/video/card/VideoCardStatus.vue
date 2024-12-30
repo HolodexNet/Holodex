@@ -39,7 +39,7 @@ export default defineComponent({
             langStore.lang,
             t,
             false, // allowNegative = false
-            dayjs()
+            dayjs(),
           ); // upcoming videos don't get to be ("5 minutes ago")
           return;
         case "live":
@@ -51,7 +51,7 @@ export default defineComponent({
             langStore.lang,
             t,
             true,
-            dayjs()
+            dayjs(),
           );
       }
     }

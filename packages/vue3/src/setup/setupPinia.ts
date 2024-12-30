@@ -23,7 +23,7 @@ export function setupPinia() {
       enable: false,
       // If set to true this tab tries to immediately recover the shared state from another tab. Defaults to true.
       initialize: false,
-    })
+    }),
   );
 
   return pinia;

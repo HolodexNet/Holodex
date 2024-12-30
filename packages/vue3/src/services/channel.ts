@@ -23,13 +23,13 @@ export function useChannels(query: Ref<object>, enabled: MaybeRef<boolean>) {
         if (!d || d.length < 100) return undefined;
         return { offset: dh.length * 100, limit: 100 };
       },
-    }
+    },
   );
 }
 
 export function useChannel(
   id: Ref<undefined | string>,
-  enabled: MaybeRef<boolean>
+  enabled: MaybeRef<boolean>,
 ) {
   return useQuery(
     ["channel", id] as const,
@@ -45,7 +45,7 @@ export function useChannel(
       refetchOnMount: false,
       refetchInterval: false,
       refetchOnWindowFocus: false,
-    }
+    },
   );
 }
 
@@ -63,7 +63,7 @@ export function useChannelActions(id: Ref<undefined | string>) {
 
   const settings = useSettingsStore();
   const isBlocked = computed(
-    () => !!id.value && settings.blockedSet.has(id.value)
+    () => !!id.value && settings.blockedSet.has(id.value),
   );
 
   const favPatcher = useFavoritesPatcher();
@@ -88,7 +88,7 @@ export function useChannelActions(id: Ref<undefined | string>) {
   }
   const unblock = (channel: ShortChannel) => {
     settings.blockedChannels = settings.blockedChannels.filter(
-      (x) => x.id !== channel.id
+      (x) => x.id !== channel.id,
     );
   };
 

@@ -139,7 +139,7 @@ const { history, undo, canUndo, redo, canRedo, clear } = useDebouncedRefHistory(
     deep: true,
     debounce: 2000,
     clone: klona,
-  }
+  },
 );
 setTimeout(async () => {
   if (messages.value == undefined || messages.value.length == 0) {
@@ -177,8 +177,10 @@ const player = ref<PlayerRef>();
   position: relative;
   text-align: end;
   width: 100%;
-  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
-    0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.14),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.12);
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.0333333333em;

@@ -50,7 +50,7 @@ export const AUTOCOMPLETE_OPTIONS = {
 
 export function splitSearchClassTerms(
   term: string,
-  langCategoryReversemapClass: Record<string, keyof typeof JSON_SCHEMA>
+  langCategoryReversemapClass: Record<string, keyof typeof JSON_SCHEMA>,
 ): [SearchableCategory | undefined, string] {
   const [q_class, ...q_value] = term.split(":");
   const trimmed_class = q_class.trim();
@@ -68,7 +68,7 @@ export function splitSearchClassTerms(
 }
 
 export function getQueryModelFromQuery(
-  query: QueryItem[]
+  query: QueryItem[],
 ): VideoQueryModel | null {
   if (!query) return null;
   const vqm: VideoQueryModel = {};
@@ -106,7 +106,7 @@ async function gen2array<T>(gen: AsyncIterable<T>): Promise<T[]> {
 
 /** sometimes the query model has strings where an array is expected. */
 export function sanitizeQueryModel(
-  dirtyQueryModel: Partial<Record<keyof VideoQueryModel, any>>
+  dirtyQueryModel: Partial<Record<keyof VideoQueryModel, any>>,
 ): VideoQueryModel {
   const out = {} as any;
   for (const key of Object.keys(dirtyQueryModel) as (keyof VideoQueryModel)[]) {
@@ -126,7 +126,7 @@ export function sanitizeQueryModel(
  * @param queryModel
  */
 export async function getQueryFromQueryModel(
-  queryModel: VideoQueryModel
+  queryModel: VideoQueryModel,
 ): Promise<QueryItem[]> {
   console.log(queryModel);
   /**
@@ -194,7 +194,7 @@ export async function getQueryFromQueryModel(
 type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 export function useSearch(
   queryModel: MaybeRef<VideoQueryModel>,
-  queryContainer: MaybeRef<WithOptional<VideoQueryContainer, "query">>
+  queryContainer: MaybeRef<WithOptional<VideoQueryContainer, "query">>,
   // options: Ref<Partial<UseQueryOptions>>
 ) {
   const query = computed(() => {
@@ -213,6 +213,6 @@ export function useSearch(
       enabled: true,
       staleTime: 10 * 60 * 1000, // 10min.
       cacheTime: 12 * 60 * 1000, // 12min.
-    }
+    },
   );
 }

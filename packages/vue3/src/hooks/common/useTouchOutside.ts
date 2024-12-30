@@ -2,7 +2,7 @@ import { unrefElement } from "@vueuse/core";
 
 export default function useTouchOutside(
   target: Ref<HTMLElement | null>,
-  fn: (e: TouchEvent) => void
+  fn: (e: TouchEvent) => void,
 ) {
   const el = unrefElement(target);
   const listener = (event: TouchEvent) => {

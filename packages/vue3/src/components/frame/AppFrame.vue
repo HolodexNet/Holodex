@@ -39,7 +39,7 @@ const sidebarVisibility = ref(display.greater("lg").value);
 // on smaller displays, upon first entering the site, the sidebar is hidden.
 
 const isTemporary = computed(() =>
-  shouldHideSidebar.value ? true : display.smaller("md").value
+  shouldHideSidebar.value ? true : display.smaller("md").value,
 );
 
 function toggle() {
@@ -58,7 +58,7 @@ watch(
       sidebarVisibility.value = true;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 router.afterEach(() => {

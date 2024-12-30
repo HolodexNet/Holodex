@@ -86,7 +86,7 @@ export function usePages() {
   ].map((page) =>
     Object.assign(
       page,
-      /^https?:\/\//.test(page.path) ? { isAbsolute: true } : {}
-    )
+      /^https?:\/\//.test(page.path) ? { isAbsolute: true } : {},
+    ),
   );
 }

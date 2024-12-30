@@ -13,7 +13,7 @@ withDefaults(
   }>(),
   {
     left: false,
-  }
+  },
 );
 </script>
 <style>

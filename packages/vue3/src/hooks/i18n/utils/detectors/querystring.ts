@@ -12,7 +12,7 @@ export default {
         window.location.hash.indexOf("?") > -1
       ) {
         search = window.location.hash.substring(
-          window.location.hash.indexOf("?")
+          window.location.hash.indexOf("?"),
         );
       }
       const query = search.substring(1);

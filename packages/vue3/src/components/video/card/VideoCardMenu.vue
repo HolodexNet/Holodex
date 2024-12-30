@@ -204,9 +204,9 @@ export default defineComponent({
           "/",
           eventEnd,
           "&details=",
-          details
+          details,
         ),
-        "_blank"
+        "_blank",
       );
     },
     copyLink() {

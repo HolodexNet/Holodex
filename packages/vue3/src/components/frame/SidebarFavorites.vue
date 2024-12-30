@@ -60,7 +60,7 @@ const lookupState = ref<VideoListLookup>({
 
 const videoQuery = useVideoListDatasource(
   lookupState as any,
-  ref({ enabled: isLoggedIn })
+  ref({ enabled: isLoggedIn }),
 );
 
 const formatDurationUpcoming = function (ts: any) {

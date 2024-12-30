@@ -44,7 +44,7 @@ export function resizeArtwork(artworkUrl, size = 400) {
 
 export function getChannelPhoto(
   channelId: string,
-  size: string | number = 100
+  size: string | number = 100,
 ) {
   const nearest = Math.min(Math.max(Math.ceil(+size / 50) * 50, 50), 150);
   return `/statics/channelImg/${channelId}/${nearest}.png`;
@@ -87,7 +87,7 @@ export function getVideoThumbnails(ytVideoKey: string, useWebP?: boolean) {
 const AvailableTLLangs = new Set(TL_LANGS.map((x) => x.value));
 
 export function getTLLangRecommendation(
-  weblang: SupportedLangCodes
+  weblang: SupportedLangCodes,
 ): TLLanguageCode {
   const lang = String(weblang).split("-")[0].toLowerCase();
   if (AvailableTLLangs.has(lang as any)) {
@@ -188,7 +188,7 @@ export function localSortChannels(
   {
     sort = "subscriber_count",
     order = "asc",
-  }: { sort: keyof FullChannel; order: "asc" | "desc" }
+  }: { sort: keyof FullChannel; order: "asc" | "desc" },
 ) {
   if (!sort) return channels;
   channels.sort((a, b) => {
@@ -208,7 +208,7 @@ export function localSortChannels(
 
 export function arrayChunk(arr, size) {
   return Array.from(new Array(Math.ceil(arr.length / size)), (_, i) =>
-    arr.slice(i * size, i * size + size)
+    arr.slice(i * size, i * size + size),
   );
 }
 
@@ -393,7 +393,7 @@ export function waitForElement(selector: any) {
 export function debounce<T extends (...args: any) => any>(
   func: T,
   wait?: number,
-  immediate?: boolean
+  immediate?: boolean,
 ) {
   let timeout: number | undefined;
   return function (...args) {

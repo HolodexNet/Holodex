@@ -85,7 +85,7 @@ export async function persistQueryClientRestore({
   } catch (err) {
     console.error(
       "Encountered an error attempting to restore client cache from persisted location. As a precaution, the persisted cache will be discarded",
-      err
+      err,
     );
     // if (process.env.NODE_ENV !== 'production') {
     //     queryClient.getLogger().error(err)
@@ -124,7 +124,7 @@ export async function persistQueryClientSave({
  * @returns an unsubscribe function (to discontinue monitoring)
  */
 export function persistQueryClientSubscribe(
-  props: PersistedQueryClientSaveOptions
+  props: PersistedQueryClientSaveOptions,
 ) {
   const unsubscribeQueryCache = props.queryClient
     .getQueryCache()
@@ -148,7 +148,7 @@ export function persistQueryClientSubscribe(
  * Restores persisted data to QueryCache and persists further changes.
  */
 export function persistQueryClient(
-  props: PersistQueryClientOptions
+  props: PersistQueryClientOptions,
 ): [() => void, Promise<void>] {
   let hasUnsubscribed = false;
   let persistQueryClientUnsubscribe: (() => void) | undefined;
@@ -184,7 +184,7 @@ export const removeOldestQuery: PersistRetryer = ({ persistedClient }) => {
 
   // sort queries by dataUpdatedAt (oldest first)
   const sortedQueries = [...queries].sort(
-    (a, b) => a.state.dataUpdatedAt - b.state.dataUpdatedAt
+    (a, b) => a.state.dataUpdatedAt - b.state.dataUpdatedAt,
   );
 
   // clean oldest query
