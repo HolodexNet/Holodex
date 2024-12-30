@@ -10,10 +10,13 @@ import { useVideoSelection } from "@/hooks/useVideoSelection";
 
 export function SelectionEditShortcuts() {
   const { selectedVideos } = useVideoSelection();
-  const hasClip = selectedVideos.some(
-    (x) => x.type === "clip" || x.type === "placeholder",
+  const selectionContainsClips = selectedVideos.some((x) => x.type === "clip");
+  const selectionContainsNoClip = selectedVideos.every(
+    (x) => x.type !== "clip",
   );
-  const hasNonClip = selectedVideos.some((x) => x.type !== "clip");
+  const selectionContainsNoPlaceholders = selectedVideos.every(
+    (x) => x.type !== "placeholder",
+  );
   const hasMentions = selectedVideos.some((x) => x.mentions?.length);
 
   const context = { pageVideo: null, pageChannel: null };
@@ -38,12 +41,17 @@ export function SelectionEditShortcuts() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {!hasClip && hasNonClip && (
-          <DropdownMenuItem>Make Collab</DropdownMenuItem>
+        {!selectionContainsClips && selectionContainsNoClip && (
+          <DropdownMenuItem>Merge Participant Lists</DropdownMenuItem>
         )}
-        {hasClip && hasNonClip && (
+        {selectionContainsNoClip && selectionContainsNoPlaceholders && (
           <DropdownMenuItem>Make Simulwatch</DropdownMenuItem>
         )}
+        {selectionContainsNoClip &&
+          selectionContainsNoPlaceholders &&
+          selectedVideos?.length < 4 && (
+            <DropdownMenuItem>Make videos refer to each other</DropdownMenuItem>
+          )}
         {context.pageVideo && (
           <DropdownMenuItem onClick={dissociateVideo}>
             Disassociate w/ Current Video

@@ -57,9 +57,7 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
 
   // Selection behavior
   const { addVideo, removeVideo, setSelectionMode } = useVideoSelection();
-  const isSelected = useAtomValue(selectedVideoSetReadonlyAtom).includes(
-    videoId,
-  );
+  const isSelected = useAtomValue(selectedVideoSetReadonlyAtom).has(videoId);
 
   const [, copy] = useCopyToClipboard();
   const setReportedVideo = useSetAtom(videoReportAtom);

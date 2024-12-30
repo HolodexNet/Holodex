@@ -1,7 +1,7 @@
 import { VideoCardCountdownToLive } from "./VideoCardCountdownToLive";
 import { formatDuration } from "@/lib/time";
 import { Button } from "@/shadcn/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { VideoMenu } from "./VideoMenu";
 import { cn, makeThumbnailUrl, resizeChannelPhoto } from "@/lib/utils";
 import React, { Suspense, useCallback, useMemo, useState } from "react";
@@ -18,6 +18,7 @@ import {
 import { isMobileAtom } from "@/hooks/useFrame";
 import { ChannelImg } from "../channel/ChannelImg";
 import { tldexLanguageAtom } from "@/store/tldex";
+import { useDefaultVideoCardClickHandler } from "./VideoCard.utils";
 
 export type VideoCardType = VideoRef &
   Partial<VideoBase> &
@@ -63,8 +64,6 @@ export function VideoCard({
   onClick,
   showDuration = true,
 }: VideoCardProps) {
-  const navigate = useNavigate();
-
   const isTwitch = video.link?.includes("twitch");
   const videoHref =
     !isTwitch && video.status === "live" && video.link
@@ -85,70 +84,12 @@ export function VideoCard({
   const [placeholderOpen, setPlaceholderOpen] = useState(false); // placeholder popup state.
 
   const selectedSet = useAtomValue(selectedVideoSetReadonlyAtom);
-  const { selectionMode, addVideo, removeVideo } = useVideoSelection();
+  const { selectionMode } = useVideoSelection();
   const isMobile = useAtomValue(isMobileAtom);
 
-  const goToVideoClickHandler = useCallback(
-    (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      console.info("JS Video Click Handling", evt);
-      const isLinkClick = (evt.target as HTMLElement).closest("a");
-      if (isLinkClick) {
-        // Handle selection mode
-        if (selectionMode) {
-          if (selectedSet.includes(video.id)) {
-            removeVideo(video.id);
-          } else {
-            addVideo(video as PlaceholderVideo);
-          }
-          evt.preventDefault();
-          evt.stopPropagation();
-          return;
-        }
-
-        if (videoIsPlaceholder) {
-          evt.preventDefault();
-          evt.stopPropagation();
-          return setPlaceholderOpen(true);
-        }
-
-        console.info("no action b/c closest element is a link.", evt);
-        return;
-      }
-      // clicked a non-link part of the video card. Prevent default behavior.
-      evt.preventDefault();
-      evt.stopPropagation();
-
-      if (evt.ctrlKey || evt.metaKey) {
-        /** Control clicking a non-link part always goes to the external link no matter what the context */
-        return window.open(videoHref, "_blank");
-      }
-
-      // Handle selection mode
-      if (selectionMode) {
-        if (selectedSet.includes(video.id)) {
-          removeVideo(video.id);
-        } else {
-          addVideo(video as PlaceholderVideo);
-        }
-        return;
-      }
-
-      if (videoIsPlaceholder) {
-        return setPlaceholderOpen(true);
-      }
-
-      navigate(videoHref, { state: { video } });
-    },
-    [
-      selectionMode,
-      videoIsPlaceholder,
-      navigate,
-      videoHref,
-      video,
-      selectedSet,
-      removeVideo,
-      addVideo,
-    ],
+  const goToVideoClickHandler = useDefaultVideoCardClickHandler(
+    video,
+    setPlaceholderOpen,
   );
 
   /**
@@ -174,7 +115,7 @@ export function VideoCard({
         (size == "md" || size == "lg") && "group flex w-full flex-col gap-4",
         onClick && "cursor-pointer",
         selectionMode &&
-          (selectedSet?.includes(video.id)
+          (selectedSet?.has(video.id)
             ? "ring-offset-base-2 ring-offset-2 ring-4 ring-primary-8 rounded-lg "
             : "ring-offset-base-2 ring-offset-2 ring-4 ring-base-6 rounded-lg saturate-[0.75] brightness-75 opacity-50"),
       ]),
@@ -265,9 +206,11 @@ export function VideoCard({
         {(size == "lg" || size == "md") && video.channel && (
           <Link
             to={`/channel/${video.channel.id}`}
-            id="channelLink"
+            dataBehavior="channelLink"
             className="shrink-0"
-            onClick={(e) => onClick && onClick("channel", video, e)}
+            onClick={(e) =>
+              onClick ? onClick("channel", video, e) : goToVideoClickHandler(e)
+            }
           >
             <ChannelImg
               channelId={video.channel.id}
@@ -282,7 +225,7 @@ export function VideoCard({
           </Link>
         )}
 
-        {/* This block contains the Video Text Info: Title, Channel, Schedule. */}
+        {/* This sub-block contains the Video Text Info: Title, Channel, Schedule. */}
         <div
           className={videoCardClasses.videoTextInfo}
           onClick={(e) =>
@@ -304,7 +247,7 @@ export function VideoCard({
           {video.channel && (
             <Link
               className={videoCardClasses.channelLink}
-              id="channelLink"
+              dataBehavior="channelLink"
               to={`/channel/${video.channel.id}`}
               onClick={(e) => onClick && onClick("channel", video, e)}
             >
@@ -317,6 +260,7 @@ export function VideoCard({
             </div>
           )}
         </div>
+        {/* The last sub-block is for the video menu dropdown */}
         <VideoMenu url={externalLink} video={video}>
           <Button
             variant="ghost"
@@ -334,8 +278,11 @@ export function VideoCard({
           </Button>
         </VideoMenu>
         {videoIsPlaceholder && (
+          // This block contains the pop-up card for the video which is rendered when clicked.
+          // the surrounding onclick and mousedown events are caught to prevent navigating the video.
           <div onClick={stopPropagation} onMouseDown={stopPropagation}>
             <Suspense fallback={null}>
+              {/* The `Suspense` prevents the lazy-loaded placeholder from blocking page rendering */}
               <LazyVideoCardPlaceholder
                 open={placeholderOpen}
                 setOpen={setPlaceholderOpen}

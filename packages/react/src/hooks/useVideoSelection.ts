@@ -3,8 +3,8 @@ import { atom, useAtom } from "jotai";
 export const selectionModeAtom = atom(false);
 const selectedVideosAtom = atom<PlaceholderVideo[]>([]);
 
-export const selectedVideoSetReadonlyAtom = atom((get) =>
-  get(selectedVideosAtom).map((v) => v.id),
+export const selectedVideoSetReadonlyAtom = atom(
+  (get) => new Set(get(selectedVideosAtom).map((v) => v.id)),
 );
 export const useVideoSelection = () => {
   const [selectionMode, setSelectionMode] = useAtom(selectionModeAtom);
