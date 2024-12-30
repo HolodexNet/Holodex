@@ -7,6 +7,7 @@
     "build": "vite build --mode prod",
     "preview": "vite preview",
     "lint": "eslint --fix src/",
+    "lint:check": "eslint src/",
     "prepare": "husky install",
     "test": "jest tests"
   },
