@@ -26,8 +26,11 @@ export function useDefaultVideoCardClickHandler(
 
       console.info("JS Video Click Handling", evt);
       const isLinkClick = (evt.target as HTMLElement).closest("a");
+      // thumbnail, title, and channel image / channel name are all React Router links
+      // in contrast, the rest of the video card is not a link
       const isChannelClick =
         isLinkClick?.getAttribute("dataBehavior") === "channelLink";
+
       if (isChannelClick) {
         return; // do not select, skip the entire handler
       }

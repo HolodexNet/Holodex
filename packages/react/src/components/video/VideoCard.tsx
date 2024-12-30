@@ -19,6 +19,7 @@ import { isMobileAtom } from "@/hooks/useFrame";
 import { ChannelImg } from "../channel/ChannelImg";
 import { tldexLanguageAtom } from "@/store/tldex";
 import { useDefaultVideoCardClickHandler } from "./VideoCard.utils";
+import { useLongPress } from "react-use";
 
 export type VideoCardType = VideoRef &
   Partial<VideoBase> &
@@ -64,9 +65,9 @@ export function VideoCard({
   onClick,
   showDuration = true,
 }: VideoCardProps) {
-  const isTwitch = video.link?.includes("twitch");
+  const isTwitchPlaceholder = video.link?.includes("twitch");
   const videoHref =
-    !isTwitch && video.status === "live" && video.link
+    !isTwitchPlaceholder && video.status === "live" && video.link
       ? video.link
       : `/watch/${video.id}`;
   const videoIsPlaceholder = video.type === "placeholder";
@@ -77,14 +78,14 @@ export function VideoCard({
     : `https://youtu.be/${video.id}`;
 
   const videoTarget =
-    !isTwitch && video.placeholderType === "external-stream"
+    !isTwitchPlaceholder && video.placeholderType === "external-stream"
       ? "_blank"
       : undefined;
 
   const [placeholderOpen, setPlaceholderOpen] = useState(false); // placeholder popup state.
 
   const selectedSet = useAtomValue(selectedVideoSetReadonlyAtom);
-  const { selectionMode } = useVideoSelection();
+  const { selectionMode, setSelectionMode, addVideo } = useVideoSelection();
   const isMobile = useAtomValue(isMobileAtom);
 
   const goToVideoClickHandler = useDefaultVideoCardClickHandler(
@@ -92,6 +93,15 @@ export function VideoCard({
     setPlaceholderOpen,
   );
 
+  const longPressCallback = useCallback(() => {
+    setSelectionMode(true);
+    // i would add the video here but i think if you don't move your mouse it counts as a click
+    // and i can't stop propagation coz it's usually another layer that's being clicked.
+  }, [setSelectionMode]);
+  const longPressBind = useLongPress(longPressCallback, {
+    isPreventDefault: false,
+    delay: 1500,
+  });
   /**
    * Alt clicking always goes to the external link no matter what the context.
    */
@@ -154,6 +164,7 @@ export function VideoCard({
       onClick={(e) =>
         onClick ? onClick("full", video, e) : goToVideoClickHandler(e)
       }
+      {...longPressBind}
     >
       {/* Thumbnail for the video */}
       <Link
