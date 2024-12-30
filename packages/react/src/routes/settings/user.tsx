@@ -1,7 +1,7 @@
 import { LoginButtons } from "@/components/login/LoginButtons";
+import { SettingsResetKeyButton } from "@/components/login/SettingsResetKeyButton";
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { useAuth } from "@/hooks/useAuth";
-import { useUserRefreshMutation } from "@/services/user.service";
 import { Badge } from "@/shadcn/ui/badge";
 import { Button } from "@/shadcn/ui/button";
 import { Input } from "@/shadcn/ui/input";
@@ -24,29 +24,6 @@ export function SettingsUser() {
   const user = useAtomValue(userAtom);
   const { logout } = useAuth();
   const { i18n, t } = useTranslation();
-  const { mutate } = useUserRefreshMutation();
-
-  function resetKey() {
-    // /* eslint-disable no-restricted-globals, no-alert */
-    if (user?.api_key) {
-      const confirm1 = confirm(t("views.login.apikeyResetConfirm1"));
-      if (!confirm1) {
-        alert(t("views.login.apikeyResetNvm"));
-        return;
-      }
-      const confirm2 = confirm(t("views.login.apikeyResetConfirm2"));
-      if (!confirm2) {
-        alert(t("views.login.apikeyResetNvm"));
-        return;
-      }
-    }
-    mutate(undefined, {
-      onError: () => {
-        alert("something went wrong creating your key...");
-      },
-    });
-    // /* eslint-enable no-restricted-globals, no-alert */
-  }
 
   if (!user)
     return (
@@ -191,9 +168,7 @@ export function SettingsUser() {
               <div className="i-heroicons:square-2-stack" />
             </Button>
           </div>
-          <Button variant="destructive" onClick={resetKey}>
-            {t("views.login.apikeyNew")}
-          </Button>
+          <SettingsResetKeyButton />
           <Button
             variant="primary"
             onClick={() => window.open("https://docs.holodex.net", "_blank")}

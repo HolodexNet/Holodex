@@ -26,6 +26,8 @@ export const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline focus-visible:underline focus-visible:ring-secondary-7",
         destructive:
           "bg-red-9 text-base-12 hover:bg-redA-10 focus-visible:ring-red-7 active:bg-redA-11",
+        simple:
+          "rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2",
       },
       size: {
         default: "h-8 gap-2 px-3.5 py-2", // also counts as "md"
@@ -33,6 +35,7 @@ export const buttonVariants = cva(
         lg: "h-10 gap-3 rounded-md px-6 text-lg ",
         icon: "h-8 w-8",
         "icon-lg": "h-10 w-10 text-lg",
+        unset: "",
       },
     },
     defaultVariants: {

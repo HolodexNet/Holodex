@@ -1,6 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
 import { userAtom } from "@/store/auth";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { UserMenuItem } from "./UserMenuItem";
@@ -13,31 +13,33 @@ import {
   DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shadcn/ui/avatar";
+import { calendarDialogAtom } from "@/hooks/useFrame";
 
 export function UserMenu() {
   const { t } = useTranslation();
   const user = useAtomValue(userAtom);
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const setDialog = useSetAtom(calendarDialogAtom);
 
   const userMenuItems = [
     {
       key: "settings",
-      value: "Settings",
+      value: t("component.mainNav.settings"),
       fn: () => navigate("/settings/user"),
-      icon: <div className="i-heroicons:cog-6-tooth"></div>,
+      icon: <div className="i-heroicons:cog-6-tooth" />,
     },
     {
       key: "iCalFeed",
-      value: "ICal Feed",
-      fn: () => console.log("iCalFeed"),
-      icon: <div className="i-heroicons:calendar"></div>,
+      value: "iCal Feed",
+      fn: () => setDialog((x) => ({ ...x, open: true })),
+      icon: <div className="i-heroicons:calendar" />,
     },
     {
       key: "logout",
-      value: "Logout",
+      value: t("component.mainNav.logout"),
       fn: logout,
-      icon: <div className="i-heroicons:arrow-up-tray"></div>,
+      icon: <div className="i-heroicons:arrow-up-tray" />,
     },
   ];
 
