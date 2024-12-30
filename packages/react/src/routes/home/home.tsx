@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { mostRecentOrgAtom } from "@/store/org";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { lazy, useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import {
@@ -24,6 +24,8 @@ import {
   isSidebarOpenAtom,
   sidebarShouldBeFullscreenAtom,
 } from "@/hooks/useFrame";
+import { userAtom } from "@/store/auth";
+import { useVideoSelection } from "@/hooks/useVideoSelection";
 
 const ChannelsOrg = lazy(() =>
   import("../orgChannels").then((module) => ({ default: module.ChannelsOrg })),
@@ -97,6 +99,7 @@ function StickyTabsList({
 
   const [open] = useAtom(isSidebarOpenAtom);
   const [isFullScreen] = useAtom(sidebarShouldBeFullscreenAtom);
+  const user = useAtomValue(userAtom);
 
   return (
     <TabsList
@@ -129,6 +132,9 @@ function StickyTabsList({
       {/* Optional Control Buttons */}
       {tab === "clips" && <ClipLanguageSelector />}
       {tab !== "members" && <CardSizeToggle />}
+      {(user?.role === "admin" || user?.role === "editor") && (
+        <EditingStateToggle />
+      )}
     </TabsList>
   );
 }
@@ -138,11 +144,6 @@ export default StickyTabsList;
 export const CardSizeToggle: React.FC = () => {
   const { nextSize, setNextSize } = useVideoCardSizes(["list", "md", "lg"]);
 
-  const handleClick = () => {
-    setNextSize();
-    console.log("new card size", nextSize);
-  };
-
   return (
     <Button
       className="shrink-0"
@@ -150,7 +151,7 @@ export const CardSizeToggle: React.FC = () => {
       variant="ghost"
       role="button"
       type="button"
-      onClick={handleClick}
+      onClick={setNextSize}
     >
       <div
         className={cn(
@@ -163,6 +164,41 @@ export const CardSizeToggle: React.FC = () => {
           }[nextSize],
         )}
       />
+    </Button>
+  );
+};
+
+export const EditingStateToggle: React.FC = () => {
+  const { selectionMode, setSelectionMode, clearSelection } =
+    useVideoSelection();
+
+  return selectionMode ? (
+    <Button
+      className="shrink-0 px-2"
+      size="lg"
+      variant="primary"
+      role="button"
+      type="button"
+      onClick={() => {
+        setSelectionMode(!selectionMode);
+        clearSelection();
+      }}
+    >
+      <div className="i-lucide:check" /> Exit Edit Mode
+    </Button>
+  ) : (
+    <Button
+      className="shrink-0"
+      size="icon-lg"
+      variant="ghost"
+      role="button"
+      type="button"
+      onClick={() => {
+        setSelectionMode(!selectionMode);
+        clearSelection();
+      }}
+    >
+      <div className="i-lucide:edit" />
     </Button>
   );
 };
