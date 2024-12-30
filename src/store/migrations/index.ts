@@ -8,7 +8,8 @@ import v8 from "./v8-20210714-multiview-content-reset";
 import v9 from "./v9-2021097-mv-defaults";
 import v10 from "./v10-20230401-fools";
 import v11 from "./v11-20230402-foolsnomore";
+import v12 from "./v12-20241231-ytembedvariant";
 
-export const migrations: IMigration[] = [v2, v4, v5, v6, v7, v8, v9, v10, v11];
+export const migrations: IMigration[] = [v2, v4, v5, v6, v7, v8, v9, v10, v11, v12];
 
-export const VUEX_STATE_VERSION = 11;
+export const VUEX_STATE_VERSION = 12;

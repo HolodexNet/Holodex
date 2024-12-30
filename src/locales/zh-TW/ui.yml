@@ -275,6 +275,13 @@ views:
     hideMissingStreams: 隱藏已消失的實況
     ignoredTopicsLabel: 隱藏指定內容標籤
     ignoredTopicsMsg: 在首頁與我的收藏頁面中隱藏含有下列內容標籤的影片
+    YTEmbedVariantLabel: YouTube 播放器
+    YTEmbedVariantMsg: 更改用作播放 YouTube 的播放器。或許能舒緩播放限制。
+    YTEmbedVariant:
+      - 每次詢問
+      - YouTube 預設
+      - 隱私加強保護模式
+    YTEmbedVariantPromptMsg: 按確定採用 YouTube 預設播放器，取消則採用隱私加強保護模式
     theme: 佈景主題
     moreSettings: 更多設定
   app:

@@ -213,6 +213,23 @@
               :label="$t('views.settings.redirectModeLabel')"
               :messages="$t('views.settings.redirectModeMsg')"
             />
+            <div class="mb-0 mt-6">
+              <v-icon style="margin-right: 9px">
+                {{ icons.mdiPlayNetwork }}
+              </v-icon>
+              <span class="text-body-1">{{ $t("views.settings.YTEmbedVariantLabel") }}</span>
+            </div>
+            <v-select
+              v-model="YTEmbedVariant"
+              prepend-icon=" "
+              class="mt-n4"
+              :items="[
+                { text: $t('views.settings.YTEmbedVariant[0]'), value: '' },
+                { text: $t('views.settings.YTEmbedVariant[1]'), value: 'youtube' },
+                { text: $t('views.settings.YTEmbedVariant[2]'), value: 'youtube-nocookie' },
+              ]"
+              :messages="$t('views.settings.YTEmbedVariantMsg')"
+            />
           </v-card-text>
         </v-sheet>
       </v-col>
@@ -332,6 +349,14 @@ export default {
             },
             set(val) {
                 this.$store.commit("setCurrentGridSize", val);
+            },
+        },
+        YTEmbedVariant: {
+            get() {
+                return this.$store.state.settings.YTEmbedVariant;
+            },
+            set(val) {
+                this.$store.commit("settings/setYTEmbedVariant", val);
             },
         },
         useEnName: {
