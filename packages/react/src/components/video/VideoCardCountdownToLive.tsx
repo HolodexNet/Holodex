@@ -10,8 +10,6 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { useInterval } from "usehooks-ts";
 
-const incr = 0;
-
 interface LiveCounterProps {
   viewers?: number;
   start_date?: string;
@@ -148,6 +146,28 @@ export function VideoCardCountdownToLive({
         {pastText}
       </TimeTooltip>
     );
+  }
+
+  // Handle missing videos
+  if (video.status === "missing") {
+    if (video.start_actual) {
+      const tick = dayjs(video.start_actual);
+      return (
+        <TimeTooltip id={video.id} timestamp={tick} className={className}>
+          <div className="i-ph:image-broken inline-block align-text-bottom opacity-80" />
+          &nbsp;Streamed at {tick.format("LLL")}
+        </TimeTooltip>
+      );
+    }
+    if (video.start_scheduled) {
+      const tick = dayjs(video.start_scheduled);
+      return (
+        <TimeTooltip id={video.id} timestamp={Date.now()} className={className}>
+          <div className="i-ph:image-broken inline-block align-text-bottom opacity-80" />
+          &nbsp;Scheduled for {tick.format("LLL")}
+        </TimeTooltip>
+      );
+    }
   }
 
   return null;

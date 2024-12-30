@@ -12,6 +12,8 @@ export function useDuration({
 >) {
   const [date] = useSeconds();
 
+  if (status === "missing") return duration ? duration * 1000 : null;
+
   if (status === "past") return duration * 1000;
 
   if (status === "live" && start_actual)
