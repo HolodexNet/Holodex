@@ -81,41 +81,44 @@
       :margin="[1, 1]"
       @layout-updated="onLayoutUpdated"
     >
-      <grid-item
-        v-for="item in layout"
-        :key="'mvgrid' + item.i"
-        :static="item.static"
-        :x="item.x"
-        :y="item.y"
-        :w="item.w"
-        :h="item.h"
-        :i="item.i"
-        :is-draggable="item.isDraggable !== false"
-        :is-resizable="item.isResizable !== false"
-        :style="showReorderLayout && {'pointer-events': 'none'}"
-      >
-        <cell-container :item="item">
-          <ChatCell
-            v-if="layoutContent[item.i] && layoutContent[item.i].type === 'chat'"
-            :item="item"
-            :tl="layoutContent[item.i].initAsTL"
-            :cell-width="columnWidth * item.w"
-            @delete="handleDelete"
-          />
-          <VideoCell
-            v-else-if="layoutContent[item.i] && layoutContent[item.i].type === 'video'"
-            ref="videoCell"
-            :item="item"
-            @delete="handleDelete"
-          />
-          <EmptyCell
-            v-else
-            :item="item"
-            @showSelector="showSelectorForId = item.i"
-            @delete="handleDelete"
-          />
-        </cell-container>
-      </grid-item>
+      <!-- This tells Vue not to try to re-order the elements but instead to create/delete them as required -->
+      <TransitionGroup>
+        <grid-item
+          v-for="item in layout"
+          :key="'mvitem' + item.i"
+          :static="item.static"
+          :x="item.x"
+          :y="item.y"
+          :w="item.w"
+          :h="item.h"
+          :i="item.i"
+          :is-draggable="item.isDraggable !== false"
+          :is-resizable="item.isResizable !== false"
+          :style="showReorderLayout && {'pointer-events': 'none'}"
+        >
+          <cell-container :item="item">
+            <ChatCell
+              v-if="layoutContent[item.i] && layoutContent[item.i].type === 'chat'"
+              :item="item"
+              :tl="layoutContent[item.i].initAsTL"
+              :cell-width="columnWidth * item.w"
+              @delete="handleDelete"
+            />
+            <VideoCell
+              v-else-if="layoutContent[item.i] && layoutContent[item.i].type === 'video'"
+              ref="videoCell"
+              :item="item"
+              @delete="handleDelete"
+            />
+            <EmptyCell
+              v-else
+              :item="item"
+              @showSelector="showSelectorForId = item.i"
+              @delete="handleDelete"
+            />
+          </cell-container>
+        </grid-item>
+      </TransitionGroup>
     </grid-layout>
 
     <!-- Video Selector -->

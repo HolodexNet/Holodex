@@ -1,5 +1,5 @@
 import type { Content } from "@/utils/mv-utils";
-import { decodeLayout, sortLayout } from "@/utils/mv-utils";
+import { decodeLayout, generateContentId, sortLayout } from "@/utils/mv-utils";
 import { mapGetters } from "vuex";
 
 export default {
@@ -178,18 +178,24 @@ export default {
             if (mergeContent) {
                 const contentsToMerge = {};
                 let videoIndex = 0;
-                const currentVideos = Object.values(this.layoutContent as Content[]).filter((o) => o.type === "video");
+                // Maintain the original layout ordering when chosing new videos.
+                const currentVideoContents = this.layout.filter(({ i }) => this.layoutContent[i]?.type === "video");
                 const newVideoIdToIndex = {};
                 // Loop through the incoming layout, and fill with current content
                 layout.filter((item) => !content[item.i]).forEach((item) => {
                     // For empty cells fill until there's no more current videos
                     if (videoIndex < this.activeVideos.length) {
                         // get next video to fill this item's cell
-                        const key = item.i;
-                        contentsToMerge[key] = currentVideos[videoIndex];
+                        const key = currentVideoContents[videoIndex].i;
+                        // Re-use the original video's index so that the component is not re-mounted.
+                        item.i = key;
+                        contentsToMerge[key] = this.layoutContent[key];
                         // Infer next activeVideos to be used in auto chat tabbing below
-                        newVideoIdToIndex[currentVideos[videoIndex].video.id] = videoIndex;
+                        newVideoIdToIndex[this.layoutContent[key].video.id] = videoIndex;
                         videoIndex += 1;
+                    } else {
+                        // Create a new id because the templates are cached with re-used ids that would otherwise cause issues.
+                        item.i = generateContentId();
                     }
                 });
 

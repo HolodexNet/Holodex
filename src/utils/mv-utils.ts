@@ -13,6 +13,10 @@ const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.";
 export const sortLayout = (a, b) => a.x - b.x || a.y - b.y;
 // export const sortLayout = (a, b) => a.y - b.y || a.x - b.x;
 
+export const generateContentId = () => Array.from({ length: 8 })
+    .map(() => b64[Math.floor(Math.random() * b64.length)])
+    .join("");
+
 /**
  * Encodes a layout array and contents to a compact URI
  * @param {{layout, contents, includeVideo?}} layout and layout contents
@@ -68,7 +72,8 @@ export function decodeLayout(encodedStr) {
     let videoCellCount = 0;
     const parts = encodedStr.split(",");
     parts.sort(); // DO NOT TOUCH THIS LINE
-    parts.forEach((str, index) => {
+    parts.forEach((str) => {
+        const index = generateContentId();
         const xywh = str.substring(0, 4);
         const idOrChat = str.substring(4, 15);
         const isChat = idOrChat.substring(0, 4) === "chat";
