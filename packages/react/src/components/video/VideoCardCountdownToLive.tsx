@@ -150,21 +150,14 @@ export function VideoCardCountdownToLive({
 
   // Handle missing videos
   if (video.status === "missing") {
-    if (video.start_actual) {
-      const tick = dayjs(video.start_actual);
+    if (video.start_actual || video.start_scheduled || video.available_at) {
+      const tick = dayjs(
+        video.start_actual || video.start_scheduled || video.available_at,
+      );
       return (
         <TimeTooltip id={video.id} timestamp={tick} className={className}>
           <div className="i-ph:image-broken inline-block align-text-bottom opacity-80" />
-          &nbsp;Streamed at {tick.format("LLL")}
-        </TimeTooltip>
-      );
-    }
-    if (video.start_scheduled) {
-      const tick = dayjs(video.start_scheduled);
-      return (
-        <TimeTooltip id={video.id} timestamp={Date.now()} className={className}>
-          <div className="i-ph:image-broken inline-block align-text-bottom opacity-80" />
-          &nbsp;Scheduled for {tick.format("LLL")}
+          &nbsp;{tick.format("LLL")}
         </TimeTooltip>
       );
     }
