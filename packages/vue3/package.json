@@ -10,6 +10,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "postinstall": "npm run build",
+    "lint": "prettier --check src",
     "lint:fix": "prettier --write src"
   },
   "lint-staged": {
