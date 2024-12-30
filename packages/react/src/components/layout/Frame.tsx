@@ -89,6 +89,17 @@ export function GlobalReactivity() {
   return <></>;
 }
 
+export function CopyrightNotice() {
+  return (
+    <div className="mt-16 text-center text-sm text-base-7">
+      © 2020-2024 Holodex v{lastTag}.{commitsSinceLastTag}
+      <small className="ml-2 inline-block opacity-80">
+        {abbreviatedSha} / {dayjs(new Date(committerDate)).format("lll")}
+      </small>
+    </div>
+  );
+}
+
 const LazyVideoReportDialog = React.lazy(() => import("../video/VideoReport"));
 
 export function Frame() {
@@ -151,12 +162,7 @@ export function Frame() {
               <Outlet />
             </Suspense>
           </ErrorBoundary>
-          <div className="mt-16 text-center text-sm text-base-7">
-            © 2020 Holodex v{lastTag}.{commitsSinceLastTag}
-            <small className="ml-2 opacity-50">
-              {abbreviatedSha} / {dayjs(new Date(committerDate)).format("lll")}
-            </small>
-          </div>
+          <CopyrightNotice />
         </main>
         <SelectionFooter />
         {reportedVideo && (
