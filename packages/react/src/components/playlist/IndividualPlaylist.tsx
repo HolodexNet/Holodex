@@ -124,7 +124,7 @@ export default function IndividualPlaylist({ playlist }: Props) {
                   <DeletePlaylistDialog
                     triggerElement={
                       <Button size="icon" variant="ghost">
-                        <span className="i-heroicons:trash-solid" />
+                        <span className="i-heroicons:trash" />
                       </Button>
                     }
                     playlistId={playlist.id}

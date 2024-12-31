@@ -89,7 +89,7 @@ export default function PlaylistEntry({
             <DeletePlaylistDialog
               triggerElement={
                 <Button size="sm" variant="ghost">
-                  <span className="i-heroicons:trash-solid mr-1" />
+                  <span className="i-heroicons:trash mr-1" />
                 </Button>
               }
               playlistId={id}
