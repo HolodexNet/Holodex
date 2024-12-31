@@ -25,7 +25,11 @@ export function usePlaylist(id: number, options?: UseQueryOptions<Playlist>) {
 
   return useQuery({
     queryKey: ["playlist", id],
-    queryFn: async () => await client<Playlist>(`/api/v2/playlist/${id}`),
+    queryFn: async () => {
+      const p = await client<Playlist>(`/api/v2/playlist/${id}`);
+      p.videos = p.videos || []; // null check this
+      return p;
+    },
     ...options,
   });
 }
@@ -40,6 +44,7 @@ export function usePlaylistInclude(
     queryKey: ["playlist", "include", videoId],
     queryFn: async () =>
       await client<PlaylistInclude[]>(`/api/v2/video-playlist/${videoId}`),
+    staleTime: 30000,
     ...options,
     enabled: options?.enabled && client.loggedIn,
   });
@@ -53,6 +58,7 @@ export function usePlaylistVideoMutation(
   >,
 ) {
   const client = useClient();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ id, videoId }) =>
@@ -60,6 +66,52 @@ export function usePlaylistVideoMutation(
         method: "PUT",
       }),
     ...options,
+    onSuccess: (_, vars, c) => {
+      queryClient.invalidateQueries({
+        queryKey: ["playlist", "include", vars.videoId],
+      });
+      queryClient.invalidateQueries({ queryKey: ["playlist", vars.id] });
+      options?.onSuccess?.(_, vars, c);
+    },
+  });
+}
+
+export function usePlaylistVideoMassAddMutation(
+  options?: UseMutationOptions<
+    number,
+    HTTPError,
+    { id: number; videoIds: string[] }
+  >,
+) {
+  const client = useClient();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      id,
+      videoIds,
+    }: {
+      id: number;
+      videoIds: string[];
+    }) => {
+      const playlist = await client<PlaylistStub>(`/api/v2/playlist/${id}`);
+
+      playlist.video_ids = videoIds.concat(
+        playlist.video_ids.filter((id) => !videoIds.includes(id)),
+      );
+
+      return await client.post<number, PlaylistStub>(
+        `/api/v2/playlist/`,
+        playlist,
+      );
+    },
+    ...options,
+    onSuccess: (_, vars, c) => {
+      options?.onSuccess?.(_, vars, c);
+
+      queryClient.invalidateQueries({ queryKey: ["playlist", vars.id] });
+      queryClient.invalidateQueries({ queryKey: ["playlist", "include"] });
+    },
   });
 }
 

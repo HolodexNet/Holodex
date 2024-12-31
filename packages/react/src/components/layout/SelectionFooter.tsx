@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useAtom } from "jotai";
+import React, { Suspense, useState } from "react";
+import { useAtom, useAtomValue } from "jotai";
 import { Button } from "@/shadcn/ui/button";
 import { Dialog, DialogContent } from "@/shadcn/ui/dialog";
 import {
@@ -8,6 +8,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuGroup,
+  DropdownMenuSubTrigger,
+  DropdownMenuPortal,
+  DropdownMenuSubContent,
 } from "@/shadcn/ui/dropdown-menu";
 import { useVideoSelection } from "@/hooks/useVideoSelection";
 import { siteIsSmallAtom } from "@/hooks/useFrame";
@@ -16,6 +21,14 @@ import { makeThumbnailUrl } from "@/lib/utils";
 import { VideoThumbnail } from "../video/VideoThumbnail";
 import { SelectionEditShortcuts } from "../edit/selection/SelectionEditShortcuts";
 import SelectionFooterTopicPicker from "../edit/selection/SelectionFooterTopicPicker";
+import {
+  usePlaylistVideoMassAddMutation,
+  usePlaylists,
+} from "@/services/playlist.service";
+import { userAtom } from "@/store/auth";
+import { Link } from "react-router-dom";
+import { LazyNewPlaylistDialog } from "../video/LazyNewPlaylistDialog";
+import { useToast } from "@/shadcn/ui/use-toast";
 const SelectedVideosModal = ({
   isSmall,
   open,
@@ -136,18 +149,27 @@ const SelectionFooter = () => {
                   disabled={!selectedVideos.length}
                   className="flex items-center"
                 >
-                  <span className="i-material-symbols:list-alt-outline mr-2" />
-                  Playlist
+                  <span className="i-heroicons:folder-open mr-2" />
+                  {t("component.mainNav.playlist")}
                   <div className="i-lucide:chevron-up ml-2 size-4"></div>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => setPage(1)}>
-                  Add to current Playlist
+                  <div className="i-heroicons:queue-list" />
+                  Add to Queue
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setPage(2)}>
-                  Make into new Playlist
-                </DropdownMenuItem>
+                <DropdownMenuGroup>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger className="bg-base-1">
+                      <div className="i-solar:playlist-broken" />
+                      Add to Playlist
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <PlaylistMenuItems />
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -240,5 +262,66 @@ const SelectionFooter = () => {
     </footer>
   );
 };
+
+function PlaylistMenuItems() {
+  const { t } = useTranslation();
+  const { toast } = useToast();
+
+  const { mutate } = usePlaylistVideoMassAddMutation({
+    onSuccess: () => {
+      toast({
+        title: "Added to playlist",
+      });
+    },
+  });
+  const { data, isLoading } = usePlaylists();
+  const user = useAtomValue(userAtom);
+  const { selectedVideos } = useVideoSelection();
+  const videoIds = selectedVideos
+    .filter((v) => v.type === "stream" || v.type === "clip")
+    .map((v) => v.id);
+
+  return (
+    <DropdownMenuSubContent>
+      {!user ? (
+        <DropdownMenuItem asChild>
+          <Link to="/login">{t("component.mainNav.login")}</Link>
+        </DropdownMenuItem>
+      ) : (
+        <>
+          {data?.map(({ name, id }) => (
+            <DropdownMenuItem key={id} onClick={() => mutate({ id, videoIds })}>
+              {name}
+            </DropdownMenuItem>
+          ))}
+          {isLoading && (
+            <DropdownMenuItem className="justify-center" disabled>
+              <div className="i-lucide:loader-2 animate-spin leading-none" />
+            </DropdownMenuItem>
+          )}
+          {data?.length || isLoading ? <DropdownMenuSeparator /> : null}
+          {videoIds && (
+            <Suspense
+              fallback={
+                <div className="i-lucide:loader-2 animate-spin leading-none" />
+              }
+            >
+              <LazyNewPlaylistDialog
+                triggerElement={
+                  <DropdownMenuItem
+                    onSelect={(event) => event.preventDefault()}
+                  >
+                    {t("component.playlist.menu.new-playlist")}
+                  </DropdownMenuItem>
+                }
+                videoIds={videoIds}
+              />
+            </Suspense>
+          )}
+        </>
+      )}
+    </DropdownMenuSubContent>
+  );
+}
 
 export default SelectionFooter;

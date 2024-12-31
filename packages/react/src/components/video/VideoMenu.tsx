@@ -14,7 +14,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu";
-import { ReactNode, Suspense, lazy, useState } from "react";
+import { ReactNode, Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useCopyToClipboard } from "usehooks-ts";
@@ -30,10 +30,7 @@ import {
 import { TLDexLogo } from "../common/TLDexLogo";
 import { userAtom } from "@/store/auth";
 import { videoReportAtom } from "@/store/video";
-
-const LazyNewPlaylistDialog = lazy(
-  () => import("@/components/playlist/NewPlaylistDialog"),
-);
+import { LazyNewPlaylistDialog } from "./LazyNewPlaylistDialog";
 
 interface VideoMenuProps {
   video: VideoCardType;
@@ -126,7 +123,7 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
           <DropdownMenuGroup>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger className="video-menu-item bg-base-1">
-                <div className="i-heroicons:queue-list" />
+                <div className="i-solar:playlist-broken" />
                 {t("component.mainNav.playlist")}
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
