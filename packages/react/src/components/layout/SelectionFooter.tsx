@@ -49,7 +49,14 @@ const SelectedVideosModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="flex max-h-[50vh] min-w-min max-w-[min(500px,calc(100vw-40px))] flex-col gap-0 overflow-y-auto overflow-x-hidden px-0 py-6">
+      <DialogContent
+        className="flex flex-col gap-0 overflow-y-auto overflow-x-hidden px-0 py-6"
+        style={{
+          maxHeight: "50vh",
+          minWidth: "min-content",
+          maxWidth: "min(500px, calc(100vw - 40px))",
+        }}
+      >
         {selectedVideos.map((video, idx) => (
           <div
             key={video.id}
