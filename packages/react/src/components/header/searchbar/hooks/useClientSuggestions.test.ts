@@ -78,6 +78,35 @@ describe("useClientSuggestions", () => {
     ]);
   });
 
+  it("handles ONLY a SearchCategory by providing a incomplete QueryItem", () => {
+    const { result } = renderHook(() =>
+      useClientSuggestions("topic", "", mockT),
+    );
+
+    expect(result.current).toEqual([
+      {
+        type: "topic",
+        value: "",
+        text: "",
+        incomplete: true,
+      },
+    ]);
+  });
+
+  it("handles PARTIAL searchCategory by providing a matched QueryItem", () => {
+    const { result } = renderHook(() =>
+      useClientSuggestions(undefined, "Topi", mockT),
+    );
+
+    expect(result.current).toEqual([
+      {
+        type: "search",
+        value: "Topi",
+        text: "Topi",
+      },
+    ]);
+  });
+
   it("limits organization suggestions to 5 when no category specified", () => {
     const manyOrgs = Array.from({ length: 10 }, (_, i) => ({
       name: `Munchies ${i}`,

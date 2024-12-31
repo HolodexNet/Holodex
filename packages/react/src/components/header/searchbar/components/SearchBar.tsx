@@ -108,7 +108,7 @@ export function SearchBar({
       shouldFilter={false}
     >
       <Popover
-        open={open && autocomplete.length > 0}
+        open={open}
         onOpenChange={() => {
           /* ignore the event, basically popover needs to be mostly inert and controlled by the focus state of the input */
         }}

@@ -64,11 +64,12 @@ export function useClientSuggestions(
     // Handle category-specific static suggestions that only show up when a category is specified
     else if (searchCategory && STATIC_SUGGESTIONS[searchCategory]) {
       suggestions.push(...STATIC_SUGGESTIONS[searchCategory]);
-    } else if (searchCategory) {
+    } else if (searchCategory && !searchString) {
       suggestions.push({
         type: searchCategory,
         value: searchString,
         text: searchString,
+        incomplete: true,
       });
     }
 
@@ -85,9 +86,9 @@ export function useClientSuggestions(
       const categoryAutofill = FIRST_SEARCH.filter(
         (x) =>
           !searchString ||
-          t(`search.class.${x.type}`, { defaultValue: x.type }).startsWith(
-            searchString,
-          ),
+          t(`search.class.${x.type}`, { defaultValue: x.type })
+            .toLowerCase()
+            .startsWith(searchString.toLowerCase()),
       );
       suggestions.push(...categoryAutofill);
     }
