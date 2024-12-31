@@ -38,7 +38,7 @@ import {
   commitsSinceLastTag,
 } from "~build/git";
 import dayjs from "dayjs";
-import { CalendarPopup } from "./CalendarPopup";
+import { CalendarGeneratorPopup } from "./CalendarPopup";
 
 export function LocationAwareReactivity() {
   const location = useLocation();
@@ -177,7 +177,7 @@ export function Frame() {
         {isMobile && <Footer />}
         {miniPlayer && <MiniPlayer />}
         <Toaster />
-        <CalendarPopup />
+        <CalendarGeneratorPopup />
         <GlobalReactivity />
       </div>
     </ErrorBoundary>

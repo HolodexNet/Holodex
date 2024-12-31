@@ -132,7 +132,7 @@ export default function Search() {
               <SelectContent>
                 {SORT_OPTIONS.map((option) => (
                   <SelectItem key={option} value={option}>
-                    {t(`search.sort.${option}`)}
+                    {t(`views.search.sort.${option}`)}
                   </SelectItem>
                 ))}
               </SelectContent>

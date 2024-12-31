@@ -305,6 +305,10 @@ views:
       newest: Newest
       oldest: Oldest
       longest: Longest
+      latest: Newest
+      shortest: Shortest
+      views: Views
+      score: Best Match
     type:
       all: All
       official: Official

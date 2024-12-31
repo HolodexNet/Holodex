@@ -6,7 +6,7 @@ import React from "react";
 const LazyCalendarContent = React.lazy(
   () => import("@/components/header/calendarDialog"),
 );
-export function CalendarPopup() {
+export function CalendarGeneratorPopup() {
   const [{ open, initialQuery }, setDialog] = useAtom(calendarDialogAtom);
 
   return (
