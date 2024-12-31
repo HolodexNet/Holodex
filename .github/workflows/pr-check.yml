@@ -18,6 +18,8 @@ jobs:
       working-directory: packages/react
     - run: npm run lint
       working-directory: packages/react
+    - run: npm test
+      working-directory: packages/react
 
   lint-vue3:
     name: Lint Vue3 codebase

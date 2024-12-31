@@ -44,7 +44,9 @@
       "@types/wicg-file-system-access",
       "@types/node",
       "vite/client",
-      "unplugin-info/client"
+      "unplugin-info/client",
+      "vitest/globals",
+      "@testing-library/jest-dom",
     ]
   },
   "include": [

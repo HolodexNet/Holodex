@@ -12,7 +12,11 @@
     "lint:fix": "eslint ./src --fix",
     "pretty:fix": "prettier --write ./src",
     "preview": "vite preview",
-    "prepare": "cd ../.. && husky install packages/react/.husky"
+    "prepare": "cd ../.. && husky install packages/react/.husky",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest watch"
   },
   "dependencies": {
     "@dnd-kit/sortable": "^8.0.0",
@@ -104,6 +108,8 @@
     "@rollup/plugin-dynamic-import-vars": "^2.1.5",
     "@rollup/plugin-yaml": "^4.1.2",
     "@swc-jotai/debug-label": "^0.1.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -114,6 +120,8 @@
     "@unocss/eslint-config": "^0.60.3",
     "@vitejs/plugin-react": "^4.3.3",
     "@vitejs/plugin-react-swc": "^3.7.0",
+    "@vitest/coverage-v8": "^2.1.8",
+    "@vitest/ui": "^2.1.8",
     "autoprefixer": "^10.4.19",
     "browserslist": "^4.23.0",
     "cross-env": "^7.0.3",
@@ -125,6 +133,7 @@
     "eslint-plugin-tailwindcss": "github:HolodexNet/eslint-plugin-tailwindcss",
     "eslint-plugin-unused-imports": "^3.2.0",
     "husky": "^9.0.10",
+    "jsdom": "^25.0.1",
     "lightningcss": "^1.25.1",
     "lint-staged": "^15.2.2",
     "postcss": "^8.4.38",
@@ -142,6 +151,7 @@
     "unocss": "^0.65.3",
     "unocss-preset-autoprefixer": "^0.0.9",
     "unplugin-info": "^1.2.1",
-    "vite": "^5.4.11"
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
   }
 }
