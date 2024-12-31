@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "./frame.css";
+import "./TLEditorFrame.css";
 import { useBeforeUnload, useNavigate } from "react-router-dom";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";

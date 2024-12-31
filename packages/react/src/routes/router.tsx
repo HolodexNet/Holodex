@@ -92,6 +92,9 @@ const Login = lazy(() =>
 const TLEditorPage = lazy(() =>
   import("./tleditor").then((module) => ({ default: module.TLEditorPage })),
 );
+const TLClientPage = lazy(() =>
+  import("./tlclient").then((module) => ({ default: module.TLClientPage })),
+);
 const Watch = lazy(() =>
   import("./watch").then((module) => ({ default: module.Watch })),
 );
@@ -166,7 +169,7 @@ export const routes = (
     <Route path="multiview" Component={Multiview} />
     <Route path="kitchensink" Component={Kitchensink} />
     <Route path="login" Component={Login} />
-    <Route path="tlclient" element={<div>Translation Client</div>} />
+    <Route path="tlclient" Component={TLClientPage} />
     <Route path="scripteditor" Component={TLEditorPage} />
     <Route path="watch/:id" Component={Watch} />
     <Route path="debug" Component={ResetClientPage} />

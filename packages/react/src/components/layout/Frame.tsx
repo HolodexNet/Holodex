@@ -61,7 +61,8 @@ export function LocationAwareReactivity() {
     const isFullscreen =
       location.pathname.startsWith("/watch") ||
       location.pathname.startsWith("/edit") ||
-      location.pathname.startsWith("/scripteditor");
+      location.pathname.startsWith("/scripteditor") ||
+      location.pathname.startsWith("/tlclient");
 
     indicatePageFullscreen(isFullscreen);
   }, [location.pathname, indicatePageFullscreen]);
