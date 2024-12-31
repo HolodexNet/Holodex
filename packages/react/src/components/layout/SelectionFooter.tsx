@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from "react";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@/shadcn/ui/button";
 import { Dialog, DialogContent } from "@/shadcn/ui/dialog";
 import {
@@ -29,6 +29,8 @@ import { userAtom } from "@/store/auth";
 import { Link } from "react-router-dom";
 import { LazyNewPlaylistDialog } from "../video/LazyNewPlaylistDialog";
 import { useToast } from "@/shadcn/ui/use-toast";
+import { queueAtom } from "@/store/queue";
+
 const SelectedVideosModal = ({
   isSmall,
   open,
@@ -38,7 +40,7 @@ const SelectedVideosModal = ({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) => {
-  const { selectedVideos } = useVideoSelection();
+  const { selectedVideos, setSelectedVideos } = useVideoSelection();
 
   const getThumbnailSrc = (video: PlaceholderVideo) => {
     const size = isSmall ? "sm" : "md";
@@ -47,16 +49,40 @@ const SelectedVideosModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        {selectedVideos.map((video) => (
-          <div key={video.id} className="flex items-center space-x-4 p-2">
-            <VideoThumbnail
-              src={getThumbnailSrc(video)}
-              alt={video.title}
-              className="h-auto w-24 rounded"
-            />
-            <div>
-              <h3 className="font-semibold">{video.title}</h3>
+      <DialogContent className="flex max-h-[50vh] min-w-min max-w-[min(500px,calc(100vw-40px))] flex-col gap-0 overflow-y-auto overflow-x-hidden px-0 py-6">
+        {selectedVideos.map((video, idx) => (
+          <div
+            key={video.id}
+            className={
+              "flex items-center space-x-2 px-2 py-1 " +
+              (idx % 2 === 0 ? "bg-base-3" : "")
+            }
+          >
+            <Button
+              variant="ghost"
+              size="icon-lg"
+              className="size-10 shrink-0"
+              onClick={() =>
+                setSelectedVideos((prev) =>
+                  prev.filter((v) => v.id !== video.id),
+                )
+              }
+            >
+              <div className="i-heroicons:x-mark" />
+              <span className="sr-only">Remove</span>
+            </Button>
+            <Link
+              to={`/watch/${video.id}`}
+              className="block w-24 shrink-0 overflow-hidden rounded"
+            >
+              <VideoThumbnail
+                src={getThumbnailSrc(video)}
+                alt={video.title}
+                className=""
+              />
+            </Link>
+            <div className="min-w-80">
+              <h3 className="line-clamp-2 font-semibold">{video.title}</h3>
               <p className="text-sm text-gray-500">{}</p>
               {/*  what was i doing here again why is this block empty ^ */}
             </div>
@@ -141,37 +167,7 @@ const SelectionFooter = () => {
               Open in Multiview
             </Button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="base-outline"
-                  size="sm"
-                  disabled={!selectedVideos.length}
-                  className="flex items-center"
-                >
-                  <span className="i-heroicons:folder-open mr-2" />
-                  {t("component.mainNav.playlist")}
-                  <div className="i-lucide:chevron-up ml-2 size-4"></div>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => setPage(1)}>
-                  <div className="i-heroicons:queue-list" />
-                  Add to Queue
-                </DropdownMenuItem>
-                <DropdownMenuGroup>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger className="bg-base-1">
-                      <div className="i-solar:playlist-broken" />
-                      Add to Playlist
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <PlaylistMenuItems />
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <SelectionModifyPlaylistMenu disabled={!selectedVideos.length} />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -263,7 +259,68 @@ const SelectionFooter = () => {
   );
 };
 
-function PlaylistMenuItems() {
+function SelectionModifyPlaylistMenu({ disabled }: { disabled: boolean }) {
+  const { t } = useTranslation();
+  const { selectedVideos } = useVideoSelection();
+
+  const setQueue = useSetAtom(queueAtom);
+  const { toast } = useToast();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="base-outline"
+          size="sm"
+          disabled={disabled}
+          className="flex items-center"
+        >
+          <span className="i-heroicons:folder-open mr-2" />
+          {t("component.mainNav.playlist")}
+          <div className="i-lucide:chevron-up ml-2 size-4"></div>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem
+          onClick={() => {
+            setQueue((prev) => {
+              return [
+                ...selectedVideos.filter(
+                  (v) => v.type === "stream" || v.type === "clip",
+                ),
+                ...prev.filter(
+                  (v) => !selectedVideos.find(({ id }) => id === v.id),
+                ),
+              ];
+            });
+
+            toast({
+              variant: "primary",
+              title: "Added to queue",
+              duration: 2000,
+            });
+          }}
+        >
+          <div className="i-heroicons:queue-list" />
+          Add to Queue
+        </DropdownMenuItem>
+        <DropdownMenuGroup>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger className="bg-base-1">
+              <div className="i-solar:playlist-broken" />
+              Add to Playlist
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <SelectionModifyPlaylistSubmenu />
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function SelectionModifyPlaylistSubmenu() {
   const { t } = useTranslation();
   const { toast } = useToast();
 
@@ -271,6 +328,8 @@ function PlaylistMenuItems() {
     onSuccess: () => {
       toast({
         title: "Added to playlist",
+        duration: 2000,
+        variant: "primary",
       });
     },
   });
