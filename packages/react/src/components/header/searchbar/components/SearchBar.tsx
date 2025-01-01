@@ -1,5 +1,10 @@
 import { CommandList, Command as CommandPrimitive } from "cmdk";
-import { Command, CommandGroup, CommandShortcut } from "@/shadcn/ui/command";
+import {
+  Command,
+  CommandGroup,
+  CommandItem,
+  CommandShortcut,
+} from "@/shadcn/ui/command";
 import { cn } from "@/lib/utils";
 import {
   queryAtom,
@@ -139,10 +144,12 @@ export function SearchBar({
                 className="ml-2 flex-1 bg-transparent outline-none placeholder:text-base-8"
               />
               <div className="ml-auto flex flex-row opacity-0 group-focus-within:opacity-100 ">
-                <CommandShortcut className="pointer-events-none opacity-80">
-                  <span className="mr-1 rounded-sm bg-base-4 p-0.5">⇪</span>
-                  <span className="rounded-sm bg-base-4 p-0.5">↵</span>
-                </CommandShortcut>
+                {query.length > 0 && (
+                  <CommandShortcut className="pointer-events-none opacity-80">
+                    {/* <span className="mr-1 rounded-sm bg-base-4 p-0.5">⇪</span> */}
+                    <span className="rounded-sm bg-base-4 p-0.5">↵</span>
+                  </CommandShortcut>
+                )}
                 <button
                   type="submit"
                   className="-my-2 -mr-1 flex size-8 items-center rounded-md text-base-11 transition-all hover:bg-base-5 hover:text-primary-11"
@@ -193,6 +200,14 @@ export function SearchBar({
                     </div>
                   }
                 >
+                  {query.length > 0 && (
+                    // Add a dummy item to make the <enter> key search by default.
+                    <CommandItem
+                      onSelect={doSearch}
+                      className="hidden"
+                      value="-"
+                    />
+                  )}
                   {autocomplete.map((item) => {
                     return (
                       <AutocompleteDropdownItem
