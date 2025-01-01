@@ -1,84 +1,282 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
-import { useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import { Button } from "@/shadcn/ui/button";
 import { Input } from "@/shadcn/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/shadcn/ui/dialog";
+import { Plus, Trash2 } from "lucide-react";
 import { idToVideoURL } from "@/lib/utils";
+import { Speaker } from "./Speaker";
+import { tldexSpeakerConfig } from "@/store/tldex";
+import { Label } from "@/shadcn/ui/label";
 
-const TLControlBar = ({
-  videoId,
-  onVideoIdChange,
-  onLoad,
+const SpeakerButton = ({
+  speaker,
+  isActive,
+  shortcut,
+  onClick,
+  onEdit,
 }: {
-  videoId: string;
-  onVideoIdChange: (videoId: string) => void;
-  onLoad: () => void;
+  speaker: Speaker;
+  isActive: boolean;
+  shortcut: string;
+  onClick: () => void;
+  onEdit: (speaker: Speaker) => void;
 }) => (
-  <div className="flex gap-2 rounded-lg bg-base-3 p-2">
-    <Input
-      value={videoId}
-      onChange={(e) => onVideoIdChange(e.target.value)}
-      placeholder="Enter video ID..."
-      className="w-64"
-    />
-    <Button onClick={onLoad}>Load</Button>
+  <Button
+    variant={isActive ? "primary" : "base-outline"}
+    className="h-10 justify-start gap-2 pr-1"
+    onClick={onClick}
+  >
+    <span className="text-xs text-base-11">{shortcut}</span>
+    <span className="truncate">
+      {speaker.prefix}
+      {speaker.name}
+      {speaker.suffix}
+    </span>
+    {isActive && (
+      <div
+        className="ml-auto w-6 rounded-sm p-1 hover:bg-primary-9"
+        onClick={(e) => {
+          e.stopPropagation();
+          onEdit(speaker);
+        }}
+      >
+        <div className="i-heroicons-pencil h-4 w-4" />
+      </div>
+    )}
+  </Button>
+);
+
+const SpeakerEditDialog = ({
+  speaker,
+  isOpen,
+  onClose,
+  onSave,
+  onDelete,
+}: {
+  speaker: Speaker;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (speaker: Speaker) => void;
+  onDelete: (id: number) => void;
+}) => {
+  const [name, setName] = useState(speaker?.name || "");
+  const [prefix, setPrefix] = useState(speaker?.prefix || "");
+  const [suffix, setSuffix] = useState(speaker?.suffix || "");
+
+  useEffect(() => {
+    if (isOpen) {
+      setName(speaker?.name || "");
+      setPrefix(speaker?.prefix || "");
+      setSuffix(speaker?.suffix || "");
+    }
+  }, [isOpen, speaker]);
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent onKeyDown={(e) => e.stopPropagation()}>
+        <DialogHeader>
+          <DialogTitle>Edit Speaker</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-4">
+          <div>
+            <Label>Button Label</Label>
+            <Input
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div>
+            <Label>Prefix</Label>
+            <Input
+              placeholder="Prefix"
+              value={prefix}
+              onChange={(e) => setPrefix(e.target.value)}
+            />
+          </div>
+          <div>
+            <Label>Suffix</Label>
+            <Input
+              placeholder="Suffix"
+              value={suffix}
+              onChange={(e) => setSuffix(e.target.value)}
+            />
+          </div>
+          <div>
+            <p>Example:</p>
+            <p className="border-l-2 border-l-base-4 pl-2 font-semibold">
+              {prefix} Typed Translation {suffix}
+            </p>
+          </div>
+          <div className="flex justify-between">
+            <Button
+              variant="destructive"
+              onClick={() => onDelete(speaker.id)}
+              className="gap-2"
+            >
+              <Trash2 className="h-4 w-4" />
+              Delete
+            </Button>
+            <Button
+              onClick={() => onSave({ ...speaker, name, prefix, suffix })}
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const KeyboardHelp = () => (
+  <div
+    className={`max-h-96 rounded-lg bg-base-3 p-4 transition-all duration-300`}
+  >
+    <h3 className="mb-2 font-medium">Keyboard Shortcuts</h3>
+    <ul
+      className="grid grid-cols-2 gap-1 text-sm"
+      style={{ gridTemplateColumns: "auto 1fr" }}
+    >
+      <kbd className="pointer-events-none ml-auto block text-sm tracking-widest text-base-8">
+        {/* <span className="rounded-sm bg-base-4 p-0.5">⇪</span> */}
+        {/* <span className="rounded-sm p-0.5">Ctrl-1~9</span> */}
+        <div className="i-vaadin:ctrl-a inline-block"></div>
+        <div className="i-f7:number-square inline-block"></div>
+      </kbd>
+      <span>Select speaker</span>
+      <kbd className="pointer-events-none ml-auto text-sm tracking-widest text-base-8">
+        <div className="i-uil:enter inline-block"></div>
+      </kbd>
+      <span>Send message</span>
+      <kbd className="pointer-events-none ml-auto text-sm tracking-widest text-base-8">
+        <div className="i-ic:sharp-keyboard-tab inline-block"></div>
+      </kbd>
+      <span>Next speaker</span>
+      <kbd className="pointer-events-none ml-auto text-sm tracking-widest text-base-8">
+        <div className="i-bi:shift inline-block"></div>
+        <div className="i-ic:sharp-keyboard-tab inline-block"></div>
+      </kbd>
+      <span>Prev speaker</span>
+    </ul>
   </div>
 );
 
 export default function TLClientFrame() {
   const [videoId, setVideoId] = useState("");
   const makeHeaderHide = useSetAtom(headerHiddenAtom);
-  const [speakers, setSpeakers] = useState([
-    { id: 1, name: "Speaker 1" },
-    { id: 2, name: "Speaker 2" },
-    { id: 3, name: "Speaker 3" },
-    { id: 4, name: "Speaker 4" },
-    { id: 5, name: "Speaker 5" },
-    { id: 6, name: "Speaker 5" },
-    { id: 7, name: "Speaker 5" },
-    { id: 8, name: "Speaker 5" },
-    { id: 9, name: "Speaker 5" },
-    { id: 10, name: "Speaker 5" },
-  ]);
-  const [currentSpeaker, setCurrentSpeaker] = useState(1);
+  const [speakers, setSpeakers] = useAtom<Speaker[]>(tldexSpeakerConfig);
+  const [currentSpeaker, setCurrentSpeaker] = useState(0);
   const [currentInput, setCurrentInput] = useState("");
+  const [editingSpeaker, setEditingSpeaker] = useState<Speaker | null>(null);
 
   useEffect(() => {
     makeHeaderHide(true);
     return () => makeHeaderHide(false);
   }, [makeHeaderHide]);
 
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key >= "0" && e.key <= "9") {
+        e.preventDefault();
+        const index = parseInt(e.key) - 1;
+        if (index < speakers.length) {
+          if (index === -1) {
+            setCurrentSpeaker(9);
+          }
+          setCurrentSpeaker(index);
+        }
+      }
+      // Tab and shift-tab:
+      else if (e.key === "Tab") {
+        e.preventDefault();
+        // shift:
+        if (e.shiftKey) {
+          setCurrentSpeaker(
+            (currentSpeaker - 1 + speakers.length) % speakers.length,
+          );
+        }
+        // no shift:
+        else {
+          setCurrentSpeaker((currentSpeaker + 1) % speakers.length);
+        }
+      }
+    },
+    [currentSpeaker, speakers],
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown, speakers]);
+
+  useEffect(() => {
+    if (!speakers || speakers.length === 0) {
+      setSpeakers([{ id: 1, name: "Default", prefix: "", suffix: "" }]);
+    }
+  }, [setSpeakers, speakers]);
+
+  const addSpeaker = () => {
+    const newId = Math.max(...speakers.map((s) => s.id), 0) + 1;
+    const newSpeaker = {
+      id: newId,
+      name: `Speaker ${newId}`,
+      prefix: "",
+      suffix: "",
+    };
+    setSpeakers([...speakers, newSpeaker]);
+    setEditingSpeaker(newSpeaker);
+  };
+
+  const saveSpeaker = (updatedSpeaker: Speaker) => {
+    setSpeakers(
+      speakers.map((s) => (s.id === updatedSpeaker.id ? updatedSpeaker : s)),
+    );
+    setEditingSpeaker(null);
+  };
+
+  const deleteSpeaker = (id: number) => {
+    setSpeakers(speakers.filter((s) => s.id !== id));
+    setEditingSpeaker(null);
+    if (currentSpeaker === id) {
+      setCurrentSpeaker(speakers[0]?.id);
+    }
+  };
+
   return (
-    <div className="flex h-screen w-screen flex-col gap-2 bg-base-2 p-2">
-      <TLControlBar
-        videoId={videoId}
-        onVideoIdChange={setVideoId}
-        onLoad={() => {
-          /* Implement load logic */
-        }}
-      />
+    <div className="flex h-screen flex-col gap-2 p-6">
+      <div className="flex items-center gap-2">
+        <Input
+          value={videoId}
+          onChange={(e) => setVideoId(e.target.value)}
+          placeholder="Enter video ID..."
+          className="w-64"
+        />
+        <Button
+          onClick={() => {
+            /* Implement load logic */
+          }}
+        >
+          Load
+        </Button>
+      </div>
 
       <div className="flex flex-1 flex-col gap-2">
-        {/* Main viewing area with 23:9 aspect ratio constraint */}
         <div className="relative w-full" style={{ paddingTop: "39.13%" }}>
           <div className="absolute inset-0">
             <PanelGroup
               direction="horizontal"
               className="h-full rounded-lg bg-base-3"
             >
-              <Panel minSize={13} defaultSize={15}>
-                <div className="flex h-full flex-col border-r border-base-4">
-                  <div className="border-b border-base-4 p-2 text-sm font-medium">
-                    YouTube Chat
-                  </div>
-                  <div className="flex-1 overflow-y-auto p-2">
-                    {/* Chat content */}
-                  </div>
-                </div>
-              </Panel>
-              <PanelResizeHandle className="w-2 bg-base-2 hover:bg-base-4" />
               <Panel minSize={30} defaultSize={70}>
                 <div className="flex h-full flex-col items-center justify-center">
                   <div className="aspect-video w-full">
@@ -92,41 +290,73 @@ export default function TLClientFrame() {
                   <div className="border-b border-base-4 p-2 text-sm font-medium">
                     TL Chat
                   </div>
-                  <div className="flex-1 overflow-y-auto p-2">
-                    {/* TL chat content */}
+                  <div className="flex-1 overflow-y-auto p-2" />
+                </div>
+              </Panel>
+              <PanelResizeHandle className="w-2 bg-base-2 hover:bg-base-4" />
+              <Panel minSize={13} defaultSize={15}>
+                <div className="flex h-full flex-col border-r border-base-4">
+                  <div className="border-b border-base-4 p-2 text-sm font-medium">
+                    YouTube Chat
                   </div>
+                  <div className="flex-1 overflow-y-auto p-2" />
                 </div>
               </Panel>
             </PanelGroup>
           </div>
         </div>
 
-        {/* Input and speaker selection area */}
-        <div className="container flex flex-col gap-2 rounded-lg bg-base-3 p-2">
-          <Input
-            value={currentInput}
-            onChange={(e) => setCurrentInput(e.target.value)}
-            placeholder="Enter translation..."
-            className="h-12 text-lg"
-          />
-
-          <div className="grid grid-cols-10 gap-2">
-            {speakers.map((speaker, i) => (
-              <Button
-                key={i}
-                variant={
-                  currentSpeaker === speaker.id ? "primary" : "base-outline"
-                }
-                className="h-10 justify-start gap-2"
-                onClick={() => setCurrentSpeaker(speaker.id)}
-              >
-                <span className="text-xs text-base-11">{(i + 1) % 10}</span>
-                <span className="truncate">{speaker.name}</span>
-              </Button>
-            ))}
+        <div className="flex gap-2">
+          <div className="flex flex-1 flex-col gap-2 rounded-lg bg-base-3 p-2">
+            <div className="flex flex-row items-center gap-1">
+              {speakers[currentSpeaker].prefix && (
+                <span className="rounded-sm border border-base-6 p-1">
+                  {speakers[currentSpeaker].prefix}
+                </span>
+              )}
+              <Input
+                value={currentInput}
+                onChange={(e) => setCurrentInput(e.target.value)}
+                placeholder="Enter translation..."
+                className="h-12 text-lg"
+              />
+            </div>
+            <div className="grid grid-cols-10 gap-2">
+              {speakers.map((speaker, i) => (
+                <SpeakerButton
+                  key={speaker.id}
+                  speaker={speaker}
+                  isActive={i === currentSpeaker}
+                  shortcut={i <= 9 ? `${(i + 1) % 10}` : "-"}
+                  onClick={() => setCurrentSpeaker(speaker.id)}
+                  onEdit={setEditingSpeaker}
+                />
+              ))}
+              {speakers.length < 10 && (
+                <Button
+                  variant="base-outline"
+                  className="h-10"
+                  onClick={addSpeaker}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
           </div>
+
+          <KeyboardHelp />
         </div>
       </div>
+
+      {editingSpeaker && (
+        <SpeakerEditDialog
+          speaker={editingSpeaker}
+          isOpen={!!editingSpeaker}
+          onClose={() => setEditingSpeaker(null)}
+          onSave={saveSpeaker}
+          onDelete={deleteSpeaker}
+        />
+      )}
     </div>
   );
 }

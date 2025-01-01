@@ -1,3 +1,4 @@
+import { Speaker } from "@/components/tldex/tl-client/Speaker";
 import { GET_ON_INIT, TLLanguageCode } from "@/lib/consts";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
@@ -54,3 +55,7 @@ export const tldexLanguageAtom = atom(
 );
 
 export const tldexBlockedAtom = atomWithStorage<string[]>("tldex-blocked", []);
+
+export const tldexSpeakerConfig = atomWithStorage<Speaker[]>("tldex-speakers", [
+  { id: 1, name: "Default", prefix: "", suffix: "" },
+]);
