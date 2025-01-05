@@ -298,7 +298,7 @@ views:
       dateuploadedLatestFirst: Upload date, latest first
       dateuploadedEarliestFirst: Upload date, earliest first
   notFound:
-    title: Content not found
+    title: Content Not Found
     back: Return Home
   search:
     sort:
