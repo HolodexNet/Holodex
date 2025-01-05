@@ -101,6 +101,7 @@ const Watch = lazy(() =>
 const ResetClientPage = lazy(() =>
   import("./debug").then((module) => ({ default: module.ResetClientPage })),
 );
+const NotFound = lazy(() => import("@/components/common/NotFound"));
 const Playlist = lazy(() => import("./playlist"));
 const Multiview = lazy(() =>
   import("./multiview/multiview").then((module) => ({
@@ -174,6 +175,6 @@ export const routes = (
     <Route path="watch/:id" Component={Watch} />
     <Route path="debug" Component={ResetClientPage} />
     <Route path="debug/run" element={<div>Debug Run</div>} />
-    <Route path="*" element={<div>Not found</div>} />
+    <Route path="*" Component={NotFound} />
   </Route>
 );
