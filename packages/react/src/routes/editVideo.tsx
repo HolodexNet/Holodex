@@ -19,10 +19,10 @@ import { idToVideoURL } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
 
 export function EditVideo() {
-  const { id } = useParams();
+  const { videoId } = useParams();
   const { t } = useTranslation();
   const { data, error, isPending, isSuccess } = useVideo<PlaceholderVideo>({
-    id: id!,
+    id: videoId!,
   });
   const [tab, setTab] = useState("topic");
   const [isHorizontal, setIsHorizontal] = useState(true); // Add this state

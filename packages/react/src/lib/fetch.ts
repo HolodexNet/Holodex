@@ -83,9 +83,9 @@ export const createFetchClient = (token?: string | null) => {
   // helper functions
   fetchFn.get = <U>(url: string, opt?: RequestInitWithQuery<U>) =>
     fetchFn<U>(url, { method: "GET", ...opt });
-  fetchFn.post = <APIResponseBodyType, BodyType>(
+  fetchFn.post = <APIResponseBodyType, RequestBodyType>(
     url: string,
-    body: BodyType,
+    body: RequestBodyType,
     opt?: RequestInitWithQuery<APIResponseBodyType>,
   ) =>
     fetchFn<APIResponseBodyType>(url, {
@@ -94,9 +94,9 @@ export const createFetchClient = (token?: string | null) => {
       body: JSON.stringify(body),
       ...opt,
     });
-  fetchFn.put = <APIResponseBodyType, BodyType>(
+  fetchFn.put = <APIResponseBodyType, RequestBodyType>(
     url: string,
-    body: BodyType,
+    body: RequestBodyType,
     opt?: RequestInitWithQuery<APIResponseBodyType>,
   ) =>
     fetchFn<APIResponseBodyType>(url, {
@@ -111,9 +111,9 @@ export const createFetchClient = (token?: string | null) => {
   ) => fetchFn<APIResponseBodyType>(url, { method: "DELETE", ...opt });
   fetchFn.head = (url: string, opt?: RequestInitWithQuery<null>) =>
     fetchFn<null>(url, { method: "HEAD", ...opt });
-  fetchFn.patch = <APIResponseBodyType, BodyType>(
+  fetchFn.patch = <APIResponseBodyType, RequestBodyType>(
     url: string,
-    body: BodyType,
+    body: RequestBodyType,
     opt?: RequestInitWithQuery<APIResponseBodyType>,
   ) =>
     fetchFn<APIResponseBodyType>(url, {

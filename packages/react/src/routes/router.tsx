@@ -136,14 +136,14 @@ export const routes = (
       element={<Navigate to="/about/placeholder" />}
     />
     <Route path="org/:org/channels" Component={ChannelsOrg} />
-    <Route path="channel/:id" Component={Channel}>
+    <Route path="channel/:channelId" Component={Channel}>
       <Route index element={<ChannelVideos type="videos" />} />
       <Route path="about" Component={ChannelAbout} />
       <Route path="clips" element={<ChannelVideos type="clips" />} />
       <Route path="collabs" element={<ChannelVideos type="collabs" />} />
       <Route path="music" element={<NavigateToMusicdex />} />
     </Route>
-    <Route path="edit/video/:id" Component={EditVideo} />
+    <Route path="edit/video/:videoId" Component={EditVideo} />
     <Route path="profile" element={<div>Profile</div>} />
     <Route path="settings" Component={Settings}>
       <Route index Component={SettingsLang} />
@@ -155,7 +155,7 @@ export const routes = (
       <Route path="orgs" Component={SettingsOrgs} /> */}
     </Route>
     <Route path="playlists" Component={Playlists} />
-    <Route path="playlist/:id" Component={Playlist} />
+    <Route path="playlist/:playlistId" Component={Playlist} />
     <Route path="about" Component={About}>
       <Route index Component={AboutGeneral} />
       <Route path="general" Component={AboutGeneral} />
@@ -172,7 +172,7 @@ export const routes = (
     <Route path="login" Component={Login} />
     <Route path="tlclient" Component={TLClientPage} />
     <Route path="scripteditor" Component={TLEditorPage} />
-    <Route path="watch/:id" Component={Watch} />
+    <Route path="watch/:videoId" Component={Watch} />
     <Route path="debug" Component={ResetClientPage} />
     <Route path="debug/run" element={<div>Debug Run</div>} />
     <Route path="*" Component={NotFound} />

@@ -28,17 +28,17 @@ export type ChannelOutletContext = {
 
 export function Channel() {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const { channelId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [tab, setTab] = useState("");
 
-  const { data: channel } = useChannel(id!);
+  const { data: channel } = useChannel(channelId!);
 
   const preferredName = usePreferredName(channel ?? {});
 
-  if (!id || !channel) return <Loading size="md" />;
+  if (!channelId || !channel) return <Loading size="md" />;
 
   return (
     <>
@@ -129,7 +129,9 @@ export function Channel() {
               </TabsTrigger>
             </TabsList>
           </div>
-          <Outlet context={{ id, channel } satisfies ChannelOutletContext} />
+          <Outlet
+            context={{ id: channelId, channel } satisfies ChannelOutletContext}
+          />
         </Tabs>
       </div>
     </>

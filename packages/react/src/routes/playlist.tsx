@@ -6,8 +6,8 @@ import { Helmet } from "react-helmet-async";
 
 export default function Playlist() {
   const { t } = useTranslation();
-  const { id } = useParams();
-  const { data, status } = usePlaylist(Number(id));
+  const { playlistId } = useParams();
+  const { data, status } = usePlaylist(Number(playlistId));
 
   if (status === "pending") {
     return <div>Loading...</div>;

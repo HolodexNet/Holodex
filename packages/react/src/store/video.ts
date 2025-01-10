@@ -30,3 +30,7 @@ export function useVideoCardSizes(allowedCardSizes: VideoCardSize[]) {
 
 // also acts as a Report is open indicator.
 export const videoReportAtom = atom<Video | null>(null);
+
+// used to keep track of the current page's contextual channel ID if we are on a video-related page (such as watch or edit)
+// should be set back to NULL whenever the page is unmounted.
+export const currentVideoChannelAtom = atom<string | null>(null);

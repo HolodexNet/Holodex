@@ -19,7 +19,7 @@ import { siteIsSmallAtom } from "@/hooks/useFrame";
 import { useTranslation } from "react-i18next";
 import { makeThumbnailUrl } from "@/lib/utils";
 import { VideoThumbnail } from "../video/VideoThumbnail";
-import { SelectionEditShortcuts } from "../edit/selection/SelectionEditShortcuts";
+import { SmartMultiEditShortcutsMenu } from "../edit/selection/SmartMultiEditShortcutsMenu";
 import SelectionFooterTopicPicker from "../edit/selection/SelectionFooterTopicPicker";
 import {
   usePlaylistVideoMassAddMutation,
@@ -205,7 +205,7 @@ const SelectionFooter = () => {
             </DropdownMenu>
 
             {/* Placeholder for SelectionEditShortcuts component */}
-            <SelectionEditShortcuts />
+            <SmartMultiEditShortcutsMenu />
           </div>
         )}
 

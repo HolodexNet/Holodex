@@ -23,6 +23,7 @@ import {
 } from "@/store/player";
 import { queueAtom } from "@/store/queue";
 import { clipLanguageQueryAtom } from "@/store/settings";
+import { currentVideoChannelAtom } from "@/store/video";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
@@ -130,16 +131,16 @@ const VideoAsideLists = ({
 
 export function Watch() {
   const location = useLocation();
-  const { id } = useParams();
+  const { videoId } = useParams();
   const clipLangQuery = useAtomValue(clipLanguageQueryAtom);
   const {
     data: currentVideo,
     isSuccess,
     isPlaceholderData,
   } = useVideo<PlaceholderVideo>(
-    { id: id!, lang: clipLangQuery, c: "1" },
+    { id: videoId!, lang: clipLangQuery, c: "1" },
     {
-      enabled: !!id,
+      enabled: !!videoId,
       refetchOnMount: true,
       staleTime: 30 * 1000,
       placeholderData: () => {
@@ -147,13 +148,32 @@ export function Watch() {
       },
     },
   );
+  const setCurrentVideoChannel = useSetAtom(currentVideoChannelAtom);
 
-  const { data: channel } = useChannel(currentVideo?.channel.id ?? "", {
-    enabled: !!currentVideo,
-    placeholderData: () => {
-      if (location.state?.video?.channel) return location.state.video.channel;
+  useEffect(() => {
+    if (currentVideo?.channel_id || currentVideo?.channel?.id) {
+      setCurrentVideoChannel(
+        currentVideo.channel_id ?? currentVideo?.channel?.id,
+      );
+    }
+    return () => {
+      setCurrentVideoChannel(null);
+    };
+  }, [
+    currentVideo?.channel?.id,
+    currentVideo?.channel_id,
+    setCurrentVideoChannel,
+  ]);
+
+  const { data: channel } = useChannel(
+    currentVideo?.channel.id ?? currentVideo?.channel_id ?? "",
+    {
+      enabled: !!currentVideo,
+      placeholderData: () => {
+        if (location.state?.video?.channel) return location.state.video.channel;
+      },
     },
-  });
+  );
 
   const [miniPlayer, setMiniPlayer] = useAtom(miniPlayerAtom);
   const theaterMode = useAtomValue(theaterModeAtom);
@@ -162,7 +182,7 @@ export function Watch() {
   const tlOpen = useAtomValue(tlOpenAtom);
   const chatOpen = useAtomValue(chatOpenAtom);
 
-  const url = idToVideoURL(id!, currentVideo?.link);
+  const url = idToVideoURL(videoId!, currentVideo?.link);
 
   const makeHeaderHidden = useSetAtom(headerHiddenAtom);
   useEffect(() => {
