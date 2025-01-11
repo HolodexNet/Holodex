@@ -239,7 +239,7 @@ export function Watch() {
             <UnderVideoInfo currentVideo={currentVideo} channel={channel} />
           </div>
 
-          {theaterMode && <VideoAsideLists currentVideo={currentVideo} />}
+          {!theaterMode && <VideoAsideLists currentVideo={currentVideo} />}
         </div>
 
         {/* Mobile Chat Hover */}
@@ -249,7 +249,8 @@ export function Watch() {
             chatOpen={chatOpen}
             id={currentVideo.id}
             status={currentVideo.status}
-            channelId={currentVideo.channel.id}
+            channel={currentVideo.channel}
+            link={currentVideo.link}
           />
         )}
       </div>

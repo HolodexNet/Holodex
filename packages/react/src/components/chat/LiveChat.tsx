@@ -12,17 +12,10 @@ export interface LiveChatProps {
   id: string;
   status: VideoStatus;
   channelId: string;
-  currentTime?: number;
   link?: string;
 }
 
-export function LiveChat({
-  id,
-  status,
-  channelId,
-  currentTime,
-  link,
-}: LiveChatProps) {
+export function LiveChat({ id, status, channelId, link }: LiveChatProps) {
   const { t } = useTranslation();
   const needExtension = !window.ARCHIVE_CHAT_OVERRIDE && status === "past";
 
@@ -48,11 +41,6 @@ export function LiveChat({
   return link?.includes("twitch") ? (
     <TwitchChat link={link} />
   ) : (
-    <YTChat
-      id={id}
-      status={status}
-      channelId={channelId}
-      currentTime={currentTime}
-    />
+    <YTChat id={id} status={status} channelId={channelId} />
   );
 }

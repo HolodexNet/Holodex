@@ -1,15 +1,16 @@
 import { darkAtom } from "@/hooks/useTheme";
+import { replayReloadContinuation } from "@/lib/ytChatTokenGen";
+import { videoStatusAtomFamily } from "@/store/player";
 import { useAtomValue } from "jotai";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface YTChatProps {
   id: string;
   status: VideoStatus;
   channelId?: string;
-  currentTime?: number;
 }
 
-export function YTChat({ id, status, channelId, currentTime }: YTChatProps) {
+export function YTChat({ id, status, channelId }: YTChatProps) {
   const dark = useAtomValue(darkAtom);
   const ref = useRef<HTMLIFrameElement>(null);
   const isArchive = status === "past";
@@ -17,11 +18,33 @@ export function YTChat({ id, status, channelId, currentTime }: YTChatProps) {
     v: id,
     embed_domain: window.location.hostname,
     dark_theme: dark ? "1" : "0",
-    ...(isArchive && { c: channelId }),
+    ...(isArchive &&
+      channelId && {
+        continuation: replayReloadContinuation({
+          videoId: id,
+          channelId: channelId!,
+        }),
+      }),
   }).toString();
   const src = isArchive
-    ? `https://www.youtube.com/redirect_replay_chat?${q}`
+    ? `https://www.youtube.com/live_chat_replay?${q}`
     : `https://www.youtube.com/live_chat?${q}`;
+
+  const videoStatus = useAtomValue(videoStatusAtomFamily(id));
+
+  useEffect(() => {
+    if (
+      isArchive &&
+      channelId &&
+      ref.current?.contentWindow &&
+      videoStatus?.progress !== undefined
+    ) {
+      ref.current.contentWindow.postMessage(
+        { "yt-player-video-progress": videoStatus.progress },
+        "*",
+      );
+    }
+  }, [isArchive, channelId, videoStatus?.progress]);
 
   return (
     <iframe
@@ -32,7 +55,7 @@ export function YTChat({ id, status, channelId, currentTime }: YTChatProps) {
       onLoad={() => {
         if (isArchive && channelId)
           ref.current?.contentWindow?.postMessage(
-            { "yt-player-video-progress": currentTime || 0 },
+            { "yt-player-video-progress": 0 },
             "*",
           );
       }}

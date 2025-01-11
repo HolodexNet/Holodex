@@ -1,5 +1,3 @@
-import { Buffer } from "buffer";
-
 /**
  * Extracted from Masterchat's `replayReloadContinuation`
  */
@@ -114,7 +112,14 @@ enum B64Type {
 //   return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
 // };
 
-const u8tob64 = (data: Uint8Array) => Buffer.from(data).toString("base64");
+// const u8tob64 = (data: Uint8Array) => Buffer.from(data).toString("base64"); // this requires NodeJS.BUFFER which isn't available on the client
+const u8tob64 = (data: Uint8Array) => {
+  return window.btoa(
+    Array.from(data)
+      .map((byte) => String.fromCharCode(byte))
+      .join(""),
+  );
+};
 
 function urlsafeB64e(payload: Uint8Array): string {
   return encodeURIComponent(u8tob64(payload));
