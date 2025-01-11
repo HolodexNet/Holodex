@@ -35,17 +35,23 @@ export function SettingsUser() {
   return (
     <div className="flex flex-col">
       <div className="my-4 flex items-center gap-6">
-        <img
-          className="h-24 w-24 rounded-full"
-          src={`https://api.dicebear.com/7.x/shapes/svg?seed=${user.id}`}
-        />
+        <div className="flex flex-col items-center">
+          <img
+            className="h-24 w-24 rounded-full"
+            src={`https://api.dicebear.com/7.x/shapes/svg?seed=${user.id}`}
+          />
+          <Badge className="-mt-2">{user.role}</Badge>
+        </div>
         <div className="flex flex-col gap-2">
           <div className="text-2xl font-bold md:text-4xl">{user.username}</div>
           <div className="capitalize text-base-11">
-            {user.role} : {user.contribution_count}
+            {user.contribution_count}
             {t("component.mainNav.points")}
           </div>
           <div className="flex flex-wrap gap-2 text-sm">
+            <Badge className="border-base text-base-11" variant="outline">
+              <kbd className="font-bold">#{user.id}</kbd>
+            </Badge>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
@@ -110,7 +116,7 @@ export function SettingsUser() {
         </div>
         <div className="ml-auto hidden flex-col gap-2 xl:flex">
           {user?.role !== "user" && (
-            <Button variant="outline" asChild>
+            <Button variant="base-outline" asChild>
               <Link
                 to={
                   /(en|lol)/.test(i18n.language)
@@ -119,8 +125,8 @@ export function SettingsUser() {
                 }
                 target="_blank"
               >
-                <div className="i-heroicons:information-circle" />
-                Editor Guide
+                <div className="i-ion:book" />
+                Editor's Guide
               </Link>
             </Button>
           )}
@@ -156,7 +162,7 @@ export function SettingsUser() {
       <SettingsItem label="API Key" fullWidth>
         <div className="ml-auto flex w-full max-w-md flex-col gap-4">
           <div className="flex items-center gap-2">
-            <Input value={user.api_key} readOnly />
+            <Input value={user.api_key ?? ""} placeholder="---" readOnly />
             <Button
               size="icon-lg"
               variant="ghost"

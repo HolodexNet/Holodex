@@ -16,7 +16,7 @@ export function ContactList() {
     {
       className:
         "border-violet-10 hover:bg-violet-4 hover:border-violet-10 text-violet-10 max-w-xs",
-      href: "https://discord.gg/A24AbzgvRJ",
+      href: "https://discord.gg/jctkgHBt4b",
       icon: "i-logos:discord-icon",
       label: t("about.contact.discord"),
     },

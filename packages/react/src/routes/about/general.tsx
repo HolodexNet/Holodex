@@ -129,7 +129,7 @@ export const QuickLinks = () => {
     {
       className:
         "border-violet-10 hover:bg-violet-4 hover:border-violet-10 text-violet-10",
-      href: "https://discord.gg/A24AbzgvRJ",
+      href: "https://discord.gg/jctkgHBt4b",
       icon: "i-carbon:logo-discord",
       label: t("about.discordBtn"),
     },

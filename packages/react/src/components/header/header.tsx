@@ -44,10 +44,8 @@ export function Header({ id }: HeaderProps) {
           size="icon"
           variant="link"
           className={clsx(
-            "h-12 w-12 p-0 opacity-100 transition-all hover:bg-secondaryA-2",
-            {
-              "-translate-y-8 duration-200 opacity-0": isSidebarOpen,
-            },
+            "h-12 w-12 p-0 opacity-100 transition-all starting:opacity-0 starting:-translate-y-6  duration-1000 hover:bg-secondaryA-2",
+            isSidebarOpen && "hidden",
           )}
           asChild
         >

@@ -122,6 +122,10 @@ const config = {
   plugins: [
     require("tailwindcss-animate"),
     require("@tailwindcss/container-queries"),
+    /** @type {import('tailwindcss/types/config').PluginCreator} */
+    ({ addVariant }) => {
+      addVariant("starting", "@starting-style");
+    },
   ],
 };
 

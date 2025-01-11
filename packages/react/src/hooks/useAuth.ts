@@ -42,22 +42,25 @@ export function useAuth() {
   const client = useClient();
 
   const { data: valid, error } = useQuery({
-    queryKey: ["login-check"],
+    queryKey: ["login-check", token],
     queryFn: (): Promise<RefreshUser | null> => {
+      if (!token) return Promise.resolve(null);
+      if (!client.loggedIn) return Promise.resolve(null);
       return client.get<RefreshUser>("/api/v2/user/refresh");
     },
-    enabled: !!token && !!client.loggedIn,
+    enabled: true,
     staleTime: 60 * 60 * 1000, // 1 hour
   });
 
   useEffect(() => {
     if (error) toast({ title: error.message, variant: "error" });
     else if (valid) {
+      console.log("saved new token", valid);
       setToken(valid?.jwt);
       setUser(valid?.user);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valid, error]);
+  }, [valid, error, token]);
 
   const login = useMutation({
     mutationFn: async ({
@@ -79,7 +82,7 @@ export function useAuth() {
             });
             setToken(jwt);
             setUser(user);
-            navigate("/settings");
+            navigate("/settings/user");
           } catch (e) {
             onFailure(e as Error);
           }
@@ -94,7 +97,7 @@ export function useAuth() {
             });
             setToken(jwt);
             setUser(user);
-            navigate("/settings");
+            navigate("/settings/user");
           } catch (e) {
             onFailure(e as Error);
           }
@@ -110,7 +113,7 @@ export function useAuth() {
             });
             setToken(jwt);
             setUser(user);
-            navigate("/settings");
+            navigate("/settings/user");
           } catch (e) {
             onFailure(e as Error);
           }

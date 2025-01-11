@@ -73,7 +73,10 @@ export function Sidebar() {
       ref={ref}
     >
       <div className="flex min-h-[100dvh] flex-col bg-base-2">
-        <div className="flex items-center gap-2 px-4 pb-2 pt-4">
+        <div
+          className="flex cursor-pointer items-center gap-2 px-4 pb-2 pt-4"
+          onClick={() => navigate("/")}
+        >
           <Logo className="ml-1.5 h-8 w-8" />
           <h2 className="text-3xl font-semibold tracking-tight">Holodex</h2>
           <div className="flex grow" />

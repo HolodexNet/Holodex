@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
 import { useState } from "react";
+import { LinkItUrl, LinkItTwitter } from "react-linkify-it";
 
 export function PlayerDescription({
   description,
@@ -20,7 +21,11 @@ export function PlayerDescription({
           "line-clamp-3": !isExpanded,
         })}
       >
-        {description}
+        <LinkItUrl className="text-primary underline hover:text-primary-12">
+          <LinkItTwitter className="text-primary underline hover:text-primary-12">
+            {description}
+          </LinkItTwitter>
+        </LinkItUrl>
       </div>
       {description.split(/\r\n|\r|\n/).length > lines && (
         <Button variant="ghost" onClick={() => setIsExpanded(!isExpanded)}>

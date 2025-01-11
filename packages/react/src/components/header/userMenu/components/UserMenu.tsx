@@ -14,6 +14,7 @@ import {
 } from "@/shadcn/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shadcn/ui/avatar";
 import { calendarDialogAtom } from "@/hooks/useFrame";
+import { Badge } from "@/shadcn/ui/badge";
 
 export function UserMenu() {
   const { t } = useTranslation();
@@ -70,7 +71,8 @@ export function UserMenu() {
           </Avatar>
           <div className="flex flex-col gap-1 pl-4">
             <div className="overflow-hidden text-ellipsis font-semibold">
-              {user.username}
+              {user.username}{" "}
+              <Badge size="sm">{user.role === "user" ? "" : user.role}</Badge>
             </div>
             <div className="flex flex-row gap-2 text-sm">
               <div className={user.discord_id ? "" : "saturate-0"}>
@@ -86,8 +88,6 @@ export function UserMenu() {
               </div> */}
             </div>
             <div className="flex flex-row capitalize text-primary-11">
-              {user.role === "user" ? "" : user.role}
-
               <div className="i-mage:stars-c mx-1 animate-pulse"></div>
 
               {user.contribution_count + " " + t("component.mainNav.points")}

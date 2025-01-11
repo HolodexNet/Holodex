@@ -95,8 +95,24 @@ export function CopyrightNotice() {
     <div className="mt-16 text-center text-sm text-base-7">
       © 2020-2024 Holodex v{lastTag}.{commitsSinceLastTag}
       <small className="ml-2 inline-block opacity-80">
-        {abbreviatedSha} / {dayjs(new Date(committerDate)).format("lll")}
-      </small>
+        b.{abbreviatedSha} / {dayjs(new Date(committerDate)).format("lll")}
+      </small>{" "}
+      /{" "}
+      <a
+        href="https://discord.gg/jctkgHBt4b"
+        target="_blank"
+        className="hover:text-secondary-8 hover:underline"
+      >
+        Discord
+      </a>{" "}
+      /{" "}
+      <a
+        href="https://ko-fi.com/holodex"
+        target="_blank"
+        className="hover:text-secondary-8 hover:underline"
+      >
+        Ko-fi
+      </a>
     </div>
   );
 }

@@ -120,6 +120,7 @@ export function VideoCard({
   const videoCardClasses = useMemo(
     () => ({
       outerLayer: clsx([
+        "starting:opacity-0 opacity-100 transition-opacity duration-300",
         size == "list" && "rounded-sm hover:bg-base-3 @lg:px-2",
         (size == "list" || size == "sm") && "group relative flex gap-4 py-2",
         (size == "md" || size == "lg") && "group flex w-full flex-col gap-4",

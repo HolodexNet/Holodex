@@ -134,7 +134,7 @@ export function ChannelsOrg() {
     <>
       <Helmet>
         <title>
-          TODO PUT CURRENT ORG HERE {t("component.mainNav.channels")} - Holodex
+          {org} - {t("component.mainNav.channels")} - Holodex
         </title>
       </Helmet>
       <div className="h-full w-full px-4 md:p-8">
