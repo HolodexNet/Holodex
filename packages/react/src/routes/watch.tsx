@@ -66,7 +66,8 @@ const VideoContent = ({
         "flex-row-reverse": chatPos === "left",
       })}
     >
-      <div className="grow">
+      {/* min-w-0 and shrink are necessary here for the player to shrink on Chrome (specifically Chrome) */}
+      <div className="min-w-0 shrink grow">
         <PlayerWrapper id={currentVideo?.id} url={url} />
       </div>
       {theaterMode && <TheaterModeChat currentVideo={currentVideo} />}
