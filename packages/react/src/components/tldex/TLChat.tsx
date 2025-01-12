@@ -2,9 +2,12 @@ import { useSocket } from "@/hooks/useSocket";
 import { formatDuration } from "@/lib/time";
 import { cn, getChannelPhoto } from "@/lib/utils";
 import { Badge } from "@/shadcn/ui/badge";
-import { playerRefAtom, videoStatusAtomFamily } from "@/store/player";
+import {
+  videoPlayerRefAtomFamily,
+  videoStatusAtomFamily,
+} from "@/store/player";
 import { tldexBlockedAtom, tldexSettingsAtom } from "@/store/tldex";
-import { useAtom, useAtomValue } from "jotai";
+import { getDefaultStore, useAtom, useAtomValue } from "jotai";
 import {
   DetailedHTMLProps,
   HTMLAttributes,
@@ -15,16 +18,27 @@ import {
 } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import "./tlchat.css";
+import React from "react";
+import ReactPlayer from "react-player";
 
 interface TLChatProps {
   videoId: string;
 }
-// Custom hook for timestamp indexing
+/**
+ * Returns a memoized function that takes a target timestamp and returns the
+ * index of the closest message in the given array of messages. If the array is
+ * empty, returns 0. If the target timestamp is before the first message, returns
+ * 0. If the target timestamp is after the last message, returns the last index.
+ * Otherwise, performs a binary search to find the closest match.
+ * @param messages - The array of messages to search
+ * @returns A function that takes a target timestamp and returns the index of the
+ * closest message
+ */
 function useTimestampIndex(messages?: ParsedMessage[]) {
   // Build and memoize the timestamp index
   return useMemo(() => {
     const findIndexForTimestamp = (targetTimestamp: number) => {
-      if (!messages) return 0;
+      if (!messages) return undefined;
 
       let left = 0;
       let right = messages.length - 1;
@@ -58,6 +72,35 @@ function useTimestampIndex(messages?: ParsedMessage[]) {
   }, [messages]);
 }
 
+/**
+ * Subscribe to video status updates outside of React and scroll the virtuoso
+ * component to the index that is closest to the video's current progress.
+ *
+ * @param videoId The video ID to subscribe to.
+ * @param indexFinder A function that given a timestamp, returns the index of the
+ * message that is closest to it.
+ * @param virtuosoRef A ref to the Virtuoso component.
+ * @returns A subscription that will be called when the video status changes.
+ */
+function scrollToVideoProgress(
+  videoId: string,
+  indexFinder: (targetTimestamp: number) => number | undefined,
+  virtuosoRef: React.RefObject<VirtuosoHandle>,
+) {
+  const videoStatusAtom = videoStatusAtomFamily(videoId);
+  const store = getDefaultStore();
+  return store.sub(videoStatusAtom, () => {
+    const videoStatus = store.get(videoStatusAtom);
+    if (virtuosoRef.current && videoStatus?.progress !== undefined) {
+      const index = indexFinder(videoStatus.progress);
+      virtuosoRef.current?.scrollToIndex({
+        index: index ?? "LAST",
+        align: "end",
+      });
+    }
+  });
+}
+
 export function TLChat({ videoId }: TLChatProps) {
   const tldexState = useAtomValue(tldexSettingsAtom);
   const roomID = useMemo(
@@ -76,23 +119,24 @@ export function TLChat({ videoId }: TLChatProps) {
         (i > 5 && arr[i - 5]?.name === msg.name), // This condition checks if the message 5 positions back in the array has the same name as the current message
     }));
   }, [chatDB.messages]);
+  const playerRef = useAtomValue(videoPlayerRefAtomFamily(videoId));
 
   // inverse index of timestamp to index of message
   const findIndexForTimestamp = useTimestampIndex(processedMessages);
 
-  // scroll to the video:
-  const videoStatusAtom = videoStatusAtomFamily(videoId);
-  const videoStatus = useAtomValue(videoStatusAtom);
-
   useEffect(() => {
-    if (videoStatus?.progress === undefined || videoStatus.status !== "playing")
-      return;
-    const index = findIndexForTimestamp(videoStatus.progress);
-    virtuosoRef.current?.scrollToIndex({
-      index: index || "LAST",
-      align: "end",
-    });
-  }, [findIndexForTimestamp, videoStatus.progress, videoStatus.status]);
+    // Set up subscription
+    const unsubscribe = scrollToVideoProgress(
+      videoId,
+      findIndexForTimestamp,
+      virtuosoRef,
+    );
+
+    // Cleanup
+    return () => {
+      unsubscribe();
+    };
+  }, [videoId, findIndexForTimestamp]);
 
   return (
     <Virtuoso
@@ -106,7 +150,7 @@ export function TLChat({ videoId }: TLChatProps) {
       startReached={() => chatDB.loadMessages({ partial: 30 })}
       data={processedMessages}
       itemContent={(_, { key, ...message }) => (
-        <TLChatMessage {...message} key={key} />
+        <TLChatMessage {...message} key={key} player={playerRef} />
       )}
     />
   );
@@ -128,20 +172,33 @@ function TLChatMessage({
   parsed,
   name,
   video_offset,
+  duration,
   is_owner,
   is_verified,
   is_vtuber,
   is_moderator,
   channel_id,
   showHeader,
-}: ParsedMessage & { showHeader?: boolean }) {
-  const playerRef = useAtomValue(playerRefAtom);
+  video_id,
+  player,
+}: ParsedMessage & { showHeader?: boolean; player: ReactPlayer | null }) {
   const [blocked, setBlocked] = useAtom(tldexBlockedAtom);
+  const { progress } = useAtomValue(videoStatusAtomFamily(video_id || ""));
+  // highlighted:
+  const highlighted =
+    video_offset < progress &&
+    progress < video_offset + (duration ? duration / 1000 : 5000);
   if (blocked.includes(name)) return null;
   return (
     <div
-      className="flex flex-col p-1 px-2 hover:cursor-pointer hover:bg-base-4"
-      onClick={() => playerRef?.seekTo(video_offset, "seconds")}
+      className={cn(
+        "flex flex-col p-1 px-2 hover:cursor-pointer hover:bg-base-4",
+        highlighted && "bg-primary-4 hover:bg-primary-5",
+      )}
+      onClick={() => {
+        player?.seekTo(video_offset, "seconds");
+        player?.getInternalPlayer()?.playVideo();
+      }}
     >
       {showHeader && (
         <div
@@ -180,7 +237,11 @@ function TLChatMessage({
             </div>
             <span className="line-clamp-1 whitespace-nowrap text-sm">
               {name}
-              {is_verified && <span className="ml-2">✓</span>}
+              {is_verified && (
+                <span className="ml-2" title="verified">
+                  ✓
+                </span>
+              )}
             </span>
           </div>
         </div>

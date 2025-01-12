@@ -13,7 +13,7 @@ interface YTChatProps {
 const chatIframeRefs = new Map<string, HTMLIFrameElement>();
 
 // Subscribe to video status updates outside of React
-export function subscribeToVideoProgress(videoId: string) {
+function subscribeToVideoProgress(videoId: string) {
   const videoStatusAtom = videoStatusAtomFamily(videoId);
   const store = getDefaultStore();
   return store.sub(videoStatusAtom, () => {

@@ -107,7 +107,9 @@ export default defineConfig({
       // plugins: [["@swc-jotai/debug-label", {}]],
       // devTarget: "esnext", // SWC only.
     }),
-    UnoCSS({ presets: [presetIcons()] }),
+    UnoCSS({
+      presets: [presetIcons()],
+    }),
     yaml() as unknown as PluginOption,
     dynamicImportVars({
       // for importing yml dynamically.
