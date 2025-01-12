@@ -2,15 +2,60 @@ import { useSocket } from "@/hooks/useSocket";
 import { formatDuration } from "@/lib/time";
 import { cn, getChannelPhoto } from "@/lib/utils";
 import { Badge } from "@/shadcn/ui/badge";
-import { playerRefAtom } from "@/store/player";
+import { playerRefAtom, videoStatusAtomFamily } from "@/store/player";
 import { tldexBlockedAtom, tldexSettingsAtom } from "@/store/tldex";
 import { useAtom, useAtomValue } from "jotai";
-import { DetailedHTMLProps, HTMLAttributes, forwardRef, useMemo } from "react";
-import { Virtuoso } from "react-virtuoso";
+import {
+  DetailedHTMLProps,
+  HTMLAttributes,
+  forwardRef,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
+import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import "./tlchat.css";
 
 interface TLChatProps {
   videoId: string;
+}
+// Custom hook for timestamp indexing
+function useTimestampIndex(messages?: ParsedMessage[]) {
+  // Build and memoize the timestamp index
+  return useMemo(() => {
+    const findIndexForTimestamp = (targetTimestamp: number) => {
+      if (!messages) return 0;
+
+      let left = 0;
+      let right = messages.length - 1;
+
+      // Handle edge cases
+      if (right < 0) return 0;
+      if (targetTimestamp <= messages[0].video_offset) return 0;
+      if (targetTimestamp >= messages[right].video_offset) return right;
+
+      // Binary search for closest match
+      while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        const midTimestamp = messages[mid].video_offset;
+
+        if (midTimestamp === targetTimestamp) {
+          return mid;
+        }
+
+        if (midTimestamp < targetTimestamp) {
+          left = mid + 1;
+        } else {
+          right = mid - 1;
+        }
+      }
+
+      // Find closest between the two surrounding values
+      return messages[right].video_offset <= targetTimestamp ? right : left;
+    };
+
+    return findIndexForTimestamp;
+  }, [messages]);
 }
 
 export function TLChat({ videoId }: TLChatProps) {
@@ -20,6 +65,7 @@ export function TLChat({ videoId }: TLChatProps) {
     [videoId, tldexState.liveTlLang],
   );
   const { chatDB } = useSocket(roomID);
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
 
   const processedMessages = useMemo(() => {
     return chatDB.messages?.map((msg, i, arr) => ({
@@ -31,8 +77,26 @@ export function TLChat({ videoId }: TLChatProps) {
     }));
   }, [chatDB.messages]);
 
+  // inverse index of timestamp to index of message
+  const findIndexForTimestamp = useTimestampIndex(processedMessages);
+
+  // scroll to the video:
+  const videoStatusAtom = videoStatusAtomFamily(videoId);
+  const videoStatus = useAtomValue(videoStatusAtom);
+
+  useEffect(() => {
+    if (videoStatus?.progress === undefined || videoStatus.status !== "playing")
+      return;
+    const index = findIndexForTimestamp(videoStatus.progress);
+    virtuosoRef.current?.scrollToIndex({
+      index: index || "LAST",
+      align: "end",
+    });
+  }, [findIndexForTimestamp, videoStatus.progress, videoStatus.status]);
+
   return (
     <Virtuoso
+      ref={virtuosoRef}
       components={{ Item: TLChatItem }}
       className="h-full w-full bg-base-2 py-2"
       initialTopMostItemIndex={{ index: "LAST", align: "end" }}
