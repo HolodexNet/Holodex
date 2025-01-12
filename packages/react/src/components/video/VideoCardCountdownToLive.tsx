@@ -89,9 +89,11 @@ const TimeTooltip = ({
 export function VideoCardCountdownToLive({
   video,
   className,
+  onlyTime = false,
 }: {
   className?: string;
   video: VideoCardType;
+  onlyTime?: boolean; // Only show time info, basically pretending it's a available_at only.
 }) {
   const { t } = useTranslation();
   const { dayjs } = useAtomValue(localeAtom);
@@ -101,7 +103,7 @@ export function VideoCardCountdownToLive({
   useInterval(() => setTime(Date.now()), 30000);
 
   // Early return for live videos
-  if (video.status === "live") {
+  if (video.status === "live" && !onlyTime) {
     return (
       <LiveCounter
         viewers={video.live_viewers}
@@ -114,7 +116,8 @@ export function VideoCardCountdownToLive({
   // Handle upcoming videos
   if (
     (video.type === "placeholder" || video.status === "upcoming") &&
-    video.start_scheduled
+    video.start_scheduled &&
+    !onlyTime
   ) {
     const tick = dayjs(video.start_scheduled);
     const countdownText = t("time.diff_future_date", {
@@ -135,7 +138,7 @@ export function VideoCardCountdownToLive({
   }
 
   // Handle past videos
-  if (video.status === "past" && video.available_at) {
+  if (onlyTime || (video.status === "past" && video.available_at)) {
     const tick = dayjs(video.available_at);
     const pastText = t("time.distance_past_date", {
       0: tick.fromNow(false),

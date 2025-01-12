@@ -7,7 +7,6 @@ import { cn, makeThumbnailUrl, resizeChannelPhoto } from "@/lib/utils";
 import React, { Suspense, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDuration } from "@/hooks/useDuration";
-import { clsx } from "clsx";
 import { VideoThumbnail } from "./VideoThumbnail";
 import { usePreferredName } from "@/store/settings";
 import { useAtomValue } from "jotai";
@@ -51,6 +50,8 @@ interface VideoCardProps {
    */
   onClick?: OnClickHandler;
   showDuration?: boolean;
+  // showing the status of the video object (live now, # watching, or available_at time)
+  showStatus?: boolean | "available_at_only";
 }
 
 const LazyVideoCardPlaceholder = React.lazy(
@@ -64,6 +65,7 @@ export function VideoCard({
   size,
   onClick,
   showDuration = true,
+  showStatus = true,
 }: VideoCardProps) {
   const isTwitchPlaceholder = video.link?.includes("twitch");
   const videoHref =
@@ -119,36 +121,37 @@ export function VideoCard({
 
   const videoCardClasses = useMemo(
     () => ({
-      outerLayer: clsx([
-        "starting:opacity-0 opacity-100 transition-opacity duration-300",
+      outerLayer: cn([
+        "opacity-100 transition-opacity duration-300 starting:opacity-0",
         size == "list" && "rounded-sm hover:bg-base-3 @lg:px-2",
-        (size == "list" || size == "sm") && "group relative flex gap-4 py-2",
+        (size == "list" || size == "sm") &&
+          "group relative flex gap-2 py-2 @lg:gap-4",
         (size == "md" || size == "lg") && "group flex w-full flex-col gap-4",
         onClick && "cursor-pointer",
         selectionMode &&
           (selectedSet?.has(video.id)
-            ? "ring-offset-base-2 ring-offset-2 ring-4 ring-primary-8 rounded-lg "
-            : "ring-offset-base-2 ring-offset-2 ring-4 ring-base-6 rounded-lg saturate-[0.75] brightness-75 opacity-50"),
+            ? "rounded-lg ring-4 ring-primary-8 ring-offset-2 ring-offset-base-2 "
+            : "rounded-lg opacity-50 ring-4 ring-base-6 ring-offset-2 ring-offset-base-2 brightness-75 saturate-[0.75]"),
       ]),
-      thumbnailLink: clsx([
+      thumbnailLink: cn([
         size == "list" &&
-          "@lg:w-36 relative aspect-video w-28 shrink-0 overflow-hidden",
-        size == "sm" && "@lg:w-48 relative w-36 shrink-0 overflow-hidden",
+          "relative aspect-video w-28 shrink-0 overflow-hidden @lg:w-36",
+        size == "sm" && "relative w-36 shrink-0 overflow-hidden @lg:w-48",
         (size == "md" || size == "lg") && "relative w-full",
       ]),
-      videoTextInfo: clsx([
+      videoTextInfo: cn([
         (size == "list" || size == "sm") && "flex flex-col gap-1",
         (size == "md" || size == "lg") &&
           "flex min-h-[6rem] cursor-pointer flex-col gap-0",
       ]),
-      titleLink: clsx([
+      titleLink: cn([
         (size == "list" || size == "sm") &&
-          "@lg:text-lg line-clamp-2 pr-4 text-sm font-bold",
+          "line-clamp-2 pr-4 text-sm font-bold @lg:text-lg",
         (size == "md" || size == "lg") &&
           "line-clamp-2 pr-4 text-sm font-bold md:text-[1rem] md:leading-6",
       ]),
       channelLink:
-        "line-clamp-1 text-xs text-primary-11 hover:text-primary-12 @lg:text-sm",
+        "line-clamp-1 text-sm text-primary-11 hover:text-primary-12 @lg:text-sm",
       scheduleText: "text-sm @lg:text-sm text-base-11",
     }),
     [size, onClick, selectionMode, selectedSet, video.id],
@@ -266,9 +269,12 @@ export function VideoCard({
               {chName}
             </Link>
           )}
-          {size != "xs" && (
+          {size != "xs" && showStatus && (
             <div className={videoCardClasses.scheduleText}>
-              <VideoCardCountdownToLive video={video} />
+              <VideoCardCountdownToLive
+                video={video}
+                onlyTime={showStatus === "available_at_only"}
+              />
             </div>
           )}
         </div>
