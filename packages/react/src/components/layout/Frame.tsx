@@ -79,6 +79,8 @@ export function GlobalReactivity() {
     if (data && data.length > 0) {
       console.log("updating org ranking");
       updateOrgRanking((orgs: Org[]) => {
+        console.log("orgs:", orgs);
+        // return orgs;
         return orgs
           .map((org) => data.find((x) => x.name === org.name))
           .filter((x): x is Org => !!x);

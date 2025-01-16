@@ -62,6 +62,7 @@ export function QueueList({ currentId }: { currentId?: string }) {
             <div className="flex flex-col px-2">
               {queue.map((video) => (
                 <VideoCard
+                  key={"queue-" + video.id}
                   showDuration={false}
                   showStatus="available_at_only"
                   size="list"
