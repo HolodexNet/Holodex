@@ -113,11 +113,11 @@ export const SettingsTheme = () => {
             </div>
           </div>
           <Button
-            variant="outline"
+            variant="base-outline"
             size="lg"
             onClick={() => setDark(!dark)}
             className={cn(
-              "h-10 w-10 p-0 text-primary-12 transition-colors",
+              "h-10 w-24 p-0 text-primary-12 transition-colors",
               dark ? "bg-base-4" : "bg-primary-4",
             )}
           >
@@ -184,7 +184,7 @@ const ColorPickerRow = ({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
+          variant="base-outline"
           className="h-10 w-24 justify-between bg-base-4"
         >
           <div
