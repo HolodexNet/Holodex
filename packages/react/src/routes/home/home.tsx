@@ -37,7 +37,7 @@ export function Home() {
   const { t } = useTranslation();
   const { org } = useParams();
   const setMostRecentOrg = useSetAtom(mostRecentOrgAtom);
-  const [tab, setTab] = useState(searchParams.get("tab") ?? "live");
+  const [activeTab, setActiveTab] = useState(searchParams.get("tab") ?? "live");
 
   if (!org) {
     // it's weird ther's no org.
@@ -51,10 +51,10 @@ export function Home() {
   }, [org]);
 
   useEffect(() => {
-    console.log(`tab changed ${tab}`);
-    searchParams.set("tab", tab);
+    console.log(`tab changed ${activeTab}`);
+    searchParams.set("tab", activeTab);
     setSearchParams(searchParams, { replace: true });
-  }, [searchParams, setSearchParams, tab]);
+  }, [searchParams, setSearchParams, activeTab]);
 
   if (!org) return <Navigate to="/org404" />;
 
@@ -63,8 +63,8 @@ export function Home() {
       <Helmet>
         <title>{org} - Holodex</title>
       </Helmet>
-      <Tabs defaultValue={tab} onValueChange={setTab}>
-        <StickyTabsList tab={tab} fourthTab="Members" />
+      <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
+        <StickyTabsList activeTab={activeTab} membersTabLabel="Members" />
         <TabsContent value="live">
           <LiveTab />
         </TabsContent>
@@ -83,11 +83,11 @@ export function Home() {
 }
 
 function StickyTabsList({
-  tab,
-  fourthTab,
+  activeTab,
+  membersTabLabel,
 }: {
-  tab: string;
-  fourthTab: string;
+  activeTab: string;
+  membersTabLabel: string;
 }) {
   const { t } = useTranslation();
   // usehooks-ts way:
@@ -126,14 +126,14 @@ function StickyTabsList({
       <TabsTrigger value="clips">
         {t("views.home.recentVideoToggles.subber")}
       </TabsTrigger>
-      <TabsTrigger value="members">{fourthTab}</TabsTrigger>
+      <TabsTrigger value="members">{membersTabLabel}</TabsTrigger>
       <Separator orientation="vertical" className="relative h-10" />
       {/* The h-10 on this separator is actually load bearing - it maintains the height of the whole tab list */}
       {/* Optional Control Buttons */}
-      {tab === "clips" && <ClipLanguageSelector />}
-      {tab !== "members" && <CardSizeToggle />}
+      {activeTab === "clips" && <ClipLanguageSelector />}
+      {activeTab !== "members" && <CardSizeToggle />}
       {(user?.role === "admin" || user?.role === "editor") &&
-        tab != "members" && <EditingStateToggle />}
+        activeTab != "members" && <EditingStateToggle />}
     </TabsList>
   );
 }

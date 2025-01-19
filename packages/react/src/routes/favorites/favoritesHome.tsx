@@ -59,17 +59,17 @@ export function FavoritesHome() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useTranslation();
   // const { org } = useParams();
-  const [tab, setTab] = useState(searchParams.get("tab") ?? "live");
+  const [activeTab, setActiveTab] = useState(searchParams.get("tab") ?? "live");
 
   // useEffect(() => {
   //   navigate(`/org/${currentOrg}`, { replace: true });
   // }, [currentOrg, navigate]);
 
   useEffect(() => {
-    console.log(`tab changed ${tab}`);
-    searchParams.set("tab", tab);
+    console.log(`tab changed ${activeTab}`);
+    searchParams.set("tab", activeTab);
     setSearchParams(searchParams, { replace: true });
-  }, [searchParams, setSearchParams, tab]);
+  }, [searchParams, setSearchParams, activeTab]);
 
   // TODO: probably use a different flag than "Oshis", but idk between Members or What
   return (
@@ -77,8 +77,8 @@ export function FavoritesHome() {
       <Helmet>
         <title>{t("component.mainNav.favorites")} - Holodex</title>
       </Helmet>
-      <Tabs defaultValue={tab} onValueChange={setTab}>
-        <StickyTabsList tab={tab} fourthTab="Oshis" />
+      <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
+        <StickyTabsList activeTab={activeTab} membersTabLabel="Oshis" />
         <TabsContent value="live">
           <FavoritesLive />
         </TabsContent>
