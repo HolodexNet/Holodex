@@ -39,6 +39,7 @@ import {
 } from "~build/git";
 import dayjs from "dayjs";
 import { CalendarGeneratorPopup } from "./CalendarPopup";
+import { useSwipeRightInit } from "@/hooks/useSwipeRight";
 
 export function LocationAwareReactivity() {
   const location = useLocation();
@@ -131,6 +132,7 @@ export function Frame() {
   const open = useAtomValue(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
+  const ref = useSwipeRightInit();
 
   const mainClasses = clsx({
     "mobile-footer": isMobile,
@@ -171,7 +173,7 @@ export function Frame() {
       FallbackComponent={ErrorFallback}
       onReset={() => window.location.reload()}
     >
-      <div className={mainClasses} id="layout">
+      <div ref={ref} className={mainClasses} id="layout">
         <LocationAwareReactivity />
         <Sidebar />
         <Header id="header" />
