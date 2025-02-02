@@ -4,17 +4,17 @@ import { Button } from "@/shadcn/ui/button";
 import { Link } from "react-router-dom";
 import { VideoMenu } from "./VideoMenu";
 import { cn, makeThumbnailUrl, resizeChannelPhoto } from "@/lib/utils";
-import React, { Suspense, useCallback, useMemo, useRef, useState } from "react";
+import React, { Suspense, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDuration } from "@/hooks/useDuration";
 import { VideoThumbnail } from "./VideoThumbnail";
 import { usePreferredName } from "@/store/settings";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import {
   selectedVideoSetReadonlyAtom,
   useVideoSelection,
 } from "@/hooks/useVideoSelection";
-import { isMobileAtom, openSidebarAtom } from "@/hooks/useFrame";
+import { isMobileAtom } from "@/hooks/useFrame";
 import { ChannelImg } from "../channel/ChannelImg";
 import { tldexLanguageAtom } from "@/store/tldex";
 import { useDefaultVideoCardClickHandler } from "./VideoCard.utils";
@@ -156,48 +156,11 @@ export function VideoCard({
     }),
     [size, onClick, selectionMode, selectedSet, video.id],
   );
-  const swipeRightX = useRef<number | null>(null);
-  const swipeRightY = useRef<number | null>(null);
-  const openSidebar = useSetAtom(openSidebarAtom);
 
   const tlLang = useAtomValue(tldexLanguageAtom);
   const tlcount = video.live_tl_count?.[tlLang] ?? 0;
 
   const chName = usePreferredName(video.channel);
-
-  const handleSwipeRightStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    // Check if the touch starts near the left edge of the screen
-    const SWIPE_RIGHT_START_POINT = 30;
-    if (e.touches[0].clientX <= SWIPE_RIGHT_START_POINT) {
-      swipeRightX.current = e.touches[0].clientX;
-      swipeRightY.current = e.touches[0].clientY;
-    } else {
-      swipeRightX.current = null;
-      swipeRightY.current = null;
-    }
-  };
-  const handleSwipeRightMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (swipeRightX.current === null || swipeRightY.current === null) return;
-
-    const touchEndX = e.touches[0].clientX;
-    const touchEndY = e.touches[0].clientY;
-
-    const deltaX = touchEndX - swipeRightX.current;
-    const deltaY = touchEndY - swipeRightY.current;
-
-    const SWIPE_RIGHT_THRESHOLD = 100;
-
-    // Check if the movement is primarily horizontal and to the right
-    if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > SWIPE_RIGHT_THRESHOLD) {
-      openSidebar();
-      swipeRightX.current = null;
-      swipeRightY.current = null;
-    }
-  };
-  const handleSwipeRightEnd = () => {
-    swipeRightX.current = null;
-    swipeRightY.current = null;
-  };
 
   return (
     <div
@@ -205,26 +168,7 @@ export function VideoCard({
       onClick={(e) =>
         onClick ? onClick("full", video, e) : goToVideoClickHandler(e)
       }
-      onTouchStart={(e) => {
-        longPressBind.onTouchStart(e);
-        handleSwipeRightStart(e);
-      }}
-      onTouchMove={(e) => {
-        handleSwipeRightMove(e);
-      }}
-      onTouchEnd={() => {
-        longPressBind.onTouchEnd();
-        handleSwipeRightEnd();
-      }}
-      onMouseUp={() => {
-        longPressBind.onMouseUp();
-      }}
-      onMouseDown={(e) => {
-        longPressBind.onMouseDown(e);
-      }}
-      onMouseLeave={() => {
-        longPressBind.onMouseLeave();
-      }}
+      {...longPressBind}
     >
       {/* Thumbnail for the video */}
       <Link

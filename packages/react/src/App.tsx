@@ -4,10 +4,12 @@ import { useSyncTFunction } from "./store/i18n";
 import { Suspense, useEffect } from "react";
 import { routes } from "./routes/router";
 import React from "react";
+import { useSwipeRightInit } from "./hooks/useSwipeRight";
 
 export function App() {
   useThemeInit();
   useSyncTFunction();
+  useSwipeRightInit();
   useEffect(() => {
     // Set up listener for cross-window communication
     if (window.BroadcastChannel) {
