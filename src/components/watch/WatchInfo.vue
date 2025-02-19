@@ -25,6 +25,9 @@
       <span :class="'text-' + video.status" :title="absoluteTimeString">
         {{ formattedTime }}
       </span>
+      <span v-if="video.status !== 'live' && video.duration" class="mx-1">
+        • {{ formatDuration(video.duration * 1000) }}
+      </span>
       <span
         v-if="video.status === 'live' && liveViewers"
         class="live-viewers"
@@ -50,7 +53,7 @@
           {{ video.topic_id }}
         </router-link>
       </span>
-      <span 
+      <span
         v-if="video.type === 'placeholder' && !(video.certainty === 'certain')"
         style="font-size:95%"
       > <br>
