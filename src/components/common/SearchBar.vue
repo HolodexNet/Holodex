@@ -186,6 +186,30 @@ export default {
                 }
             },
         },
+        $route(to) {
+            // on non-channel pages, remove default channel query if it exists
+            if (this.query[0]?.$default && !to.path.startsWith("/channel/")) {
+                this.query.splice(0, 1);
+            }
+        },
+        "$store.state.channel.channel": function () {
+            // on channel pages, default the query to include channel
+            // console.log("$store.state.channel:", structuredClone(this.$store.state.channel), "query[0]:", this.query[0]);
+            if (this.query.length > 0 && !this.query[0].$default) return;
+            const { channel } = this.$store.state;
+            if (!channel?.channel || channel.isLoading || channel.hasError) return;
+            const defaultQuery = {
+                type: "channel",
+                value: channel.channel.id,
+                text: channel.channel.name,
+                $default: true,
+            };
+            if (this.query.length === 0) {
+                this.query.push(defaultQuery);
+            } else {
+                this.query.splice(0, 1, defaultQuery);
+            }
+        },
         // eslint-disable-next-line func-names
         search: debounce(function (val) {
             if (!val) return;
