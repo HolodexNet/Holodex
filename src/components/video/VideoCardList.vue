@@ -23,6 +23,7 @@
           :disable-default-click="disableDefaultClick"
           :dense-list="denseList"
           :hide-thumbnail="shouldHideThumbnail"
+          :in-multi-view-selector="inMultiViewSelector"
           @videoClicked="handleVideoClick"
         >
           <!-- pass slot to each individual video card -->
@@ -95,7 +96,7 @@ export default {
                 xl: 8,
             }),
         },
-        activeId: {
+        activeId: { // TODO: is this never specified (and thus VideoCard.active always false)?
             required: false,
             type: String,
             default: "",
@@ -118,6 +119,10 @@ export default {
         showComments: {
             type: Boolean,
             default: false,
+        },
+        inMultiViewSelector: {
+            type: Boolean,
+            required: false,
         },
     },
     computed: {

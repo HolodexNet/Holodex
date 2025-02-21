@@ -6,6 +6,7 @@
       'video-card-active': active,
       'video-card-horizontal': horizontal,
       'video-card-list': denseList,
+      'video-card-multiview-active': inMultiViewActiveVideos,
       'flex-column': !horizontal && !denseList,
     }"
     :target="redirectMode ? '_blank' : ''"
@@ -56,8 +57,8 @@
         <!-- Video duration/music indicator (👻❌) -->
         <div v-if="!isPlaceholder" class="d-flex flex-column align-end">
           <!-- Show music icon if songs exist, and song count if there's multiple -->
-          <div 
-            v-if="data.songcount" 
+          <div
+            v-if="data.songcount"
             class="video-duration d-flex align-center"
             :title="songIconTitle"
           >
@@ -360,7 +361,7 @@ export default {
             type: Number,
             default: 1,
         },
-        active: {
+        active: { // TODO: is this always false?
             required: false,
             type: Boolean,
             default: false,
@@ -379,6 +380,10 @@ export default {
             default: null,
         },
         denseList: {
+            type: Boolean,
+            required: false,
+        },
+        inMultiViewSelector: {
             type: Boolean,
             required: false,
         },
@@ -549,6 +554,11 @@ export default {
         },
         twitterPlaceholder() {
             return this.data.link?.includes("/i/spaces/");
+        },
+        inMultiViewActiveVideos() {
+            if (!this.inMultiViewSelector) return false;
+            const { id } = this.data;
+            return this.$store.getters["multiview/activeVideos"].some((video) => video.id === id);
         },
     },
     // created() {
@@ -887,6 +897,12 @@ export default {
   left: -1px;
   opacity: 0.15;
   border-radius: 4px;
+}
+
+.video-card-multiview-active .video-thumbnail,
+.video-card-multiview-active .video-card-title {
+  filter: grayscale(1);
+  opacity: 0.3;
 }
 
 .video-card-subtitle {
