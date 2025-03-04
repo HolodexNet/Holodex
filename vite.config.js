@@ -158,6 +158,7 @@ export default ({ mode }) => {
         },
         sourcemap: true,
         build: {
+            target: "esnext", // you can also use 'es2020' here
             rollupOptions: {
                 input: {
                     main: path.resolve(__dirname, "index.html"),
@@ -183,6 +184,11 @@ export default ({ mode }) => {
                     //     }
                     // },
                 },
+            },
+        },
+        optimizeDeps: {
+            esbuildOptions: {
+                target: "esnext", // you can also use 'es2020' here
             },
         },
         server: {
