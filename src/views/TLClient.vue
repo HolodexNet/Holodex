@@ -825,13 +825,17 @@ export default {
                     switch (target.slice(0, 3)) {
                         case "YT_": {
                             if (event.target.contentWindow) {
-                                event.target.contentWindow.postMessage(
-                                    {
-                                        n: "HolodexSync",
-                                        d: "Initiate",
-                                    },
-                                    "https://www.youtube.com",
-                                );
+                                const eventWindow = event.target.contentWindow;
+                                // TODO: This is a dirty fix, since the event was sent before extension could init
+                                setTimeout(() => {
+                                    eventWindow.postMessage(
+                                        {
+                                            n: "HolodexSync",
+                                            d: "Initiate",
+                                        },
+                                        "https://www.youtube.com",
+                                    );
+                                }, 5000);
                             } else {
                                 let trial = 0;
                                 const id = setInterval(() => {

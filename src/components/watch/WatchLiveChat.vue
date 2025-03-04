@@ -87,6 +87,7 @@
 
 <script lang="ts">
 import LiveTranslations from "@/components/chat/LiveTranslations.vue";
+import { replayTimedContinuation } from "@/utils/chat";
 
 // Contains Live Chat iframe and Chat TLs, can show either one at both at the same time
 export default {
@@ -146,9 +147,20 @@ export default {
                 embed_domain: window.location.hostname,
                 dark_theme: this.$vuetify.theme.dark ? "1" : "0",
                 ...this.video.status === "past" && { c: this.video.channel?.id },
+                continuation: undefined,
             };
+
+            if (this.video.status === "past") {
+                const cont = query.v && query.c && replayTimedContinuation({ videoId: query.v, channelId: query.c });
+                if (cont) query.continuation = cont;
+            }
             const q = new URLSearchParams(query).toString();
             if (this.video.status === "past") {
+                // Redirect is no longer needed for V3 extension, keep original behavior for v2 extension users
+                // @ts-ignore
+                if (window.HOLODEX_PLUS_INSTALLED_V3) {
+                    return `https://www.youtube.com/live_chat_replay?${q}`;
+                }
                 return `https://www.youtube.com/redirect_replay_chat?${q}`;
             }
             return `https://www.youtube.com/live_chat?${q}`;
