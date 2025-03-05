@@ -4,6 +4,12 @@
 
 - If you are a **React UI engineer/designer** and would like to contribute to Holodex v3 React development, drop by our discord!
 
+### 2.40 Holodex [*March 4th, 2025*]
+
+First update of the year!
+
+- Changes to live chat to support Holodex Plus extension v3 (Thanks Google...)
+
 ### 2.39 Holodex [*December 30th, 2024*]
 
 Merry Christmas and Happy New Year!
@@ -13,6 +19,7 @@ It's been a quiet year for us at Holodex, but we're excited to welcome the new y
 Changes to v2 since August 5th:
 
 #### MultiView Improvements
+
 - Added playback rate controls to archive sync (0.25x-2x) (@meiamsome)
 - Fixed iframe reloads and component remounting issues (@meiamsome)
 - Improved layout persistence and content ID generation (@meiamsome)
@@ -20,13 +27,14 @@ Changes to v2 since August 5th:
 - Enhanced archive sync timing and delta calculations (@meiamsome)
 
 #### UI
+
 - Improved highlights detection and processing (Edward)
 - Added "Starts" label for future stream dates (Flaming Sarge)
 - Enhanced music search translations (Nelo)
 - Turned off the annoying update popup (Nelo)
 
-
 ### 2.38 Holodex [*November 14th, 2023*]
+
 - TY Livia for:
   - Hovering over a currently live stream's time will show its start time.
 - And TY Nelo for:
@@ -52,10 +60,6 @@ Woot, haven't released musicdex in a while right? Xrave totally forgot how to wr
 
 - Translations for various languages <3
 
-
-
-
-
 ### 2.36 Holodex [*August 12th, 2023*]
 
 - We got audited, yay.
@@ -67,6 +71,7 @@ Woot, haven't released musicdex in a while right? Xrave totally forgot how to wr
 - I think twitter broke the timeline embed. This is entirely twitter's fault this time. Hmph!
 
 - Thanks LiviaMedeiros for fixing several bugs in:
+
   - searching certain topics that don't encode correctly
   - cleaning up UI on Watch page when clips are all blocked or empty
 
@@ -78,7 +83,6 @@ Woot, haven't released musicdex in a while right? Xrave totally forgot how to wr
 
 Report system is overhauled.
 
-
 ### 2.33 Holodex [*April 30th 2023*]
 
 Bugfix Edition
@@ -87,14 +91,13 @@ Bugfix Edition
 - Fixed TLdex bugs
 - Multiview toolbar bugs
 
-
 ### 2.32 Holodex [*Feb 19th, 2023*]
 
 - TY Livia Medeiros for the following:
   - Add Hide Missing Streams to settings
   - respecting Hide Placeholder on channel pages
   - Reine theme
-  -  Add ❤ mark for favorited channels in TLdex 
+  - Add ❤ mark for favorited channels in TLdex
 - TY Nelo for these changes:
   - Always show block/unblock in Channel list. (It might look a bit squished up on smaller resolutions... until Holodex 3 comes out or someone fixes that.)
 - Fixed a huge bug where Google Login won't show up if you already have discord binded. Oops.
@@ -116,7 +119,6 @@ This release puts out several community contributed changes.
 - Allow opening a youtube chat popout from the video dropdown menu.
 - Placeholders can have durations (for Twitch External Stream & events) (Thanks Nelo)
 
-
 Bugfixes:
 
 - issues with text truncation on some rare comments.
@@ -125,11 +127,10 @@ Bugfixes:
 
 This release puts out several community contributed changes.
 
-- UI Improvements to Watch Page, Search Title,  (Thanks Nelo)
+- UI Improvements to Watch Page, Search Title, (Thanks Nelo)
 - Improvements to login
 - Localization improvements to Spanish, Indonesian, Russian
 
- 
 ### 2.28.1 Holodex [*August 18th, 2022*]
 
 - Hotfix for videos replaying after stream ends
