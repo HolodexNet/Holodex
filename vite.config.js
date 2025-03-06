@@ -158,6 +158,7 @@ export default ({ mode }) => {
         },
         sourcemap: true,
         build: {
+            target: "es2020",
             rollupOptions: {
                 input: {
                     main: path.resolve(__dirname, "index.html"),
