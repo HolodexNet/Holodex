@@ -80,7 +80,7 @@ function vt(fid: bigint | number, payload: bigint | number): Uint8Array {
 }
 
 function pbh(fid: bigint | number, type: number): bigint {
-  return encv((BigInt(fid) << 3n) | BigInt(type));
+  return encv((BigInt(fid) << BigInt(3)) | BigInt(type));
 }
 
 function bitou8(n: bigint | number): Uint8Array {
@@ -115,12 +115,12 @@ function concatu8(args: Uint8Array[]): Uint8Array {
   return out;
 }
 function encv(n: bigint): bigint {
-  let s = 0n;
-  while (n >> 7n) {
-    s = (s << 8n) | 0x80n | (n & 0x7fn);
-    n >>= 7n;
+  let s = BigInt(0);
+  while (n >> BigInt(7)) {
+    s = (s << BigInt(8)) | BigInt(0x80) | (n & BigInt(0x7f));
+    n >>= BigInt(7);
   }
-  s = (s << 8n) | n;
+  s = (s << BigInt(8)) | n;
   return s;
 }
 
