@@ -4,6 +4,10 @@
 
 - If you are a **React UI engineer/designer** and would like to contribute to Holodex v3 React development, drop by our discord!
 
+### 2.40.1 Holodex [*March 4th, 2025*]
+
+- Fix black screen issue on very old browsers
+
 ### 2.40 Holodex [*March 4th, 2025*]
 
 First update of the year!
