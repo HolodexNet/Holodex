@@ -233,6 +233,16 @@
             <video-list-filters />
           </v-card-text>
         </v-sheet>
+        <v-col class="flex flex-col" style="display: flex">
+          <v-btn
+            color="red"
+            class="mt-2 mb-2"
+            style="margin: auto"
+            @click="forceUninstall"
+          >
+            Force Refresh App
+          </v-btn>
+        </v-col>
       </v-col>
     </v-row>
   </v-container>
@@ -407,6 +417,15 @@ export default {
         });
     },
     methods: {
+        forceUninstall() {
+            navigator.serviceWorker.getRegistration().then((reg) => {
+                if (reg) {
+                    reg.unregister().then(() => { window.location.reload(); });
+                } else {
+                    window.location.reload();
+                }
+            });
+        },
         goToSettings() {
             this.$emit("close");
             this.$router.push({ path: "/settings" });
