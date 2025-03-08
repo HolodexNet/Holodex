@@ -15,9 +15,9 @@ if ("serviceWorker" in navigator) {
     immediate: true,
     onNeedRefresh: () => {
       needsRefreshCallback();
-      //   if (reg && reg.waiting) {
-      //     reg.waiting.postMessage({ type: "SKIP_WAITING" });
-      //   }
+      if (reg && reg.waiting) {
+        reg.waiting.postMessage({ type: "SKIP_WAITING" });
+      }
     },
     onOfflineReady() {
       offlineReadyCallback();
@@ -29,10 +29,6 @@ if ("serviceWorker" in navigator) {
         && setInterval(() => {
           newReg.update();
         }, SW_UPDATE_INTERVAL);
-
-      reg.addEventListener("install", (event) => {
-        console.log("trying to install from new sw", event);
-      });
     },
     onRegisterError(err) {
       console.log("Error during service worker registration:", err);
