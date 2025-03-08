@@ -13,7 +13,7 @@
         <router-view :key="viewKey" />
       </keep-alive>
     </v-main>
-    <!-- <PWAUpdate /> -->
+    <PWAUpdate />
     <ReportDialog />
     <InstallPrompt v-if="$store.state.isMobile" />
     <v-snackbar

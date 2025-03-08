@@ -68,8 +68,8 @@ export default {
             this.needRefresh = true;
         });
         SW.setControllerChangeCallback(() => {
+            console.log("sw controller is changing");
             this.showUpdateDetails = true;
-            window.location.reload();
         });
     },
     methods: {

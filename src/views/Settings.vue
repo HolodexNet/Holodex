@@ -216,7 +216,7 @@
           </v-card-text>
         </v-sheet>
       </v-col>
-      <v-col v-if="!slim">
+      <v-col v-if="!slim" :cols="slim ? 12 : currentCol">
         <v-sheet class="settings-group">
           <v-card-title class="py-1">
             <v-icon
@@ -233,24 +233,26 @@
             <video-list-filters />
           </v-card-text>
         </v-sheet>
-        <v-col class="flex flex-col" style="display: flex">
-          <v-btn
-            color="primary"
-            class="mt-2 mb-2"
-            style="margin: auto"
-            @click="forceCheckUpdate"
-          >
-            Check for Update
-          </v-btn>
-          <v-btn
-            color="red"
-            class="mt-2 mb-2"
-            style="margin: auto"
-            @click="forceUninstall"
-          >
-            Force Refresh App
-          </v-btn>
-        </v-col>
+
+        <v-sheet class="settings-group mt-2" s>
+          <v-card-title class="py-1">
+            <span class="text-h6 font-weight-light">Updates</span>
+          </v-card-title>
+          <v-card-text class="mt-4" style="display: flex; flex-wrap: wrap; justify-content: space-evenly; align-items: center; gap: 8px;">
+            <v-btn
+              color="primary"
+              @click="forceCheckUpdate"
+            >
+              Check for Update
+            </v-btn>
+            <v-btn
+              color="red"
+              @click="forceUninstall"
+            >
+              Force Refresh App
+            </v-btn>
+          </v-card-text>
+        </v-sheet>
       </v-col>
     </v-row>
   </v-container>
@@ -439,7 +441,12 @@ export default {
         forceCheckUpdate() {
             if ("serviceWorker" in navigator) {
                 navigator.serviceWorker.ready
-                    .then((registration) => registration.update())
+                    .then((reg) => {
+                        reg.update();
+                        if (reg && reg.waiting) {
+                            reg.waiting.postMessage({ type: "SKIP_WAITING" });
+                        }
+                    })
                     .then(() => {
                         console.log("ServiceWorker update checked");
                     })
