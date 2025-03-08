@@ -235,6 +235,14 @@
         </v-sheet>
         <v-col class="flex flex-col" style="display: flex">
           <v-btn
+            color="primary"
+            class="mt-2 mb-2"
+            style="margin: auto"
+            @click="forceCheckUpdate"
+          >
+            Check for Update
+          </v-btn>
+          <v-btn
             color="red"
             class="mt-2 mb-2"
             style="margin: auto"
@@ -418,13 +426,27 @@ export default {
     },
     methods: {
         forceUninstall() {
-            navigator.serviceWorker.getRegistration().then((reg) => {
-                if (reg) {
-                    reg.unregister().then(() => { window.location.reload(); });
-                } else {
-                    window.location.reload();
-                }
-            });
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.getRegistration().then((reg) => {
+                    if (reg) {
+                        reg.unregister().then(() => { window.location.reload(); });
+                    } else {
+                        window.location.reload();
+                    }
+                });
+            }
+        },
+        forceCheckUpdate() {
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.ready
+                    .then((registration) => registration.update())
+                    .then(() => {
+                        console.log("ServiceWorker update checked");
+                    })
+                    .catch((error) => {
+                        console.error("Error checking for ServiceWorker update:", error);
+                    });
+            }
         },
         goToSettings() {
             this.$emit("close");
