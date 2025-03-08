@@ -147,7 +147,6 @@ export default {
                 embed_domain: window.location.hostname,
                 dark_theme: this.$vuetify.theme.dark ? "1" : "0",
                 ...this.video.status === "past" && { c: this.video.channel?.id },
-                continuation: undefined,
             };
 
             if (this.video.status === "past") {
