@@ -74,7 +74,7 @@ export default {
     },
     methods: {
         updateServiceWorker() {
-            console.log("update service worker");
+            console.log("[Holodex SW] update service worker");
             SW.updateServiceWorker();
         },
     },
