@@ -43,7 +43,6 @@
 </template>
 
 <script lang="ts">
-// Test change: 2
 import * as SW from "../../sw";
 
 export default {
@@ -51,6 +50,7 @@ export default {
     data() {
         return {
             needRefresh: false,
+            testVar: 1,
         };
     },
     computed: {
@@ -65,7 +65,7 @@ export default {
     },
     created() {
         SW.setNeedsRefreshCallback(() => {
-            console.log("[Holodex SW] sw needs refresh +1");
+            console.log("[Holodex SW] sw needs refresh");
             this.needRefresh = true;
         });
         SW.setControllerChangeCallback(() => {

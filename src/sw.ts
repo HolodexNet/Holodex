@@ -22,7 +22,7 @@ if ("serviceWorker" in navigator) {
     onNeedRefresh: () => {
       needsRefreshCallback();
       // Temporary auto update
-      updateServiceWorkerFn();
+      //   updateServiceWorkerFn();
     },
     onOfflineReady() {
       offlineReadyCallback();
@@ -42,7 +42,7 @@ if ("serviceWorker" in navigator) {
 
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     controllerChangeCallback();
-    window.location.reload();
+    // window.location.reload();
   });
 }
 
