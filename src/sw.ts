@@ -15,6 +15,9 @@ if ("serviceWorker" in navigator) {
     immediate: true,
     onNeedRefresh: () => {
       needsRefreshCallback();
+      if (reg && reg.waiting) {
+        reg.waiting.postMessage({ type: "SKIP_WAITING" });
+      }
     },
     onOfflineReady() {
       offlineReadyCallback();
