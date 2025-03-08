@@ -440,10 +440,8 @@ export default {
             }
         },
         forceCheckUpdate() {
-            if ("serviceWorker" in navigator) {
-                SW.updateServiceWorker();
-                SW.getRegistration()?.update();
-            }
+            SW.updateServiceWorker();
+            SW.getRegistration()?.update();
         },
         goToSettings() {
             this.$emit("close");
