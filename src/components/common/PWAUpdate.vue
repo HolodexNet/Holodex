@@ -50,7 +50,7 @@ export default {
     data() {
         return {
             needRefresh: false,
-            testVar: 2,
+            testVar: 3,
         };
     },
     computed: {
