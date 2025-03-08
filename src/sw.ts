@@ -21,7 +21,7 @@ if ("serviceWorker" in navigator) {
     onNeedRefresh: () => {
       needsRefreshCallback();
       // Temporary auto update
-      updateServiceWorkerFn();
+      //   updateServiceWorkerFn();
     },
     onOfflineReady() {
       offlineReadyCallback();
@@ -44,6 +44,12 @@ if ("serviceWorker" in navigator) {
     window.location.reload();
   });
 }
+
+/* eslint-disable no-restricted-globals */
+self?.addEventListener("install", (event) => {
+  console.log("Service Worker installing.", event);
+  //   updateServiceWorkerFn();
+});
 
 export const setNeedsRefreshCallback = (value: () => void) => {
   needsRefreshCallback = value;
