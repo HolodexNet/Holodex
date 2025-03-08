@@ -442,7 +442,7 @@ export default {
         forceCheckUpdate() {
             if ("serviceWorker" in navigator) {
                 SW.updateServiceWorker();
-                SW.reg?.update();
+                SW.getRegistration()?.update();
             }
         },
         goToSettings() {

@@ -7,18 +7,22 @@ let needsRefreshCallback = () => {};
 let offlineReadyCallback = () => {};
 let controllerChangeCallback = () => {};
 // eslint-disable-next-line
-export let reg: ServiceWorkerRegistration | undefined;
+let reg: ServiceWorkerRegistration | undefined;
 
 const SW_UPDATE_INTERVAL = 15 * 60 * 1000;
 
 if ("serviceWorker" in navigator) {
+  updateServiceWorkerFn = () => {
+    if (reg && reg.waiting) {
+      reg.waiting.postMessage({ type: "SKIP_WAITING" });
+    }
+  };
   registerSW({
     immediate: true,
     onNeedRefresh: () => {
       needsRefreshCallback();
-      if (reg && reg.waiting) {
-        reg.waiting.postMessage({ type: "SKIP_WAITING" });
-      }
+      // Temporary auto update
+      updateServiceWorkerFn();
     },
     onOfflineReady() {
       offlineReadyCallback();
@@ -40,12 +44,6 @@ if ("serviceWorker" in navigator) {
     controllerChangeCallback();
     // window.location.reload();
   });
-
-  updateServiceWorkerFn = () => {
-    if (reg && reg.waiting) {
-      reg.waiting.postMessage({ type: "SKIP_WAITING" });
-    }
-  };
 }
 
 export const setNeedsRefreshCallback = (value: () => void) => {
