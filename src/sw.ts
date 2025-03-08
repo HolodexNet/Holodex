@@ -10,9 +10,6 @@ let reg: ServiceWorkerRegistration | undefined;
 
 const SW_UPDATE_INTERVAL = 15 * 60 * 1000;
 
-reg.addEventListener("install", (event) => {
-  console.log("trying to install from new sw", event);
-});
 if ("serviceWorker" in navigator) {
   registerSW({
     immediate: true,
@@ -32,6 +29,10 @@ if ("serviceWorker" in navigator) {
         && setInterval(() => {
           newReg.update();
         }, SW_UPDATE_INTERVAL);
+
+      reg.addEventListener("install", (event) => {
+        console.log("trying to install from new sw", event);
+      });
     },
     onRegisterError(err) {
       console.log("Error during service worker registration:", err);
