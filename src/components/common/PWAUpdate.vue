@@ -1,6 +1,6 @@
 <template>
   <v-snackbar
-    v-if="false"
+    v-if="needRefresh"
     bottom
     right
     :value="needRefresh"
