@@ -65,7 +65,7 @@ export default {
     },
     created() {
         SW.setNeedsRefreshCallback(() => {
-            console.log("[Holodex SW] sw needs refresh");
+            console.log("[Holodex SW] sw needs refresh +1");
             this.needRefresh = true;
         });
         SW.setControllerChangeCallback(() => {
