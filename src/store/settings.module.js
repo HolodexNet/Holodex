@@ -30,6 +30,7 @@ const initialState = {
     ignoredTopics: [],
     // Valid values: "grid" | "list" | "denseList"
     homeViewMode: "grid",
+    YTEmbedVariant: "youtube",
 
     // Live TL Window Settings
     liveTlStickBottom: false,
@@ -105,6 +106,9 @@ const mutations = {
     setScrollMode(state, val) {
         state.scrollMode = val;
     },
+    setYTEmbedVariant(state, val) {
+        state.YTEmbedVariant = val;
+    },
     ...createSimpleMutation([
         "defaultOpen",
         "liveTlStickBottom",
@@ -122,6 +126,7 @@ const mutations = {
         "hidePlaceholder",
         "hideMissing",
         "homeViewMode",
+        "YTEmbedVariant",
     ]),
     resetState(state) {
         Object.assign(state, initialState);
