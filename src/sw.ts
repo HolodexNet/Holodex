@@ -6,7 +6,8 @@ let updateServiceWorkerFn = () => {};
 let needsRefreshCallback = () => {};
 let offlineReadyCallback = () => {};
 let controllerChangeCallback = () => {};
-let reg: ServiceWorkerRegistration | undefined;
+// eslint-disable-next-line
+export let reg: ServiceWorkerRegistration | undefined;
 
 const SW_UPDATE_INTERVAL = 15 * 60 * 1000;
 

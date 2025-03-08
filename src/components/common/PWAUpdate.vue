@@ -1,6 +1,6 @@
 <template>
   <v-snackbar
-    v-if="needRefresh"
+    v-if="false"
     bottom
     right
     :value="needRefresh"
@@ -75,7 +75,11 @@ export default {
     methods: {
         updateServiceWorker() {
             console.log("[Holodex SW] update service worker");
-            SW.updateServiceWorker();
+            if (!SW.reg || !SW.reg.waiting) {
+                window.location.reload();
+            } else {
+                SW.updateServiceWorker();
+            }
         },
     },
 };
