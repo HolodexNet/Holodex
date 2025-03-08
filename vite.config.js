@@ -143,6 +143,7 @@ export default ({ mode }) => {
                             },
                         },
                     ],
+                    importScripts: ["./sw-add.js"],
                     // workbox options for generateSW
                 },
             }),
