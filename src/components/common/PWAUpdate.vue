@@ -64,11 +64,11 @@ export default {
     },
     created() {
         SW.setNeedsRefreshCallback(() => {
-            console.log("sw needs refresh");
+            console.log("[Holodex SW] sw needs refresh");
             this.needRefresh = true;
         });
         SW.setControllerChangeCallback(() => {
-            console.log("sw controller is changing");
+            console.log("[Holodex SW] sw controller is changing");
             this.showUpdateDetails = true;
         });
     },
