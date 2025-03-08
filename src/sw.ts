@@ -21,7 +21,7 @@ if ("serviceWorker" in navigator) {
     onNeedRefresh: () => {
       needsRefreshCallback();
       // Temporary auto update
-      //   updateServiceWorkerFn();
+      updateServiceWorkerFn();
     },
     onOfflineReady() {
       offlineReadyCallback();
