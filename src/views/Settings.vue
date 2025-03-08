@@ -440,8 +440,16 @@ export default {
             }
         },
         forceCheckUpdate() {
-            SW.updateServiceWorker();
-            SW.getRegistration()?.update();
+            const reg = SW.getRegistration();
+            console.log("[Holodex SW] update service worker", reg);
+            if (!reg || !reg.waiting) {
+                console.log("[Holodex SW] Nothing to do reloading");
+                window.location.reload();
+            } else {
+                console.log("[Holodex SW] Triggered Update");
+                SW.updateServiceWorker();
+                SW.getRegistration()?.update();
+            }
         },
         goToSettings() {
             this.$emit("close");
