@@ -278,6 +278,7 @@ import { syncState } from "@/utils/functions";
 import Vue from "vue";
 import backendApi from "@/utils/backend-api";
 import VideoListFilters from "@/components/setting/VideoListFilters.vue";
+import * as SW from "../sw";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
@@ -440,19 +441,8 @@ export default {
         },
         forceCheckUpdate() {
             if ("serviceWorker" in navigator) {
-                navigator.serviceWorker.ready
-                    .then((reg) => {
-                        reg.update();
-                        if (reg && reg.waiting) {
-                            reg.waiting.postMessage({ type: "SKIP_WAITING" });
-                        }
-                    })
-                    .then(() => {
-                        console.log("ServiceWorker update checked");
-                    })
-                    .catch((error) => {
-                        console.error("Error checking for ServiceWorker update:", error);
-                    });
+                SW.updateServiceWorker();
+                SW.reg?.update();
             }
         },
         goToSettings() {

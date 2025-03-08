@@ -41,7 +41,7 @@ if ("serviceWorker" in navigator) {
 
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     controllerChangeCallback();
-    window.location.reload();
+    // window.location.reload();
   });
 
   updateServiceWorkerFn = () => {
