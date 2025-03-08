@@ -43,6 +43,7 @@
 </template>
 
 <script lang="ts">
+// Test change: 1
 import * as SW from "../../sw";
 
 export default {
