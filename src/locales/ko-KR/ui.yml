@@ -62,8 +62,6 @@ component:
     uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
-  video:
-    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기

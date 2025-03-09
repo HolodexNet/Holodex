@@ -87,6 +87,14 @@ component:
   relatedVideo:
     clipsLabel: 翻譯剪輯
     simulcastsLabel: 同時聯播
+    simulcasts:
+      linkToMultiview:
+        tooltip: 於多窗工具中打開所有同時聯播實況
+        error:
+          layoutBuildFailure: >-
+            產生多窗工具連結時出現錯誤，請透過 GitHib 或是 Discord 向我們回報此問題
+          noDefaultLayout: 多窗工具目前尚未有 {videoCount} 部影片的分割佈局
+          noSimulcasts: 本影片無任何同時聯播
     refersLabel: 相關影片
     sourcesLabel: 剪輯來源
     songsLabel: 歌曲

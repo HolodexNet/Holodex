@@ -62,8 +62,6 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -91,7 +89,7 @@ component:
     sourcesLabel: források
     songsLabel: dalok
     recommendationsLabel: ajánlott
-    sameSourceClips: Ugyan abból a streamből
+    sameSourceClips: Ugyan ebből a streamből
   paginateLoad:
     newer: Újabbak
     older: Régebbiek
@@ -611,20 +609,20 @@ about:
   privacyPolicy: Adatvédelmi irányelvek
   gdpr: GDPR és az adataim
   gdprContent: >-
-    Egy Google Analytics cookiet használunk, hogy nyomon tartsuk az oldal látogatóit, kizárólag elemzési célokkal. Bejelentkezés után társítjuk a közösségi fiókod felhasználónevét és ID-jét a kedvenceiddel. Ez az adat lehet az e-mail címed (Google), Discord ID vagy a Twittered illően kezelve.
+    Egy Google Analytics cookiet használunk, hogy nyomon tartsuk az oldal látogatóit, kizárólag elemzési célokkal. Bejelentkezés után társítjuk a közösségi fiókod felhasználónevét és ID-jét a kedvenceiddel. Ezekbe az adatokba beletartozhat az e-mail címed (Google), Discord ID vagy a Twittered, illően kezelve.
   gdprDeletion: A felhasználói adataid törléséhez kérlek vedd fel velünk a kapcsolatot Discordon!
   feedback: Visszajelzés/Hiba jelentés
   feedbackHtml: >-
-    Létrehozhatsz egy ügyet a <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker-en </a> vagy felkeresve a Holodex csapatot Discordon <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+    Létrehozhatsz egy Issue-t a <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker-en </a> vagy felkeresve a Holodex csapatot Discordon <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Közreműködők
     contents:
       - Szeretnék nagy köszönetet mondani a
-      - 'csapatnak a munkáikért itt:'
+      - csapatnak a munkáikért!
       - >-
         A fordítóknak szintén, akik segítik a tengerentúli nézőket! Kérlek nézd meg őket!
       - >-
-        Ez egy rajongói készítésű weboldal, a rajta talált tartalmakat a Cover corp és a partnerei birtokolják. Az oldal követi a Cover corp irányelveit a
+        Ez egy rajongói weboldal, tartalmait a Cover corp és partnerei birtokolják, az ő irányelveiket követi a
       - Származtatott Munkavállalói Licencszerződés szerint
   changelog:
     title: Változtatások

@@ -1,1 +1,15 @@
----
+music:
+  title: '{{english_name}} Músicas Originais e Covers - Holodex'
+  description: >-
+    Ouça músicas oficiais e transmissões de karaokê marcadas por nossa comunidade através do reprodutor de música Holodex.
+channel:
+  normal:
+    title: '{{english_name}} Clipes, Transmissões, Músicas e Colabs - Holodex'
+    description: >-
+      Encontre mais de {{clip_count}}, {{video_count}} transmissões de {{english_name}}. Saiba quando estiverem ao vivo adicionando os canais aos seus favoritos do Holodex.
+    descriptionWithTopic: >-
+      Encontre transmissões de {{ topics }} de {{english_name}}. Mantenha-se em dia com {{clip_count}} clipes, {{video_count}} transmissões e mais no Holodex.
+  clip:
+    title: '{{english_name}} Visão geral - Holodex'
+    description: >-
+      Encontre mais de {{video_count}} clipes de seus Vtubers favoritos de {{english_name}}.
