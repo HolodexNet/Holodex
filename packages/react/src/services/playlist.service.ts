@@ -6,6 +6,7 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
+  useSuspenseQuery,
 } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -20,12 +21,33 @@ export function usePlaylists(options?: UseQueryOptions<PlaylistStub[]>) {
   });
 }
 
-export function usePlaylist(id: number, options?: UseQueryOptions<Playlist>) {
+export function usePlaylist(
+  id: number,
+  options?: Omit<UseQueryOptions<Playlist>, "queryKey" | "queryFn">,
+) {
   const client = useClient();
 
   return useQuery({
     queryKey: ["playlist", id],
     queryFn: async () => {
+      const p = await client<Playlist>(`/api/v2/playlist/${id}`);
+      p.videos = p.videos || []; // null check this
+      return p;
+    },
+    ...options,
+  });
+}
+
+export function useSuspensePlaylist(
+  id: number | null,
+  options?: Omit<UseQueryOptions<Playlist | null>, "queryKey" | "queryFn">,
+) {
+  const client = useClient();
+
+  return useSuspenseQuery({
+    queryKey: ["playlist", id],
+    queryFn: async () => {
+      if (id === null) return null;
       const p = await client<Playlist>(`/api/v2/playlist/${id}`);
       p.videos = p.videos || []; // null check this
       return p;
@@ -50,7 +72,7 @@ export function usePlaylistInclude(
   });
 }
 
-export function usePlaylistVideoMutation(
+export function usePlaylistVideoAddMutation(
   options?: UseMutationOptions<
     boolean,
     HTTPError,
@@ -67,9 +89,65 @@ export function usePlaylistVideoMutation(
       }),
     ...options,
     onSuccess: (_, vars, c) => {
-      queryClient.invalidateQueries({
-        queryKey: ["playlist", "include", vars.videoId],
-      });
+      try {
+        queryClient.setQueryData<PlaylistInclude[]>(
+          ["playlist", "include", vars.videoId],
+          (oldData) => {
+            if (!oldData) return oldData;
+            const newData = [...oldData];
+            const index = newData.findIndex((el) => el.id === vars.id);
+            if (index !== -1) {
+              newData[index].contains = true;
+            }
+            return newData;
+          },
+        );
+      } catch (e) {
+        queryClient.invalidateQueries({
+          queryKey: ["playlist", "include", vars.videoId],
+        });
+      }
+      queryClient.invalidateQueries({ queryKey: ["playlist", vars.id] });
+      options?.onSuccess?.(_, vars, c);
+    },
+  });
+}
+
+export function usePlaylistVideoDeleteMutation(
+  options?: UseMutationOptions<
+    boolean,
+    HTTPError,
+    { id: number; videoId: string }
+  >,
+) {
+  const client = useClient();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, videoId }) =>
+      await client<boolean>(`/api/v2/video-playlist/${id}/${videoId}`, {
+        method: "DELETE",
+      }),
+    ...options,
+    onSuccess: (_, vars, c) => {
+      try {
+        queryClient.setQueryData<PlaylistInclude[]>(
+          ["playlist", "include", vars.videoId],
+          (oldData) => {
+            if (!oldData) return oldData;
+            const newData = [...oldData];
+            const index = newData.findIndex((el) => el.id === vars.id);
+            if (index !== -1) {
+              newData[index].contains = false;
+            }
+            return newData;
+          },
+        );
+      } catch (e) {
+        queryClient.invalidateQueries({
+          queryKey: ["playlist", "include", vars.videoId],
+        });
+      }
       queryClient.invalidateQueries({ queryKey: ["playlist", vars.id] });
       options?.onSuccess?.(_, vars, c);
     },

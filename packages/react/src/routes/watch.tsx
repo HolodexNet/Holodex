@@ -7,9 +7,10 @@ import { Mentions } from "@/components/player/MentionsCard";
 import { PlayerDescription as Description } from "@/components/player/PlayerDescription";
 import { PlayerRecommendations as Recommendations } from "@/components/player/PlayerRecommendations";
 import { VideoStats } from "@/components/player/PlayerStats";
-import { QueueList } from "@/components/player/QueueList";
+import { CurrentVideoList } from "@/components/player/CurrentVideoList";
 import Comments from "@/components/watch/Comments";
 import { useIsLgAndUp } from "@/hooks/useBreakpoint";
+import { useCurrentVideoList } from "@/hooks/useCurrentVideoList";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import { cn, idToVideoURL } from "@/lib/utils";
 import { useChannel } from "@/services/channel.service";
@@ -21,7 +22,6 @@ import {
   theaterModeAtom,
   tlOpenAtom,
 } from "@/store/player";
-import { queueAtom } from "@/store/queue";
 import { clipLanguageQueryAtom } from "@/store/settings";
 import { currentVideoChannelAtom } from "@/store/video";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -111,11 +111,11 @@ const VideoAsideLists = ({
 }) => {
   const [chatOpen] = useAtom(chatOpenAtom);
   const [tlOpen] = useAtom(tlOpenAtom);
-  const queue = useAtomValue(queueAtom);
+  const { videos } = useCurrentVideoList();
 
   return (
     <div className="hidden w-96 shrink-0 flex-col gap-4 @screen-lg:flex">
-      {!!queue.length && <QueueList currentId={currentVideo?.id} />}
+      {!!videos.length && <CurrentVideoList currentId={currentVideo?.id} />}
       {(currentVideo?.type === "stream" || currentVideo?.status === "live") && (
         <div
           className={cn("overflow-hidden", {
