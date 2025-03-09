@@ -93,6 +93,7 @@
           :filter-config="filterConfig"
           :dense-list="homeViewMode === 'denseList'"
           :horizontal="homeViewMode === 'list'"
+          :in-multi-view-selector="inMultiViewSelector"
           v-bind="$attrs"
           v-on="$listeners"
         />
@@ -107,6 +108,7 @@
             :filter-config="filterConfig"
             :dense-list="homeViewMode === 'denseList'"
             :horizontal="homeViewMode === 'list'"
+            :in-multi-view-selector="inMultiViewSelector"
             v-bind="$attrs"
             v-on="$listeners"
           />
@@ -141,6 +143,7 @@
             v-bind="$attrs"
             :dense-list="homeViewMode === 'denseList'"
             :horizontal="homeViewMode === 'list'"
+            :in-multi-view-selector="inMultiViewSelector"
             v-on="$listeners"
           />
           <!-- only show SkeletonCardList if it's loading -->
@@ -208,6 +211,10 @@ export default {
         datePortalName: {
             type: String,
             default: "",
+        },
+        inMultiViewSelector: {
+            type: Boolean,
+            required: false,
         },
     },
     data() {

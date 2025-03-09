@@ -80,6 +80,7 @@
             horizontal
             dense
             disable-default-click
+            in-multi-view-selector
             @videoClicked="handleVideoClick"
           />
           <ConnectedVideoList
@@ -91,6 +92,7 @@
             disable-default-click
             dense
             date-portal-name="date-selector-multiview"
+            in-multi-view-selector
             @videoClicked="handleVideoClick"
           />
           <div class="d-block" style="height: 120px" />
@@ -188,8 +190,8 @@ import { mapGetters, mapState } from "vuex";
 import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
 import filterVideos from "@/mixins/filterVideos";
 import { mdiTwitch } from "@mdi/js";
-import CustomUrlField from "./CustomUrlField.vue";
 import { syncState } from "@/utils/functions";
+import CustomUrlField from "./CustomUrlField.vue";
 
 export default {
     name: "VideoSelector",
@@ -241,7 +243,7 @@ export default {
         ...mapState("playlist", ["active"]),
         ...syncState("settings", [
             "hideCollabStreams",
-            "hidePlaceholder"
+            "hidePlaceholder",
         ]),
         baseFilteredLive() {
             const filterConfig = {
