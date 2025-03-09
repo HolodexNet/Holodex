@@ -7,6 +7,7 @@ import { userAtom } from "@/store/auth";
 import { Button } from "@/shadcn/ui/button";
 import { VideoThumbnail } from "../video/VideoThumbnail";
 import DeletePlaylistDialog from "@/components/playlist/DeletePlaylistDialog";
+import StartPlaylistLink from "./StartPlaylistLink";
 
 export default function PlaylistEntry({
   video_ids,
@@ -71,8 +72,15 @@ export default function PlaylistEntry({
             dayjs(updated_at).format("LLL")}
         </span>
         <div className="mt-2 flex gap-2 max-md:justify-between">
-          <Button size="sm" variant="primary" className="w-full md:w-20">
-            <span className="i-heroicons:play-solid" />
+          <Button
+            size="sm"
+            variant="primary"
+            className="w-full md:w-20"
+            asChild
+          >
+            <StartPlaylistLink firstVideoId={video_ids[0]} playlistId={id}>
+              <span className="i-heroicons:play-solid" />
+            </StartPlaylistLink>
           </Button>
           <Button
             size="sm"

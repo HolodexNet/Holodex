@@ -1,6 +1,7 @@
 import {
   usePlaylistInclude,
-  usePlaylistVideoMutation,
+  usePlaylistVideoAddMutation,
+  usePlaylistVideoDeleteMutation,
 } from "@/services/playlist.service";
 import {
   DropdownMenu,
@@ -31,6 +32,7 @@ import { TLDexLogo } from "../common/TLDexLogo";
 import { userAtom } from "@/store/auth";
 import { videoReportAtom } from "@/store/video";
 import { LazyNewPlaylistDialog } from "./LazyNewPlaylistDialog";
+import { CheckIcon } from "lucide-react";
 
 interface VideoMenuProps {
   video: VideoCardType;
@@ -195,7 +197,8 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
 
 function PlaylistMenuItems({ videoId }: { videoId: string }) {
   const { t } = useTranslation();
-  const { mutate } = usePlaylistVideoMutation();
+  const { mutate: addVideo } = usePlaylistVideoAddMutation();
+  const { mutate: deleteVideo } = usePlaylistVideoDeleteMutation();
   const { data, isLoading } = usePlaylistInclude(videoId, { enabled: true });
   const user = useAtomValue(userAtom);
 
@@ -207,9 +210,20 @@ function PlaylistMenuItems({ videoId }: { videoId: string }) {
         </DropdownMenuItem>
       ) : (
         <>
-          {data?.map(({ name, id }) => (
-            <DropdownMenuItem key={id} onClick={() => mutate({ id, videoId })}>
-              {name}
+          {data?.map(({ name, id, contains }) => (
+            <DropdownMenuItem
+              key={id}
+              onClick={() => {
+                !contains
+                  ? addVideo({ id, videoId })
+                  : deleteVideo({ id, videoId });
+              }}
+              onSelect={(event) => event.preventDefault()}
+            >
+              <span>{name}</span>{" "}
+              {contains ? (
+                <CheckIcon className="ml-auto" size={16} />
+              ) : undefined}
             </DropdownMenuItem>
           ))}
           {isLoading && (

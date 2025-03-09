@@ -52,6 +52,7 @@ interface VideoCardProps {
   showDuration?: boolean;
   // showing the status of the video object (live now, # watching, or available_at time)
   showStatus?: boolean | "available_at_only";
+  outerLayerStyle?: string;
 }
 
 const LazyVideoCardPlaceholder = React.lazy(
@@ -66,12 +67,11 @@ export function VideoCard({
   onClick,
   showDuration = true,
   showStatus = true,
+  outerLayerStyle,
 }: VideoCardProps) {
   const isTwitchPlaceholder = video.link?.includes("twitch");
   const videoHref =
-    !isTwitchPlaceholder && video.status === "live" && video.link
-      ? video.link
-      : `/watch/${video.id}`;
+    !isTwitchPlaceholder && video.link ? video.link : `/watch/${video.id}`;
   const videoIsPlaceholder = video.type === "placeholder";
   const thumbnailSrc = makeThumbnailUrl(video.id, size, video.thumbnail);
 
@@ -164,7 +164,7 @@ export function VideoCard({
 
   return (
     <div
-      className={videoCardClasses.outerLayer}
+      className={cn(videoCardClasses.outerLayer, outerLayerStyle)}
       onClick={(e) =>
         onClick ? onClick("full", video, e) : goToVideoClickHandler(e)
       }
