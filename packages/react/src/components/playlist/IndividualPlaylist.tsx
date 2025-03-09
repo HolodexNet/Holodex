@@ -197,7 +197,13 @@ export default function IndividualPlaylist({ playlist }: Props) {
               </div>
             ) : null}
             <div className="grow">
-              <VideoCard size="sm" video={video} />
+              <VideoCard
+                size="sm"
+                video={{
+                  ...video,
+                  link: `/watch/${video.id}?${new URLSearchParams({ playlist: playlist.id.toString() })}`,
+                }}
+              />
             </div>
           </div>
         );
