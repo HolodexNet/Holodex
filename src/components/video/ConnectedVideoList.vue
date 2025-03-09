@@ -222,7 +222,8 @@ export default {
                 LIVE_UPCOMING: 0,
                 ARCHIVE: 1,
                 CLIPS: 2,
-                // LIST: 3,
+                COLLABS: 3,
+                // LIST: 4,
             }),
             datePicker: false,
             toDate: null,
@@ -365,6 +366,23 @@ export default {
     created() {
         console.log("Created, so adding refresh timer to HomeFav");
         this.init(true); // try updating favorites if it's actually favorites page.
+        this.tabToQueryMap = Object.freeze({
+            [this.Tabs.ARCHIVE]: Object.freeze({
+                status: "past,missing",
+                type: "stream",
+                include: "mentions,clips",
+            }),
+            [this.Tabs.CLIPS]: Object.freeze({
+                status: "past",
+                type: "clip",
+                include: "mentions",
+            }),
+            [this.Tabs.COLLABS]: Object.freeze({
+                // status: "new,upcoming,live,past,missing", // Include all status
+                type: "stream",
+                include: "mentions",
+            }),
+        });
     },
     methods: {
         toggleDisplayMode() {
@@ -399,16 +417,8 @@ export default {
             this.init();
         },
         getLoadFn() {
-            const inclusion = {
-                [this.Tabs.ARCHIVE]: "mentions,clips",
-                [this.Tabs.LIVE_UPCOMING]: "mentions",
-                [this.Tabs.CLIPS]: "mentions",
-            }[this.tab] ?? "";
-
             const query = {
-                status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                include: inclusion,
+                ...(this.tabToQueryMap[this.tab] ?? {}),
                 lang: this.$store.state.settings.clipLangs.join(","),
                 paginated: !this.scrollMode,
                 ...(this.toDate && {
@@ -416,9 +426,12 @@ export default {
                 }),
                 max_upcoming_hours: 1,
             };
-            if (this.isFavPage) {
-                return async (offset, limit) => {
-                    const res = await backendApi
+            return async (offset: any, limit: any) => {
+                let res = null;
+                // Handle backend query depending on page
+                if (this.isFavPage) {
+                    // Favourites Page
+                    res = await backendApi
                         .favoritesVideos(this.$store.state.userdata.jwt, {
                             ...query,
                             limit,
@@ -429,18 +442,24 @@ export default {
                             this.$store.dispatch("loginVerify", { bounceToLogin: true }); // check if the user is actually logged in.
                             throw err;
                         });
-                    return res.data;
-                };
-            }
-            // home page function
-            return async (offset, limit) => {
-                const res = await backendApi.videos({
-                    ...query,
-                    org: this.$store.state.currentOrg.name,
-                    limit,
-                    offset,
-                });
-                return res.data;
+                } else {
+                    // Home Page
+                    res = await backendApi
+                        .videos({
+                            ...query,
+                            org: this.$store.state.currentOrg.name,
+                            limit,
+                            offset,
+                        });
+                }
+                // Handle collab tab
+                if (this.tab === this.Tabs.COLLABS) {
+                    res.data.items = res.data.items.filter(
+                        // Filter only for videos with mentions (collabs)
+                        (obj) => (Array.isArray(obj.mentions) && obj.mentions.length > 0),
+                    );
+                }
+                return res?.data;
             };
         },
     },
