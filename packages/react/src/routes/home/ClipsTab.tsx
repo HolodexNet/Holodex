@@ -50,7 +50,7 @@ export function ClipsTab() {
       </div>
     );
 
-  if (!filteredClips.length)
+  if (!filteredClips.length && !clipLoading)
     return (
       <div className="gap-4 px-4 py-2 @container md:px-8">
         <div>No clips for languages: {clipLangs.join(", ")}</div>
