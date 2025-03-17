@@ -11,11 +11,19 @@ export function DatePicker(
   props: Omit<DayPickerSingleProps, "mode" | "onSelect"> & {
     timezone?: string;
     onSelect: (date: Date) => void;
+    calendarClassName?: string;
   },
 ) {
   const { t } = useTranslation();
   // date is UTC time
-  const { selected: date, onSelect, timezone } = props;
+  const {
+    selected: date,
+    onSelect,
+    timezone,
+    className,
+    calendarClassName,
+    ...rest
+  } = props;
 
   return (
     <Popover>
@@ -25,6 +33,7 @@ export function DatePicker(
           className={cn(
             "h-9 justify-start border-base-6 text-left text-sm font-normal focus:border-blue-6 ",
             !date && "text-base-11",
+            className,
           )}
         >
           <div className="i-heroicons:calendar mr-2 h-4 w-4" />
@@ -38,7 +47,8 @@ export function DatePicker(
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
-          {...props}
+          className={calendarClassName}
+          selected={date}
           // "day" is local date
           onSelect={(day) => {
             if (day)
@@ -53,6 +63,7 @@ export function DatePicker(
                   .toDate(),
               );
           }}
+          {...rest}
         />
         <div className="px-4 pb-4">
           <Input
