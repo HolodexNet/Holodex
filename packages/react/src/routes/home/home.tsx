@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ClipLanguageSelector } from "@/components/language/ClipLanguageSelector";
+import { VideoListSettingsMenu } from "@/components/settings/VideoListSettingsMenu";
 
 // New components for each tab
 import { LiveTab } from "./LiveTab";
@@ -131,6 +132,9 @@ function StickyTabsList({
       {/* The h-10 on this separator is actually load bearing - it maintains the height of the whole tab list */}
       {/* Optional Control Buttons */}
       {activeTab === "clips" && <ClipLanguageSelector />}
+      {activeTab !== "members" && (
+        <VideoListSettingsMenu activeTab={activeTab} />
+      )}
       {activeTab !== "members" && <CardSizeToggle />}
       {(user?.role === "admin" || user?.role === "editor") &&
         activeTab != "members" && <EditingStateToggle />}
