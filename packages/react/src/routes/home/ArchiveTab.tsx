@@ -1,13 +1,16 @@
+import { useParams } from "react-router-dom";
+import { useAtomValue } from "jotai";
 import { useVideosV3 } from "@/services/video.service";
 import { MainVideoListing } from "@/components/video/MainVideoListing";
-import { useParams } from "react-router-dom";
 import { useVideoCardSizes } from "@/store/video";
 import PullToRefresh from "@/components/layout/PullToRefresh";
 import { useVideoFilter } from "@/hooks/useVideoFilter";
+import { pastVideoFilterByAtom } from "@/components/settings/VideoListSettingsMenu";
 
 export function ArchiveTab() {
   const { org } = useParams();
   const { size: cardSize } = useVideoCardSizes(["list", "md", "lg"]);
+  const toDate = useAtomValue(pastVideoFilterByAtom);
   const {
     data: archives,
     isLoading: archiveLoading,
@@ -23,6 +26,8 @@ export function ArchiveTab() {
       include: ["clips", "mentions"],
       max_upcoming_hours: 1,
       limit: 32,
+      // api currently does not support JSON date strings (i.e., JSON.stringify(Date))
+      to: toDate?.toJSON(),
     },
     {
       refetchInterval: 1000 * 60 * 5,

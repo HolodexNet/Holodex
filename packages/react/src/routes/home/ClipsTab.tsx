@@ -1,17 +1,19 @@
+import { useParams } from "react-router-dom";
+import { useAtomValue } from "jotai";
 import { useVideosV3 } from "@/services/video.service";
 import { MainVideoListing } from "@/components/video/MainVideoListing";
-import { useAtomValue } from "jotai";
 import { clipLanguageAtom } from "@/store/settings";
-import { useParams } from "react-router-dom";
 import { useVideoCardSizes } from "@/store/video";
 import PullToRefresh from "@/components/layout/PullToRefresh";
 import { useVideoFilter } from "@/hooks/useVideoFilter";
 import { ClipLanguageSelector } from "@/components/language/ClipLanguageSelector";
+import { pastVideoFilterByAtom } from "@/components/settings/VideoListSettingsMenu";
 
 export function ClipsTab() {
   const { org } = useParams();
   const { size: cardSize } = useVideoCardSizes(["list", "md", "lg"]);
   const clipLangs = useAtomValue(clipLanguageAtom);
+  const toDate = useAtomValue(pastVideoFilterByAtom);
 
   const {
     data: clips,
@@ -29,6 +31,8 @@ export function ClipsTab() {
       max_upcoming_hours: 1,
       limit: 32,
       lang: clipLangs,
+      // api currently does not support JSON date strings (i.e., JSON.stringify(Date))
+      to: toDate?.toJSON(),
     },
     {
       refetchInterval: 1000 * 60 * 5,
