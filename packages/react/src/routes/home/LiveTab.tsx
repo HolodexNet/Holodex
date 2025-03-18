@@ -1,11 +1,13 @@
+import { useMemo } from "react";
+import { useParams } from "react-router-dom";
 import { useLive } from "@/services/live.service";
 import { MainVideoListing } from "@/components/video/MainVideoListing";
 import { Separator } from "@/shadcn/ui/separator";
-import { useParams } from "react-router-dom";
 import { useVideoCardSizes } from "@/store/video";
 import PullToRefresh from "@/components/layout/PullToRefresh";
 import { useVideoFilter } from "@/hooks/useVideoFilter";
 import { EmptyQuip } from "./EmptyQuip";
+import { useVideoSort } from "@/hooks/useVideoSort";
 
 export function LiveTab() {
   const { org } = useParams();
@@ -25,9 +27,15 @@ export function LiveTab() {
     "org",
   );
 
-  const nowLive = liveFiltered?.filter(({ status }) => status === "live") ?? [];
+  const nowLive = useMemo(
+    () => liveFiltered?.filter(({ status }) => status === "live") ?? [],
+    [liveFiltered],
+  );
   const upcoming =
     liveFiltered?.filter(({ status }) => status !== "live") ?? [];
+
+  // sort livestreams by video list settings
+  const nowLiveSorted = useVideoSort(nowLive, "stream_schedule");
 
   return (
     <>
@@ -35,9 +43,9 @@ export function LiveTab() {
         <MainVideoListing
           isLoading={liveLoading}
           size={cardSize}
-          videos={nowLive}
+          videos={nowLiveSorted}
         />
-        {!liveLoading && nowLive.length == 0 && <EmptyQuip />}
+        {!liveLoading && nowLiveSorted.length == 0 && <EmptyQuip />}
         <Separator className="mb-4 mt-2 w-full border-base-3 lg:mb-6 lg:mt-4" />
         <MainVideoListing
           isLoading={liveLoading}
