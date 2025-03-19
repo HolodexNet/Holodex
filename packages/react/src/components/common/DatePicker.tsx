@@ -12,6 +12,7 @@ export function DatePicker(
     timezone?: string;
     onSelect: (date: Date) => void;
     calendarClassName?: string;
+    showTimeSelect?: boolean;
   },
 ) {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ export function DatePicker(
     timezone,
     className,
     calendarClassName,
+    showTimeSelect,
     ...rest
   } = props;
 
@@ -65,26 +67,28 @@ export function DatePicker(
           }}
           {...rest}
         />
-        <div className="px-4 pb-4">
-          <Input
-            value={dayjs(date).tz(timezone).format("HH:mm")}
-            onChange={(e) => {
-              const currentDate = dayjs(date).tz(timezone);
-              const selectedDate = dayjs.tz(e.target.valueAsDate, "UTC");
-              onSelect(
-                dayjs
-                  .tz(
-                    currentDate.startOf("day").valueOf() +
-                      selectedDate.valueOf(),
-                    timezone,
-                  )
-                  .toDate(),
-              );
-            }}
-            type="time"
-            step="60"
-          />
-        </div>
+        {showTimeSelect && (
+          <div className="px-4 pb-4">
+            <Input
+              value={dayjs(date).tz(timezone).format("HH:mm")}
+              onChange={(e) => {
+                const currentDate = dayjs(date).tz(timezone);
+                const selectedDate = dayjs.tz(e.target.valueAsDate, "UTC");
+                onSelect(
+                  dayjs
+                    .tz(
+                      currentDate.startOf("day").valueOf() +
+                        selectedDate.valueOf(),
+                      timezone,
+                    )
+                    .toDate(),
+                );
+              }}
+              type="time"
+              step="60"
+            />
+          </div>
+        )}
       </PopoverContent>
     </Popover>
   );

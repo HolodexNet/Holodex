@@ -84,7 +84,7 @@ export const VideoListSettingsMenu: React.FC<{
           {(activeTab === "archive" || activeTab === "clips") && (
             <UploadedBeforeDatePicker />
           )}
-          <ToggleableFeatureGroup features={hideFeatures} />
+          <ToggleableFeatureGroup features={hideFeatures} compact />
         </div>
       </PopoverContent>
     </Popover>
