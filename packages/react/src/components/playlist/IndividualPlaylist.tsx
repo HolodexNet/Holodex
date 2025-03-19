@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useToast } from "@/shadcn/ui/use-toast";
 import { Input } from "@/shadcn/ui/input";
 import DeletePlaylistDialog from "@/components/playlist/DeletePlaylistDialog";
+import StartPlaylistLink from "./StartPlaylistLink";
 
 interface Props {
   playlist: Playlist;
@@ -116,8 +117,13 @@ export default function IndividualPlaylist({ playlist }: Props) {
               {playlist.videos.length} Videos
             </TypographyP>
             <div className="mt-4 flex items-center gap-3">
-              <Button size="lg" variant="primary">
-                <span className="i-heroicons:play-solid" /> Play
+              <Button size="lg" variant="primary" asChild>
+                <StartPlaylistLink
+                  firstVideoId={playlist.videos[0].id}
+                  playlistId={playlist.id}
+                >
+                  <span className="i-heroicons:play-solid" /> Play
+                </StartPlaylistLink>
               </Button>
               {userOwnsPlaylist ? (
                 <>
@@ -191,7 +197,13 @@ export default function IndividualPlaylist({ playlist }: Props) {
               </div>
             ) : null}
             <div className="grow">
-              <VideoCard size="sm" video={video} />
+              <VideoCard
+                size="sm"
+                video={{
+                  ...video,
+                  link: `/watch/${video.id}?${new URLSearchParams({ playlist: playlist.id.toString() })}`,
+                }}
+              />
             </div>
           </div>
         );

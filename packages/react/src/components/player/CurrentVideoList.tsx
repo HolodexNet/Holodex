@@ -1,5 +1,3 @@
-import { queueAtom } from "@/store/queue";
-import { useAtom } from "jotai";
 import { VideoCard } from "../video/VideoCard";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/shadcn/ui/button";
@@ -11,14 +9,16 @@ import {
 import { useMemo, useState } from "react";
 import NewPlaylistDialog from "../playlist/NewPlaylistDialog";
 import { WATCH_PAGE_DROPDOWN_BUTTON_STYLE } from "@/shadcn/ui/button.variants";
+import { useCurrentVideoList } from "@/hooks/useCurrentVideoList";
+import { cn } from "@/lib/utils";
 
-export function QueueList({ currentId }: { currentId?: string }) {
+export function CurrentVideoList({ currentId }: { currentId?: string }) {
   const { t } = useTranslation();
-  const [queue, setQueue] = useAtom(queueAtom);
+  const { title, videos, clearList } = useCurrentVideoList();
   // currentIdInQueue:
   const currentIdIdxInQueue = useMemo(() => {
-    return currentId && queue.findIndex(({ id }) => currentId === id) + 1;
-  }, [currentId, queue]);
+    return currentId && videos.findIndex(({ id }) => currentId === id) + 1;
+  }, [currentId, videos]);
   const [open, setOpen] = useState(!!currentIdIdxInQueue);
 
   return (
@@ -34,10 +34,10 @@ export function QueueList({ currentId }: { currentId?: string }) {
           onClick={() => setOpen(!open)}
         >
           <div className={open ? "i-heroicons:minus" : "i-heroicons:plus"} />
-          {t("component.queue.title")}
+          {title}
           <span className="ml-auto text-sm text-base-11">
             {currentIdIdxInQueue ? currentIdIdxInQueue + " / " : ""}
-            {queue.length} items
+            {videos.length} items
           </span>
         </Button>
       </CollapsibleTrigger>
@@ -52,21 +52,27 @@ export function QueueList({ currentId }: { currentId?: string }) {
                     {t("component.playlist.menu.new-playlist")}
                   </Button>
                 }
-                videoIds={queue.map(({ id }) => id)}
+                videoIds={videos.map(({ id }) => id)}
               />
 
-              <Button variant="ghost" onClick={() => setQueue([])}>
-                Clear
-              </Button>
+              {clearList && (
+                <Button variant="ghost" onClick={() => clearList()}>
+                  Clear
+                </Button>
+              )}
             </div>
-            <div className="flex flex-col px-2">
-              {queue.map((video) => (
+            <div className="flex flex-col gap-1">
+              {videos.map((video) => (
                 <VideoCard
                   key={"queue-" + video.id}
                   showDuration={false}
                   showStatus="available_at_only"
                   size="list"
                   video={video}
+                  outerLayerStyle={cn(
+                    "rounded-none px-2",
+                    video.id === currentId && "bg-primary hover:bg-primary",
+                  )}
                 />
               ))}
             </div>
