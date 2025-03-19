@@ -192,7 +192,7 @@ export default {
             this.fromApi = [];
             const entropy = encodeURIComponent(val.trim()).length;
             if (entropy <= 1) return;
-            const formatted = val.trim().replace("#", "");
+            const formatted = val.trim().replace("#", "").replace(/\s+/g, "_");
             this.getAutocomplete(formatted)
                 .then((res) => {
                     let textQueries = [];
