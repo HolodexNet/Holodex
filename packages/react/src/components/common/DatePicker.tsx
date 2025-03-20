@@ -28,6 +28,7 @@ export function DatePicker(
     clearable = false,
     ...rest
   } = props;
+  const dateFormat = showTimeSelect ? "YYYY-MM-DD HH:mm" : "YYYY-MM-DD";
 
   return (
     <Popover>
@@ -42,7 +43,7 @@ export function DatePicker(
         >
           <div className="i-heroicons:calendar mr-2 h-4 w-4" />
           {date ? (
-            dayjs(date).tz(timezone).format("YYYY-MM-DD HH:mm")
+            dayjs(date).tz(timezone).format(dateFormat)
           ) : (
             <span>{t("component.datePicker.pickDate")}</span>
           )}
