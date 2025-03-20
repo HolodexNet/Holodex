@@ -49,7 +49,7 @@ export function MergeParticipantsItem({
         })
       }
     >
-      <span className="i-tabler:users mr-2" />
+      <span className="i-fluent:people-link-20-regular mr-2" />
       Merge Participant Lists
     </DropdownMenuItem>
   );
@@ -77,7 +77,7 @@ export function SimulcastItem({
         })
       }
     >
-      <span className="i-tabler:player-play mr-2" />
+      <span className="i-fluent:share-screen-person-overlay-20-regular mr-2" />
       Make Simulwatch
     </DropdownMenuItem>
   );
@@ -109,7 +109,7 @@ export function ReferItem({
         })
       }
     >
-      <span className="i-tabler:link mr-2" />
+      <span className="i-fluent:link-add-20-regular mr-2" />
       Make videos refer to each other
     </DropdownMenuItem>
   );
@@ -129,6 +129,10 @@ export function DissociateVideoItem({
 
   if (!pageVideo) return null;
 
+  const displayText = pageChannel
+    ? "Disassociate w/ Current Video & Channel"
+    : "Disassociate w/ Current Video";
+
   return (
     <DropdownMenuItem
       onClick={() =>
@@ -140,8 +144,8 @@ export function DissociateVideoItem({
         })
       }
     >
-      <span className="i-tabler:unlink mr-2" />
-      Disassociate w/ Current Video
+      <span className="i-fluent:link-dismiss-20-regular mr-2" />
+      {displayText}
     </DropdownMenuItem>
   );
 }
@@ -174,7 +178,7 @@ export function DissociateChannelItem({
         })
       }
     >
-      <span className="i-tabler:user-minus mr-2" />
+      <span className="i-fluent:people-prohibited-20-regular mr-2" />
       Disassociate w/ Current Channel
     </DropdownMenuItem>
   );
@@ -207,7 +211,7 @@ export function RemoveMentionsItem({
 
   return (
     <DropdownMenuItem onClick={handleClick}>
-      <span className="i-tabler:user-off mr-2" />
+      <span className="i-fluent:people-team-delete-20-regular mr-2" />
       Remove all Mentions
     </DropdownMenuItem>
   );

@@ -32,8 +32,7 @@ const DraggableNumber = ({
       setDragStartPos(0);
       setDragInProgressValue(value);
       if ((e.target as HTMLSpanElement)?.style) {
-        // @ts-expect-error ignoring type error of style property not existing
-        e.target?.style.cursor = "crosshair";
+        (e.target as HTMLSpanElement).style.cursor = "crosshair";
       }
       document.body.requestPointerLock();
 
@@ -52,8 +51,9 @@ const DraggableNumber = ({
         onChange(+dragInProgressValue.toFixed(precision));
         setDragStartPos(null);
         if ((e.target as HTMLSpanElement)?.style) {
-          // @ts-expect-error ignoring type error of style property not existing
-          e.target.style.cursor = horizontal ? "col-resize" : "row-resize";
+          (e.target as HTMLSpanElement).style.cursor = horizontal
+            ? "col-resize"
+            : "row-resize";
         }
         document.exitPointerLock();
       };

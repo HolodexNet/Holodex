@@ -19,8 +19,6 @@ import { siteIsSmallAtom } from "@/hooks/useFrame";
 import { useTranslation } from "react-i18next";
 import { makeThumbnailUrl } from "@/lib/utils";
 import { VideoThumbnail } from "../video/VideoThumbnail";
-import { SmartMultiEditShortcutsMenu } from "../edit/selection/SmartMultiEditShortcutsMenu";
-import SelectionFooterTopicPicker from "../edit/selection/SelectionFooterTopicPicker";
 import {
   usePlaylistVideoMassAddMutation,
   usePlaylists,
@@ -30,6 +28,8 @@ import { Link } from "react-router-dom";
 import { LazyNewPlaylistDialog } from "../video/LazyNewPlaylistDialog";
 import { useToast } from "@/shadcn/ui/use-toast";
 import { queueAtom } from "@/store/queue";
+import { currentSelectionPage } from "../edit/selection/selection.store";
+import { SmartMultiEditShortcutsMenu } from "../edit/selection/SmartMultiEditShortcutsMenu";
 
 const SelectedVideosModal = ({
   isSmall,
@@ -90,8 +90,7 @@ const SelectedVideosModal = ({
             </Link>
             <div className="min-w-80">
               <h3 className="line-clamp-2 font-semibold">{video.title}</h3>
-              <p className="text-sm text-gray-500">{}</p>
-              {/*  what was i doing here again why is this block empty ^ */}
+              <p className="text-sm text-gray-500">{video.channel?.name}</p>
             </div>
           </div>
         ))}
@@ -105,7 +104,7 @@ const SelectionFooter = () => {
   const { selectionMode, selectedVideos, setSelectionMode, clearSelection } =
     useVideoSelection();
   const [showVideos, setShowVideos] = useState(false);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useAtom(currentSelectionPage);
   const [isSmall] = useAtom(siteIsSmallAtom);
 
   const exit = () => {
@@ -119,7 +118,7 @@ const SelectionFooter = () => {
   return (
     <footer
       id="selectionFooter"
-      className="sticky bottom-0 right-0 flex border-t border-base-6 bg-base-3 p-1 shadow-lg"
+      className="sticky bottom-0 right-0 flex bg-base-3 p-1 shadow-lg"
       style={{ bottom: "var(--footer-height-clearance)" }}
     >
       <SelectedVideosModal
@@ -136,133 +135,243 @@ const SelectionFooter = () => {
         }`}
         onClick={exit}
       >
-        <div className="i-mdi:close-circle text-xl" />
+        <span className="i-mdi:close-circle text-xl" />
       </Button>
 
       <div className="ml-4 space-y-2">
-        {page === 0 && (
-          <div className="flex flex-wrap gap-2">
-            {selectedVideos.length > 0 && (
-              <>
-                <Button
-                  variant="base-outline"
-                  size="sm"
-                  onClick={clearSelection}
-                >
-                  <span className="i-material-symbols:deselect" />
-                  Deselect
-                </Button>
+        {page === 0 && <SelectionMainPage setShowVideos={setShowVideos} />}
 
-                <Button
-                  variant="base-outline"
-                  size="sm"
-                  onClick={() => setShowVideos(!showVideos)}
-                >
-                  <span className="i-mdi:select-search" />
-                  Show {selectedVideos.length} Videos
-                </Button>
-              </>
-            )}
+        {page === 1 && <SelectionMentionsPage />}
 
-            <Button
-              variant="base-outline"
-              size="sm"
-              disabled={!selectedVideos.length}
-              // TODO: onclick behavior once Multiview is finished.
-            >
-              <span className="i-heroicons:rectangle-group" />
-              Open in Multiview
-            </Button>
+        {page === 2 && <SelectionSourcesPage />}
 
-            <SelectionModifyPlaylistMenu disabled={!selectedVideos.length} />
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="base-outline"
-                  size="sm"
-                  disabled={selectedVideos.length === 0}
-                  className="flex items-center"
-                >
-                  <span className="i-lucide:tag mr-2" />
-                  Modify Attributes
-                  <div className="i-lucide:chevron-up ml-2 size-4"></div>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => setPage(1)}>
-                  Mentions
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setPage(2)}>
-                  Sources
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setPage(3)}>
-                  Topic
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Language (clips only)</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            {/* Placeholder for SelectionEditShortcuts component */}
-            <SmartMultiEditShortcutsMenu />
-          </div>
-        )}
-
-        {page !== 0 && (
-          <div className="flex items-center justify-between">
-            <nav className="flex items-center" aria-label="Breadcrumb">
-              <ol className="flex items-center space-x-2 px-2">
-                <li>
-                  <div
-                    onClick={() => setPage(0)}
-                    className="flex cursor-pointer items-center text-sm font-medium"
-                  >
-                    <div className="i-lucide:chevron-left mr-1" />
-                    Back
-                  </div>
-                </li>
-                <li className="text-sm font-medium text-base-10">
-                  | Selected ({selectedVideos.length}) |
-                </li>
-                <li className="text-sm font-medium">
-                  {page === 1 && "Mentions"}
-                  {page === 2 && "Sources"}
-                  {page === 3 && "Set Topic: "}
-                </li>
-              </ol>
-            </nav>
-            <div className="flex items-center space-x-2">
-              {page === 1 && (
-                <>
-                  <input
-                    type="text"
-                    placeholder="Search channels..."
-                    className="rounded-md border px-2 py-1 text-sm"
-                  />
-                  <Button size="sm" variant="outline">
-                    Add Mention
-                  </Button>
-                </>
-              )}
-              {page === 2 && (
-                <>
-                  <input
-                    type="text"
-                    placeholder="Enter source URL..."
-                    className="rounded-md border px-2 py-1 text-sm"
-                  />
-                  <Button size="sm" variant="outline">
-                    Add Source
-                  </Button>
-                </>
-              )}
-              {page === 3 && <SelectionFooterTopicPicker />}
-            </div>
-          </div>
-        )}
+        {page === 3 && <SelectionTopicPage />}
       </div>
     </footer>
+  );
+};
+
+// Page 0: Main selection page
+export const SelectionMainPage = ({
+  setShowVideos,
+}: {
+  setShowVideos: (show: boolean) => void;
+}) => {
+  const { t } = useTranslation();
+  const { selectedVideos } = useVideoSelection();
+  const setPage = useSetAtom(currentSelectionPage);
+  const { clearSelection } = useVideoSelection();
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      {selectedVideos.length > 0 && (
+        <>
+          <Button
+            variant="base-outline"
+            size="sm"
+            onClick={clearSelection}
+            className="flex items-center"
+          >
+            <span className="i-material-symbols:deselect mr-2" />
+            Deselect
+          </Button>
+
+          <Button
+            variant="base-outline"
+            size="sm"
+            onClick={() => setShowVideos(true)}
+            className="flex items-center"
+          >
+            <span className="i-mdi:select-search mr-2" />
+            Show {selectedVideos.length} Videos
+          </Button>
+        </>
+      )}
+
+      <Button
+        variant="base-outline"
+        size="sm"
+        disabled={!selectedVideos.length}
+      >
+        <span className="i-heroicons:rectangle-group mr-2" />
+        Open in Multiview
+      </Button>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="base-outline"
+            size="sm"
+            disabled={!selectedVideos.length}
+            className="flex items-center"
+          >
+            <span className="i-material-symbols:list-alt-outline mr-2" />
+            Playlist
+            <div className="i-lucide:chevron-up ml-2 size-4"></div>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem onClick={() => setPage(1)}>
+            Add to current Playlist
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setPage(2)}>
+            Make into new Playlist
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="base-outline"
+            size="sm"
+            disabled={selectedVideos.length === 0}
+            className="flex items-center"
+          >
+            <span className="i-lucide:tag mr-2" />
+            Modify Attributes
+            <div className="i-lucide:chevron-up ml-2 size-4"></div>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem onClick={() => setPage(1)}>
+            Mentions
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setPage(2)}>
+            Sources
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setPage(3)}>Topic</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Language (clips only)</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Existing edit shortcuts component */}
+      <SmartMultiEditShortcutsMenu />
+    </div>
+  );
+};
+
+// Page 1: Mentions Page
+export const SelectionMentionsPage = () => {
+  const { selectedVideos } = useVideoSelection();
+  const [searchTerm, setSearchTerm] = useState("");
+  const setPage = useSetAtom(currentSelectionPage);
+
+  return (
+    <div className="flex w-full items-center justify-between">
+      <nav className="flex items-center" aria-label="Breadcrumb">
+        <ol className="flex items-center space-x-2 px-2">
+          <li>
+            <div
+              onClick={() => setPage(0)}
+              className="flex cursor-pointer items-center text-sm font-medium"
+            >
+              <div className="i-lucide:chevron-left mr-1" />
+              Back
+            </div>
+          </li>
+          <li className="text-sm font-medium text-base-10">
+            | Selected ({selectedVideos.length}) |
+          </li>
+          <li className="text-sm font-medium">Mentions</li>
+        </ol>
+      </nav>
+      <div className="flex items-center space-x-2">
+        <input
+          type="text"
+          placeholder="Search channels..."
+          className="rounded-md border px-2 py-1 text-sm"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <Button size="sm" variant="outline">
+          Add Mention
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+// Page 2: Sources Page
+export const SelectionSourcesPage = () => {
+  const { selectedVideos } = useVideoSelection();
+  const [sourceUrl, setSourceUrl] = useState("");
+  const setPage = useSetAtom(currentSelectionPage);
+
+  return (
+    <div className="flex w-full items-center justify-between">
+      <nav className="flex items-center" aria-label="Breadcrumb">
+        <ol className="flex items-center space-x-2 px-2">
+          <li>
+            <div
+              onClick={() => setPage(0)}
+              className="flex cursor-pointer items-center text-sm font-medium"
+            >
+              <div className="i-lucide:chevron-left mr-1" />
+              Back
+            </div>
+          </li>
+          <li className="text-sm font-medium text-base-10">
+            | Selected ({selectedVideos.length}) |
+          </li>
+          <li className="text-sm font-medium">Sources</li>
+        </ol>
+      </nav>
+      <div className="flex items-center space-x-2">
+        <input
+          type="text"
+          placeholder="Enter source URL..."
+          className="rounded-md border px-2 py-1 text-sm"
+          value={sourceUrl}
+          onChange={(e) => setSourceUrl(e.target.value)}
+        />
+        <Button size="sm" variant="outline">
+          Add Source
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+// Page 3: Topic Page
+export const SelectionTopicPage = () => {
+  const { selectedVideos } = useVideoSelection();
+  const [topic, setTopic] = useState("");
+  const setPage = useSetAtom(currentSelectionPage);
+
+  return (
+    <div className="flex w-full items-center justify-between">
+      <nav className="flex items-center" aria-label="Breadcrumb">
+        <ol className="flex items-center space-x-2 px-2">
+          <li>
+            <div
+              onClick={() => setPage(0)}
+              className="flex cursor-pointer items-center text-sm font-medium"
+            >
+              <div className="i-lucide:chevron-left mr-1" />
+              Back
+            </div>
+          </li>
+          <li className="text-sm font-medium text-base-10">
+            | Selected ({selectedVideos.length}) |
+          </li>
+          <li className="text-sm font-medium">Set Topic:</li>
+        </ol>
+      </nav>
+      <div className="flex items-center space-x-2">
+        <input
+          type="text"
+          placeholder="Enter topic..."
+          className="rounded-md border px-2 py-1 text-sm"
+          value={topic}
+          onChange={(e) => setTopic(e.target.value)}
+        />
+        <Button size="sm" variant="outline">
+          Set Topic
+        </Button>
+      </div>
+    </div>
   );
 };
 

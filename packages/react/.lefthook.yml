@@ -1,0 +1,7 @@
+pre-commit:
+  commands:
+    lint-staged:
+      # Move to your target directory
+      root: "packages/react"
+      # Run lint-staged
+      run: "npx lint-staged"

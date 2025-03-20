@@ -57,7 +57,7 @@ export function ItunesSearchDropdown({
         onFocus={() => setOpen(true)}
       />
       {open &&
-        (autocomplete?.length ?? 0 > 0 ? (
+        (autocomplete?.length ? (
           <CommandList className="absolute top-10 z-10 w-full rounded-b-md border border-solid border-base bg-base-1 text-base-11">
             <CommandGroup heading={<div>Search Results</div>} />
             <CommandSeparator />
