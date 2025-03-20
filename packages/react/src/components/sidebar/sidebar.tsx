@@ -7,7 +7,6 @@ import {
   Link,
   useLocation,
   useNavigate,
-  useParams,
   useSearchParams,
 } from "react-router-dom";
 import {
@@ -22,7 +21,7 @@ import {
   isMobileAtom,
   isSidebarOpenAtom,
   sidebarShouldBeFullscreenAtom,
-  toggleSidebarAtom,
+  closeSidebarAtom,
 } from "@/hooks/useFrame";
 import { Logo } from "../header/Logo";
 import { MUSICDEX_URL } from "@/lib/consts";
@@ -40,10 +39,9 @@ export function Sidebar() {
   const floating = useAtomValue(isSidebarFloatingAtom);
   const [open, setOpen] = useAtom(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
-  const toggle = useSetAtom(toggleSidebarAtom);
+  const setClose = useSetAtom(closeSidebarAtom);
   const fs = useAtomValue(sidebarShouldBeFullscreenAtom);
   const navigate = useNavigate();
-  const org = useParams().org;
   const [params] = useSearchParams();
 
   const setOrg = useCallback(
@@ -62,7 +60,7 @@ export function Sidebar() {
 
   const handleClickOutside = useCallback(() => {
     floating && open && setOpen(false);
-  }, [floating, open]);
+  }, [floating, open, setOpen]);
 
   useOnClickOutside(ref, handleClickOutside);
 
@@ -73,17 +71,20 @@ export function Sidebar() {
       ref={ref}
     >
       <div className="flex min-h-[100dvh] flex-col bg-base-2">
-        <div
-          className="flex cursor-pointer items-center gap-2 px-4 pb-2 pt-4"
-          onClick={() => navigate("/")}
-        >
-          <Logo className="ml-1.5 h-8 w-8" />
-          <h2 className="text-3xl font-semibold tracking-tight">Holodex</h2>
-          <div className="flex grow" />
+        <div className="flex items-center justify-end gap-2 px-4 pb-2 pt-4">
+          <Link
+            to="/"
+            className="flex items-center gap-2 overflow-hidden"
+            onClick={isMobile ? setClose : undefined}
+          >
+            <Logo className="ml-1.5 h-8 w-8" />
+            <h2 className="text-3xl font-semibold tracking-tight">Holodex</h2>
+          </Link>
+          <div className="grow" />
           <Button
             variant="ghost"
             className="i-lucide:x p-4 md:hidden"
-            onClick={toggle}
+            onClick={setClose}
           />
         </div>
         <div className="group/sidebar flex grow flex-col space-y-1 px-3 py-2">
@@ -93,7 +94,7 @@ export function Sidebar() {
           <div className="space-y-2">
             <SidebarItem
               key={"fav-sb"}
-              onClose={toggle}
+              onClose={setClose}
               label={"Favorites"}
               href={`/favorites`}
               icon={"i-ph:heart-fill"}
@@ -101,7 +102,7 @@ export function Sidebar() {
             {rankedOrgs.map((pinnedOrg) => (
               <SidebarItem
                 key={pinnedOrg.name}
-                onClose={toggle}
+                onClose={setClose}
                 label={pinnedOrg.name}
                 href={`/org/${pinnedOrg.name}`}
                 icon={pinnedOrg.icon ? undefined : "i-ph:placeholder-fill"}
@@ -137,25 +138,25 @@ export function Sidebar() {
             label={t("component.mainNav.favorites")}
             icon="i-heroicons:heart"
             href="/favorites"
-            onClose={toggle}
+            onClose={setClose}
           /> */}
           <SidebarItem
             label={t("component.mainNav.multiview")}
             icon="i-heroicons:rectangle-group"
             href="/multiview"
-            onClose={toggle}
+            onClose={setClose}
           />
           <SidebarItem
             label="Musicdex"
             icon="i-heroicons:musical-note"
             href={MUSICDEX_URL}
-            onClose={toggle}
+            onClose={setClose}
           />
           <SidebarItem
             label={t("component.mainNav.playlist")}
             icon="i-heroicons:queue-list"
             href="/playlists"
-            onClose={toggle}
+            onClose={setClose}
           />
           <Button
             className={cn("w-full justify-start", "font-light text-base-11")}
@@ -172,14 +173,14 @@ export function Sidebar() {
                 label={t("component.mainNav.tlclient")}
                 icon="i-heroicons:language"
                 href="/tlclient"
-                onClose={toggle}
+                onClose={setClose}
               />
               <SidebarItem
                 className=""
                 label={t("component.mainNav.scriptEditor")}
                 icon="i-fluent:gantt-chart-16-regular"
                 href="/scripteditor"
-                onClose={toggle}
+                onClose={setClose}
               />
             </div>
           )}
@@ -187,13 +188,13 @@ export function Sidebar() {
             label="Settings"
             icon="i-heroicons:cog-6-tooth"
             href="/settings"
-            onClose={toggle}
+            onClose={setClose}
           />
           <SidebarItem
             label="About"
             icon="i-heroicons:question-mark-circle"
             href="/about"
-            onClose={toggle}
+            onClose={setClose}
           />
         </div>
       </div>
