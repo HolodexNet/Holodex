@@ -154,6 +154,7 @@ export const FormDatePicker = ({
                 timezone={timezone}
                 {...props}
                 onSelect={(date: Date) => field.onChange(date.toISOString())}
+                showTimeSelect
               />
             </div>
           </FormControl>

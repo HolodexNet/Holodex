@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useFavoriteLive } from "@/services/live.service";
 import { MainVideoListing } from "@/components/video/MainVideoListing";
 import { useVideoCardSizes } from "@/store/video";
@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { Separator } from "@/shadcn/ui/separator";
 import { FavoritesArchiveTab, FavoritesClipTab } from "./favoriteOtherTabs";
 import { EmptyQuip } from "../home/EmptyQuip";
+import { useVideoSort } from "@/hooks/useVideoSort";
 
 export function FavoritesLive() {
   const { t } = useTranslation();
@@ -31,8 +32,14 @@ export function FavoritesLive() {
     "favorites",
   );
 
-  const nowLive = filtered?.filter(({ status }) => status === "live") ?? [];
+  const nowLive = useMemo(
+    () => filtered?.filter(({ status }) => status === "live") ?? [],
+    [filtered],
+  );
   const upcoming = filtered?.filter(({ status }) => status !== "live") ?? [];
+
+  // sort livestreams by video list settings
+  const nowLiveSorted = useVideoSort(nowLive, "stream_schedule");
 
   return (
     <>
@@ -40,9 +47,9 @@ export function FavoritesLive() {
         <MainVideoListing
           isLoading={liveLoading}
           size={cardSize}
-          videos={nowLive}
+          videos={nowLiveSorted}
         />
-        {!liveLoading && nowLive.length == 0 && <EmptyQuip />}
+        {!liveLoading && nowLiveSorted.length == 0 && <EmptyQuip />}
         <Separator className="mb-4 mt-2 w-full border-base-3 lg:mb-6 lg:mt-4" />
         <MainVideoListing
           isLoading={liveLoading}

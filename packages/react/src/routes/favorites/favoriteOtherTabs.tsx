@@ -5,10 +5,12 @@ import { clipLanguageAtom } from "@/store/settings";
 import { useVideoCardSizes } from "@/store/video";
 import PullToRefresh from "@/components/layout/PullToRefresh";
 import { useVideoFilter } from "@/hooks/useVideoFilter";
+import { pastVideoFilterByAtom } from "@/components/settings/VideoListSettingsMenu";
 
 export function FavoritesClipTab() {
   const { size: cardSize } = useVideoCardSizes(["list", "md", "lg"]);
   const clipLangs = useAtomValue(clipLanguageAtom);
+  const toDate = useAtomValue(pastVideoFilterByAtom);
 
   const {
     data: clips,
@@ -25,6 +27,7 @@ export function FavoritesClipTab() {
       max_upcoming_hours: 1,
       limit: 32,
       lang: clipLangs,
+      to: toDate?.toJSON(),
     },
     {
       refetchInterval: 1000 * 60 * 5,
@@ -53,6 +56,7 @@ export function FavoritesClipTab() {
 
 export function FavoritesArchiveTab() {
   const { size: cardSize } = useVideoCardSizes(["list", "md", "lg"]);
+  const toDate = useAtomValue(pastVideoFilterByAtom);
   const {
     data: archives,
     isLoading: archiveLoading,
@@ -67,6 +71,7 @@ export function FavoritesArchiveTab() {
       include: ["clips", "mentions"],
       max_upcoming_hours: 1,
       limit: 32,
+      to: toDate?.toJSON(),
     },
     {
       refetchInterval: 1000 * 60 * 5,

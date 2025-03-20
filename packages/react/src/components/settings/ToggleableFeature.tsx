@@ -26,6 +26,7 @@ type ToggleableFeatureProps =
 interface ToggleableFeatureGroupProps {
   features: ToggleableFeatureProps[];
   showDividers?: boolean;
+  compact?: boolean;
 }
 
 // Individual feature toggle component
@@ -91,13 +92,18 @@ const ToggleableFeatureSetting = (props: ToggleableFeatureProps) => {
 };
 
 // Group component to handle multiple toggles
-// Group component to handle multiple toggles
 export const ToggleableFeatureGroup = ({
   features,
   showDividers = false,
+  compact = false,
 }: ToggleableFeatureGroupProps) => {
   return (
-    <div className={"flex flex-col  " + (showDividers ? "gap-2" : "gap-4")}>
+    <div
+      className={cn(
+        "flex flex-col",
+        showDividers || compact ? "gap-2" : "gap-4",
+      )}
+    >
       {features.map((feature, index) => (
         <React.Fragment key={feature.id}>
           <ToggleableFeatureSetting {...feature} />
