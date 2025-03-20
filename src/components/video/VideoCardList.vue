@@ -96,7 +96,7 @@ export default {
                 xl: 8,
             }),
         },
-        activeId: { // TODO: is this never specified (and thus VideoCard.active always false)?
+        activeId: { // TODO: seems never specified (and thus VideoCard.active always false)
             required: false,
             type: String,
             default: "",

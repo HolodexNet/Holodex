@@ -361,7 +361,7 @@ export default {
             type: Number,
             default: 1,
         },
-        active: { // TODO: is this always false?
+        active: { // TODO: seems always false (see VideoCardList.activeId); 'video-card-active' class is instead toggled via VirtualVideoCardList.activeIndex/checkActive
             required: false,
             type: Boolean,
             default: false,
