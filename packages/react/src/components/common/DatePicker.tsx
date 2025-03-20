@@ -10,9 +10,10 @@ import { useTranslation } from "react-i18next";
 export function DatePicker(
   props: Omit<DayPickerSingleProps, "mode" | "onSelect"> & {
     timezone?: string;
-    onSelect: (date: Date) => void;
-    calendarClassName?: string;
+    onSelect: (date: Date | undefined) => void;
     showTimeSelect?: boolean;
+    calendarClassName?: string;
+    clearable?: boolean;
   },
 ) {
   const { t } = useTranslation();
@@ -21,9 +22,10 @@ export function DatePicker(
     selected: date,
     onSelect,
     timezone,
+    showTimeSelect = false,
     className,
     calendarClassName,
-    showTimeSelect,
+    clearable = false,
     ...rest
   } = props;
 
@@ -43,6 +45,20 @@ export function DatePicker(
             dayjs(date).tz(timezone).format("YYYY-MM-DD HH:mm")
           ) : (
             <span>{t("component.datePicker.pickDate")}</span>
+          )}
+          {clearable && date && (
+            <button
+              className="ring-offset-background focus:ring-ring 
+                ml-auto rounded-sm opacity-70 transition-opacity hover:opacity-100 
+                focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelect(undefined);
+              }}
+            >
+              <div className="i-heroicons:x-mark h-4 w-4"></div>
+              <span className="sr-only">Close</span>
+            </button>
           )}
         </Button>
       </PopoverTrigger>

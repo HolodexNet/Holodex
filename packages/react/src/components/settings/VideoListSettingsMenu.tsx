@@ -150,6 +150,7 @@ export const UploadedBeforeDatePicker: React.FC = () => {
         className="w-full"
         selected={toDate}
         onSelect={setToDate}
+        clearable
       />
     </div>
   );
