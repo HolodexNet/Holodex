@@ -750,7 +750,7 @@ channelRequest:
   Comments: Comments
   CommentsHint: Other comments you'd like to tell us.
   VtuberRequirementText: >-
-    A minimum of 20K subscribers is required for independents. Vtubers as part
+    A minimum of 15K subscribers is required for independents. Vtubers as part
     of existing orgs will be accepted. <br /><br />New Orgs will be created
     depending on the average subscriber count.<br /><br />Twitch streamers must
     have an official YouTube channel to be indexed.
