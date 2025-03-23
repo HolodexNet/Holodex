@@ -9,6 +9,8 @@ component:
     signInToFavorite: Masuk untuk menambahkan favorit
     unfavoriteAllInGroup: Unfavoritkan semua dalam grup
     favoriteAllInGroup: Favoritkan semua dalam grup
+    enableGroupDisplay: Tampilkan channel dari grup ini di Beranda
+    disableGroupDisplay: Sembunyikan channel dari grup ini dari Beranda
   channelInfo:
     stats: Statistik
     videoCount: '{0} Video'
@@ -48,6 +50,7 @@ component:
     premiere: PREMIER
     googleCalendar: Tambahkan ke Kalender Google
     totalTLs: Jumlah Terjemahan Obrolan
+    totalSongs: Total lagu yang telah diberi timestamp
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
     uncertainPlaceholder: Waktu mulai tidak terkonfirmasi secara resmi, waktu mulai sebenarnya bisa saja berbeda.
     typeScheduledYT: Stream Terjadwal
@@ -603,6 +606,7 @@ about:
       contents:
         '0': >-
           Perangkat Server Hostingan kami sendiri memiliki 28-core disertai dengan 60GB RAM yang membutuhkan kisaran $60 USD (sekitar ±Rp 855.000) / bulan untuk tetap berjalan, dan kami ingin memperluas lebih banyak fitur-fitur yang akan kami sajikan nantinya, oleh karena itu kami membuka <a href="https://ko-fi.com/holodex">Ko-fi</a> untuk membantu biaya jalannya server. (Kami juga memiliki <a href="https://www.patreon.com/holodex">Patreon</a>, tapi kami lebih menyarankan Ko-fi.)<br /><br />Kamu juga dapat membantu Holodex dengan memberi kami pesan penyemangat dan saran pada twitter kami, membantu menerjemahkan via <a href="https://crwd.in/holodex">Crowdin</a>, atau dengan berkontribusi ke penyimpanan data lagu kami. bahkan dengan memberi timestamp pada stream aslinya untuk bagian yang menarik juga sangat membantu!
+  privacyPolicy: Kebijakan Privasi
   gdpr: GDPR dan data saya
   gdprContent: >-
     Cookie Google Analytics digunakan untuk melacak tampilan halaman untuk tujuan analitis kami. Setelah login, kami mengaitkan nama pengguna dan ID akun media sosial dengan favorit kamu. Data ini mungkin termasuk alamat Email (untuk Google), ID Discord, atau Twitter kamu.
@@ -647,8 +651,11 @@ channelRequest:
   EnglishNameLabel: Nama Channel dalam Bahasa Inggris
   Comments: Komentar
   CommentsHint: Komentar lain yang ingin kamu sampaikan pada kami.
+  VtuberRequirementText: >-
+    Diperlukan minimal 20 ribu subscriber untuk independen. Vtuber sebagai bagian dari agensi yang sudah ada akan diterima. <br /><br />Agensi baru akan dibuat tergantung dari jumlah rata-rata subscriber.<br /><br />Streamer Twitch harus memiliki channel YouTube resmi agar dapat diindeks.
   ClipperRequirementText: >-
     Untuk clipper, usia channel minimal 2 bulan dan mengunggah secara konsisten, atau mengunggah lebih dari 20 klip dalam satu bulan. Spam klip pendek setiap hari, hanya mengunggah klip pendek &lt;1 menit, atau menggunakan thumbnail yang tidak menarik semuanya akan diperhitungkan. Kualitas konten mungkin juga akan dinilai. <br /><br />Penting untuk diperhatikan bahwa clipper harus mengutip sumbernya dalam deskripsi video dengan tautan channel, mention channel @Youtube, dan tautan video. overciting (cth. Menautkan semua orang di Nijisanji) membuat pekerjaan lebih untuk editor Holodex, dan underciting (tidak ada tautan / tidak mengutip sama sekali) akan membuat klip disembunyikan. <br /><br /> Holodex berisi algoritme untuk mendeteksi overciting dan mengoreksinya secara otomatis, tetapi mungkin tidak selalu bekerja dengan sempurna. Clipper yang sering overcite akan dihapus dari platform untuk mengurangi noise.
   DeletionRequirementText: >-
     Penghapusan channel hanya dapat diajukan jika kamu adalah (salah satu) pemilik channel tersebut, mohon isi informasi kontak sehingga kami dapat memverifikasi ini.
   PageTitle: Holodex Pengajuan Channel
+  ChannelURLErrorFeedback: Harus berupa https://www.youtube.com/channel/UC_____ atau https://www.youtube.com/@_____

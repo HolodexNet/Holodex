@@ -3,7 +3,7 @@ component:
     title: โกเมนาซอรี่!
     textBeforeTwitter: 'เกิดข้อผิดพลาดในการดึงเนื้อหา โปรดตรวจสอบทวิตเตอร์ '
     textAfterTwitter: ' หรือแจ้งข้อผิดพลาดผ่าน'
-    aboutPage: เกี่ยวกับเพจ
+    aboutPage: เกี่ยวกับ
     afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: ลงชื่อเข้าใช้เพื่อเพิ่มรายการโปรด
@@ -30,14 +30,14 @@ component:
     favorites: รายการโปรด
     channels: ช่อง
     about: เกี่ยวกับ
-    library: ของสะสม
+    library: ไลบรารี
     settings: ตั้งค่า
     login: เข้าสู่ระบบ
     logout: ออกจากระบบ
     MugenClips: MugenClips<sup>เบต้า</sup>
     accountSettings: ตั้งค่าบัญชี
     music: เพลง
-    multiview: MultiView
+    multiview: มัลติวิว
     points: แต้ม
     playlist: เพลย์ลิสต์
   videoCard:
@@ -48,17 +48,17 @@ component:
     copiedToClipboard: คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว
     copyLink: คัดลอกลิงก์ Holodex
     premiere: พรีเมียร์
-    googleCalendar: เพิ่มไปยัง Google ปฏิทิน
+    googleCalendar: เพิ่มไปยังปฏิทินกูเกิล
     totalTLs: จำนวนการแปลแชท
     totalSongs: เพลงที่ถูกบันทึกเวลาไว้ทั้งหมด
-    tlPresence: นักแปลที่ใช้งานใน 30 นาทีที่ผ่านมา
+    tlPresence: นักแปลที่แปลใน 30 นาทีที่ผ่านมา
     uncertainPlaceholder: เวลาเริ่มยังไม่ถูกยืนยันอย่างเป็นทางการ เวลาเริ่มจริงอาจแตกต่าง
     typeScheduledYT: สตรีมที่ถูกกำหนดเวลาไว้
     typeExternalStream: สตรีมภายนอก
     typeEventPlaceholder: กิจกรรมที่ถูกกำหนดเวลาไว้
     openClient: เปิดไคลเอนต์การแปล
     openScriptEditor: เปิดตัวแก้ไขสคริปต์
-    popoutChat: ป๊อปเอาท์แชท YouTube
+    popoutChat: ป๊อปอัปแชทของยูทูป
     uploadScript: อัปโหลดสคริปต์การแปล
   videoDescription:
     description: คำอธิบาย
@@ -68,7 +68,7 @@ component:
     showLess: แสดงน้อยลง
     showMore: แสดงมากขึ้น
   watch:
-    streamingFor: สตรีมมาแล้ว {0}
+    streamingFor: สตรีมของ {0} มาแล้ว
     nextUpInMugen: ถัดไป
     Comments:
       title: ความคิดเห็น
@@ -87,10 +87,18 @@ component:
   relatedVideo:
     clipsLabel: คลิป
     simulcastsLabel: ถ่ายทอดสดร่วม
+    simulcasts:
+      linkToMultiview:
+        tooltip: เปิดสตรีมคู่ขนานทั้งหมดด้วย Multiview
+        error:
+          layoutBuildFailure: >-
+            มีข้อผิดพลาดขณะสร้างลิ้งก์ Multiview โปรดแจ้งข้อผิดพลาดนี้บน GitHub หรือ Discord
+          noDefaultLayout: Multiview ไม่มีเลย์เอาต์สำหรับ {videoCount} วิดิโอ
+          noSimulcasts: ไม่มีสตรีมคู่ขนานสำหรับวิดิโอนี้
     refersLabel: refers
     sourcesLabel: แหล่งที่มา
     songsLabel: เพลง
-    recommendationsLabel: ที่แนะนำ
+    recommendationsLabel: แนะนำ
     sameSourceClips: จากสตรีมเดียวกัน
   paginateLoad:
     newer: ใหม่กว่า
@@ -127,7 +135,7 @@ component:
   reportDialog:
     title: รายงาน
     collabing: >-
-      ช่องนี้อาจจะกำลังโคแลปกับสมาชิก {org} หรือรายการโปรดของคุณ คุณสามารถปิดการใช้งานคุณสมบัตินี้ผ่านการตั้งค่า
+      ช่องนี้อาจจะกำลังสตรีมร่วมกับสมาชิกจาก {org} หรือช่องโปรดของคุณ คุณสามารถปิดการใช้งานบริการนี้ผ่านการตั้งค่า
     comments: Holodex ควรทำอย่างไร?
     success: ส่งรายงานแล้ว ขอบคุณ!
     consider: แนะนำให้ใช้ตัวกรองและยกเลิกการรายงานนี้
@@ -137,12 +145,12 @@ component:
       - ละเมิดสัญญาอนุญาตทำงานดัดแปลงของสังกัด หรือ ไม่เหมาะสม
       - อื่น ๆ
       - หัวข้อวิดิโอไม่ถูกต้อง
-      - การกล่าวถึงช่องไม่ถูกต้อง
+      - ช่องไม่ถูกต้อง
       - '{0} นี้ไม่ได้เป็นของ {1}'
   thirdpartycookie:
     explanation: >-
       เนื่องจากการทำงานของอินเตอร์เน็ตเบราว์เซอร์ของคุณ เบราว์เซอร์บางตัวที่มีนโยบาย <b>คุกกี้ของบุคคลที่สาม</b> ที่เข้มงวดหรือมีการบล็อกคุกกี้จาก <kbd>YouTube.com</kbd> ทำให้การเข้า/ใช้งานแชทใน Youtube เป็นเรื่องยาก <br /><br /> คุณสามารถแก้ไขได้โดยอนุญาต(whitelist) <kbd>YouTube.com</kbd> ในการบล็อกคุกกี้ของบุคคลที่สาม หรือลดระดับความปลอดภัย/ความเป็นส่วนตัวของคุกกี้สำหรับ <kbd>Holodex.net</kbd> .<br /> เราจะแสดงรายการเว็บไซต์ต่างๆ ที่ให้ข้อมูลเพิ่มเติมเกี่ยวกับเรื่องนี้
-    dialogTitle: กำลังใช้แชท Youtube บน Holodex
+    dialogTitle: เบราว์เซอร์ของคุณมีนโยบาย <b>คุกกี้มือที่สาม</b> ที่เข้มงวดหรือมีการบล็อกคุกกี้จาก <kbd>YouTube.com</kbd> ทำให้การเข้า/ใช้งานแชทใน Youtube เป็นเรื่องยาก <br /><br /> คุณสามารถแก้ไขได้โดยอนุญาต(whitelist) <kbd>YouTube.com</kbd> ในตัวบล็อกคุกกี้มือที่สาม หรือลดระดับความปลอดภัย/ความเป็นส่วนตัวของคุกกี้สำหรับ <kbd>Holodex.net</kbd> .<br /> เราแสดงรายการเว็บไซต์ต่างๆ ที่ให้ข้อมูลช่วยเหลือเพิ่มเติมเกี่ยวกับเรื่องนี้
     alertText: >-
       การตั้งค่าความเป็นส่วนตัวของเบราว์เซอร์ทำให้ไม่สามารถลงชื่อเข้าใช้แชท Youtube ได้ คลิกที่นี่สำหรับข้อมูลเพิ่มเติม
     neverShowAgain: ไม่แสดงการเตือนอีก
@@ -162,7 +170,7 @@ component:
     streamPageBtn: หน้าสตรีม
     eventPageBtn: หน้ากิจกรรม
     scheduledEvent: ถูกกำหนดเวลาไว้
-    editorCredit: เตรียมกิจกรรมโดย Holodex editor {0}
+    editorCredit: เพิ่มกิจกรรมโดย Holodex editor {0}
     creditTitleText: 'เครดิต:'
 views:
   channel:
@@ -181,7 +189,7 @@ views:
       org: สังกัด
     tabs:
       Vtuber: วีทูบเบอร์
-      Subber: นักแปล
+      Subber: สมาชิก
       Favorites: รายการโปรด
       Blocked: ถูกบล็อก
     favoritesAreEmpty: คุณไม่มีรายการโปรด!
@@ -516,7 +524,7 @@ views:
     langPick: ภาษา
 time:
   soon: เร็ว ๆ นี้
-  diff_future_date: เริ่ม {0} ({1})
+  diff_future_date: เริ่มใน {0} ({1})
   distance_past_date: '{0}'
 editor:
   music:
