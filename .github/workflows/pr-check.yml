@@ -22,21 +22,6 @@ jobs:
     - run: npm test
       working-directory: packages/react
 
-  lint-vue3:
-    name: Lint Vue3 codebase
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22.x'
-    - run: npm ci
-      working-directory: packages/vue3
-    - run: npm run lint
-      working-directory: packages/vue3
-
   lint:
     name: Lint codebase
     runs-on: ubuntu-latest
