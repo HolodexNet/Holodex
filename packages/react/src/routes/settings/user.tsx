@@ -38,7 +38,7 @@ export function SettingsUser() {
         <div className="flex flex-col items-center">
           <img
             className="h-24 w-24 rounded-full"
-            src={`https://api.dicebear.com/7.x/shapes/svg?seed=${user.id}`}
+            src={`https://api.dicebear.com/9.x/shapes/svg?seed=${user.id}`}
           />
           <Badge className="-mt-2">{user.role}</Badge>
         </div>
