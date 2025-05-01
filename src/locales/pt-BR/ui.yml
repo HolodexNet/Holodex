@@ -53,9 +53,7 @@ component:
     totalSongs: Total de músicas com marcações de tempo
     tlPresence: Tradutor ativo nos últimos 30 min
     uncertainPlaceholder: Horário de início não foi confirmado oficialmente, horário de início real pode variar.
-    typeScheduledYT: Transmissão Agendada
     typeExternalStream: Transmissão Externa
-    typeEventPlaceholder: Evento Agendado
     openClient: Abrir Cliente TL
     openScriptEditor: Abrir Editor de Script
     popoutChat: Abrir chat do YouTube em outra janela
@@ -651,8 +649,6 @@ channelRequest:
   EnglishNameLabel: Nome do Canal em Inglês
   Comments: Comentários
   CommentsHint: Outros comentários que você gostaria de nos dizer
-  VtuberRequirementText: >-
-    É necessário um mínimo de 20K inscritos para independentes. Vtubers que fazem parte de orgs existentes serão aceitos. <br /><br />Novas Orgs serão criadas dependendo da média de inscritos.<br /><br />Streamers da Twitch precisam ter um canal oficial no YouTube para serem indexados.
   ClipperRequirementText: >-
     Para os clippers, o canal deve ter pelo menos 2 meses, ou postar mais de 20 clipes em um mês. Fazer spam de clipes curtos todos os dias, postar somente clipes curtos &lt;1min, ou usar miniaturas desfavoráveis vão contar contra o canal. A qualidade do conteúdo também pode ser avaliada. <br /><br />É importante notar que os clippers devem marcar suas fontes via links de canal, menções de canal do @YouTube, e links em vídeo. Marcar demais (ex.: colocar o link de todos em Nijisanji) gera trabalho para os editores do Holodex, e marcar de menos (nenhum link) fará com que os clipes fiquem escondidos. <br /><br /> Holodex contém algoritmos para detectar supermarcação e corrigi-los automaticamente, mas pode nem sempre funcionar perfeitamente. Clippers que marcarem demais podem ser removidos da plataforma para reduzir o ruído.
   DeletionRequirementText: >-
