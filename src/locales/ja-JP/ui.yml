@@ -52,9 +52,7 @@ component:
     totalTLs: ライブチャット翻訳の合計
     tlPresence: 30分以内にアクティブだった翻訳者
     uncertainPlaceholder: 開始時刻は確定していません。実際の開始時刻は異なる可能性があります。
-    typeScheduledYT: 予定された配信
     typeExternalStream: 外部配信
-    typeEventPlaceholder: 予定されたイベント
     openClient: 翻訳クライアントを開く
     openScriptEditor: スクリプトエディターを開く
     popoutChat: YouTubeチャットをポップアップ
