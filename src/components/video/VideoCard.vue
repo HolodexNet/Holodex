@@ -28,6 +28,13 @@
           `background: url(${imageSrc}) center/cover;`
       "
     >
+      <PlaceholderOverlay
+        v-if="shouldShowPlaceholder"
+        width="200"
+        height="150"
+        text="text"
+        :show-only-on-hover="false"
+      />
       <!-- Image Overlay -->
       <div
         class="video-card-overlay d-flex justify-space-between flex-column"
@@ -312,6 +319,7 @@ import {
 } from "@/utils/time";
 import { mdiBroadcast, mdiTwitch, mdiTwitter } from "@mdi/js";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
+import PlaceholderOverlay from "./PlaceholderOverlay.vue";
 /* eslint-disable no-unused-vars */
 
 export default {
@@ -320,6 +328,7 @@ export default {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
         PlaceholderCard: () => import("./PlaceholderCard.vue"),
         VideoCardMenu,
+        PlaceholderOverlay,
     },
     props: {
         video: {
@@ -451,6 +460,10 @@ export default {
                         this.$t.bind(this),
                     );
             }
+        },
+        shouldShowPlaceholder() {
+            return this.isPlaceholder
+                && (this.data.status === "upcoming" && this.data.placeholderType);
         },
         hasDuration() {
             return (
