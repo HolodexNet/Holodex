@@ -36,6 +36,9 @@ component:
     edit: Editto
     premiere: Premiar
     googleCalendar: google calendar ni tuika
+    typeScheduledYT: yoyaku raibu
+    typeExternalStream: gaibu raibu
+    typeEventPlaceholder: evento
   videoDescription:
     description: setumei
   description:

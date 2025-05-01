@@ -53,9 +53,9 @@ component:
     totalSongs: Total timestamped songs
     tlPresence: Active translator in last 30 mins
     uncertainPlaceholder: Start time is not officially confirmed, actual start time may vary.
-    typeScheduledYT: Scheduled Stream
+    typeScheduledYT: Placeholder Stream
     typeExternalStream: External Stream
-    typeEventPlaceholder: Scheduled Event
+    typeEventPlaceholder: Event
     openClient: Open TL Client
     openScriptEditor: Open Script Editor
     popoutChat: Popout YouTube Chat
