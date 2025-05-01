@@ -34,6 +34,7 @@
         :height="150"
         :text="placeholderText"
         :show-only-on-hover="false"
+        :stream-type="data.placeholderType"
       />
       <!-- Image Overlay -->
       <div

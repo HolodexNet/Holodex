@@ -73,9 +73,9 @@
         <!-- Optional badge for stream type -->
         <div class="stream-badge">
           <v-icon small class="mr-1">
-            {{ placeholderIconMap[text] }}
+            {{ placeholderIconMap[streamType] }}
           </v-icon>
-          {{ streamType }}
+          {{ text }}
         </div>
       </div>
     </div>
@@ -106,15 +106,15 @@ export default {
         },
         streamType: {
             type: String,
-            default: "Scheduled Stream",
+            default: "scheduled-stream",
         },
     },
     data() {
         return {
             placeholderIconMap: {
-                Event: this.icons.mdiCalendar,
-                "Scheduled Stream": this.icons.mdiYoutube,
-                "External Stream": mdiBroadcast,
+                event: this.icons.mdiCalendar,
+                "scheduled-yt-stream": this.icons.mdiYoutube,
+                "external-stream": mdiBroadcast,
             },
         };
     },
