@@ -29,10 +29,10 @@
       "
     >
       <PlaceholderOverlay
-        v-if="shouldShowPlaceholder"
-        width="200"
-        height="150"
-        text="text"
+        v-if="shouldShowPlaceholderOverlay"
+        :width="200"
+        :height="150"
+        :text="placeholderText"
         :show-only-on-hover="false"
       />
       <!-- Image Overlay -->
@@ -90,7 +90,7 @@
             {{ formattedDuration }}
           </div>
         </div>
-        <div v-else class="d-flex flex-column align-end">
+        <div v-else-if="!shouldShowPlaceholderOverlay && isPlaceholder" class="d-flex flex-column align-end">
           <!-- (👻✅) -->
           <div class="video-duration">
             <span v-if="hasDuration" class="duration-placeholder">{{
@@ -461,9 +461,19 @@ export default {
                     );
             }
         },
-        shouldShowPlaceholder() {
+        shouldShowPlaceholderOverlay() {
             return this.isPlaceholder
                 && (this.data.status === "upcoming" && this.data.placeholderType);
+        },
+        placeholderText() {
+            if (this.data.placeholderType === "scheduled-yt-stream") {
+                return this.$t("component.videoCard.typeScheduledYT");
+            } if (this.data.placeholderType === "external-stream") {
+                return this.$t("component.videoCard.typeExternalStream");
+            } if (this.data.placeholderType === "event") {
+                return this.$t("component.videoCard.typeEventPlaceholder");
+            }
+            return "";
         },
         hasDuration() {
             return (
