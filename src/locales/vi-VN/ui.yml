@@ -16,6 +16,7 @@ component:
     subscriberCount: '{n} người đăng kí'
     subscriberNA: Số lượng người đăng kí không khả dụng
     totalViews: Tổng lượt xem
+    inactiveChannel: Kênh này không còn hoạt động.
   channelSocials:
     addToFavorites: Thêm vào mục Yêu thích
     removeFromFavorites: Xoá khỏi mục Yêu thích
@@ -48,9 +49,8 @@ component:
     googleCalendar: Thêm vào Google Calendar
     totalTLs: Tổng số live chat đã dịch
     tlPresence: Những dịch giả hoạt động trong 30 phút gần nhất
-    typeScheduledYT: Stream đã lên lịch
     typeExternalStream: Stream từ trang khác
-    typeEventPlaceholder: Sự kiện đã lên lịch
+    openClient: Mở TL Client
   videoDescription:
     description: Mô tả
   description:
@@ -70,6 +70,7 @@ component:
       org: tổ chức
       titledesc: tiêu đề/mô tả
       title: tiêu đề
+      description: mô tả
       comments: bình luận
       videourl: video url
   relatedVideo:
@@ -212,6 +213,7 @@ views:
     sort:
       newest: Mới nhất
       oldest: Cũ nhất
+      longest: Dài nhất
     type:
       all: Tất cả
       official: Chính thức
@@ -297,13 +299,16 @@ views:
         disconnectedToChat: Đã ngắt kết nối
       archiveNeedExtension: >-
         Chat từ các stream đã kết thúc sẽ không hoạt động mà không có tiện ích mở rộng {0} hoặc các tiện ích mở rộng từ nguồn thứ 3 khác.
+      hideSpoiler: Ẩn spoiler
     removeFromPlaylist: Xoá video khỏi playlist hiện tại
     saveToPlaylist: Lưu video vào playlist hiện tại
     likeOnYoutube: Thích video này trên Youtube
     uploadPanel:
       usernameChange: Thay đổi
       headerStart: Bắt đầu
+      headerEnd: Kết
       cancelBtn: Hủy bỏ
+      okBtn: OK
   favorites:
     promptForAction: >-
       Tạo một danh sách các Vtuber yêu thích để xem các clip và livestream mới nhất của họ tại trang này.
@@ -411,14 +416,56 @@ views:
       four: >-
         Sửa các lỗi của Youtube (ví dụ như không cho phép mở nhiều stream cùng một lúc, ảnh thu nhỏ không hiển thị) và nhiều hơn nữa!
   tlClient:
+    menu:
+      loadVideo: Hiện Video
+      unloadVideo: Ẩn Video
+    tlControl:
+      enterBtn: Nhập
+      prefix: Tiền tố
+      suffix: Hậu tố
+      fontColour: Màu chữ
+      outlineColour: Màu viền chữ
+      addProfile: Thêm Hồ sơ
+      removeProfile: Xóa Hồ sơ
+      showSetting: Cài đặt
+      hideSetting: Ẩn
+    addProfilePanel:
+      title: Thêm Hồ sơ mới
+      inputLabel: Tên hồ sơ
+    settingPanel:
+      title: Cài đặt
+      collabLink: Đường dẫn liên kết collab
+    loadChatPanel:
+      title: Tải Chat
+      inputLabel: Link trực tuyến
     cancelBtn: Hủy bỏ
+    okBtn: OK
   scriptEditor:
     menu:
       save: Lưu
+      clearAll: Xóa kịch bản
+      exportFile: Xuất tệp
+      importFile: Nhập tệp
+      editorMode: Chế độ biên tập
     table:
       headerStart: Bắt đầu
+      headerEnd: Kết thúc
+      headerProfile: Hồ sơ
+      deleteEntry: Xóa mục
+    loadVideoPanel:
+      title: Tải Video
+      inputLabel: Link đến stream
+    importFile:
+      overwriteBtn: Ghi đè
+    editorModePanel:
+      roleWarning: Bạn không có đặc quyền
+      filterTranslator: Lọc người dịch
   tlManager:
+    headerID: Video ID
+    headerEntries: Mục
+    download: Tải xuống
     delete: Xoá
+    deleteTitle: Xóa các mục
     langPick: Ngôn ngữ
 time:
   soon: sớm
@@ -514,6 +561,7 @@ about:
       contents:
         '0': >-
           Máy chủ của chúng tôi là một máy tính 28 lõi 60GB RAM với phí duy trì $60 USD/tháng, và chúng tôi vẫn đang tiếp tục tìm cách phát triển các tính năng của hệ thống nhiều hơn nữa, vì vậy chúng tôi đã mở <a href="https://ko-fi.com/holodex">Ko-fi</a>để trang trải chi phí này. (Chúng tôi cũng có <a href="https://www.patreon.com/holodex">Patreon</a>, nhưng chúng tôi thích Ko-fi hơn.)<br /><br />Bạn cũng có thể hỗ trợ Holodex bằng cách gửi cho chúng tôi phản hồi từ người dùng và các tin nhắn khích lệ trên twitter, cung cấp bản dịch tại <a href="https://crwd.in/holodex">Crowdin</a>, cũng như đóng góp vào kho dữ liệu bài hát của chúng ta. Thậm chí timestamp những khoảnh khắc hài hước và gửi bình luận đó trên stream gốc cũng đã là một sự trợ giúp tuyệt vời rồi!
+  privacyPolicy: Chính sách về Quyền riêng tư
   gdpr: GDPR và dữ liệu của tôi
   gdprContent: >-
     Google Analytics sẽ được sử dụng cho việc theo dõi lượng truy cập trang nhằm mục đích phân tích của chúng tôi. Danh sách mục Yêu thích của bạn sẽ được liên kết với tên người dùng hoặc ID tài khoản mạng xã hội mà bạn dùng để đăng nhập. Dữ liệu này có thể bao gồm email của bạn (nếu đăng nhập bằng Google), Discord ID, hoặc tên đăng nhập Twitter tuỳ thuộc vào cách thức đăng nhập của bạn.
@@ -540,4 +588,12 @@ about:
     description: >-
       Kéo các bookmarklet bên dưới lên thanh dấu trang của bạn để mở stream từ trang Youtube bằng Holodex một cách dễ dàng:
 channelRequest:
+  RequestType: 'Loại Yêu Cầu'
+  Types:
+    AddVtuber: Thêm một Vtuber ▶️ vào Holodex để theo dõi kênh và các clip.
+    DeleteChannel: Xoá kênh của tôi
+  DirectContactLabel: Cách thức liên lạc (không bắt buộc)
+  TwitterHandle: Tên tài khoản Twitter của kênh (không bắt buộc)
+  ChannelLanguageLabel: Ngôn ngữ chính của kênh
+  EnglishNameLabel: Kênh tên Tiếng Anh
   Comments: Bình luận
