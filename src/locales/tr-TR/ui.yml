@@ -22,7 +22,7 @@ component:
     removeFromFavorites: Favorilerden çıkar
     unblock: Kanal engelini kaldır
     block: Kanal içeriğini Holodex genelinde engelle
-    blocked: Engellenenler
+    blocked: Engellendi
   mainNav:
     home: Ana Sayfa
     favorites: Favoriler
@@ -50,9 +50,7 @@ component:
     totalTLs: Toplam canlı sohbet çevirileri
     tlPresence: Son 30 dakikada aktif çevirmen
     uncertainPlaceholder: Başlangıç zamanı resmi değildir, asıl başlangıç zamanı değişebilir.
-    typeScheduledYT: Planlı Yayın
     typeExternalStream: Harici Yayın
-    typeEventPlaceholder: Planlı Etkinlik
     openClient: Çeviri İstrmcisini Aç
     openScriptEditor: Senaryo Editörünü Aç
     popoutChat: YouTube Sohbetini Ayrı Pencerede Aç
