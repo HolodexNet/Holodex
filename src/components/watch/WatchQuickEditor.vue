@@ -161,6 +161,7 @@
         <v-autocomplete
           v-model="newTopic"
           :items="topics"
+          :filter="topicFilter"
           inline
           hide-details
           label="Topic (leave empty to unset)"
@@ -399,6 +400,10 @@ export default {
                 this.showSuccess(`Updated Topic to ${this.newTopic}`);
             });
             this.topic = this.newTopic;
+        },
+        topicFilter(_, queryText, itemText) { // same as default filter, just also converting whitespace to underscore
+            return itemText.toString().replace(/\s+/g, "_").toLocaleLowerCase()
+                .indexOf(queryText.toString().replace(/\s+/g, "_").toLocaleLowerCase()) > -1;
         },
     },
 };

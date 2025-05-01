@@ -4,6 +4,13 @@
 
 - If you are a **React UI engineer/designer** and would like to contribute to Holodex v3 React development, drop by our discord!
 
+### 2.40.2 Holodex [*March 4th, 2025*]
+
+- Made placeholders look a bit different
+- Added duration to watch page (thanks lbmaian)
+- Bugfixes about Autocomplete (thanks lbmaian)
+
+
 ### 2.40.1 Holodex [*March 4th, 2025*]
 
 - Fix black screen issue on very old browsers

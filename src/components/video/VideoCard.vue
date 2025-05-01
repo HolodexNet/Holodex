@@ -6,6 +6,7 @@
       'video-card-active': active,
       'video-card-horizontal': horizontal,
       'video-card-list': denseList,
+      'video-card-multiview-active': inMultiViewActiveVideos,
       'flex-column': !horizontal && !denseList,
     }"
     :target="redirectMode ? '_blank' : ''"
@@ -27,6 +28,14 @@
           `background: url(${imageSrc}) center/cover;`
       "
     >
+      <PlaceholderOverlay
+        v-if="shouldShowPlaceholderOverlay"
+        :width="200"
+        :height="150"
+        :text="placeholderText"
+        :show-only-on-hover="false"
+        :stream-type="data.placeholderType"
+      />
       <!-- Image Overlay -->
       <div
         class="video-card-overlay d-flex justify-space-between flex-column"
@@ -56,8 +65,8 @@
         <!-- Video duration/music indicator (👻❌) -->
         <div v-if="!isPlaceholder" class="d-flex flex-column align-end">
           <!-- Show music icon if songs exist, and song count if there's multiple -->
-          <div 
-            v-if="data.songcount" 
+          <div
+            v-if="data.songcount"
             class="video-duration d-flex align-center"
             :title="songIconTitle"
           >
@@ -82,7 +91,7 @@
             {{ formattedDuration }}
           </div>
         </div>
-        <div v-else class="d-flex flex-column align-end">
+        <div v-else-if="!shouldShowPlaceholderOverlay && isPlaceholder" class="d-flex flex-column align-end">
           <!-- (👻✅) -->
           <div class="video-duration">
             <span v-if="hasDuration" class="duration-placeholder">{{
@@ -311,6 +320,7 @@ import {
 } from "@/utils/time";
 import { mdiBroadcast, mdiTwitch, mdiTwitter } from "@mdi/js";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
+import PlaceholderOverlay from "./PlaceholderOverlay.vue";
 /* eslint-disable no-unused-vars */
 
 export default {
@@ -319,6 +329,7 @@ export default {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
         PlaceholderCard: () => import("./PlaceholderCard.vue"),
         VideoCardMenu,
+        PlaceholderOverlay,
     },
     props: {
         video: {
@@ -360,7 +371,7 @@ export default {
             type: Number,
             default: 1,
         },
-        active: {
+        active: { // TODO: seems always false (see VideoCardList.activeId); 'video-card-active' class is instead toggled via VirtualVideoCardList.activeIndex/checkActive
             required: false,
             type: Boolean,
             default: false,
@@ -379,6 +390,10 @@ export default {
             default: null,
         },
         denseList: {
+            type: Boolean,
+            required: false,
+        },
+        inMultiViewSelector: {
             type: Boolean,
             required: false,
         },
@@ -446,6 +461,20 @@ export default {
                         this.$t.bind(this),
                     );
             }
+        },
+        shouldShowPlaceholderOverlay() {
+            return this.isPlaceholder
+                && (this.data.status === "upcoming" && this.data.placeholderType);
+        },
+        placeholderText() {
+            if (this.data.placeholderType === "scheduled-yt-stream") {
+                return this.$t("component.videoCard.typeScheduledYT");
+            } if (this.data.placeholderType === "external-stream") {
+                return this.$t("component.videoCard.typeExternalStream");
+            } if (this.data.placeholderType === "event") {
+                return this.$t("component.videoCard.typeEventPlaceholder");
+            }
+            return "";
         },
         hasDuration() {
             return (
@@ -549,6 +578,11 @@ export default {
         },
         twitterPlaceholder() {
             return this.data.link?.includes("/i/spaces/");
+        },
+        inMultiViewActiveVideos() {
+            if (!this.inMultiViewSelector) return false;
+            const { id } = this.data;
+            return this.$store.getters["multiview/activeVideos"].some((video) => video.id === id);
         },
     },
     // created() {
@@ -887,6 +921,12 @@ export default {
   left: -1px;
   opacity: 0.15;
   border-radius: 4px;
+}
+
+.video-card-multiview-active .video-thumbnail,
+.video-card-multiview-active .video-card-title {
+  filter: grayscale(1);
+  opacity: 0.3;
 }
 
 .video-card-subtitle {

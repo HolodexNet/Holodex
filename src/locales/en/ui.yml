@@ -53,9 +53,9 @@ component:
     totalSongs: Total timestamped songs
     tlPresence: Active translator in last 30 mins
     uncertainPlaceholder: Start time is not officially confirmed, actual start time may vary.
-    typeScheduledYT: Scheduled Stream
+    typeScheduledYT: Placeholder Stream
     typeExternalStream: External Stream
-    typeEventPlaceholder: Scheduled Event
+    typeEventPlaceholder: Event
     openClient: Open TL Client
     openScriptEditor: Open Script Editor
     popoutChat: Popout YouTube Chat
@@ -750,7 +750,7 @@ channelRequest:
   Comments: Comments
   CommentsHint: Other comments you'd like to tell us.
   VtuberRequirementText: >-
-    A minimum of 20K subscribers is required for independents. Vtubers as part
+    A minimum of 15K subscribers is required for independents. Vtubers as part
     of existing orgs will be accepted. <br /><br />New Orgs will be created
     depending on the average subscriber count.<br /><br />Twitch streamers must
     have an official YouTube channel to be indexed.<br /><br /><strong>Any 
