@@ -53,9 +53,7 @@ component:
     totalSongs: 已标时间戳的歌曲
     tlPresence: 过去30分钟内有实时翻译
     uncertainPlaceholder: 开始时间未正式说明，实际开始时间可能有所不同。
-    typeScheduledYT: 直播预约
     typeExternalStream: 外部直播
-    typeEventPlaceholder: 预定活动
     openClient: 开启翻译客户端
     openScriptEditor: 开启脚本编辑器
     popoutChat: 弹出 YouTube 聊天
@@ -84,7 +82,15 @@ component:
       videourl: 视频链接
   relatedVideo:
     clipsLabel: 剪辑
-    simulcastsLabel: 同时联播
+    simulcastsLabel: 同步直播
+    simulcasts:
+      linkToMultiview:
+        tooltip: 该视频没有同步直播
+        error:
+          layoutBuildFailure: >-
+            多视图链接创建失败，请通过GitHub或Discord反馈Bug。
+          noDefaultLayout: 多视图暂无适用于 {videoCount} 个视频的布局。
+          noSimulcasts: 在多视图中打开所有同步直播。
     refersLabel: 引用
     sourcesLabel: 来源
     songsLabel: 歌曲
@@ -655,7 +661,7 @@ channelRequest:
   Comments: 备注
   CommentsHint: 还有其他想告诉我们
   VtuberRequirementText: >-
-    个人势Vtuber最低要求2万名订阅者以上，但如果这个Vtuber所属团队已在Holodex名单内，则不需要达到以上要求。<br /><br />至于是否添加新的团体进Holodex名单内，将取决于他们的平均订阅数量。<br /><br />Twitch主播必须有YouTube频道才可以加入名单中。
+    个人势Vtuber需拥有至少15,000名订阅者方可被收录。若所隶属的事务所已被Holodex收录，其旗下Vtuber则不受此限制。<br /><br />事务所是否收据将取决于成员的平均订阅数。<br /><br />Twitch主播需拥有官方的YouTube频道才可被收录。
   ClipperRequirementText: >-
     翻译剪辑频道的审核标准如下：该频道至少需要有两个月的视频上传历史并且定时更新频道内容或在一个月内发布20多个剪辑。此外管理员也会依照该频道内容的质量来决定是否通过审核—Holodex不接受每天洗版式的大量更新短视频，或是上传的翻译剪辑内容几乎全数都低于&lt;一分钟的频道，使用钓鱼/误导式缩图的翻译剪辑片段也包含在不通过的标准之内。<br /><br />另外一点要注意的是，剪辑者应于视频描述字段填写「实况/视频出处」、「@YouTube频道」或是「Vtuber频道连接」来注明视频来源，过度标注（例如在描述字段填写一堆彩虹社成员连接）会增加Holodex编辑者群们的负担，而没有标注（未标明来源）将会导致Holodex后台无法判定其内容使否为精华剪辑，进而导致该视频不会出现于Holodex页面上。<br /><br />Holodex数据库虽然有标注的自动错误修正机制，但此机制运作并不稳定，过度标注可能会导致管理员们被迫于Holodex上移除其频道内容以避免相关问题重复出现。
   DeletionRequirementText: >-
