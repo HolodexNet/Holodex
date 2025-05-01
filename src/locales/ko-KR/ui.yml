@@ -1,6 +1,6 @@
 component:
   apiError:
-    title: 고멘나소리!
+    title: Gomenasorry!
     textBeforeTwitter: '콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 '
     textAfterTwitter: ' 을 확인하거나'
     aboutPage: 정보 페이지
@@ -53,9 +53,7 @@ component:
     totalSongs: 타임스탬프가 있는 노래
     tlPresence: 최근 30분간 활동 중인 번역가
     uncertainPlaceholder: 시작 시간은 아직 공식적으로 확인되지 않았으며, 실제로는 다를 수 있습니다.
-    typeScheduledYT: 예정된 방송
     typeExternalStream: 외부 방송
-    typeEventPlaceholder: 예정된 이벤트
     openClient: 번역 클라이언트 열기
     openScriptEditor: 스크립트 편집기 열기
     popoutChat: YouTube 채팅 팝업
@@ -85,6 +83,14 @@ component:
   relatedVideo:
     clipsLabel: 클립
     simulcastsLabel: 동시 방송
+    simulcasts:
+      linkToMultiview:
+        tooltip: 모든 합방을 멀티뷰로 열기
+        error:
+          layoutBuildFailure: >-
+            멀티뷰 링크를 생성하던 중 오류가 발생했습니다. GitHub 또는 Discord를 통해서 버그 리포트를 제출해주세요.
+          noDefaultLayout: 멀티뷰는 {videoCount}개 영상에 대한 레이아웃을 가지고 있지 않습니다.
+          noSimulcasts: 이 영상에는 합방이 없습니다.
     refersLabel: 관련 영상
     sourcesLabel: 출처
     songsLabel: 노래
@@ -651,8 +657,6 @@ channelRequest:
   EnglishNameLabel: 영문 채널명
   Comments: 설명
   CommentsHint: 저희에게 추가적으로 말하고 싶은 점이 있다면 알려주세요.
-  VtuberRequirementText: >-
-    소속이 없는 경우 최소 2만명의 구독자가 필요합니다. 이미 존재하는 소속의 버튜버는 수락됩니다. <br /><br />새 소속은 평균 구독자 수에 따라서 생성됩니다.
   ClipperRequirementText: >-
     키리누키의 경우 최소 2개월 이상이면서 정기적으로 올리거나, 한 달에 20개 이상의 클립을 게시해야 합니다. 짧은 클립을 매일 도배하거나, 1분 미만의 짧은 클립만 올리거나, 악의적인 썸네일을 사용하는 경우 채널 검토 시에 영향을 미칠 수 있습니다. 콘텐츠 품질도 평가될 수 있습니다. <br /><br />키리누키는 채널 링크, @YouTube 채널 멘션 및 원본 영상 링크를 통해 출처를 표시해야 합니다. 과잉 출처 (예: 모든 Nijisanji 멤버 링크 넣기) Holodex 편집자에게 작업이 생성되고, 출처가 없으면 (링크 없음) 클립이 숨겨집니다. <br /><br /> Holodex에는 과잉 출처를 감지하여 자동으로 수정하는 알고리즘이 포함되어 있지만, 항상 완벽하게 작동하는 것은 아닙니다. 너무 자주 과잉 출처를 다는 키리누키의 경우 혼란을 방지하기 위해서 플랫폼에서 제거될 수 있습니다.
   DeletionRequirementText: >-
