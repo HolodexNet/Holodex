@@ -48,9 +48,7 @@ component:
     googleCalendar: Agregar al Calendario de Google
     totalTLs: Total de traductores en el chat en vivo
     tlPresence: Traductor activo en los últimos 30 min
-    typeScheduledYT: Directo programado
     typeExternalStream: Directo externo
-    typeEventPlaceholder: Evento programado
     openClient: Abrir el cliente de traducción
     openScriptEditor: Abrir el editor de scripts
     uploadScript: Subir el guión de traducción
