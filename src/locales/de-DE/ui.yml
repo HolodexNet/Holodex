@@ -53,9 +53,7 @@ component:
     totalSongs: Songs mit Zeitstempeln
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
     uncertainPlaceholder: Diese Startzeit ist nicht offiziell bestätigt, die tatsächliche Startzeit kann variieren.
-    typeScheduledYT: Geplanter Stream
     typeExternalStream: Externer Stream
-    typeEventPlaceholder: Geplantes Event
     openClient: TL-Client öffnen
     openScriptEditor: Skript-Editor öffnen
     popoutChat: YouTube-Chat rauslösen
