@@ -302,6 +302,13 @@ views:
     hideMissingStreams: Hide Missing Streams
     ignoredTopicsLabel: Ignored Topics
     ignoredTopicsMsg: Hide videos with these topics from the Home and Favorites pages
+    YTEmbedVariantLabel: YouTube Player
+    YTEmbedVariantMsg: Change the player used to play YouTube videos. Might help alleviate playback throttling issues.
+    YTEmbedVariant:
+      - Ask every time
+      - YouTube default
+      - Privacy Enhanced Mode
+    YTEmbedVariantPromptMsg: Confirm to use default YouTube player, or cancel to use Privacy Enhanced Mode
     theme: Theme
     moreSettings: More Settings
   app:
