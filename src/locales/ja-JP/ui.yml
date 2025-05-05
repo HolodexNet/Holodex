@@ -190,6 +190,7 @@ views:
       all: すべて
       official: アーカイブ
       subber: 切り抜き
+      collabs: コラボ
   library:
     savedVideosTitle: 保存した動画
     createYtPlaylistButton: Youtubeの再生リストを作成（{0}）
