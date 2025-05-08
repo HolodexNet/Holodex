@@ -13,7 +13,7 @@
           <v-icon v-if="shouldShowYtIcon(content, l)" :small="!isXSmall(content, l)" :x-small="isXSmall(content, l)">
             {{ icons.ytChat }}
           </v-icon>
-          <span v-if="shouldShowEmoji(content, l)" class="text-caption">💬</span>
+          <span v-if="shouldShowEmoji(content, l)" class="text-caption" title="Chat+TL">💬</span>
         </template>
       </div>
     </template>
