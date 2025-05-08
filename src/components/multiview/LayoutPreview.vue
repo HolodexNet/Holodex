@@ -23,6 +23,8 @@
 <script lang="ts">
 import { mapState } from 'vuex';
 
+const MIN_DOUBLE_ICON_HEIGHT = 8;
+const MIN_XSMALL_ICON_HEIGHT = 5;
 export default {
     name: "LayoutPreview",
     props: {
@@ -59,16 +61,16 @@ export default {
             return content && content[l.i] && content[l.i].type === "chat";
         },
         isXSmall(content, l) {
-            if (l.h < 7) {
-                return false;
+            if (l.h < MIN_DOUBLE_ICON_HEIGHT) {
+                return l.h < MIN_XSMALL_ICON_HEIGHT;
             }
             if (this.showBothIcons(content, l)) {
-                return l.h < 9;
+                return l.h < (MIN_XSMALL_ICON_HEIGHT * 2);
             }
             return false;
         },
         shouldShowEmoji(content, l) {
-            return l.h < 7 && this.showBothIcons(content, l);
+            return l.h < MIN_DOUBLE_ICON_HEIGHT && this.showBothIcons(content, l);
         },
         showBothIcons(content, l) {
             return content[l.i].mode === 3
@@ -77,12 +79,12 @@ export default {
         shouldShowYtIcon(content, l) {
             return content[l.i].mode === 1
                 || (content[l.i].mode === 0 && !this.defaultShowTlChat && this.defaultShowYtChat)
-                || (this.showBothIcons(content, l) && l.h >= 7);
+                || (this.showBothIcons(content, l) && l.h >= MIN_DOUBLE_ICON_HEIGHT);
         },
         shouldShowTlIcon(content, l) {
             return content[l.i].mode === 2
                 || (content[l.i].mode === 0 && this.defaultShowTlChat && !this.defaultShowYtChat)
-                || (this.showBothIcons(content, l) && l.h >= 7);
+                || (this.showBothIcons(content, l) && l.h >= MIN_DOUBLE_ICON_HEIGHT);
         },
         getStyle(l) {
             // viewport is constricted to 24 cols and 24 rows
