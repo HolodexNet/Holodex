@@ -28,6 +28,8 @@ const persistedState = {
     twUrlHistory: [],
     // Default true for iOS device
     muteOthers: isAppleDevice,
+    defaultShowYtChat: true,
+    defaultShowTlChat: false,
     syncOffsets: {},
 };
 export const state = { ...initialState, ...persistedState };
@@ -233,6 +235,18 @@ const mutations = {
             }
         });
     }, 0, { trailing: true }),
+    setDefaultYtChat(state, value) {
+        state.defaultShowYtChat = value;
+        if (!value && !state.defaultShowTlChat) {
+            state.defaultShowTlChat = true;
+        }
+    },
+    setDefaultTlChat(state, value) {
+        state.defaultShowTlChat = value;
+        if (!value && !state.defaultShowYtChat) {
+            state.defaultShowYtChat = true;
+        }
+    },
     setVideoData(state, videos) {
         if (!videos) return;
         videos.forEach((video) => {
