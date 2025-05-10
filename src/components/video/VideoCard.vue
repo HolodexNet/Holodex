@@ -295,7 +295,7 @@
       <slot name="action" />
     </v-list-item-action>
 
-    <!-- 👻👻👻 Placeholder MODAL 👻👻👻 -->
+    <!-- Placeholder MODAL -->
     <placeholder-card
       v-if="placeholderOpen"
       v-model="placeholderOpen"

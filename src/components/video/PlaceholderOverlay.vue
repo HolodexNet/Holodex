@@ -6,11 +6,11 @@
     <div class="placeholder-content">
       <svg :viewBox="`0 0 400 225`" xmlns="http://www.w3.org/2000/svg" class="placeholder-svg">
         <g
-          stroke-width="12"
-          stroke="var(--v-background-darken3)"
           class="placeholder-line"
+          stroke="var(--v-background-darken3)"
           stroke-dasharray="0,20"
           stroke-linecap="round"
+          stroke-width="12"
         >
           <line
             :y1="225 * 2 / 10"
