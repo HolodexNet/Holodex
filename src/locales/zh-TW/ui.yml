@@ -54,6 +54,7 @@ component:
     tlPresence: 過去半小時內有即時翻譯
     uncertainPlaceholder: 尚未有正式的開始時間，實際的開始時間可能會有誤差。
     typeExternalStream: 外部實況
+    typeEventPlaceholder: 活動
     openClient: 開啟翻譯客戶端
     openScriptEditor: 開啟文本編輯器
     popoutChat: 彈出YouTube聊天室視窗
