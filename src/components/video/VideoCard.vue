@@ -32,9 +32,7 @@
         v-if="shouldShowPlaceholderOverlay"
         :width="200"
         :height="150"
-        :text="placeholderText"
         :show-only-on-hover="false"
-        :stream-type="data.placeholderType"
       />
       <!-- Image Overlay -->
       <div
@@ -91,7 +89,7 @@
             {{ formattedDuration }}
           </div>
         </div>
-        <div v-else-if="!shouldShowPlaceholderOverlay && isPlaceholder" class="d-flex flex-column align-end">
+        <div v-else-if="isPlaceholder" class="d-flex flex-column align-end">
           <!-- (👻✅) -->
           <div class="video-duration">
             <span v-if="hasDuration" class="duration-placeholder">{{
