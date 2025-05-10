@@ -53,7 +53,7 @@ component:
     totalSongs: Total timestamped songs
     tlPresence: Active translator in last 30 mins
     uncertainPlaceholder: Start time is not officially confirmed, actual start time may vary.
-    typeScheduledYT: Placeholder Stream
+    typeScheduledYT: Draft Stream
     typeExternalStream: External Stream
     typeEventPlaceholder: Event
     openClient: Open TL Client
