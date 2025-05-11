@@ -124,16 +124,17 @@ export default {
             type: Number,
             default: 0,
         },
-        tl: {
-            type: Boolean,
+        mode: {
+            // 0: auto, 1: yt, 2: tl, 3: both
+            type: Number,
             required: false,
-            default: false,
+            default: 0,
         },
     },
     data() {
         return {
-            showTlChat: this.tl,
-            showYtChat: !this.tl,
+            showTlChat: this.mode === 3 || this.mode === 2 || (this.mode === 0 && this.$store.state.multiview.defaultShowTlChat),
+            showYtChat: this.mode === 3 || this.mode === 1 || (this.mode === 0 && this.$store.state.multiview.defaultShowYtChat),
             scale: 1,
         };
     },
@@ -215,10 +216,20 @@ export default {
         toggleYtChat() {
             this.showYtChat = !this.showYtChat;
             if (!this.showYtChat) this.showTlChat = true;
+            this.$store.commit("multiview/setLayoutContentWithKey", {
+                id: this.item.i,
+                key: "mode",
+                value: (this.showYtChat ? 1 : 0) + (this.showTlChat ? 2 : 0),
+            });
         },
         toggleTlChat() {
             this.showTlChat = !this.showTlChat;
             if (!this.showTlChat) this.showYtChat = true;
+            this.$store.commit("multiview/setLayoutContentWithKey", {
+                id: this.item.i,
+                key: "mode",
+                value: (this.showYtChat ? 1 : 0) + (this.showTlChat ? 2 : 0),
+            });
         },
         handleVideoUpdate(update) {
             const v = this.layoutContent[this.videoCellId].video;
