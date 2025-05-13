@@ -194,7 +194,7 @@ export const StyledExternalLink = ({
         `
         flex grow basis-1 items-center gap-2 rounded-lg border-2 px-4
         py-2 transition-all duration-300 ease-in-out
-        focus:outline-none focus:ring-2 focus:ring-base-8 focus:ring-offset-2
+        focus:outline-hidden focus:ring-2 focus:ring-base-8 focus:ring-offset-2
       `,
         className,
       )}

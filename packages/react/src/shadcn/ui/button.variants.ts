@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority"
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium transition focus-visible:outline-none focus-visible:ring-1 active:scale-[97%] disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center rounded-md text-sm font-medium transition focus-visible:outline-hidden focus-visible:ring-1 active:scale-[97%] disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -27,7 +27,7 @@ export const buttonVariants = cva(
         destructive:
           "bg-red-9 text-base-12 hover:bg-redA-10 focus-visible:ring-red-7 active:bg-redA-11",
         simple:
-          "rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2",
+          "rounded-full outline-hidden ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2",
       },
       size: {
         default: "h-8 gap-2 px-3.5 py-2", // also counts as "md"

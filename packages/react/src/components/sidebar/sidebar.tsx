@@ -70,7 +70,7 @@ export function Sidebar() {
       id="sidebar"
       ref={ref}
     >
-      <div className="flex min-h-[100dvh] flex-col bg-base-2">
+      <div className="flex min-h-dvh flex-col bg-base-2">
         <div className="flex items-center justify-end gap-2 px-4 pb-2 pt-4">
           <Link
             to="/"
@@ -119,7 +119,7 @@ export function Sidebar() {
               transition-opacity duration-300 hover:bg-base-3`,
               {
                 "visible opacity-70": fs,
-                "opacity-0 group-hover/sidebar:opacity-50 hover:!opacity-80":
+                "opacity-0 group-hover/sidebar:opacity-50 hover:opacity-80!":
                   !fs,
               },
             )}

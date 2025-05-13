@@ -102,7 +102,7 @@ export function SettingsContentPreferences() {
       <SettingsItem label={t("views.settings.blockedChannels")} fullWidth>
         <div className="flex w-full justify-center">
           {blockedChannels.length ? (
-            <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))]">
+            <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))]">
               {blockedChannels.map((channel) => (
                 <ChannelCard
                   variant="card"

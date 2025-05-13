@@ -27,7 +27,7 @@ export function QueryBadge({
           ? queryItem.value
           : queryItem.text}
       <button
-        className="ml-1 rounded-full outline-none ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
+        className="ml-1 rounded-full outline-hidden ring-offset-base-2 focus:ring-2 focus:ring-primary-9 focus:ring-offset-2"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             onRemoveItem();

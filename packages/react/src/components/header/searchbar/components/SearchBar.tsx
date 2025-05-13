@@ -141,7 +141,7 @@ export function SearchBar({
                 onBlur={() => setOpen(false)}
                 onFocus={() => setOpen(true)}
                 placeholder={t("component.search.searchLabel")}
-                className="ml-2 flex-1 bg-transparent outline-none placeholder:text-base-8"
+                className="ml-2 flex-1 bg-transparent outline-hidden placeholder:text-base-8"
               />
               <div className="ml-auto flex flex-row opacity-0 group-focus-within:opacity-100 ">
                 {query.length > 0 && (
@@ -179,7 +179,7 @@ export function SearchBar({
           >
             <CommandList>
               <div
-                className="min-w-80 rounded-md border border-base bg-base-2 text-base-11 outline-none animate-in fade-in-20 slide-in-from-top-2  sm:left-auto sm:w-full"
+                className="min-w-80 rounded-md border border-base bg-base-2 text-base-11 outline-hidden animate-in fade-in-20 slide-in-from-top-2  sm:left-auto sm:w-full"
                 style={{
                   boxShadow:
                     "0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)",

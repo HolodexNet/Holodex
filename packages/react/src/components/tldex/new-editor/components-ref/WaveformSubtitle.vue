@@ -1,5 +1,5 @@
 <template>
-  <div class="wf-sub-container pointer-events-none hover:ring">
+  <div class="wf-sub-container pointer-events-none hover:ring-3">
     <div
       class="handle left-0 top-0 cursor-col-resize"
       @mousedown.stop="$emit('dragHandle', true)"

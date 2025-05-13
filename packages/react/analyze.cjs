@@ -1,3 +1,4 @@
+// @ts-ignore
 // Color Usage Analyzer
 // This script will scan your codebase and report on color usage patterns
 

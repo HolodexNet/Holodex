@@ -123,13 +123,13 @@ export const OrgReranker = ({
         <h3 className="mb-2 text-center text-lg font-semibold text-base-11">
           Other Organizations
         </h3>
-        <div className="flex h-9 w-full rounded-md rounded-b-none border border-base bg-transparent px-3 text-sm shadow-sm transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-primaryA-8">
+        <div className="flex h-9 w-full rounded-md rounded-b-none border border-base bg-transparent px-3 text-sm shadow-xs transition-colors focus-within:outline-hidden focus-within:ring-2 focus-within:ring-primaryA-8">
           <input
             type="text"
             placeholder="Filter organizations..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full border-0 border-none border-transparent bg-transparent outline-none placeholder:text-base-8"
+            className="w-full border-0 border-none border-transparent bg-transparent outline-hidden placeholder:text-base-8"
           />
         </div>
         <ScrollArea className="h-60 rounded-md rounded-b rounded-t-none border border-base-5 px-1 md:h-80">

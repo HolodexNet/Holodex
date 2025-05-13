@@ -15,7 +15,7 @@ export function FavoritedChannels() {
       <div className="h-full w-full p-4 md:px-8">
         <VirtuosoGrid
           useWindowScroll
-          listClassName="w-full grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-x-4 gap-y-6"
+          listClassName="w-full grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-4 gap-y-6"
           data={favChannels?.flat() ?? []}
           itemContent={(_, channel) => (
             <MemoizedChannelCard

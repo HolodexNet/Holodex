@@ -60,7 +60,7 @@ export function Channel() {
             tab !== "music" && navigate(`/channel/${channel?.id}/${tab}`)
           }
         >
-          <div className="sticky top-0 z-20 flex flex-col gap-2 border-b-[1px] border-b-base-5 bg-base-3 pt-4 shadow-lg md:gap-6">
+          <div className="sticky top-0 z-20 flex flex-col gap-2 border-b border-b-base-5 bg-base-3 pt-4 shadow-lg md:gap-6">
             <div className="container flex items-start gap-4 px-4 max-sm:flex-col md:items-center md:px-8">
               <div className="flex items-center gap-4">
                 <ChannelImg

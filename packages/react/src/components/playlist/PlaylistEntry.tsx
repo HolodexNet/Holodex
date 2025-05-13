@@ -21,7 +21,7 @@ export default function PlaylistEntry({
   const user = useAtomValue(userAtom);
 
   return (
-    <div className="flex items-center gap-4 rounded-lg bg-base-2 p-4 shadow-sm max-md:flex-col">
+    <div className="flex items-center gap-4 rounded-lg bg-base-2 p-4 shadow-xs max-md:flex-col">
       <div className="aspect-video shrink-0 max-md:w-full md:h-24">
         {video_ids && video_ids.length > 0 ? (
           <VideoThumbnail

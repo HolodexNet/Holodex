@@ -1,13 +1,15 @@
 .video-menu-item {
-  @apply flex gap-2 hover:text-base-12 text-base-11
+  gap: calc(var(--spacing) * 2) /* 0.5rem = 8px */;
+  display: flex;
+  /* TODO: there was some text colors here */
 }
 
 .video-menu-item div:first-child,
 .video-menu-item svg:first-child {
-  @apply text-base-9
+  /* TODO: there was some text colors here */
 }
 
 .video-menu-item:hover div:first-child,
 .video-menu-item:hover svg:first-child {
-  @apply text-base-11
+  /* TODO: there was some text colors here */
 }
