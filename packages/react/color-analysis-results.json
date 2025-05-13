@@ -1,0 +1,834 @@
+{
+  "totalFiles": 290,
+  "filesWithColors": 107,
+  "colorUsage": {
+    "primary": {
+      "1": 1,
+      "2": 0,
+      "3": 1,
+      "4": 11,
+      "5": 5,
+      "6": 4,
+      "7": 17,
+      "8": 6,
+      "9": 16,
+      "10": 10,
+      "11": 20,
+      "12": 23
+    },
+    "primaryA": {
+      "1": 0,
+      "2": 0,
+      "3": 1,
+      "4": 9,
+      "5": 8,
+      "6": 1,
+      "7": 6,
+      "8": 5,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0
+    },
+    "secondary": {
+      "1": 1,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 1,
+      "6": 2,
+      "7": 6,
+      "8": 6,
+      "9": 8,
+      "10": 5,
+      "11": 10,
+      "12": 4
+    },
+    "secondaryA": {
+      "1": 0,
+      "2": 1,
+      "3": 1,
+      "4": 3,
+      "5": 0,
+      "6": 0,
+      "7": 1,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0
+    },
+    "base": {
+      "1": 9,
+      "2": 29,
+      "3": 37,
+      "4": 37,
+      "5": 22,
+      "6": 23,
+      "7": 11,
+      "8": 21,
+      "9": 8,
+      "10": 24,
+      "11": 79,
+      "12": 39
+    },
+    "baseA": {
+      "1": 0,
+      "2": 1,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0
+    }
+  },
+  "colorsByFile": {
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/about/request/AddSubber.tsx": [
+      "text-primary-10"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/about/request/AddVtuber.tsx": [
+      "text-primary-10"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/about/request/DeleteChannel.tsx": [
+      "text-primary-10"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/channel/ChannelCard.tsx": [
+      "bg-base-3",
+      "bg-base-4",
+      "text-base-11",
+      "border-base-7",
+      "text-base-10"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/channel/ChannelPicker.tsx": [
+      "border-base-6",
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/chat/LiveChat.tsx": [
+      "text-secondary-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/common/DatePicker.tsx": [
+      "border-base-6",
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/common/ErrorFallback.tsx": [
+      "bg-base-4",
+      "border-base-6",
+      "text-base-8"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/common/TwitterFeed.tsx": [
+      "text-base-8"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/edit/DraggableTimestamp.tsx": [
+      "text-base-8",
+      "text-base-10",
+      "text-base-12",
+      "text-base-11",
+      "text-base-7"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/edit/ItunesSearchDropdown.tsx": [
+      "ring-primary-9",
+      "bg-base-1",
+      "text-base-11",
+      "text-base-10",
+      "text-primaryA-8",
+      "text-base-12",
+      "bg-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/edit/SongSearch.tsx": [
+      "bg-base-4",
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/edit/VideoEditMusic.tsx": [
+      "text-base-11",
+      "text-base-12",
+      "border-base-5",
+      "ring-primary-7",
+      "text-base-8",
+      "bg-base-3",
+      "text-base-10",
+      "bg-primaryA-4",
+      "bg-primaryA-8",
+      "border-base-4"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/header/calendarDialog.tsx": [
+      "border-base-4"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/header/header.tsx": [
+      "bg-secondaryA-2",
+      "text-base-10"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/header/searchbar/components/AutocompleteDropdownItem.tsx": [
+      "text-base-11",
+      "text-base-9"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/header/searchbar/components/QueryBadge.tsx": [
+      "ring-primary-9",
+      "text-base-8",
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/header/searchbar/components/SearchBar.tsx": [
+      "bg-base-2",
+      "bg-base-3",
+      "text-base-8",
+      "bg-base-4",
+      "text-base-11",
+      "bg-base-5",
+      "text-primary-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/header/userMenu/components/UserMenu.tsx": [
+      "bg-base-2",
+      "text-secondary-11",
+      "text-primary-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/language/ClipLanguageSelector.tsx": [
+      "border-base-5"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/layout/Footer.tsx": [
+      "border-base-5",
+      "bg-base-2",
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/layout/Frame.tsx": [
+      "text-base-7",
+      "text-secondary-8"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/layout/InlayContainer.tsx": [
+      "bg-base-2",
+      "bg-baseA-2"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/layout/PullToRefresh.tsx": [
+      "bg-base-5"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/layout/SelectionFooter.tsx": [
+      "bg-base-3",
+      "text-primary-10",
+      "text-base-10",
+      "bg-base-1"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/multiview/LiveStreamInfo.tsx": [
+      "bg-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/multiview/Selector.tsx": [
+      "bg-base-2",
+      "bg-primary-5",
+      "ring-primary-7",
+      "bg-primaryA-7"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/multiview/Toolbar.tsx": [
+      "bg-base-2"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/multiview/ToolButtonContainer.tsx": [
+      "bg-base-5"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/org/OrgSelectorCombobox.tsx": [
+      "bg-base-3",
+      "text-base-12",
+      "bg-primary-5",
+      "ring-primary-7",
+      "bg-primaryA-7",
+      "bg-base-4",
+      "ring-primary-9",
+      "bg-base-5"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/player/ChatCard.tsx": [
+      "bg-base-3",
+      "bg-primary-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/player/Controlbar.tsx": [
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/player/CurrentVideoList.tsx": [
+      "bg-base-3",
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/player/Highlightbar.tsx": [
+      "bg-base-4"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/player/MentionsCard.tsx": [
+      "bg-base-3"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/player/MiniPlayer.tsx": [
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/player/PlayerDescription.tsx": [
+      "bg-base-3",
+      "text-primary-12"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/player/PlayerRecommendations.tsx": [
+      "bg-base-3",
+      "bg-base-2"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/player/PlayerStats.tsx": [
+      "text-base-9"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/playlist/IndividualPlaylist.tsx": [
+      "text-base-7"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/playlist/PlaylistEntry.tsx": [
+      "bg-base-2",
+      "bg-base-5",
+      "text-base-10"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/settings/SettingsItem.tsx": [
+      "border-base-6",
+      "bg-base-3"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/settings/SettingsTimezonePicker.tsx": [
+      "text-primary-12",
+      "bg-primary-9"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/settings/ToggleableFeature.tsx": [
+      "bg-primary-4",
+      "bg-base-4",
+      "text-primary-11",
+      "text-base-11",
+      "bg-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/sidebar/sidebar.tsx": [
+      "bg-base-2",
+      "text-base-9",
+      "bg-base-3",
+      "text-base-11",
+      "text-base-12"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/tldex/new-editor/components/SubtitleList.tsx": [
+      "bg-base-2",
+      "border-base-4",
+      "bg-base-3",
+      "bg-primaryA-4",
+      "border-primary-7",
+      "text-base-11",
+      "bg-base-1"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/tldex/new-editor/components/Timeline/DemoTimeline.tsx": [
+      "border-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/tldex/new-editor/components/unused/RndSubtitle.tsx": [
+      "border-primary-9",
+      "bg-base-3",
+      "text-base-12"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/tldex/new-editor/TLEditorFrame.tsx": [
+      "bg-base-4"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/tldex/new-editor/TLEditorHeader.tsx": [
+      "text-base-10"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/tldex/tl-client/TLClientFrame.tsx": [
+      "text-base-11",
+      "bg-primary-9",
+      "bg-base-3",
+      "text-base-8",
+      "bg-base-4",
+      "bg-base-2",
+      "border-base-4",
+      "border-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/tldex/TLChat.tsx": [
+      "bg-base-2",
+      "border-base-4",
+      "bg-base-4",
+      "bg-primary-4",
+      "bg-primary-5",
+      "text-base-11",
+      "text-base-12"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/video/VideoCard.tsx": [
+      "bg-base-3",
+      "ring-primary-8",
+      "ring-base-6",
+      "text-primary-11",
+      "text-primary-12",
+      "text-base-11",
+      "text-base-9"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/video/VideoCardCountdownToLive.tsx": [
+      "text-base-11",
+      "text-secondary-10",
+      "bg-base-3",
+      "bg-base-4",
+      "text-base-12",
+      "text-base-10"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/video/VideoCardPlaceholder.tsx": [
+      "text-base-10",
+      "text-base-9",
+      "bg-base-3",
+      "border-base-6",
+      "bg-base-2"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/video/VideoMenu.tsx": [
+      "border-base-5",
+      "bg-base-1"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/video/VideoReport.tsx": [
+      "text-base-11",
+      "bg-base-3"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/watch/Comments.tsx": [
+      "text-base-11",
+      "text-base-12",
+      "text-primary-11",
+      "text-primary-12",
+      "border-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/about/faq.tsx": [
+      "text-secondary-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/about/general.tsx": [
+      "bg-base-2",
+      "ring-base-8"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/about/privacy.tsx": [
+      "text-secondary-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/about/request.tsx": [
+      "bg-primary-6",
+      "border-primary-8"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/channel.tsx": [
+      "bg-base-3",
+      "text-base-11",
+      "border-base-7",
+      "text-base-10"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/channel/ChannelAbout.tsx": [
+      "bg-base-3",
+      "text-primary-12"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/favorites/favoritesHome.tsx": [
+      "border-base-3"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/home/EmptyQuip.tsx": [
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/home/home.tsx": [
+      "bg-base-2"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/home/LiveTab.tsx": [
+      "border-base-3"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/multiview/multiview.tsx": [
+      "bg-base-2",
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/playlists.tsx": [
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/settings/appearance.tsx": [
+      "bg-base-5",
+      "bg-primary-4",
+      "text-primary-11",
+      "text-base-11",
+      "text-primary-12",
+      "bg-base-4"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/settings/content.tsx": [
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/settings/lang.tsx": [
+      "bg-base-3",
+      "text-base-12",
+      "bg-primary-5",
+      "ring-primary-7",
+      "bg-primaryA-7",
+      "bg-base-4",
+      "ring-primary-9",
+      "bg-base-5",
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/settings/orgs.tsx": [
+      "text-base-11",
+      "bg-primaryA-4",
+      "ring-primaryA-8",
+      "text-base-8",
+      "border-base-5",
+      "bg-base-4"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/settings/user.tsx": [
+      "text-base-11",
+      "border-secondary-8",
+      "text-secondary-11",
+      "border-secondary-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/routes/watch.tsx": [
+      "bg-base-3"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/accordion.tsx": [
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/alert.tsx": [
+      "text-base-12",
+      "border-primary-8",
+      "bg-primary-7"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/badge.tsx": [
+      "bg-primary-6",
+      "text-primary-12",
+      "bg-primaryA-4",
+      "ring-primary-8",
+      "bg-secondary-6",
+      "text-secondary-12",
+      "bg-secondaryA-4",
+      "ring-secondary-8",
+      "text-base-12",
+      "ring-base-8"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/calendar.tsx": [
+      "text-base-11",
+      "bg-base-4",
+      "text-base-12"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/card.tsx": [
+      "bg-base-2",
+      "border-base-5",
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/checkbox.tsx": [
+      "border-base-10",
+      "ring-primaryA-5",
+      "bg-primary-9",
+      "text-primary-12",
+      "border-base-12"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/command.tsx": [
+      "text-base-11",
+      "text-base-9",
+      "text-base-8"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/context-menu.tsx": [
+      "bg-primaryA-5",
+      "text-primary-12",
+      "bg-primaryA-4",
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/dialog.tsx": [
+      "ring-primary-7",
+      "bg-primaryA-3"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/drawer.tsx": [
+      "border-base-6",
+      "bg-base-3",
+      "bg-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/dropdown-menu.tsx": [
+      "bg-base-2",
+      "bg-primaryA-5",
+      "bg-primaryA-4",
+      "text-primary-12",
+      "bg-base-1",
+      "text-base-12",
+      "bg-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/fancy-multiselect.tsx": [
+      "ring-primary-9",
+      "text-base-8",
+      "text-base-11",
+      "bg-base-1"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/form.tsx": [
+      "text-base-11"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/input.tsx": [
+      "text-base-8",
+      "ring-primaryA-8"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/menubar.tsx": [
+      "border-base-5",
+      "bg-base-2",
+      "bg-primary-4",
+      "text-primary-11",
+      "bg-primary-3",
+      "bg-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/pagination.tsx": [
+      "bg-primaryA-4",
+      "bg-primaryA-5"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/radio-group.tsx": [
+      "text-primary-10"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/resizable.tsx": [
+      "bg-base-5"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/scroll-area.tsx": [
+      "bg-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/select.tsx": [
+      "border-base-7",
+      "bg-base-4",
+      "text-base-12",
+      "bg-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/separator.tsx": [
+      "bg-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/skeleton.tsx": [
+      "bg-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/switch.tsx": [
+      "ring-primary-7",
+      "bg-primary-10",
+      "bg-base-4"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/tabs.tsx": [
+      "bg-base-3",
+      "text-base-11",
+      "bg-secondaryA-3",
+      "ring-secondary-8",
+      "bg-secondary-9",
+      "ring-primary-8"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/textarea.tsx": [
+      "text-base-8",
+      "ring-primaryA-8"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/toast.tsx": [
+      "border-base-7",
+      "bg-base-1",
+      "text-base-12",
+      "border-secondary-7",
+      "bg-secondary-9",
+      "text-secondary-12",
+      "border-primary-7",
+      "bg-primary-9",
+      "text-primary-12",
+      "text-base-11",
+      "text-secondary-9",
+      "text-secondary-5",
+      "ring-secondary-7",
+      "text-base-6"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/tooltip.tsx": [
+      "bg-base-5",
+      "text-base-12"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/button.variants.ts": [
+      "bg-base-3",
+      "text-base-12",
+      "bg-base-4",
+      "ring-primary-7",
+      "bg-primaryA-7",
+      "border-base-5",
+      "border-base-6",
+      "bg-base-5",
+      "border-primary-5",
+      "border-primaryA-6",
+      "bg-primaryA-5",
+      "bg-primary-9",
+      "bg-primary-7",
+      "bg-secondary-9",
+      "bg-secondaryA-4",
+      "ring-secondary-7",
+      "bg-primaryA-4",
+      "bg-base-7",
+      "bg-secondaryA-7",
+      "ring-primary-9"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/shadcn/ui/dialog.variants.ts": [
+      "border-base-7",
+      "bg-base-1",
+      "border-primary-7",
+      "bg-primary-1",
+      "border-secondary-7",
+      "bg-secondary-1"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/components/video/VideoMenu.css": [
+      "text-base-12",
+      "text-base-11",
+      "text-base-9"
+    ],
+    "F:/Xrave/Code/HolodexNet/HolodexReact/packages/react/src/index.css": [
+      "bg-base-1",
+      "text-base-12",
+      "bg-primary-10",
+      "bg-primary-9",
+      "bg-secondary-9",
+      "bg-secondary-10",
+      "text-base-11",
+      "text-secondary-11",
+      "text-secondary-12",
+      "text-primary-11",
+      "text-primary-12"
+    ]
+  },
+  "mostUsedColors": [
+    {
+      "color": "base-11",
+      "count": 79
+    },
+    {
+      "color": "base-12",
+      "count": 39
+    },
+    {
+      "color": "base-3",
+      "count": 37
+    },
+    {
+      "color": "base-4",
+      "count": 37
+    },
+    {
+      "color": "base-2",
+      "count": 29
+    },
+    {
+      "color": "base-10",
+      "count": 24
+    },
+    {
+      "color": "primary-12",
+      "count": 23
+    },
+    {
+      "color": "base-6",
+      "count": 23
+    },
+    {
+      "color": "base-5",
+      "count": 22
+    },
+    {
+      "color": "base-8",
+      "count": 21
+    },
+    {
+      "color": "primary-11",
+      "count": 20
+    },
+    {
+      "color": "primary-7",
+      "count": 17
+    },
+    {
+      "color": "primary-9",
+      "count": 16
+    },
+    {
+      "color": "primary-4",
+      "count": 11
+    },
+    {
+      "color": "base-7",
+      "count": 11
+    },
+    {
+      "color": "primary-10",
+      "count": 10
+    },
+    {
+      "color": "secondary-11",
+      "count": 10
+    },
+    {
+      "color": "primaryA-4",
+      "count": 9
+    },
+    {
+      "color": "base-1",
+      "count": 9
+    },
+    {
+      "color": "primaryA-5",
+      "count": 8
+    },
+    {
+      "color": "secondary-9",
+      "count": 8
+    },
+    {
+      "color": "base-9",
+      "count": 8
+    },
+    {
+      "color": "primary-8",
+      "count": 6
+    },
+    {
+      "color": "primaryA-7",
+      "count": 6
+    },
+    {
+      "color": "secondary-7",
+      "count": 6
+    },
+    {
+      "color": "secondary-8",
+      "count": 6
+    },
+    {
+      "color": "primary-5",
+      "count": 5
+    },
+    {
+      "color": "primaryA-8",
+      "count": 5
+    },
+    {
+      "color": "secondary-10",
+      "count": 5
+    },
+    {
+      "color": "primary-6",
+      "count": 4
+    },
+    {
+      "color": "secondary-12",
+      "count": 4
+    },
+    {
+      "color": "secondaryA-4",
+      "count": 3
+    },
+    {
+      "color": "secondary-6",
+      "count": 2
+    },
+    {
+      "color": "primary-1",
+      "count": 1
+    },
+    {
+      "color": "primary-3",
+      "count": 1
+    },
+    {
+      "color": "primaryA-3",
+      "count": 1
+    },
+    {
+      "color": "primaryA-6",
+      "count": 1
+    },
+    {
+      "color": "secondary-1",
+      "count": 1
+    },
+    {
+      "color": "secondary-5",
+      "count": 1
+    },
+    {
+      "color": "secondaryA-2",
+      "count": 1
+    },
+    {
+      "color": "secondaryA-3",
+      "count": 1
+    },
+    {
+      "color": "secondaryA-7",
+      "count": 1
+    },
+    {
+      "color": "baseA-2",
+      "count": 1
+    }
+  ]
+}
