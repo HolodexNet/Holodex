@@ -142,7 +142,7 @@ export function VideoCard({
       videoTextInfo: cn([
         (size == "list" || size == "sm") && "flex flex-col gap-1",
         (size == "md" || size == "lg") &&
-          "flex min-h-[6rem] cursor-pointer flex-col gap-0",
+          "flex min-h-24 cursor-pointer flex-col gap-0",
       ]),
       titleLink: cn([
         (size == "list" || size == "sm") &&

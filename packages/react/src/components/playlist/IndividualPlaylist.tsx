@@ -92,7 +92,7 @@ export default function IndividualPlaylist({ playlist }: Props) {
     <div className="container">
       <div className="sticky top-0 z-10 bg-mauve-2">
         <div className="flex items-center">
-          <span className="i-solar:playlist-broken hidden text-9xl !text-base-7 md:block" />
+          <span className="i-solar:playlist-broken hidden text-9xl text-base-7! md:block" />
           <div className="ml-6">
             <div className="flex gap-3">
               {renaming ? (
@@ -113,7 +113,7 @@ export default function IndividualPlaylist({ playlist }: Props) {
                 </Button>
               ) : null}
             </div>
-            <TypographyP className="!mt-1">
+            <TypographyP className="mt-1!">
               {playlist.videos.length} Videos
             </TypographyP>
             <div className="mt-4 flex items-center gap-3">

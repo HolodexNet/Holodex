@@ -1,3 +1,5 @@
+@layer base {
+
 .tl-frame .highlight-border * {
   border: 1px solid white;
 }
@@ -64,4 +66,5 @@
 .tl-frame .waveform {
   @apply overflow-hidden rounded-lg;
   grid-area: waveform;
+}
 }

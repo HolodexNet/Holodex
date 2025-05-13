@@ -56,7 +56,7 @@ const GroupComponent: React.FC<{
     <React.Fragment>
       {group && <h2 className="mb-4 mt-6 text-xl font-bold">{group}</h2>}
       {displayStyle === "grid" ? (
-        <div className="grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-4">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
           {channels.map((channel) => (
             <ChannelCard
               key={channel.id}

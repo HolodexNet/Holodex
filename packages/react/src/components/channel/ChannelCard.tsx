@@ -150,7 +150,7 @@ export function ChannelCard({
       return (
         // Set min-height because react-virtuoso will break if the height is not fixed
         <div
-          className="group relative flex h-full min-h-[24rem] w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4 transition-all hover:cursor-pointer hover:bg-base-4"
+          className="group relative flex h-full min-h-96 w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4 transition-all hover:cursor-pointer hover:bg-base-4"
           onClick={goToChannelClickHandler}
         >
           <Link

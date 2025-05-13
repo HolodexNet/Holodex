@@ -51,7 +51,7 @@ export function DatePicker(
             <button
               className="ring-offset-background focus:ring-ring 
                 ml-auto rounded-sm opacity-70 transition-opacity hover:opacity-100 
-                focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none"
+                focus:outline-hidden focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none"
               onClick={(e) => {
                 e.stopPropagation();
                 onSelect(undefined);

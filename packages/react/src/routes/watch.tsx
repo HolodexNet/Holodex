@@ -199,7 +199,7 @@ export function Watch() {
 
   const containerClasses = cn(
     "mx-auto flex w-full gap-8",
-    regularMode && " max-w-screen-2xl p-4 pt-2", // padding around the container + a max width for regular mode container.
+    regularMode && " max-w-(--breakpoint-2xl) p-4 pt-2", // padding around the container + a max width for regular mode container.
   );
 
   const playerContainerClasses = cn(

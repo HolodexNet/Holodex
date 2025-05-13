@@ -47,7 +47,7 @@ export function OrgSelectorCombobox({
           className={cn(
             "inline-flex min-h-8 w-full items-center justify-between rounded-md bg-base-3 py-1 pl-4 pr-2",
             "text-left text-lg font-medium text-base-12 transition",
-            "hover:bg-primary-5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-7 active:scale-[97%] active:bg-primaryA-7 disabled:pointer-events-none disabled:opacity-50",
+            "hover:bg-primary-5 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-primary-7 active:scale-[97%] active:bg-primaryA-7 disabled:pointer-events-none disabled:opacity-50",
             open && "bg-base-4 ring-2 ring-primary-9 hover:bg-base-5",
           )}
         >

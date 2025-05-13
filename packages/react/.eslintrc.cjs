@@ -5,18 +5,17 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:tailwindcss/recommended",
     "prettier",
   ],
   plugins: ["react-refresh", "prettier", "unused-imports"],
   settings: {
-    tailwindcss: {
-      callees: ["cn"],
-      whitelist: [
-        "i\\-.+:?.+",
-        // doesn't work see: [https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/284]
-      ],
-    },
+    // tailwindcss: {
+    //   callees: ["cn"],
+    //   whitelist: [
+    //     "i\\-.+:?.+",
+    //     // doesn't work see: [https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/284]
+    //   ],
+    // },
   },
 
   ignorePatterns: [
@@ -55,16 +54,16 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "tailwindcss/no-custom-classname": [
-      "warn",
-      {
-        whitelist: [
-          "i-[a-zA-Z-]+:[a-zA-Z0-9-]+", // iconify classes
-          "\\S+-(base|primary|secondary)-[0-9]{1,2}", // custom colors
-          "@.+:?.+", // @tailwindcss/container-queries classes
-        ],
-      },
-    ],
+    // "tailwindcss/no-custom-classname": [
+    //   "warn",
+    //   {
+    //     whitelist: [
+    //       "i-[a-zA-Z-]+:[a-zA-Z0-9-]+", // iconify classes
+    //       "\\S+-(base|primary|secondary)-[0-9]{1,2}", // custom colors
+    //       "@.+:?.+", // @tailwindcss/container-queries classes
+    //     ],
+    //   },
+    // ],
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
         "warn",

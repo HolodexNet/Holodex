@@ -39,7 +39,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
         ))}
       </div>
       <div
-        className={cn("hidden w-full max-w-screen-lg md:block", {
+        className={cn("hidden w-full max-w-(--breakpoint-lg) md:block", {
           "flex flex-col gap-4": itemSelected,
         })}
       >
