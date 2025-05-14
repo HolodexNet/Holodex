@@ -1,9 +1,8 @@
-import { useState, Ref, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAtomValue } from "jotai";
 // import { yourTimestampAtom } from './store'; // Replace with your actual atom path
 import { videoStatusAtomFamily } from "@/store/player";
-import MaskedInput from "react-text-mask";
-import { Input } from "@/shadcn/ui/input";
+import { InputMask } from "@react-input/mask";
 import { clsx } from "clsx";
 
 type TimeoutId = number | NodeJS.Timeout;
@@ -159,10 +158,10 @@ export function TimeAdjuster({
           />
 
           {editMode ? (
-            <MaskedInput
-              mask={[/\d/, /\d/, ":", /\d/, /\d/, ":", /\d/, /\d/]}
+            <InputMask
+              mask={"__:__:__"}
               placeholder="00:00:00"
-              guide={true}
+              replacement={{ _: /\d/ }}
               autoFocus={true}
               onBlur={() => {
                 setEditMode(false);
@@ -184,15 +183,7 @@ export function TimeAdjuster({
                   onValueChange(time);
                 }
               }}
-              render={(ref, props) => {
-                return (
-                  <Input
-                    ref={ref as unknown as Ref<HTMLInputElement>}
-                    {...props}
-                    className="h-7 w-28 py-0 text-center font-mono text-lg text-base-12"
-                  />
-                );
-              }}
+              className="h-7 w-28 py-0 text-center font-mono text-lg text-base-12"
             />
           ) : (
             <div
@@ -311,10 +302,10 @@ export function DurationAdjuster({
           onMouseDown={handleMouseDown}
         >
           {editMode ? (
-            <MaskedInput
-              mask={[/\d/, /\d/, ":", /\d/, /\d/, ":", /\d/, /\d/]}
+            <InputMask
+              mask={"__:__:__"}
               placeholder="00:00:00"
-              guide={true}
+              replacement={{ _: /\d/ }}
               autoFocus={true}
               onBlur={() => {
                 setEditMode(false);
@@ -336,15 +327,7 @@ export function DurationAdjuster({
                   onValueChange(time);
                 }
               }}
-              render={(ref, props) => {
-                return (
-                  <Input
-                    ref={ref as unknown as Ref<HTMLInputElement>}
-                    {...props}
-                    className="h-7 w-28 py-0 text-center font-mono text-base-12"
-                  />
-                );
-              }}
+              className="h-7 w-28 py-0 text-center font-mono text-base-12"
             />
           ) : (
             <div
