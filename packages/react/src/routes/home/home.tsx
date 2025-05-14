@@ -116,8 +116,8 @@ function StickyTabsList({
         <Trans
           i18nKey="views.home.liveOrUpcomingHeading"
           components={{
-            liveCount: <></>,
-            upcomingCount: <></>,
+            liveCount: <b></b>,
+            upcomingCount: <b></b>,
           }}
         />
       </TabsTrigger>
