@@ -1,7 +1,7 @@
 import { InlayContainer } from "@/components/layout/InlayContainer";
 import useAlwaysShowScrollbar from "@/hooks/useAlwaysShowScrollbar";
 import { useMemo } from "react";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { useTranslation } from "react-i18next";
 export function About() {
   const { t } = useTranslation();

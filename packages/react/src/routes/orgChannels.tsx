@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useParams } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { useTranslation } from "react-i18next";
 import { VirtuosoLoadingFooter } from "@/components/common/Loading";
 import { useChannels } from "@/services/channel.service";

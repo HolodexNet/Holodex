@@ -7,7 +7,7 @@ import { useVideoFilter } from "@/hooks/useVideoFilter";
 import StickyTabsList from "../home/home";
 import { FavoritedChannels } from "./favoritedChannels";
 import { Tabs, TabsContent } from "@/shadcn/ui/tabs";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Separator } from "@/shadcn/ui/separator";

@@ -9,7 +9,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 import { TypographyH3 } from "@/shadcn/ui/typography";
 import { useState } from "react";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import "./editVideo.scss";

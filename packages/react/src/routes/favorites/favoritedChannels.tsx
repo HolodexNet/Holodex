@@ -1,7 +1,7 @@
 import { useFavorites } from "@/services/user.service";
 import { MemoizedChannelCard } from "@/components/channel/ChannelCard";
 import { VirtuosoGrid } from "react-virtuoso";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { useTranslation } from "react-i18next";
 
 export function FavoritedChannels() {

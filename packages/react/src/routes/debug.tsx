@@ -9,7 +9,7 @@ import {
   CardFooter,
 } from "@/shadcn/ui/card";
 import { useToast } from "@/shadcn/ui/use-toast";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { useNavigate } from "react-router-dom";
 
 export function ResetClientPage(): JSX.Element {

@@ -1,5 +1,5 @@
 import { Toolbar } from "@/components/multiview/Toolbar";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 
 // multiview skeleton
 // selection bar at the top to change between orgs and allow url insertion

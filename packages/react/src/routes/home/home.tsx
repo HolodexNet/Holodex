@@ -9,7 +9,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { ClipLanguageSelector } from "@/components/language/ClipLanguageSelector";
 import { VideoListSettingsMenu } from "@/components/settings/VideoListSettingsMenu";
 

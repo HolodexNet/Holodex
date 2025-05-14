@@ -1,5 +1,5 @@
 import { LoginButtons } from "@/components/login/LoginButtons";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { useTranslation } from "react-i18next";
 
 export function Login() {
