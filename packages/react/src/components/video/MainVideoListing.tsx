@@ -64,7 +64,7 @@ export function MainVideoListing({
           />
         ))}
         {isFetchingNextPage && hasNextPage && (
-          <div className="col-span-full flex justify-center py-4">
+          <div className="flex justify-center py-4 col-span-full">
             <VirtuosoLoadingFooter
               context={{
                 size: "sm",

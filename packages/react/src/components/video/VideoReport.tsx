@@ -207,7 +207,7 @@ export function ReportDialogMenu({
           <div className="i-lucide:x h-4 w-4"></div>
         </CredenzaClose>
         <CredenzaHeader>
-          <CredenzaTitle className="text-lg ">
+          <CredenzaTitle className="text-lg">
             {t("component.reportDialog.title")}
           </CredenzaTitle>
         </CredenzaHeader>
@@ -358,7 +358,7 @@ export function ReportDialogMenu({
               />
             </CredenzaBody>
 
-            <CredenzaFooter className=" mt-2">
+            <CredenzaFooter className="mt-2">
               <Button
                 variant="base-outline"
                 onClick={() => onOpenChange(false)}

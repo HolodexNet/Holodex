@@ -123,7 +123,7 @@ export default function CalendarUsage({
   const getTypeIcon = (type: string) => {
     switch (type) {
       case "channel":
-        return <div className="i-heroicons:tv rounded-md p-3" />;
+        return <div className="rounded-md p-3 i-heroicons:tv" />;
       case "org":
         return <Users className="h-4 w-4" />;
       case "topic":
@@ -134,7 +134,7 @@ export default function CalendarUsage({
   };
 
   return (
-    <div className="space-y-6 rounded-lg">
+    <div className="rounded-lg space-y-6">
       <div className="space-y-2">
         <Label>{t("Live Calendar (iCal)")}</Label>
         <div className="flex gap-2">
@@ -149,7 +149,7 @@ export default function CalendarUsage({
             size="icon-lg"
             onClick={() => handleCopy(getLiveCalendarURL())}
           >
-            <div className="i-heroicons:clipboard size-4 " />
+            <div className="size-4 i-heroicons:clipboard" />
           </Button>
         </div>
       </div>
@@ -233,7 +233,7 @@ export default function CalendarUsage({
               size="icon-lg"
               onClick={() => handleCopy(getFavoritesCalendarURL())}
             >
-              <div className="i-heroicons:clipboard size-4 " />
+              <div className="i-heroicons:clipboard size-4" />
             </Button>
           </div>
           {user.api_key && <SettingsResetKeyButton />}

@@ -30,11 +30,11 @@ export function LiveStreamInfo({
     >
       <div className="relative flex w-full flex-col items-center px-4 py-2">
         <img
-          className="h-auto w-64 rounded-lg"
+          className="rounded-lg h-auto w-64"
           src={thumbnailLink}
           alt={altText}
         />
-        <p className="absolute left-4 top-2 z-30 bg-black px-1 py-0.5 text-white opacity-80">
+        <p className="absolute z-30 px-1 text-white opacity-80 left-4 top-2 bg-black py-0.5">
           {topicId}
         </p>
       </div>

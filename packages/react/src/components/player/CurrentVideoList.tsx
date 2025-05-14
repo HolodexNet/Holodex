@@ -43,7 +43,7 @@ export function CurrentVideoList({ currentId }: { currentId?: string }) {
       </CollapsibleTrigger>
       <CollapsibleContent>
         {open && (
-          <div className="flex max-h-[40vh] flex-col overflow-y-auto">
+          <div className="flex flex-col overflow-y-auto max-h-[40vh]">
             <div className="flex justify-between">
               <NewPlaylistDialog
                 triggerElement={

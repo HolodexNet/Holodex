@@ -36,7 +36,7 @@ const TruncatedText = ({ text }: TruncatedTextProps) => {
       {isClamped && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="mt-1 text-xs text-base-11 hover:text-base-12"
+          className="text-xs text-base-11 mt-1 hover:text-base-12"
         >
           {expanded ? "Show less" : "Read more"}
         </button>
@@ -72,13 +72,13 @@ const Comment = ({
   );
 
   return (
-    <div className="group relative my-3 min-h-0 border-l-2 border-base-6 px-4 py-1">
+    <div className="group relative border-l-2 border-base-6 px-4 py-1 my-3 min-h-0">
       <TruncatedText text={parsedMessage} />
       <a
         href={`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute right-0 top-0 hidden text-base-11 hover:text-base-12 group-hover:block"
+        className="absolute top-0 hidden text-base-11 hover:text-base-12 right-0 group-hover:block"
       >
         <ExternalLink className="h-4 w-4" />
       </a>

@@ -92,7 +92,7 @@ export function ErrorFallback({
               onClick={() => window.location.reload()}
               className="gap-2"
             >
-              <div className="i-lucide:refresh-ccw h-4 w-4" />
+              <div className="h-4 w-4 i-lucide:refresh-ccw" />
               {t("component.apiError.reload")}
             </Button>
             <Button
@@ -105,7 +105,7 @@ export function ErrorFallback({
               }}
               className="gap-2"
             >
-              <div className="i-lucide:log-out h-4 w-4" />
+              <div className="h-4 w-4 i-lucide:log-out" />
               {t("component.apiError.logoutAndClearCache")}
             </Button>
           </div>
@@ -115,7 +115,7 @@ export function ErrorFallback({
             onOpenChange={setIsDebugOpen}
             className=""
           >
-            <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border border-base-6 p-4 font-medium hover:bg-muted">
+            <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border-base-6 p-4 font-medium border hover:bg-muted">
               Debug Information
               <div
                 className={`i-lucide:chevron-down h-4 w-4 transition-transform duration-200 ${
@@ -124,7 +124,7 @@ export function ErrorFallback({
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="">
-              <code className="bg-muted/50 my-2 block w-full overflow-x-auto rounded-lg px-4">
+              <code className="w-full rounded-lg px-4 my-2 bg-muted/50 block overflow-x-auto">
                 {error?.message}
               </code>
               <code className="bg-muted/50 block w-full overflow-x-auto rounded-lg px-4 text-xs">

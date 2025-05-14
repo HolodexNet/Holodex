@@ -21,8 +21,8 @@ export function LiveChat({ id, status, channelId, link }: LiveChatProps) {
 
   if (needExtension)
     return (
-      <div className="flex h-full w-full items-center justify-center p-4 ">
-        <span className="max-w-40 text-center text-sm">
+      <div className="flex h-full w-full items-center justify-center p-4">
+        <span className="text-sm max-w-40 text-center">
           {t("views.watch.chat.archiveNeedExtension", {
             0: (
               <Link

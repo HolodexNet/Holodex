@@ -52,9 +52,9 @@ export function AboutFaqEmailForm() {
             Object.entries(payload).map(([name, value]) => ({ name, value })),
           ),
         )}
-        className="grid gap-2 md:gap-4"
+        className="gap-2 grid md:gap-4"
       >
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
+        <div className="grid gap-2 md:gap-4 grid-cols-1 md:grid-cols-2">
           <FormField
             control={form.control}
             name="name"

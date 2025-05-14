@@ -129,11 +129,11 @@ export function AddSubberForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit, onInvalid)}
-        className="flex flex-col gap-4"
+        className="flex gap-4 flex-col"
       >
         <Alert variant="default">
           <div className="float-left mr-4 text-primary-10">
-            <div className="i-icon-park-outline:guide-board text-4xl" />
+            <div className="text-4xl i-icon-park-outline:guide-board" />
           </div>{" "}
           <AlertDescription
             dangerouslySetInnerHTML={{

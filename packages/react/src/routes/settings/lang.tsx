@@ -43,10 +43,10 @@ export function SettingsLang() {
                 )}
               >
                 {langs.find(({ val }) => i18n.language === val)?.display}
-                <div className="i-lucide:chevrons-up-down ml-2 h-4 w-4 shrink-0 opacity-50" />
+                <div className="ml-2 h-4 w-4 shrink-0 opacity-50 i-lucide:chevrons-up-down" />
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-fit min-w-[240px] p-0">
+            <PopoverContent className="p-0 w-fit min-w-[240px]">
               <Command>
                 <CommandInput
                   placeholder={t("views.settings.languageSearch")}

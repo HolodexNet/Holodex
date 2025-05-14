@@ -32,7 +32,7 @@ const SpeakerButton = ({
 }) => (
   <Button
     variant={isActive ? "primary" : "base-outline"}
-    className="h-10 justify-start gap-2 pr-1"
+    className="gap-2 h-10 justify-start pr-1"
     onClick={onClick}
   >
     <span className="text-xs text-base-11">{shortcut}</span>
@@ -49,7 +49,7 @@ const SpeakerButton = ({
           onEdit(speaker);
         }}
       >
-        <div className="i-heroicons-pencil h-4 w-4" />
+        <div className="h-4 w-4 i-heroicons-pencil" />
       </div>
     )}
   </Button>
@@ -113,7 +113,7 @@ const SpeakerEditDialog = ({
           </div>
           <div>
             <p>Example:</p>
-            <p className="border-l-2 border-l-base-4 pl-2 font-semibold">
+            <p className="pl-2 font-semibold border-l-2 border-l-base-4">
               {prefix} Typed Translation {suffix}
             </p>
           </div>
@@ -144,26 +144,26 @@ const KeyboardHelp = () => (
   >
     <h3 className="mb-2 font-medium">Keyboard Shortcuts</h3>
     <ul
-      className="grid grid-cols-2 gap-1 text-sm"
+      className="grid gap-1 text-sm grid-cols-2"
       style={{ gridTemplateColumns: "auto 1fr" }}
     >
-      <kbd className="pointer-events-none ml-auto block text-sm tracking-widest text-base-8">
+      <kbd className="ml-auto block text-sm pointer-events-none text-base-8 tracking-widest">
         {/* <span className="rounded-sm bg-base-4 p-0.5">⇪</span> */}
         {/* <span className="rounded-sm p-0.5">Ctrl-1~9</span> */}
-        <div className="i-vaadin:ctrl-a inline-block"></div>
-        <div className="i-f7:number-square inline-block"></div>
+        <div className="inline-block i-vaadin:ctrl-a"></div>
+        <div className="inline-block i-f7:number-square"></div>
       </kbd>
       <span>Select speaker</span>
       <kbd className="pointer-events-none ml-auto text-sm tracking-widest text-base-8">
-        <div className="i-uil:enter inline-block"></div>
+        <div className="inline-block i-uil:enter"></div>
       </kbd>
       <span>Send message</span>
       <kbd className="pointer-events-none ml-auto text-sm tracking-widest text-base-8">
-        <div className="i-ic:sharp-keyboard-tab inline-block"></div>
+        <div className="inline-block i-ic:sharp-keyboard-tab"></div>
       </kbd>
       <span>Next speaker</span>
       <kbd className="pointer-events-none ml-auto text-sm tracking-widest text-base-8">
-        <div className="i-bi:shift inline-block"></div>
+        <div className="inline-block i-bi:shift"></div>
         <div className="i-ic:sharp-keyboard-tab inline-block"></div>
       </kbd>
       <span>Prev speaker</span>
@@ -253,7 +253,7 @@ export default function TLClientFrame() {
   };
 
   return (
-    <div className="flex h-screen flex-col gap-2 p-6">
+    <div className="flex flex-col gap-2 h-screen p-6">
       <div className="flex items-center gap-2">
         <Input
           value={videoId}
@@ -286,8 +286,8 @@ export default function TLClientFrame() {
               </Panel>
               <PanelResizeHandle className="w-2 bg-base-2 hover:bg-base-4" />
               <Panel minSize={13} defaultSize={15}>
-                <div className="flex h-full flex-col border-l border-base-4">
-                  <div className="border-b border-base-4 p-2 text-sm font-medium">
+                <div className="flex h-full flex-col border-base-4 border-l">
+                  <div className="border-base-4 text-sm font-medium border-b p-2">
                     TL Chat
                   </div>
                   <div className="flex-1 overflow-y-auto p-2" />
@@ -308,9 +308,9 @@ export default function TLClientFrame() {
 
         <div className="flex gap-2">
           <div className="flex flex-1 flex-col gap-2 rounded-lg bg-base-3 p-2">
-            <div className="flex flex-row items-center gap-1">
+            <div className="flex items-center gap-1 flex-row">
               {speakers[currentSpeaker].prefix && (
-                <span className="rounded-sm border border-base-6 p-1">
+                <span className="rounded-sm border p-1 border-base-6">
                   {speakers[currentSpeaker].prefix}
                 </span>
               )}
@@ -318,10 +318,10 @@ export default function TLClientFrame() {
                 value={currentInput}
                 onChange={(e) => setCurrentInput(e.target.value)}
                 placeholder="Enter translation..."
-                className="h-12 text-lg"
+                className="text-lg h-12"
               />
             </div>
-            <div className="grid grid-cols-10 gap-2">
+            <div className="grid gap-2 grid-cols-10">
               {speakers.map((speaker, i) => (
                 <SpeakerButton
                   key={speaker.id}

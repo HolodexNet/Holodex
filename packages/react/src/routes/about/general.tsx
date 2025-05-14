@@ -91,7 +91,7 @@ function StatsBlock() {
   }
 
   return (
-    <div className="mx-auto grid w-full min-w-min grid-cols-1 gap-4 @md:max-w-2xl @md:grid-cols-2 @lg:max-w-4xl">
+    <div className="grid w-full grid-cols-1 gap-4 mx-auto min-w-min @md:max-w-2xl @md:grid-cols-2 @lg:max-w-4xl">
       <StatComponent
         title={"Vtubers"}
         amount={stats.statistics.channelCount.vtuber || 0}

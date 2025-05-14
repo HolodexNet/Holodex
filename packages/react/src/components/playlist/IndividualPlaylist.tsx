@@ -92,7 +92,7 @@ export default function IndividualPlaylist({ playlist }: Props) {
     <div className="container">
       <div className="sticky top-0 z-10 bg-mauve-2">
         <div className="flex items-center">
-          <span className="i-solar:playlist-broken hidden text-9xl text-base-7! md:block" />
+          <span className="hidden text-9xl md:block i-solar:playlist-broken text-base-7!" />
           <div className="ml-6">
             <div className="flex gap-3">
               {renaming ? (
@@ -116,7 +116,7 @@ export default function IndividualPlaylist({ playlist }: Props) {
             <TypographyP className="mt-1!">
               {playlist.videos.length} Videos
             </TypographyP>
-            <div className="mt-4 flex items-center gap-3">
+            <div className="flex items-center gap-3 mt-4">
               <Button size="lg" variant="primary" asChild>
                 <StartPlaylistLink
                   firstVideoId={playlist.videos[0].id}
@@ -166,7 +166,7 @@ export default function IndividualPlaylist({ playlist }: Props) {
             </div>
           </div>
         </div>
-        <Separator className="mb-7 mt-3" />
+        <Separator className="mt-3 mb-7" />
       </div>
       {playlistToRender.videos.map((video, index) => {
         return (

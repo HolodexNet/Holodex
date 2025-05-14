@@ -52,13 +52,13 @@ export function Playlists() {
         <TypographyH3>{t("views.playlist.page-heading")}</TypographyH3>
 
         <Card
-          className="my-4 cursor-pointer"
+          className="cursor-pointer my-4"
           onClick={() =>
             user ? setIsNewPlaylistDialogOpen(true) : navigate("/login")
           }
         >
           <div className="flex items-center p-4">
-            <div className="i-lucide:list-plus mr-3 text-xl" />
+            <div className="mr-3 text-xl i-lucide:list-plus" />
             <div>
               <TypographyP className="font-medium">
                 {t("views.playlist.new-playlist-btn-label")}

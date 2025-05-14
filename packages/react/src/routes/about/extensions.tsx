@@ -11,28 +11,28 @@ export function AboutExtensions() {
       <AboutHeading>
         <img
           src="/img/holodex-plus/holodex-plus-icon.png"
-          className="mr-2 inline h-8 w-8"
+          className="mr-2 h-8 w-8 inline"
         />
         {t("views.extension.title")}
       </AboutHeading>
-      <div className="grid grid-cols-1 gap-4 2xl:grid-cols-2">
+      <div className="grid gap-4 grid-cols-1 2xl:grid-cols-2">
         <img src="/img/holodex-plus/holodex-plus-screenshot.webp" />
         <div className="flex flex-col gap-4">
-          <h5 className="text-xl font-bold">{t("views.extension.features")}</h5>
+          <h5 className="font-bold text-xl">{t("views.extension.features")}</h5>
           <ul className="list-inside list-disc leading-8 tracking-wide">
             <li>{t("views.extension.featureset.one")}</li>
             <li>{t("views.extension.featureset.two")}</li>
             <li>{t("views.extension.featureset.three")}</li>
             <li>{t("views.extension.featureset.four")}</li>
           </ul>
-          <div className="flex min-h-fit flex-wrap items-center justify-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-4 min-h-fit">
             <Link
               to="https://chrome.google.com/webstore/detail/holodex-plus/mjcecbpccklceljomllkhilglcdcncbh"
               title="Chrome Webstore"
             >
               <img
                 src="/img/holodex-plus/chrome-webstore.png"
-                className="h-12 w-auto rounded-lg"
+                className="h-12 rounded-lg w-auto"
               />
             </Link>
             <Link

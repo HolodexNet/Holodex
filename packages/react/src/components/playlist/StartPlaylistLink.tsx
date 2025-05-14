@@ -1,18 +1,19 @@
 import { cn } from "@/lib/utils";
-import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 
-export const StartPlaylistLink = forwardRef<
-  HTMLAnchorElement,
-  React.HTMLAttributes<HTMLAnchorElement> & {
-    children: React.ReactNode;
-    firstVideoId: string | undefined;
-    playlistId: number;
-  }
->(({ children, firstVideoId, playlistId, className, ...props }, ref) => {
+export const StartPlaylistLink = ({
+  children,
+  firstVideoId,
+  playlistId,
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLAnchorElement> & {
+  children: React.ReactNode;
+  firstVideoId: string | undefined;
+  playlistId: number;
+}) => {
   return (
     <Link
-      ref={ref}
       to={`/watch/${firstVideoId}?${new URLSearchParams({ playlist: playlistId.toString() })}`}
       className={cn(
         firstVideoId === undefined && "pointer-events-none opacity-50",
@@ -23,6 +24,6 @@ export const StartPlaylistLink = forwardRef<
       {children}
     </Link>
   );
-});
+};
 
 export default StartPlaylistLink;

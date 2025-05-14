@@ -23,7 +23,7 @@ export function LiveChannelIcon({
         <AvatarImage src={imageLink} alt={`${channelName} user icon`} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
-      <div className="absolute bottom-0 right-0 bg-red text-xs text-white">
+      <div className="absolute bottom-0 right-0 text-xs bg-red text-white">
         12hr
       </div>
     </div>

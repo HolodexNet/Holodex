@@ -27,9 +27,9 @@ export function VideoEditMusic({ video }: { video: Video }) {
   const [artist, setArtist] = useState("");
 
   return (
-    <div className="flex flex-col justify-items-stretch gap-4 p-4 text-base-11">
+    <div className="flex flex-col gap-4 p-4 text-base-11 justify-items-stretch">
       <TypographyH4 className="text-base-12">
-        <div className="i-lucide:list-plus mr-1 inline-block align-middle"></div>
+        <div className="mr-1 inline-block align-middle i-lucide:list-plus"></div>
         Add New Song / Select song from Tracklist to modify
       </TypographyH4>
 
@@ -46,7 +46,7 @@ export function VideoEditMusic({ video }: { video: Video }) {
         />
       </div>
       <div className="flex flex-row flex-wrap gap-2">
-        <div className="grid min-w-80 grow gap-1">
+        <div className="grid grow gap-1 min-w-80">
           <Label htmlFor="track_name">Track Name</Label>
           <Input
             type="text"
@@ -80,8 +80,8 @@ export function VideoEditMusic({ video }: { video: Video }) {
           <TooltipProvider>
             <Tooltip delayDuration={100}>
               <TooltipTrigger asChild>
-                <div className="mx-1 mb-1 mt-5 cursor-pointer rounded-sm p-2 text-base-8 hover:bg-base-3 hover:hover:text-base-10">
-                  <div className="i-ic:sharp-start  "></div>
+                <div className="mx-1 cursor-pointer rounded-sm p-2 text-base-8 mb-1 mt-5 hover:bg-base-3 hover:hover:text-base-10">
+                  <div className="i-ic:sharp-start"></div>
                 </div>
               </TooltipTrigger>
               <TooltipContent side="top">Test Start</TooltipContent>
@@ -100,7 +100,7 @@ export function VideoEditMusic({ video }: { video: Video }) {
             <Tooltip delayDuration={100}>
               <TooltipTrigger asChild>
                 <div className="mx-1 mb-1 mt-5 cursor-pointer rounded-sm p-2 text-base-8 hover:bg-base-3 hover:text-base-10">
-                  <div className="i-ic:sharp-keyboard-tab "></div>
+                  <div className="i-ic:sharp-keyboard-tab"></div>
                 </div>
               </TooltipTrigger>
               <TooltipContent side="top">Test End</TooltipContent>
@@ -130,10 +130,10 @@ export function VideoEditMusic({ video }: { video: Video }) {
       </div>
       <hr className="border-base-4" />
       <TypographyH4 className="text-base-12">
-        <div className="i-lucide:list-music mr-1 inline-block align-middle"></div>
+        <div className="mr-1 inline-block align-middle i-lucide:list-music"></div>
         Tracklist:
       </TypographyH4>
-      <div className="min-h-4 rounded-lg bg-base-3"></div>
+      <div className="rounded-lg bg-base-3 min-h-4"></div>
     </div>
   );
 }

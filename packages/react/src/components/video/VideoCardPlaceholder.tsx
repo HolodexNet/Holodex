@@ -60,25 +60,25 @@ export default function VideoCardPlaceholder({
           <VideoThumbnail
             src={thumbnailSrc}
             alt="Stream Thumbnail"
-            className="aspect-video max-h-[50vh] w-full rounded-sm bg-black object-cover"
+            className="aspect-video w-full rounded-sm object-cover bg-black max-h-[50vh]"
           />
-          <div className="mx-4 grid gap-2">
-            <h2 className="text-2xl font-bold">{video.title}</h2>
+          <div className="grid gap-2 mx-4">
+            <h2 className="font-bold text-2xl">{video.title}</h2>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
               <div className="items-center font-semibold text-base-10">
-                <div className="i-heroicons:user -mb-1 mr-3 inline-block text-sm" />
+                <div className="inline-block text-sm mr-3 i-heroicons:user -mb-1" />
                 <span>{nameFn(video.channel)}</span>
               </div>
               {video.mentions &&
                 video.mentions.map((mention) => (
                   <div className="items-center text-base-9">
-                    <div className="i-heroicons:user-plus -mb-1 mr-3 inline-block text-sm" />
+                    <div className="-mb-1 mr-3 inline-block text-sm i-heroicons:user-plus" />
                     <span>{nameFn(mention)}</span>
                   </div>
                 ))}
             </div>
             <div className="flex items-center gap-2 text-base-10">
-              <div className="i-heroicons:clock -mb-1 mr-1 inline-block text-sm" />
+              <div className="-mb-1 mr-1 inline-block text-sm i-heroicons:clock" />
               <VideoCardCountdownToLive video={video} />
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function VideoCardPlaceholder({
                           href={`https://discord.gg/${video.credits.discord.link}`}
                           className="inline-block"
                         >
-                          <div className="i-logos:discord-icon mr-1 inline-block" />
+                          <div className="mr-1 inline-block i-logos:discord-icon" />
                           {video.credits.discord.guildName}
                         </a>
                       </strong>
@@ -124,7 +124,7 @@ export default function VideoCardPlaceholder({
                     })}
                     <strong>
                       <a href={video.credits.datasource.link}>
-                        <div className="i-heroicons:arrow-top-right-on-square mr-1 inline-block" />
+                        <div className="mr-1 inline-block i-heroicons:arrow-top-right-on-square" />
                         {video.credits.datasource.link}
                       </a>
                     </strong>
@@ -154,7 +154,7 @@ export default function VideoCardPlaceholder({
               </div>
               {user && user.role !== "user" && (
                 <div className="flex flex-row flex-nowrap items-center gap-2 pl-6">
-                  <code className="my-2 rounded-md bg-base-3 px-2 py-1 text-sm text-muted">
+                  <code className="rounded-md bg-base-3 text-sm text-muted my-2 px-2 py-1">
                     {video.id}
                   </code>
                   <Button variant="default" className="" asChild>
@@ -197,7 +197,7 @@ export default function VideoCardPlaceholder({
     return (
       <Drawer open={open} onOpenChange={setOpen} modal={true}>
         <DrawerContent
-          className="rounded-lg border border-solid border-base-6 bg-base-2 p-0"
+          className="rounded-lg border border-base-6 bg-base-2 p-0 border-solid"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="h-4"></div>
@@ -211,7 +211,7 @@ export default function VideoCardPlaceholder({
     <Dialog open={open} onOpenChange={setOpen} modal={true}>
       <DialogTitle hidden>Holodex Placeholder Event</DialogTitle>
       <DialogContent
-        className="w-[80%] rounded-lg border border-solid border-base-6 p-0 sm:max-w-[980px]"
+        className="rounded-lg border border-solid border-base-6 p-0 w-[80%] sm:max-w-[980px]"
         onClick={(e) => e.stopPropagation()}
       >
         {content}

@@ -39,12 +39,12 @@ export default function TimezoneSelector() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex gap-2 flex-wrap">
         {selectedTimezones.map((timezone) => (
           <Badge
             key={timezone}
             variant="primary"
-            className="flex h-7 cursor-pointer items-center gap-1 rounded-sm p-1 pr-2"
+            className="flex cursor-pointer items-center gap-1 h-7 rounded-sm p-1 pr-2"
           >
             <div className="i-mdi:clock-outline" />
             {timezone}
@@ -52,20 +52,20 @@ export default function TimezoneSelector() {
               onClick={() => handleTimezoneRemove(timezone)}
               className="ml-1 hover:text-primary-12"
             >
-              <div className="i-mdi:close h-4 w-4" />
+              <div className="h-4 w-4 i-mdi:close" />
             </button>
           </Badge>
         ))}
 
         <Select onValueChange={handleTimezoneAdd}>
           <SelectTrigger
-            className="flex h-7 w-7 items-center justify-center rounded-sm border-none bg-primary-9 p-0"
+            className="flex h-7 items-center rounded-sm justify-center p-0 w-7 border-none bg-primary-9"
             showIcon={false}
           >
-            <div className="i-mdi:plus h-7 w-7" />
+            <div className="h-7 w-7 i-mdi:plus" />
           </SelectTrigger>
           <SelectContent>
-            <SelectGroup className="max-h-[300px] overflow-auto">
+            <SelectGroup className="overflow-auto max-h-[300px]">
               {timezoneOptions.map(({ label, value, offset }) => (
                 <SelectItem
                   key={value}
@@ -74,7 +74,7 @@ export default function TimezoneSelector() {
                 >
                   <div className="flex w-full justify-between">
                     <span>{label}</span>
-                    <span className="text-muted-foreground ml-2">
+                    <span className="ml-2 text-muted-foreground">
                       (UTC{offset})
                     </span>
                   </div>

@@ -27,7 +27,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
           <Button
             key={href + label}
             asChild
-            className="justify-start gap-4 px-4"
+            className="gap-4 px-4 justify-start"
             size="lg"
             variant={href === location.pathname ? "default" : "ghost"}
           >
@@ -52,11 +52,11 @@ export function InlayContainer({ routes }: InlayContainerProps) {
           >
             <div className="i-heroicons:chevron-left" />
           </Button>
-          <h2 className="mr-12 flex-1 text-center text-lg font-semibold md:text-2xl">
+          <h2 className="flex-1 text-center text-lg font-semibold mr-12 md:text-2xl">
             {routes.find(({ href }) => href === location.pathname)?.label}
           </h2>
         </div>
-        <div className="w-full rounded-lg bg-baseA-2 p-2 md:p-4 xl:p-8">
+        <div className="w-full rounded-lg p-2 md:p-4 bg-baseA-2 xl:p-8">
           <Suspense fallback={<Loading size="xl" />}>
             <Outlet />
           </Suspense>

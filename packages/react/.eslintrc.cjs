@@ -6,6 +6,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "prettier",
+    "@unocss"
   ],
   plugins: ["react-refresh", "prettier", "unused-imports"],
   settings: {

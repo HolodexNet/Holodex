@@ -50,7 +50,7 @@ const SelectedVideosModal = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="flex flex-col gap-0 overflow-y-auto overflow-x-hidden px-0 py-6"
+        className="flex flex-col overflow-x-hidden gap-0 overflow-y-auto px-0 py-6"
         style={{
           maxHeight: "50vh",
           minWidth: "min-content",
@@ -68,7 +68,7 @@ const SelectedVideosModal = ({
             <Button
               variant="ghost"
               size="icon-lg"
-              className="size-10 shrink-0"
+              className="shrink-0 size-10"
               onClick={() =>
                 setSelectedVideos((prev) =>
                   prev.filter((v) => v.id !== video.id),
@@ -80,7 +80,7 @@ const SelectedVideosModal = ({
             </Button>
             <Link
               to={`/watch/${video.id}`}
-              className="block w-24 shrink-0 overflow-hidden rounded"
+              className="block shrink-0 overflow-hidden rounded w-24"
             >
               <VideoThumbnail
                 src={getThumbnailSrc(video)}
@@ -89,7 +89,7 @@ const SelectedVideosModal = ({
               />
             </Link>
             <div className="min-w-80">
-              <h3 className="line-clamp-2 font-semibold">{video.title}</h3>
+              <h3 className="font-semibold line-clamp-2">{video.title}</h3>
               <p className="text-sm text-gray-500">{video.channel?.name}</p>
             </div>
           </div>
@@ -118,7 +118,7 @@ const SelectionFooter = () => {
   return (
     <footer
       id="selectionFooter"
-      className="sticky bottom-0 right-0 flex bg-base-3 p-1 shadow-lg"
+      className="bottom-0 flex bg-base-3 p-1 sticky right-0 shadow-lg"
       style={{ bottom: "var(--footer-height-clearance)" }}
     >
       <SelectedVideosModal
@@ -135,10 +135,10 @@ const SelectionFooter = () => {
         }`}
         onClick={exit}
       >
-        <span className="i-mdi:close-circle text-xl" />
+        <span className="text-xl i-mdi:close-circle" />
       </Button>
 
-      <div className="ml-4 space-y-2">
+      <div className="space-y-2 ml-4">
         {page === 0 && <SelectionMainPage setShowVideos={setShowVideos} />}
 
         {page === 1 && <SelectionMentionsPage />}
@@ -172,7 +172,7 @@ export const SelectionMainPage = ({
             onClick={clearSelection}
             className="flex items-center"
           >
-            <span className="i-material-symbols:deselect mr-2" />
+            <span className="mr-2 i-material-symbols:deselect" />
             Deselect
           </Button>
 
@@ -182,7 +182,7 @@ export const SelectionMainPage = ({
             onClick={() => setShowVideos(true)}
             className="flex items-center"
           >
-            <span className="i-mdi:select-search mr-2" />
+            <span className="mr-2 i-mdi:select-search" />
             Show {selectedVideos.length} Videos
           </Button>
         </>
@@ -193,7 +193,7 @@ export const SelectionMainPage = ({
         size="sm"
         disabled={!selectedVideos.length}
       >
-        <span className="i-heroicons:rectangle-group mr-2" />
+        <span className="mr-2 i-heroicons:rectangle-group" />
         Open in Multiview
       </Button>
 
@@ -205,9 +205,9 @@ export const SelectionMainPage = ({
             disabled={!selectedVideos.length}
             className="flex items-center"
           >
-            <span className="i-material-symbols:list-alt-outline mr-2" />
+            <span className="mr-2 i-material-symbols:list-alt-outline" />
             Playlist
-            <div className="i-lucide:chevron-up ml-2 size-4"></div>
+            <div className="ml-2 size-4 i-lucide:chevron-up"></div>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -267,7 +267,7 @@ export const SelectionMentionsPage = () => {
               onClick={() => setPage(0)}
               className="flex cursor-pointer items-center text-sm font-medium"
             >
-              <div className="i-lucide:chevron-left mr-1" />
+              <div className="mr-1 i-lucide:chevron-left" />
               Back
             </div>
           </li>
@@ -391,7 +391,7 @@ function SelectionModifyPlaylistMenu({ disabled }: { disabled: boolean }) {
           disabled={disabled}
           className="flex items-center"
         >
-          <span className="i-heroicons:folder-open mr-2" />
+          <span className="mr-2 i-heroicons:folder-open" />
           {t("component.mainNav.playlist")}
           <div className="i-lucide:chevron-up ml-2 size-4"></div>
         </Button>

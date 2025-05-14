@@ -66,7 +66,7 @@ export function AboutFaq() {
               </li>
               <li>
                 {t("about.faq.mobile.content.ios.0")}
-                <span className="i-heroicons:arrow-up-on-square inline-block" />
+                <span className="inline-block i-heroicons:arrow-up-on-square" />
                 {t("about.faq.mobile.content.ios.1")}
               </li>
             </ul>

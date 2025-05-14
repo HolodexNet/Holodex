@@ -10,7 +10,7 @@ export function ApiError({ error }: { error: HTTPError }) {
 
   return (
     <div className="flex grow flex-col items-center justify-center gap-4">
-      <div className="i-heroicons:exclamation-circle text-4xl" />
+      <div className="text-4xl i-heroicons:exclamation-circle" />
       <TypographyH3>{t("component.apiError.title")}</TypographyH3>
       <code>{error.message}</code>
       <Button

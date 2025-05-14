@@ -108,7 +108,7 @@ export const ToggleableFeatureGroup = ({
         <React.Fragment key={feature.id}>
           <ToggleableFeatureSetting {...feature} />
           {showDividers && index < features.length - 1 && (
-            <div className="-mb-px h-px bg-base-6" />
+            <div className="bg-base-6 h-px -mb-px" />
           )}
         </React.Fragment>
       ))}

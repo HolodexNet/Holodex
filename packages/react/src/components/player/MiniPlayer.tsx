@@ -8,7 +8,7 @@ export function MiniPlayer() {
   const currentVideo = useAtomValue(miniplayerVideoAtom);
 
   return (
-    <div className="fixed inset-x-4 bottom-0 flex flex-col overflow-hidden rounded-t-lg bg-base sm:left-auto sm:w-96">
+    <div className="flex flex-col overflow-hidden fixed bottom-0 sm:left-auto inset-x-4 rounded-t-lg bg-base sm:w-96">
       {currentVideo && (
         <PlayerWrapper
           // className="aspect-video w-full"

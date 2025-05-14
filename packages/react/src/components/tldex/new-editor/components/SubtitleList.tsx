@@ -127,7 +127,7 @@ const SubtitleItem = React.memo(
             }
             title="Delete"
           >
-            <i className="i-mdi:delete text-base" />
+            <i className="text-base i-mdi:delete" />
           </Button>
           <Button
             size="sm"
@@ -136,7 +136,7 @@ const SubtitleItem = React.memo(
             title="Merge"
             disabled={!nextSubtitleId}
           >
-            <i className="i-mdi:call-merge text-base" />
+            <i className="text-base i-mdi:call-merge" />
           </Button>
           <Button
             size="sm"
@@ -157,7 +157,7 @@ const SubtitleItem = React.memo(
           <Textarea
             value={subtitle.message}
             onChange={handleChange}
-            className="w-full rounded bg-base-1 p-1 text-sm"
+            className="w-full rounded p-1 text-sm bg-base-1"
             rows={3}
           />
         </div>

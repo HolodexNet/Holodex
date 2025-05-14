@@ -8,14 +8,7 @@ import {
 } from "@/store/player";
 import { tldexBlockedAtom, tldexSettingsAtom } from "@/store/tldex";
 import { getDefaultStore, useAtom, useAtomValue } from "jotai";
-import {
-  DetailedHTMLProps,
-  HTMLAttributes,
-  forwardRef,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react";
+import { HTMLAttributes, useEffect, useMemo, useRef } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import "./tlchat.css";
 import React from "react";
@@ -85,7 +78,7 @@ function useTimestampIndex(messages?: ParsedMessage[]) {
 function scrollToVideoProgress(
   videoId: string,
   indexFinder: (targetTimestamp: number) => number | undefined,
-  virtuosoRef: React.RefObject<VirtuosoHandle>,
+  virtuosoRef: React.RefObject<VirtuosoHandle | null>,
 ) {
   const videoStatusAtom = videoStatusAtomFamily(videoId);
   const store = getDefaultStore();
@@ -156,16 +149,17 @@ export function TLChat({ videoId }: TLChatProps) {
   );
 }
 
-const TLChatItem = forwardRef<
-  HTMLDivElement,
-  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
->((props, ref) => (
+const TLChatItem = (
+  props: React.DetailedHTMLProps<
+    HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  >,
+) => (
   <div
     {...props}
     className={cn(props.className, "border-b-0 border-base-4 last:border-b-0")}
-    ref={ref}
   />
-));
+);
 
 function TLChatMessage({
   message,
@@ -220,7 +214,7 @@ function TLChatMessage({
                 <Badge
                   size="sm"
                   variant="outline"
-                  className="border-base px-1 py-0.5 text-[0.6rem] text-base-11"
+                  className="border-base text-base-11 px-1 py-0.5 text-[0.6rem]"
                 >
                   VTuber
                 </Badge>
@@ -235,7 +229,7 @@ function TLChatMessage({
                 </Badge>
               )}
             </div>
-            <span className="line-clamp-1 whitespace-nowrap text-sm">
+            <span className="line-clamp-1 text-sm whitespace-nowrap">
               {name}
               {is_verified && (
                 <span className="ml-2" title="verified">
@@ -247,12 +241,11 @@ function TLChatMessage({
         </div>
       )}
       <div className="break-words">
-        <span className="mr-2 whitespace-nowrap text-xs text-base-11">
+        <span className="whitespace-nowrap text-xs text-base-11 mr-2">
           {formatDuration(video_offset * 1000)}
         </span>
         {parsed ? (
           <span
-            // eslint-disable-next-line tailwindcss/no-custom-classname
             className="tlmsg"
             dangerouslySetInnerHTML={{ __html: parsed }}
           />
