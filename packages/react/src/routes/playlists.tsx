@@ -6,7 +6,7 @@ import {
 import PlaylistEntry from "@/components/playlist/PlaylistEntry";
 import { TypographyH3, TypographyP } from "@/shadcn/ui/typography";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { Button } from "@/shadcn/ui/button";
 import { useAtomValue } from "jotai";
 import { userAtom } from "@/store/auth";

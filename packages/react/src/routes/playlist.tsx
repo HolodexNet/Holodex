@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import IndividualPlaylist from "@/components/playlist/IndividualPlaylist";
 import { usePlaylist } from "@/services/playlist.service";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 
 export default function Playlist() {
   const { t } = useTranslation();

@@ -26,7 +26,7 @@ import { clipLanguageQueryAtom } from "@/store/settings";
 import { currentVideoChannelAtom } from "@/store/video";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { useLocation, useParams } from "react-router-dom";
 
 const TheaterModeChat = ({
