@@ -1,4 +1,4 @@
-import { useSeconds } from "use-seconds";
+import { useSeconds } from "./useSeconds";
 
 export function useDuration({
   type,
