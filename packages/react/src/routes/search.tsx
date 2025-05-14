@@ -120,8 +120,8 @@ export default function Search() {
 
       <div className="container space-y-4 p-4">
         {/* Search Controls */}
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-xl flex-1">
+        <div className="flex flex-col gap-4 md:items-center md:flex-row md:justify-between">
+          <div className="flex-1 max-w-xl">
             <SearchBar />
           </div>
           <div className="flex items-center gap-2">

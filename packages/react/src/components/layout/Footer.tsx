@@ -37,7 +37,7 @@ export const Footer = () => {
   return (
     <footer
       id="footer"
-      className="fixed inset-x-0 bottom-0 border-t border-base-5 bg-base-2 p-1"
+      className="fixed border-base-5 bg-base-2 inset-x-0 bottom-0 border-t p-1"
     >
       <nav className="flex items-center justify-between">
         {navItems.map((item, index) => (

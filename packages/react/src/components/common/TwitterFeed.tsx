@@ -69,7 +69,7 @@ export function StatusTweetEmbed({
 
   if (error) {
     return (
-      <TwitterFeed className="flex h-[900px] max-w-[min(500px,calc(100vw-40px))] justify-center" />
+      <TwitterFeed className="flex justify-center h-[900px] max-w-[min(500px,calc(100vw-40px))]" />
     );
   }
 

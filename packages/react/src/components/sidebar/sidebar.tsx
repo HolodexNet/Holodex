@@ -65,20 +65,16 @@ export function Sidebar() {
   useOnClickOutside(ref, handleClickOutside);
 
   return (
-    <aside
-      className=" z-40 border-r border-r-base pb-12"
-      id="sidebar"
-      ref={ref}
-    >
-      <div className="flex min-h-dvh flex-col bg-base-2">
-        <div className="flex items-center justify-end gap-2 px-4 pb-2 pt-4">
+    <aside className="z-40 border-r border-r-base pb-12" id="sidebar" ref={ref}>
+      <div className="flex flex-col bg-base-2 min-h-dvh">
+        <div className="flex items-center gap-2 px-4 pb-2 justify-end pt-4">
           <Link
             to="/"
             className="flex items-center gap-2 overflow-hidden"
             onClick={isMobile ? setClose : undefined}
           >
-            <Logo className="ml-1.5 h-8 w-8" />
-            <h2 className="text-3xl font-semibold tracking-tight">Holodex</h2>
+            <Logo className="h-8 w-8 ml-1.5" />
+            <h2 className="font-semibold text-3xl tracking-tight">Holodex</h2>
           </Link>
           <div className="grow" />
           <Button
@@ -87,7 +83,7 @@ export function Sidebar() {
             onClick={setClose}
           />
         </div>
-        <div className="group/sidebar flex grow flex-col space-y-1 px-3 py-2">
+        <div className="flex grow flex-col py-2 group/sidebar px-3 space-y-1">
           <div className="mb-2">
             <OrgSelectorCombobox setOrg={setOrg} />
           </div>
@@ -132,7 +128,7 @@ export function Sidebar() {
           </Link>
         </div>
         <div className="grow"></div>
-        <hr className="mx-3 my-1 border-base" />
+        <hr className="border-base mx-3 my-1" />
         <div className="flex flex-col space-y-1 px-3 pb-4">
           {/* <SidebarItem
             label={t("component.mainNav.favorites")}
@@ -167,7 +163,7 @@ export function Sidebar() {
             TLDex
           </Button>
           {tldexOpen && (
-            <div className="space-y-1 pl-2 animate-in zoom-in-75">
+            <div className="space-y-1 animate-in pl-2 zoom-in-75">
               <SidebarItem
                 className=""
                 label={t("component.mainNav.tlclient")}

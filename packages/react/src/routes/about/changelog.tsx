@@ -1,7 +1,7 @@
 export function AboutChangelog() {
   return (
     <iframe
-      className="min-h-[70vh] w-full"
+      className="w-full min-h-[70vh]"
       src="https://holodexnet.github.io/Holodex/CHANGELOG.html"
     />
   );

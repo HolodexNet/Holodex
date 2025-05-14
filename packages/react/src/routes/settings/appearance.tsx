@@ -173,7 +173,7 @@ const ColorPickerRow = ({
   <div className="flex items-center justify-between">
     <div className="flex items-center gap-3">
       <div
-        className="h-10 w-10 rounded-full"
+        className="h-10 rounded-full w-10"
         style={{ backgroundColor: `var(--${value}-9)` }}
       />
       <div className="flex flex-col">
@@ -185,19 +185,19 @@ const ColorPickerRow = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant="base-outline"
-          className="h-10 w-24 justify-between bg-base-4"
+          className="h-10 justify-between w-24 bg-base-4"
         >
           <div
             className="h-4 w-4 rounded-full"
             style={{ backgroundColor: `var(--${value}-9)` }}
           />
-          <div className="i-lucide:chevron-down h-4 w-4 opacity-60" />
+          <div className="h-4 w-4 opacity-60 i-lucide:chevron-down" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-52">
         <DropdownMenuLabel>Select a color</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <div className="grid grid-cols-4 gap-1 p-1">
+        <div className="grid gap-1 p-1 grid-cols-4">
           {options.map((color) => (
             <DropdownMenuItem
               key={color}

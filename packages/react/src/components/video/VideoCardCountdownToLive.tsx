@@ -159,7 +159,7 @@ export function VideoCardCountdownToLive({
       );
       return (
         <TimeTooltip id={video.id} timestamp={tick} className={className}>
-          <div className="i-ph:image-broken inline-block align-text-bottom opacity-80" />
+          <div className="inline-block align-text-bottom opacity-80 i-ph:image-broken" />
           &nbsp;{tick.format("LLL")}
         </TimeTooltip>
       );
@@ -199,7 +199,7 @@ const WorldTimeTooltip = React.memo(
     return (
       <div className="w-64">
         {isLikely && (
-          <div className="mb-3 rounded-md bg-yellow-500/10 p-2 text-xs text-yellow-10">
+          <div className="rounded-md p-2 text-xs mb-3 bg-yellow-500/10 text-yellow-10">
             {t("component.videoCard.uncertainPlaceholder")}
           </div>
         )}
@@ -220,7 +220,7 @@ const WorldTimeTooltip = React.memo(
                   </span>
                   <span className="text-xs text-base-10">{day}</span>
                 </div>
-                <div className="font-mono text-sm font-extrabold text-base-11 antialiased">
+                <div className="font-mono text-sm text-base-11 font-extrabold antialiased">
                   {time}
                 </div>
               </div>

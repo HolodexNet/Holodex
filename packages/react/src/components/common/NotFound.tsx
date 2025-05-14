@@ -12,7 +12,7 @@ export default function NotFound() {
         <title>{t("views.notFound.title")} - Holodex</title>
       </Helmet>
       <div className="text-center">
-        <h1 className="my-10 text-xl font-bold">{t("views.notFound.title")}</h1>
+        <h1 className="font-bold my-10 text-xl">{t("views.notFound.title")}</h1>
         <Button asChild variant="secondary">
           <Link to="/">{t("views.notFound.back")}</Link>
         </Button>

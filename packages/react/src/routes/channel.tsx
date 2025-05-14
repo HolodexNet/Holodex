@@ -60,8 +60,8 @@ export function Channel() {
             tab !== "music" && navigate(`/channel/${channel?.id}/${tab}`)
           }
         >
-          <div className="sticky top-0 z-20 flex flex-col gap-2 border-b border-b-base-5 bg-base-3 pt-4 shadow-lg md:gap-6">
-            <div className="container flex items-start gap-4 px-4 max-sm:flex-col md:items-center md:px-8">
+          <div className="sticky top-0 flex flex-col gap-2 border-b bg-base-3 pt-4 shadow-lg z-20 border-b-base-5 md:gap-6">
+            <div className="container flex items-start gap-4 px-4 md:px-8 max-sm:flex-col md:items-center">
               <div className="flex items-center gap-4">
                 <ChannelImg
                   className="size-16 md:size-24"
@@ -92,7 +92,7 @@ export function Channel() {
                         key={topic}
                         size="sm"
                         topic={topic}
-                        className="border-base-7 capitalize text-base-10 "
+                        className="capitalize text-base-10 border-base-7"
                       />
                     ))}
                   </div>
@@ -107,7 +107,7 @@ export function Channel() {
                 />
               </div>
             </div>
-            <TabsList className="container justify-start overflow-x-auto bg-transparent md:px-8">
+            <TabsList className="container justify-start overflow-x-auto md:px-8 bg-transparent">
               <TabsTrigger value="">{t("views.channel.video")}</TabsTrigger>
               <TabsTrigger value="clips">
                 {t("views.channel.clips")}
@@ -121,7 +121,7 @@ export function Channel() {
                   to={MUSICDEX_URL + "/channel/" + channel?.id}
                 >
                   {t("views.channel.music")}
-                  <div className="i-lucide:external-link text-lg" />
+                  <div className="text-lg i-lucide:external-link" />
                 </Link>
               </TabsTrigger>
               <TabsTrigger value="about">

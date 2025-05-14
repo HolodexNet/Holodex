@@ -63,7 +63,7 @@ export function SettingsUser() {
                     }
                     variant="outline"
                   >
-                    <div className="i-carbon:logo-discord md:mr-1" />
+                    <div className="md:mr-1 i-carbon:logo-discord" />
                     <span className="hidden md:block">Discord</span>
                   </Badge>
                 </TooltipTrigger>
@@ -83,7 +83,7 @@ export function SettingsUser() {
                     }
                     variant="outline"
                   >
-                    <div className="i-mdi:google md:mr-1" />
+                    <div className="md:mr-1 i-mdi:google" />
                     <span className="hidden md:block">Google</span>
                   </Badge>
                 </TooltipTrigger>
@@ -103,7 +103,7 @@ export function SettingsUser() {
                     }
                     variant="outline"
                   >
-                    <div className="i-mdi:twitter md:mr-1" />
+                    <div className="md:mr-1 i-mdi:twitter" />
                     <span className="hidden md:block">Twitter</span>
                   </Badge>
                 </TooltipTrigger>
@@ -144,7 +144,7 @@ export function SettingsUser() {
         <LoginButtons />
       </SettingsItem>
       <SettingsItem label={t("views.login.username")} fullWidth>
-        <div className="ml-auto flex w-full max-w-md items-center gap-2">
+        <div className="ml-auto flex w-full items-center gap-2 max-w-md">
           <Input placeholder={user.username} />
           <Button className="whitespace-nowrap">
             {t("views.watch.uploadPanel.usernameChange")}

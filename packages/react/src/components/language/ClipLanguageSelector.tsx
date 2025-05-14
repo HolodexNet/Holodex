@@ -46,23 +46,23 @@ export const ClipLanguageSelector: React.FC = () => {
           title={t("views.settings.clipLanguageSelection")}
         >
           <div className="relative h-6 w-6">
-            <div className="i-tabler:language-hiragana absolute h-full w-full text-xl" />
+            <div className="absolute h-full w-full text-xl i-tabler:language-hiragana" />
             <div
-              className="i-mdi:filter-gear-outline absolute inset-0 mb-auto ml-auto h-full w-full opacity-50"
+              className="absolute ml-auto h-full w-full opacity-50 inset-0 mb-auto i-mdi:filter-gear-outline"
               style={{ fontSize: "10px", marginBottom: "3px" }}
             />
           </div>
           <span className="sr-only">Select clip language</span>{" "}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="max-w-[80vw] p-0">
+      <PopoverContent className="p-0 max-w-[80vw]">
         <Command>
           {/* <CommandInput placeholder={t("Search languages...")} /> */}
           <CommandList>
             <CommandGroup heading={t("views.settings.clipLanguageSelection")}>
               <CommandItem disabled className="p-0">
                 {selectedLangs.length > 0 && (
-                  <div className="mb-1 flex w-full flex-wrap gap-1 border-b border-base-5 p-2 pt-0">
+                  <div className="mb-1 flex w-full flex-wrap gap-1 border-base-5 p-2 pt-0 border-b">
                     {selectedLangs.map((langValue) => {
                       const lang = CLIPPER_LANGS.find(
                         (l) => l.value === langValue,

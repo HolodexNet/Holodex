@@ -189,15 +189,15 @@ export function VideoCard({
           }
         />
         {video.topic_id && (
-          <span className="absolute left-1 top-1 text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
+          <span className="absolute rounded-sm px-1 text-sm capitalize left-1 top-1 text-pretty bg-black/80 text-white/80 group-hover:text-white">
             {video.topic_id.replaceAll("_", " ")}
           </span>
         )}
-        <div className="absolute bottom-1 right-1 flex flex-col items-end gap-1">
+        <div className="absolute flex flex-col gap-1 bottom-1 right-1 items-end">
           {video.songcount && (
             <span className="text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
               <div
-                className="i-fluent:music-note-2-16-regular inline-block align-text-bottom"
+                className="inline-block align-text-bottom i-fluent:music-note-2-16-regular"
                 // style={{ fontSize: "13px", lineHeight: "1.15rem" }}
               />
               &nbsp;{video.songcount}
@@ -206,7 +206,7 @@ export function VideoCard({
           {tlcount > 0 && (
             <span className="text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
               <div
-                className="i-fluent:subtitles-16-regular inline-block align-text-bottom"
+                className="inline-block align-text-bottom i-fluent:subtitles-16-regular"
                 // style={{ fontSize: "13px", lineHeight: "1.15rem" }}
               />
               &nbsp;{tlcount}
@@ -292,7 +292,7 @@ export function VideoCard({
               e.stopPropagation();
             }}
           >
-            <div className="i-heroicons:ellipsis-vertical h-6 w-6" />
+            <div className="h-6 w-6 i-heroicons:ellipsis-vertical" />
           </Button>
         </VideoMenu>
         {videoIsPlaceholder && (

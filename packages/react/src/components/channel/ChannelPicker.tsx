@@ -67,14 +67,14 @@ export function ChannelPicker<
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          className="justify-between border-base-6 pr-2 text-base-11 focus:border-blue-6"
+          className="text-base-11 justify-between border-base-6 pr-2 focus:border-blue-6"
           variant="outline"
           role="combobox"
         >
           {preferredSelectedName ||
             value ||
             t("channelRequest.ChannelPickerLabel")}
-          <div className="i-lucide:chevrons-up-down text-sm opacity-50" />
+          <div className="text-sm opacity-50 i-lucide:chevrons-up-down" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0">
@@ -95,7 +95,7 @@ export function ChannelPicker<
           <CommandList>
             {isPending && (
               <div className="flex w-full">
-                <div className="i-lucide:loader-2 mx-auto animate-spin" />
+                <div className="mx-auto animate-spin i-lucide:loader-2" />
               </div>
             )}
             <CommandEmpty>

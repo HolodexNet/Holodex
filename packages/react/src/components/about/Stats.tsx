@@ -65,7 +65,7 @@ export default function StatComponent({
 
   return (
     <Card className="">
-      <CardHeader className="space-y-1 p-4 pb-2">
+      <CardHeader className="p-4 pb-2 space-y-1">
         <CardDescription>{title}</CardDescription>
         <CardTitle className="text-3xl">
           {displayAmount.toLocaleString()}

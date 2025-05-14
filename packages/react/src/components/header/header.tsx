@@ -33,10 +33,10 @@ export function Header({ id }: HeaderProps) {
       <Button
         size="icon"
         variant="ghost"
-        className="h-12 w-12 p-4"
+        className="p-4 h-12 w-12"
         onClick={frameToggleSidebar}
       >
-        <div className="i-heroicons:bars-3 rounded-md p-3" />
+        <div className="rounded-md p-3 i-heroicons:bars-3" />
       </Button>
 
       {!isSearching && (
@@ -62,15 +62,15 @@ export function Header({ id }: HeaderProps) {
           {/* Mobile-specific search bar */}
           {isMobile &&
             (isSearching ? (
-              <div className="mt-3 flex w-full items-start self-start">
-                <SearchBar className="shrink grow" autoFocus />
+              <div className="flex w-full items-start mt-3 self-start">
+                <SearchBar className="grow shrink" autoFocus />
                 <Button
                   size="icon"
                   variant="ghost"
                   className="ml-2 text-lg text-base-10"
                   onClick={() => setIsSearching(false)}
                 >
-                  <div className="i-lucide:x h-8 w-8" />
+                  <div className="h-8 w-8 i-lucide:x" />
                 </Button>
               </div>
             ) : (
@@ -80,13 +80,13 @@ export function Header({ id }: HeaderProps) {
                 className="ml-auto h-12 w-12 text-xl text-base-10"
                 onClick={() => setIsSearching(true)}
               >
-                <div className="i-heroicons:magnifying-glass h-8 w-8" />
+                <div className="h-8 w-8 i-heroicons:magnifying-glass" />
               </Button>
             ))}
 
           {/* Desktop-specific search bar */}
           {!isMobile && (
-            <SearchBar className="mt-3 max-w-lg self-start md:mr-1 lg:mr-2" />
+            <SearchBar className="mt-3 self-start max-w-lg md:mr-1 lg:mr-2" />
           )}
         </>
       )}

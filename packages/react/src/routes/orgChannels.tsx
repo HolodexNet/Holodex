@@ -56,7 +56,7 @@ const GroupComponent: React.FC<{
     <React.Fragment>
       {group && <h2 className="mb-4 mt-6 text-xl font-bold">{group}</h2>}
       {displayStyle === "grid" ? (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
+        <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(240px,1fr))]">
           {channels.map((channel) => (
             <ChannelCard
               key={channel.id}
@@ -138,7 +138,7 @@ export function ChannelsOrg() {
         </title>
       </Helmet>
       <div className="h-full w-full px-4 md:p-8">
-        <div className="mb-6 flex flex-row gap-4">
+        <div className="flex flex-row gap-4 mb-6">
           {/* Controls */}
           <div className="flex gap-1">
             <Button
@@ -147,7 +147,7 @@ export function ChannelsOrg() {
               className="h-9 w-9"
               onClick={() => setDisplayStyle("grid")}
             >
-              <span className="i-lucide:layout-grid text-base" />
+              <span className="text-base i-lucide:layout-grid" />
             </Button>
             <Button
               variant={displayStyle === "list" ? "default" : "base-outline"}
@@ -155,7 +155,7 @@ export function ChannelsOrg() {
               className="h-9 w-9"
               onClick={() => setDisplayStyle("list")}
             >
-              <span className="i-lucide:list text-base" />
+              <span className="text-base i-lucide:list" />
             </Button>
           </div>
 

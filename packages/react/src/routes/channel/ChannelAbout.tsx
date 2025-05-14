@@ -9,14 +9,14 @@ export default function ChannelAbout() {
 
   return (
     <div className="container flex gap-4 py-4 max-sm:flex-col-reverse">
-      <div className="w-full whitespace-pre-wrap rounded-lg bg-base-3 p-4">
-        <LinkItUrl className="text-primary underline hover:text-primary-12">
+      <div className="w-full rounded-lg bg-base-3 p-4 whitespace-pre-wrap">
+        <LinkItUrl className="hover:text-primary-12 text-primary underline">
           <LinkItTwitter className="text-primary underline hover:text-primary-12">
             {channel.description}
           </LinkItTwitter>
         </LinkItUrl>
       </div>
-      <div className="h-fit w-full shrink-0 flex-col divide-y-2 divide-base-5 rounded-lg bg-base-3 p-4 md:w-80 [&>p]:py-2">
+      <div className="w-full shrink-0 flex-col rounded-lg bg-base-3 p-4 h-fit md:w-80 divide-y-2 divide-base-5 [&>p]:py-2">
         <h3 className="pb-2 text-xl font-bold">
           {t("component.channelInfo.stats")}
         </h3>

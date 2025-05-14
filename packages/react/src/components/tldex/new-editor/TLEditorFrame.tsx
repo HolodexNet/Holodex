@@ -109,7 +109,7 @@ export function TLEditorFrame() {
 
   return (
     // <div className="h-full w-full">
-    <div className="tl-frame p-4">
+    <div className="p-4 tl-frame">
       <TLEditorHeader onSave={handleSave} onExit={handleExit} />
       {!id && !currentVideo && <VideoIdInput />}
       {id && (isVideoPending || isScriptLoading) && <Loading size="md" />}
@@ -126,8 +126,8 @@ export function TLEditorContent() {
     <>
       <PanelGroup direction="horizontal" className="content">
         <Panel defaultSize={60} minSize={40}>
-          <div className="flex size-full flex-col">
-            <div className="flex-1 overflow-hidden rounded">
+          <div className="flex flex-col size-full">
+            <div className="overflow-hidden flex-1 rounded">
               <PlayerWrapper
                 id={id || "x"}
                 customSetPlayerRef={setPlayerRef}

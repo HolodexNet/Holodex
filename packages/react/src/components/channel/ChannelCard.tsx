@@ -89,12 +89,12 @@ export function ChannelCard({
     case "list":
       return (
         <div
-          className="flex items-center gap-2 rounded-lg bg-base-3 p-2 transition-all hover:cursor-pointer hover:bg-base-4 md:gap-4 md:p-4"
+          className="flex items-center gap-2 md:gap-4 rounded-lg bg-base-3 p-2 transition-all md:p-4 hover:cursor-pointer hover:bg-base-4"
           onClick={goToChannelClickHandler}
         >
           <Link
             to={channelHref}
-            className="flex grow items-center gap-2 md:gap-4"
+            className="flex items-center gap-2 md:gap-4 grow"
           >
             <ChannelImg
               className={`h-12 w-auto md:h-20 lg:h-24 ${inactive && "opacity-80 saturate-50"}`}
@@ -108,7 +108,7 @@ export function ChannelCard({
               <div className="line-clamp-1 text-lg font-bold">
                 {preferredName}
               </div>
-              <div className="text-sm text-base-11">
+              <div className="text-base-11 text-sm">
                 {showSubscribers &&
                   t("component.channelInfo.subscriberCount", {
                     n: formatCount(subscriber_count ?? "0"),
@@ -123,12 +123,12 @@ export function ChannelCard({
                   })}`}
               </div>
               {size === "sm" && (
-                <div className="mt-1 flex max-w-full gap-1 overflow-x-hidden">
+                <div className="flex mt-1 max-w-full gap-1 overflow-x-hidden">
                   {top_topics?.map((topic) => (
                     <TopicBadge
                       size="sm"
                       topic={topic}
-                      className="border-base-7 capitalize text-base-10 "
+                      className="border-base-7 capitalize text-base-10"
                     />
                   ))}
                 </div>
@@ -150,7 +150,7 @@ export function ChannelCard({
       return (
         // Set min-height because react-virtuoso will break if the height is not fixed
         <div
-          className="group relative flex h-full min-h-96 w-full flex-col items-center gap-2 rounded-md bg-base-3 p-4 transition-all hover:cursor-pointer hover:bg-base-4"
+          className="flex w-full flex-col items-center gap-2 bg-base-3 p-4 transition-all hover:cursor-pointer hover:bg-base-4 group relative h-full min-h-96 rounded-md"
           onClick={goToChannelClickHandler}
         >
           <Link
@@ -191,12 +191,12 @@ export function ChannelCard({
               {preferredName}
             </div>
             <div className="flex flex-col items-center">
-              <div className="whitespace-nowrap text-sm text-base-11">
+              <div className="text-sm text-base-11 whitespace-nowrap">
                 {t("component.channelInfo.subscriberCount", {
                   n: formatCount(subscriber_count ?? "0"),
                 })}
               </div>
-              <div className="flex flex-wrap justify-center gap-x-1 gap-y-0 text-sm text-base-11">
+              <div className="flex flex-wrap text-sm text-base-11 justify-center gap-x-1 gap-y-0">
                 <span className="whitespace-nowrap">
                   {t("component.channelInfo.videoCount", {
                     0: video_count ?? 0,
@@ -215,7 +215,7 @@ export function ChannelCard({
                 <TopicBadge
                   size="sm"
                   topic={topic}
-                  className="border-base-7 capitalize text-base-10 "
+                  className="border-base-7 capitalize text-base-10"
                 />
               ))}
             </div>

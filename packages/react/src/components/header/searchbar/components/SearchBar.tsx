@@ -119,7 +119,7 @@ export function SearchBar({
         }}
       >
         <PopoverTrigger asChild>
-          <div className="group rounded-md bg-base-2 p-2 text-sm ring-offset-base-2 focus-within:bg-base-3 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:bg-base-3">
+          <div className="group rounded-md p-2 text-sm ring-offset-base-2 focus-within:ring-2 hover:bg-base-3 bg-base-2 focus-within:bg-base-3 focus-within:ring-primary focus-within:ring-offset-2">
             <label className="flex flex-wrap items-center gap-1">
               {queryPieces.map((queryItem, i) => {
                 return (
@@ -141,9 +141,9 @@ export function SearchBar({
                 onBlur={() => setOpen(false)}
                 onFocus={() => setOpen(true)}
                 placeholder={t("component.search.searchLabel")}
-                className="ml-2 flex-1 bg-transparent outline-hidden placeholder:text-base-8"
+                className="ml-2 outline-hidden flex-1 bg-transparent placeholder:text-base-8"
               />
-              <div className="ml-auto flex flex-row opacity-0 group-focus-within:opacity-100 ">
+              <div className="ml-auto flex flex-row opacity-0 group-focus-within:opacity-100">
                 {query.length > 0 && (
                   <CommandShortcut className="pointer-events-none opacity-80">
                     {/* <span className="mr-1 rounded-sm bg-base-4 p-0.5">⇪</span> */}
@@ -152,12 +152,12 @@ export function SearchBar({
                 )}
                 <button
                   type="submit"
-                  className="-my-2 -mr-1 flex size-8 items-center rounded-md text-base-11 transition-all hover:bg-base-5 hover:text-primary-11"
+                  className="flex items-center rounded-md text-base-11 transition-all size-8 -my-2 -mr-1 hover:bg-base-5 hover:text-primary-11"
                   disabled={query.length === 0}
                   onClick={() => doSearch()}
                   onSubmit={() => doSearch()}
                 >
-                  <div className="i-carbon:search mx-auto"></div>
+                  <div className="mx-auto i-carbon:search"></div>
                 </button>
               </div>
             </label>
@@ -179,7 +179,7 @@ export function SearchBar({
           >
             <CommandList>
               <div
-                className="min-w-80 rounded-md border border-base bg-base-2 text-base-11 outline-hidden animate-in fade-in-20 slide-in-from-top-2  sm:left-auto sm:w-full"
+                className="min-w-80 rounded-md border border-base bg-base-2 text-base-11 outline-hidden animate-in fade-in-20 slide-in-from-top-2 sm:left-auto sm:w-full"
                 style={{
                   boxShadow:
                     "0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)",

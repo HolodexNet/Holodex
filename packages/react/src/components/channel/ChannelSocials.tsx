@@ -26,13 +26,13 @@ export function ChannelSocials({
         <div className="flex gap-2">
           {/* Youtube Logo needs to conform with YT guidelines https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors */}
           <Button
-            className="hidden text-[#282828] dark:text-white md:flex"
+            className="hidden text-[#282828] md:flex dark:text-white"
             size="icon-lg"
             variant="ghost-yt"
             asChild
           >
             <Link to={`https://www.youtube.com/channel/${id}`}>
-              <div className="i-mdi:youtube text-3xl" />
+              <div className="text-3xl i-mdi:youtube" />
             </Link>
           </Button>
           {twitter && (
@@ -73,7 +73,6 @@ export function ChannelSocials({
             disabled={isPending}
           >
             <div
-              // eslint-disable-next-line tailwindcss/no-custom-classname
               className={
                 isFavorited
                   ? "i-tabler:heart group-hover:i-tabler-heart-broken"
@@ -88,7 +87,7 @@ export function ChannelSocials({
       return (
         <div className="flex w-full flex-col gap-2">
           <Button
-            className="group/fav w-full"
+            className="w-full group/fav"
             variant={isFavorited ? "outline" : "secondary"}
             disabled={isPending}
             onClick={() => {
@@ -102,7 +101,6 @@ export function ChannelSocials({
             }}
           >
             <div
-              // eslint-disable-next-line tailwindcss/no-custom-classname
               className={
                 isFavorited
                   ? "i-tabler:heart group-hover/fav:i-tabler-heart-broken inline-block"

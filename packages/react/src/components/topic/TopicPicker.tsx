@@ -65,7 +65,7 @@ export function TopicPicker({
             }
           >
             {value ?? t("component.topicPicker.pickLabel")}
-            <div className="i-heroicons:chevron-up-down ml-2 h-4 w-4 shrink-0 opacity-50 " />
+            <div className="ml-2 h-4 w-4 shrink-0 opacity-50 i-heroicons:chevron-up-down" />
           </Button>
         </DrawerTrigger>
         <DrawerContent className="p-0">
@@ -93,7 +93,7 @@ export function TopicPicker({
                 )}
                 {(isPending || isLoading) && (
                   <CommandItem className="flex justify-center py-2" disabled>
-                    <div className="i-lucide:loader-2 animate-spin" />
+                    <div className="animate-spin i-lucide:loader-2" />
                   </CommandItem>
                 )}
               </CommandGroup>

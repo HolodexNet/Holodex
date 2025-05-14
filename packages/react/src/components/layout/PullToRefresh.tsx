@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, type JSX } from "react";
 
 interface PullToRefreshProps {
   isPullable?: boolean;
@@ -104,7 +104,7 @@ const PullToRefresh: React.FC<PullToRefreshProps> = ({
   return (
     <div ref={containerRef} className="relative">
       <div
-        className="fixed inset-x-0 top-0 z-50 flex -translate-y-10 items-center justify-center overflow-hidden transition ease-out"
+        className="fixed inset-x-0 top-0 z-50 flex items-center justify-center overflow-hidden transition ease-out -translate-y-10"
         style={{
           transform: `translateY(${pullDistance}px)`,
           opacity: pullDistance / (pullDownThreshold / 1.8),
@@ -129,7 +129,7 @@ const PullToRefresh: React.FC<PullToRefreshProps> = ({
         </div>
       </div>
       <div
-        className="transition-transform ease-out"
+        className="ease-out transition-transform"
         style={{
           transform: `translateY(${pullDistance}px)`,
         }}
