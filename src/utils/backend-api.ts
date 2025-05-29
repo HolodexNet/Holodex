@@ -171,7 +171,12 @@ export default {
               ),
           )
           // get currently live and upcoming lives within the next 3 weeks
-          .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))));
+          .filter(
+            (live) => (
+                live.start_actual
+                || dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))
+              ),
+          ));
   },
   patchFavorites(jwt, operations) {
     return axiosInstance.patch("/users/favorites", operations, {
