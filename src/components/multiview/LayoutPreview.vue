@@ -1,14 +1,30 @@
 <template>
   <div class="layout-preview" :class="{ 'theme--light': !$vuetify.theme.dark }" :style="size">
     <template v-for="l in layout">
-      <div :key="l.i" class="layout-preview-cell" :style="getStyle(l)">
-        <span v-if="content && content[l.i] && content[l.i].type === 'chat'">💬</span>
+      <div
+        :key="l.i"
+        class="layout-preview-cell flex-column"
+        :style="getStyle(l)"
+      >
+        <template v-if="isChat(content, l)">
+          <v-icon v-if="shouldShowTlIcon(content, l)" :small="!isXSmall(content, l)" :x-small="isXSmall(content, l)">
+            {{ icons.tlChat }}
+          </v-icon>
+          <v-icon v-if="shouldShowYtIcon(content, l)" :small="!isXSmall(content, l)" :x-small="isXSmall(content, l)">
+            {{ icons.ytChat }}
+          </v-icon>
+          <span v-if="shouldShowEmoji(content, l)" class="text-caption" title="Chat+TL">💬</span>
+        </template>
       </div>
     </template>
   </div>
 </template>
 
 <script lang="ts">
+import { mapState } from 'vuex';
+
+const MIN_DOUBLE_ICON_HEIGHT = 8;
+const MIN_XSMALL_ICON_HEIGHT = 5;
 export default {
     name: "LayoutPreview",
     props: {
@@ -30,6 +46,7 @@ export default {
         },
     },
     computed: {
+        ...mapState("multiview", ["defaultShowYtChat", "defaultShowTlChat"]),
         size() {
             const width = this.scale * (this.mobile ? 108 : 192);
             const height = this.scale * (this.mobile ? 192 : 108);
@@ -40,6 +57,35 @@ export default {
         },
     },
     methods: {
+        isChat(content, l) {
+            return content && content[l.i] && content[l.i].type === "chat";
+        },
+        isXSmall(content, l) {
+            if (l.h < MIN_DOUBLE_ICON_HEIGHT) {
+                return l.h < MIN_XSMALL_ICON_HEIGHT;
+            }
+            if (this.showBothIcons(content, l)) {
+                return l.h < (MIN_XSMALL_ICON_HEIGHT * 2);
+            }
+            return false;
+        },
+        shouldShowEmoji(content, l) {
+            return l.h < MIN_DOUBLE_ICON_HEIGHT && this.showBothIcons(content, l);
+        },
+        showBothIcons(content, l) {
+            return content[l.i].mode === 3
+                || (content[l.i].mode === 0 && this.defaultShowYtChat && this.defaultShowTlChat);
+        },
+        shouldShowYtIcon(content, l) {
+            return content[l.i].mode === 1
+                || (content[l.i].mode === 0 && !this.defaultShowTlChat && this.defaultShowYtChat)
+                || (this.showBothIcons(content, l) && l.h >= MIN_DOUBLE_ICON_HEIGHT);
+        },
+        shouldShowTlIcon(content, l) {
+            return content[l.i].mode === 2
+                || (content[l.i].mode === 0 && this.defaultShowTlChat && !this.defaultShowYtChat)
+                || (this.showBothIcons(content, l) && l.h >= MIN_DOUBLE_ICON_HEIGHT);
+        },
         getStyle(l) {
             // viewport is constricted to 24 cols and 24 rows
             // assuming nothing is off the screen, 0 < x < 24, 0 < y < 24

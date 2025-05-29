@@ -40,10 +40,18 @@ export function encodeLayout({ layout, contents, includeVideo = false }) {
 
             if (contents[item.i]) {
                 const {
-                    id, type, video, currentTab,
+                    id, type, mode, video, currentTab,
                 } = contents[item.i];
                 if (type === "chat") {
-                    encodedBlock += `chat${currentTab || 0}`;
+                    let prefix = "chat";
+                    if (mode === 3) {
+                        prefix = "chtl";
+                    } else if (mode === 2) {
+                        prefix = "_tl_";
+                    } else if (mode === 1) {
+                        prefix = "_ch_";
+                    }
+                    encodedBlock += `${prefix}${currentTab || 0}`;
                 } else if (type === "video" && includeVideo) {
                     if (video?.type === "twitch") {
                         encodedBlock += `twitch${id}`;
@@ -76,7 +84,24 @@ export function decodeLayout(encodedStr) {
         const index = generateContentId();
         const xywh = str.substring(0, 4);
         const idOrChat = str.substring(4, 15);
-        const isChat = idOrChat.substring(0, 4) === "chat";
+        const chatModeStr = idOrChat.substring(0, 4);
+        let chatMode = -1;
+        switch (chatModeStr) {
+            case "chtl":
+                chatMode = 3;
+                break;
+            case "_tl_":
+                chatMode = 2;
+                break;
+            case "_ch_":
+                chatMode = 1;
+                break;
+            case "chat":
+                chatMode = 0;
+                break;
+            default:
+                break;
+        }
         const isTwitch = idOrChat.substring(0, 6) === "twitch";
         const channelName = str.substring(15);
 
@@ -98,10 +123,11 @@ export function decodeLayout(encodedStr) {
         });
         videoCellCount += 1;
         layoutItem.i = index;
-        if (isChat) {
+        if (chatMode >= 0) {
             const currentTab = idOrChat.length === 5 ? Number(idOrChat[4]) : -1;
             parsedContent[index] = {
                 type: "chat",
+                mode: chatMode,
                 ...(currentTab >= 0) && { currentTab },
             };
             videoCellCount -= 1;

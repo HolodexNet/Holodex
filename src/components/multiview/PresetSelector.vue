@@ -123,7 +123,31 @@
         {{ $t("views.favorites.showall") }}
       </v-btn>
     </div>
-    <v-row class="ml-1">
+    <v-row class="ml-1 text-body-1 d-flex align-center">
+      <span class="pl-4 pr-2">Chat Defaults:</span>
+      <v-btn
+        :color="defaultShowYtChat ? 'primary' : ''"
+        small
+        @click.stop="toggleDefaultYtChat"
+      >
+        <v-icon small class="mr-1">
+          {{ icons.ytChat }}
+        </v-icon>
+        Chat
+      </v-btn>
+      <v-btn
+        class="ml-1"
+        :color="defaultShowTlChat ? 'primary' : ''"
+        small
+        @click.stop="toggleDefaultTlChat"
+      >
+        <v-icon small class="mr-1">
+          {{ icons.tlChat }}
+        </v-icon>
+        TL
+      </v-btn>
+    </v-row>
+    <v-row class="ml-1 mt-1">
       <template v-for="preset in currentGroup">
         <v-col :key="preset.name" cols="auto" class="justify-center pa-1">
           <LayoutPreviewCard
@@ -141,7 +165,7 @@
 <script lang="ts">
 import { mdiDotsVertical, mdiToggleSwitch } from "@mdi/js";
 import { decodeLayout } from "@/utils/mv-utils";
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 import LayoutPreviewCard from "./LayoutPreviewCard.vue";
 
 export default {
@@ -164,7 +188,7 @@ export default {
         };
     },
     computed: {
-        ...mapState("multiview", ["presetLayout", "autoLayout", "activeVideos", "layout", "layoutContent"]),
+        ...mapState("multiview", ["presetLayout", "autoLayout", "activeVideos", "layout", "layoutContent", "defaultShowYtChat", "defaultShowTlChat"]),
         ...mapGetters("multiview", [
             "decodedCustomPresets",
             "decodedMobilePresets",
@@ -184,6 +208,7 @@ export default {
         },
     },
     methods: {
+        ...mapMutations("multiview", ["setDefaultYtChat", "setDefaultTlChat"]),
         setAutoLayout(index, encodedLayout) {
             this.$store.commit("multiview/setAutoLayout", { index, encodedLayout });
         },
@@ -198,6 +223,12 @@ export default {
         },
         presetInAuto(preset) {
             return this.autoLayoutSet.has(preset.id);
+        },
+        toggleDefaultYtChat() {
+            this.setDefaultYtChat(!this.defaultShowYtChat);
+        },
+        toggleDefaultTlChat() {
+            this.setDefaultTlChat(!this.defaultShowTlChat);
         },
     },
 };
