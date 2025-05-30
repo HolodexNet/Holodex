@@ -463,6 +463,7 @@ views:
         Videos are synced based on the stream start time, and can desync due to
         mid stream technical issues or deleted portions. Use offsets to manually
         align videos
+    autoHideToolbar: Auto Hide Toolbar
   mugen:
     welcome: >-
       Welcome to MugenClips! Everyone on this page is seeing the same randomly
