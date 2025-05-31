@@ -263,6 +263,8 @@ views:
     title: Settings
     darkModeLabel: Dark Mode
     darkModeMsg: Changes the theme between light mode and dark mode
+    watchViewReversedLabel: Show Chat on Left
+    watchViewReversedMsg: Display chat to left of screen in watch screen
     redirectModeLabel: Open on Youtube
     redirectModeMsg: >-
       Clicking on video thumbnails will open it in Youtube, clicking the video
