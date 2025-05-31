@@ -194,6 +194,7 @@ views:
       all: 모두
       official: 아카이브
       subber: 클립
+      collabs: 콜라보
   library:
     savedVideosTitle: 저장된 동영상
     createYtPlaylistButton: YouTube 재생목록 생성 ({0})

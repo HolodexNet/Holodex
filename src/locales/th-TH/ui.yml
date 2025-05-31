@@ -194,6 +194,7 @@ views:
       all: ทั้งหมด
       official: สตรีมที่ผ่านมาแล้ว
       subber: คลิป
+      collabs: โคแลป
   library:
     savedVideosTitle: วิดีโอที่บันทึกไว้
     createYtPlaylistButton: สร้างเพลย์ลิสต์ YouTube ({0})
