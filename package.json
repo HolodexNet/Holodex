@@ -27,7 +27,7 @@
     "@interactjs/modifiers": "^1.10.11",
     "@mdi/js": "^6.5.95",
     "@vueuse/core": "^9.1.0",
-    "axios": "^0.25.0",
+    "axios": "^0.28.0",
     "axios-retry": "^3.2.4",
     "dayjs": "^1.10.7",
     "element-resize-detector": "^1.2.4",
