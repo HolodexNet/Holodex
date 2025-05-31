@@ -29,6 +29,7 @@ export {
     mdiMusic,
     mdiPencil, // for changing language
     mdiPlay,
+    mdiPlayNetwork,
     mdiPlaylistMusic,
     mdiPlaylistPlay,
     mdiPlaylistPlus,

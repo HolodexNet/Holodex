@@ -55,7 +55,11 @@ export default {
             host: "https://www.youtube.com/iframe_api",
         };
 
-        const host = "https://www.youtube.com";
+        const host = (
+            this.$store.state.settings.YTEmbedVariant === "youtube"
+            // eslint-disable-next-line no-alert
+            || (this.$store.state.settings.YTEmbedVariant === "" && window.confirm(this.$t("views.settings.YTEmbedVariantPromptMsg")))
+        ) ? "https://www.youtube.com" : "https://www.youtube-nocookie.com";
 
         this.player = player(this.elementId, {
             host,
