@@ -1,5 +1,13 @@
-import { Toolbar } from "@/components/multiview/Toolbar";
+import { Selector } from "@/components/multiview/Selector";
+import { ToolButtonContainer } from "@/components/multiview/ToolButtonContainer";
+import {
+  isSidebarOpenAtom,
+  sidebarShouldBeFullscreenAtom,
+} from "@/hooks/useFrame";
+import { cn } from "@/lib/utils";
+import { useAtom } from "jotai";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 // multiview skeleton
 // selection bar at the top to change between orgs and allow url insertion
@@ -11,12 +19,32 @@ export function Multiview() {
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
-      <div
-        id="multiview-banner"
-        className="sticky top-0 z-20 flex justify-start gap-2 rounded-lg bg-base-2 p-2 text-base-11 transition-all md:mx-8 md:px-2"
-      >
-        <Toolbar />
-      </div>
+      <StickyBar />
     </>
+  );
+}
+
+function StickyBar() {
+  const { t } = useTranslation();
+  const [open] = useAtom(isSidebarOpenAtom);
+  const [isFullScreen] = useAtom(sidebarShouldBeFullscreenAtom);
+
+  return (
+    <div
+      className={cn(
+        "top-0 z-20 flex items-stretch justify-start overflow-x-auto rounded-none bg-base-2 p-2 transition-all md:px-10",
+        //isStuckAtTop && "rounded-lg md:mx-8 md:px-2",
+        !open ? "sticky" : isFullScreen ? "" : "sticky",
+      )}
+    >
+      <div className="flex w-full max-w-full flex-nowrap justify-between bg-base-2">
+        <div className="mr-2 w-3/5 shrink-0 grow-0 basis-auto">
+          <Selector />
+        </div>
+        <div className="ml-2 w-2/5 shrink-0 grow-0 basis-auto">
+          <ToolButtonContainer />
+        </div>
+      </div>
+    </div>
   );
 }
