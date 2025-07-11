@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { cn } from "@/lib/utils";
 import { mdiChevronDown } from "@mdi/js";
 import { ToolButton } from "./ToolButton";
@@ -19,7 +20,7 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { LiveChannel } from "./LiveChannel";
 import { useLive } from "@/services/live.service";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function ToolBar() {
   const { t } = useTranslation();
@@ -36,6 +37,7 @@ export function ToolBar() {
   const [currentOrg, setCurrentOrg] = useState(Favorites);
   const [liveChannels, setLiveChannels] = useState<Live[]>([]);
   const { data } = useLive({ org: currentOrg.name });
+  const liveChannelContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!data) return;
@@ -48,11 +50,20 @@ export function ToolBar() {
     setLiveChannels([]);
   };
 
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (liveChannelContainerRef.current) {
+      if (e.deltaY !== 0) {
+        liveChannelContainerRef.current.scrollLeft += e.deltaY;
+        e.preventDefault();
+      }
+    }
+  };
+
   return (
     <>
       <div
         className={cn(
-          "top-0 flex max-w-full flex-row items-stretch justify-between gap-2 rounded-none bg-base-2 p-2 transition-all md:px-10",
+          "top-0 flex flex-row items-stretch justify-between gap-2 rounded-none bg-base-2 p-2 transition-all md:px-10",
           //isStuckAtTop && "rounded-lg md:mx-8 md:px-2",
           !open ? "sticky" : isFullScreen ? "" : "sticky",
           isBarActive ? "visible" : "hidden",
@@ -78,6 +89,8 @@ export function ToolBar() {
         </DropdownMenu>
         <div
           id="live-channel-container"
+          ref={liveChannelContainerRef}
+          onWheel={handleWheel}
           className={cn(
             "flex min-h-12 flex-nowrap gap-2 overflow-x-scroll",
             {},
