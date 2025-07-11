@@ -10,7 +10,7 @@ import {
   sidebarShouldBeFullscreenAtom,
 } from "@/hooks/useFrame";
 import { useAtom, useSetAtom } from "jotai";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import { defaultOrgs } from "@/store/org";
 import {
   DropdownMenu,
@@ -23,7 +23,7 @@ import { useLive } from "@/services/live.service";
 import { useEffect, useRef, useState } from "react";
 
 export function ToolBar() {
-  const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [open] = useAtom(isSidebarOpenAtom);
   const [isFullScreen] = useAtom(sidebarShouldBeFullscreenAtom);
   const [isBarActive] = useAtom(multiViewPanelOpenAtom);
