@@ -1,7 +1,5 @@
-import Icon from "@mdi/react";
 import {
   mdiCardPlusOutline,
-  mdiChevronDown,
   mdiChevronUp,
   mdiContentSaveOutline,
   mdiDeleteOutline,
@@ -12,73 +10,69 @@ import {
   mdiTuneVertical,
   mdiViewGridPlusOutline,
 } from "@mdi/js";
-import { isMultiViewPanelOpenAtom } from "@/hooks/useFrame";
+import { closeMultiViewPanelAtom } from "@/hooks/useFrame";
+import { useSetAtom } from "jotai";
+import { MultiViewIcon, ToolButton } from "./ToolButton";
 
 const reorderIcon =
   "M2 2h8.8v8.8H2V2Zm11.3 11.3H22V22h-8.8v-8.8Zm4.6-10.9a.6.6 0 0 0-1 0l-3.9 4a.6.6 0 1 0 .9.9l3.5-3.6L21 7.3a.6.6 0 0 0 .8-1l-4-4Zm.1 10V2.8h-1.2v9.6H18ZM5.7 21.6c.3.3.7.3 1 0l3.9-4a.6.6 0 1 0-.9-.9l-3.5 3.6-3.6-3.6a.6.6 0 1 0-.9 1l4 4Zm-.2-10v9.6h1.3v-9.6H5.5Z";
 
-type MultiViewIcon = {
-  path: string;
-  tooltip: string;
-  onClick?: () => void;
-};
-
-const icons: MultiViewIcon[] = [
-  {
-    path: mdiCardPlusOutline,
-    tooltip: "Open Dialog",
-  },
-  {
-    path: mdiGridLarge,
-    tooltip: "Change Layout",
-  },
-  {
-    path: mdiViewGridPlusOutline,
-    tooltip: "Add Cell",
-  },
-  {
-    path: mdiTuneVertical,
-    tooltip: "Media Control",
-  },
-  {
-    path: reorderIcon,
-    tooltip: "Reorder Layout",
-  },
-  {
-    path: mdiSync,
-    tooltip: "Archive Sync",
-  },
-  {
-    path: mdiContentSaveOutline,
-    tooltip: "Save Layout",
-  },
-  {
-    path: mdiDeleteOutline,
-    tooltip: "Clear",
-  },
-  {
-    path: mdiFullscreen,
-    tooltip: "Fullscreen",
-  },
-  {
-    path: mdiLinkVariant,
-    tooltip: "Share Layout",
-  },
-];
-
 export function ToolButtonContainer() {
+  const closePanel = useSetAtom(closeMultiViewPanelAtom);
+
+  const icons: MultiViewIcon[] = [
+    {
+      path: mdiCardPlusOutline,
+      tooltip: "Open Dialog",
+    },
+    {
+      path: mdiGridLarge,
+      tooltip: "Change Layout",
+    },
+    {
+      path: mdiViewGridPlusOutline,
+      tooltip: "Add Cell",
+    },
+    {
+      path: mdiTuneVertical,
+      tooltip: "Media Control",
+    },
+    {
+      path: reorderIcon,
+      tooltip: "Reorder Layout",
+    },
+    {
+      path: mdiSync,
+      tooltip: "Archive Sync",
+    },
+    {
+      path: mdiContentSaveOutline,
+      tooltip: "Save Layout",
+    },
+    {
+      path: mdiDeleteOutline,
+      tooltip: "Clear",
+    },
+    {
+      path: mdiFullscreen,
+      tooltip: "Fullscreen",
+    },
+    {
+      path: mdiLinkVariant,
+      tooltip: "Share Layout",
+    },
+    {
+      path: mdiChevronUp,
+      tooltip: "Collapse Panel",
+      onClick: closePanel,
+    },
+  ];
+
   return (
     <div className="flex flex-row items-center justify-center gap-4 rounded-lg ">
       {icons.map((icon, index) => (
-        <button key={index} onClick={icon.onClick} title={icon.tooltip}>
-          <Icon path={icon.path} size={1} className="h-6 w-6 text-base-11" />
-        </button>
+        <ToolButton key={index} icon={icon} index={`${icon.tooltip}-button`} />
       ))}
-      {isMultiViewPanelOpenAtom ? (
-        <Icon path={mdiChevronUp} size={1} />
-      ) : (
-        <Icon path={mdiChevronDown} size={1} />
-      )}
     </div>
   );
 }
