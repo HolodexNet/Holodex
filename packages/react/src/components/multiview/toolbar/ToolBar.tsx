@@ -103,9 +103,7 @@ export function ToolBar() {
           className={cn("flex min-h-12 w-full gap-2 overflow-x-scroll", {})}
         >
           {nowLiveSorted.map((live) => {
-            return (
-              <LiveChannel key={live.id} channel={live.channel} video={live} />
-            );
+            return <LiveChannel key={live.id} video={live} />;
           })}
         </div>
         <ToolButtonContainer />

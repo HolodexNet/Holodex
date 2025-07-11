@@ -6,18 +6,18 @@ import {
   TooltipContent,
 } from "@radix-ui/react-tooltip";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shadcn/ui/avatar";
-import { makeThumbnailUrl } from "@/lib/utils";
+import { cn, makeThumbnailUrl } from "@/lib/utils";
 import { MemoizedLiveChannelTooltipContentCard } from "./LiveChannelTooltipContentCard";
+import { compareTimeDiffToNow } from "@/lib/time";
 
 interface LiveChannelProps {
-  channel: ShortChannel;
   video: VideoBase;
 }
 
-export function LiveChannel({ channel, video }: LiveChannelProps) {
+export function LiveChannel({ video }: LiveChannelProps) {
   const preferredName = usePreferredName({
-    name: channel.name,
-    english_name: channel.english_name,
+    name: video.channel.name,
+    english_name: video.channel.english_name,
   });
 
   const thumbnail = makeThumbnailUrl(video.id, "sm");
@@ -30,13 +30,22 @@ export function LiveChannel({ channel, video }: LiveChannelProps) {
           <div draggable="true" className="relative cursor-pointer">
             <Avatar className="size-12">
               <AvatarImage
-                src={channel.photo}
+                src={video.channel.photo}
                 alt={`${preferredName} user icon`}
               />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <div className="absolute bottom-0 right-0 bg-red text-xs text-white">
-              12hr
+            <div
+              className={cn(
+                "absolute bottom-0 right-0 rounded-sm px-0.5 text-xs text-white",
+                video.status === "live" ? "bg-red" : "bg-slate-10",
+              )}
+            >
+              {/* if live stream has started, check how long it has been running */}
+              {/* if it is less than 1 hour, use the minutes, otherwise, round down to the hour */}
+              {video.status === "live"
+                ? compareTimeDiffToNow(video.start_actual)
+                : compareTimeDiffToNow(video.start_scheduled)}
             </div>
           </div>
         </TooltipTrigger>
