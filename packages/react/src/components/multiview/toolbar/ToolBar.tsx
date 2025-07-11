@@ -63,7 +63,7 @@ export function ToolBar() {
     <>
       <div
         className={cn(
-          "top-0 flex flex-row items-stretch justify-between gap-2 rounded-none bg-base-2 p-2 transition-all md:px-10",
+          "top-0 grid max-w-full grid-cols-[auto,1fr,auto] items-stretch gap-2 rounded-none bg-base-2 p-2 transition-all md:px-10",
           //isStuckAtTop && "rounded-lg md:mx-8 md:px-2",
           !open ? "sticky" : isFullScreen ? "" : "sticky",
           isBarActive ? "visible" : "hidden",
@@ -91,10 +91,7 @@ export function ToolBar() {
           id="live-channel-container"
           ref={liveChannelContainerRef}
           onWheel={handleWheel}
-          className={cn(
-            "flex min-h-12 flex-nowrap gap-2 overflow-x-scroll",
-            {},
-          )}
+          className={cn("flex min-h-12 w-full gap-2 overflow-x-scroll", {})}
         >
           {liveChannels.map((live) => {
             return (
@@ -108,9 +105,7 @@ export function ToolBar() {
             );
           })}
         </div>
-        <div className="ml-2 flex shrink-0 grow-0 basis-auto items-center">
-          <ToolButtonContainer />
-        </div>
+        <ToolButtonContainer />
       </div>
       <ToolButton
         className={cn(

@@ -11,7 +11,7 @@ export function Multiview() {
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
-      <div className="relative max-w-full overflow-x-hidden">
+      <div className="relative overflow-x-hidden">
         <ToolBar />
       </div>
     </>
