@@ -20,7 +20,9 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { LiveChannel } from "./LiveChannel";
 import { useLive } from "@/services/live.service";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useVideoFilter } from "@/hooks/useVideoFilter";
+import { useVideoSort } from "@/hooks/useVideoSort";
 
 export function ToolBar() {
   //   const { t } = useTranslation();
@@ -36,18 +38,25 @@ export function ToolBar() {
   // based on what the selection is -> use different methods to render title card?
   const [currentOrg, setCurrentOrg] = useState(Favorites);
   const [liveChannels, setLiveChannels] = useState<Live[]>([]);
-  const { data } = useLive({ org: currentOrg.name });
+  const { data: live } = useLive({
+    org: currentOrg.name,
+    type: ["placeholder", "stream"],
+    include: ["mentions"],
+  });
   const liveChannelContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!data) return;
-    setLiveChannels(data.items);
-  }, [data]);
+  const liveFiltered = useVideoFilter(
+    live?.items as Video[],
+    "stream_schedule",
+    "org",
+  );
+
+  // sort livestreams by video list settings
+  const nowLiveSorted = useVideoSort(liveFiltered, "stream_schedule");
 
   const onSelect = (org: Org) => {
     if (org.name === currentOrg.name) return;
     setCurrentOrg(org);
-    setLiveChannels([]);
   };
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -93,15 +102,9 @@ export function ToolBar() {
           onWheel={handleWheel}
           className={cn("flex min-h-12 w-full gap-2 overflow-x-scroll", {})}
         >
-          {liveChannels.map((live) => {
+          {nowLiveSorted.map((live) => {
             return (
-              <LiveChannel
-                key={live.id}
-                videoId={live.id}
-                topicId={live.topic_id!}
-                channel={live.channel}
-                title={live.title.trim()}
-              />
+              <LiveChannel key={live.id} channel={live.channel} video={live} />
             );
           })}
         </div>
