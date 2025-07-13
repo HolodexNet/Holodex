@@ -10,19 +10,7 @@ import {
   openMultiViewPanelAtom,
 } from "@/hooks/useFrame";
 import { cn } from "@/lib/utils";
-import {
-  mdiCardPlusOutline,
-  mdiChevronDown,
-  mdiChevronUp,
-  mdiContentSaveOutline,
-  mdiDeleteOutline,
-  mdiFullscreen,
-  mdiGridLarge,
-  mdiLinkVariant,
-  mdiSync,
-  mdiTuneVertical,
-  mdiViewGridPlusOutline,
-} from "@mdi/js";
+
 import { useAtomValue, useSetAtom } from "jotai";
 import { useRef, useState } from "react";
 import { Helmet } from "@dr.pogodin/react-helmet";
@@ -54,32 +42,38 @@ export function Multiview() {
   };
 
   const baseIcons: MultiViewIcon[] = [
-    { path: mdiCardPlusOutline, tooltip: "Open Dialog" },
-    { path: mdiGridLarge, tooltip: "Change Layout" },
-    { path: mdiViewGridPlusOutline, tooltip: "Add Cell" },
-    { path: mdiTuneVertical, tooltip: "Media Control" },
-    { path: reorderIcon, tooltip: "Reorder Layout" },
+    { path: "i-heroicons:plus-circle", tooltip: "Select Live" },
+    { path: "i-heroicons:squares-2x2", tooltip: "Change Layout" },
+    { path: "i-heroicons:squares-plus", tooltip: "Add Cell" },
+    { path: "i-heroicons:adjustments-vertical", tooltip: "Media Control" },
+    { path: "i-heroicons:rectangle-group", tooltip: "Reorder Layout" },
+  ];
+
+  const additionalIcons: MultiViewIcon[] = [
+    { path: "i-heroicons:link", tooltip: "Share Layout" },
+    {
+      path: "i-heroicons:chevron-up",
+      tooltip: "Collapse Panel",
+      onClick: closePanel,
+    },
   ];
 
   const icons: MultiViewIcon[] = [
     ...baseIcons,
-    { path: mdiSync, tooltip: "Archive Sync" },
-    { path: mdiContentSaveOutline, tooltip: "Save Layout" },
-    { path: mdiDeleteOutline, tooltip: "Clear" },
+    { path: "i-heroicons:arrow-path", tooltip: "Archive Sync" },
+    { path: "i-fluent:save-32-regular", tooltip: "Save Layout" },
+    { path: "i-heroicons:trash", tooltip: "Clear" },
     {
-      path: mdiFullscreen,
+      path: isFullScreen
+        ? "i-heroicons:arrows-pointing-in"
+        : "i-heroicons:arrows-pointing-out",
       tooltip: isFullScreen ? "Exit Fullscreen" : "Enter Fullscreen",
       onClick: toggleFullScreen,
     },
-    { path: mdiLinkVariant, tooltip: "Share Layout" },
-    { path: mdiChevronUp, tooltip: "Collapse Panel", onClick: closePanel },
+    ...additionalIcons,
   ];
 
-  const mobileIcons: MultiViewIcon[] = [
-    ...baseIcons,
-    { path: mdiLinkVariant, tooltip: "Share Layout" },
-    { path: mdiChevronUp, tooltip: "Collapse Panel", onClick: closePanel },
-  ];
+  const mobileIcons: MultiViewIcon[] = [...baseIcons, ...additionalIcons];
 
   return (
     <>
@@ -97,7 +91,7 @@ export function Multiview() {
                 isBarActive ? "hidden" : "visible",
               )}
               icon={{
-                path: mdiChevronDown,
+                path: "i-heroicons:chevron-down",
                 tooltip: "Open Panel",
                 onClick: openPanel,
               }}

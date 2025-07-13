@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import Icon from "@mdi/react";
 import {
   TooltipProvider,
   Tooltip,
@@ -29,10 +28,9 @@ export function ToolButton({
           <button
             key={index}
             onClick={icon.onClick}
-            // eslint-disable-next-line tailwindcss/no-custom-classname
             className={cn(className, "rounded-md p-2 hover:bg-slate-5")}
           >
-            <Icon path={icon.path} size={1} className="h-6 w-6 text-base-11" />
+            <div className={cn(icon.path, "bg-slate-4")} />
           </button>
         </TooltipTrigger>
         <TooltipContent
