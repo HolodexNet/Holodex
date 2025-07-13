@@ -11,23 +11,25 @@ import { useAtom, useAtomValue } from "jotai";
 import { defaultOrgs } from "@/store/org";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@radix-ui/react-dropdown-menu";
+  DropdownMenuTrigger,
+} from "@/shadcn/ui/dropdown-menu";
 import { LiveChannel } from "./LiveChannel";
 import { useLive } from "@/services/live.service";
 import { useRef, useState } from "react";
 import { useVideoFilter } from "@/hooks/useVideoFilter";
 import { useVideoSort } from "@/hooks/useVideoSort";
 import { MultiViewIcon } from "./ToolButton";
+import { useTranslation } from "react-i18next";
+import { Button } from "@/shadcn/ui/button";
 
 type VideoWithExtra = VideoBase & {
   platform: string;
 };
 
 export function ToolBar({ icons }: { icons: MultiViewIcon[] }) {
-  //   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [open] = useAtom(isSidebarOpenAtom);
   const [isFullScreen] = useAtom(sidebarShouldBeFullscreenAtom);
   const [isBarActive] = useAtom(multiViewPanelOpenAtom);
@@ -79,7 +81,7 @@ export function ToolBar({ icons }: { icons: MultiViewIcon[] }) {
     <div
       id="multiview-toolbar"
       className={cn(
-        "top-0 z-20 grid h-[var(--toolbar-height)] max-w-full items-stretch gap-2 rounded-none bg-base-2 p-2 transition-all duration-300 md:px-10",
+        "top-0 z-20 grid h-[var(--toolbar-height)] max-w-full items-stretch content-center gap-4 rounded-none bg-base-2 py-2 px-4 transition-all duration-300 md:px-10",
         !open ? "sticky" : isFullScreen ? "" : "sticky",
         isBarActive ? "visible" : "hidden",
         isMobile ? "justify-center" : "grid-cols-[auto_1fr_auto]",
@@ -88,18 +90,26 @@ export function ToolBar({ icons }: { icons: MultiViewIcon[] }) {
       {!isMobile && (
         <>
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex min-h-8 w-48 shrink-0 items-center justify-between overflow-hidden rounded-md bg-base-2 pl-4 pr-2 hover:bg-primary-5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-7 active:scale-[97%] active:bg-primaryA-7 disabled:pointer-events-none disabled:opacity-50">
-              {currentOrg.name}
-              <div className="shrink-0 ml-2 inline-block h-4 w-4 align-middle opacity-50 i-lucide:chevrons-down"></div>
+            <DropdownMenuTrigger asChild>
+              <Button
+                className={cn(
+                  "w-48 h-full box-border z-30 flex justify-between items-center px-4",
+                )}
+                variant="default"
+              >
+                {t(currentOrg.name)}
+                <div className="shrink-0 ml-2 inline-block h-4 w-4 align-middle opacity-50 i-lucide:chevrons-down"></div>
+              </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-48 bg-base-2 z-30">
               {[Favorites, ...defaultOrgs].map((org) => {
                 return (
                   <DropdownMenuItem
-                    className="hover:bg-primary-5 cursor-pointer gap-1 px-4 py-2"
+                    key={`${org.name}-selection`}
+                    className="cursor-pointer gap-1 px-4 py-2"
                     onClick={() => onSelect(org)}
                   >
-                    {org.name}
+                    {t(org.name)}
                   </DropdownMenuItem>
                 );
               })}
