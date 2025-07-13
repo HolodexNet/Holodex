@@ -1,3 +1,4 @@
+import { MultiViewBackground } from "@/components/multiview/background";
 import { ToolBar } from "@/components/multiview/toolbar/ToolBar";
 import {
   MultiViewIcon,
@@ -24,7 +25,7 @@ import {
   mdiViewGridPlusOutline,
 } from "@mdi/js";
 import { useAtomValue, useSetAtom } from "jotai";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Helmet } from "@dr.pogodin/react-helmet";
 
 const reorderIcon =
@@ -39,16 +40,13 @@ export function Multiview() {
   const openPanel = useSetAtom(openMultiViewPanelAtom);
   const multiviewRef = useRef<HTMLDivElement>(null);
   const closePanel = useSetAtom(closeMultiViewPanelAtom);
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const isMobile = useAtomValue(isMobileAtom);
   const toggleFullScreen = () => {
     if (multiviewRef.current) {
-      if (isFullScreen) {
+      if (document.fullscreenElement) {
         document.exitFullscreen();
-        setIsFullScreen(false);
-      } else {
-        multiviewRef.current.requestFullscreen();
-        setIsFullScreen(true);
+      } else if (multiviewRef.current.parentElement) {
+        multiviewRef.current.parentElement.requestFullscreen();
       }
     }
   };
@@ -68,7 +66,9 @@ export function Multiview() {
     { path: mdiDeleteOutline, tooltip: "Clear" },
     {
       path: mdiFullscreen,
-      tooltip: isFullScreen ? "Exit Fullscreen" : "Enter Fullscreen",
+      tooltip: document.fullscreenElement
+        ? "Exit Fullscreen"
+        : "Enter Fullscreen",
       onClick: toggleFullScreen,
     },
     { path: mdiLinkVariant, tooltip: "Share Layout" },
@@ -87,23 +87,27 @@ export function Multiview() {
         <title>Multiview - Holodex</title>
       </Helmet>
       <div id="multiview" ref={multiviewRef}>
-        <div>
-          <div className="flex relative h-full w-full flex-col">
-            <ToolBar icons={isMobile ? mobileIcons : icons} />
-            <ToolButton
-              className={cn(
-                "right-2 top-0 z-20 rounded-none bg-base-2 p-1 transition-all md:px-5",
-                "absolute",
-                isBarActive ? "hidden" : "visible",
-              )}
-              icon={{
-                path: mdiChevronDown,
-                tooltip: "Open Panel",
-                onClick: openPanel,
-              }}
-            />
-          </div>
+        <div className="flex relative h-full w-full flex-col">
+          <ToolBar icons={isMobile ? mobileIcons : icons} />
+          <ToolButton
+            className={cn(
+              "right-2 top-0 z-20 rounded-none bg-base-2 p-1 transition-all md:px-5",
+              "absolute",
+              isBarActive ? "hidden" : "visible",
+            )}
+            icon={{
+              path: mdiChevronDown,
+              tooltip: "Open Panel",
+              onClick: openPanel,
+            }}
+          />
         </div>
+        <MultiViewBackground
+          columnWidth={120}
+          rowHeight={90}
+          showTips={true}
+          collapseToolbar={!isBarActive}
+        />
       </div>
     </>
   );
