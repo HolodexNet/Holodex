@@ -1,0 +1,5 @@
+$toolbar-height: 64px;
+
+#multiview-background {
+  --toolbar-height: #{$toolbar-height};
+}
