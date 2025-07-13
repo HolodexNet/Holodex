@@ -86,7 +86,7 @@ export function Multiview() {
             <ToolBar icons={isMobile ? mobileIcons : icons} />
             <ToolButton
               className={cn(
-                "right-2 top-0 z-20 rounded-none bg-base-2 p-1 transition-all md:px-5",
+                "right-4 top-4 z-20 rounded-none bg-base-2 p-1 transition-all md:px-5",
                 "absolute",
                 isBarActive ? "hidden" : "visible",
               )}
