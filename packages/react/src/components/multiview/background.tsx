@@ -13,14 +13,14 @@ interface MultiViewBackgroundProps {
   children?: React.ReactNode;
 }
 
-export const MultiViewBackground: React.FC<MultiViewBackgroundProps> = ({
+export const MultiViewBackground = ({
   columnWidth,
   rowHeight,
   showTips = false,
   collapseToolbar = false,
   style = {},
   children,
-}) => {
+}: MultiViewBackgroundProps) => {
   const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
   // Example: 24 columns, 12 rows (customize as needed)

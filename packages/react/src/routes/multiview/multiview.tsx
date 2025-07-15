@@ -9,11 +9,13 @@ import {
   multiViewPanelOpenAtom,
   openMultiViewPanelAtom,
 } from "@/hooks/useFrame";
+import { useMultiViewFullScreen } from "@/store/multiview";
 import { cn } from "@/lib/utils";
 
 import { useAtomValue, useSetAtom } from "jotai";
 import { useRef } from "react";
 import { Helmet } from "@dr.pogodin/react-helmet";
+import { MultiViewBackground } from "@/components/multiview/background";
 
 const reorderIcon =
   "M2 2h8.8v8.8H2V2Zm11.3 11.3H22V22h-8.8v-8.8Zm4.6-10.9a.6.6 0 0 0-1 0l-3.9 4a.6.6 0 1 0 .9.9l3.5-3.6L21 7.3a.6.6 0 0 0 .8-1l-4-4Zm.1 10V2.8h-1.2v9.6H18ZM5.7 21.6c.3.3.7.3 1 0l3.9-4a.6.6 0 1 0-.9-.9l-3.5 3.6-3.6-3.6a.6.6 0 1 0-.9 1l4 4Zm-.2-10v9.6h1.3v-9.6H5.5Z";
@@ -28,15 +30,9 @@ export function Multiview() {
   const multiviewRef = useRef<HTMLDivElement>(null);
   const closePanel = useSetAtom(closeMultiViewPanelAtom);
   const isMobile = useAtomValue(isMobileAtom);
-  const toggleFullScreen = () => {
-    if (multiviewRef.current) {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else if (multiviewRef.current.parentElement) {
-        multiviewRef.current.parentElement.requestFullscreen();
-      }
-    }
-  };
+
+  const { isFullScreen: isFullscreen, toggleFullScreen } =
+    useMultiViewFullScreen(multiviewRef.current);
 
   const baseIcons: MultiViewIcon[] = [
     { path: "i-heroicons:plus-circle", tooltip: "Select Live" },
@@ -61,12 +57,10 @@ export function Multiview() {
     { path: "i-fluent:save-32-regular", tooltip: "Save Layout" },
     { path: "i-heroicons:trash", tooltip: "Clear" },
     {
-      path: document.fullscreenElement
+      path: isFullscreen
         ? "i-heroicons:arrows-pointing-in"
         : "i-heroicons:arrows-pointing-out",
-      tooltip: document.fullscreenElement
-        ? "Exit Fullscreen"
-        : "Enter Fullscreen",
+      tooltip: isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen",
       onClick: toggleFullScreen,
     },
     ...additionalIcons,
@@ -80,23 +74,28 @@ export function Multiview() {
         <title>Multiview - Holodex</title>
       </Helmet>
       <div id="multiview" ref={multiviewRef}>
-        <div>
-          <div className="flex relative h-full w-full flex-col">
-            <ToolBar icons={isMobile ? mobileIcons : icons} />
-            <ToolButton
-              className={cn(
-                "right-4 top-4 z-20 rounded-none bg-base-2 p-1 transition-all md:px-5",
-                "absolute",
-                isBarActive ? "hidden" : "visible",
-              )}
-              icon={{
-                path: "i-heroicons:chevron-down",
-                tooltip: "Open Panel",
-                onClick: openPanel,
-              }}
-            />
-          </div>
+        <div className="flex relative h-full w-full flex-col">
+          <ToolBar icons={isMobile ? mobileIcons : icons} />
+          <ToolButton
+            className={cn(
+              "right-4 top-4 z-20 rounded-none bg-base-2 p-1 transition-all md:px-5",
+              "absolute",
+              isBarActive ? "hidden" : "visible",
+            )}
+            icon={{
+              path: "i-heroicons:chevron-down",
+              tooltip: "Open Panel",
+              onClick: openPanel,
+            }}
+          />
         </div>
+        {/* 
+        divide the available horizontal space by 24 and vertical space by 24 
+        take into account of whether the sidebar is open or not
+        and the available space
+        when it is fullscreen, there is no copyright bar at the bottom
+        */}
+        <MultiViewBackground columnWidth={24} rowHeight={8} />
       </div>
     </>
   );

@@ -53,8 +53,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={globalQueryClient}>
         {process.env.NODE_ENV === "development" && (
           <Suspense>
-            <ReactQueryDevtools position={"right"} buttonPosition="top-right" />
-            <JotaiDevtools position="top-right" />
+            <ReactQueryDevtools
+              position={"left"}
+              buttonPosition="bottom-left"
+            />
+            <JotaiDevtools position="bottom-left" />
           </Suspense>
         )}
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
