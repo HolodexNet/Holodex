@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { useAtomValue, useSetAtom } from "jotai";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Helmet } from "@dr.pogodin/react-helmet";
 
 const reorderIcon =
@@ -27,16 +27,13 @@ export function Multiview() {
   const openPanel = useSetAtom(openMultiViewPanelAtom);
   const multiviewRef = useRef<HTMLDivElement>(null);
   const closePanel = useSetAtom(closeMultiViewPanelAtom);
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const isMobile = useAtomValue(isMobileAtom);
   const toggleFullScreen = () => {
     if (multiviewRef.current) {
-      if (isFullScreen) {
+      if (document.fullscreenElement) {
         document.exitFullscreen();
-        setIsFullScreen(false);
-      } else {
-        multiviewRef.current.requestFullscreen();
-        setIsFullScreen(true);
+      } else if (multiviewRef.current.parentElement) {
+        multiviewRef.current.parentElement.requestFullscreen();
       }
     }
   };
@@ -64,10 +61,12 @@ export function Multiview() {
     { path: "i-fluent:save-32-regular", tooltip: "Save Layout" },
     { path: "i-heroicons:trash", tooltip: "Clear" },
     {
-      path: isFullScreen
+      path: document.fullscreenElement
         ? "i-heroicons:arrows-pointing-in"
         : "i-heroicons:arrows-pointing-out",
-      tooltip: isFullScreen ? "Exit Fullscreen" : "Enter Fullscreen",
+      tooltip: document.fullscreenElement
+        ? "Exit Fullscreen"
+        : "Enter Fullscreen",
       onClick: toggleFullScreen,
     },
     ...additionalIcons,
