@@ -32,7 +32,7 @@ export function Multiview() {
   const isMobile = useAtomValue(isMobileAtom);
 
   const { isFullScreen: isFullscreen, toggleFullScreen } =
-    useMultiViewFullScreen(multiviewRef.current);
+    useMultiViewFullScreen(multiviewRef);
 
   const baseIcons: MultiViewIcon[] = [
     { path: "i-heroicons:plus-circle", tooltip: "Select Live" },
