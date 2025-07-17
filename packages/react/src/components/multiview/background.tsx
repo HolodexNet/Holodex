@@ -72,12 +72,7 @@ export const MultiViewBackground = ({
       )}
     >
       {showTips && (
-        <div
-          className={cn(
-            "pointer-events-none absolute left-1/2 top-1/3 -translate-y-1/2 text-center text-lg text-white",
-            "-translate-x-1/2",
-          )}
-        >
+        <div className="pointer-events-none absolute left-1/2 top-1/3 text-center text-lg text-white -translate-y-1/2 -translate-x-1/2">
           Drag videos here to start your multiview!
         </div>
       )}
