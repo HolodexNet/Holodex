@@ -9,6 +9,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/shadcn/ui/avatar";
 import { cn, makeThumbnailUrl } from "@/lib/utils";
 import { MemoizedLiveChannelTooltipContentCard } from "./LiveChannelTooltipContentCard";
 import { compareTimeDiffToNow } from "@/lib/time";
+import { addMultiviewVideoAtom } from "@/store/multiview";
+import { useAtom } from "jotai";
 
 interface LiveChannelProps {
   video: VideoBase;
@@ -21,13 +23,18 @@ export function LiveChannel({ video }: LiveChannelProps) {
   });
 
   const thumbnail = makeThumbnailUrl(video.id, "sm");
+  const [_, addVideo] = useAtom(addMultiviewVideoAtom);
 
   // TODO: move live stream info card outside of this components
   return (
     <TooltipProvider>
       <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
-          <div draggable="true" className="relative cursor-pointer">
+          <div
+            draggable="true"
+            className="relative cursor-pointer"
+            onClick={() => addVideo(video)}
+          >
             <Avatar className="size-12">
               <AvatarImage
                 src={video.channel.photo}

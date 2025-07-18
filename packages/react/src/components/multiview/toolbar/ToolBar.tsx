@@ -49,7 +49,7 @@ export function ToolBar({ icons }: { icons: MultiViewIcon[] }) {
   const liveChannelContainerRef = useRef<HTMLDivElement>(null);
 
   const liveFiltered = useVideoFilter(
-    live?.items as Video[],
+    live?.items as VideoBase[],
     "stream_schedule",
     "org",
   );
@@ -106,7 +106,7 @@ export function ToolBar({ icons }: { icons: MultiViewIcon[] }) {
                 return (
                   <DropdownMenuItem
                     key={`${org.name}-selection`}
-                    className="cursor-pointer gap-1 px-4 py-2"
+                    className="cursor-pointer px-4 py-2 gap-1"
                     onClick={() => onSelect(org)}
                   >
                     {t(org.name)}
