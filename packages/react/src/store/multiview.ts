@@ -36,3 +36,29 @@ export function useMultiViewFullScreen(ref: RefObject<HTMLDivElement | null>) {
     toggleFullScreen,
   };
 }
+
+const multiviewVideoAtom = atom<VideoBase[]>([]);
+export const readMultiviewVideoAtom = atom((get) => get(multiviewVideoAtom));
+
+export const addMultiviewVideoAtom = atom(
+  null,
+  (get, set, video: VideoBase) => {
+    const currentVideos = get(readMultiviewVideoAtom);
+    set(multiviewVideoAtom, [...currentVideos, video]);
+  },
+);
+
+export const removeMultiviewVideoAtom = atom(
+  null,
+  (get, set, videoId: string) => {
+    const currentVideos = get(multiviewVideoAtom);
+    set(
+      multiviewVideoAtom,
+      currentVideos.filter((video) => video.id !== videoId),
+    );
+  },
+);
+
+export const clearMultiviewVideosAtom = atom(null, (_, set) => {
+  set(multiviewVideoAtom, []);
+});
