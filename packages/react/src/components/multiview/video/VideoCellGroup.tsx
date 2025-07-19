@@ -3,6 +3,12 @@ import { cn } from "@/lib/utils";
 import { readMultiviewVideoAtom } from "@/store/multiview";
 import { useAtomValue } from "jotai";
 import { VideoCell } from "./VideoCell";
+import { useComputedDimensions } from "@/hooks/useComputedDimensions";
+
+export interface VideoCellDimension {
+  width: number;
+  height: number;
+}
 
 interface VideoContainerProps {
   isFullScreen?: boolean;
@@ -16,11 +22,12 @@ export function VideoCellGroup({
   const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
   const videos = useAtomValue(readMultiviewVideoAtom);
+  const { dimensions } = useComputedDimensions(isFullScreen);
 
   return (
     <div
       className={cn(
-        "bg-red z-30 relative",
+        "bg-red z-30 absolute overflow-hidden",
         // isMobile
         //   ? "ml-0"
         //   : isSidebarOpen
@@ -37,7 +44,11 @@ export function VideoCellGroup({
       )}
     >
       {videos.map((video) => (
-        <VideoCell key={video.id} video={video} />
+        <VideoCell
+          key={video.id}
+          video={video}
+          height={dimensions.height / videos.length}
+        />
       ))}
     </div>
   );

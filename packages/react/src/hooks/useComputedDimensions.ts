@@ -12,6 +12,11 @@ export const useComputedDimensions = (isFullScreen = false) => {
   const isBarActive = useAtomValue(multiViewPanelOpenAtom);
 
   const [dimensions, setDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  const [cellDimensions, setCellDimensions] = useState({
     columnWidth: 0,
     rowHeight: 0,
   });
@@ -31,9 +36,14 @@ export const useComputedDimensions = (isFullScreen = false) => {
         ? window.innerWidth - SIDEBAR_WIDTH
         : window.innerWidth;
 
-      setDimensions({
+      setCellDimensions({
         columnWidth: Math.max(width / CELL_COUNT, 1),
         rowHeight: Math.max(height / CELL_COUNT, 1),
+      });
+
+      setDimensions({
+        width,
+        height,
       });
     };
 
@@ -43,5 +53,8 @@ export const useComputedDimensions = (isFullScreen = false) => {
     return () => window.removeEventListener("resize", updateDimensions);
   }, [isFullScreen, isBarActive, isSidebarOpen]);
 
-  return dimensions;
+  return {
+    cellDimensions,
+    dimensions,
+  };
 };

@@ -21,7 +21,7 @@ export const MultiViewBackground = ({
 }: MultiViewBackgroundProps) => {
   const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
-  const { columnWidth, rowHeight } = useComputedDimensions(isFullScreen);
+  const { cellDimensions } = useComputedDimensions(isFullScreen);
 
   // Grid background using repeating linear gradients
   const backgroundStyle: React.CSSProperties = {
@@ -31,14 +31,14 @@ export const MultiViewBackground = ({
         #222 0,
         #222 1px,
         transparent 1px,
-        transparent ${columnWidth}px
+        transparent ${cellDimensions.columnWidth}px
       ),
       repeating-linear-gradient(
         to bottom,
         #222 0,
         #222 1px,
         transparent 1px,
-        transparent ${rowHeight}px
+        transparent ${cellDimensions.rowHeight}px
       )
     `,
     ...style,
@@ -50,7 +50,7 @@ export const MultiViewBackground = ({
       style={backgroundStyle}
       className={cn(
         "absolute left-0 z-0",
-        `bg-size-[${columnWidth}px ${rowHeight}px]`,
+        `bg-size-[${cellDimensions.columnWidth}px ${cellDimensions.rowHeight}px]`,
         isMobile
           ? "ml-0"
           : isSidebarOpen

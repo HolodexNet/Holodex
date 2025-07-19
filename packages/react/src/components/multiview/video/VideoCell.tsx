@@ -4,19 +4,30 @@ import { Suspense } from "react";
 
 interface VideoCellProps {
   video: VideoBase;
+  height?: number;
+  width?: number;
 }
 
-export function VideoCell({ video }: VideoCellProps) {
+export function VideoCell({ video, height, width }: VideoCellProps) {
+  console.log(height);
   return (
     <div>
-      <Suspense key={video.id} fallback={<VideoSkeleton />}>
-        <PlayerWrapper
-          id={video.id}
-          url={idToVideoURL(video.id)}
-          autoplay={false}
-        />
-      </Suspense>
-      <div className="w-full flex align-middle justify-center">
+      <div
+        style={{
+          width: `auto`,
+          height: `calc(${height || 100}px - 20px)`,
+          aspectRatio: "16 / 9",
+        }}
+      >
+        <Suspense key={video.id} fallback={<VideoSkeleton />}>
+          <PlayerWrapper
+            id={video.id}
+            url={idToVideoURL(video.id)}
+            autoplay={false}
+          />
+        </Suspense>
+      </div>
+      <div className="w-full h-[20px] flex align-middle justify-center">
         Bar for buttons
       </div>
     </div>
