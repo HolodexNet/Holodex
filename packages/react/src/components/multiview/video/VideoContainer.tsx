@@ -48,7 +48,11 @@ export function VideoContainer({
     >
       {videos.map((video) => (
         <Suspense key={video.id} fallback={<VideoSkeleton />}>
-          <PlayerWrapper id={video.id} url={idToVideoURL(video.id)} />
+          <PlayerWrapper
+            id={video.id}
+            url={idToVideoURL(video.id)}
+            autoplay={false}
+          />
         </Suspense>
       ))}
     </div>
