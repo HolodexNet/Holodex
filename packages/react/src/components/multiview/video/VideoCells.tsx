@@ -19,7 +19,7 @@ const VideoSkeleton = () => (
   </div>
 );
 
-export function VideoContainer({
+export function VideoCells({
   isFullScreen = false,
   collapseToolbar,
 }: VideoContainerProps) {
