@@ -100,8 +100,6 @@ export function Multiview() {
         when it is fullscreen, there is no copyright bar at the bottom
         */}
         <MultiViewBackground
-          columnWidth={24}
-          rowHeight={8}
           isFullScreen={isFullscreen}
           collapseToolbar={!isBarActive}
           showTips={true}

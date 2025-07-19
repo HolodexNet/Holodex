@@ -1,11 +1,10 @@
+import { useComputedDimensions } from "@/hooks/useComputedDimensions";
 import { isMobileAtom, isSidebarOpenAtom } from "@/hooks/useFrame";
 import { cn } from "@/lib/utils";
 import { useAtomValue } from "jotai";
 import React from "react";
 
 interface MultiViewBackgroundProps {
-  columnWidth?: number;
-  rowHeight?: number;
   showTips?: boolean;
   isFullScreen?: boolean;
   collapseToolbar?: boolean;
@@ -14,8 +13,6 @@ interface MultiViewBackgroundProps {
 }
 
 export const MultiViewBackground = ({
-  columnWidth,
-  rowHeight,
   showTips = false,
   collapseToolbar = false,
   style = {},
@@ -24,9 +21,7 @@ export const MultiViewBackground = ({
 }: MultiViewBackgroundProps) => {
   const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
-  // Example: 24 columns, 12 rows (customize as needed)
-  // const numColumns = 24;
-  // const numRows = 12;
+  const { columnWidth, rowHeight } = useComputedDimensions(isFullScreen);
 
   // Grid background using repeating linear gradients
   const backgroundStyle: React.CSSProperties = {
