@@ -28,7 +28,13 @@ type VideoWithExtra = VideoBase & {
   platform: string;
 };
 
-export function ToolBar({ icons }: { icons: MultiViewIcon[] }) {
+export function ToolBar({
+  icons,
+  currentVideoIds = [],
+}: {
+  icons: MultiViewIcon[];
+  currentVideoIds: string[];
+}) {
   const { t } = useTranslation();
   const [open] = useAtom(isSidebarOpenAtom);
   const [isFullScreen] = useAtom(sidebarShouldBeFullscreenAtom);
@@ -56,7 +62,12 @@ export function ToolBar({ icons }: { icons: MultiViewIcon[] }) {
 
   // sort livestreams by video list settings
   const nowLiveSorted = useVideoSort(liveFiltered, "stream_schedule");
-  const nowLiveSortedWithPlatform: VideoWithExtra[] = nowLiveSorted.map(
+
+  const availableLiveStreams = nowLiveSorted.filter(
+    (live) => !currentVideoIds.includes(live.id),
+  );
+
+  const nowLiveSortedWithPlatform: VideoWithExtra[] = availableLiveStreams.map(
     (video) => ({
       ...video,
       platform: (video as VideoWithExtra).platform ?? "",

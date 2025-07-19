@@ -44,6 +44,8 @@ export const addMultiviewVideoAtom = atom(
   null,
   (get, set, video: VideoBase) => {
     const currentVideos = get(readMultiviewVideoAtom);
+    // Check if the video already exists in the multiview
+    if (currentVideos.some((v) => v.id === video.id)) return;
     set(multiviewVideoAtom, [...currentVideos, video]);
   },
 );
