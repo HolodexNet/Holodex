@@ -11,7 +11,14 @@ interface VideoCellProps {
 export function VideoCell({ video, height, width }: VideoCellProps) {
   console.log(height);
   return (
-    <div>
+    <div
+      className="flex flex-col justify-center"
+      style={{
+        height: height ? `${height}px` : "100%",
+        // padding: "10px",
+        boxSizing: "border-box",
+      }}
+    >
       <div
         style={{
           width: `auto`,
@@ -27,7 +34,7 @@ export function VideoCell({ video, height, width }: VideoCellProps) {
           />
         </Suspense>
       </div>
-      <div className="w-full h-[20px] flex align-middle justify-center">
+      <div className="flex justify-center w-full h-[20px] align-middle">
         Bar for buttons
       </div>
     </div>

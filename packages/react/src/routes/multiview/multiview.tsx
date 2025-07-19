@@ -82,11 +82,11 @@ export function Multiview() {
         {/*
           to figure out how to make the container occupy the same size as the background
         */}
-        <div className="flex w-full relative h-full flex-col">
+        <div className="flex w-full flex-col relative h-full">
           <ToolBar icons={isMobile ? mobileIcons : icons} />
           <ToolButton
             className={cn(
-              "right-4 top-4 z-20 rounded-none bg-base-2 p-1 transition-all md:px-5",
+              "right-4 top-4 z-40 rounded-none bg-base-2 p-1 transition-all md:px-5",
               "absolute",
               isBarActive ? "hidden" : "visible",
             )}
