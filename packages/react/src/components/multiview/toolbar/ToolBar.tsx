@@ -54,25 +54,23 @@ export function ToolBar({
 
   const liveChannelContainerRef = useRef<HTMLDivElement>(null);
 
-  const liveFiltered = useVideoFilter(
+  const liveStreamsByOrg = useVideoFilter(
     live?.items as VideoBase[],
     "stream_schedule",
     "org",
   );
 
-  // sort livestreams by video list settings
-  const nowLiveSorted = useVideoSort(liveFiltered, "stream_schedule");
-
-  const availableLiveStreams = nowLiveSorted.filter(
-    (live) => !currentVideoIds.includes(live.id),
-  );
-
-  const nowLiveSortedWithPlatform: VideoWithExtra[] = availableLiveStreams.map(
-    (video) => ({
+  const nowLiveSortedWithPlatform: VideoWithExtra[] = useVideoSort(
+    liveStreamsByOrg,
+    "stream_schedule",
+  )
+    // check against videos that are already viewing in the multiview
+    .filter((live) => !currentVideoIds.includes(live.id))
+    .map((video) => ({
       ...video,
+      // add platform info
       platform: (video as VideoWithExtra).platform ?? "",
-    }),
-  );
+    }));
 
   const onSelect = (org: Org) => {
     if (org.name === currentOrg.name) return;
