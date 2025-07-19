@@ -1,23 +1,13 @@
-import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { isSidebarOpenAtom, isMobileAtom } from "@/hooks/useFrame";
-import { cn, idToVideoURL } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { readMultiviewVideoAtom } from "@/store/multiview";
 import { useAtomValue } from "jotai";
-import { Suspense } from "react";
+import { VideoCell } from "./VideoCell";
 
 interface VideoContainerProps {
   isFullScreen?: boolean;
   collapseToolbar?: boolean;
 }
-
-const VideoSkeleton = () => (
-  <div
-    className="w-full bg-gray-800 flex items-center justify-center border border-gray-600"
-    style={{ aspectRatio: "16 / 9" }}
-  >
-    <div className="text-white text-sm">Loading video...</div>
-  </div>
-);
 
 export function VideoCellGroup({
   isFullScreen = false,
@@ -47,13 +37,7 @@ export function VideoCellGroup({
       )}
     >
       {videos.map((video) => (
-        <Suspense key={video.id} fallback={<VideoSkeleton />}>
-          <PlayerWrapper
-            id={video.id}
-            url={idToVideoURL(video.id)}
-            autoplay={false}
-          />
-        </Suspense>
+        <VideoCell key={video.id} video={video} />
       ))}
     </div>
   );
