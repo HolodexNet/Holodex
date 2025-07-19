@@ -69,7 +69,7 @@ export const PlayerWrapper = React.memo(
           youtube: {
             playerVars: {
               origin: window.origin,
-              autoplay: autoplay ? 1 : 0,
+              autoplay: autoplay,
             },
           },
         }}
