@@ -19,7 +19,7 @@ import { useRef } from "react";
 import { Helmet } from "@dr.pogodin/react-helmet";
 import { MultiViewBackground } from "@/components/multiview/background";
 import "../../components/multiview/Multiview.scss";
-import { VideoCells } from "@/components/multiview/video/VideoCells";
+import { VideoCellGroup } from "@/components/multiview/video/VideoCellGroup";
 
 const reorderIcon =
   "M2 2h8.8v8.8H2V2Zm11.3 11.3H22V22h-8.8v-8.8Zm4.6-10.9a.6.6 0 0 0-1 0l-3.9 4a.6.6 0 1 0 .9.9l3.5-3.6L21 7.3a.6.6 0 0 0 .8-1l-4-4Zm.1 10V2.8h-1.2v9.6H18ZM5.7 21.6c.3.3.7.3 1 0l3.9-4a.6.6 0 1 0-.9-.9l-3.5 3.6-3.6-3.6a.6.6 0 1 0-.9 1l4 4Zm-.2-10v9.6h1.3v-9.6H5.5Z";
@@ -102,7 +102,7 @@ export function Multiview() {
           collapseToolbar={!isBarActive}
           showTips={videos.length === 0}
         />
-        <VideoCells
+        <VideoCellGroup
           isFullScreen={isFullscreen}
           collapseToolbar={!isBarActive}
         />
