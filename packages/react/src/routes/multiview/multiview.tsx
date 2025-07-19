@@ -9,7 +9,10 @@ import {
   multiViewPanelOpenAtom,
   openMultiViewPanelAtom,
 } from "@/hooks/useFrame";
-import { useMultiViewFullScreen } from "@/store/multiview";
+import {
+  readMultiviewVideoAtom,
+  useMultiViewFullScreen,
+} from "@/store/multiview";
 import { cn } from "@/lib/utils";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useRef } from "react";
@@ -31,6 +34,7 @@ export function Multiview() {
   const multiviewRef = useRef<HTMLDivElement>(null);
   const closePanel = useSetAtom(closeMultiViewPanelAtom);
   const isMobile = useAtomValue(isMobileAtom);
+  const videos = useAtomValue(readMultiviewVideoAtom);
 
   const { isFullScreen: isFullscreen, toggleFullScreen } =
     useMultiViewFullScreen(multiviewRef);
@@ -93,16 +97,10 @@ export function Multiview() {
             }}
           />
         </div>
-        {/* 
-        divide the available horizontal space by 24 and vertical space by 24 
-        take into account of whether the sidebar is open or not
-        and the available space
-        when it is fullscreen, there is no copyright bar at the bottom
-        */}
         <MultiViewBackground
           isFullScreen={isFullscreen}
           collapseToolbar={!isBarActive}
-          showTips={true}
+          showTips={videos.length === 0}
         />
         <VideoContainer
           isFullScreen={isFullscreen}
