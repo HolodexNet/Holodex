@@ -74,6 +74,7 @@ export function VideoCell({ video, height, width, status }: VideoCellProps) {
           width: "auto",
           height: videoHeight ? `${videoHeight}px` : "auto",
           aspectRatio: "16 / 9",
+          padding: status === "playing" ? "0" : "12px 12px 0 12px",
         }}
       >
         <Suspense key={video.id} fallback={<VideoSkeleton />}>
@@ -84,36 +85,39 @@ export function VideoCell({ video, height, width, status }: VideoCellProps) {
           />
         </Suspense>
       </div>
-      {status !== "playing" && (
-        <div
-          ref={buttonRef}
-          className="flex justify-center w-full items-center"
+      <div
+        ref={buttonRef}
+        className={cn(
+          "flex justify-center w-full items-center transition-transform duration-200 ease-out",
+          status === "playing"
+            ? "transform translate-y-full opacity-0 h-0"
+            : "transform translate-y-0 opacity-100",
+        )}
+      >
+        <Button
+          onClick={() => switchToPlaceholder(video.id)}
+          className={cn("rounded-md p-2 hover:bg-slate-5")}
+          variant={"ghost"}
         >
-          <Button
-            onClick={() => switchToPlaceholder(video.id)}
-            className={cn("rounded-md p-2 hover:bg-slate-5")}
-            variant={"ghost"}
-          >
-            <div
-              className={cn("i-heroicons:chevron-left", "text-lg text-base-11")}
-            />
-          </Button>
-          <Button
-            onClick={() => removeVideo(video.id)}
-            className={cn("rounded-md p-2 hover:bg-slate-5")}
-            variant={"ghost"}
-          >
-            <div className={cn("i-heroicons:trash", "text-lg text-base-11")} />
-          </Button>
-        </div>
-      )}
+          <div
+            className={cn("i-heroicons:chevron-left", "text-lg text-base-11")}
+          />
+        </Button>
+        <Button
+          onClick={() => removeVideo(video.id)}
+          className={cn("rounded-md p-2 hover:bg-slate-5")}
+          variant={"ghost"}
+        >
+          <div className={cn("i-heroicons:trash", "text-lg text-base-11")} />
+        </Button>
+      </div>
     </>
   );
 }
 
 const VideoSkeleton = () => (
   <div
-    className="w-full flex justify-center items-center bg-gray-800 border border-gray-600"
+    className="flex w-full justify-center items-center bg-gray-800 border border-gray-600"
     style={{ aspectRatio: "16 / 9" }}
   >
     <div className="text-white text-sm">Loading video...</div>

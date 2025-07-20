@@ -28,7 +28,7 @@ export function CellGroup({
   return (
     <div
       className={cn(
-        "bg-red z-30 absolute overflow-hidden",
+        "bg-slate-3 z-30 absolute overflow-hidden",
         // isMobile
         //   ? "ml-0"
         //   : isSidebarOpen
@@ -49,21 +49,22 @@ export function CellGroup({
           case "video":
             return (
               <CellContainer
-                height={dimensions.height}
+                height={dimensions.height / cells.length}
                 width={dimensions.width}
               >
                 <VideoCell
                   key={cell.id}
                   video={cell.video}
-                  height={dimensions.height}
+                  height={dimensions.height / cells.length}
                   width={dimensions.width}
+                  status={cell.status}
                 />
               </CellContainer>
             );
           case "chat":
             return (
               <CellContainer
-                height={dimensions.height}
+                height={dimensions.height / cells.length}
                 width={dimensions.width}
               >
                 <p>Chat cell not implemented yet</p>
@@ -72,7 +73,7 @@ export function CellGroup({
           case "placeholder":
             return (
               <CellContainer
-                height={dimensions.height}
+                height={dimensions.height / cells.length}
                 width={dimensions.width}
               >
                 <p>Placeholder cell not implemented yet</p>
