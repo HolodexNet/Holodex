@@ -1,13 +1,9 @@
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
-import { cn, idToVideoURL } from "@/lib/utils";
-import { Button } from "@/shadcn/ui/button";
-import {
-  mutateVideoToPlaceholderAtom,
-  removeVideoCellAtom,
-} from "@/store/multiview";
+import { idToVideoURL } from "@/lib/utils";
 import { videoStatusAtomFamily } from "@/store/player";
-import { useAtomValue, useSetAtom } from "jotai";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useAtomValue } from "jotai";
+import { Suspense, useRef, useState } from "react";
+import { VideoCellControl } from "./VideoCellControl";
 
 interface VideoCellProps {
   video: VideoBase;
@@ -18,19 +14,18 @@ interface VideoCellProps {
 export function VideoCell({ video, height, width }: VideoCellProps) {
   const buttonRef = useRef<HTMLDivElement>(null);
   const [buttonHeight, setButtonHeight] = useState(0);
-  const switchToPlaceholder = useSetAtom(mutateVideoToPlaceholderAtom);
-  const removeVideo = useSetAtom(removeVideoCellAtom);
+
   const videoStatusAtom = videoStatusAtomFamily(video.id || "x");
   const statusValue = useAtomValue(videoStatusAtom);
 
-  useEffect(() => {
-    if (buttonRef.current) {
-      setButtonHeight(buttonRef.current.offsetHeight);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (buttonRef.current) {
+  //     setButtonHeight(buttonRef.current.offsetHeight);
+  //   }
+  // }, []);
 
-  const videoHeight =
-    height && buttonHeight ? height - buttonHeight : undefined;
+  // const videoHeight =
+  //   height && buttonHeight ? height - buttonHeight : undefined;
 
   return (
     <>
@@ -38,7 +33,8 @@ export function VideoCell({ video, height, width }: VideoCellProps) {
         className="video-cell-video flex-1"
         style={{
           width: "auto",
-          height: videoHeight ? `${videoHeight}px` : "auto",
+          // height: videoHeight ? `${videoHeight}px` : "auto",
+          height: "200px",
           aspectRatio: "16 / 9",
           padding: statusValue.status === "playing" ? "0" : "12px 12px 0 12px",
         }}
@@ -51,32 +47,7 @@ export function VideoCell({ video, height, width }: VideoCellProps) {
           />
         </Suspense>
       </div>
-      <div
-        ref={buttonRef}
-        className={cn(
-          "flex justify-center w-full items-center transition-transform duration-200 ease-out",
-          statusValue.status === "playing"
-            ? "transform translate-y-full opacity-0 h-0"
-            : "transform translate-y-0 opacity-100",
-        )}
-      >
-        <Button
-          onClick={() => switchToPlaceholder(video.id)}
-          className={cn("rounded-md p-2 hover:bg-slate-5")}
-          variant={"ghost"}
-        >
-          <div
-            className={cn("i-heroicons:chevron-left", "text-lg text-base-11")}
-          />
-        </Button>
-        <Button
-          onClick={() => removeVideo(video.id)}
-          className={cn("rounded-md p-2 hover:bg-slate-5")}
-          variant={"ghost"}
-        >
-          <div className={cn("i-heroicons:trash", "text-lg text-base-11")} />
-        </Button>
-      </div>
+      <VideoCellControl id={video.id} buttonRef={buttonRef} />
     </>
   );
 }
