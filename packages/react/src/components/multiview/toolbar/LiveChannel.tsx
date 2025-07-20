@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/shadcn/ui/avatar";
 import { cn, makeThumbnailUrl } from "@/lib/utils";
 import { MemoizedLiveChannelTooltipContentCard } from "./LiveChannelTooltipContentCard";
 import { compareTimeDiffToNow } from "@/lib/time";
-import { addMultiviewVideoAtom } from "@/store/multiview";
+import { registerVideoCellAtom } from "@/store/multiview";
 import { useAtom } from "jotai";
 
 interface LiveChannelProps {
@@ -23,7 +23,7 @@ export function LiveChannel({ video }: LiveChannelProps) {
   });
 
   const thumbnail = makeThumbnailUrl(video.id, "sm");
-  const [_, addVideo] = useAtom(addMultiviewVideoAtom);
+  const [_, addVideo] = useAtom(registerVideoCellAtom);
 
   // TODO: move live stream info card outside of this components
   return (
