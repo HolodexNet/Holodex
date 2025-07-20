@@ -11,7 +11,6 @@ import {
 } from "@/hooks/useFrame";
 import {
   readMultiviewCellsAtom,
-  readMultiviewVideoAtom,
   useMultiViewFullScreen,
 } from "@/store/multiview";
 import { cn } from "@/lib/utils";
@@ -35,7 +34,6 @@ export function Multiview() {
   const multiviewRef = useRef<HTMLDivElement>(null);
   const closePanel = useSetAtom(closeMultiViewPanelAtom);
   const isMobile = useAtomValue(isMobileAtom);
-  const videos = useAtomValue(readMultiviewVideoAtom);
   const { cells } = useAtomValue(readMultiviewCellsAtom);
 
   const { isFullScreen: isFullscreen, toggleFullScreen } =
@@ -107,7 +105,7 @@ export function Multiview() {
         <MultiViewBackground
           isFullScreen={isFullscreen}
           collapseToolbar={!isBarActive}
-          showTips={videos.length === 0}
+          showTips={cells.length === 0}
         />
         {cells.length > 0 && (
           <CellGroup

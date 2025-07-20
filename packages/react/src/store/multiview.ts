@@ -37,34 +37,6 @@ export function useMultiViewFullScreen(ref: RefObject<HTMLDivElement | null>) {
   };
 }
 
-const multiviewVideoAtom = atom<VideoBase[]>([]);
-export const readMultiviewVideoAtom = atom((get) => get(multiviewVideoAtom));
-
-export const addMultiviewVideoAtom = atom(
-  null,
-  (get, set, video: VideoBase) => {
-    const currentVideos = get(readMultiviewVideoAtom);
-    // Check if the video already exists in the multiview
-    if (currentVideos.some((v) => v.id === video.id)) return;
-    set(multiviewVideoAtom, [...currentVideos, video]);
-  },
-);
-
-export const removeMultiviewVideoAtom = atom(
-  null,
-  (get, set, videoId: string) => {
-    const currentVideos = get(multiviewVideoAtom);
-    set(
-      multiviewVideoAtom,
-      currentVideos.filter((video) => video.id !== videoId),
-    );
-  },
-);
-
-export const clearMultiviewVideosAtom = atom(null, (_, set) => {
-  set(multiviewVideoAtom, []);
-});
-
 // TODO: read from memory
 export const multiviewCellsAtom = atom<MultiviewCells>({ cells: [] });
 multiviewCellsAtom.debugLabel = "multiviewCellsAtom";
