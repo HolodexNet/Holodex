@@ -1,5 +1,5 @@
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
-import { idToVideoURL } from "@/lib/utils";
+import { cn, idToVideoURL } from "@/lib/utils";
 import { videoStatusAtomFamily } from "@/store/player";
 import { useAtomValue } from "jotai";
 import { Suspense } from "react";
@@ -16,12 +16,10 @@ export function VideoCell({ video }: VideoCellProps) {
   return (
     <>
       <div
-        className="video-cell-video flex-1 min-h-0"
-        style={{
-          width: "auto",
-          aspectRatio: "16 / 9",
-          padding: statusValue.status === "playing" ? "0" : "12px 12px 0 12px",
-        }}
+        className={cn(
+          "video-cell-video flex-1 min-h-0 w-auto aspect-video",
+          statusValue.status === "playing" ? "p-0" : "px-3 pt-3 pb-0",
+        )}
       >
         <Suspense key={video.id} fallback={<VideoSkeleton />}>
           <PlayerWrapper

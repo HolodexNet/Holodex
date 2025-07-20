@@ -22,7 +22,7 @@ export function VideoCellControl({ id }: VideoCellControlProps) {
       className={cn(
         "flex justify-between w-full items-center transition-transform duration-200 ease-out p-2",
         statusValue.status === "playing"
-          ? "transform translate-y-full opacity-0 h-0"
+          ? "transform translate-y-full opacity-0 h-0 p-0"
           : "transform translate-y-0 opacity-100",
       )}
     >
