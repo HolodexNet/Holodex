@@ -1,12 +1,11 @@
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
+import { usePlayerEvents } from "@/hooks/usePlayerEvents";
 import { cn, idToVideoURL } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
 import {
   mutateVideoToPlaceholderAtom,
   removeVideoCellAtom,
-  updateCellStatusAtom,
 } from "@/store/multiview";
-import { defaultPlayerEventBus } from "@/store/player";
 import { useSetAtom } from "jotai";
 import { Suspense, useEffect, useRef, useState } from "react";
 
@@ -22,40 +21,9 @@ export function VideoCell({ video, height, width, status }: VideoCellProps) {
   const [buttonHeight, setButtonHeight] = useState(0);
   const removeVideo = useSetAtom(removeVideoCellAtom);
   const switchToPlaceholder = useSetAtom(mutateVideoToPlaceholderAtom);
-
-  const updateCellStatus = useSetAtom(updateCellStatusAtom);
   const cellId = `video_${video.id}`;
 
-  useEffect(() => {
-    const handlePlay = (playerId: string) => {
-      if (playerId === video.id) {
-        updateCellStatus({ cellId, status: "playing" });
-      }
-    };
-
-    const handlePause = (playerId: string) => {
-      if (playerId === video.id) {
-        updateCellStatus({ cellId, status: "paused" });
-      }
-    };
-
-    const handleError = (playerId: string, ...errorDetails: unknown[]) => {
-      if (playerId === video.id) {
-        console.error("Video error for", playerId, errorDetails);
-      }
-    };
-
-    // Subscribe to events
-    defaultPlayerEventBus.on("onPlay", handlePlay);
-    defaultPlayerEventBus.on("onPause", handlePause);
-    defaultPlayerEventBus.on("onError", handleError);
-
-    return () => {
-      defaultPlayerEventBus.off("onPlay", handlePlay);
-      defaultPlayerEventBus.off("onPause", handlePause);
-      defaultPlayerEventBus.off("onError", handleError);
-    };
-  }, [video.id, cellId, updateCellStatus]);
+  usePlayerEvents({ videoId: video.id, cellId });
 
   useEffect(() => {
     if (buttonRef.current) {

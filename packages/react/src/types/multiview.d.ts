@@ -1,5 +1,11 @@
 type CellType = "video" | "chat" | "placeholder";
-type VideoCellStatus = "paused" | "playing";
+type VideoCellStatus =
+  | "paused"
+  | "playing"
+  | "buffering"
+  | "buffered"
+  | "ended"
+  | "error";
 type ChatCellStatus = "active" | "inactive";
 
 interface BaseCell {
