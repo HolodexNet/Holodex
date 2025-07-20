@@ -9,10 +9,9 @@ import { useAtomValue, useSetAtom } from "jotai";
 
 interface VideoCellControlProps {
   id: string;
-  buttonRef: React.RefObject<HTMLDivElement | null>;
 }
 
-export function VideoCellControl({ id, buttonRef }: VideoCellControlProps) {
+export function VideoCellControl({ id }: VideoCellControlProps) {
   const switchToPlaceholder = useSetAtom(mutateVideoToPlaceholderAtom);
   const removeVideo = useSetAtom(removeVideoCellAtom);
   const videoStatusAtom = videoStatusAtomFamily(id || "x");
@@ -20,7 +19,6 @@ export function VideoCellControl({ id, buttonRef }: VideoCellControlProps) {
 
   return (
     <div
-      ref={buttonRef}
       className={cn(
         "flex justify-between w-full items-center transition-transform duration-200 ease-out p-2",
         statusValue.status === "playing"

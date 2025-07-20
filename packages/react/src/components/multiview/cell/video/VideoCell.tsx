@@ -2,39 +2,23 @@ import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { idToVideoURL } from "@/lib/utils";
 import { videoStatusAtomFamily } from "@/store/player";
 import { useAtomValue } from "jotai";
-import { Suspense, useRef, useState } from "react";
+import { Suspense } from "react";
 import { VideoCellControl } from "./VideoCellControl";
 
 interface VideoCellProps {
   video: VideoBase;
-  height?: number;
-  width?: number;
 }
 
-export function VideoCell({ video, height, width }: VideoCellProps) {
-  const buttonRef = useRef<HTMLDivElement>(null);
-  const [buttonHeight, setButtonHeight] = useState(0);
-
+export function VideoCell({ video }: VideoCellProps) {
   const videoStatusAtom = videoStatusAtomFamily(video.id || "x");
   const statusValue = useAtomValue(videoStatusAtom);
-
-  // useEffect(() => {
-  //   if (buttonRef.current) {
-  //     setButtonHeight(buttonRef.current.offsetHeight);
-  //   }
-  // }, []);
-
-  // const videoHeight =
-  //   height && buttonHeight ? height - buttonHeight : undefined;
 
   return (
     <>
       <div
-        className="video-cell-video flex-1"
+        className="video-cell-video flex-1 min-h-0"
         style={{
           width: "auto",
-          // height: videoHeight ? `${videoHeight}px` : "auto",
-          height: "200px",
           aspectRatio: "16 / 9",
           padding: statusValue.status === "playing" ? "0" : "12px 12px 0 12px",
         }}
@@ -47,7 +31,7 @@ export function VideoCell({ video, height, width }: VideoCellProps) {
           />
         </Suspense>
       </div>
-      <VideoCellControl id={video.id} buttonRef={buttonRef} />
+      <VideoCellControl id={video.id} />
     </>
   );
 }
