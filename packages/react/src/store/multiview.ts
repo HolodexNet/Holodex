@@ -64,3 +64,38 @@ export const removeMultiviewVideoAtom = atom(
 export const clearMultiviewVideosAtom = atom(null, (_, set) => {
   set(multiviewVideoAtom, []);
 });
+
+// TODO: read from memory
+export const multiviewCellsAtom = atom<MultiviewCells>({ cells: [] });
+multiviewCellsAtom.debugLabel = "multiviewCellsAtom";
+
+export const readMultiviewCellsAtom = atom((get) => get(multiviewCellsAtom));
+
+export const addMultiviewCellAtom = atom(null, (get, set, cell: Cell) => {
+  const curr = get(readMultiviewCellsAtom);
+  set(multiviewCellsAtom, { cells: [...curr.cells, cell] });
+});
+
+export const removeMultiviewCellAtom = atom(
+  null,
+  (get, set, cellId: string) => {
+    const curr = get(readMultiviewCellsAtom);
+    set(multiviewCellsAtom, {
+      cells: curr.cells.filter((cell) => cell.id !== cellId),
+    });
+  },
+);
+
+export const clearMultiviewCellsAtom = atom(null, (_, set) => {
+  set(multiviewCellsAtom, { cells: [] });
+});
+
+export const registerVideoCellAtom = atom(null, (_, set, video: VideoBase) => {
+  const newVideoCell: VideoCell = {
+    id: video.id,
+    type: "video",
+    status: "paused", // Default status
+    video: video, // Placeholder video object
+  };
+  set(addMultiviewCellAtom, newVideoCell);
+});
