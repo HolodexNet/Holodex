@@ -105,10 +105,12 @@ export function Multiview() {
           collapseToolbar={!isBarActive}
           showTips={videos.length === 0}
         />
-        <VideoCellGroup
-          isFullScreen={isFullscreen}
-          collapseToolbar={!isBarActive}
-        />
+        {videos.length > 0 && (
+          <VideoCellGroup
+            isFullScreen={isFullscreen}
+            collapseToolbar={!isBarActive}
+          />
+        )}
       </div>
     </>
   );
