@@ -6,11 +6,11 @@ import { Suspense } from "react";
 import { VideoCellControl } from "./VideoCellControl";
 
 interface VideoCellProps {
-  video: VideoBase;
+  id: string;
 }
 
-export function VideoCell({ video }: VideoCellProps) {
-  const videoStatusAtom = videoStatusAtomFamily(video.id || "x");
+export function VideoCell({ id }: VideoCellProps) {
+  const videoStatusAtom = videoStatusAtomFamily(id || "x");
   const statusValue = useAtomValue(videoStatusAtom);
 
   return (
@@ -21,15 +21,11 @@ export function VideoCell({ video }: VideoCellProps) {
           statusValue.status === "playing" ? "p-0" : "px-3 pt-3 pb-0",
         )}
       >
-        <Suspense key={video.id} fallback={<VideoSkeleton />}>
-          <PlayerWrapper
-            id={video.id}
-            url={idToVideoURL(video.id)}
-            autoplay={false}
-          />
+        <Suspense key={id} fallback={<VideoSkeleton />}>
+          <PlayerWrapper id={id} url={idToVideoURL(id)} autoplay={false} />
         </Suspense>
       </div>
-      <VideoCellControl id={video.id} />
+      <VideoCellControl id={id} />
     </>
   );
 }
