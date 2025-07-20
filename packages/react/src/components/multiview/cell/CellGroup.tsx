@@ -57,7 +57,6 @@ export function CellGroup({
                   video={cell.video}
                   height={dimensions.height / cells.length}
                   width={dimensions.width}
-                  status={cell.status}
                 />
               </CellContainer>
             );

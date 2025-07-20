@@ -66,7 +66,6 @@ export const registerVideoCellAtom = atom(null, (_, set, video: VideoBase) => {
   const newVideoCell: VideoCell = {
     id: `video_${video.id}`,
     type: "video",
-    status: "paused", // Default status
     video: video, // Placeholder video object
   };
   set(addMultiviewCellAtom, newVideoCell);
@@ -121,14 +120,7 @@ export const updateCellStateAtom = atom(
 
 export const updateCellStatusAtom = atom(
   null,
-  (
-    _,
-    set,
-    {
-      cellId,
-      status,
-    }: { cellId: string; status: VideoCellStatus | ChatCellStatus },
-  ) => {
+  (_, set, { cellId, status }: { cellId: string; status: ChatCellStatus }) => {
     set(updateCellStateAtom, { cellId, updates: { status } });
   },
 );

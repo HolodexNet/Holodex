@@ -1,29 +1,27 @@
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
-import { usePlayerEvents } from "@/hooks/usePlayerEvents";
 import { cn, idToVideoURL } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
 import {
   mutateVideoToPlaceholderAtom,
   removeVideoCellAtom,
 } from "@/store/multiview";
-import { useSetAtom } from "jotai";
+import { videoStatusAtomFamily } from "@/store/player";
+import { useAtomValue, useSetAtom } from "jotai";
 import { Suspense, useEffect, useRef, useState } from "react";
 
 interface VideoCellProps {
   video: VideoBase;
   height?: number;
   width?: number;
-  status: VideoCellStatus;
 }
 
-export function VideoCell({ video, height, width, status }: VideoCellProps) {
+export function VideoCell({ video, height, width }: VideoCellProps) {
   const buttonRef = useRef<HTMLDivElement>(null);
   const [buttonHeight, setButtonHeight] = useState(0);
-  const removeVideo = useSetAtom(removeVideoCellAtom);
   const switchToPlaceholder = useSetAtom(mutateVideoToPlaceholderAtom);
-  const cellId = `video_${video.id}`;
-
-  usePlayerEvents({ videoId: video.id, cellId });
+  const removeVideo = useSetAtom(removeVideoCellAtom);
+  const videoStatusAtom = videoStatusAtomFamily(video.id || "x");
+  const statusValue = useAtomValue(videoStatusAtom);
 
   useEffect(() => {
     if (buttonRef.current) {
@@ -42,7 +40,7 @@ export function VideoCell({ video, height, width, status }: VideoCellProps) {
           width: "auto",
           height: videoHeight ? `${videoHeight}px` : "auto",
           aspectRatio: "16 / 9",
-          padding: status === "playing" ? "0" : "12px 12px 0 12px",
+          padding: statusValue.status === "playing" ? "0" : "12px 12px 0 12px",
         }}
       >
         <Suspense key={video.id} fallback={<VideoSkeleton />}>
@@ -57,7 +55,7 @@ export function VideoCell({ video, height, width, status }: VideoCellProps) {
         ref={buttonRef}
         className={cn(
           "flex justify-center w-full items-center transition-transform duration-200 ease-out",
-          status === "playing"
+          statusValue.status === "playing"
             ? "transform translate-y-full opacity-0 h-0"
             : "transform translate-y-0 opacity-100",
         )}

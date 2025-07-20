@@ -1,11 +1,4 @@
 type CellType = "video" | "chat" | "placeholder";
-type VideoCellStatus =
-  | "paused"
-  | "playing"
-  | "buffering"
-  | "buffered"
-  | "ended"
-  | "error";
 type ChatCellStatus = "active" | "inactive";
 
 interface BaseCell {
@@ -19,7 +12,6 @@ interface BaseCell {
 
 interface VideoCell extends BaseCell {
   type: "video";
-  status: VideoCellStatus;
   video: VideoBase;
 }
 
