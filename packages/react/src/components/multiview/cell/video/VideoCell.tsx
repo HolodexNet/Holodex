@@ -1,7 +1,7 @@
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { cn, idToVideoURL } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
-import { removeMultiviewCellAtom } from "@/store/multiview";
+import { removeVideoCellAtom } from "@/store/multiview";
 import { useAtom } from "jotai";
 import { Suspense, useEffect, useRef, useState } from "react";
 
@@ -14,7 +14,7 @@ interface VideoCellProps {
 export function VideoCell({ video, height, width }: VideoCellProps) {
   const buttonRef = useRef<HTMLDivElement>(null);
   const [buttonHeight, setButtonHeight] = useState(0);
-  const [_, removeVideo] = useAtom(removeMultiviewCellAtom);
+  const [_, removeVideo] = useAtom(removeVideoCellAtom);
 
   useEffect(() => {
     if (buttonRef.current) {

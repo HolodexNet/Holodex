@@ -64,10 +64,16 @@ export const clearMultiviewCellsAtom = atom(null, (_, set) => {
 
 export const registerVideoCellAtom = atom(null, (_, set, video: VideoBase) => {
   const newVideoCell: VideoCell = {
-    id: video.id,
+    id: `video_${video.id}`,
     type: "video",
     status: "paused", // Default status
     video: video, // Placeholder video object
   };
   set(addMultiviewCellAtom, newVideoCell);
 });
+
+export const removeVideoCellAtom = atom(null, (_, set, videoId: string) => {
+  set(removeMultiviewCellAtom, `video_${videoId}`);
+});
+
+// function to manage cell layout

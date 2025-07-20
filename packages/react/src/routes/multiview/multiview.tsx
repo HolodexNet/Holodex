@@ -82,12 +82,12 @@ export function Multiview() {
         {/*
           to figure out how to make the container occupy the same size as the background
         */}
-        <div className="flex flex-col w-full relative h-full">
+        <div className="flex w-full flex-col relative h-full">
           <ToolBar
             icons={isMobile ? mobileIcons : icons}
             currentVideoIds={cells
               .filter((c: Cell) => c.type === "video")
-              .map((c: VideoCell) => c.id)}
+              .map((c: VideoCell) => c.id.replace("video_", ""))}
           />
           <ToolButton
             className={cn(
