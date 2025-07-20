@@ -1,20 +1,61 @@
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { cn, idToVideoURL } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
-import { removeVideoCellAtom } from "@/store/multiview";
-import { useAtom } from "jotai";
+import {
+  mutateVideoToPlaceholderAtom,
+  removeVideoCellAtom,
+  updateCellStatusAtom,
+} from "@/store/multiview";
+import { defaultPlayerEventBus } from "@/store/player";
+import { useSetAtom } from "jotai";
 import { Suspense, useEffect, useRef, useState } from "react";
 
 interface VideoCellProps {
   video: VideoBase;
   height?: number;
   width?: number;
+  status: VideoCellStatus;
 }
 
-export function VideoCell({ video, height, width }: VideoCellProps) {
+export function VideoCell({ video, height, width, status }: VideoCellProps) {
   const buttonRef = useRef<HTMLDivElement>(null);
   const [buttonHeight, setButtonHeight] = useState(0);
-  const [_, removeVideo] = useAtom(removeVideoCellAtom);
+  const removeVideo = useSetAtom(removeVideoCellAtom);
+  const switchToPlaceholder = useSetAtom(mutateVideoToPlaceholderAtom);
+
+  const updateCellStatus = useSetAtom(updateCellStatusAtom);
+  const cellId = `video_${video.id}`;
+
+  useEffect(() => {
+    const handlePlay = (playerId: string) => {
+      if (playerId === video.id) {
+        updateCellStatus({ cellId, status: "playing" });
+      }
+    };
+
+    const handlePause = (playerId: string) => {
+      if (playerId === video.id) {
+        updateCellStatus({ cellId, status: "paused" });
+      }
+    };
+
+    const handleError = (playerId: string, ...errorDetails: unknown[]) => {
+      if (playerId === video.id) {
+        console.error("Video error for", playerId, errorDetails);
+      }
+    };
+
+    // Subscribe to events
+    defaultPlayerEventBus.on("onPlay", handlePlay);
+    defaultPlayerEventBus.on("onPause", handlePause);
+    defaultPlayerEventBus.on("onError", handleError);
+
+    return () => {
+      defaultPlayerEventBus.off("onPlay", handlePlay);
+      defaultPlayerEventBus.off("onPause", handlePause);
+      defaultPlayerEventBus.off("onError", handleError);
+    };
+  }, [video.id, cellId, updateCellStatus]);
 
   useEffect(() => {
     if (buttonRef.current) {
@@ -43,15 +84,29 @@ export function VideoCell({ video, height, width }: VideoCellProps) {
           />
         </Suspense>
       </div>
-      <div ref={buttonRef} className="flex justify-center w-full items-center">
-        <Button
-          onClick={() => removeVideo(video.id)}
-          className={cn("rounded-md p-2 hover:bg-slate-5")}
-          variant={"ghost"}
+      {status !== "playing" && (
+        <div
+          ref={buttonRef}
+          className="flex justify-center w-full items-center"
         >
-          <div className={cn("i-heroicons:trash", "text-lg text-base-11")} />
-        </Button>
-      </div>
+          <Button
+            onClick={() => switchToPlaceholder(video.id)}
+            className={cn("rounded-md p-2 hover:bg-slate-5")}
+            variant={"ghost"}
+          >
+            <div
+              className={cn("i-heroicons:chevron-left", "text-lg text-base-11")}
+            />
+          </Button>
+          <Button
+            onClick={() => removeVideo(video.id)}
+            className={cn("rounded-md p-2 hover:bg-slate-5")}
+            variant={"ghost"}
+          >
+            <div className={cn("i-heroicons:trash", "text-lg text-base-11")} />
+          </Button>
+        </div>
+      )}
     </>
   );
 }
