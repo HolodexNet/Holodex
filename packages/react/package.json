@@ -81,6 +81,7 @@
     "react-day-picker": "^9.6.7",
     "react-dom": "^19.1.0",
     "react-error-boundary": "^4.0.13",
+    "react-grid-layout": "^1.5.2",
     "react-hook-form": "^7.56.3",
     "react-i18next": "^15.5.1",
     "react-image": "^4.1.0",
