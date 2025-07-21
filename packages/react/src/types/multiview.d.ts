@@ -1,13 +1,10 @@
+import GridLayout from "react-grid-layout";
+
 type CellType = "video" | "chat" | "placeholder";
 type ChatCellStatus = "active" | "inactive";
 
-interface BaseCell {
-  id: string;
+interface BaseCell extends GridLayout.Layout {
   type: CellType;
-  x?: number; // x and y are based on grid position
-  y?: number;
-  w?: number; // w and h are in grid units
-  h?: number;
 }
 
 interface VideoCell extends BaseCell {

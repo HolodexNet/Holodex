@@ -1,4 +1,12 @@
 import { indicatePageFullscreenAtom } from "@/hooks/useFrame";
+import {
+  Cell,
+  ChatCell,
+  ChatCellStatus,
+  MultiviewCells,
+  PlaceholderCell,
+  VideoCell,
+} from "@/types/multiview";
 import { atom, useAtom, useSetAtom } from "jotai";
 import { RefObject, useEffect } from "react";
 
@@ -53,7 +61,7 @@ export const removeMultiviewCellAtom = atom(
   (get, set, cellId: string) => {
     const curr = get(readMultiviewCellsAtom);
     set(multiviewCellsAtom, {
-      cells: curr.cells.filter((cell) => cell.id !== cellId),
+      cells: curr.cells.filter((cell) => cell.i !== cellId),
     });
   },
 );
@@ -64,9 +72,13 @@ export const clearMultiviewCellsAtom = atom(null, (_, set) => {
 
 export const registerVideoCellAtom = atom(null, (_, set, video: VideoBase) => {
   const newVideoCell: VideoCell = {
-    id: `video_${video.id}`,
+    i: `video_${video.id}`,
     type: "video",
     video: video, // Placeholder video object
+    x: 0, // Default position
+    y: 0,
+    w: 1, // Default width
+    h: 1, // Default height
   };
   set(addMultiviewCellAtom, newVideoCell);
 });
@@ -83,7 +95,7 @@ export const updateCellStateAtom = atom(
     { cellId, updates }: { cellId: string; updates: Partial<Cell> },
   ) => {
     const curr = get(readMultiviewCellsAtom);
-    const cellExists = curr.cells.some((cell) => cell.id === cellId);
+    const cellExists = curr.cells.some((cell) => cell.i === cellId);
 
     if (!cellExists) {
       console.warn(`Cell with id ${cellId} not found`);
@@ -92,7 +104,7 @@ export const updateCellStateAtom = atom(
 
     set(multiviewCellsAtom, {
       cells: curr.cells.map((cell) => {
-        if (cell.id !== cellId) return cell;
+        if (cell.i !== cellId) return cell;
         // Only allow updates that are valid for the specific cell type
         if (
           cell.type === "video" &&
@@ -130,7 +142,7 @@ const mutateCellTypesAtom = atom(
   (get, set, { cellId, newCell }: { cellId: string; newCell: Cell }) => {
     // find in the array of cells the cell with the given cell id
     const curr = get(readMultiviewCellsAtom);
-    const cell = curr.cells.find((cell) => cell.id === cellId);
+    const cell = curr.cells.find((cell) => cell.i === cellId);
     if (!cell) {
       console.warn(`Cell with id ${cellId} not found`);
       return;
@@ -138,7 +150,7 @@ const mutateCellTypesAtom = atom(
 
     set(multiviewCellsAtom, {
       cells: curr.cells.map((cell) =>
-        cell.id === cellId
+        cell.i === cellId
           ? {
               ...newCell,
               x: cell.x ?? 0,
@@ -157,8 +169,12 @@ export const mutateVideoToPlaceholderAtom = atom(
   (_, set, videoId: string) => {
     const id = cleanMultiviewCellId(videoId);
     const newPlaceholderCell: PlaceholderCell = {
-      id: `placeholder_${id}`,
+      i: `placeholder_${id}`,
       type: "placeholder",
+      x: 0,
+      y: 0,
+      w: 0,
+      h: 0,
     };
     set(mutateCellTypesAtom, {
       cellId: `video_${id}`,
@@ -175,7 +191,7 @@ export const mutatePlaceholderToOtherCellAtom = atom(
       cellId: `placeholder_${id}`,
       newCell: {
         ...newCell,
-        id: `${newCell.type}_${id}`, // Ensure the new cell has the correct prefix
+        i: `${newCell.type}_${id}`, // Ensure the new cell has the correct prefix
       },
     });
   },

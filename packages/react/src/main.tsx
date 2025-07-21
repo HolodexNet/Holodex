@@ -4,6 +4,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { HelmetProvider } from "@dr.pogodin/react-helmet";
 import "./index.css";
 import "./colors.css";
+import "../node_modules/react-grid-layout/css/styles.css";
+import "../node_modules/react-resizable/css/styles.css";
 import "uno.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import "./lib/i18n";

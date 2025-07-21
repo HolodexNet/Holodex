@@ -52,7 +52,7 @@ export function CellGroup({
                 height={dimensions.height / cells.length}
                 width={dimensions.width}
               >
-                <VideoCell key={cell.id} id={cell.video.id} />
+                <VideoCell key={cell.i} id={cell.video.id} />
               </CellContainer>
             );
           case "chat":
