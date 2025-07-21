@@ -17,7 +17,7 @@ export function VideoCell({ id }: VideoCellProps) {
     <>
       <div
         className={cn(
-          "video-cell-video flex-1 min-h-0 w-auto aspect-video",
+          "video-cell-video flex-1 min-h-0 min-w-0 w-auto aspect-video",
           statusValue.status === "playing" ? "p-0" : "px-3 pt-3 pb-0",
         )}
       >
