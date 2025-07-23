@@ -108,7 +108,7 @@ export function Multiview() {
         </div>
         <div
           className={cn(
-            "absolute left-0 z-0",
+            "absolute left-0 z-0 overflow-hidden",
             isMobile
               ? "ml-0"
               : isBarActive

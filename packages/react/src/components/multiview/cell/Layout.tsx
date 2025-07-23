@@ -49,7 +49,7 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
           return (
             <div
               key={cell.i}
-              className="h-full w-full flex flex-col border-2 border-blue-6 rounded-lg box-border bg-slate-5 overflow-hidden"
+              className="h-full w-full flex flex-col border-2 border-blue-6 rounded-lg box-border bg-slate-5"
             >
               {renderCellContent()}
             </div>

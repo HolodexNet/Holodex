@@ -47,7 +47,7 @@ export const MultiViewBackground = ({
       style={backgroundStyle}
       className={cn(
         `bg-size-[${cellDimensions.columnWidth}px ${cellDimensions.rowHeight}px]`,
-        "absolute inset-0",
+        "absolute h-full w-full",
       )}
     >
       {showTips && (
