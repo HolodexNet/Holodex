@@ -86,9 +86,6 @@ export function Multiview() {
         <title>Multiview - Holodex</title>
       </Helmet>
       <div id="multiview" ref={multiviewRef} className="relative">
-        {/*
-          to figure out how to make the container occupy the same size as the background
-        */}
         <div className="relative flex w-full flex-col h-full">
           <ToolBar
             icons={isMobile ? mobileIcons : icons}

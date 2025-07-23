@@ -74,11 +74,11 @@ export const registerVideoCellAtom = atom(null, (_, set, video: VideoBase) => {
   const newVideoCell: VideoCell = {
     i: `video_${video.id}`,
     type: "video",
-    video: video, // Placeholder video object
-    x: 0, // Default position
+    video: video,
+    x: 0,
     y: 0,
-    w: 1, // Default width
-    h: 1, // Default height
+    w: 1,
+    h: 1,
   };
   set(addMultiviewCellAtom, newVideoCell);
 });
