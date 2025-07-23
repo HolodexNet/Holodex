@@ -11,6 +11,7 @@ import {
   openMultiViewPanelAtom,
 } from "@/hooks/useFrame";
 import {
+  clearMultiviewCellsAtom,
   readMultiviewCellsAtom,
   useMultiViewFullScreen,
 } from "@/store/multiview";
@@ -31,13 +32,16 @@ const reorderIcon =
 // grid page for drag and drop
 
 export function Multiview() {
-  const isBarActive = useAtomValue(multiViewPanelOpenAtom);
-  const openPanel = useSetAtom(openMultiViewPanelAtom);
   const multiviewRef = useRef<HTMLDivElement>(null);
-  const closePanel = useSetAtom(closeMultiViewPanelAtom);
+
+  const isBarActive = useAtomValue(multiViewPanelOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
-  const { cells } = useAtomValue(readMultiviewCellsAtom);
   const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
+  const { cells } = useAtomValue(readMultiviewCellsAtom);
+
+  const openPanel = useSetAtom(openMultiViewPanelAtom);
+  const closePanel = useSetAtom(closeMultiViewPanelAtom);
+  const clearCells = useSetAtom(clearMultiviewCellsAtom);
 
   const { isFullScreen: isFullscreen, toggleFullScreen } =
     useMultiViewFullScreen(multiviewRef);
@@ -63,7 +67,7 @@ export function Multiview() {
     ...baseIcons,
     { path: "i-heroicons:arrow-path", tooltip: "Archive Sync" },
     { path: "i-fluent:save-32-regular", tooltip: "Save Layout" },
-    { path: "i-heroicons:trash", tooltip: "Clear" },
+    { path: "i-heroicons:trash", tooltip: "Clear", onClick: clearCells },
     {
       path: isFullscreen
         ? "i-heroicons:arrows-pointing-in"
@@ -85,7 +89,7 @@ export function Multiview() {
         {/*
           to figure out how to make the container occupy the same size as the background
         */}
-        <div className="flex w-full flex-col h-full relative">
+        <div className="relative flex w-full flex-col h-full">
           <ToolBar
             icons={isMobile ? mobileIcons : icons}
             currentVideoIds={cells
