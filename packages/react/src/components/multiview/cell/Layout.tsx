@@ -4,6 +4,7 @@ import { useAtomValue } from "jotai";
 import GridLayout from "react-grid-layout";
 import { VideoCell } from "./video/VideoCell";
 import { Cell } from "@/types/multiview";
+import { onDragStop } from "./GridFunctions";
 
 interface LayoutProps {
   isFullScreen?: boolean;
@@ -25,12 +26,13 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
         width={dimensions.width}
         isDraggable={true}
         isResizable={true}
+        allowOverlap
         margin={[1, 1]}
         containerPadding={[0, 0]}
         compactType={null}
-        isBounded={true}
         resizeHandles={["se", "sw", "ne", "nw", "n", "s", "e", "w"]}
         // onLayoutChange={handleLayoutChange}
+        onDragStop={onDragStop}
       >
         {arrangedCell.map((cell) => {
           const renderCellContent = () => {
