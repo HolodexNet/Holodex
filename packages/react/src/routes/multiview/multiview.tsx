@@ -6,6 +6,7 @@ import {
 import {
   closeMultiViewPanelAtom,
   isMobileAtom,
+  isSidebarOpenAtom,
   multiViewPanelOpenAtom,
   openMultiViewPanelAtom,
 } from "@/hooks/useFrame";
@@ -36,6 +37,7 @@ export function Multiview() {
   const closePanel = useSetAtom(closeMultiViewPanelAtom);
   const isMobile = useAtomValue(isMobileAtom);
   const { cells } = useAtomValue(readMultiviewCellsAtom);
+  const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
 
   const { isFullScreen: isFullscreen, toggleFullScreen } =
     useMultiViewFullScreen(multiviewRef);
@@ -79,7 +81,7 @@ export function Multiview() {
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
-      <div id="multiview" ref={multiviewRef}>
+      <div id="multiview" ref={multiviewRef} className="relative">
         {/*
           to figure out how to make the container occupy the same size as the background
         */}
@@ -103,14 +105,30 @@ export function Multiview() {
             }}
           />
         </div>
-        <MultiViewBackground
-          isFullScreen={isFullscreen}
-          collapseToolbar={!isBarActive}
-          showTips={cells.length === 0}
-        />
-        {cells.length > 0 && (
-          <Layout isFullScreen={isFullscreen} collapseToolbar={!isBarActive} />
-        )}
+        <div
+          className={cn(
+            "absolute left-0 z-0",
+            isMobile
+              ? "ml-0"
+              : isBarActive
+                ? "ml-0"
+                : "ml-[var(--sidebar-width)]",
+            isSidebarOpen ? "w-[calc(100vw-var(--sidebar-width))]" : "w-full",
+            isFullscreen
+              ? isBarActive
+                ? "min-h-[calc(100vh-var(--toolbar-height))]"
+                : "min-h-full"
+              : isBarActive
+                ? "min-h-[calc(100vh-var(--toolbar-height)-var(--header-height))]"
+                : "min-h-[calc(100vh-var(--header-height))]",
+          )}
+        >
+          <MultiViewBackground
+            isFullScreen={isFullscreen}
+            showTips={cells.length === 0}
+          />
+          {cells.length > 0 && <Layout isFullScreen={isFullscreen} />}
+        </div>
       </div>
     </>
   );

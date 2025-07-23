@@ -4,38 +4,19 @@ import { useAtomValue } from "jotai";
 import GridLayout from "react-grid-layout";
 import { VideoCell } from "./video/VideoCell";
 import { Cell } from "@/types/multiview";
-import { cn } from "@/lib/utils";
-import { isSidebarOpenAtom } from "@/hooks/useFrame";
 
 interface LayoutProps {
   isFullScreen?: boolean;
-  collapseToolbar: boolean;
 }
 
-export function Layout({
-  isFullScreen = false,
-  collapseToolbar = false,
-}: LayoutProps) {
-  const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
+export function Layout({ isFullScreen = false }: LayoutProps) {
   const { cells } = useAtomValue(readMultiviewCellsAtom);
   const { cellDimensions, dimensions } = useComputedDimensions(isFullScreen);
 
   const arrangedCell = calculateLayout(cells);
 
   return (
-    <div
-      className={cn(
-        "layout z-30 absolute p-0 overflow-hidden",
-        isSidebarOpen ? "w-[calc(100%-var(--sidebar-width))]" : "w-full",
-        isFullScreen
-          ? collapseToolbar
-            ? "h-full"
-            : "h-[calc(100%-var(--toolbar-height))]"
-          : collapseToolbar
-            ? "h-[calc(100%-var(--header-height))]"
-            : "h-[calc(100%-var(--toolbar-height)-var(--header-height))]",
-      )}
-    >
+    <div className="h-full w-full">
       <GridLayout
         className="layout"
         layout={arrangedCell}
@@ -46,7 +27,7 @@ export function Layout({
         isResizable={true}
         margin={[1, 1]}
         containerPadding={[0, 0]}
-        compactType={"horizontal"}
+        compactType={null}
         isBounded={true}
         resizeHandles={["se", "sw", "ne", "nw", "n", "s", "e", "w"]}
         // onLayoutChange={handleLayoutChange}
@@ -68,7 +49,7 @@ export function Layout({
           return (
             <div
               key={cell.i}
-              className="flex flex-col h-full w-full border-2 border-blue-6 rounded-lg box-border bg-slate-5 overflow-hidden"
+              className="h-full w-full flex flex-col border-2 border-blue-6 rounded-lg box-border bg-slate-5 overflow-hidden"
             >
               {renderCellContent()}
             </div>

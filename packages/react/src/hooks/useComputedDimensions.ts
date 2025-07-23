@@ -7,6 +7,7 @@ const TOOLBAR_HEIGHT = 64;
 const SIDEBAR_WIDTH = 208;
 const CELL_COUNT = 24;
 
+// the computed dimensions here is based on screen dimension and should not be impacted by the content size
 export const useComputedDimensions = (isFullScreen = false) => {
   const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
   const isBarActive = useAtomValue(multiViewPanelOpenAtom);

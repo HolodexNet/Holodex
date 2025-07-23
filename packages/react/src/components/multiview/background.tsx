@@ -1,5 +1,5 @@
 import { useComputedDimensions } from "@/hooks/useComputedDimensions";
-import { isMobileAtom, isSidebarOpenAtom } from "@/hooks/useFrame";
+import { isMobileAtom } from "@/hooks/useFrame";
 import { cn } from "@/lib/utils";
 import { useAtomValue } from "jotai";
 import React from "react";
@@ -7,19 +7,16 @@ import React from "react";
 interface MultiViewBackgroundProps {
   showTips?: boolean;
   isFullScreen?: boolean;
-  collapseToolbar?: boolean;
   style?: React.CSSProperties;
   children?: React.ReactNode;
 }
 
 export const MultiViewBackground = ({
   showTips = false,
-  collapseToolbar = false,
   style = {},
   children,
   isFullScreen = false,
 }: MultiViewBackgroundProps) => {
-  const isSidebarOpen = useAtomValue(isSidebarOpenAtom);
   const isMobile = useAtomValue(isMobileAtom);
   const { cellDimensions } = useComputedDimensions(isFullScreen);
 
@@ -49,21 +46,8 @@ export const MultiViewBackground = ({
       id="multiview-background"
       style={backgroundStyle}
       className={cn(
-        "absolute left-0 z-0",
         `bg-size-[${cellDimensions.columnWidth}px ${cellDimensions.rowHeight}px]`,
-        isMobile
-          ? "ml-0"
-          : isSidebarOpen
-            ? "ml-[var(--sidebar-width)]"
-            : "ml-0",
-        isSidebarOpen ? "w-[calc(100%-var(--sidebar-width))]" : "w-full",
-        isFullScreen
-          ? collapseToolbar
-            ? "h-full"
-            : "h-[calc(100%-var(--toolbar-height))]"
-          : collapseToolbar
-            ? "h-[calc(100%-var(--header-height))]"
-            : "h-[calc(100%-var(--toolbar-height)-var(--header-height))]",
+        "absolute inset-0",
       )}
     >
       {showTips && (
