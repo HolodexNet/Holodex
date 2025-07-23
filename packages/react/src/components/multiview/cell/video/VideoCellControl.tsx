@@ -28,6 +28,8 @@ export function VideoCellControl({ id }: VideoCellControlProps) {
     >
       <Button
         onClick={() => switchToPlaceholder(id)}
+        onMouseDown={(e) => e.stopPropagation()}
+        onPointerDown={(e) => e.stopPropagation()}
         className={cn("rounded-md p-2 hover:bg-slate-5")}
         variant="secondary"
       >
@@ -37,6 +39,8 @@ export function VideoCellControl({ id }: VideoCellControlProps) {
       </Button>
       <Button
         onClick={() => removeVideo(id)}
+        onMouseDown={(e) => e.stopPropagation()}
+        onPointerDown={(e) => e.stopPropagation()}
         className={cn("rounded-md p-2 hover:bg-slate-5")}
         variant="destructive"
       >
