@@ -109,11 +109,6 @@ export function Multiview() {
         <div
           className={cn(
             "absolute left-0 z-0 overflow-hidden",
-            isMobile
-              ? "ml-0"
-              : isBarActive
-                ? "ml-0"
-                : "ml-[var(--sidebar-width)]",
             isSidebarOpen ? "w-[calc(100vw-var(--sidebar-width))]" : "w-full",
             isFullscreen
               ? isBarActive
