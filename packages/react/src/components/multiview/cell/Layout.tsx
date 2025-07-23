@@ -32,7 +32,11 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
         compactType={null}
         resizeHandles={["se", "sw", "ne", "nw", "n", "s", "e", "w"]}
         // onLayoutChange={handleLayoutChange}
-        onDragStop={onDragStop}
+        onDragStop={(
+          layout: GridLayout.Layout[],
+          oldItem: GridLayout.Layout,
+          newItem: GridLayout.Layout,
+        ) => onDragStop(layout, oldItem, newItem, 24)}
       >
         {arrangedCell.map((cell) => {
           const renderCellContent = () => {
