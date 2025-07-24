@@ -1,5 +1,7 @@
 import { Layout } from "react-grid-layout";
 
+type Direction = "l" | "r" | "u" | "d";
+
 /* Expected behavior:
 There are four possible scenarios post dragging items
 1) items are swapped
@@ -12,7 +14,6 @@ Scenario 2 is when the movingItem's new y is at the top 1/3 of the highest colli
 Scenario 3 is when the movingItem's new drop site is more than 2/3 of the height of the highest colliding item
 Scenario 4 is when the movingItem's new drop site is not colliding with any other
 */
-
 export function onDragStop(
   layout: Layout[],
   oldItem: Layout,
@@ -20,15 +21,7 @@ export function onDragStop(
   limit: number,
 ) {
   // find all of the items that are colliding with the newItem position
-  const collidingItems = layout.filter((item) => {
-    return (
-      item.i !== oldItem.i &&
-      item.x < newItem.x + newItem.w && // checks if the the movedItem's x is greater than the item's x
-      item.x + item.w > newItem.x &&
-      item.y < newItem.y + newItem.h &&
-      item.y + item.h > newItem.y
-    );
-  });
+  const collidingItems = getCollidingItems(layout, newItem);
 
   if (collidingItems.length) {
     const swapTarget = collidingItems[0];
@@ -56,51 +49,62 @@ export function onResizeStop(
   layout: Layout[],
   oldItem: Layout,
   newItem: Layout,
+  minSize: number = 2,
 ) {
-  // resize items that are impacted on the right of the resizedItem
-  //   const itemsCollidingWithOldSpace = layout
-  //     .filter((item) => {
-  //       return (
-  //         item.i !== newItem.i &&
-  //         item.x < newItem.x + newItem.w &&
-  //         item.x + item.w > newItem.x &&
-  //         item.y < newItem.y + newItem.h &&
-  //         item.y + item.h > newItem.y
-  //       );
-  //     })
-  //     .sort((a, b) => {
-  //       // this sort will ensure that the items colliding will be sorted by the top left first
-  //       if (a.y === b.y) {
-  //         return a.x - b.x; // Sort by x position when y is the same
-  //       }
-  //       return a.y - b.y; // Sort by y position to handle vertical collisions
-  //     });
+  const directionImpacted = checkImpactDirection(newItem, oldItem);
+  const itemsColliding = getCollidingItems(layout, newItem);
+  console.log(directionImpacted);
+  console.log(itemsColliding);
+
+  for (const collidingItem of itemsColliding) {
+    // iterate and check which direction the item is being impacted
+    if (directionImpacted.includes("l")) {
+      const newWidth = collidingItem.w - (oldItem.x - newItem.x);
+      if (newWidth < minSize) {
+        collidingItem.w = minSize;
+        newItem.x = collidingItem.x + minSize;
+      } else {
+        collidingItem.w -= oldItem.x - newItem.x;
+      }
+    }
+    if (directionImpacted.includes("r")) {
+      const newWidth = collidingItem.w - (newItem.w - oldItem.w);
+      if (newWidth < minSize) {
+        collidingItem.w = minSize;
+        collidingItem.x = newItem.x + newItem.w - minSize;
+        newItem.w -= minSize;
+      } else {
+        collidingItem.w = newWidth;
+        collidingItem.x = newItem.x + newItem.w;
+      }
+    }
+    if (directionImpacted.includes("u")) {
+      const newHeight = collidingItem.h - (oldItem.y - newItem.y);
+      if (!newHeight) {
+        // if the calculated height is 0, then we need to move the item down
+      } else {
+        collidingItem.h -= oldItem.y - newItem.y;
+      }
+    }
+  }
+
+  // resizing an item and causing collision:
+  // 1) if the item is resized left or up, then the impacted items will have their w and/or h adjusted
+  // 2) if the item is resized right or down, then the impacted items will have their x and/or y adjusted (and potentially their w and/or h as well)
+  // compare newItem and oldItem to see which directions are changed
 
   //     for (const item of itemsCollidingWithOldSpace) {
   //         // for each item, change their size
   //         // if the resizing leads to the item having a width or height that is less than 1, then move it down
   //     }
-  moveCollidingItems(layout, newItem);
+  //   moveCollidingItems(layout, newItem);
 }
 
 function moveCollidingItems(itemsToCheck: Layout[], movingItem: Layout) {
-  const itemsCollidingWithOldSpace = itemsToCheck
-    .filter((item) => {
-      return (
-        item.i !== movingItem.i &&
-        item.x < movingItem.x + movingItem.w &&
-        item.x + item.w > movingItem.x &&
-        item.y < movingItem.y + movingItem.h &&
-        item.y + item.h > movingItem.y
-      );
-    })
-    .sort((a, b) => {
-      // this sort will ensure that the items colliding will be sorted by the top left first
-      if (a.y === b.y) {
-        return a.x - b.x; // Sort by x position when y is the same
-      }
-      return a.y - b.y; // Sort by y position to handle vertical collisions
-    });
+  const itemsCollidingWithOldSpace = getCollidingItems(
+    itemsToCheck,
+    movingItem,
+  );
 
   if (itemsCollidingWithOldSpace.length > 0) {
     // check if the moving Item's top left corner is below the half way point of the first colliding item
@@ -128,4 +132,54 @@ function areItemsColliding(itemA: Layout, itemB: Layout): boolean {
     itemA.y < itemB.y + itemB.h &&
     itemA.y + itemA.h > itemB.y
   );
+}
+
+function checkImpactDirection(newSpace: Layout, oldSpace: Layout): Direction[] {
+  const impacts: Direction[] = [];
+  const impactDirection = {
+    x:
+      newSpace.x - oldSpace.x === 0
+        ? newSpace.w - oldSpace.w
+        : newSpace.x - oldSpace.x,
+    y:
+      newSpace.y - oldSpace.y === 0
+        ? newSpace.h - oldSpace.h
+        : newSpace.y - oldSpace.y,
+  };
+
+  console.log(newSpace, oldSpace, impactDirection);
+
+  if (impactDirection.x < 0) {
+    impacts.push("l");
+  } else if (impactDirection.x > 0) {
+    impacts.push("r");
+  }
+
+  if (impactDirection.y < 0) {
+    impacts.push("u");
+  } else if (impactDirection.y > 0) {
+    impacts.push("d");
+  }
+  return impacts;
+}
+
+function getCollidingItems(layout: Layout[], newItem: Layout): Layout[] {
+  const itemsCollidingWithOldSpace = layout
+    .filter((item) => {
+      return (
+        item.i !== newItem.i &&
+        item.x < newItem.x + newItem.w &&
+        item.x + item.w > newItem.x &&
+        item.y < newItem.y + newItem.h &&
+        item.y + item.h > newItem.y
+      );
+    })
+    .sort((a, b) => {
+      // this sort will ensure that the items colliding will be sorted by the top left first
+      if (a.y === b.y) {
+        return a.x - b.x; // Sort by x position when y is the same
+      }
+      return a.y - b.y; // Sort by y position to handle vertical collisions
+    });
+  return itemsCollidingWithOldSpace;
 }
