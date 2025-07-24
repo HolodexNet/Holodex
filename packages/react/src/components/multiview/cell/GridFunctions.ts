@@ -17,9 +17,13 @@ export function onDragStop(
     );
   });
 
-  // if there is more than one item that is covered by the movedItem, do not move
+  // when moving across the grid, priority should be to move the item to its new position
+  // and then move everything around it
   if (collidingItems.length === 1) {
     const swapTarget = collidingItems[0];
+    newItem.x = swapTarget.x;
+    newItem.y = swapTarget.y;
+
     swapTarget.x = oldItem.x;
     swapTarget.y = oldItem.y;
 
@@ -38,6 +42,7 @@ export function onDragStop(
       swapTarget.w = limit - swapTarget.x;
     }
 
+    moveCollidingItems(layout, newItem);
     moveCollidingItems(layout, swapTarget);
   } else {
     moveCollidingItems(layout, newItem);
@@ -55,11 +60,20 @@ function moveCollidingItems(itemsToCheck: Layout[], movingItem: Layout) {
         item.y + item.h > movingItem.y
       );
     })
-    .sort((a, b) => a.y - b.y); // Sort by y position to handle vertical collisions;
+    .sort((a, b) => {
+      // this sort will ensure that the items colliding will be sorted by the top left first
+      if (a.y === b.y) {
+        return a.x - b.x; // Sort by x position when y is the same
+      }
+      return a.y - b.y; // Sort by y position to handle vertical collisions
+    });
 
   if (itemsCollidingWithOldSpace.length > 0) {
-    // check if the item is above the moving Item
-    if (itemsCollidingWithOldSpace[0].y < movingItem.y) {
+    // check if the moving Item's top left corner is below the half way point of the first colliding item
+    if (
+      itemsCollidingWithOldSpace[0].y + itemsCollidingWithOldSpace[0].h / 3 <=
+      movingItem.y
+    ) {
       // move the moving item down
       const moveDistance =
         movingItem.y -
