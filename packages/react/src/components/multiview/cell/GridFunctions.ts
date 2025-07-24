@@ -1,5 +1,18 @@
 import { Layout } from "react-grid-layout";
 
+/* Expected behavior:
+There are four possible scenarios post dragging items
+1) items are swapped
+2) items are moved down to make space for the new item, the new item is placed at exactly the x and y where it was dropped
+3) Item is inserted between the two items, the new item is placed tightly
+4) Item is moved to the new space without any collision
+
+Scenario 1 is triggered when the top left corner of both items match
+Scenario 2 is when the movingItem's new y is at the top 1/3 of the highest colliding item
+Scenario 3 is when the movingItem's new drop site is more than 2/3 of the height of the highest colliding item
+Scenario 4 is when the movingItem's new drop site is not colliding with any other
+*/
+
 export function onDragStop(
   layout: Layout[],
   oldItem: Layout,
@@ -17,36 +30,57 @@ export function onDragStop(
     );
   });
 
-  // when moving across the grid, priority should be to move the item to its new position
-  // and then move everything around it
-  if (collidingItems.length === 1) {
+  if (collidingItems.length) {
     const swapTarget = collidingItems[0];
-    newItem.x = swapTarget.x;
-    newItem.y = swapTarget.y;
+    if (swapTarget.x === newItem.x && swapTarget.y === newItem.y) {
+      newItem.x = swapTarget.x;
+      newItem.y = swapTarget.y;
 
-    swapTarget.x = oldItem.x;
-    swapTarget.y = oldItem.y;
+      swapTarget.x = oldItem.x;
+      swapTarget.y = oldItem.y;
 
-    // if there is only item being covered by the movedItem, swap the two places
-    // because we know that the first item is only covering with one item, we know that the space will fit the item
-    // if the colliding item is smaller than the movedItem, it will fit no problem into the new space
-    // check if there is any space between the colliding items
+      // TODO: add logic to resize item if there is an item to the right of the new item
+      if (swapTarget.x + swapTarget.w > limit) {
+        swapTarget.w = limit - swapTarget.x;
+      }
 
-    // 1) put the swapped item in the top left corner and check if there is any collision (besides old item)
-    // 2) if there is no collision, then we can move the item to the top left corner (or maybe even higher)
-    // 3) if there is a collision, then we need to move everything down
-    // 4) this includes detecting everything that is colliding with the moved items from step (3)
-    // 5) if the item is moved beyond the grid limit, if so, resize
-
-    if (swapTarget.x + swapTarget.w > limit) {
-      swapTarget.w = limit - swapTarget.x;
+      moveCollidingItems(layout, newItem);
+      moveCollidingItems(layout, swapTarget);
+      return;
     }
-
-    moveCollidingItems(layout, newItem);
-    moveCollidingItems(layout, swapTarget);
-  } else {
     moveCollidingItems(layout, newItem);
   }
+}
+
+export function onResizeStop(
+  layout: Layout[],
+  oldItem: Layout,
+  newItem: Layout,
+) {
+  // resize items that are impacted on the right of the resizedItem
+  //   const itemsCollidingWithOldSpace = layout
+  //     .filter((item) => {
+  //       return (
+  //         item.i !== newItem.i &&
+  //         item.x < newItem.x + newItem.w &&
+  //         item.x + item.w > newItem.x &&
+  //         item.y < newItem.y + newItem.h &&
+  //         item.y + item.h > newItem.y
+  //       );
+  //     })
+  //     .sort((a, b) => {
+  //       // this sort will ensure that the items colliding will be sorted by the top left first
+  //       if (a.y === b.y) {
+  //         return a.x - b.x; // Sort by x position when y is the same
+  //       }
+  //       return a.y - b.y; // Sort by y position to handle vertical collisions
+  //     });
+
+  //     for (const item of itemsCollidingWithOldSpace) {
+  //         // for each item, change their size
+  //         // if the resizing leads to the item having a width or height that is less than 1, then move it down
+  //     }
+  moveCollidingItems(layout, newItem);
 }
 
 function moveCollidingItems(itemsToCheck: Layout[], movingItem: Layout) {
@@ -70,40 +104,22 @@ function moveCollidingItems(itemsToCheck: Layout[], movingItem: Layout) {
 
   if (itemsCollidingWithOldSpace.length > 0) {
     // check if the moving Item's top left corner is below the half way point of the first colliding item
-    if (
-      itemsCollidingWithOldSpace[0].y + itemsCollidingWithOldSpace[0].h / 3 <=
-      movingItem.y
-    ) {
-      // move the moving item down
-      const moveDistance =
-        movingItem.y -
-        (itemsCollidingWithOldSpace[0].y + itemsCollidingWithOldSpace[0].h);
-      movingItem.y += Math.abs(moveDistance);
+    const firstItemCollidedWith = itemsCollidingWithOldSpace[0];
+    // if the item's new position is more than 1/3 lower than the first colliding item, move the new item down
+    if (firstItemCollidedWith.y + firstItemCollidedWith.h / 3 <= movingItem.y) {
+      movingItem.y = firstItemCollidedWith.y + firstItemCollidedWith.h;
       moveCollidingItems(itemsToCheck, movingItem);
     } else {
-      const moveDistance =
-        movingItem.y + movingItem.h - itemsCollidingWithOldSpace[0].y;
-      // there is a collision, we need to find the next available place VERTICALLY
       for (const item of itemsCollidingWithOldSpace) {
-        // try to find empty space above
+        // there is a collision, we need to find the next available place VERTICALLY
         if (areItemsColliding(item, movingItem)) {
-          item.y += moveDistance;
+          item.y = movingItem.y + movingItem.h;
           moveCollidingItems(itemsToCheck, item);
         }
       }
     }
   }
 }
-
-// if there is one item that you are swapping with, swap the two items
-// check if the second item will collide with anything
-// move them accordingly
-
-// if there is more than one item that collides with the swapped item, decide if the item is above or below the new space that it is supposed to occupy
-// if it is above, then don't move that item, but move the MOVED item down
-// if it is below, move the next item down by however much space is needed to no longer collide
-
-// if there is no item colliding with the newItem, then we can just move it to the new position
 
 function areItemsColliding(itemA: Layout, itemB: Layout): boolean {
   return (
