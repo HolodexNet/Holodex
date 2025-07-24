@@ -52,8 +52,9 @@ export function onResizeStop(
   minSize: number = 2,
   limit: number = 24,
 ) {
-  // make sure that the newItem is at least minSize
   const directionImpacted = checkImpactDirection(newItem, oldItem);
+
+  // if the newItem is smaller than the minSize, then we need to adjust it
   if (newItem.w < minSize) {
     newItem.w = minSize;
     // if the resizing brings the item to beyond the edge of the grid, then we need to adjust the x position
@@ -64,25 +65,34 @@ export function onResizeStop(
   if (newItem.h < minSize) {
     newItem.h = minSize;
   }
+
   const itemsColliding = getCollidingItems(layout, newItem);
+  const intendedLayout = { ...newItem };
 
   for (const collidingItem of itemsColliding) {
     // iterate and check which direction the item is being impacted
     if (directionImpacted.includes("l")) {
-      const newWidth = collidingItem.w - (oldItem.x - newItem.x);
-      if (newWidth < minSize) {
+      let widthOfImpact = collidingItem.x + collidingItem.w - intendedLayout.x; // edege comparison - how much of the resizeItem is encroaching on the collidingItem
+      const widthOfImpactedItem = collidingItem.w - widthOfImpact;
+      // if the new width is less than the minsize
+      // 1) enforce the collidingItem's size to minSize
+      // 2) adjust the newItem's x position to be at the end of the collidingItem
+      // 3) adjust the newItem's width to be the difference between the newItem's expected width and how much the item has gone over by
+      if (widthOfImpactedItem < minSize) {
+        widthOfImpact = collidingItem.x + minSize - intendedLayout.x; // width of impact is recalculated here since there will be bounceback due to a minimum size guarantee
         collidingItem.w = minSize;
         newItem.x = collidingItem.x + minSize;
+        newItem.w = intendedLayout.w - widthOfImpact;
       } else {
-        collidingItem.w -= oldItem.x - newItem.x;
+        collidingItem.w -= widthOfImpact;
       }
     }
     if (directionImpacted.includes("r")) {
       const newWidth = collidingItem.w - (newItem.w - oldItem.w);
       if (newWidth < minSize) {
         collidingItem.w = minSize;
-        collidingItem.x = newItem.x + newItem.w - minSize;
-        newItem.w -= minSize;
+        collidingItem.x = newItem.x + newItem.w - (minSize - newWidth);
+        newItem.w -= minSize - newWidth;
       } else {
         collidingItem.w = newWidth;
         collidingItem.x = newItem.x + newItem.w;
