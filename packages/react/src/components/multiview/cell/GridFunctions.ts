@@ -68,6 +68,7 @@ export function onResizeStop(
 
   const itemsColliding = getCollidingItems(layout, newItem);
   const intendedLayout = { ...newItem };
+  const originalLayout = { ...oldItem };
 
   for (const collidingItem of itemsColliding) {
     // iterate and check which direction the item is being impacted
@@ -88,22 +89,28 @@ export function onResizeStop(
       }
     }
     if (directionImpacted.includes("r")) {
-      const newWidth = collidingItem.w - (newItem.w - oldItem.w);
-      if (newWidth < minSize) {
+      // When resizing right, we're expanding into the colliding item's space
+      const overlapWidth =
+        intendedLayout.x + intendedLayout.w - collidingItem.x;
+      const remainingWidth = collidingItem.w - overlapWidth;
+
+      if (remainingWidth < minSize) {
+        const maxAllowedOverlap = collidingItem.w - minSize;
         collidingItem.w = minSize;
-        collidingItem.x = newItem.x + newItem.w - (minSize - newWidth);
-        newItem.w -= minSize - newWidth;
+        collidingItem.x = collidingItem.x + maxAllowedOverlap;
+        newItem.w = collidingItem.x - intendedLayout.x; // Limit newItem's width to not overlap
       } else {
-        collidingItem.w = newWidth;
-        collidingItem.x = newItem.x + newItem.w;
+        // Colliding item has enough space, just shrink it and move it right
+        collidingItem.w = remainingWidth;
+        collidingItem.x = intendedLayout.x + intendedLayout.w;
       }
     }
     if (directionImpacted.includes("u")) {
-      const newHeight = collidingItem.h - (oldItem.y - newItem.y);
+      const newHeight = collidingItem.h - (originalLayout.y - newItem.y);
       if (!newHeight) {
         // if the calculated height is 0, then we need to move the item down
       } else {
-        collidingItem.h -= oldItem.y - newItem.y;
+        collidingItem.h -= originalLayout.y - newItem.y;
       }
     }
   }
