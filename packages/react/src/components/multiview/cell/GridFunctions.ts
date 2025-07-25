@@ -59,9 +59,9 @@ export function onResizeStop(
   const directionImpacted = checkImpactDirection(newItem, oldItem);
 
   // if the newItem is smaller than the minSize, then we need to adjust it
+  // if the resizing brings the item to beyond the edge of the grid, then we need to adjust the x position
   if (newItem.w < minSize) {
     newItem.w = minSize;
-    // if the resizing brings the item to beyond the edge of the grid, then we need to adjust the x position
     if (newItem.x + newItem.w > limit) {
       newItem.x = limit - newItem.w;
     }
@@ -71,76 +71,18 @@ export function onResizeStop(
   }
 
   const itemsColliding = getCollidingItems(layout, newItem);
-  const intendedLayout = { ...newItem };
-  const originalLayout = { ...oldItem };
 
-  for (const collidingItem of itemsColliding) {
-    // iterate and check which direction the item is being impacted
-    if (directionImpacted.includes("l")) {
-      let widthOfImpact = collidingItem.x + collidingItem.w - intendedLayout.x; // edege comparison - how much of the resizeItem is encroaching on the collidingItem
-      const widthOfImpactedItem = collidingItem.w - widthOfImpact;
-      // if the new width is less than the minsize
-      // 1) enforce the collidingItem's size to minSize
-      // 2) adjust the newItem's x position to be at the end of the collidingItem
-      // 3) adjust the newItem's width to be the difference between the newItem's expected width and how much the item has gone over by
-      if (widthOfImpactedItem < minSize) {
-        widthOfImpact = collidingItem.x + minSize - intendedLayout.x; // width of impact is recalculated here since there will be bounceback due to a minimum size guarantee
-        collidingItem.w = minSize;
-        newItem.x = collidingItem.x + minSize;
-        newItem.w = intendedLayout.w - widthOfImpact;
-      } else {
-        collidingItem.w -= widthOfImpact;
-      }
-    }
-    if (directionImpacted.includes("r")) {
-      // When resizing right, we're expanding into the colliding item's space
-      const overlapWidth =
-        intendedLayout.x + intendedLayout.w - collidingItem.x;
-      const remainingWidth = collidingItem.w - overlapWidth;
-
-      if (remainingWidth < minSize) {
-        const maxAllowedOverlap = collidingItem.w - minSize;
-        collidingItem.w = minSize;
-        collidingItem.x = collidingItem.x + maxAllowedOverlap;
-        newItem.w = collidingItem.x - intendedLayout.x; // Limit newItem's width to not overlap
-      } else {
-        // Colliding item has enough space, just shrink it and move it right
-        collidingItem.w = remainingWidth;
-        collidingItem.x = intendedLayout.x + intendedLayout.w;
-      }
-    }
-    if (directionImpacted.includes("u")) {
-      const newHeight = collidingItem.h - (originalLayout.y - newItem.y);
-      if (!newHeight) {
-        // if the calculated height is 0, then we need to move the item down
-      } else {
-        collidingItem.h -= originalLayout.y - newItem.y;
-      }
-    }
-
-    if (directionImpacted.includes("d")) {
-      const newHeightOfImpactedItem =
-        collidingItem.h - (newItem.y + newItem.h - collidingItem.y);
-      if (newHeightOfImpactedItem < minSize) {
-        // push down the colliding item
-        collidingItem.y = newItem.y + newItem.h;
-      } else {
-        collidingItem.h -= newItem.y + newItem.h - collidingItem.y;
-        collidingItem.y = newItem.y + newItem.h;
-      }
+  if (directionImpacted.length === 1) {
+    for (const collidingItem of itemsColliding) {
+      singleDirectionResize(
+        directionImpacted[0],
+        collidingItem,
+        newItem,
+        minSize,
+        layout,
+      );
     }
   }
-
-  // resizing an item and causing collision:
-  // 1) if the item is resized left or up, then the impacted items will have their w and/or h adjusted
-  // 2) if the item is resized right or down, then the impacted items will have their x and/or y adjusted (and potentially their w and/or h as well)
-  // compare newItem and oldItem to see which directions are changed
-
-  //     for (const item of itemsCollidingWithOldSpace) {
-  //         // for each item, change their size
-  //         // if the resizing leads to the item having a width or height that is less than 1, then move it down
-  //     }
-  //   moveCollidingItems(layout, newItem);
 }
 
 function moveCollidingItems(itemsToCheck: Layout[], movingItem: Layout) {
@@ -165,6 +107,58 @@ function moveCollidingItems(itemsToCheck: Layout[], movingItem: Layout) {
         }
       }
     }
+  }
+}
+
+function singleDirectionResize(
+  directionImpacted: Direction,
+  collidingItem: Layout,
+  newItem: Layout,
+  minSize: number,
+  layout: Layout[],
+) {
+  let collidingLength: number;
+  switch (directionImpacted) {
+    case "l":
+      collidingLength =
+        collidingItem.w - (collidingItem.x + collidingItem.w - newItem.x);
+      if (collidingLength < minSize) {
+        collidingItem.y = newItem.y + newItem.h;
+        moveCollidingItems(layout, collidingItem);
+      } else {
+        collidingItem.w -= collidingItem.x + collidingItem.w - newItem.x;
+      }
+      break;
+    case "r":
+      collidingLength = newItem.x + newItem.w - collidingItem.x;
+      if (collidingItem.w - collidingLength < minSize) {
+        collidingItem.y = newItem.y + newItem.h;
+        moveCollidingItems(layout, collidingItem);
+      } else {
+        collidingItem.w = collidingItem.w - collidingLength;
+        collidingItem.x = newItem.x + newItem.w;
+      }
+      break;
+    case "u":
+      collidingLength = newItem.y - collidingItem.y;
+      if (collidingLength < minSize) {
+        collidingItem.y = newItem.y + newItem.h;
+        moveCollidingItems(layout, collidingItem);
+      } else {
+        collidingItem.h -= collidingItem.y + collidingItem.h - newItem.y;
+      }
+      break;
+    case "d":
+      collidingLength =
+        collidingItem.h - (newItem.y + newItem.h - collidingItem.y);
+      if (collidingLength < minSize) {
+        collidingItem.y = newItem.y + newItem.h;
+        moveCollidingItems(layout, collidingItem);
+      } else {
+        collidingItem.h -= newItem.y + newItem.h - collidingItem.y;
+        collidingItem.y = newItem.y + newItem.h;
+      }
+      break;
   }
 }
 
