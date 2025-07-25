@@ -8,18 +8,13 @@ import {
   VideoCell,
 } from "@/types/multiview";
 import { atom, useAtom, useSetAtom } from "jotai";
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect } from "react";
 
 export const isMultiViewFullscreenAtom = atom(!!document.fullscreenElement);
 
 export function useMultiViewFullScreen(ref: RefObject<HTMLDivElement | null>) {
   const [isFullScreen, setIsFullScreen] = useAtom(isMultiViewFullscreenAtom);
   const indicatePageFullscreen = useSetAtom(indicatePageFullscreenAtom);
-
-  const originalStyles = useRef<{
-    overflowY?: string;
-    height?: string;
-  }>({});
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -35,24 +30,11 @@ export function useMultiViewFullScreen(ref: RefObject<HTMLDivElement | null>) {
   }, [setIsFullScreen, indicatePageFullscreen]);
 
   const toggleFullScreen = () => {
-    if (ref && ref.current && ref.current.parentElement) {
-      const parentEl = ref.current.parentElement;
-
+    if (ref && ref.current) {
       if (document.fullscreenElement) {
-        // Exiting fullscreen - restore original styles
-        parentEl.style.overflowY = originalStyles.current.overflowY || "";
-        parentEl.style.height = originalStyles.current.height || "";
         document.exitFullscreen();
       } else {
-        // Entering fullscreen - store original styles
-        originalStyles.current = {
-          overflowY: parentEl.style.overflowY,
-          height: parentEl.style.height,
-        };
-
-        parentEl.requestFullscreen();
-        parentEl.style.overflowY = "auto";
-        parentEl.style.minHeight = "100vh";
+        ref.current.requestFullscreen(); // Use ref.current directly
       }
     }
   };
