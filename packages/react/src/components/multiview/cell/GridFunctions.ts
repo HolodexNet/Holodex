@@ -14,12 +14,7 @@ Scenario 2 is when the movingItem's new y is at the top 1/3 of the highest colli
 Scenario 3 is when the movingItem's new drop site is more than 2/3 of the height of the highest colliding item
 Scenario 4 is when the movingItem's new drop site is not colliding with any other
 */
-export function onDragStop(
-  layout: Layout[],
-  oldItem: Layout,
-  newItem: Layout,
-  limit: number,
-) {
+export function onDragStop(layout: Layout[], oldItem: Layout, newItem: Layout) {
   // find all of the items that are colliding with the newItem position
   const collidingItems = getCollidingItems(layout, newItem);
 
@@ -30,19 +25,14 @@ export function onDragStop(
       (swapTarget.x === newItem.x && swapTarget.y === newItem.y) ||
       collidingItems.length === 1
     ) {
-      //   newItem.x = swapTarget.x;
-      //   newItem.y = swapTarget.y;
-
+      newItem.x = swapTarget.x;
+      newItem.y = swapTarget.y;
+      newItem.w = swapTarget.w;
+      newItem.h = swapTarget.h;
       swapTarget.x = oldItem.x;
       swapTarget.y = oldItem.y;
-
-      // TODO: add logic to resize item if there is an item to the right of the new item
-      if (swapTarget.x + swapTarget.w > limit) {
-        swapTarget.w = limit - swapTarget.x;
-      }
-
-      moveCollidingItems(layout, newItem);
-      moveCollidingItems(layout, swapTarget);
+      swapTarget.w = oldItem.w;
+      swapTarget.h = oldItem.h;
       return;
     }
     moveCollidingItems(layout, newItem);
@@ -72,16 +62,14 @@ export function onResizeStop(
 
   const itemsColliding = getCollidingItems(layout, newItem);
 
-  if (directionImpacted.length === 1) {
-    for (const collidingItem of itemsColliding) {
-      singleDirectionResize(
-        directionImpacted[0],
-        collidingItem,
-        newItem,
-        minSize,
-        layout,
-      );
-    }
+  for (const collidingItem of itemsColliding) {
+    singleDirectionResize(
+      directionImpacted[0],
+      collidingItem,
+      newItem,
+      minSize,
+      layout,
+    );
   }
 }
 
@@ -124,7 +112,6 @@ function singleDirectionResize(
         collidingItem.w - (collidingItem.x + collidingItem.w - newItem.x);
       if (collidingLength < minSize) {
         collidingItem.y = newItem.y + newItem.h;
-        moveCollidingItems(layout, collidingItem);
       } else {
         collidingItem.w -= collidingItem.x + collidingItem.w - newItem.x;
       }
@@ -133,7 +120,6 @@ function singleDirectionResize(
       collidingLength = newItem.x + newItem.w - collidingItem.x;
       if (collidingItem.w - collidingLength < minSize) {
         collidingItem.y = newItem.y + newItem.h;
-        moveCollidingItems(layout, collidingItem);
       } else {
         collidingItem.w = collidingItem.w - collidingLength;
         collidingItem.x = newItem.x + newItem.w;
@@ -143,7 +129,6 @@ function singleDirectionResize(
       collidingLength = newItem.y - collidingItem.y;
       if (collidingLength < minSize) {
         collidingItem.y = newItem.y + newItem.h;
-        moveCollidingItems(layout, collidingItem);
       } else {
         collidingItem.h -= collidingItem.y + collidingItem.h - newItem.y;
       }
@@ -153,13 +138,13 @@ function singleDirectionResize(
         collidingItem.h - (newItem.y + newItem.h - collidingItem.y);
       if (collidingLength < minSize) {
         collidingItem.y = newItem.y + newItem.h;
-        moveCollidingItems(layout, collidingItem);
       } else {
         collidingItem.h -= newItem.y + newItem.h - collidingItem.y;
         collidingItem.y = newItem.y + newItem.h;
       }
       break;
   }
+  moveCollidingItems(layout, collidingItem);
 }
 
 function areItemsColliding(itemA: Layout, itemB: Layout): boolean {

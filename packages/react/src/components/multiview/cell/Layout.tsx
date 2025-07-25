@@ -32,11 +32,7 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
         compactType={null}
         resizeHandles={["se", "sw", "ne", "nw", "n", "s", "e", "w"]}
         // onLayoutChange={handleLayoutChange}
-        onDragStop={(
-          layout: GridLayout.Layout[],
-          oldItem: GridLayout.Layout,
-          newItem: GridLayout.Layout,
-        ) => onDragStop(layout, oldItem, newItem, 24)}
+        onDragStop={onDragStop}
         onResizeStop={(
           layout: GridLayout.Layout[],
           oldItem: GridLayout.Layout,
