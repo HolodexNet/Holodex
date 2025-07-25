@@ -23,11 +23,15 @@ export function onDragStop(
   // find all of the items that are colliding with the newItem position
   const collidingItems = getCollidingItems(layout, newItem);
 
+  // TODO: swap logic needs to be fixed -> the swapped item needs to be fitted into the grid
   if (collidingItems.length) {
     const swapTarget = collidingItems[0];
-    if (swapTarget.x === newItem.x && swapTarget.y === newItem.y) {
-      newItem.x = swapTarget.x;
-      newItem.y = swapTarget.y;
+    if (
+      (swapTarget.x === newItem.x && swapTarget.y === newItem.y) ||
+      collidingItems.length === 1
+    ) {
+      //   newItem.x = swapTarget.x;
+      //   newItem.y = swapTarget.y;
 
       swapTarget.x = oldItem.x;
       swapTarget.y = oldItem.y;
@@ -111,6 +115,18 @@ export function onResizeStop(
         // if the calculated height is 0, then we need to move the item down
       } else {
         collidingItem.h -= originalLayout.y - newItem.y;
+      }
+    }
+
+    if (directionImpacted.includes("d")) {
+      const newHeightOfImpactedItem =
+        collidingItem.h - (newItem.y + newItem.h - collidingItem.y);
+      if (newHeightOfImpactedItem < minSize) {
+        // push down the colliding item
+        collidingItem.y = newItem.y + newItem.h;
+      } else {
+        collidingItem.h -= newItem.y + newItem.h - collidingItem.y;
+        collidingItem.y = newItem.y + newItem.h;
       }
     }
   }
