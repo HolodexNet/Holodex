@@ -8,13 +8,18 @@ import {
   VideoCell,
 } from "@/types/multiview";
 import { atom, useAtom, useSetAtom } from "jotai";
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
 export const isMultiViewFullscreenAtom = atom(!!document.fullscreenElement);
 
 export function useMultiViewFullScreen(ref: RefObject<HTMLDivElement | null>) {
   const [isFullScreen, setIsFullScreen] = useAtom(isMultiViewFullscreenAtom);
   const indicatePageFullscreen = useSetAtom(indicatePageFullscreenAtom);
+
+  const originalStyles = useRef<{
+    overflowY?: string;
+    height?: string;
+  }>({});
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -30,11 +35,24 @@ export function useMultiViewFullScreen(ref: RefObject<HTMLDivElement | null>) {
   }, [setIsFullScreen, indicatePageFullscreen]);
 
   const toggleFullScreen = () => {
-    if (ref && ref.current) {
+    if (ref && ref.current && ref.current.parentElement) {
+      const parentEl = ref.current.parentElement;
+
       if (document.fullscreenElement) {
+        // Exiting fullscreen - restore original styles
+        parentEl.style.overflowY = originalStyles.current.overflowY || "";
+        parentEl.style.height = originalStyles.current.height || "";
         document.exitFullscreen();
-      } else if (ref.current.parentElement) {
-        ref.current.parentElement.requestFullscreen();
+      } else {
+        // Entering fullscreen - store original styles
+        originalStyles.current = {
+          overflowY: parentEl.style.overflowY,
+          height: parentEl.style.height,
+        };
+
+        parentEl.requestFullscreen();
+        parentEl.style.overflowY = "auto";
+        parentEl.style.minHeight = "100vh";
       }
     }
   };
@@ -47,7 +65,6 @@ export function useMultiViewFullScreen(ref: RefObject<HTMLDivElement | null>) {
 
 // TODO: read from memory
 export const multiviewCellsAtom = atom<MultiviewCells>({ cells: [] });
-multiviewCellsAtom.debugLabel = "multiviewCellsAtom";
 
 export const readMultiviewCellsAtom = atom((get) => get(multiviewCellsAtom));
 
@@ -68,6 +85,10 @@ export const removeMultiviewCellAtom = atom(
 
 export const clearMultiviewCellsAtom = atom(null, (_, set) => {
   set(multiviewCellsAtom, { cells: [] });
+});
+
+export const setCellsAtom = atom(null, (_, set, cells: Cell[]) => {
+  set(multiviewCellsAtom, { cells: cells });
 });
 
 export const registerVideoCellAtom = atom(null, (_, set, video: VideoBase) => {
