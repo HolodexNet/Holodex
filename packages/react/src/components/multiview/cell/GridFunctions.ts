@@ -27,11 +27,27 @@ export function onDragStop(layout: Layout[], oldItem: Layout, newItem: Layout) {
     },
   );
 
-  const emptyCell = emptyCells.find(
-    (cell) => cell.x === newItem.x && cell.y === newItem.y,
-  );
+  let emptyCell = emptyCells.find((cell) => {
+    // Check if newItem's top-left corner is inside this empty cell
+    return (
+      newItem.x >= cell.x &&
+      newItem.x < cell.x + cell.w &&
+      newItem.y >= cell.y &&
+      newItem.y < cell.y + cell.h
+    );
+  });
 
-  console.log(emptyCells, emptyCell);
+  if (!emptyCell) {
+    emptyCell = emptyCells.find((cell) => {
+      // Check if newItem's top-left corner is inside this empty cell
+      return (
+        newItem.x + newItem.w >= cell.x &&
+        newItem.x + newItem.w <= cell.x + cell.w &&
+        newItem.y >= cell.y &&
+        newItem.y < cell.y + cell.h
+      );
+    });
+  }
 
   if (emptyCell) {
     newItem.x = emptyCell.x;
