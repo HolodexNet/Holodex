@@ -4,8 +4,9 @@ import { useAtomValue } from "jotai";
 import GridLayout from "react-grid-layout";
 import { VideoCell } from "./video/VideoCell";
 import { Cell } from "@/types/multiview";
-import { onDragStop, onResize } from "./GridFunctions";
 import { useMemo } from "react";
+import { onResize } from "./gridFunctions/resize";
+import { onDragStop } from "./gridFunctions/drag";
 
 interface LayoutProps {
   isFullScreen?: boolean;
