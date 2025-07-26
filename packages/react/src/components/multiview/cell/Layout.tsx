@@ -4,8 +4,7 @@ import { useAtomValue } from "jotai";
 import GridLayout from "react-grid-layout";
 import { VideoCell } from "./video/VideoCell";
 import { Cell } from "@/types/multiview";
-import { onDragStop, onResizeStop } from "./GridFunctions";
-import { cn } from "@/lib/utils";
+import { onDragStop, onResize } from "./GridFunctions";
 import { useMemo } from "react";
 
 interface LayoutProps {
@@ -41,35 +40,32 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
           {renderCellContent(cell)}
         </div>
       )),
-    [arrangedCell], // Re-render when arrangedCell changes (i.e., when cells are added/removed)
+    [arrangedCell],
   );
 
   return (
-    <div className={cn("w-full", isFullScreen ? "min-h-full" : "h-full")}>
-      <GridLayout
-        className="layout"
-        layout={arrangedCell}
-        cols={24}
-        rowHeight={Math.max(cellDimensions.rowHeight - 26.0 / 24.0, 1)}
-        width={dimensions.width}
-        isDraggable={true}
-        isResizable={true}
-        allowOverlap
-        margin={[1, 1]}
-        containerPadding={[0, 0]}
-        compactType={null}
-        resizeHandles={["se", "sw", "ne", "nw", "n", "s", "e", "w"]}
-        // onLayoutChange={handleLayoutChange}
-        onDragStop={onDragStop}
-        onResizeStop={(
-          layout: GridLayout.Layout[],
-          oldItem: GridLayout.Layout,
-          newItem: GridLayout.Layout,
-        ) => onResizeStop(layout, oldItem, newItem, 2)}
-      >
-        {renderedCells}
-      </GridLayout>
-    </div>
+    <GridLayout
+      className="layout"
+      layout={arrangedCell}
+      cols={24}
+      rowHeight={Math.max(cellDimensions.rowHeight - 26.0 / 24.0, 1)}
+      width={dimensions.width}
+      isDraggable={true}
+      isResizable={true}
+      allowOverlap
+      margin={[1, 1]}
+      containerPadding={[0, 0]}
+      compactType={null}
+      resizeHandles={["se", "sw", "ne", "nw", "n", "s", "e", "w"]}
+      onDragStop={onDragStop}
+      onResizeStop={(
+        layout: GridLayout.Layout[],
+        oldItem: GridLayout.Layout,
+        newItem: GridLayout.Layout,
+      ) => onResize(layout, oldItem, newItem, 2)}
+    >
+      {renderedCells}
+    </GridLayout>
   );
 }
 

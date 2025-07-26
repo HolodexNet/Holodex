@@ -68,7 +68,7 @@ export function onDragStop(layout: Layout[], oldItem: Layout, newItem: Layout) {
   }
 }
 
-export function onResizeStop(
+export function onResize(
   layout: Layout[],
   oldItem: Layout,
   newItem: Layout,

@@ -85,8 +85,15 @@ export function Multiview() {
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
-      <div id="multiview" ref={multiviewRef} className="relative">
-        <div className="relative flex w-full flex-col h-full">
+      <div
+        id="multiview"
+        ref={multiviewRef}
+        className={cn(
+          "relative",
+          isFullscreen && "overflow-y-scroll min-h-full h-full",
+        )}
+      >
+        <div className={cn("relative flex w-full flex-col")}>
           <ToolBar
             icons={isMobile ? mobileIcons : icons}
             currentVideoIds={cells
@@ -108,17 +115,11 @@ export function Multiview() {
         </div>
         <div
           className={cn(
-            "absolute left-0 z-0",
-            isFullscreen ? "overflow-auto" : "overflow-hidden",
+            "left-0 z-0 overflow-hidden",
             isSidebarOpen ? "w-[calc(100vw-var(--sidebar-width))]" : "w-full",
-            // Remove height constraints in fullscreen to allow unlimited height
-            isFullscreen
-              ? isBarActive
-                ? "min-h-[calc(100vh-var(--toolbar-height))] top-[var(--toolbar-height)]" // Only minimum height, can grow beyond
-                : "min-h-full top-0"
-              : isBarActive
-                ? "min-h-[calc(100vh-var(--toolbar-height)-var(--header-height))]"
-                : "min-h-[calc(100vh-var(--header-height))]",
+            isBarActive
+              ? "absolute min-h-[calc(100vh-var(--toolbar-height)-var(--header-height))]"
+              : "absolute min-h-[calc(100vh-var(--header-height))]",
           )}
         >
           <MultiViewBackground
