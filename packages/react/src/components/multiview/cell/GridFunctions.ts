@@ -27,27 +27,39 @@ export function onDragStop(layout: Layout[], oldItem: Layout, newItem: Layout) {
     },
   );
 
-  let emptyCell = emptyCells.find((cell) => {
-    // Check if newItem's top-left corner is inside this empty cell
+  const emptyCell = emptyCells.find((cell) => {
+    const newItemCorners = {
+      topLeft: { x: newItem.x, y: newItem.y },
+      topRight: { x: newItem.x + newItem.w, y: newItem.y },
+      bottomLeft: { x: newItem.x, y: newItem.y + newItem.h },
+      bottomRight: {
+        x: newItem.x + newItem.w,
+        y: newItem.y + newItem.h,
+      },
+    };
+
+    const emptyCellCorners = {
+      topLeft: { x: cell.x, y: cell.y },
+      topRight: { x: cell.x + cell.w, y: cell.y },
+      bottomLeft: { x: cell.x, y: cell.y + cell.h },
+      bottomRight: { x: cell.x + cell.w, y: cell.y + cell.h },
+    };
+
     return (
-      newItem.x >= cell.x &&
-      newItem.x < cell.x + cell.w &&
-      newItem.y >= cell.y &&
-      newItem.y < cell.y + cell.h
+      // Top-left corner match
+      (newItemCorners.topLeft.x === emptyCellCorners.topLeft.x &&
+        newItemCorners.topLeft.y === emptyCellCorners.topLeft.y) ||
+      // Top-right corner match
+      (newItemCorners.topRight.x === emptyCellCorners.topRight.x &&
+        newItemCorners.topRight.y === emptyCellCorners.topRight.y) ||
+      // Bottom-left corner match
+      (newItemCorners.bottomLeft.x === emptyCellCorners.bottomLeft.x &&
+        newItemCorners.bottomLeft.y === emptyCellCorners.bottomLeft.y) ||
+      // Bottom-right corner match
+      (newItemCorners.bottomRight.x === emptyCellCorners.bottomRight.x &&
+        newItemCorners.bottomRight.y === emptyCellCorners.bottomRight.y)
     );
   });
-
-  if (!emptyCell) {
-    emptyCell = emptyCells.find((cell) => {
-      // Check if newItem's top-left corner is inside this empty cell
-      return (
-        newItem.x + newItem.w >= cell.x &&
-        newItem.x + newItem.w <= cell.x + cell.w &&
-        newItem.y >= cell.y &&
-        newItem.y < cell.y + cell.h
-      );
-    });
-  }
 
   if (emptyCell) {
     newItem.x = emptyCell.x;
@@ -249,7 +261,7 @@ function getCollidingItems(layout: Layout[], newItem: Layout): Layout[] {
 }
 
 export function calculateEmptyCells(
-  arrangedCells: Layout[],
+  occupiedCells: Layout[],
   gridWidth: number,
   gridHeight: number,
 ): Cell[] {
@@ -257,8 +269,7 @@ export function calculateEmptyCells(
     .fill(null)
     .map(() => Array(gridWidth).fill(false));
 
-  // Mark occupied cells
-  arrangedCells.forEach((cell) => {
+  occupiedCells.forEach((cell) => {
     for (let y = cell.y; y < cell.y + cell.h; y++) {
       for (let x = cell.x; x < cell.x + cell.w; x++) {
         if (y < gridHeight && x < gridWidth) {
@@ -303,6 +314,7 @@ export function calculateEmptyCells(
   return emptyCells;
 }
 
+// always looks for the largest empty rectangle possible from the empty cells
 function findLargestEmptyRegion(
   occupancyGrid: boolean[][],
   processedGrid: boolean[][],
@@ -311,43 +323,88 @@ function findLargestEmptyRegion(
   gridWidth: number,
   gridHeight: number,
 ): { x: number; y: number; w: number; h: number } | null {
-  // Find maximum width from starting point
-  let maxWidth = 0;
-  for (let x = startX; x < gridWidth && !occupancyGrid[startY][x]; x++) {
-    maxWidth++;
-  }
+  let maxArea = 0;
+  let bestRegion: { x: number; y: number; w: number; h: number } | null = null;
 
-  if (maxWidth === 0) return null;
+  // Create height array for histogram approach
+  const heights: number[] = new Array(gridWidth - startX).fill(0);
 
-  // Find maximum height that maintains the width
-  let maxHeight = 0;
   for (let y = startY; y < gridHeight; y++) {
-    let canExtendRow = true;
-    for (let x = startX; x < startX + maxWidth; x++) {
-      if (occupancyGrid[y][x]) {
-        canExtendRow = false;
-        break;
+    // Update heights array
+    for (let x = startX; x < gridWidth; x++) {
+      const idx = x - startX;
+      if (occupancyGrid[y][x] || processedGrid[y][x]) {
+        heights[idx] = 0;
+      } else {
+        heights[idx]++;
       }
     }
 
-    if (canExtendRow) {
-      maxHeight++;
-    } else {
-      break;
+    const result = largestRectangleInHistogram(heights, startX, y);
+    if (result && result.area > maxArea) {
+      maxArea = result.area;
+      bestRegion = {
+        x: result.x,
+        y: result.y,
+        w: result.w,
+        h: result.h,
+      };
     }
   }
 
-  // Mark region as processed
-  for (let y = startY; y < startY + maxHeight; y++) {
-    for (let x = startX; x < startX + maxWidth; x++) {
+  if (!bestRegion) return null;
+
+  // Mark the best region as processed
+  for (let y = bestRegion.y; y < bestRegion.y + bestRegion.h; y++) {
+    for (let x = bestRegion.x; x < bestRegion.x + bestRegion.w; x++) {
       processedGrid[y][x] = true;
     }
   }
 
-  return {
-    x: startX,
-    y: startY,
-    w: maxWidth,
-    h: maxHeight,
-  };
+  return bestRegion;
+}
+
+function largestRectangleInHistogram(
+  heights: number[],
+  baseX: number,
+  currentY: number,
+): { x: number; y: number; w: number; h: number; area: number } | null {
+  const stack: number[] = [];
+  let maxArea = 0;
+  let bestRect: {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+    area: number;
+  } | null = null;
+
+  for (let i = 0; i <= heights.length; i++) {
+    const currentHeight = i === heights.length ? 0 : heights[i];
+
+    while (
+      stack.length > 0 &&
+      heights[stack[stack.length - 1]] > currentHeight
+    ) {
+      const height = heights[stack.pop()!];
+      const width = stack.length === 0 ? i : i - stack[stack.length - 1] - 1;
+      const area = height * width;
+
+      if (area > maxArea) {
+        maxArea = area;
+        const startX = stack.length === 0 ? 0 : stack[stack.length - 1] + 1;
+        bestRect = {
+          x: baseX + startX,
+          y: currentY - height + 1,
+          w: width,
+          h: height,
+          area: area,
+        };
+      }
+    }
+
+    stack.push(i);
+  }
+
+  return bestRect;
 }
