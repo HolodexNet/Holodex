@@ -5,19 +5,47 @@ import GridLayout from "react-grid-layout";
 import { VideoCell } from "./video/VideoCell";
 import { Cell } from "@/types/multiview";
 import { onDragStop, onResizeStop } from "./GridFunctions";
+import { cn } from "@/lib/utils";
+import { useMemo } from "react";
 
 interface LayoutProps {
   isFullScreen?: boolean;
 }
 
+const renderCellContent = (cell: Cell) => {
+  switch (cell.type) {
+    case "video":
+      return <VideoCell id={cell.video.id} />;
+    case "chat":
+      return <p>Chat cell not implemented yet</p>;
+    case "placeholder":
+      return <p>Placeholder cell not implemented yet</p>;
+    default:
+      return <p>Unknown cell type</p>;
+  }
+};
+
 export function Layout({ isFullScreen = false }: LayoutProps) {
   const { cells } = useAtomValue(readMultiviewCellsAtom);
   const { cellDimensions, dimensions } = useComputedDimensions(isFullScreen);
 
-  const arrangedCell = calculateLayout(cells);
+  const arrangedCell = useMemo(() => calculateLayout(cells), [cells]);
+
+  const renderedCells = useMemo(
+    () =>
+      arrangedCell.map((cell) => (
+        <div
+          key={cell.i}
+          className="h-full w-full flex flex-col border-2 border-blue-6 rounded-lg box-border bg-slate-5"
+        >
+          {renderCellContent(cell)}
+        </div>
+      )),
+    [arrangedCell], // Re-render when arrangedCell changes (i.e., when cells are added/removed)
+  );
 
   return (
-    <div className="h-full w-full">
+    <div className={cn("w-full", isFullScreen ? "min-h-full" : "h-full")}>
       <GridLayout
         className="layout"
         layout={arrangedCell}
@@ -39,29 +67,7 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
           newItem: GridLayout.Layout,
         ) => onResizeStop(layout, oldItem, newItem, 2)}
       >
-        {arrangedCell.map((cell) => {
-          const renderCellContent = () => {
-            switch (cell.type) {
-              case "video":
-                return <VideoCell id={cell.video.id} />;
-              case "chat":
-                return <p>Chat cell not implemented yet</p>;
-              case "placeholder":
-                return <p>Placeholder cell not implemented yet</p>;
-              default:
-                return <p>Unknown cell type</p>;
-            }
-          };
-
-          return (
-            <div
-              key={cell.i}
-              className="h-full w-full flex flex-col border-2 border-blue-6 rounded-lg box-border bg-slate-5"
-            >
-              {renderCellContent()}
-            </div>
-          );
-        })}
+        {renderedCells}
       </GridLayout>
     </div>
   );
