@@ -20,10 +20,7 @@ export function onDragStop(layout: Layout[], oldItem: Layout, newItem: Layout) {
   // find all of the items that are colliding with the newItem position
   const collidingItems = getCollidingItems(layout, newItem);
   const beforeTheChange = layout.filter((item) => item.i !== newItem.i);
-  const maxHeight = Math.max(
-    ...beforeTheChange.map((item) => item.h + item.y),
-    24,
-  );
+  const maxHeight = Math.max(...layout.map((item) => item.h + item.y), 24);
   const emptyCells = calculateEmptyCells(beforeTheChange, 24, maxHeight).filter(
     (cell) => {
       return cell.h >= 2 && cell.w >= 2; // Only include cells that are larger than 2x2
