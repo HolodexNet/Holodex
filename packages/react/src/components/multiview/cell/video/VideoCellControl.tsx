@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
 import {
   mutateVideoToPlaceholderAtom,
+  readMultiviewCellsAtom,
   removeVideoCellAtom,
 } from "@/store/multiview";
 import { videoStatusAtomFamily } from "@/store/player";
@@ -16,6 +17,9 @@ export function VideoCellControl({ id }: VideoCellControlProps) {
   const removeVideo = useSetAtom(removeVideoCellAtom);
   const videoStatusAtom = videoStatusAtomFamily(id || "x");
   const statusValue = useAtomValue(videoStatusAtom);
+  const { cells } = useAtomValue(readMultiviewCellsAtom);
+  const cell = cells.find((cell) => cell.i === `video_${id}`);
+  const dimensions = `${cell?.w} x ${cell?.h}`;
 
   return (
     <div
@@ -37,6 +41,7 @@ export function VideoCellControl({ id }: VideoCellControlProps) {
           className={cn("i-heroicons:chevron-left", "text-lg text-base-11")}
         />
       </Button>
+      <div className="text-sm text-base-11">{dimensions}</div>
       <Button
         onClick={() => removeVideo(id)}
         onMouseDown={(e) => e.stopPropagation()}

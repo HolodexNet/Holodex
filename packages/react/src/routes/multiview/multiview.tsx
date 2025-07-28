@@ -90,7 +90,7 @@ export function Multiview() {
         ref={multiviewRef}
         className={cn(
           "relative",
-          isFullscreen && "overflow-y-scroll min-h-full h-full",
+          isFullscreen && "overflow-y-scroll min-h-full",
         )}
       >
         <div className={cn("relative flex w-full flex-col")}>
