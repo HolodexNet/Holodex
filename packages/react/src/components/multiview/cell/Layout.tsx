@@ -1,6 +1,9 @@
 import { useComputedDimensions } from "@/hooks/useComputedDimensions";
-import { readMultiviewCellsAtom } from "@/store/multiview";
-import { useAtomValue } from "jotai";
+import {
+  readMultiviewCellsAtom,
+  updateCellPositionAtom,
+} from "@/store/multiview";
+import { useAtomValue, useSetAtom } from "jotai";
 import GridLayout from "react-grid-layout";
 import { VideoCell } from "./video/VideoCell";
 import { Cell } from "@/types/multiview";
@@ -28,8 +31,23 @@ const renderCellContent = (cell: Cell) => {
 export function Layout({ isFullScreen = false }: LayoutProps) {
   const { cells } = useAtomValue(readMultiviewCellsAtom);
   const { cellDimensions, dimensions } = useComputedDimensions(isFullScreen);
+  const updateCell = useSetAtom(updateCellPositionAtom);
 
-  const arrangedCell = useMemo(() => calculateLayout(cells), [cells]);
+  const arrangedCell = useMemo(() => {
+    const calculated = calculateLayout(cells);
+
+    calculated.forEach((cell) => {
+      const currentCell = cells.find((c) => c.i === cell.i);
+      if (
+        currentCell &&
+        (currentCell.w !== cell.w || currentCell.h !== cell.h)
+      ) {
+        updateCell({ cellId: cell.i, updates: { w: cell.w, h: cell.h } });
+      }
+    });
+
+    return calculated;
+  }, [cells, updateCell]);
 
   const renderedCells = useMemo(
     () =>

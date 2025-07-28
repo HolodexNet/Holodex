@@ -133,6 +133,40 @@ export const updateCellStateAtom = atom(
   },
 );
 
+export const updateCellPositionAtom = atom(
+  null,
+  (
+    get,
+    set,
+    {
+      cellId,
+      updates,
+    }: {
+      cellId: string;
+      updates: Partial<Pick<Cell, "x" | "y" | "h" | "w">>;
+    },
+  ) => {
+    const curr = get(readMultiviewCellsAtom);
+    const cellExists = curr.cells.some((cell) => cell.i === cellId);
+
+    if (!cellExists) {
+      console.warn(`Cell with id ${cellId} not found`);
+      return;
+    }
+
+    set(multiviewCellsAtom, {
+      cells: curr.cells.map((cell) => {
+        if (cell.i !== cellId) return cell;
+        cell.h = updates.h ?? cell.h;
+        cell.w = updates.w ?? cell.w;
+        cell.x = updates.x ?? cell.x;
+        cell.y = updates.y ?? cell.y;
+        return cell;
+      }),
+    });
+  },
+);
+
 export const updateCellStatusAtom = atom(
   null,
   (_, set, { cellId, status }: { cellId: string; status: ChatCellStatus }) => {
