@@ -1,6 +1,6 @@
 import { useComputedDimensions } from "@/hooks/useComputedDimensions";
 import {
-  isLayoutChangedAtom,
+  isAutoLayoutAtom,
   readMultiviewCellsAtom,
   updateCellPositionAtom,
 } from "@/store/multiview";
@@ -33,14 +33,14 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
   const { cells } = useAtomValue(readMultiviewCellsAtom);
   const { cellDimensions, dimensions } = useComputedDimensions(isFullScreen);
   const updateCell = useSetAtom(updateCellPositionAtom);
-  const isLayoutChanged = useAtomValue(isLayoutChangedAtom);
-  const setLayoutChanged = useSetAtom(isLayoutChangedAtom);
-  const layoutChanged = () => setLayoutChanged(true);
+  const isAutoLayout = useAtomValue(isAutoLayoutAtom);
+  const setIsAutoLayout = useSetAtom(isAutoLayoutAtom);
+  const turnOffAutoLayout = () => setIsAutoLayout(true);
 
   // Pure calculation of layout - no side effects
   const arrangedCell = useMemo(() => {
-    return isLayoutChanged ? cells : calculateLayout(cells, updateCell);
-  }, [cells, isLayoutChanged]);
+    return isAutoLayout ? cells : calculateLayout(cells, updateCell);
+  }, [cells, isAutoLayout]);
 
   const renderedCells = useMemo(
     () =>
@@ -73,7 +73,7 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
         layout: GridLayout.Layout[],
         oldItem: GridLayout.Layout,
         newItem: GridLayout.Layout,
-      ) => onDragStop(layout, oldItem, newItem, updateCell, layoutChanged)}
+      ) => onDragStop(layout, oldItem, newItem, updateCell, turnOffAutoLayout)}
       onResizeStop={(
         layout: GridLayout.Layout[],
         oldItem: GridLayout.Layout,

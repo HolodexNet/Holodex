@@ -13,7 +13,7 @@ export function onDragStop(
   oldItem: Layout,
   newItem: Layout,
   updateCellInStorage: (cellId: string, updates: Partial<Layout>) => void,
-  registerChange: () => void,
+  turnOffAutoLayout: () => void,
 ) {
   // find all of the items that are colliding with the newItem position
   const collidingItems = getCollidingItems(layout, newItem);
@@ -26,7 +26,7 @@ export function onDragStop(
 
     if (emptyCell) {
       registerMovedcell(newItem, emptyCell, updateCellInStorage);
-      registerChange();
+      turnOffAutoLayout();
       return;
     }
   } else if (collidingItems.length === 1) {
@@ -37,7 +37,7 @@ export function onDragStop(
     ) {
       registerMovedcell(newItem, swapTarget, updateCellInStorage);
       registerMovedcell(swapTarget, oldItem, updateCellInStorage);
-      registerChange();
+      turnOffAutoLayout();
       return;
     }
   } else {

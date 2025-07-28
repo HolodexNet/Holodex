@@ -48,7 +48,7 @@ export function useMultiViewFullScreen(ref: RefObject<HTMLDivElement | null>) {
 // TODO: read from memory
 export const multiviewCellsAtom = atom<MultiviewCells>({ cells: [] });
 
-export const isLayoutChangedAtom = atom(false);
+export const isAutoLayoutAtom = atom(false);
 
 export const readMultiviewCellsAtom = atom((get) => get(multiviewCellsAtom));
 
