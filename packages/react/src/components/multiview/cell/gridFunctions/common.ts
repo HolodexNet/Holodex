@@ -8,6 +8,7 @@ export function singleDirectionResize(
   newItem: Layout,
   minSize: number,
   layout: Layout[],
+  updateCellInStorage: (cellId: string, updates: Partial<Layout>) => void,
 ) {
   let collidingLength: number;
   switch (directionImpacted) {
@@ -19,6 +20,12 @@ export function singleDirectionResize(
       } else {
         collidingItem.w -= collidingItem.x + collidingItem.w - newItem.x;
       }
+      updateCellInStorage(collidingItem.i, {
+        x: collidingItem.x,
+        y: collidingItem.y,
+        w: collidingItem.w,
+        h: collidingItem.h,
+      });
       break;
     case "r":
       collidingLength = newItem.x + newItem.w - collidingItem.x;
@@ -28,6 +35,12 @@ export function singleDirectionResize(
         collidingItem.w = collidingItem.w - collidingLength;
         collidingItem.x = newItem.x + newItem.w;
       }
+      updateCellInStorage(collidingItem.i, {
+        x: collidingItem.x,
+        y: collidingItem.y,
+        w: collidingItem.w,
+        h: collidingItem.h,
+      });
       break;
     case "u":
       collidingLength = newItem.y - collidingItem.y;
@@ -36,6 +49,12 @@ export function singleDirectionResize(
       } else {
         collidingItem.h -= collidingItem.y + collidingItem.h - newItem.y;
       }
+      updateCellInStorage(collidingItem.i, {
+        x: collidingItem.x,
+        y: collidingItem.y,
+        w: collidingItem.w,
+        h: collidingItem.h,
+      });
       break;
     case "d":
       collidingLength =
@@ -46,9 +65,15 @@ export function singleDirectionResize(
         collidingItem.h -= newItem.y + newItem.h - collidingItem.y;
         collidingItem.y = newItem.y + newItem.h;
       }
+      updateCellInStorage(collidingItem.i, {
+        x: collidingItem.x,
+        y: collidingItem.y,
+        w: collidingItem.w,
+        h: collidingItem.h,
+      });
       break;
   }
-  moveCollidingItems(layout, collidingItem);
+  moveCollidingItems(layout, collidingItem, updateCellInStorage);
 }
 
 function areItemsColliding(itemA: Layout, itemB: Layout): boolean {
@@ -60,7 +85,11 @@ function areItemsColliding(itemA: Layout, itemB: Layout): boolean {
   );
 }
 
-export function moveCollidingItems(itemsToCheck: Layout[], movingItem: Layout) {
+export function moveCollidingItems(
+  itemsToCheck: Layout[],
+  movingItem: Layout,
+  updateCellInStorage: (cellId: string, updates: Partial<Layout>) => void,
+) {
   const itemsCollidingWithOldSpace = getCollidingItems(
     itemsToCheck,
     movingItem,
@@ -72,13 +101,25 @@ export function moveCollidingItems(itemsToCheck: Layout[], movingItem: Layout) {
     // if the item's new position is more than 1/3 lower than the first colliding item, move the new item down
     if (firstItemCollidedWith.y + firstItemCollidedWith.h / 3 <= movingItem.y) {
       movingItem.y = firstItemCollidedWith.y + firstItemCollidedWith.h;
-      moveCollidingItems(itemsToCheck, movingItem);
+      updateCellInStorage(movingItem.i, {
+        x: movingItem.x,
+        y: movingItem.y,
+        w: movingItem.w,
+        h: movingItem.h,
+      });
+      moveCollidingItems(itemsToCheck, movingItem, updateCellInStorage);
     } else {
       for (const item of itemsCollidingWithOldSpace) {
         // there is a collision, we need to find the next available place VERTICALLY
         if (areItemsColliding(item, movingItem)) {
           item.y = movingItem.y + movingItem.h;
-          moveCollidingItems(itemsToCheck, item);
+          updateCellInStorage(item.i, {
+            x: item.x,
+            y: item.y,
+            w: item.w,
+            h: item.h,
+          });
+          moveCollidingItems(itemsToCheck, item, updateCellInStorage);
         }
       }
     }

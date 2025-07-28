@@ -9,6 +9,8 @@ export function onResize(
   layout: Layout[],
   oldItem: Layout,
   newItem: Layout,
+  updateCellInStorage: (cellId: string, updates: Partial<Layout>) => void,
+  turnOffAutoLayout: () => void,
   minSize: number = 2,
   limit: number = 24,
 ) {
@@ -25,6 +27,13 @@ export function onResize(
   if (newItem.h < minSize) {
     newItem.h = minSize;
   }
+  turnOffAutoLayout();
+  updateCellInStorage(newItem.i, {
+    x: newItem.x,
+    y: newItem.y,
+    w: newItem.w,
+    h: newItem.h,
+  });
 
   const itemsColliding = getCollidingItems(layout, newItem);
 
@@ -35,6 +44,7 @@ export function onResize(
       newItem,
       minSize,
       layout,
+      updateCellInStorage,
     );
   }
 }

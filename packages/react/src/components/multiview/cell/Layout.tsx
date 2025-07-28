@@ -78,7 +78,7 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
         layout: GridLayout.Layout[],
         oldItem: GridLayout.Layout,
         newItem: GridLayout.Layout,
-      ) => onResize(layout, oldItem, newItem, 2)}
+      ) => onResize(layout, oldItem, newItem, updateCell, turnOffAutoLayout, 2)}
     >
       {renderedCells}
     </GridLayout>
