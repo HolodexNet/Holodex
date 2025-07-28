@@ -9,8 +9,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/shadcn/ui/avatar";
 import { cn, makeThumbnailUrl } from "@/lib/utils";
 import { MemoizedLiveChannelTooltipContentCard } from "./LiveChannelTooltipContentCard";
 import { compareTimeDiffToNow } from "@/lib/time";
-import { registerVideoCellAtom } from "@/store/multiview";
-import { useAtom } from "jotai";
+import { isLayoutChangedAtom, registerVideoCellAtom } from "@/store/multiview";
+import { useAtom, useSetAtom } from "jotai";
 
 interface LiveChannelProps {
   video: VideoBase;
@@ -24,6 +24,8 @@ export function LiveChannel({ video }: LiveChannelProps) {
 
   const thumbnail = makeThumbnailUrl(video.id, "sm");
   const [_, addVideo] = useAtom(registerVideoCellAtom);
+  const setLayoutChanged = useSetAtom(isLayoutChangedAtom);
+  const layoutChanged = () => setLayoutChanged(false);
 
   // TODO: move live stream info card outside of this components
   return (
@@ -33,7 +35,10 @@ export function LiveChannel({ video }: LiveChannelProps) {
           <div
             draggable="true"
             className="relative cursor-pointer"
-            onClick={() => addVideo(video)}
+            onClick={() => {
+              addVideo(video);
+              layoutChanged();
+            }}
           >
             <Avatar className="size-12">
               <AvatarImage

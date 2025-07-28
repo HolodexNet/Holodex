@@ -48,6 +48,8 @@ export function useMultiViewFullScreen(ref: RefObject<HTMLDivElement | null>) {
 // TODO: read from memory
 export const multiviewCellsAtom = atom<MultiviewCells>({ cells: [] });
 
+export const isLayoutChangedAtom = atom(false);
+
 export const readMultiviewCellsAtom = atom((get) => get(multiviewCellsAtom));
 
 const addMultiviewCellAtom = atom(null, (get, set, cell: Cell) => {
@@ -138,31 +140,42 @@ export const updateCellPositionAtom = atom(
   (
     get,
     set,
-    {
-      cellId,
-      updates,
-    }: {
-      cellId: string;
-      updates: Partial<Pick<Cell, "x" | "y" | "h" | "w">>;
-    },
+    cellId: string,
+    updates: Partial<Pick<Cell, "x" | "y" | "h" | "w">>,
   ) => {
     const curr = get(readMultiviewCellsAtom);
-    const cellExists = curr.cells.some((cell) => cell.i === cellId);
+    const targetCellIndex = curr.cells.findIndex((cell) => cell.i === cellId);
 
-    if (!cellExists) {
+    if (targetCellIndex === -1) {
       console.warn(`Cell with id ${cellId} not found`);
       return;
     }
 
+    const targetCell = curr.cells[targetCellIndex];
+
+    // Check if any values actually changed
+    const hasChanges = Object.keys(updates).some((key) => {
+      const updateKey = key as keyof typeof updates;
+      return (
+        updates[updateKey] !== undefined &&
+        targetCell[updateKey] !== updates[updateKey]
+      );
+    });
+
+    if (!hasChanges) {
+      console.log(`Cell with id ${cellId} has no changes to apply`);
+      return;
+    }
+
+    // Create new array with only the changed cell replaced
+    const newCells = [...curr.cells];
+    newCells[targetCellIndex] = {
+      ...targetCell,
+      ...updates,
+    };
+
     set(multiviewCellsAtom, {
-      cells: curr.cells.map((cell) => {
-        if (cell.i !== cellId) return cell;
-        cell.h = updates.h ?? cell.h;
-        cell.w = updates.w ?? cell.w;
-        cell.x = updates.x ?? cell.x;
-        cell.y = updates.y ?? cell.y;
-        return cell;
-      }),
+      cells: newCells,
     });
   },
 );

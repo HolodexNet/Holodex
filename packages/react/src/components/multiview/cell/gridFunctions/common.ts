@@ -135,3 +135,20 @@ export function checkImpactDirection(
   }
   return impacts;
 }
+
+export function registerMovedcell(
+  movedCell: Layout,
+  spaceMovedTo: Layout,
+  updateCellInStorage: (cellId: string, updates: Partial<Layout>) => void,
+) {
+  movedCell.x = spaceMovedTo.x;
+  movedCell.y = spaceMovedTo.y;
+  movedCell.w = spaceMovedTo.w;
+  movedCell.h = spaceMovedTo.h;
+  updateCellInStorage(movedCell.i, {
+    x: movedCell.x,
+    y: movedCell.y,
+    w: movedCell.w,
+    h: movedCell.h,
+  });
+}

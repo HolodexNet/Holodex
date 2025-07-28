@@ -1,5 +1,6 @@
 import { useComputedDimensions } from "@/hooks/useComputedDimensions";
 import {
+  isLayoutChangedAtom,
   readMultiviewCellsAtom,
   updateCellPositionAtom,
 } from "@/store/multiview";
@@ -32,22 +33,14 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
   const { cells } = useAtomValue(readMultiviewCellsAtom);
   const { cellDimensions, dimensions } = useComputedDimensions(isFullScreen);
   const updateCell = useSetAtom(updateCellPositionAtom);
+  const isLayoutChanged = useAtomValue(isLayoutChangedAtom);
+  const setLayoutChanged = useSetAtom(isLayoutChangedAtom);
+  const layoutChanged = () => setLayoutChanged(true);
 
+  // Pure calculation of layout - no side effects
   const arrangedCell = useMemo(() => {
-    const calculated = calculateLayout(cells);
-
-    calculated.forEach((cell) => {
-      const currentCell = cells.find((c) => c.i === cell.i);
-      if (
-        currentCell &&
-        (currentCell.w !== cell.w || currentCell.h !== cell.h)
-      ) {
-        updateCell({ cellId: cell.i, updates: { w: cell.w, h: cell.h } });
-      }
-    });
-
-    return calculated;
-  }, [cells, updateCell]);
+    return isLayoutChanged ? cells : calculateLayout(cells, updateCell);
+  }, [cells, isLayoutChanged]);
 
   const renderedCells = useMemo(
     () =>
@@ -76,7 +69,11 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
       containerPadding={[0, 0]}
       compactType={null}
       resizeHandles={["se", "sw", "ne", "nw", "n", "s", "e", "w"]}
-      onDragStop={onDragStop}
+      onDragStop={(
+        layout: GridLayout.Layout[],
+        oldItem: GridLayout.Layout,
+        newItem: GridLayout.Layout,
+      ) => onDragStop(layout, oldItem, newItem, updateCell, layoutChanged)}
       onResizeStop={(
         layout: GridLayout.Layout[],
         oldItem: GridLayout.Layout,
@@ -88,7 +85,10 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
   );
 }
 
-function calculateLayout(cells: Cell[]) {
+function calculateLayout(
+  cells: Cell[],
+  updateCell: (id: string, updates: Partial<Cell>) => void,
+) {
   const numberOfCells = cells.length;
   const rows = Math.floor(Math.sqrt(numberOfCells));
   const cols = Math.ceil(numberOfCells / rows);
@@ -99,18 +99,34 @@ function calculateLayout(cells: Cell[]) {
 
   const arrangedCells: Cell[] = [];
 
-  for (let i = 0; i < numberOfCells; i++) {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
+  if (arrangedCells)
+    for (let i = 0; i < numberOfCells; i++) {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
 
-    arrangedCells.push({
-      ...cells[i],
-      x: col * cellWidth,
-      y: row * cellHeight,
-      w: cellWidth,
-      h: cellHeight,
-    });
-  }
+      const newPosition = {
+        x: col * cellWidth,
+        y: row * cellHeight,
+        w: cellWidth,
+        h: cellHeight,
+      };
+
+      arrangedCells.push({
+        ...cells[i],
+        ...newPosition,
+      });
+
+      const currentCell = cells[i];
+      const hasChanges =
+        currentCell.x !== newPosition.x ||
+        currentCell.y !== newPosition.y ||
+        currentCell.w !== newPosition.w ||
+        currentCell.h !== newPosition.h;
+
+      if (hasChanges) {
+        updateCell(cells[i].i, newPosition);
+      }
+    }
 
   return arrangedCells;
 }

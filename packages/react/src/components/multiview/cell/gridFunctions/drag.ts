@@ -1,62 +1,50 @@
 import { Layout } from "react-grid-layout";
-import { getCollidingItems, moveCollidingItems } from "./common";
+import { getCollidingItems, registerMovedcell } from "./common";
 import { Cell } from "@/types/multiview";
 
 /* Expected behavior:
-There are four possible scenarios post dragging items
+There are three possible scenarios post dragging items
 1) items are swapped
-2) items are moved down to make space for the new item, the new item is placed at exactly the x and y where it was dropped
-3) Item is inserted between items, the surrounding items are moved accordingly
-4) Item is moved to the new space without any collision
-5) Item is inserted into an empty space
-
-Scenario 1 is triggered when the top left corner of both items match
-Scenario 2 is when the movingItem's new y is at the top 1/3 of the highest colliding item
-Scenario 3 is when the movingItem's new drop site is more than 2/3 of the height of the highest colliding item
-Scenario 4 is when the movingItem's new drop site is not colliding with any other
+2) Item is moved to the new space without any collision
+3) Item is grows into empty space - only when at least one corner matches a respective corner of the empty space
 */
-export function onDragStop(layout: Layout[], oldItem: Layout, newItem: Layout) {
+export function onDragStop(
+  layout: Layout[],
+  oldItem: Layout,
+  newItem: Layout,
+  updateCellInStorage: (cellId: string, updates: Partial<Layout>) => void,
+  registerChange: () => void,
+) {
   // find all of the items that are colliding with the newItem position
   const collidingItems = getCollidingItems(layout, newItem);
 
   if (collidingItems.length === 0) {
-    // if there is no collision, see if it's matching an empty space's corner
-    // if so, fill that empty cell with the new item
-    // otherwise, just place it there
-    const beforeTheChange = layout.filter((item) => item.i !== newItem.i);
-    const maxHeight = Math.max(...layout.map((item) => item.h + item.y), 24);
+    const itemsNotMoved = layout.filter((item) => item.i !== newItem.i);
+    const maxHOccupied = Math.max(...layout.map((item) => item.h + item.y), 24);
 
-    const emptyCell = findEmptyCellToFill(beforeTheChange, maxHeight, newItem);
+    const emptyCell = findEmptyCellToFill(itemsNotMoved, maxHOccupied, newItem);
 
     if (emptyCell) {
-      newItem.x = emptyCell.x;
-      newItem.y = emptyCell.y;
-      newItem.w = emptyCell.w;
-      newItem.h = emptyCell.h;
+      registerMovedcell(newItem, emptyCell, updateCellInStorage);
+      registerChange();
       return;
     }
   } else if (collidingItems.length === 1) {
     const swapTarget = collidingItems[0];
-    // if the newItem is being put into an empty space, we will resize the item and fit it into the empty space
-    // check if there is an empty cell that matches the newItem position
-
     if (
       (swapTarget.x === newItem.x && swapTarget.y === newItem.y) ||
       collidingItems.length === 1
     ) {
-      newItem.x = swapTarget.x;
-      newItem.y = swapTarget.y;
-      newItem.w = swapTarget.w;
-      newItem.h = swapTarget.h;
-      swapTarget.x = oldItem.x;
-      swapTarget.y = oldItem.y;
-      swapTarget.w = oldItem.w;
-      swapTarget.h = oldItem.h;
+      registerMovedcell(newItem, swapTarget, updateCellInStorage);
+      registerMovedcell(swapTarget, oldItem, updateCellInStorage);
+      registerChange();
       return;
     }
-    moveCollidingItems(layout, newItem);
   } else {
-    // fit the colliding items around the new item
+    newItem.x = oldItem.x;
+    newItem.y = oldItem.y;
+    newItem.w = oldItem.w;
+    newItem.h = oldItem.h;
   }
 }
 
