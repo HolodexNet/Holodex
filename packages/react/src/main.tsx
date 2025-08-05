@@ -18,6 +18,9 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import { App } from "./App";
 import { TooltipProvider } from "./shadcn/ui/tooltip";
 import { globalQueryClient } from "./lib/query";
+import { Provider } from "jotai";
+import { useAtomsDebugValue } from "jotai-devtools";
+import "jotai-devtools/styles.css";
 
 const GOOGLE_CLIENT_ID =
   "275540829388-87s7f9v2ht3ih51ah0tjkqng8pd8bqo2.apps.googleusercontent.com";
@@ -32,6 +35,11 @@ const JotaiDevtools =
         return { default: moduleExports.DevTools };
       })
     : () => null;
+
+const DebugAtoms = () => {
+  useAtomsDebugValue();
+  return null;
+};
 
 const ReactQueryDevtools =
   process.env.NODE_ENV === "development"
@@ -53,25 +61,27 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HelmetProvider>
       <QueryClientProvider client={globalQueryClient}>
-        {process.env.NODE_ENV === "development" && (
-          <Suspense>
-            <ReactQueryDevtools
-              position={"left"}
-              buttonPosition="bottom-left"
-            />
-            <JotaiDevtools position="bottom-left" />
-          </Suspense>
-        )}
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          {/* <ErrorBoundary
+        <Provider>
+          {process.env.NODE_ENV === "development" && (
+            <Suspense>
+              <ReactQueryDevtools
+                position={"right"}
+                buttonPosition="top-right"
+              />
+              <JotaiDevtools position="top-right" />
+            </Suspense>
+          )}
+          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            {/* <ErrorBoundary
             FallbackComponent={ErrorFallback}
             onReset={() => window.location.reload()}
           > */}
-          <TooltipProvider>
-            <App />
-          </TooltipProvider>
-          {/* </ErrorBoundary> */}
-        </GoogleOAuthProvider>
+            <TooltipProvider>
+              <App />
+            </TooltipProvider>
+            {/* </ErrorBoundary> */}
+          </GoogleOAuthProvider>
+        </Provider>
       </QueryClientProvider>
     </HelmetProvider>
   </React.StrictMode>,
