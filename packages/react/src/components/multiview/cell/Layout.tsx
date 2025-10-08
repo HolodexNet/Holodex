@@ -2,7 +2,6 @@ import { useComputedDimensions } from "@/hooks/useComputedDimensions";
 import {
   isAutoLayoutAtom,
   readMultiviewCellsAtom,
-  swapCells,
   updateCellPositionAtom,
 } from "@/store/multiview";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -12,7 +11,6 @@ import { Cell } from "@/types/multiview";
 import { useMemo } from "react";
 import { onResize } from "./gridFunctions/resize";
 import { onDragStop } from "./gridFunctions/drag";
-// import { useMultiview } from "@/hooks/useMultiview";
 
 interface LayoutProps {
   isFullScreen?: boolean;
@@ -38,12 +36,11 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
   const isAutoLayout = useAtomValue(isAutoLayoutAtom);
   const setIsAutoLayout = useSetAtom(isAutoLayoutAtom);
   const turnOffAutoLayout = () => setIsAutoLayout(false);
-  const swapCellsFn = useSetAtom(swapCells);
 
   // Pure calculation of layout - no side effects
   const arrangedCell = useMemo(() => {
     return isAutoLayout ? cells : calculateLayout(cells, updateCell);
-  }, [cells, isAutoLayout]);
+  }, [cells, isAutoLayout, updateCell]);
 
   const renderedCells = useMemo(
     () =>
@@ -76,16 +73,7 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
         layout: GridLayout.Layout[],
         oldItem: GridLayout.Layout,
         newItem: GridLayout.Layout,
-      ) =>
-        onDragStop(
-          layout,
-          oldItem,
-          newItem,
-          updateCell,
-          turnOffAutoLayout,
-          swapCellsFn,
-        )
-      }
+      ) => onDragStop(layout, oldItem, newItem, updateCell, turnOffAutoLayout)}
       onResizeStop={(
         layout: GridLayout.Layout[],
         oldItem: GridLayout.Layout,
@@ -101,6 +89,8 @@ function calculateLayout(
   cells: Cell[],
   updateCell: (id: string, updates: Partial<Cell>) => void,
 ) {
+  if (cells.length === 0) return [];
+
   const numberOfCells = cells.length;
   const rows = Math.floor(Math.sqrt(numberOfCells));
   const cols = Math.ceil(numberOfCells / rows);
@@ -109,56 +99,30 @@ function calculateLayout(
   const cellWidth = Math.floor(24 / cols);
   const cellHeight = Math.floor(24 / rows);
 
-  const sortedCells = cells.toSorted((a, b) => {
-    if (a.y < b.y) return -1;
-    if (a.y > b.y) return 1;
+  const sortedCells = cells.toSorted((a, b) =>
+    a.y !== b.y ? a.y - b.y : a.x - b.x,
+  );
 
-    if (a.x < b.x) return -1;
-    if (a.x > b.x) return 1;
-    return 0;
-  });
+  const newPositions: GridLayout.Layout[] = sortedCells.map((cell, i) => ({
+    i: cell.i,
+    x: (i % cols) * cellWidth,
+    y: Math.floor(i / cols) * cellHeight,
+    w: cellWidth,
+    h: cellHeight,
+  }));
 
-  // recalculate their positions, but update them as normal
+  return cells.map((cell) => {
+    const matchingEntry = newPositions.find((pos) => pos.i === cell.i)!;
 
-  const newPositions: GridLayout.Layout[] = [];
-
-  for (let i = 0; i < numberOfCells; i++) {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-
-    const newPosition = {
-      x: col * cellWidth,
-      y: row * cellHeight,
-      w: cellWidth,
-      h: cellHeight,
-    };
-
-    newPositions.push({
-      i: sortedCells[i].i,
-      ...newPosition,
-    });
-  }
-
-  const arrangedCells: Cell[] = [];
-
-  for (let i = 0; i < numberOfCells; i++) {
-    const matchingEntry = newPositions.filter((pos) => pos.i === cells[i].i)[0];
-    arrangedCells.push({
-      ...cells[i],
-      ...matchingEntry,
-    });
-
-    const currentCell = cells[i];
-    const hasChanges =
-      currentCell.x !== matchingEntry.x ||
-      currentCell.y !== matchingEntry.y ||
-      currentCell.w !== matchingEntry.w ||
-      currentCell.h !== matchingEntry.h;
-
-    if (hasChanges) {
-      updateCell(cells[i].i, matchingEntry);
+    if (
+      cell.x !== matchingEntry.x ||
+      cell.y !== matchingEntry.y ||
+      cell.w !== matchingEntry.w ||
+      cell.h !== matchingEntry.h
+    ) {
+      updateCell(cell.i, matchingEntry);
     }
-  }
 
-  return arrangedCells;
+    return { ...cell, ...matchingEntry };
+  });
 }

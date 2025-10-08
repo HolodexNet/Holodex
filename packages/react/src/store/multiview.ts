@@ -47,19 +47,9 @@ export function useMultiViewFullScreen(ref: RefObject<HTMLDivElement | null>) {
 
 // TODO: read from memory
 export const multiviewCellsAtom = atom<MultiviewCells>({ cells: [] });
-export const tempMultiviewCellsAtom = atom<MultiviewCells | null>(null);
-
 export const isAutoLayoutAtom = atom(false);
 
 export const readMultiviewCellsAtom = atom((get) => get(multiviewCellsAtom));
-
-export const syncTempToMainAtom = atom(null, (get, set) => {
-  const temp = get(tempMultiviewCellsAtom);
-  if (temp) {
-    set(multiviewCellsAtom, temp);
-    set(tempMultiviewCellsAtom, null);
-  }
-});
 
 const addMultiviewCellAtom = atom(null, (get, set, cell: Cell) => {
   const curr = get(readMultiviewCellsAtom);
@@ -85,6 +75,7 @@ export const setCellsAtom = atom(null, (_, set, cells: Cell[]) => {
   set(multiviewCellsAtom, { cells: cells });
 });
 
+// x and y are set to the max possible number to ensure end of list
 export const registerVideoCellAtom = atom(null, (_, set, video: VideoBase) => {
   const newVideoCell: VideoCell = {
     i: `video_${video.id}`,
@@ -189,17 +180,6 @@ export const updateCellPositionAtom = atom(
     });
   },
 );
-
-export const swapCells = atom(null, (get, set, a: string, b: string) => {
-  // const atom = get(readMultiviewCellsAtom);
-  // const duplicate = atom.cells;
-  // const aIndex = duplicate.findIndex((cell) => cell.i === a);
-  // const bIndex = duplicate.findIndex((cell) => cell.i === b);
-  // const temp = duplicate[aIndex];
-  // duplicate[aIndex] = duplicate[bIndex];
-  // duplicate[bIndex] = temp;
-  // set(multiviewCellsAtom, { cells: duplicate });
-});
 
 export const updateCellStatusAtom = atom(
   null,

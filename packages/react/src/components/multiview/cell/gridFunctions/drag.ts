@@ -14,7 +14,6 @@ export function onDragStop(
   newItem: Layout,
   updateCellInStorage: (cellId: string, updates: Partial<Layout>) => void,
   turnOffAutoLayout: () => void,
-  swapCells: (a: string, b: string) => void,
 ) {
   // find all of the items that are colliding with the newItem position
   const collidingItems = getCollidingItems(layout, newItem);
@@ -38,8 +37,6 @@ export function onDragStop(
     ) {
       registerMovedcell(newItem, swapTarget, updateCellInStorage);
       registerMovedcell(swapTarget, oldItem, updateCellInStorage);
-      // swap the order of the cells
-      swapCells(newItem.i, swapTarget.i);
       turnOffAutoLayout();
       return;
     }
