@@ -90,8 +90,8 @@ export const registerVideoCellAtom = atom(null, (_, set, video: VideoBase) => {
     i: `video_${video.id}`,
     type: "video",
     video: video,
-    x: 0,
-    y: 0,
+    x: Number.MAX_SAFE_INTEGER,
+    y: Number.MAX_SAFE_INTEGER,
     w: 1,
     h: 1,
   };

@@ -32,8 +32,6 @@ const renderCellContent = (cell: Cell) => {
 };
 
 export function Layout({ isFullScreen = false }: LayoutProps) {
-  // const { getCells } = useMultiview();
-  // const cells = getCells().cells;
   const { cells } = useAtomValue(readMultiviewCellsAtom);
   const { cellDimensions, dimensions } = useComputedDimensions(isFullScreen);
   const updateCell = useSetAtom(updateCellPositionAtom);
@@ -111,35 +109,54 @@ function calculateLayout(
   const cellWidth = Math.floor(24 / cols);
   const cellHeight = Math.floor(24 / rows);
 
+  const sortedCells = cells.toSorted((a, b) => {
+    if (a.y < b.y) return -1;
+    if (a.y > b.y) return 1;
+
+    if (a.x < b.x) return -1;
+    if (a.x > b.x) return 1;
+    return 0;
+  });
+
+  // recalculate their positions, but update them as normal
+
+  const newPositions: GridLayout.Layout[] = [];
+
+  for (let i = 0; i < numberOfCells; i++) {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+
+    const newPosition = {
+      x: col * cellWidth,
+      y: row * cellHeight,
+      w: cellWidth,
+      h: cellHeight,
+    };
+
+    newPositions.push({
+      i: sortedCells[i].i,
+      ...newPosition,
+    });
+  }
+
   const arrangedCells: Cell[] = [];
 
-  if (arrangedCells) {
-    for (let i = 0; i < numberOfCells; i++) {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
+  for (let i = 0; i < numberOfCells; i++) {
+    const matchingEntry = newPositions.filter((pos) => pos.i === cells[i].i)[0];
+    arrangedCells.push({
+      ...cells[i],
+      ...matchingEntry,
+    });
 
-      const newPosition = {
-        x: col * cellWidth,
-        y: row * cellHeight,
-        w: cellWidth,
-        h: cellHeight,
-      };
+    const currentCell = cells[i];
+    const hasChanges =
+      currentCell.x !== matchingEntry.x ||
+      currentCell.y !== matchingEntry.y ||
+      currentCell.w !== matchingEntry.w ||
+      currentCell.h !== matchingEntry.h;
 
-      arrangedCells.push({
-        ...cells[i],
-        ...newPosition,
-      });
-
-      const currentCell = cells[i];
-      const hasChanges =
-        currentCell.x !== newPosition.x ||
-        currentCell.y !== newPosition.y ||
-        currentCell.w !== newPosition.w ||
-        currentCell.h !== newPosition.h;
-
-      if (hasChanges) {
-        updateCell(cells[i].i, newPosition);
-      }
+    if (hasChanges) {
+      updateCell(cells[i].i, matchingEntry);
     }
   }
 
