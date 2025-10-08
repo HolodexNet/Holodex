@@ -5,6 +5,7 @@ type ChatCellStatus = "active" | "inactive";
 
 interface BaseCell extends GridLayout.Layout {
   type: CellType;
+  orderForAutoLayout?: number;
 }
 
 interface VideoCell extends BaseCell {

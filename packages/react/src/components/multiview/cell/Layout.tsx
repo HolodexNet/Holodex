@@ -2,6 +2,7 @@ import { useComputedDimensions } from "@/hooks/useComputedDimensions";
 import {
   isAutoLayoutAtom,
   readMultiviewCellsAtom,
+  swapCells,
   updateCellPositionAtom,
 } from "@/store/multiview";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -11,6 +12,7 @@ import { Cell } from "@/types/multiview";
 import { useMemo } from "react";
 import { onResize } from "./gridFunctions/resize";
 import { onDragStop } from "./gridFunctions/drag";
+// import { useMultiview } from "@/hooks/useMultiview";
 
 interface LayoutProps {
   isFullScreen?: boolean;
@@ -30,12 +32,15 @@ const renderCellContent = (cell: Cell) => {
 };
 
 export function Layout({ isFullScreen = false }: LayoutProps) {
+  // const { getCells } = useMultiview();
+  // const cells = getCells().cells;
   const { cells } = useAtomValue(readMultiviewCellsAtom);
   const { cellDimensions, dimensions } = useComputedDimensions(isFullScreen);
   const updateCell = useSetAtom(updateCellPositionAtom);
   const isAutoLayout = useAtomValue(isAutoLayoutAtom);
   const setIsAutoLayout = useSetAtom(isAutoLayoutAtom);
-  const turnOffAutoLayout = () => setIsAutoLayout(true);
+  const turnOffAutoLayout = () => setIsAutoLayout(false);
+  const swapCellsFn = useSetAtom(swapCells);
 
   // Pure calculation of layout - no side effects
   const arrangedCell = useMemo(() => {
@@ -73,7 +78,16 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
         layout: GridLayout.Layout[],
         oldItem: GridLayout.Layout,
         newItem: GridLayout.Layout,
-      ) => onDragStop(layout, oldItem, newItem, updateCell, turnOffAutoLayout)}
+      ) =>
+        onDragStop(
+          layout,
+          oldItem,
+          newItem,
+          updateCell,
+          turnOffAutoLayout,
+          swapCellsFn,
+        )
+      }
       onResizeStop={(
         layout: GridLayout.Layout[],
         oldItem: GridLayout.Layout,
@@ -99,7 +113,7 @@ function calculateLayout(
 
   const arrangedCells: Cell[] = [];
 
-  if (arrangedCells)
+  if (arrangedCells) {
     for (let i = 0; i < numberOfCells; i++) {
       const col = i % cols;
       const row = Math.floor(i / cols);
@@ -127,6 +141,7 @@ function calculateLayout(
         updateCell(cells[i].i, newPosition);
       }
     }
+  }
 
   return arrangedCells;
 }
