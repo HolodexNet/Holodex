@@ -37,14 +37,9 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
   const setIsAutoLayout = useSetAtom(isAutoLayoutAtom);
   const turnOffAutoLayout = () => setIsAutoLayout(false);
 
-  // Pure calculation of layout - no side effects
-  const arrangedCell = useMemo(() => {
-    return isAutoLayout ? cells : calculateLayout(cells, updateCell);
-  }, [cells, isAutoLayout, updateCell]);
-
   const renderedCells = useMemo(
     () =>
-      arrangedCell.map((cell) => (
+      cells.map((cell) => (
         <div
           key={cell.i}
           className="h-full w-full flex flex-col border-2 border-blue-6 rounded-lg box-border bg-slate-5"
@@ -52,13 +47,13 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
           {renderCellContent(cell)}
         </div>
       )),
-    [arrangedCell],
+    [cells],
   );
 
   return (
     <GridLayout
       className="layout"
-      layout={arrangedCell}
+      layout={cells}
       cols={24}
       rowHeight={Math.max(cellDimensions.rowHeight - 26.0 / 24.0, 1)}
       width={dimensions.width}
@@ -83,46 +78,4 @@ export function Layout({ isFullScreen = false }: LayoutProps) {
       {renderedCells}
     </GridLayout>
   );
-}
-
-function calculateLayout(
-  cells: Cell[],
-  updateCell: (id: string, updates: Partial<Cell>) => void,
-) {
-  if (cells.length === 0) return [];
-
-  const numberOfCells = cells.length;
-  const rows = Math.floor(Math.sqrt(numberOfCells));
-  const cols = Math.ceil(numberOfCells / rows);
-
-  // Calculate grid units (each cell should span equal portions of the 24x24 grid)
-  const cellWidth = Math.floor(24 / cols);
-  const cellHeight = Math.floor(24 / rows);
-
-  const sortedCells = cells.toSorted((a, b) =>
-    a.y !== b.y ? a.y - b.y : a.x - b.x,
-  );
-
-  const newPositions: GridLayout.Layout[] = sortedCells.map((cell, i) => ({
-    i: cell.i,
-    x: (i % cols) * cellWidth,
-    y: Math.floor(i / cols) * cellHeight,
-    w: cellWidth,
-    h: cellHeight,
-  }));
-
-  return cells.map((cell) => {
-    const matchingEntry = newPositions.find((pos) => pos.i === cell.i)!;
-
-    if (
-      cell.x !== matchingEntry.x ||
-      cell.y !== matchingEntry.y ||
-      cell.w !== matchingEntry.w ||
-      cell.h !== matchingEntry.h
-    ) {
-      updateCell(cell.i, matchingEntry);
-    }
-
-    return { ...cell, ...matchingEntry };
-  });
 }

@@ -13,8 +13,6 @@ export function VideoCell({ id }: VideoCellProps) {
   const videoStatusAtom = videoStatusAtomFamily(id || "x");
   const statusValue = useAtomValue(videoStatusAtom);
 
-  console.log("video cell rendered");
-
   return (
     <>
       <div

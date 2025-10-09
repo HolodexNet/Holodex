@@ -51,12 +51,6 @@ export const isAutoLayoutAtom = atom(false);
 
 export const readMultiviewCellsAtom = atom((get) => get(multiviewCellsAtom));
 
-const addMultiviewCellAtom = atom(null, (get, set, cell: Cell) => {
-  const curr = get(readMultiviewCellsAtom);
-  console.log("Add new cell");
-  set(multiviewCellsAtom, { cells: [...curr.cells, cell] });
-});
-
 export const removeMultiviewCellAtom = atom(
   null,
   (get, set, cellId: string) => {
@@ -75,22 +69,77 @@ export const setCellsAtom = atom(null, (_, set, cells: Cell[]) => {
   set(multiviewCellsAtom, { cells: cells });
 });
 
-// x and y are set to the max possible number to ensure end of list
-export const registerVideoCellAtom = atom(null, (_, set, video: VideoBase) => {
-  const newVideoCell: VideoCell = {
-    i: `video_${video.id}`,
-    type: "video",
-    video: video,
-    x: Number.MAX_SAFE_INTEGER,
-    y: Number.MAX_SAFE_INTEGER,
-    w: 1,
-    h: 1,
-  };
-  set(addMultiviewCellAtom, newVideoCell);
-});
+function calculateLayout(
+  cells: Cell[],
+  maxCol: number = 24,
+  maxRow: number = 24,
+) {
+  if (cells.length === 0) return [];
 
-export const removeVideoCellAtom = atom(null, (_, set, videoId: string) => {
-  set(removeMultiviewCellAtom, `video_${videoId}`);
+  const numberOfCells = cells.length;
+  const rows = Math.floor(Math.sqrt(numberOfCells));
+  const cols = Math.ceil(numberOfCells / rows);
+
+  // Calculate grid units (each cell should span equal portions of the 24x24 grid)
+  const cellWidth = Math.floor(maxCol / cols);
+  const cellHeight = Math.floor(maxRow / rows);
+
+  const sortedCells = cells.toSorted((a, b) =>
+    a.y !== b.y ? a.y - b.y : a.x - b.x,
+  );
+
+  return sortedCells.map((cell, i) => ({
+    i: cell.i,
+    x: (i % cols) * cellWidth,
+    y: Math.floor(i / cols) * cellHeight,
+    w: cellWidth,
+    h: cellHeight,
+  }));
+}
+
+function applyCalculatedPositions(cells: Cell[]): Cell[] {
+  if (cells.length === 0) return [];
+
+  const newPositions = calculateLayout(cells);
+
+  return cells.map((cell) => {
+    const position = newPositions.find((pos) => pos.i === cell.i);
+    return position ? { ...cell, ...position } : cell;
+  });
+}
+
+// todo - extract logic for all types of cells
+// x and y are set to the max possible number to ensure end of list
+export const registerVideoCellAtom = atom(
+  null,
+  (get, set, video: VideoBase) => {
+    const current = get(multiviewCellsAtom);
+
+    const newVideoCell: VideoCell = {
+      i: `video_${video.id}`,
+      type: "video",
+      video: video,
+      x: Number.MAX_SAFE_INTEGER,
+      y: Number.MAX_SAFE_INTEGER,
+      w: 1,
+      h: 1,
+    };
+
+    const updatedCells = [...current.cells, newVideoCell];
+    const finalCells = applyCalculatedPositions(updatedCells);
+
+    set(multiviewCellsAtom, { cells: finalCells });
+  },
+);
+
+export const removeVideoCellAtom = atom(null, (get, set, videoId: string) => {
+  const currentCells = get(multiviewCellsAtom);
+  const cellsPostRemoval = currentCells.cells.filter(
+    (cell) => cell.i !== `video_${videoId}`,
+  );
+
+  const finalCells = applyCalculatedPositions(cellsPostRemoval);
+  set(multiviewCellsAtom, { cells: finalCells });
 });
 
 export const updateCellStateAtom = atom(
