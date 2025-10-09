@@ -15,3 +15,17 @@ export function formatDuration(millisecs: number): string {
 
   return millisecs < 0 ? `-${formattedTime}` : formattedTime;
 }
+
+export function compareTimeDiffToNow(timeString: string | undefined) {
+  if (!timeString) return "";
+  const diff = new Date(timeString).getTime() - new Date().getTime();
+  const absDiff = Math.abs(diff);
+  const seconds = Math.floor(absDiff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+
+  if (hours < 1) {
+    return `${minutes}m`;
+  }
+  return `${hours}h`;
+}

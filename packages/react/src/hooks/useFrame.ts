@@ -13,6 +13,8 @@ export const pageIsFullscreenAtom = atom(false);
 
 export const siteIsSmallAtom = atom(window.innerWidth < MobileSizeBreak);
 
+export const multiViewPanelOpenAtom = atom(true);
+
 export const sidebarShouldBeFullscreenAtom = atom(
   window.innerWidth < FooterSizeBreak,
 );
@@ -27,6 +29,18 @@ export const isMobileAtom = atom(
 );
 
 export const isSidebarOpenAtom = atom(window.innerWidth > MobileSizeBreak);
+
+export const isMultiViewPanelOpenAtom = atom((get) =>
+  get(multiViewPanelOpenAtom),
+);
+
+export const openMultiViewPanelAtom = atom(null, (_, set) => {
+  set(multiViewPanelOpenAtom, true);
+});
+
+export const closeMultiViewPanelAtom = atom(null, (_, set) => {
+  set(multiViewPanelOpenAtom, false);
+});
 
 export const indicatePageFullscreenAtom = atom(
   null,

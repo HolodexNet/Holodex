@@ -18,10 +18,11 @@ interface IPlayerWrapper {
   id: string;
   url: string;
   customSetPlayerRef?: React.Ref<ReactPlayer>;
+  autoplay?: boolean;
 }
 
 export const PlayerWrapper = React.memo(
-  ({ id, url, customSetPlayerRef }: IPlayerWrapper) => {
+  ({ id, url, customSetPlayerRef, autoplay = true }: IPlayerWrapper) => {
     const playerRefAtom = videoPlayerRefAtomFamily(id);
     const setPlayerRef = useSetAtom(playerRefAtom);
 
@@ -68,7 +69,7 @@ export const PlayerWrapper = React.memo(
           youtube: {
             playerVars: {
               origin: window.origin,
-              autoplay: 1,
+              autoplay: autoplay,
             },
           },
         }}
