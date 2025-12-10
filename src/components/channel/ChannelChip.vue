@@ -43,6 +43,8 @@
         vertical
         hide-yt
         hide-twitter
+        hide-bluesky
+        hide-twitch
       />
       <span class="grey--text text--lighten-1 ml-2">{{ channelName }}</span>
     </div>
