@@ -76,7 +76,7 @@ const TimeTooltip = ({
       </TooltipTrigger>
       <TooltipContent
         className="p-1.5 drop-shadow-muted drop-shadow-lg"
-        variant="primary"
+        variant="secondary"
         side="bottom"
       >
         <WorldTimeTooltip
@@ -210,7 +210,7 @@ const WorldTimeTooltip = React.memo(
     return (
       <div className="w-64">
         {isLikely && (
-          <div className="rounded-md text-xs px-1 mb-2 text-primary-foreground">
+          <div className="rounded-md px-1 text-xs mb-2 text-primary-foreground">
             {t("component.videoCard.uncertainPlaceholder")}
           </div>
         )}

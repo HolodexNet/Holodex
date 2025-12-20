@@ -151,7 +151,7 @@ export function VideoCard({
           "line-clamp-2 pr-4 text-sm font-bold md:text-[1rem] md:leading-6",
       ]),
       channelLink:
-        "line-clamp-1 text-sm text-link/80 hover:text-primary-foreground @lg:text-sm",
+        "line-clamp-1 text-sm text-link/80 hover:text-primary-hover @lg:text-sm",
       scheduleText: "text-sm @lg:text-sm ",
     }),
     [size, onClick, selectionMode, selectedSet, video.id],
@@ -193,7 +193,7 @@ export function VideoCard({
             {video.topic_id.replaceAll("_", " ")}
           </span>
         )}
-        <div className="absolute flex flex-col gap-1 bottom-1 right-1 items-end">
+        <div className="absolute flex gap-1 flex-col bottom-1 right-1 items-end">
           {video.songcount && (
             <span className="text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
               <div
@@ -216,7 +216,7 @@ export function VideoCard({
         </div>
       </Link>
       {/* This block contains the entire bottom of the video card, which is the channel thumbnail + Video Text Info + Menu */}
-      <div className="relative flex grow gap-2 @sm:gap-1">
+      <div className="flex grow relative gap-2 @sm:gap-1">
         {/* Channel thumbnail, only drawn on large & medium video cards */}
         {(size == "lg" || size == "md") && video.channel && (
           <Link

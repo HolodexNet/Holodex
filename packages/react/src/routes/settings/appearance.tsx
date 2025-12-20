@@ -1,33 +1,39 @@
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { Button } from "@/shadcn/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/shadcn/ui/dropdown-menu";
+
 import { cn } from "@/lib/utils";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
-import {
-  THEME_BASE_COLORS,
-  THEME_COLORS,
-  darkAtom,
-  primaryAtom,
-  secondaryAtom,
-} from "@/hooks/useTheme";
+import { darkAtom, primaryHexAtom, secondaryHexAtom } from "@/hooks/useTheme";
 import { useVideoCardSizes } from "@/store/video";
 import { hideThumbnailAtom, englishNameAtom } from "@/store/settings";
-import { Separator } from "@/shadcn/ui/separator";
 import ToggleableFeatureGroup from "@/components/settings/ToggleableFeature";
+import { ColorPicker, useColor } from "react-color-palette";
+import "react-color-palette/css";
+import { useEffect } from "react";
+import { Label } from "@/shadcn/ui/label";
+import { useDebounceValue } from "usehooks-ts";
 
 export const SettingsTheme = () => {
   const { t } = useTranslation();
   const [dark, setDark] = useAtom(darkAtom);
-  const [primary, setPrimary] = useAtom(primaryAtom);
-  const [secondary, setSecondary] = useAtom(secondaryAtom);
+  const [primaryHex, setPrimaryHex] = useAtom(primaryHexAtom);
+  const [secondaryHex, setSecondaryHex] = useAtom(secondaryHexAtom);
+
+  const [primaryColor, setPrimaryColor] = useColor(primaryHex);
+  const [secondaryColor, setSecondaryColor] = useColor(secondaryHex);
+
+  const [debouncedPrimaryColor] = useDebounceValue(primaryColor, 500);
+  const [debouncedSecondaryColor] = useDebounceValue(secondaryColor, 500);
+
+  useEffect(() => {
+    setPrimaryHex(debouncedPrimaryColor.hex);
+  }, [debouncedPrimaryColor, setPrimaryHex]);
+
+  useEffect(() => {
+    setSecondaryHex(debouncedSecondaryColor.hex);
+  }, [debouncedSecondaryColor, setSecondaryHex]);
+
   const { size, setSize } = useVideoCardSizes(["lg", "md", "list"]);
   const [hideThumbnail, setHideThumbnail] = useAtom(hideThumbnailAtom);
   const [useENName, setUseENName] = useAtom(englishNameAtom);
@@ -85,7 +91,7 @@ export const SettingsTheme = () => {
       <SettingsItem label={t("views.settings.theme")} fullWidth>
         <div className="flex items-center justify-between">
           <div
-            className="flex cursor-pointer items-center grow gap-3"
+            className="flex items-center grow cursor-pointer gap-3"
             onClick={() => setDark(!dark)}
           >
             <div
@@ -111,7 +117,7 @@ export const SettingsTheme = () => {
             </div>
           </div>
           <Button
-            variant="base-outline"
+            variant="outline"
             size="lg"
             onClick={() => setDark(!dark)}
             className={cn("h-10 w-24 p-0  transition-colors", dark ? "" : "")}
@@ -124,20 +130,38 @@ export const SettingsTheme = () => {
             />
           </Button>
         </div>
-        <Separator />
-        <ColorPickerRow
-          label="Primary Color"
-          value={primary}
-          onChange={setPrimary}
-          options={THEME_COLORS.concat(THEME_BASE_COLORS)}
-        />
-        <Separator />
-        <ColorPickerRow
-          label="Secondary Color"
-          value={secondary}
-          onChange={setSecondary}
-          options={THEME_COLORS.concat(THEME_BASE_COLORS)}
-        />
+        <div className="pt-4 space-y-4">
+          {/* We need to wrap ColorPicker in a way that doesn't crash. 
+               The previous crash might have been due to missing CSS import or Portal issues. 
+               Adding the CSS import here just in case. 
+           */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label className="mb-2 block">Primary Color</Label>
+              <div className="border rounded-lg p-2 bg-card">
+                <ColorPicker
+                  color={primaryColor}
+                  onChange={setPrimaryColor}
+                  hideInput={["hsv"]}
+                  hideAlpha
+                  height={150}
+                />
+              </div>
+            </div>
+            <div>
+              <Label className="mb-2 block">Secondary Color</Label>
+              <div className="border rounded-lg p-2 bg-card">
+                <ColorPicker
+                  color={secondaryColor}
+                  onChange={setSecondaryColor}
+                  hideInput={["hsv"]}
+                  hideAlpha
+                  height={150}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </SettingsItem>
       {/* Grid Size Selection */}
       <SettingsItem label={t("views.settings.gridSizeLabel")} fullWidth>
@@ -153,57 +177,3 @@ export const SettingsTheme = () => {
     </div>
   );
 };
-
-const ColorPickerRow = ({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  options: string[];
-}) => (
-  <div className="flex items-center justify-between">
-    <div className="flex items-center gap-3">
-      <div
-        className="h-10 rounded-full w-10"
-        style={{ backgroundColor: `var(--${value}-9)` }}
-      />
-      <div className="flex flex-col">
-        <span className="font-medium">{label}</span>
-        <span className="text-sm capitalize">{value}</span>
-      </div>
-    </div>
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="base-outline" className="h-10 justify-between w-24">
-          <div
-            className="rounded-full h-4 w-4"
-            style={{ backgroundColor: `var(--${value}-9)` }}
-          />
-          <div className="h-4 w-4 opacity-60 i-lucide:chevron-down" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-52">
-        <DropdownMenuLabel>Select a color</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <div className="grid gap-1 p-1 grid-cols-4">
-          {options.map((color) => (
-            <DropdownMenuItem
-              key={color}
-              className="flex h-10 w-10 items-center hover: justify-center p-0"
-              onSelect={() => onChange(color)}
-            >
-              <div
-                className="rounded-full h-6 w-6 transition-transform hover:scale-110"
-                style={{ backgroundColor: `var(--${color}-9)` }}
-              />
-            </DropdownMenuItem>
-          ))}
-        </div>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  </div>
-);

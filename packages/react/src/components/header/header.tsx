@@ -13,6 +13,7 @@ import clsx from "clsx";
 import { Logo } from "./Logo";
 import { useState } from "react";
 import { UserMenu } from "./userMenu/components/UserMenu";
+
 interface HeaderProps
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLElement>,
@@ -77,7 +78,7 @@ export function Header({ id }: HeaderProps) {
               <Button
                 size="icon"
                 variant="ghost"
-                className="ml-auto h-12 w-12 text-xl"
+                className="h-12 w-12 ml-auto text-xl"
                 onClick={() => setIsSearching(true)}
               >
                 <div className="h-8 w-8 i-heroicons:magnifying-glass" />

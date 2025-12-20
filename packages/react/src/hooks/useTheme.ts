@@ -2,97 +2,22 @@ import { useEffect } from "react";
 import { atomWithStorageBroadcast } from "@/lib/jotai/atomWithStorageBroadcast";
 import { useAtom } from "jotai";
 import { GET_ON_INIT } from "@/lib/consts";
-
-export const THEME_COLORS = [
-  "tomato",
-  "red",
-  "ruby",
-  "crimson",
-  "pink",
-  "plum",
-  "purple",
-  "violet",
-  "iris",
-  "indigo",
-  "blue",
-  "cyan",
-  "teal",
-  "jade",
-  "green",
-  "grass",
-  "brown",
-  "bronze",
-  "gold",
-  "orange",
-  "sky",
-  "mint",
-  "lime",
-  "yellow",
-  "amber",
-];
-
-export const THEME_DARK_FOREGROUND_TXT_COLORS = [
-  "sky",
-  "mint",
-  "lime",
-  "yellow",
-  "amber",
-];
-
-export const THEME_BASE_COLORS = [
-  "gray",
-  "mauve",
-  "slate",
-  "sage",
-  "olive",
-  "sand",
-] as const;
-
-export const BASE_MAPPING: Record<
-  (typeof THEME_COLORS)[number],
-  (typeof THEME_BASE_COLORS)[number]
-> = {
-  tomato: "mauve",
-  red: "mauve",
-  ruby: "mauve",
-  crimson: "mauve",
-  pink: "mauve",
-  plum: "mauve",
-  purple: "mauve",
-  violet: "mauve",
-  iris: "slate",
-  indigo: "slate",
-  blue: "slate",
-  sky: "slate",
-  cyan: "slate",
-  mint: "sage",
-  teal: "sage",
-  jade: "sage",
-  green: "sage",
-  grass: "olive",
-  lime: "olive",
-  yellow: "sand",
-  amber: "sand",
-  orange: "sand",
-  brown: "sand",
-  gold: "sand", // Not officially specified.
-  bronze: "sand", // Not officially specified.
-};
+import { generateTheme } from "../utils/themeGenerator";
 
 /** STORE **/
-// export const baseAtom = atomWithStorageBroadcast(
-//   "theme-base",
-//   "mauve",
-//   GET_ON_INIT,
-// );
-export const primaryAtom = atomWithStorageBroadcast(
-  "theme-primary",
-  "blue",
+export const primaryHexAtom = atomWithStorageBroadcast(
+  "theme-primary-hex",
+  "#8A2BE2", // Default Primary
   GET_ON_INIT,
 );
-export const secondaryAtom = atomWithStorageBroadcast(
-  "theme-secondary",
-  "pink",
+export const secondaryHexAtom = atomWithStorageBroadcast(
+  "theme-secondary-hex",
+  "#FF6347", // Default Secondary
+  GET_ON_INIT,
+);
+export const baseColorAtom = atomWithStorageBroadcast(
+  "theme-base-color",
+  "#808080", // Default Base
   GET_ON_INIT,
 );
 export const darkAtom = atomWithStorageBroadcast(
@@ -103,65 +28,35 @@ export const darkAtom = atomWithStorageBroadcast(
 /** END STORE **/
 
 /**
- * Configures CSS variables using the body tag for all 1-12 levels
- *
- * @param property Sets the targeted semantic property (primary, secondary, base, etc)
- * @param targetColor to be this target color
- * @param alpha with optionally the alpha palette
- */
-const setCssVariable = (
-  property: string,
-  targetColor: string,
-  alpha: boolean = false,
-) => {
-  const A = alpha ? "a" : "";
-  for (let i = 1; i <= 12; i++) {
-    const propertyLevel = `--${property}-${A}${i}`;
-    document.body.style.setProperty(
-      propertyLevel,
-      `var(--${targetColor}-${A}${i})`,
-    );
-  }
-};
-
-/**
  * Initializes the theme based on the current state. This function should only be called once
  *
  * @return {null} This function does not return any value.
  */
 export function useThemeInit() {
-  // const [base] = useAtom(baseAtom);
-  const [primary] = useAtom(primaryAtom);
-  const [secondary] = useAtom(secondaryAtom);
+  const [primaryHex] = useAtom(primaryHexAtom);
+  const [secondaryHex] = useAtom(secondaryHexAtom);
+  const [baseColor] = useAtom(baseColorAtom);
   const [dark] = useAtom(darkAtom);
 
   useEffect(() => {
-    setCssVariable("base", BASE_MAPPING[primary] || primary);
-    setCssVariable("base", BASE_MAPPING[primary] || primary, true);
-    setCssVariable("primary", primary);
-    setCssVariable("primary", primary, true);
-  }, [primary]);
-
-  useEffect(() => {
-    setCssVariable("secondary", secondary);
-    setCssVariable("secondary", secondary, true);
-  }, [secondary]);
-
-  useEffect(() => {
-    document.body.classList.remove(
-      "dark",
-      "light",
-      "hc-primary",
-      "hc-secondary",
+    const mode = dark ? "dark" : "light";
+    const themeVariables = generateTheme(
+      primaryHex,
+      secondaryHex,
+      baseColor,
+      mode,
     );
-    document.body.classList.add(dark ? "dark" : "light");
-    if (dark) {
-      if (THEME_DARK_FOREGROUND_TXT_COLORS.includes(primary))
-        document.body.classList.add("hc-primary");
-      if (THEME_DARK_FOREGROUND_TXT_COLORS.includes(secondary))
-        document.body.classList.add("hc-secondary");
-    }
-  }, [dark, primary, secondary]);
+
+    // Apply variables to documentElement (root) so that derived variables in :root (like --color-primary)
+    // can resolve using the updated values.
+    Object.entries(themeVariables).forEach(([key, value]) => {
+      document.documentElement.style.setProperty(key, value);
+    });
+
+    // Handle classList for dark/light mode
+    document.documentElement.classList.remove("dark", "light");
+    document.documentElement.classList.add(mode);
+  }, [primaryHex, secondaryHex, baseColor, dark]);
 
   return null; // This component doesn't need to render anything visible
 }
