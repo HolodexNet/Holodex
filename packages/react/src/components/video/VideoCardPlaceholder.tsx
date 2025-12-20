@@ -60,9 +60,9 @@ export default function VideoCardPlaceholder({
           <VideoThumbnail
             src={thumbnailSrc}
             alt="Stream Thumbnail"
-            className="aspect-video w-full rounded-sm object-cover bg-black max-h-[50vh]"
+            className="w-full rounded-sm aspect-video object-cover bg-black max-h-[50vh]"
           />
-          <div className="grid gap-2 mx-4">
+          <div className="gap-2 grid mx-4">
             <h2 className="font-bold text-2xl">{video.title}</h2>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
               <div className="items-center font-semibold">
@@ -78,11 +78,11 @@ export default function VideoCardPlaceholder({
                 ))}
             </div>
             <div className="flex items-center gap-2">
-              <div className="-mb-1 mr-1 inline-block text-sm i-heroicons:clock" />
+              <div className="-mb-1 inline-block text-sm mr-1 i-heroicons:clock" />
               <VideoCardCountdownToLive video={video} />
             </div>
           </div>
-          <div className="flex flex-col gap-4 p-4">
+          <div className="flex flex-col p-4 gap-4">
             <Button size="lg" variant="default" className="h-12 py-4" asChild>
               <a href={video.link} target="_blank" rel="noopener noreferrer">
                 <div
@@ -153,7 +153,7 @@ export default function VideoCardPlaceholder({
                 )}
               </div>
               {user && user.role !== "user" && (
-                <div className="flex flex-row flex-nowrap items-center gap-2 pl-6">
+                <div className="flex flex-row items-center gap-2 flex-nowrap pl-6">
                   <code className="rounded-md text-sm text-muted-foreground my-2 px-2 py-1">
                     {video.id}
                   </code>

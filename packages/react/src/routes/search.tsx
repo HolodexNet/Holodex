@@ -120,7 +120,7 @@ export default function Search() {
 
       <div className="container space-y-4 p-4">
         {/* Search Controls */}
-        <div className="flex flex-col gap-4 md:items-center md:flex-row md:justify-between">
+        <div className="flex flex-col gap-4 md:items-center md:justify-between md:flex-row">
           <div className="flex-1 max-w-xl">
             <SearchBar />
           </div>
@@ -170,7 +170,7 @@ export default function Search() {
         {/* Results */}
         {isLoading ? (
           <div className="flex justify-center p-8">
-            <div className="i-lucide:loader-2 animate-spin text-4xl" />
+            <div className="animate-spin text-4xl i-lucide:loader-2" />
           </div>
         ) : (
           <>

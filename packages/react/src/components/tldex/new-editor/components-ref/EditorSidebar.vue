@@ -129,13 +129,17 @@ watch(
 <style lang="scss">
 .tle-sidebar {
   .ops div {
-    @apply cursor-pointer hover:text-primary;
+    cursor: pointer;
+    &:hover {
+      color: var(--primary);
+    }
   }
   .ts {
-    @apply shrink-0 grow-0;
+    flex-shrink: 0;
+    flex-grow: 0;
   }
   .subs {
-    @apply grow;
+    flex-grow: 1;
   }
 }
 </style>

@@ -32,11 +32,25 @@ defineEmits<{
 </script>
 <style>
 .wf-sub-container {
-  @apply absolute border-l border-r text-xs font-thin transition-all duration-100 ease-linear;
+  position: absolute;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 100;
+  transition: all 100ms linear;
   line-height: 1;
   height: 90px;
 }
 .wf-sub-container .handle {
-  @apply pointer-events-auto absolute z-10 h-full w-2 bg-blue-300 bg-opacity-10 hover:bg-opacity-50;
+  pointer-events: auto;
+  position: absolute;
+  z-index: 10;
+  height: 100%;
+  width: 0.5rem;
+  background-color: rgba(147, 197, 253, 0.1);
+  &:hover {
+    background-color: rgba(147, 197, 253, 0.5);
+  }
 }
 </style>

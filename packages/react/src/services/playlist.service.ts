@@ -88,7 +88,7 @@ export function usePlaylistVideoAddMutation(
         method: "PUT",
       }),
     ...options,
-    onSuccess: (_, vars, c) => {
+    onSuccess: (_, vars, result, context) => {
       try {
         queryClient.setQueryData<PlaylistInclude[]>(
           ["playlist", "include", vars.videoId],
@@ -108,7 +108,7 @@ export function usePlaylistVideoAddMutation(
         });
       }
       queryClient.invalidateQueries({ queryKey: ["playlist", vars.id] });
-      options?.onSuccess?.(_, vars, c);
+      options?.onSuccess?.(_, vars, result, context);
     },
   });
 }
@@ -129,7 +129,7 @@ export function usePlaylistVideoDeleteMutation(
         method: "DELETE",
       }),
     ...options,
-    onSuccess: (_, vars, c) => {
+    onSuccess: (_, vars, result, context) => {
       try {
         queryClient.setQueryData<PlaylistInclude[]>(
           ["playlist", "include", vars.videoId],
@@ -149,7 +149,7 @@ export function usePlaylistVideoDeleteMutation(
         });
       }
       queryClient.invalidateQueries({ queryKey: ["playlist", vars.id] });
-      options?.onSuccess?.(_, vars, c);
+      options?.onSuccess?.(_, vars, result, context);
     },
   });
 }
@@ -184,8 +184,8 @@ export function usePlaylistVideoMassAddMutation(
       );
     },
     ...options,
-    onSuccess: (_, vars, c) => {
-      options?.onSuccess?.(_, vars, c);
+    onSuccess: (_, vars, result, context) => {
+      options?.onSuccess?.(_, vars, result, context);
 
       queryClient.invalidateQueries({ queryKey: ["playlist", vars.id] });
       queryClient.invalidateQueries({ queryKey: ["playlist", "include"] });
@@ -237,7 +237,7 @@ export function usePlaylistSaveMutation(
       );
     },
     ...options,
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables, result, context) => {
       // new playlist
       if (!variables.id) {
         queryClient.setQueryData<PlaylistInclude[]>(
@@ -262,7 +262,8 @@ export function usePlaylistSaveMutation(
         queryKey: ["playlist", variables.id],
       });
 
-      if (options?.onSuccess) options.onSuccess(data, variables, context);
+      if (options?.onSuccess)
+        options.onSuccess(data, variables, result, context);
     },
   });
 }

@@ -1,5 +1,5 @@
 .l_loading #tri1 {
-  @apply brightness-125;
+  filter: brightness(1.25);
   stroke: var(--secondary-a11);
   stroke-width: 1px;
   stroke-dasharray: 7;
@@ -9,7 +9,7 @@
 }
 
 .l_loading #tri2 {
-  @apply brightness-125;
+  filter: brightness(1.25);
   animation:
     bounce 0.5s ease-in-out infinite alternate,
     stroke-move 8s linear infinite;

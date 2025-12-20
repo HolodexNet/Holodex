@@ -193,7 +193,7 @@ export default function CalendarUsage({
         </CommandList>
       </Command>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex gap-2 flex-wrap">
         {query.map((item) => (
           <Badge
             key={item.value + item.type}
@@ -203,8 +203,8 @@ export default function CalendarUsage({
             {getTypeIcon(item.type)}
             <span>{item.text}</span>
             <Button
-              variant="simple"
-              size="unset"
+              variant="ghost"
+              className="w-auto p-0 h-auto text-current hover:bg-transparent"
               onClick={() =>
                 setQuery(query.filter((q) => q.value !== item.value))
               }

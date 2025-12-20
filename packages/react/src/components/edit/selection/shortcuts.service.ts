@@ -45,12 +45,12 @@ export function useMergeParticipantsMutation(
     mutationFn: async (payload) =>
       await client.post("/api/smart-edit/merge-participants", payload),
     ...options,
-    onSuccess: (_, variables, context) => {
+    onSuccess: (_, variables, result, context) => {
       // Invalidate queries for all affected videos
       variables.videoIds.forEach((videoId) => {
         queryClient.invalidateQueries({ queryKey: ["video", videoId] });
       });
-      options?.onSuccess?.(_, variables, context);
+      options?.onSuccess?.(_, variables, result, context);
     },
   });
 }
@@ -72,11 +72,11 @@ export function useSimulcastMutation(
     mutationFn: async (payload) =>
       await client.post("/api/smart-edit/make-simulcast", payload),
     ...options,
-    onSuccess: (_, variables, context) => {
+    onSuccess: (_, variables, result, context) => {
       variables.videoIds.forEach((videoId) => {
         queryClient.invalidateQueries({ queryKey: ["video", videoId] });
       });
-      options?.onSuccess?.(_, variables, context);
+      options?.onSuccess?.(_, variables, result, context);
     },
   });
 }
@@ -98,11 +98,11 @@ export function useReferMutation(
     mutationFn: async (payload) =>
       await client.post("/api/smart-edit/make-refer", payload),
     ...options,
-    onSuccess: (_, variables, context) => {
+    onSuccess: (_, variables, result, context) => {
       variables.videoIds.forEach((videoId) => {
         queryClient.invalidateQueries({ queryKey: ["video", videoId] });
       });
-      options?.onSuccess?.(_, variables, context);
+      options?.onSuccess?.(_, variables, result, context);
     },
   });
 }
@@ -124,12 +124,12 @@ export function useDissociateVideoMutation(
     mutationFn: async (payload) =>
       await client.post("/api/smart-edit/dissociate-video", payload),
     ...options,
-    onSuccess: (_, variables, context) => {
+    onSuccess: (_, variables, result, context) => {
       // Invalidate both the selected videos and the target video
       [...variables.videoIds, variables.targetVideoId].forEach((videoId) => {
         queryClient.invalidateQueries({ queryKey: ["video", videoId] });
       });
-      options?.onSuccess?.(_, variables, context);
+      options?.onSuccess?.(_, variables, result, context);
     },
   });
 }
@@ -151,7 +151,7 @@ export function useDissociateChannelMutation(
     mutationFn: async (payload) =>
       await client.post("/api/smart-edit/dissociate-channel", payload),
     ...options,
-    onSuccess: (_, variables, context) => {
+    onSuccess: (_, variables, result, context) => {
       variables.videoIds.forEach((videoId) => {
         queryClient.invalidateQueries({ queryKey: ["video", videoId] });
       });
@@ -161,7 +161,7 @@ export function useDissociateChannelMutation(
           queryKey: ["channel", variables.channelId],
         });
       }
-      options?.onSuccess?.(_, variables, context);
+      options?.onSuccess?.(_, variables, result, context);
     },
   });
 }
@@ -183,11 +183,11 @@ export function useRemoveMentionsMutation(
     mutationFn: async (payload) =>
       await client.post("/api/smart-edit/remove-mentions", payload),
     ...options,
-    onSuccess: (_, variables, context) => {
+    onSuccess: (_, variables, result, context) => {
       variables.videoIds.forEach((videoId) => {
         queryClient.invalidateQueries({ queryKey: ["video", videoId] });
       });
-      options?.onSuccess?.(_, variables, context);
+      options?.onSuccess?.(_, variables, result, context);
     },
   });
 }

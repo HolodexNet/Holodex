@@ -38,7 +38,7 @@ export type ThemeVariables = {
 export function generateTheme(
   primaryHex: string,
   secondaryHex: string,
-  baseColor: string,
+  _baseColor: string,
   mode: "light" | "dark",
 ): ThemeVariables {
   const primary = primaryHex;

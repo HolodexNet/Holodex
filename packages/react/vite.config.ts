@@ -97,7 +97,7 @@ export default defineConfig({
       analyzerMode: process.env["HOME"]?.includes("/home/holodex")
         ? "static" // don't use server mode when compiling on the linux server
         : "server",
-      port: 9821,
+      port: 9828,
     }) as unknown as PluginOption,
     tailwindcss(),
     react({

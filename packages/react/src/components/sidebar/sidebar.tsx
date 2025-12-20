@@ -12,6 +12,7 @@ import {
 import {
   HTMLAttributes,
   type ReactNode,
+  RefObject,
   useCallback,
   useRef,
   useState,
@@ -34,7 +35,7 @@ export function Sidebar() {
   const { t } = useTranslation();
   const rankedOrgs = useAtomValue(orgRankingAtom);
   const [tldexOpen, setTldexOpen] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
 
   const floating = useAtomValue(isSidebarFloatingAtom);
   const [open, setOpen] = useAtom(isSidebarOpenAtom);
@@ -62,7 +63,7 @@ export function Sidebar() {
     floating && open && setOpen(false);
   }, [floating, open, setOpen]);
 
-  useOnClickOutside(ref, handleClickOutside);
+  useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
 
   return (
     <aside
@@ -83,7 +84,7 @@ export function Sidebar() {
           <div className="grow" />
           <Button
             variant="ghost"
-            className="p-4 md:hidden i-lucide:x"
+            className="p-4 i-lucide:x md:hidden"
             onClick={setClose}
           />
         </div>

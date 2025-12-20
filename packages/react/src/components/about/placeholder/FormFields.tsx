@@ -153,7 +153,9 @@ export const FormDatePicker = ({
                 selected={field.value ? new Date(field.value) : undefined}
                 timezone={timezone}
                 {...props}
-                onSelect={(date: Date) => field.onChange(date.toISOString())}
+                onSelect={(date: Date | undefined) =>
+                  field.onChange(date?.toISOString())
+                }
                 showTimeSelect
               />
             </div>

@@ -1,5 +1,5 @@
 import {
-  experimental_createPersister,
+  experimental_createQueryPersister,
   type PersistedQuery,
   type AsyncStorage,
 } from "@tanstack/query-persist-client-core";
@@ -22,12 +22,12 @@ export const globalQueryClient = new QueryClient({
       retry: 0,
       staleTime: 120 * 1000, // usually stale after 2 minutes
       gcTime: 1000 * 60 * 60 * 6, // 6 hours garbage collection
-      persister: experimental_createPersister<PersistedQuery>({
+      persister: experimental_createQueryPersister<PersistedQuery>({
         storage: newIdbStorage(createStore("holodex_queries", "qskvdb")),
         maxAge: 1000 * 60 * 60 * 12, // 12 hours
         // serialize: (persistedQuery) => persistedQuery,
         // deserialize: (cached) => cached,
-      }),
+      }).persisterFn,
     },
   },
 });

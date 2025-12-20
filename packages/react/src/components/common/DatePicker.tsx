@@ -14,6 +14,9 @@ export function DatePicker(
     showTimeSelect?: boolean;
     calendarClassName?: string;
     clearable?: boolean;
+    className?: string;
+    wrapperClassName?: string;
+    id?: string;
   },
 ) {
   const { t } = useTranslation();
@@ -61,7 +64,7 @@ export function DatePicker(
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-auto">
+      <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
           className={calendarClassName}
