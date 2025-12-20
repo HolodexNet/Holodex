@@ -19,7 +19,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
     <div className="flex justify-center gap-4 p-4 md:p-8">
       <div
         className={cn(
-          "flex h-fit w-full shrink-0 flex-col gap-2 rounded-lg p-2 md:w-72 xl:w-80 bg-card",
+          "flex h-fit w-full shrink-0 flex-col gap-2 rounded-lg p-2 md:w-72 xl:w-80 bg-card border",
           { "hidden md:flex": itemSelected },
         )}
       >
@@ -39,15 +39,18 @@ export function InlayContainer({ routes }: InlayContainerProps) {
         ))}
       </div>
       <div
-        className={cn("hidden w-full max-w-(--breakpoint-lg) md:block", {
-          "flex flex-col gap-4": itemSelected,
-        })}
+        className={cn(
+          "hidden w-full max-w-(--breakpoint-lg) md:block border rounded-lg",
+          {
+            "flex flex-col gap-4": itemSelected,
+          },
+        )}
       >
-        <div className="flex w-full flex-row items-center rounded-lg p-2 bg-card md:hidden">
+        <div className="flex flex-row items-center p-2 w-full rounded-lg bg-card md:hidden">
           <Button
             size="lg"
             variant="link"
-            className="w-12 justify-start px-2"
+            className="justify-start w-12 px-2"
             onClick={() => navigate(-1)}
           >
             <div className="i-heroicons:chevron-left" />
@@ -56,12 +59,12 @@ export function InlayContainer({ routes }: InlayContainerProps) {
             {routes.find(({ href }) => href === location.pathname)?.label}
           </h2>
         </div>
-        <div className="w-full rounded-lg p-2 md:p-4 bg-card xl:p-8">
+        <div className="w-full rounded-lg p-2 bg-card md:p-4 xl:p-8">
           <Suspense fallback={<Loading size="xl" />}>
             <Outlet />
           </Suspense>
         </div>
-        <div className="block w-full rounded-lg p-2 md:hidden bg-card">
+        <div className="w-full rounded-lg p-2 md:hidden bg-card block">
           <Button
             size="lg"
             variant="link"

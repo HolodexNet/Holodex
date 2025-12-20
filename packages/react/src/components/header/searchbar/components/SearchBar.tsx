@@ -120,7 +120,7 @@ export function SearchBar({
         }}
       >
         <PopoverTrigger asChild>
-          <div className="rounded-md p-2 text-sm focus-within:ring-2 focus-within: ring-offset-muted bg-input group focus-within:ring-primary focus-within:ring-offset-1">
+          <div className="focus-within: rounded-md p-2 text-sm ring-offset-muted bg-input group focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
             <label className="flex flex-wrap items-center gap-1">
               {queryPieces.map((queryItem, i) => {
                 return (
@@ -144,7 +144,7 @@ export function SearchBar({
                 placeholder={t("component.search.searchLabel")}
                 className="ml-2 outline-hidden flex-1 bg-transparent placeholder:text-muted-foreground"
               />
-              <div className="ml-auto flex flex-row opacity-0 group-focus-within:opacity-100">
+              <div className="flex ml-auto flex-row opacity-0 group-focus-within:opacity-100">
                 {query.length > 0 && (
                   <CommandShortcut className="pointer-events-none opacity-80">
                     {/* <span className="mr-1 rounded-sm  p-0.5">⇪</span> */}
@@ -155,7 +155,7 @@ export function SearchBar({
                 )}
                 <button
                   type="submit"
-                  className="flex items-center rounded-md transition-all hover: hover: size-8 -my-2 -mr-1"
+                  className="flex items-center rounded-md hover: hover: transition-all size-8 -my-2 -mr-1"
                   disabled={query.length === 0}
                   onClick={() => doSearch()}
                   onSubmit={() => doSearch()}
@@ -169,7 +169,7 @@ export function SearchBar({
         <PopoverPrimitive.Portal>
           <PopoverPrimitive.Content
             align={"center"}
-            sideOffset={4}
+            sideOffset={8}
             className="z-50"
             sticky="partial"
             autoFocus={false}
@@ -182,7 +182,7 @@ export function SearchBar({
           >
             <CommandList className="">
               <div
-                className="min-w-80 rounded-md bg-input border border-base outline-hidden animate-in fade-in-20 slide-in-from-top-2 sm:left-auto sm:w-full"
+                className="rounded-md bg-input outline-hidden min-w-80 border border-base animate-in fade-in-20 slide-in-from-top-2 sm:left-auto sm:w-full"
                 style={{
                   boxShadow:
                     "0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)",
@@ -195,7 +195,7 @@ export function SearchBar({
                       {t("search.options_menu_header")}
                       <span className="float-right">
                         <CommandShortcut className="pointer-events-none opacity-80">
-                          <span className="mr-1 rounded-sm p-0.5">↕</span>
+                          <span className="rounded-sm p-0.5 mr-1">↕</span>
                         </CommandShortcut>
                       </span>
                     </div>
