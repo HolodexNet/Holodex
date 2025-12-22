@@ -53,7 +53,9 @@ component:
     totalSongs: Időbélyegzett dalok száma
     tlPresence: Aktív fordító az utolsó 30 percben
     uncertainPlaceholder: A kezdés időpontja nincs hivatalosan megerősítve, eltérhet a valóságtól.
+    typeScheduledYT: Stream előrejelzés
     typeExternalStream: Külső Stream
+    typeEventPlaceholder: Esemény
     openClient: Fordító kliens megnyitása
     openScriptEditor: Script szerkesztő megnyitása
     popoutChat: Felugró ablak YouTube chat
@@ -83,7 +85,15 @@ component:
   relatedVideo:
     clipsLabel: klipek
     simulcastsLabel: közvetítések
-    refersLabel: utal
+    simulcasts:
+      linkToMultiview:
+        tooltip: Minden közvetítés megnyitása Multiview-ben
+        error:
+          layoutBuildFailure: >-
+            Hiba történt a Multiview link elkészítése közben. Kérlek nyújts be egy hibajelentést GitHub-on vagy Discordon.
+          noDefaultLayout: Nincs Multiview elrendezés {videoCount} videónak.
+          noSimulcasts: Nincs párhuzamos közvetítés ehhez a videóhoz.
+    refersLabel: 'utal rá:'
     sourcesLabel: források
     songsLabel: dalok
     recommendationsLabel: ajánlott
