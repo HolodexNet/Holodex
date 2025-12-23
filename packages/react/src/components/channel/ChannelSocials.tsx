@@ -32,8 +32,10 @@ export function ChannelSocials({
   const isBlocked = blockedChannels.some(({ id: chId }) => chId === id);
   const isSmall = size === "sm";
 
-  const toggleFavorite = () =>
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
     mutate([{ op: isFavorited ? "remove" : "add", channel_id: id }]);
+  };
 
   const toggleBlock = (e: React.MouseEvent) => {
     e.stopPropagation();
