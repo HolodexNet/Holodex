@@ -51,7 +51,7 @@ export function ChatCard({
                   to="/about/faq#youtube"
                   target="_blank"
                   onClick={(e) => e.stopPropagation()}
-                  className="ml-auto rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  className="ml-auto rounded-md px-2 text-xs text-muted-foreground py-0.5 transition-colors bg-muted hover:bg-accent hover:text-accent-foreground"
                 >
                   Not logged in{" "}
                   <div className="text-xs inline-block align-bottom i-lucide:shield-question-mark"></div>

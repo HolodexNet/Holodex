@@ -58,7 +58,7 @@ export function ItunesSearchDropdown({
       />
       {open &&
         (autocomplete?.length ? (
-          <CommandList className="absolute w-full border border-base top-10 z-10 rounded-b-md border-solid">
+          <CommandList className="absolute w-full z-10 border border-base top-10 rounded-b-md border-solid">
             <CommandGroup heading={<div>Search Results</div>} />
             <CommandSeparator />
             <CommandGroup className="h-full">

@@ -60,13 +60,13 @@ export default function VideoCardPlaceholder({
           <VideoThumbnail
             src={thumbnailSrc}
             alt="Stream Thumbnail"
-            className="w-full rounded-sm aspect-video object-cover bg-black max-h-[50vh]"
+            className="w-full rounded-sm object-cover aspect-video bg-black max-h-[50vh]"
           />
           <div className="gap-2 grid mx-4">
             <h2 className="font-bold text-2xl">{video.title}</h2>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
               <div className="items-center font-semibold">
-                <div className="inline-block text-sm mr-3 i-heroicons:user -mb-1" />
+                <div className="inline-block text-sm -mb-1 mr-3 i-heroicons:user" />
                 <span>{nameFn(video.channel)}</span>
               </div>
               {video.mentions &&
@@ -197,7 +197,7 @@ export default function VideoCardPlaceholder({
     return (
       <Drawer open={open} onOpenChange={setOpen} modal={true}>
         <DrawerContent
-          className="border p-0 rounded-lg border-solid"
+          className="border rounded-lg border-solid p-0"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="h-4"></div>

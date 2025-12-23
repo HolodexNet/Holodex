@@ -1,4 +1,5 @@
 import { cn, getChannelPhoto } from "@/lib/utils";
+import { ClassValue } from "clsx";
 import { useState } from "react";
 
 export function ChannelImg({
@@ -11,7 +12,7 @@ export function ChannelImg({
   channelId: string;
   size?: number;
   photo?: string; // photo for non-fallback
-  className?: string;
+  className?: ClassValue;
   fallbackPhoto?: string; // photo for fallback.
 }) {
   const [err, hasError] = useState(false);

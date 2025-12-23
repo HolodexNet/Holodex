@@ -1,14 +1,15 @@
 import { formatCount } from "@/lib/numbers";
-import { Button } from "@/shadcn/ui/button";
+// import { Button } from "@/shadcn/ui/button";
 import { ReactNode, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { ChannelMenu } from "./ChannelMenu";
+// import { ChannelMenu } from "./ChannelMenu";
 import { ChannelImg } from "./ChannelImg";
 import { TopicBadge } from "../topic/TopicBadge";
 import { ChannelSocials } from "./ChannelSocials";
 import { Link, useNavigate } from "react-router-dom";
-import { usePreferredName } from "@/store/settings";
+import { blockedSetAtom, usePreferredName } from "@/store/settings";
 import React from "react";
+import { useAtomValue } from "jotai";
 
 type WithNonOptional<T, NonOptionalKeys extends keyof T> = Pick<
   T,
@@ -85,6 +86,9 @@ export function ChannelCard({
     english_name,
   });
 
+  const blockedChannelSet = useAtomValue(blockedSetAtom);
+  const isBlocked = blockedChannelSet.has(id);
+
   switch (variant) {
     case "list":
       return (
@@ -96,10 +100,21 @@ export function ChannelCard({
             to={channelHref}
             className="flex items-center gap-2 md:gap-4 grow"
           >
-            <ChannelImg
-              className={`h-12 w-auto md:h-20 lg:h-24 ${inactive && "opacity-80 saturate-50"}`}
-              channelId={id}
-            />
+            <div className="relative">
+              <ChannelImg
+                className={[
+                  "h-12 w-auto md:h-20 lg:h-24",
+                  inactive && "opacity-80 saturate-50",
+                  isBlocked && "opacity-80 saturate-50 blur-md",
+                ]}
+                channelId={id}
+              />
+              {isBlocked && (
+                <div className="flex items-center absolute inset-0 justify-center">
+                  <div className="text-2xl text-muted-foreground i-heroicons:eye-slash" />
+                </div>
+              )}
+            </div>
             <div className="flex flex-col overflow-hidden">
               <div className="text-xs">
                 {org}
@@ -139,6 +154,10 @@ export function ChannelCard({
             <ChannelSocials
               size="sm"
               id={id}
+              name={name}
+              english_name={english_name}
+              type={type}
+              photo={photo}
               twitter={twitter}
               twitch={twitch}
             />
@@ -161,7 +180,7 @@ export function ChannelCard({
             to={channelHref}
             className="flex grow flex-col items-center gap-2"
           >
-            <ChannelMenu
+            {/* <ChannelMenu
               {...{
                 id,
                 name,
@@ -180,17 +199,31 @@ export function ChannelCard({
               >
                 <div className="i-heroicons:ellipsis-vertical" />
               </Button>
-            </ChannelMenu>
-            {!inactive && (
+            </ChannelMenu> */}
+            {
               <ChannelImg
-                className={`-z-0 -mb-36 mt-4 h-32 w-32 opacity-20 blur-2xl saturate-150`}
+                className={[
+                  "-z-0 -mb-36 mt-4 h-32 w-32 opacity-20 blur-2xl saturate-150",
+                  inactive || (isBlocked && "opacity-0"),
+                ]}
                 channelId={id}
               />
-            )}
-            <ChannelImg
-              className={`z-10 h-24 w-24 ${inactive && "brightness-75 saturate-50"}`}
-              channelId={id}
-            />
+            }
+            <div className="relative z-10">
+              <ChannelImg
+                className={[
+                  "h-24 w-24",
+                  inactive && "opacity-80 saturate-50",
+                  isBlocked && "opacity-80 saturate-50 blur-md",
+                ]}
+                channelId={id}
+              />
+              {isBlocked && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="i-heroicons:eye-slash text-muted-foreground text-3xl" />
+                </div>
+              )}
+            </div>
             <div
               className={`z-10 line-clamp-2 min-h-[2lh] text-center text-lg font-bold`}
             >
@@ -202,7 +235,7 @@ export function ChannelCard({
                   n: formatCount(subscriber_count ?? "0"),
                 })}
               </div>
-              <div className="flex text-sm flex-wrap justify-center gap-x-1 gap-y-0">
+              <div className="flex text-sm justify-center flex-wrap gap-x-1 gap-y-0">
                 <span className="whitespace-nowrap">
                   {t("component.channelInfo.videoCount", {
                     0: video_count ?? 0,
@@ -225,10 +258,14 @@ export function ChannelCard({
 
           {children ?? (
             <ChannelSocials
+              size="lg"
               id={id}
+              name={name}
+              english_name={english_name}
+              type={type}
+              photo={photo}
               twitter={twitter}
               twitch={twitch}
-              size="lg"
             />
           )}
         </div>

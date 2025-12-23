@@ -55,7 +55,7 @@ export function Header({ id }: HeaderProps) {
         </Button>
       )}
 
-      <div className="hidden grow md:flex" />
+      <div className="grow hidden md:flex" />
 
       {path !== "/search" && (
         <>
@@ -67,7 +67,7 @@ export function Header({ id }: HeaderProps) {
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="ml-2 text-lg"
+                  className="text-lg ml-2"
                   onClick={() => setIsSearching(false)}
                 >
                   <div className="h-8 w-8 i-lucide:x" />

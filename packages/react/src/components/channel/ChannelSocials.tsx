@@ -3,10 +3,12 @@ import { Button } from "@/shadcn/ui/button";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { blockedChannelsAtom } from "@/store/settings";
+import { useAtom } from "jotai";
 
 interface ChannelSocialsProps extends Pick<
   Channel,
-  "id" | "twitter" | "twitch"
+  "id" | "name" | "english_name" | "type" | "twitter" | "twitch" | "photo"
 > {
   size: "sm" | "lg";
 }
@@ -14,18 +16,33 @@ interface ChannelSocialsProps extends Pick<
 export function ChannelSocials({
   size,
   id,
+  name,
+  english_name,
+  type,
   twitter,
   twitch,
+  photo,
 }: ChannelSocialsProps) {
   const { t } = useTranslation();
   const { data } = useFavorites();
   const { mutate, isPending } = useFavoriteMutation();
+  const [blockedChannels, setBlockedChannels] = useAtom(blockedChannelsAtom);
 
   const isFavorited = data?.some(({ id: chId }) => chId === id);
+  const isBlocked = blockedChannels.some(({ id: chId }) => chId === id);
   const isSmall = size === "sm";
 
   const toggleFavorite = () =>
     mutate([{ op: isFavorited ? "remove" : "add", channel_id: id }]);
+
+  const toggleBlock = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setBlockedChannels(
+      isBlocked
+        ? blockedChannels.filter(({ id: chId }) => chId !== id)
+        : [...blockedChannels, { id, name, english_name, type, photo }],
+    );
+  };
 
   // Social media buttons
   const socialButtons = (
@@ -81,6 +98,25 @@ export function ChannelSocials({
     </>
   );
 
+  // Block button - always small icon style like social buttons
+  const blockButton = (
+    <Button
+      size="icon-lg"
+      variant="ghost"
+      className={cn("group", isBlocked && "text-red-10")}
+      onClick={toggleBlock}
+      title={
+        isBlocked
+          ? t("component.channelSocials.unblock")
+          : t("component.channelSocials.block")
+      }
+    >
+      <div
+        className={isBlocked ? "i-heroicons:eye" : "i-heroicons:eye-slash"}
+      />
+    </Button>
+  );
+
   // Favorite button
   const favoriteButton = isSmall ? (
     <Button
@@ -127,12 +163,16 @@ export function ChannelSocials({
   return isSmall ? (
     <div className="flex gap-2">
       {socialButtons}
+      {blockButton}
       {favoriteButton}
     </div>
   ) : (
     <div className="flex w-full gap-2 flex-col">
       {favoriteButton}
-      <div className="flex w-full gap-2">{socialButtons}</div>
+      <div className="flex w-full gap-2">
+        {socialButtons}
+        {blockButton}
+      </div>
     </div>
   );
 }

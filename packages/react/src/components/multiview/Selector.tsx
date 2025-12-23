@@ -40,9 +40,9 @@ export function Selector() {
   return (
     <div className="flex w-full">
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex items-center rounded-md hover: focus-visible: active: justify-between shrink-0 overflow-hidden z-30 mx-2 pl-4 pr-2 min-h-8 w-48 disabled:pointer-events-none focus-visible:outline-hidden focus-visible:ring-1 active:scale-[97%] disabled:opacity-50">
+        <DropdownMenuTrigger className="flex items-center rounded-md hover: overflow-hidden focus-visible: active: justify-between shrink-0 z-30 mx-2 pl-4 pr-2 min-h-8 w-48 disabled:pointer-events-none focus-visible:outline-hidden focus-visible:ring-1 active:scale-[97%] disabled:opacity-50">
           {currentOrg.name}
-          <div className="shrink-0 ml-2 h-4 w-4 inline-block align-middle opacity-50 i-lucide:chevrons-down"></div>
+          <div className="shrink-0 ml-2 inline-block h-4 w-4 align-middle opacity-50 i-lucide:chevrons-down"></div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="z-30 w-48">
           {[Favorites, ...defaultOrgs].map((org) => {

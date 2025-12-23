@@ -120,7 +120,7 @@ export function SearchBar({
         }}
       >
         <PopoverTrigger asChild>
-          <div className="rounded-md focus-within: p-2 text-sm ring-offset-muted bg-input group focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
+          <div className="rounded-md p-2 text-sm focus-within: ring-offset-muted bg-input group focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
             <label className="flex items-center gap-1 flex-wrap">
               {queryPieces.map((queryItem, i) => {
                 return (
@@ -182,7 +182,7 @@ export function SearchBar({
           >
             <CommandList className="">
               <div
-                className="rounded-md bg-input outline-hidden min-w-80 border border-base animate-in fade-in-20 slide-in-from-top-2 sm:left-auto sm:w-full"
+                className="rounded-md bg-input outline-hidden border border-base min-w-80 animate-in fade-in-20 slide-in-from-top-2 sm:left-auto sm:w-full"
                 style={{
                   boxShadow:
                     "0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)",
