@@ -90,9 +90,9 @@ export default function IndividualPlaylist({ playlist }: Props) {
 
   return (
     <div className="mx-auto container">
-      <div className="sticky top-0 z-10 bg-mauve-2">
+      <div className="top-0 z-10 sticky bg-mauve-2">
         <div className="flex items-center">
-          <span className="hidden text-9xl md:block ! i-solar:playlist-broken" />
+          <span className="hidden i-solar:playlist-broken text-9xl md:block !" />
           <div className="ml-6">
             <div className="flex gap-3">
               {renaming ? (

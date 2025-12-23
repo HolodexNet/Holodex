@@ -82,8 +82,8 @@ export default function VideoCardPlaceholder({
               <VideoCardCountdownToLive video={video} />
             </div>
           </div>
-          <div className="flex flex-col p-4 gap-4">
-            <Button size="lg" variant="default" className="h-12 py-4" asChild>
+          <div className="flex flex-col gap-4 p-4">
+            <Button size="lg" variant="default" className="py-4 h-12" asChild>
               <a href={video.link} target="_blank" rel="noopener noreferrer">
                 <div
                   className={
@@ -154,7 +154,7 @@ export default function VideoCardPlaceholder({
               </div>
               {user && user.role !== "user" && (
                 <div className="flex flex-row items-center gap-2 flex-nowrap pl-6">
-                  <code className="rounded-md text-sm text-muted-foreground my-2 px-2 py-1">
+                  <code className="rounded-md text-sm text-muted-foreground px-2 py-1 my-2">
                     {video.id}
                   </code>
                   <Button variant="default" className="" asChild>
@@ -197,7 +197,7 @@ export default function VideoCardPlaceholder({
     return (
       <Drawer open={open} onOpenChange={setOpen} modal={true}>
         <DrawerContent
-          className="rounded-lg border p-0 border-solid"
+          className="border p-0 rounded-lg border-solid"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="h-4"></div>

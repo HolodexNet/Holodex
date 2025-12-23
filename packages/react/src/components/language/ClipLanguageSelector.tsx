@@ -47,9 +47,9 @@ export const ClipLanguageSelector = ({ className }: { className?: string }) => {
           className={className}
         >
           <div className="relative h-6 w-6">
-            <div className="absolute h-full w-full text-xl i-tabler:language-hiragana" />
+            <div className="h-full opacity-80 absolute w-full mt-1 i-tabler:language-hiragana" />
             <div
-              className="absolute ml-auto h-full w-full opacity-50 inset-0 mb-auto i-mdi:filter-gear-outline"
+              className="absolute ml-auto h-full w-full inset-0 mb-auto i-mdi:gear"
               style={{ fontSize: "10px", marginBottom: "3px" }}
             />
           </div>
@@ -63,7 +63,7 @@ export const ClipLanguageSelector = ({ className }: { className?: string }) => {
             <CommandGroup heading={t("views.settings.clipLanguageSelection")}>
               <CommandItem disabled className="p-0">
                 {selectedLangs.length > 0 && (
-                  <div className="mb-1 flex w-full flex-wrap gap-1 p-2 pt-0 border-b">
+                  <div className="flex w-full flex-wrap gap-1 p-2 mb-1 pt-0 border-b">
                     {selectedLangs.map((langValue) => {
                       const lang = CLIPPER_LANGS.find(
                         (l) => l.value === langValue,

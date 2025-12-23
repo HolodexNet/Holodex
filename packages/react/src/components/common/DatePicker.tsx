@@ -1,14 +1,14 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/shadcn/ui/button";
-import { Calendar } from "@/shadcn/ui/calendar";
+import "react-day-picker/style.css";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
-import { DayPickerSingleProps } from "react-day-picker";
+import { PropsSingle, DayPicker } from "react-day-picker";
 import dayjs from "dayjs";
 import { Input } from "@/shadcn/ui/input";
 import { useTranslation } from "react-i18next";
 
 export function DatePicker(
-  props: Omit<DayPickerSingleProps, "mode" | "onSelect"> & {
+  props: Omit<PropsSingle, "mode" | "onSelect"> & {
     timezone?: string;
     onSelect: (date: Date | undefined) => void;
     showTimeSelect?: boolean;
@@ -65,7 +65,8 @@ export function DatePicker(
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar
+        <DayPicker
+          animate
           mode="single"
           className={calendarClassName}
           selected={date}

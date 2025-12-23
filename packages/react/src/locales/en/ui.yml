@@ -229,7 +229,7 @@ component:
   queue:
     title: Queue
   multiset_topic:
-    button: Set topic '{topic}' for {videos} videos
+    button: Set topic ''{topic}'' for {videos} videos
     unset: Clear topic on {videos} videos
 views:
   channel:
@@ -261,6 +261,11 @@ views:
       all: All
       official: Archive
       subber: Clips
+    members:
+      generic: Members
+      Hololive: Talents
+      Nijisanji: Livers
+      Independent: Vtubers
     noLiveStreams:
       - Seems like all the VTubers are busy touching grass
       - Time to watch the backlog, because no one's streaming

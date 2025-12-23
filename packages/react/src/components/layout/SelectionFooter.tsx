@@ -30,6 +30,7 @@ import { useToast } from "@/shadcn/ui/use-toast";
 import { queueAtom } from "@/store/queue";
 import { currentSelectionPage } from "../edit/selection/selection.store";
 import { SmartMultiEditShortcutsMenu } from "../edit/selection/SmartMultiEditShortcutsMenu";
+import SelectionFooterTopicPicker from "../edit/selection/SelectionFooterTopicPicker";
 
 const SelectedVideosModal = ({
   isSmall,
@@ -80,7 +81,7 @@ const SelectedVideosModal = ({
             </Button>
             <Link
               to={`/watch/${video.id}`}
-              className="block shrink-0 overflow-hidden rounded w-24"
+              className="shrink-0 block overflow-hidden rounded w-24"
             >
               <VideoThumbnail
                 src={getThumbnailSrc(video)}
@@ -118,8 +119,11 @@ const SelectionFooter = () => {
   return (
     <footer
       id="selectionFooter"
-      className="bottom-0 flex p-1 sticky right-0 shadow-lg"
-      style={{ bottom: "var(--footer-height-clearance)" }}
+      className="z-50 border p-2 fixed left-1/2 min-w-[80vw] sm:min-w-[60vw] rounded-2xl bg-background/95 shadow-2xl backdrop-blur -translate-x-1/2 supports-[backdrop-filter]:bg-background/60"
+      style={{
+        bottom: "calc(1.5rem + var(--footer-height-clearance, 0px))",
+        maxWidth: "90vw",
+      }}
     >
       <SelectedVideosModal
         isSmall={isSmall}
@@ -127,25 +131,25 @@ const SelectionFooter = () => {
         onOpenChange={setShowVideos}
       />
 
-      <Button
-        variant="link"
-        size="icon"
-        className={`h-6 self-start transition-all hover: ${
-          selectedVideos.length === 0 ? "w-20" : ""
-        }`}
-        onClick={exit}
-      >
-        <span className="text-xl i-mdi:close-circle" />
-      </Button>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-8 shrink-0 rounded-full"
+          onClick={exit}
+        >
+          <span className="text-xl i-mdi:close" />
+        </Button>
 
-      <div className="space-y-2 ml-4">
-        {page === 0 && <SelectionMainPage setShowVideos={setShowVideos} />}
+        <div className="flex items-center">
+          {page === 0 && <SelectionMainPage setShowVideos={setShowVideos} />}
 
-        {page === 1 && <SelectionMentionsPage />}
+          {page === 1 && <SelectionMentionsPage />}
 
-        {page === 2 && <SelectionSourcesPage />}
+          {page === 2 && <SelectionSourcesPage />}
 
-        {page === 3 && <SelectionTopicPage />}
+          {page === 3 && <SelectionTopicPage />}
+        </div>
       </div>
     </footer>
   );
@@ -261,19 +265,21 @@ export const SelectionMentionsPage = () => {
   return (
     <div className="flex w-full items-center justify-between">
       <nav className="flex items-center" aria-label="Breadcrumb">
-        <ol className="flex items-center px-2 space-x-2">
+        <ol className="flex items-center space-x-2">
           <li>
             <div
               onClick={() => setPage(0)}
-              className="flex cursor-pointer items-center text-sm font-medium"
+              className="flex cursor-pointer items-center text-sm font-medium transition-colors hover:text-primary"
             >
               <div className="mr-1 i-lucide:chevron-left" />
               Back
             </div>
           </li>
-          <li className="text-sm font-medium">
-            | Selected ({selectedVideos.length}) |
+          <li aria-hidden="true" className="h-4 w-px bg-border" />
+          <li className="text-sm font-medium text-muted-foreground">
+            Selected ({selectedVideos.length})
           </li>
+          <li aria-hidden="true" className="h-4 w-px bg-border" />
           <li className="text-sm font-medium">Mentions</li>
         </ol>
       </nav>
@@ -281,7 +287,7 @@ export const SelectionMentionsPage = () => {
         <input
           type="text"
           placeholder="Search channels..."
-          className="rounded-md border px-2 py-1 text-sm"
+          className="rounded-md border text-sm px-2 py-1"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -302,19 +308,21 @@ export const SelectionSourcesPage = () => {
   return (
     <div className="flex w-full items-center justify-between">
       <nav className="flex items-center" aria-label="Breadcrumb">
-        <ol className="flex items-center space-x-2 px-2">
+        <ol className="flex items-center space-x-2">
           <li>
             <div
               onClick={() => setPage(0)}
-              className="flex cursor-pointer items-center text-sm font-medium"
+              className="flex cursor-pointer items-center text-sm font-medium hover:text-primary transition-colors"
             >
               <div className="i-lucide:chevron-left mr-1" />
               Back
             </div>
           </li>
-          <li className="text-sm font-medium">
-            | Selected ({selectedVideos.length}) |
+          <li aria-hidden="true" className="h-4 w-px bg-border" />
+          <li className="text-sm font-medium text-muted-foreground">
+            Selected ({selectedVideos.length})
           </li>
+          <li aria-hidden="true" className="h-4 w-px bg-border" />
           <li className="text-sm font-medium">Sources</li>
         </ol>
       </nav>
@@ -337,39 +345,31 @@ export const SelectionSourcesPage = () => {
 // Page 3: Topic Page
 export const SelectionTopicPage = () => {
   const { selectedVideos } = useVideoSelection();
-  const [topic, setTopic] = useState("");
   const setPage = useSetAtom(currentSelectionPage);
 
   return (
-    <div className="flex w-full items-center justify-between">
-      <nav className="flex items-center" aria-label="Breadcrumb">
-        <ol className="flex items-center space-x-2 px-2">
+    <div className="flex w-full items-center justify-between gap-4">
+      <nav className="flex items-center shrink-0" aria-label="Breadcrumb">
+        <ol className="flex items-center space-x-2">
           <li>
             <div
               onClick={() => setPage(0)}
-              className="flex cursor-pointer items-center text-sm font-medium"
+              className="flex cursor-pointer items-center text-sm font-medium hover:text-primary transition-colors"
             >
               <div className="i-lucide:chevron-left mr-1" />
               Back
             </div>
           </li>
-          <li className="text-sm font-medium">
-            | Selected ({selectedVideos.length}) |
+          <li aria-hidden="true" className="h-4 w-px bg-border" />
+          <li className="text-sm font-medium text-muted-foreground">
+            Selected ({selectedVideos.length})
           </li>
+          <li aria-hidden="true" className="h-4 w-px bg-border" />
           <li className="text-sm font-medium">Set Topic:</li>
         </ol>
       </nav>
-      <div className="flex items-center space-x-2">
-        <input
-          type="text"
-          placeholder="Enter topic..."
-          className="rounded-md border px-2 py-1 text-sm"
-          value={topic}
-          onChange={(e) => setTopic(e.target.value)}
-        />
-        <Button size="sm" variant="outline">
-          Set Topic
-        </Button>
+      <div className="max-w-2xl flex-grow">
+        <SelectionFooterTopicPicker />
       </div>
     </div>
   );
@@ -471,7 +471,7 @@ function SelectionModifyPlaylistSubmenu() {
           ))}
           {isLoading && (
             <DropdownMenuItem className="justify-center" disabled>
-              <div className="i-lucide:loader-2 animate-spin leading-none" />
+              <div className="animate-spin leading-none i-lucide:loader-2" />
             </DropdownMenuItem>
           )}
           {data?.length || isLoading ? <DropdownMenuSeparator /> : null}

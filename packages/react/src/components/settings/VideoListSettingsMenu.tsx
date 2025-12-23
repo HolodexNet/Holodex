@@ -16,6 +16,7 @@ import {
   filterLongStreamsAtom,
   hideCollabStreamsAtom,
   hidePlaceholderAtom,
+  nonVirtualAtom,
 } from "@/store/settings";
 import { DatePicker } from "../common/DatePicker";
 import { Label } from "@/shadcn/ui/label";
@@ -33,6 +34,7 @@ export const VideoListSettingsMenu: React.FC<{
   const [filterLongStreams, setFilterLongStreams] = useAtom(
     filterLongStreamsAtom,
   );
+  const [nonVirtual, setNonVirtual] = useAtom(nonVirtualAtom);
 
   const hideFeatures = [
     {
@@ -63,6 +65,13 @@ export const VideoListSettingsMenu: React.FC<{
       label: t("views.settings.filterLongStreams"),
       variant: "basic" as const,
     },
+    {
+      id: "non_virtual",
+      checked: nonVirtual,
+      onCheckedChange: () => setNonVirtual(!nonVirtual),
+      label: "Support Ctrl+F (Slower)",
+      variant: "basic" as const,
+    },
   ];
 
   return (
@@ -75,16 +84,19 @@ export const VideoListSettingsMenu: React.FC<{
           role="button"
           type="button"
         >
-          <div className="i-lucide:list-filter" />
+          <div className="i-iconoir:filter" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="max-w-[80vw]">
-        <div role="menu" className="grid gap-4">
+        <div role="menu" className="gap-4 grid">
           {activeTab === "live" && <SortBySelect />}
           {(activeTab === "archive" || activeTab === "clips") && (
             <UploadedBeforeDatePicker />
           )}
-          <ToggleableFeatureGroup features={hideFeatures} compact />
+          <ToggleableFeatureGroup
+            features={hideFeatures}
+            className="gap-2 md:gap-4"
+          />
         </div>
       </PopoverContent>
     </Popover>
@@ -144,7 +156,9 @@ export const UploadedBeforeDatePicker: React.FC = () => {
 
   return (
     <div>
-      <Label htmlFor={id}>{t("Uploaded Before")}</Label>
+      <Label className="mb-2" htmlFor={id}>
+        {t("Uploaded Before")}
+      </Label>
       <DatePicker
         id={id}
         className="w-full"

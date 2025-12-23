@@ -96,16 +96,16 @@ export function GlobalReactivity() {
 export function CopyrightNotice() {
   const [dark, setDark] = useAtom(darkAtom);
   return (
-    <div className="text-center text-sm mt-16">
-      © 2020-2024 Holodex v{lastTag}.{commitsSinceLastTag}
-      <small className="ml-2 inline-block opacity-80">
+    <div className="text-sm text-center mt-16">
+      © 2020-2026 Holodex v{lastTag}.{commitsSinceLastTag}
+      <small className="ml-2 opacity-80 inline-block">
         b.{abbreviatedSha} / {dayjs(new Date(committerDate)).format("lll")}
       </small>{" "}
       /{" "}
       <a
         href="https://discord.gg/jctkgHBt4b"
         target="_blank"
-        className="hover:underline hover:"
+        className="hover: hover:underline"
       >
         Discord
       </a>{" "}
@@ -117,8 +117,8 @@ export function CopyrightNotice() {
       >
         Ko-fi
       </a>
-      <span className="cursor-pointer ml-2" onClick={() => setDark(!dark)}>
-        Theme
+      <span className="ml-2 cursor-pointer" onClick={() => setDark(!dark)}>
+        {dark ? "☀️" : "🌙"}
       </span>
     </div>
   );

@@ -64,7 +64,7 @@ export function Home() {
         <title>{org} - Holodex</title>
       </Helmet>
       <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
-        <StickyTabsList activeTab={activeTab} membersTabLabel="Members" />
+        <StickyTabsList activeTab={activeTab} org={org} />
         <TabsContent value="live">
           <LiveTab />
         </TabsContent>
@@ -84,12 +84,16 @@ export function Home() {
 
 function StickyTabsList({
   activeTab,
-  membersTabLabel,
+  org,
 }: {
   activeTab: string;
-  membersTabLabel: string;
+  org?: string;
 }) {
   const { t } = useTranslation();
+  const membersTabLabel = t([
+    `views.home.members.${org}`,
+    "views.home.members.generic",
+  ]);
   const [open] = useAtom(isSidebarOpenAtom);
   const [isFullScreen] = useAtom(sidebarShouldBeFullscreenAtom);
   const user = useAtomValue(userAtom);
@@ -102,7 +106,7 @@ function StickyTabsList({
         !open ? "sticky" : isFullScreen ? "" : "sticky",
       )}
     >
-      <div className="flex w-full md:items-center gap-4 md:justify-between">
+      <div className="flex w-full gap-4 md:items-center md:justify-between">
         <div className="flex space-x-1">
           <TabsTrigger value="live">
             {t("views.home.liveOrUpcomingHeading")}

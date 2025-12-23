@@ -130,8 +130,8 @@ export function VideoCard({
         onClick && "cursor-pointer",
         selectionMode &&
           (selectedSet?.has(video.id)
-            ? "rounded-lg ring-4  ring-offset-2 ring-offset-base-2 "
-            : "rounded-lg opacity-50 ring-4  ring-offset-2 ring-offset-base-2 brightness-75 saturate-[0.75]"),
+            ? "rounded-md ring-6 " // selected
+            : "rounded-md opacity-50 ring-6 brightness-75 saturate-[0.75]"), // unselected
       ]),
       thumbnailLink: cn([
         size == "list" &&
@@ -189,7 +189,7 @@ export function VideoCard({
           }
         />
         {video.topic_id && (
-          <span className="absolute rounded-sm px-1 text-sm capitalize left-1 top-1 text-pretty bg-black/80 text-white/80 group-hover:text-white">
+          <span className="absolute rounded-sm text-sm px-1 capitalize left-1 top-1 text-pretty bg-black/80 text-white/80 group-hover:text-white">
             {video.topic_id.replaceAll("_", " ")}
           </span>
         )}
@@ -235,7 +235,7 @@ export function VideoCard({
                   ? resizeChannelPhoto(video.channel.photo, 240)
                   : undefined
               }
-              className="h-8 w-8 rounded-full"
+              className="rounded-full h-8 w-8"
             />
           </Link>
         )}

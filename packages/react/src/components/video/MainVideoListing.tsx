@@ -4,6 +4,8 @@ import { SkeletonVideoCard } from "./SkeletonVideoCard";
 import { VirtuosoGrid } from "react-virtuoso";
 import { cn } from "@/lib/utils";
 import { VirtuosoLoadingFooter } from "@/components/common/Loading";
+import { nonVirtualAtom } from "@/store/settings";
+import { useAtomValue } from "jotai";
 
 interface MainVideoListingProps {
   videos?: VideoBase[];
@@ -26,6 +28,9 @@ export function MainVideoListing({
   isLoading,
   nonVirtual,
 }: MainVideoListingProps) {
+  const settingsNonVirtual = useAtomValue(nonVirtualAtom);
+  const isNonVirtual = nonVirtual ?? settingsNonVirtual;
+
   const listClassName = useMemo(
     () =>
       cn(
@@ -53,7 +58,7 @@ export function MainVideoListing({
   }
 
   // If nonVirtual is true, render a simple grid
-  if (nonVirtual) {
+  if (isNonVirtual) {
     return (
       <div className={listClassName}>
         {videos?.map((video, idx) => (

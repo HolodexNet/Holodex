@@ -94,6 +94,12 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    scrollbar-gutter: stable;
+  }
+
+  html body[data-scroll-locked] {
+    overflow: visible !important;
+    margin-right: 0 !important;
   }
 
   body {

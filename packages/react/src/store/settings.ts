@@ -17,6 +17,7 @@ export interface HolodexSettings {
   filterDeadStreams: boolean;
   ignoredTopics: string[];
   blockedChannels: ShortChannel[];
+  nonVirtual?: boolean;
 }
 
 // Create atoms with storage for each setting
@@ -37,6 +38,7 @@ export const settingsAtom = atomWithStorage<HolodexSettings>(
     filterDeadStreams: true,
     ignoredTopics: [],
     blockedChannels: [],
+    nonVirtual: false,
   },
   undefined,
   GET_ON_INIT,
@@ -157,6 +159,16 @@ export const ignoredTopicsAtom = atom(
   (get) => get(settingsAtom).ignoredTopics,
   (get, set, newValue: string[]) => {
     set(settingsAtom, { ...get(settingsAtom), ignoredTopics: newValue });
+  },
+);
+
+export const nonVirtualAtom = atom(
+  (get) => get(settingsAtom).nonVirtual ?? false,
+  (get, set, newValue: boolean) => {
+    set(settingsAtom, {
+      ...get(settingsAtom),
+      nonVirtual: newValue,
+    });
   },
 );
 

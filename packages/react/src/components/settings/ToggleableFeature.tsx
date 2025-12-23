@@ -27,6 +27,7 @@ interface ToggleableFeatureGroupProps {
   features: ToggleableFeatureProps[];
   showDividers?: boolean;
   compact?: boolean;
+  className?: string;
 }
 
 // Individual feature toggle component
@@ -90,12 +91,14 @@ export const ToggleableFeatureGroup = ({
   features,
   showDividers = false,
   compact = false,
+  className,
 }: ToggleableFeatureGroupProps) => {
   return (
     <div
       className={cn(
         "flex flex-col",
         showDividers || compact ? "gap-2" : "gap-4",
+        className,
       )}
     >
       {features.map((feature, index) => (
