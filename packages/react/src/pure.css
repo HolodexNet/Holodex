@@ -94,7 +94,6 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    scrollbar-gutter: stable;
   }
 
   html body[data-scroll-locked] {

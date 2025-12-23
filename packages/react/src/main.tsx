@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { HelmetProvider } from "@dr.pogodin/react-helmet";
 import "./pure.css";
-import "./colors.css";
 import "uno.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import "./lib/i18n";
