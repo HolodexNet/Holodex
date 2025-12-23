@@ -2,7 +2,7 @@ import { VideoQueryContainer } from "@/components/header/searchbar/types";
 import { useClient } from "@/hooks/useClient";
 import { HTTPError } from "@/lib/fetch";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { type SearchResponse } from "@elastic/elasticsearch/lib/api/types";
+import { estypes } from "@elastic/elasticsearch";
 interface SearchAutoCompleteParams {
   q?: string;
   t?: SearchAutoCompleteType[] | SearchAutoCompleteType;
@@ -33,10 +33,10 @@ export function useSearch(
         offset: offset ?? 0,
         limit: 25,
       };
-      return await client.post<SearchResponse<PlaceholderVideo>, typeof newQ>(
-        "/api/v3/search/videoSearch",
-        newQ,
-      );
+      return await client.post<
+        estypes.SearchResponse<PlaceholderVideo>,
+        typeof newQ
+      >("/api/v3/search/videoSearch", newQ);
     },
     enabled: !!queryContainer,
   });

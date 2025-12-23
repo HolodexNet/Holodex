@@ -33,7 +33,7 @@ export function EditVideo() {
       <div className="">
         <ResizablePanelGroup
           className="container mx-auto px-4 min-h-[90vh]"
-          direction={isHorizontal ? "vertical" : "horizontal"}
+          orientation={isHorizontal ? "vertical" : "horizontal"}
           // it's talking about content direction, not the direction of the splitter.
         >
           <ResizablePanel minSize={10} defaultSize={20}>
@@ -46,7 +46,7 @@ export function EditVideo() {
           </ResizablePanel>
           <ResizableHandle withHandle />
           <ResizablePanel className="px-4">
-            <div className="mt-2 flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-4 mt-2 mb-4">
               <Button
                 variant="base-outline"
                 size="icon-lg"

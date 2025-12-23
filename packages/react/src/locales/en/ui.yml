@@ -262,6 +262,7 @@ views:
       official: Archive
       subber: Clips
     members:
+      __favorites: Oshis
       generic: Members
       Hololive: Talents
       Nijisanji: Livers

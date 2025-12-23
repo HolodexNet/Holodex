@@ -29,11 +29,11 @@ import {
 } from "@/shadcn/ui/pagination";
 import generatePageNumbers, { cn } from "@/lib/utils";
 import { SearchBar } from "@/components/header/searchbar/components/SearchBar";
-import { type SearchTotalHits } from "@elastic/elasticsearch/lib/api/types";
+import { estypes } from "@elastic/elasticsearch";
 
 const ITEMS_PER_PAGE = 25;
 
-function elasticSearchTotalToValue(total?: number | SearchTotalHits) {
+function elasticSearchTotalToValue(total?: number | estypes.SearchTotalHits) {
   if (total === undefined) {
     return 0;
   }
@@ -118,7 +118,7 @@ export default function Search() {
         <title>{t("component.search.searchLabel")} - Holodex</title>
       </Helmet>
 
-      <div className="container space-y-4 p-4">
+      <div className="container p-4 space-y-4">
         {/* Search Controls */}
         <div className="flex flex-col gap-4 md:items-center md:justify-between md:flex-row">
           <div className="flex-1 max-w-xl">

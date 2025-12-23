@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { useAtom, useSetAtom } from "jotai";
 import { headerHiddenAtom } from "@/hooks/useFrame";
@@ -16,6 +15,11 @@ import { idToVideoURL } from "@/lib/utils";
 import { Speaker } from "./Speaker";
 import { tldexSpeakerConfig } from "@/store/tldex";
 import { Label } from "@/shadcn/ui/label";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/shadcn/ui/resizable";
 
 const SpeakerButton = ({
   speaker,
@@ -43,7 +47,7 @@ const SpeakerButton = ({
     </span>
     {isActive && (
       <div
-        className="ml-auto w-6 rounded-sm p-1 hover:"
+        className="hover: ml-auto w-6 rounded-sm p-1"
         onClick={(e) => {
           e.stopPropagation();
           onEdit(speaker);
@@ -145,7 +149,7 @@ const KeyboardHelp = () => (
       className="grid gap-1 text-sm grid-cols-2"
       style={{ gridTemplateColumns: "auto 1fr" }}
     >
-      <kbd className="ml-auto block text-sm pointer-events-none tracking-widest">
+      <kbd className="ml-auto text-sm block pointer-events-none tracking-widest">
         {/* <span className="rounded-sm  p-0.5">⇪</span> */}
         {/* <span className="rounded-sm p-0.5">Ctrl-1~9</span> */}
         <div className="inline-block i-vaadin:ctrl-a"></div>
@@ -252,7 +256,7 @@ export default function TLClientFrame() {
 
   return (
     <div className="flex flex-col gap-2 h-screen p-6">
-      <div className="flex items-center gap-2">
+      <div className="flex gap-2 items-center">
         <Input
           value={videoId}
           onChange={(e) => setVideoId(e.target.value)}
@@ -271,33 +275,36 @@ export default function TLClientFrame() {
       <div className="flex flex-1 flex-col gap-2">
         <div className="relative w-full" style={{ paddingTop: "39.13%" }}>
           <div className="absolute inset-0">
-            <PanelGroup direction="horizontal" className="h-full rounded-lg">
-              <Panel minSize={30} defaultSize={70}>
+            <ResizablePanelGroup
+              orientation="horizontal"
+              className="h-full rounded-lg"
+            >
+              <ResizablePanel minSize={30} defaultSize={70}>
                 <div className="flex h-full flex-col items-center justify-center">
-                  <div className="aspect-video w-full">
+                  <div className="w-full aspect-video">
                     <PlayerWrapper id={videoId} url={idToVideoURL(videoId)} />
                   </div>
                 </div>
-              </Panel>
-              <PanelResizeHandle className="w-2 hover:" />
-              <Panel minSize={13} defaultSize={15}>
+              </ResizablePanel>
+              <ResizableHandle className="w-2 hover:" />
+              <ResizablePanel minSize={13} defaultSize={15}>
                 <div className="flex h-full flex-col border-l">
                   <div className="text-sm font-medium p-2 border-b">
                     TL Chat
                   </div>
-                  <div className="flex-1 overflow-y-auto p-2" />
+                  <div className="flex-1 p-2 overflow-y-auto" />
                 </div>
-              </Panel>
-              <PanelResizeHandle className="w-2 hover:" />
-              <Panel minSize={13} defaultSize={15}>
+              </ResizablePanel>
+              <ResizableHandle className="w-2 hover:" />
+              <ResizablePanel minSize={13} defaultSize={15}>
                 <div className="flex h-full flex-col border-r">
                   <div className="border-b p-2 text-sm font-medium">
                     YouTube Chat
                   </div>
                   <div className="flex-1 overflow-y-auto p-2" />
                 </div>
-              </Panel>
-            </PanelGroup>
+              </ResizablePanel>
+            </ResizablePanelGroup>
           </div>
         </div>
 
@@ -305,7 +312,7 @@ export default function TLClientFrame() {
           <div className="flex flex-1 flex-col gap-2 rounded-lg p-2">
             <div className="flex items-center gap-1 flex-row">
               {speakers[currentSpeaker].prefix && (
-                <span className="rounded-sm border p-1">
+                <span className="rounded-sm p-1 border">
                   {speakers[currentSpeaker].prefix}
                 </span>
               )}

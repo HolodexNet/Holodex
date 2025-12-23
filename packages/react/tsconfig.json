@@ -40,6 +40,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
     "types": [
       "@types/wicg-file-system-access",
       "@types/node",

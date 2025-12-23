@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./TLEditorFrame.css";
 import { useBeforeUnload, useNavigate } from "react-router-dom";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
 import { idToVideoURL } from "@/lib/utils";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -19,6 +18,11 @@ import { getSubtitlesForVideo, subtitleManagerAtom } from "./hooks/subtitles";
 import { TLEditorHeader } from "./TLEditorHeader";
 import { useNavBlocker } from "@/hooks/useBlock";
 import { playerRefAtom } from "@/store/player";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/shadcn/ui/resizable";
 
 export function TLEditorFrame() {
   const {
@@ -124,8 +128,8 @@ export function TLEditorContent() {
   const setPlayerRef = useSetAtom(playerRefAtom);
   return (
     <>
-      <PanelGroup direction="horizontal" className="content">
-        <Panel defaultSize={60} minSize={40}>
+      <ResizablePanelGroup orientation="horizontal" className="content">
+        <ResizablePanel defaultSize={60} minSize={40}>
           <div className="flex flex-col size-full">
             <div className="overflow-hidden flex-1 rounded">
               <PlayerWrapper
@@ -140,12 +144,12 @@ export function TLEditorContent() {
               </Menubar>
             </div>
           </div>
-        </Panel>
-        <PanelResizeHandle className="w-2 hover:" />
-        <Panel defaultSize={40} minSize={20}>
+        </ResizablePanel>
+        <ResizableHandle className="hover: w-2" />
+        <ResizablePanel defaultSize={40} minSize={20}>
           <SubtitleList />
-        </Panel>
-      </PanelGroup>
+        </ResizablePanel>
+      </ResizablePanelGroup>
       <WaveformEditor videoId={id!} />
     </>
   );
