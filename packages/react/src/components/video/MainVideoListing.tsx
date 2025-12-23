@@ -6,6 +6,46 @@ import { cn } from "@/lib/utils";
 import { VirtuosoLoadingFooter } from "@/components/common/Loading";
 import { nonVirtualAtom } from "@/store/settings";
 import { useAtomValue } from "jotai";
+import { useTranslation } from "react-i18next";
+
+interface LoadMoreCardProps {
+  onClick?: () => void;
+  isLoading?: boolean;
+  size: VideoCardSize;
+}
+
+function LoadMoreCard({ onClick, isLoading, size }: LoadMoreCardProps) {
+  const { t } = useTranslation();
+
+  return (
+    <button
+      onClick={onClick}
+      disabled={isLoading}
+      className={cn(
+        "group relative flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-base-6 bg-base-3 transition-all duration-200 hover:border-primary hover:bg-base-4 disabled:cursor-wait disabled:opacity-70",
+        {
+          // Match the aspect ratio behavior of video cards for different sizes
+          "aspect-video": size !== "list",
+          "min-h-20 py-4": size === "list",
+        },
+      )}
+    >
+      {isLoading ? (
+        <div className="flex flex-col items-center gap-2">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-base-6 border-t-primary" />
+          <span className="text-sm text-base-11">{t("views.app.loading")}</span>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-2">
+          <div className="text-base-11 h-10 w-10 transition-colors i-heroicons:arrow-down-circle group-hover:text-primary" />
+          <span className="text-sm text-base-11 transition-colors group-hover:text-primary font-medium">
+            {t("component.mainVideoListing.loadMore")}
+          </span>
+        </div>
+      )}
+    </button>
+  );
+}
 
 interface MainVideoListingProps {
   videos?: VideoBase[];
@@ -68,18 +108,12 @@ export function MainVideoListing({
             size={size}
           />
         ))}
-        {isFetchingNextPage && hasNextPage && (
-          <div className="flex justify-center py-4 col-span-full">
-            <VirtuosoLoadingFooter
-              context={{
-                size: "sm",
-                isLoading: true,
-                hasNextPage: true,
-                loadMore: fetchNextPage,
-                autoload: !!fetchNextPage,
-              }}
-            />
-          </div>
+        {hasNextPage && (
+          <LoadMoreCard
+            size={size}
+            isLoading={isFetchingNextPage}
+            onClick={fetchNextPage}
+          />
         )}
       </div>
     );
@@ -98,6 +132,7 @@ export function MainVideoListing({
         />
       )}
       endReached={async () => {
+        console.log("End Reached");
         if (hasNextPage && !isFetchingNextPage && !isLoading) {
           await fetchNextPage?.();
         }

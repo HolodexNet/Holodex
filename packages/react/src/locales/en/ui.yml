@@ -231,6 +231,8 @@ component:
   multiset_topic:
     button: Set topic ''{topic}'' for {videos} videos
     unset: Clear topic on {videos} videos
+  mainVideoListing:
+    loadMore: Load More
 views:
   channel:
     video: Videos
