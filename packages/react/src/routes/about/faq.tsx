@@ -6,8 +6,23 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/shadcn/ui/accordion";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+// All valid accordion item values for hash matching
+const FAQ_ITEM_VALUES = [
+  "youtube",
+  "autoplay",
+  "mobile",
+  "favorite-disappear",
+  "subber",
+  "video",
+  "quit",
+  "feedback",
+  "support",
+  "gdpr",
+] as const;
 
 function FaqQuestion({ children }: { children: React.ReactNode }) {
   return <h3 className="text-xl font-semibold tracking-tight">{children}</h3>;
@@ -15,28 +30,47 @@ function FaqQuestion({ children }: { children: React.ReactNode }) {
 
 export function AboutFaq() {
   const { t } = useTranslation();
+  const location = useLocation();
+  const [openItems, setOpenItems] = useState<string[]>([]);
+
+  // Handle hash-driven expansion
+  useEffect(() => {
+    const hash = location.hash.replace("#", "");
+    if (
+      hash &&
+      FAQ_ITEM_VALUES.includes(hash as (typeof FAQ_ITEM_VALUES)[number])
+    ) {
+      // Add the hash value to open items if not already open
+      setOpenItems((prev) => (prev.includes(hash) ? prev : [...prev, hash]));
+
+      // Scroll to the accordion item after a short delay for DOM update
+      requestAnimationFrame(() => {
+        const element = document.getElementById(`faq-${hash}`);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    }
+  }, [location.hash]);
 
   return (
     <div>
-      <Accordion type="multiple">
-        <AccordionItem value="youtube">
+      <Accordion type="multiple" value={openItems} onValueChange={setOpenItems}>
+        <AccordionItem id="faq-youtube" value="youtube">
           <AccordionTrigger>
             <FaqQuestion>{t("about.faq.ytchatHeader")}</FaqQuestion>
           </AccordionTrigger>
           <AccordionContent>
-            <AboutDescription className="mb-2">
-              {t("about.faq.ytchatContent")}
-            </AboutDescription>
-            <Link
-              className="hover:underline"
-              to="https://support.mozilla.org/en-US/kb/third-party-cookies-firefox-tracking-protection?redirectslug=disable-third-party-cookies"
-              target="_blank"
-            >
-              {t("about.faq.ytchatFirefox")}
-            </Link>
+            <AboutDescription
+              className="mb-2"
+              dangerouslySetInnerHTML={{
+                // this sentence has raw html tag, load via dangerouslySetInnerHTML
+                __html: t("about.faq.ytchatContent"),
+              }}
+            />
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="autoplay">
+        <AccordionItem id="faq-autoplay" value="autoplay">
           <AccordionTrigger>
             <FaqQuestion>{t("about.faq.autoplayHeader")}</FaqQuestion>
           </AccordionTrigger>
@@ -50,7 +84,7 @@ export function AboutFaq() {
             <img src="https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/firefox/files/2019/04/Screen-Shot-2019-04-01-at-11.21.21-AM.png" />
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="mobile">
+        <AccordionItem id="faq-mobile" value="mobile">
           <AccordionTrigger>
             <FaqQuestion>{t("about.faq.mobile.title")}</FaqQuestion>
           </AccordionTrigger>
@@ -72,7 +106,7 @@ export function AboutFaq() {
             </ul>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="favorite-disappear">
+        <AccordionItem id="faq-favorite-disappear" value="favorite-disappear">
           <AccordionTrigger>
             <FaqQuestion>{t("about.faq.favorite.disappear.title")}</FaqQuestion>
           </AccordionTrigger>
@@ -82,7 +116,7 @@ export function AboutFaq() {
             </AboutDescription>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="subber">
+        <AccordionItem id="faq-subber" value="subber">
           <AccordionTrigger>
             <FaqQuestion>{t("about.faq.subber.title")}</FaqQuestion>
           </AccordionTrigger>
@@ -96,7 +130,7 @@ export function AboutFaq() {
             </AboutDescription>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="video">
+        <AccordionItem id="faq-video" value="video">
           <AccordionTrigger>
             <FaqQuestion>{t("about.faq.videoLinkage")}</FaqQuestion>
           </AccordionTrigger>
@@ -106,7 +140,7 @@ export function AboutFaq() {
             </AboutDescription>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="quit">
+        <AccordionItem id="faq-quit" value="quit">
           <AccordionTrigger>
             <FaqQuestion>{t("about.faq.quitHolodex")}</FaqQuestion>
           </AccordionTrigger>
@@ -116,7 +150,7 @@ export function AboutFaq() {
             </AboutDescription>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="feedback">
+        <AccordionItem id="faq-feedback" value="feedback">
           <AccordionTrigger>
             <FaqQuestion>{t("about.faq.feedback.title")}</FaqQuestion>
           </AccordionTrigger>
@@ -126,7 +160,7 @@ export function AboutFaq() {
             </AboutDescription>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="support">
+        <AccordionItem id="faq-support" value="support">
           <AccordionTrigger>
             <FaqQuestion>{t("about.faq.support.title")}</FaqQuestion>
           </AccordionTrigger>
@@ -170,7 +204,7 @@ export function AboutFaq() {
             </div>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="gdpr">
+        <AccordionItem id="faq-gdpr" value="gdpr">
           <AccordionTrigger>
             <FaqQuestion>{t("about.gdpr")}</FaqQuestion>
           </AccordionTrigger>

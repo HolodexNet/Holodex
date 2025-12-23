@@ -696,9 +696,34 @@ about:
     title: FAQ
     ytchatHeader: My Youtube Chat is not logged in!
     ytchatContent: >-
-      Please disable the browser security feature known as 3rd Party Cookies
-      blocking, or whitelist this website and youtube.com to allow 3rd Party
-      Cookies.
+      <p class="mb-4">Since Holodex isn't YouTube, your browser refuses to share YouTube's sign-in 
+      cookie—making you appear logged-out. This affects YouTube chat, watch history, 
+      and other personalized features.</p>
+
+      <h3 class="text-lg font-semibold mt-6 mb-2">Quick Fix</h3>
+      <p class="mb-3">Click the <strong>"Learn More"</strong> link that appears in the embed right 
+      after refreshing. This tells your browser to treat Holodex as trusted, allowing 
+      YouTube's cookies to work after another refresh.</p>
+      <img class="rounded-lg border border-base-6 my-4 max-w-md" src="/img/learn-more.png" alt="Screenshot showing the Learn More link" />
+
+      <h3 class="text-lg font-semibold mt-6 mb-2">Firefox Users</h3>
+      <p class="mb-2">Firefox has a special setting to whitelist Holodex for YouTube cookies:</p>
+      <ol class="list-decimal list-inside space-y-1 mb-3 ml-2">
+        <li>Open <code class="bg-base-4 px-1.5 py-0.5 rounded text-sm">about:config</code> in your address bar</li>
+        <li>Search for <code class="bg-base-4 px-1.5 py-0.5 rounded text-sm">privacy.restrict3rdpartystorage.skip_list</code></li>
+        <li>Set the value to: <code class="bg-base-4 px-1.5 py-0.5 rounded text-sm">https://holodex.net,https://www.youtube.com</code></li>
+      </ol>
+      <p class="mb-3">This allows holodex.net to access www.youtube.com without cookie partitioning.</p>
+      <p class="mb-4"><strong>Multiple sites:</strong> Use semicolons to separate entries. For example, 
+      to also include next.holodex.net:<br/>
+      <code class="bg-base-4 px-1.5 py-0.5 rounded text-sm break-all">https://holodex.net,https://www.youtube.com;https://next.holodex.net,https://www.youtube.com</code></p>
+
+      <h3 class="text-lg font-semibold mt-6 mb-2">Other Browsers</h3>
+      <p>This issue is known as <em>third-party cookie protection</em>. If the "Learn More" 
+      trick doesn't work for you, try 
+      <a class="text-primary-foreground bg-primary underline" href="https://educationaldevelopment.uams.edu/elearning/blackboard-ultra/enable-third-party-cookies-in-your-browser" 
+      target="_blank" rel="noopener noreferrer">this guide on enabling third-party cookies</a> 
+      for step-by-step instructions for Chrome, Firefox, Safari, and Edge.</p>
     ytchatFirefox: Firefox instructions, other browsers may be similar.
     autoplayHeader: AutoPlay isn't working!
     autoplayContent: Please google how to enable autoplay for your browser.

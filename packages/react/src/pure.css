@@ -89,6 +89,15 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  /* Container query breakpoints */
+  --container-screen-sm: 640px;
+  --container-screen-md: 768px;
+  --container-screen-lg: 1024px;
+  --container-screen-xl: 1280px;
+  --container-screen-2xl: 1536px;
+
+  --breakpoint-2xl: 1536px;
 }
 
 @layer base {

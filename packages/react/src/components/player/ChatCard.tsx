@@ -11,6 +11,7 @@ import { useAtom } from "jotai";
 import { chatOpenAtom, tlOpenAtom } from "@/store/player";
 import { useStateList } from "react-use";
 import { WATCH_PAGE_DROPDOWN_BUTTON_STYLE } from "@/shadcn/ui/button.variants";
+import { Link } from "react-router-dom";
 
 const CHAT_SIZES_ITER = [1, 1.6, 2, 2.5, 0.3, 0.6, 0.8];
 
@@ -26,7 +27,7 @@ export function ChatCard({
     useStateList(CHAT_SIZES_ITER);
 
   return (
-    <div className="flex w-full overflow-hidden h-full flex-col rounded-lg border border-base">
+    <div className="flex w-full overflow-hidden h-full flex-col rounded-lg border border-base bg-card">
       <Collapsible
         open={chatOpen}
         className={cn("flex flex-col ")}
@@ -45,17 +46,29 @@ export function ChatCard({
             {"Chat"}
 
             {chatOpen && (
-              <Button
-                size="icon"
-                variant="ghost"
-                className="hover: ml-auto"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  nextChatBasis();
-                }}
-              >
-                <div className="i-fluent:arrow-autofit-height-dotted-24-regular"></div>
-              </Button>
+              <>
+                <Link
+                  to="/about/faq#youtube"
+                  target="_blank"
+                  onClick={(e) => e.stopPropagation()}
+                  className="ml-auto rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                >
+                  Not logged in{" "}
+                  <div className="text-xs inline-block align-bottom i-lucide:shield-question-mark"></div>
+                </Link>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  title="Toggle height"
+                  className="hover:"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextChatBasis();
+                  }}
+                >
+                  <div className="i-fluent:arrow-autofit-height-dotted-24-regular"></div>
+                </Button>
+              </>
             )}
           </Button>
         </CollapsibleTrigger>

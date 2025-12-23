@@ -114,7 +114,7 @@ const VideoAsideLists = ({
   const { videos } = useCurrentVideoList();
 
   return (
-    <div className="hidden shrink-0 flex-col gap-4 @screen-lg:flex w-96">
+    <div className="hidden flex-col @screen-lg:flex shrink-0 gap-4 w-96">
       {!!videos.length && <CurrentVideoList currentId={currentVideo?.id} />}
       {(currentVideo?.type === "stream" || currentVideo?.status === "live") && (
         <div
@@ -199,7 +199,7 @@ export function Watch() {
 
   const containerClasses = cn(
     "mx-auto flex w-full gap-8",
-    regularMode && " max-w-(--breakpoint-2xl) p-4 pt-2", // padding around the container + a max width for regular mode container.
+    regularMode && " max-w-(--breakpoint-2xl) p-4 pt-2 flex-row", // padding around the container + a max width for regular mode container.
   );
 
   const playerContainerClasses = cn(
@@ -219,10 +219,10 @@ export function Watch() {
         <meta name="description" content={currentVideo?.description} />
       </Helmet>
 
-      <div className="flex w-full @container h-full">
+      <div className="flex w-full h-full @container">
         <div className={containerClasses}>
           {/* Container adds padding and width constraint */}
-          <div className="flex w-full flex-col gap-4">
+          <div className="flex grow shrink min-w-0 flex-col gap-4">
             <div className={playerContainerClasses}>
               <VideoContent
                 currentVideo={currentVideo}
