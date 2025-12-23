@@ -14,11 +14,10 @@ import { Logo } from "./Logo";
 import { useState } from "react";
 import { UserMenu } from "./userMenu/components/UserMenu";
 
-interface HeaderProps
-  extends React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLElement>,
-    HTMLElement
-  > {
+interface HeaderProps extends React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLElement>,
+  HTMLElement
+> {
   id: string;
 }
 

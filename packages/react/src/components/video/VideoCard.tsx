@@ -184,12 +184,12 @@ export function VideoCard({
           src={thumbnailSrc}
           className={
             (videoIsPlaceholder &&
-              "brightness-75 saturate-[0.75] transition-[filter] duration-300 ease-in-out group-hover:brightness-100 group-hover:saturate-100") +
+              "ticket-mask brightness-75 saturate-[0.75] transition-[filter] duration-300 ease-in-out group-hover:brightness-100 group-hover:saturate-100") +
             " aspect-video h-full w-full rounded-md object-cover "
           }
         />
         {video.topic_id && (
-          <span className="absolute rounded-sm text-sm px-1 capitalize left-1 top-1 text-pretty bg-black/80 text-white/80 group-hover:text-white">
+          <span className="rounded-sm text-sm absolute px-1 capitalize left-1 top-1 text-pretty bg-black/80 text-white/80 group-hover:text-white">
             {video.topic_id.replaceAll("_", " ")}
           </span>
         )}
@@ -216,7 +216,7 @@ export function VideoCard({
         </div>
       </Link>
       {/* This block contains the entire bottom of the video card, which is the channel thumbnail + Video Text Info + Menu */}
-      <div className="flex grow relative gap-2 @sm:gap-1">
+      <div className="flex grow gap-2 relative @sm:gap-1">
         {/* Channel thumbnail, only drawn on large & medium video cards */}
         {(size == "lg" || size == "md") && video.channel && (
           <Link
@@ -235,7 +235,7 @@ export function VideoCard({
                   ? resizeChannelPhoto(video.channel.photo, 240)
                   : undefined
               }
-              className="rounded-full h-8 w-8"
+              className="h-8 w-8 rounded-full"
             />
           </Link>
         )}
@@ -379,7 +379,7 @@ function VideoCardDuration({
     }
   }
 
-  return durationMs ?? status === "upcoming" ? (
+  return (durationMs ?? status === "upcoming") ? (
     <span
       className={cn(
         "flex items-center justify-center gap-1 whitespace-nowrap rounded-sm bg-black/80 px-1 text-sm text-white/80 group-hover:text-white",

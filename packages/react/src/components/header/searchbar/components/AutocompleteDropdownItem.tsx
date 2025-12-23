@@ -3,8 +3,9 @@ import { CommandItem } from "@/shadcn/ui/command";
 import { QueryItem } from "../types";
 import { useTranslation } from "react-i18next";
 
-interface AutocompleteDropdownItemProps
-  extends React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item> {
+interface AutocompleteDropdownItemProps extends React.ComponentPropsWithoutRef<
+  typeof CommandPrimitive.Item
+> {
   item: QueryItem;
   onSelect: (_: string) => void;
 }

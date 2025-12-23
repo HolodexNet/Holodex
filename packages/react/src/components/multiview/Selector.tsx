@@ -40,7 +40,7 @@ export function Selector() {
   return (
     <div className="flex w-full">
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex items-center justify-between rounded-md disabled:pointer-events-none hover: shrink-0 overflow-hidden focus-visible: active: z-30 mx-2 pl-4 pr-2 min-h-8 w-48 focus-visible:outline-hidden focus-visible:ring-1 active:scale-[97%] disabled:opacity-50">
+        <DropdownMenuTrigger className="flex items-center rounded-md hover: focus-visible: active: justify-between shrink-0 overflow-hidden z-30 mx-2 pl-4 pr-2 min-h-8 w-48 disabled:pointer-events-none focus-visible:outline-hidden focus-visible:ring-1 active:scale-[97%] disabled:opacity-50">
           {currentOrg.name}
           <div className="shrink-0 ml-2 h-4 w-4 inline-block align-middle opacity-50 i-lucide:chevrons-down"></div>
         </DropdownMenuTrigger>

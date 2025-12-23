@@ -82,8 +82,8 @@ export default function VideoCardPlaceholder({
               <VideoCardCountdownToLive video={video} />
             </div>
           </div>
-          <div className="flex flex-col gap-4 p-4">
-            <Button size="lg" variant="default" className="py-4 h-12" asChild>
+          <div className="flex flex-col p-4 gap-4">
+            <Button size="lg" variant="default" className="h-12 py-4" asChild>
               <a href={video.link} target="_blank" rel="noopener noreferrer">
                 <div
                   className={

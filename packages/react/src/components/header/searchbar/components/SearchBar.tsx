@@ -120,8 +120,8 @@ export function SearchBar({
         }}
       >
         <PopoverTrigger asChild>
-          <div className="focus-within: rounded-md p-2 text-sm ring-offset-muted bg-input group focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
-            <label className="flex flex-wrap items-center gap-1">
+          <div className="rounded-md focus-within: p-2 text-sm ring-offset-muted bg-input group focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
+            <label className="flex items-center gap-1 flex-wrap">
               {queryPieces.map((queryItem, i) => {
                 return (
                   <QueryBadge

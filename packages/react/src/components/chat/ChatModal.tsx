@@ -5,8 +5,10 @@ import { ChatCard } from "../player/ChatCard";
 import { chatOpenAtom, tlOpenAtom } from "@/store/player";
 import { useAtom } from "jotai";
 
-interface ChatModalProps
-  extends Pick<PlaceholderVideo, "id" | "status" | "channel" | "link"> {
+interface ChatModalProps extends Pick<
+  PlaceholderVideo,
+  "id" | "status" | "channel" | "link"
+> {
   tlOpen: boolean;
   chatOpen: boolean;
 }

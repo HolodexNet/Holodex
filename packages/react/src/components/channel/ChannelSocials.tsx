@@ -4,8 +4,10 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
-interface ChannelSocialsProps
-  extends Pick<Channel, "id" | "twitter" | "twitch"> {
+interface ChannelSocialsProps extends Pick<
+  Channel,
+  "id" | "twitter" | "twitch"
+> {
   size: "sm" | "lg";
 }
 
@@ -128,7 +130,7 @@ export function ChannelSocials({
       {favoriteButton}
     </div>
   ) : (
-    <div className="flex w-full flex-col gap-2">
+    <div className="flex w-full gap-2 flex-col">
       {favoriteButton}
       <div className="flex w-full gap-2">{socialButtons}</div>
     </div>

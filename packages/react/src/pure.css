@@ -107,3 +107,24 @@
     font-family: "Inter", sans-serif;
   }
 }
+
+
+.ticket-mask {
+  --r: 10px;
+  --s: 32px;
+  mask:
+    radial-gradient(circle at 0px 50%, #0000 var(--r), #000 calc(var(--r) + 1px)) 0 0 / 100% var(--s),
+    radial-gradient(circle at 100% 50%, #0000 var(--r), #000 calc(var(--r) + 1px)) 0 0 / 100% var(--s),
+    radial-gradient(circle at center, black 80%, #000a 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
+/* .ticket-mask {
+  mask:
+    radial-gradient(ellipse at center, black 40%, transparent 70%),
+    radial-gradient(circle, transparent 10px, black 11px);
+  mask-size: 100% 100%, 28px 28px;
+  mask-composite: add;
+  -webkit-mask-composite: source-over;
+} */

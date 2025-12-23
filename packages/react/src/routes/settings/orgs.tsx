@@ -88,7 +88,7 @@ export const OrgReranker = ({
     <div className="grid gap-4 grid-cols-1 min-w-72 lg:grid-cols-2">
       <div>
         <div>
-          <h3 className="mb-2 font-semibold text-center text-lg">Starred</h3>
+          <h3 className="font-semibold text-lg mb-2 text-center">Starred</h3>
         </div>
         <DndContext
           sensors={sensors}
@@ -121,7 +121,7 @@ export const OrgReranker = ({
         <h3 className="mb-2 text-center text-lg font-semibold">
           Other Organizations
         </h3>
-        <div className="flex w-full text-sm rounded-md border border-base focus-within: bg-transparent transition-colors focus-within:ring-2 h-9 px-3 shadow-xs rounded-b-none focus-within:outline-hidden">
+        <div className="flex w-full text-sm rounded-md border border-base focus-within: bg-transparent focus-within:ring-2 transition-colors h-9 px-3 shadow-xs rounded-b-none focus-within:outline-hidden">
           <input
             type="text"
             placeholder="Filter organizations..."
