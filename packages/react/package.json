@@ -136,6 +136,7 @@
     "@vitejs/plugin-react-swc": "^4.2.2",
     "@vitest/coverage-v8": "^4.0.16",
     "@vitest/ui": "^4.0.16",
+    "babel-plugin-react-compiler": "^1.0.0",
     "browserslist": "^4.28.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",

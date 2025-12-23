@@ -104,6 +104,7 @@ export default defineConfig({
       /* top part babel is for standard plugin-react,  */
       babel: {
         presets: ["jotai/babel/preset"],
+        plugins: ["babel-plugin-react-compiler"],
       },
       /* bottom part is for plugin-react-swc. */
       // plugins: [["@swc-jotai/debug-label", {}]],
