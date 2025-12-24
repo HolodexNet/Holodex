@@ -10,14 +10,14 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { useInterval } from "usehooks-ts";
 
-interface LiveCounterProps {
+interface LiveStatusBadgeProps {
   viewers?: number;
   start_date?: string;
   className?: string;
 }
 
-const LiveCounter = React.memo(
-  ({ viewers, className, start_date }: LiveCounterProps) => {
+const LiveStatusBadge = React.memo(
+  ({ viewers, className, start_date }: LiveStatusBadgeProps) => {
     const { t } = useTranslation();
 
     return (
@@ -44,7 +44,7 @@ const LiveCounter = React.memo(
   },
 );
 
-interface TimeTooltipProps {
+interface ScheduleTooltipProps {
   id: string;
   timestamp: string | Date | number | Dayjs;
   isLikely?: boolean;
@@ -52,13 +52,13 @@ interface TimeTooltipProps {
   className?: string;
 }
 
-const TimeTooltip = ({
+const ScheduleTooltip = ({
   id,
   timestamp,
   isLikely,
   children,
   className,
-}: TimeTooltipProps) => {
+}: ScheduleTooltipProps) => {
   const preferredTimezones = useAtomValue(preferredTimezonesAtom);
 
   return (
@@ -79,7 +79,7 @@ const TimeTooltip = ({
         variant="secondary"
         side="bottom"
       >
-        <WorldTimeTooltip
+        <WorldTimeContent
           id={id}
           timestamp={timestamp}
           isLikely={isLikely}
@@ -90,7 +90,7 @@ const TimeTooltip = ({
   );
 };
 
-export function VideoCardCountdownToLive({
+export function VideoScheduleInfo({
   video,
   className,
   onlyTime = false,
@@ -109,7 +109,7 @@ export function VideoCardCountdownToLive({
   // Early return for live videos
   if (video.status === "live" && !onlyTime) {
     return (
-      <LiveCounter
+      <LiveStatusBadge
         viewers={video.live_viewers}
         start_date={video.start_actual}
         className={className}
@@ -137,14 +137,14 @@ export function VideoCardCountdownToLive({
     );
 
     return (
-      <TimeTooltip
+      <ScheduleTooltip
         id={video.id}
         timestamp={tick}
         isLikely={video.certainty === "likely"}
         className={className}
       >
         {countdownText}
-      </TimeTooltip>
+      </ScheduleTooltip>
     );
   }
 
@@ -156,9 +156,9 @@ export function VideoCardCountdownToLive({
     });
 
     return (
-      <TimeTooltip id={video.id} timestamp={tick} className={className}>
+      <ScheduleTooltip id={video.id} timestamp={tick} className={className}>
         {pastText}
-      </TimeTooltip>
+      </ScheduleTooltip>
     );
   }
 
@@ -169,10 +169,10 @@ export function VideoCardCountdownToLive({
         video.start_actual || video.start_scheduled || video.available_at,
       );
       return (
-        <TimeTooltip id={video.id} timestamp={tick} className={className}>
+        <ScheduleTooltip id={video.id} timestamp={tick} className={className}>
           <div className="inline-block align-text-bottom opacity-80 i-ph:image-broken" />
           &nbsp;{tick.format("LLL")}
-        </TimeTooltip>
+        </ScheduleTooltip>
       );
     }
   }
@@ -181,7 +181,7 @@ export function VideoCardCountdownToLive({
 }
 
 // Custom hook for interval
-const WorldTimeTooltip = React.memo(
+const WorldTimeContent = React.memo(
   ({
     id,
     timestamp,
@@ -223,7 +223,7 @@ const WorldTimeTooltip = React.memo(
             return (
               <div
                 key={`${id}_${timezone}`}
-                className="flex items-center justify-between rounded-sm px-1 odd:bg-background/20"
+                className="flex items-center rounded-sm px-1 justify-between odd:bg-background/20"
               >
                 <div className="flex flex-col">
                   <span className="text-sm font-medium">{cityName}</span>

@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import { Checkbox } from "@/shadcn/ui/checkbox";
 import { Label } from "@/shadcn/ui/label";
 import { localeAtom } from "@/store/i18n";
-import { VideoCardCountdownToLive } from "@/components/video/VideoCardCountdownToLive";
+import { VideoScheduleInfo } from "@/components/video/VideoCardScheduleInfo";
 
 export function SettingsLang() {
   const [clipLangs, setClipLangs] = useAtom(clipLanguageAtom);
@@ -48,7 +48,7 @@ export function SettingsLang() {
                 )}
               >
                 {langs.find(({ val }) => i18n.language === val)?.display}
-                <div className="h-4 w-4 shrink-0 ml-2 opacity-50 i-lucide:chevrons-up-down" />
+                <div className="h-4 shrink-0 w-4 ml-2 opacity-50 i-lucide:chevrons-up-down" />
               </button>
             </PopoverTrigger>
             <PopoverContent className="p-0 w-fit min-w-[240px]">
@@ -146,7 +146,7 @@ export function SettingsLang() {
         <TimezoneSelector />
         <span>
           <b>Example: </b>
-          <VideoCardCountdownToLive
+          <VideoScheduleInfo
             video={{
               id: "example",
               type: "placeholder",

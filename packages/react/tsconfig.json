@@ -8,14 +8,14 @@
       "DOM",
       "DOM.Iterable",
     ],
-    "baseUrl": ".",
+    // "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
       ],
-      "vite": [
-        "node_modules/vite"
-      ]
+      // "vite": [
+      //   "node_modules/vite"
+      // ]
     },
     "module": "ESNext",
     "skipLibCheck": true,

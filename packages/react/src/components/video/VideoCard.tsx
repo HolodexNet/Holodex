@@ -1,4 +1,4 @@
-import { VideoCardCountdownToLive } from "./VideoCardCountdownToLive";
+import { VideoScheduleInfo } from "./VideoCardScheduleInfo";
 import { formatDuration } from "@/lib/time";
 import { Button } from "@/shadcn/ui/button";
 import { Link } from "react-router-dom";
@@ -55,8 +55,8 @@ interface VideoCardProps {
   outerLayerStyle?: string;
 }
 
-const LazyVideoCardPlaceholder = React.lazy(
-  () => import("./VideoCardPlaceholder"),
+const LazyPlaceholderDialog = React.lazy(
+  () => import("./VideoCardPlaceholderDialog"),
 );
 
 export const MemoizedVideoCard = React.memo(VideoCard);
@@ -212,7 +212,7 @@ export function VideoCard({
               &nbsp;{tlcount}
             </span>
           )}
-          {showDuration && <VideoCardDuration className="" {...video} />}
+          {showDuration && <ThumbnailDurationBadge className="" {...video} />}
         </div>
       </Link>
       {/* This block contains the entire bottom of the video card, which is the channel thumbnail + Video Text Info + Menu */}
@@ -271,7 +271,7 @@ export function VideoCard({
           )}
           {size != "xs" && showStatus && (
             <div className={videoCardClasses.scheduleText}>
-              <VideoCardCountdownToLive
+              <VideoScheduleInfo
                 video={video}
                 onlyTime={showStatus === "available_at_only"}
               />
@@ -301,7 +301,7 @@ export function VideoCard({
           <div onClick={stopPropagation} onMouseDown={stopPropagation}>
             <Suspense fallback={null}>
               {/* The `Suspense` prevents the lazy-loaded placeholder from blocking page rendering */}
-              <LazyVideoCardPlaceholder
+              <LazyPlaceholderDialog
                 open={placeholderOpen}
                 setOpen={setPlaceholderOpen}
                 video={video}
@@ -320,7 +320,7 @@ function stopPropagation<
   e.stopPropagation();
 }
 
-function VideoCardDuration({
+function ThumbnailDurationBadge({
   type,
   status,
   duration,
