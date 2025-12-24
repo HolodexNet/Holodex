@@ -38,40 +38,42 @@ export function Selector() {
   };
 
   return (
-    <div className="flex w-full">
+    <div className="flex items-center gap-2 min-w-0">
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex items-center rounded-md hover: overflow-hidden focus-visible: active: justify-between shrink-0 z-30 mx-2 pl-4 pr-2 min-h-8 w-48 disabled:pointer-events-none focus-visible:outline-hidden focus-visible:ring-1 active:scale-[97%] disabled:opacity-50">
+        <DropdownMenuTrigger className="flex items-center text-sm shrink-0 justify-between gap-1 rounded-md px-3 py-1.5 hover:bg-accent focus-visible:outline-none focus-visible:ring-1 active:scale-[97%]">
           {currentOrg.name}
-          <div className="shrink-0 ml-2 inline-block h-4 w-4 align-middle opacity-50 i-lucide:chevrons-down"></div>
+          <div className="shrink-0 opacity-50 h-4 w-4 i-lucide:chevrons-down" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="z-30 w-48">
-          {[Favorites, ...defaultOrgs].map((org) => {
-            return (
-              <DropdownMenuItem
-                className="gap-1 cursor-pointer py-2"
-                onClick={() => onSelect(org)}
-              >
-                {org.name}
-              </DropdownMenuItem>
-            );
-          })}
+          {[Favorites, ...defaultOrgs].map((org) => (
+            <DropdownMenuItem
+              key={org.name}
+              className="cursor-pointer gap-1 py-2"
+              onClick={() => onSelect(org)}
+            >
+              {org.name}
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      {/* Live channel list - horizontal scroll */}
       <div
         id="live-channel-container"
-        className={cn("flex min-h-12 flex-nowrap gap-2 overflow-scroll", {})}
+        className={cn(
+          "flex min-w-0 flex-1 items-center gap-2 overflow-x-auto overflow-y-hidden",
+          "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted",
+        )}
       >
-        {liveChannels.map((live) => {
-          return (
-            <LiveChannel
-              key={live.id}
-              channelImgLink={live.channel.photo}
-              channelName={live.channel.name}
-              videoId={live.id}
-              topicId={live.topic_id!}
-            />
-          );
-        })}
+        {liveChannels.map((live) => (
+          <LiveChannel
+            key={live.id}
+            channelImgLink={live.channel.photo}
+            channelName={live.channel.name}
+            videoId={live.id}
+            topicId={live.topic_id!}
+          />
+        ))}
       </div>
     </div>
   );

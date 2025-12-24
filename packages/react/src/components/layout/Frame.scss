@@ -120,7 +120,7 @@ $responsive-breakpoint: 768px;
   > main {
     grid-area: content;
     max-width: 100dvw;
-    padding-bottom: calc(var(--footer-height-clearance) + 20px);
+    padding-bottom: calc(var(--footer-height-clearance));
     // transition: None;
     // disabling for now so we can use position sticky
     // overflow-y: auto;

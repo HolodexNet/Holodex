@@ -2,6 +2,7 @@
 import { LiveChannelIcon } from "./LiveChannelIcon";
 import { LiveStreamInfo } from "./LiveStreamInfo";
 import { useState } from "react";
+import { useAutoLayout } from "@/hooks/useAutoLayout";
 
 interface LiveChannelProps {
   channelImgLink?: string;
@@ -21,9 +22,20 @@ export function LiveChannel({
   videoId,
 }: LiveChannelProps) {
   const [isHover, setIsHover] = useState(false);
+  const { addVideo } = useAutoLayout();
+
+  const handleClick = () => {
+    if (videoId) {
+      addVideo({ id: videoId });
+    }
+  };
 
   return (
-    <div>
+    <div
+      onClick={handleClick}
+      className="cursor-pointer"
+      title={`Add ${channelName} to multiview`}
+    >
       <LiveChannelIcon
         imageLink={channelImgLink}
         channelName={channelName}

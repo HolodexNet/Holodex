@@ -63,7 +63,8 @@ export function LocationAwareReactivity() {
       location.pathname.startsWith("/watch") ||
       location.pathname.startsWith("/edit") ||
       location.pathname.startsWith("/scripteditor") ||
-      location.pathname.startsWith("/tlclient");
+      location.pathname.startsWith("/tlclient") ||
+      location.pathname.startsWith("/multiview");
 
     indicatePageFullscreen(isFullscreen);
   }, [location.pathname, indicatePageFullscreen]);
@@ -95,6 +96,10 @@ export function GlobalReactivity() {
 
 export function CopyrightNotice() {
   const [dark, setDark] = useAtom(darkAtom);
+  const location = useLocation();
+  if (location.pathname.startsWith("/multiview")) {
+    return null;
+  }
   return (
     <div className="text-sm text-center mt-16">
       © 2020-2026 Holodex v{lastTag}.{commitsSinceLastTag}
