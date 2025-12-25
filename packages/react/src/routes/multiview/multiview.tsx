@@ -70,7 +70,7 @@ function MultiviewContent() {
   }, [layoutParam, setCells, setContentMap]);
 
   return (
-    <div className="flex flex-col overflow-hidden h-screen w-screen">
+    <div className="flex flex-col overflow-hidden select-none h-screen w-screen">
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
@@ -84,7 +84,7 @@ function MultiviewContent() {
       </div>
 
       {/* Main grid area - fills remaining space */}
-      <div className="flex-1 relative min-h-0">
+      <div className="relative flex-1 min-h-0">
         <MultiviewGrid className="h-full w-full" />
       </div>
 

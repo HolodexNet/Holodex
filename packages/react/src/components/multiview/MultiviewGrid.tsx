@@ -112,8 +112,8 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           width={bounds.width}
           cols={cols}
           rowHeight={rowHeight}
-          margin={[1, 1]}
-          containerPadding={[1, 1]}
+          margin={[0, 0]}
+          containerPadding={[0, 0]}
           rows={rows}
           height={containerHeight}
           color="rgba(255, 255, 255, 0.03)"
@@ -129,8 +129,8 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           gridConfig={{
             cols: cols,
             rowHeight: rowHeight,
-            margin: [1, 1],
-            containerPadding: [1, 1],
+            margin: [0, 0],
+            containerPadding: [0, 0],
             maxRows: rows,
           }}
           dragConfig={{
@@ -145,21 +145,22 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
               // Direction-specific styling
               const handleStyles: Record<string, string> = {
                 // Edge handles - bar style
-                n: `${baseStyles} top-0 left-1/2 -translate-x-1/2 h-2 w-12 cursor-ns-resize rounded-b-full bg-white/20 hover:bg-white/50 hover:h-2`,
-                s: `${baseStyles} bottom-0 left-1/2 -translate-x-1/2 h-2 w-12 cursor-ns-resize rounded-t-full bg-white/20 hover:bg-white/50 hover:h-2`,
-                e: `${baseStyles} right-0 top-1/2 -translate-y-1/2 w-2 h-12 cursor-ew-resize rounded-l-full bg-white/20 hover:bg-white/50 hover:w-2`,
-                w: `${baseStyles} left-0 top-1/2 -translate-y-1/2 w-2 h-12 cursor-ew-resize rounded-r-full bg-white/20 hover:bg-white/50 hover:w-2`,
+                n: `${baseStyles} top-0 left-1/2 -translate-x-1/2 h-3 w-14 cursor-ns-resize rounded-b-full bg-white/20 hover:bg-white/50 hover:h-4`,
+                s: `${baseStyles} bottom-0 left-1/2 -translate-x-1/2 h-3 w-14 cursor-ns-resize rounded-t-full bg-white/20 hover:bg-white/50 hover:h-4`,
+                e: `${baseStyles} right-0 top-1/2 -translate-y-1/2 w-3 h-14 cursor-ew-resize rounded-l-full bg-white/20 hover:bg-white/50 hover:w-4`,
+                w: `${baseStyles} left-0 top-1/2 -translate-y-1/2 w-3 h-14 cursor-ew-resize rounded-r-full bg-white/20 hover:bg-white/50 hover:w-4`,
                 // Corner handles - dot/corner style
-                ne: `${baseStyles} top-0 right-0 size-4 cursor-nesw-resize rounded-bl-full bg-white/30 hover:bg-white/60`,
-                nw: `${baseStyles} top-0 left-0 size-4 cursor-nwse-resize rounded-br-full bg-white/30 hover:bg-white/60`,
-                se: `${baseStyles} bottom-0 right-0 size-4 cursor-nwse-resize rounded-tl-full bg-white/30 hover:bg-white/60`,
-                sw: `${baseStyles} bottom-0 left-0 size-4 cursor-nesw-resize rounded-tr-full bg-white/30 hover:bg-white/60`,
+                ne: `${baseStyles} top-0 right-0 size-4 cursor-nesw-resize rounded-bl-full bg-white/30 hover:bg-white/60 hover:size-5`,
+                nw: `${baseStyles} top-0 left-0 size-4 cursor-nwse-resize rounded-br-full bg-white/30 hover:bg-white/60 hover:size-5`,
+                se: `${baseStyles} bottom-0 right-0 size-4 cursor-nwse-resize rounded-tl-full bg-white/30 hover:bg-white/60 hover:size-5`,
+                sw: `${baseStyles} bottom-0 left-0 size-4 cursor-nesw-resize rounded-tr-full bg-white/30 hover:bg-white/60 hover:size-5`,
               };
 
               return (
                 <div
                   ref={ref as unknown as Ref<HTMLDivElement>}
                   className={handleStyles[axis] || baseStyles}
+                  style={{ display: editMode ? "block" : "none" }}
                 />
               );
             },
@@ -210,8 +211,8 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           width={bounds.width}
           cols={cols}
           rowHeight={rowHeight}
-          margin={[1, 1]}
-          containerPadding={[1, 1]}
+          margin={[0, 0]}
+          containerPadding={[0, 0]}
           rows={rows}
           height={containerHeight}
           color="rgba(125,125,125,0.15)"
