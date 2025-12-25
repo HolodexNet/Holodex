@@ -14,9 +14,10 @@ import ReactGridLayout, {
   verticalCompactor,
 } from "react-grid-layout";
 import { GridBackground } from "react-grid-layout/extras";
-import "react-grid-layout/css/styles.css";
-import "react-resizable/css/styles.css";
-import { useCallback, useMemo } from "react";
+import { gridBounds } from "react-grid-layout/core";
+// import "react-grid-layout/css/styles.css";
+// import "react-resizable/css/styles.css";
+import { Ref, useCallback, useMemo } from "react";
 import useMeasure from "react-use-measure";
 
 interface MultiviewGridProps {
@@ -87,7 +88,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
   const rowHeight = useMemo(() => {
     if (!bounds?.height) return 30;
     const containerHeight = bounds.height;
-    return containerHeight / rows;
+    return containerHeight / rows - 1; // -1 for margin
   }, [bounds?.height, rows]);
 
   // Calculate container height for GridBackground
@@ -111,8 +112,8 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           width={bounds.width}
           cols={cols}
           rowHeight={rowHeight}
-          margin={[0, 0]}
-          containerPadding={[0, 0]}
+          margin={[1, 1]}
+          containerPadding={[1, 1]}
           rows={rows}
           height={containerHeight}
           color="rgba(255, 255, 255, 0.03)"
@@ -128,8 +129,8 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           gridConfig={{
             cols: cols,
             rowHeight: rowHeight,
-            margin: [0, 0],
-            containerPadding: [0, 0],
+            margin: [1, 1],
+            containerPadding: [1, 1],
             maxRows: rows,
           }}
           dragConfig={{
@@ -137,9 +138,35 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
             bounded: true,
           }}
           resizeConfig={{
+            handleComponent: (axis, ref) => {
+              // Base styles for all handles
+              const baseStyles = `absolute transition-all duration-150 z-50 react-resizable-handle `;
+
+              // Direction-specific styling
+              const handleStyles: Record<string, string> = {
+                // Edge handles - bar style
+                n: `${baseStyles} top-0 left-1/2 -translate-x-1/2 h-2 w-12 cursor-ns-resize rounded-b-full bg-white/20 hover:bg-white/50 hover:h-2`,
+                s: `${baseStyles} bottom-0 left-1/2 -translate-x-1/2 h-2 w-12 cursor-ns-resize rounded-t-full bg-white/20 hover:bg-white/50 hover:h-2`,
+                e: `${baseStyles} right-0 top-1/2 -translate-y-1/2 w-2 h-12 cursor-ew-resize rounded-l-full bg-white/20 hover:bg-white/50 hover:w-2`,
+                w: `${baseStyles} left-0 top-1/2 -translate-y-1/2 w-2 h-12 cursor-ew-resize rounded-r-full bg-white/20 hover:bg-white/50 hover:w-2`,
+                // Corner handles - dot/corner style
+                ne: `${baseStyles} top-0 right-0 size-4 cursor-nesw-resize rounded-bl-full bg-white/30 hover:bg-white/60`,
+                nw: `${baseStyles} top-0 left-0 size-4 cursor-nwse-resize rounded-br-full bg-white/30 hover:bg-white/60`,
+                se: `${baseStyles} bottom-0 right-0 size-4 cursor-nwse-resize rounded-tl-full bg-white/30 hover:bg-white/60`,
+                sw: `${baseStyles} bottom-0 left-0 size-4 cursor-nesw-resize rounded-tr-full bg-white/30 hover:bg-white/60`,
+              };
+
+              return (
+                <div
+                  ref={ref as unknown as Ref<HTMLDivElement>}
+                  className={handleStyles[axis] || baseStyles}
+                />
+              );
+            },
             enabled: editMode,
             handles: ["se", "sw", "ne", "nw", "s", "n", "e", "w"],
           }}
+          constraints={[gridBounds]}
           compactor={verticalCompactor}
           onLayoutChange={handleLayoutChange}
           autoSize={true}
@@ -184,7 +211,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           cols={cols}
           rowHeight={rowHeight}
           margin={[1, 1]}
-          containerPadding={[0, 0]}
+          containerPadding={[1, 1]}
           rows={rows}
           height={containerHeight}
           color="rgba(125,125,125,0.15)"

@@ -19,26 +19,26 @@ import { globalQueryClient } from "./lib/query";
 const GOOGLE_CLIENT_ID =
   "275540829388-87s7f9v2ht3ih51ah0tjkqng8pd8bqo2.apps.googleusercontent.com";
 
-const JotaiDevtools =
-  process.env.NODE_ENV === "development"
-    ? React.lazy(async () => {
-        const [moduleExports, _] = await Promise.all([
-          import("jotai-devtools"),
-          import("jotai-devtools/styles.css"),
-        ]);
-        return { default: moduleExports.DevTools };
-      })
-    : () => null;
+const JotaiDevtools = () => null;
+// process.env.NODE_ENV === "development"
+//   ? React.lazy(async () => {
+//       const [moduleExports, _] = await Promise.all([
+//         import("jotai-devtools"),
+//         import("jotai-devtools/styles.css"),
+//       ]);
+//       return { default: moduleExports.DevTools };
+//     })
+//   : () => null;
 
-const ReactQueryDevtools =
-  process.env.NODE_ENV === "development"
-    ? React.lazy(async () => {
-        return {
-          default: (await import("@tanstack/react-query-devtools"))
-            .ReactQueryDevtools,
-        };
-      })
-    : () => null;
+const ReactQueryDevtools = () => null;
+// process.env.NODE_ENV === "development"
+//   ? React.lazy(async () => {
+//     return {
+//       default: (await import("@tanstack/react-query-devtools"))
+//         .ReactQueryDevtools,
+//     };
+//   })
+//   : () => null;
 
 dayjs.extend(calendar);
 dayjs.extend(relativeTime);

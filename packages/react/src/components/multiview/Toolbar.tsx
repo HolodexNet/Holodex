@@ -1,5 +1,4 @@
 import { Selector } from "./Selector";
-import { Button } from "@/shadcn/ui/button";
 import { editModeAtom } from "@/store/multiview";
 import { useAtom } from "jotai";
 import { useAutoLayout } from "@/hooks/useAutoLayout";
@@ -39,26 +38,28 @@ export function Toolbar() {
         <Selector />
       </div>
 
-      {/* Toolbar buttons - fixed width */}
-      <div className="flex shrink-0 items-center gap-1">
+      {/* Toolbar buttons - fixed width, icon-centric with small labels */}
+      <div className="flex shrink-0 items-center gap-0.5">
         {/* Edit mode toggle */}
-        <Button
-          variant={editMode ? "default" : "outline"}
-          size="sm"
+        <button
           onClick={toggleEditMode}
-          className="gap-1"
+          className={`flex flex-col items-center justify-center px-2.5 py-1 rounded-md transition-colors ${
+            editMode
+              ? "bg-primary/20 text-primary"
+              : "text-muted-foreground/70 hover:text-foreground hover:bg-accent/50"
+          }`}
         >
-          <span className="h-4 w-4 i-lucide:layout-grid" />
-          <span className="hidden sm:inline">Edit</span>
-        </Button>
+          <span className="h-5 w-5 i-lucide:layout-grid" />
+          <span className="text-[9px] mt-0.5 leading-none">Edit</span>
+        </button>
 
         {/* Preset selector with previews */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="gap-1">
-              <span className="h-4 w-4 i-lucide:grid-3x3" />
-              <span className="hidden sm:inline">Presets</span>
-            </Button>
+            <button className="flex flex-col items-center rounded-md transition-colors justify-center px-2.5 py-1 text-muted-foreground/70 hover:text-foreground hover:bg-accent/50">
+              <span className="h-5 w-5 i-lucide:grid-3x3" />
+              <span className="text-[9px] mt-0.5 leading-none">Presets</span>
+            </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
@@ -111,20 +112,22 @@ export function Toolbar() {
         </DropdownMenu>
 
         {/* Clear all */}
-        <Button
-          variant="outline"
-          size="sm"
+        <button
           onClick={clearAll}
-          className="gap-1 text-destructive hover:bg-destructive hover:text-destructive-foreground"
+          className="flex flex-col items-center justify-center px-2.5 py-1 rounded-md text-muted-foreground/70 transition-colors hover:text-destructive hover:bg-destructive/10"
         >
-          <span className="h-4 w-4 i-lucide:trash-2" />
-          <span className="hidden md:inline">Clear</span>
-        </Button>
+          <span className="h-5 w-5 i-lucide:trash-2" />
+          <span className="text-[9px] mt-0.5 leading-none">Clear</span>
+        </button>
 
         {/* Fullscreen */}
-        <Button variant="outline" size="sm" onClick={toggleFullScreen}>
-          <span className="h-4 w-4 i-lucide:maximize" />
-        </Button>
+        <button
+          onClick={toggleFullScreen}
+          className="flex flex-col items-center justify-center px-2.5 py-1 rounded-md text-muted-foreground/70 hover:text-foreground hover:bg-accent/50 transition-colors"
+        >
+          <span className="h-5 w-5 i-lucide:maximize" />
+          <span className="text-[9px] mt-0.5 leading-none">Fullscreen</span>
+        </button>
       </div>
     </div>
   );

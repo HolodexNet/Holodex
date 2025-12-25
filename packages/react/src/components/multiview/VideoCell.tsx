@@ -1,5 +1,5 @@
 import { PlayerWrapper } from "@/components/layout/PlayerWrapper";
-import { cn } from "@/lib/utils";
+import { cn, idToVideoURL } from "@/lib/utils";
 
 interface VideoCellProps {
   videoId: string;
@@ -11,8 +11,8 @@ interface VideoCellProps {
  * Wraps PlayerWrapper with multiview-specific styling.
  */
 export function VideoCell({ videoId, hidden }: VideoCellProps) {
-  // Determine video URL based on ID format
-  const url = getVideoUrl(videoId);
+  // Use shared utility that handles tw: prefix for Twitch and defaults to YouTube
+  const url = idToVideoURL(videoId);
 
   return (
     <div
@@ -25,16 +25,4 @@ export function VideoCell({ videoId, hidden }: VideoCellProps) {
       <PlayerWrapper id={videoId} url={url} />
     </div>
   );
-}
-
-/**
- * Generate video URL from ID.
- * Supports YouTube and Twitch.
- */
-function getVideoUrl(videoId: string): string {
-  // Twitch streams have channel names, not 11-char IDs
-  if (videoId.length !== 11 || videoId.includes("_")) {
-    return `https://www.twitch.tv/${videoId}`;
-  }
-  return `https://www.youtube.com/watch?v=${videoId}`;
 }

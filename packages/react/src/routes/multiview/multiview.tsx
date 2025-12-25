@@ -78,7 +78,7 @@ function MultiviewContent() {
       {/* Toolbar - fixed height */}
       <div
         id="multiview-banner"
-        className="flex shrink-0 gap-2 z-20 justify-start rounded-lg bg-background/80 p-2 backdrop-blur-sm"
+        className="flex shrink-0 z-20 justify-start bg-background/80"
       >
         <Toolbar />
       </div>

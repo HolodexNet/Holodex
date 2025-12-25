@@ -165,20 +165,27 @@ export function Selector() {
   return (
     <div className="flex items-center gap-2 min-w-0">
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex items-center text-sm px-3 shrink-0 justify-between gap-1 rounded-md py-1.5 hover:bg-accent focus-visible:outline-none focus-visible:ring-1 active:scale-[97%]">
-          {currentOrg.name}
-          <div className="shrink-0 opacity-50 h-4 w-4 i-lucide:chevrons-down" />
-        </DropdownMenuTrigger>
+        <div className="flex flex-col items-start">
+          <span className="text-[10px] text-muted-foreground/80 px-3 font-extrabold leading-tight">
+            Holodex Multiview
+          </span>
+          <DropdownMenuTrigger className="flex items-center px-3 text-sm shrink-0 justify-between gap-1 rounded-md py-1.5 ring-accent hover:bg-accent focus-visible:outline-none focus-visible:ring-1 active:scale-[97%]">
+            {currentOrg.name}
+            <div className="shrink-0 opacity-50 h-4 w-4 i-lucide:chevrons-down" />
+          </DropdownMenuTrigger>
+        </div>
         <DropdownMenuContent className="z-30 w-48">
-          {[Favorites, ...defaultOrgs].map((org) => (
-            <DropdownMenuItem
-              key={org.name}
-              className="gap-1 cursor-pointer py-2"
-              onClick={() => onSelect(org)}
-            >
-              {org.name}
-            </DropdownMenuItem>
-          ))}
+          {[/*Favorites, (fav not supported yet)*/ ...defaultOrgs].map(
+            (org) => (
+              <DropdownMenuItem
+                key={org.name}
+                className="gap-1 cursor-pointer py-2"
+                onClick={() => onSelect(org)}
+              >
+                {org.name}
+              </DropdownMenuItem>
+            ),
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 

@@ -142,7 +142,7 @@ When `editMode=true`:
 
 | Type | Content | Notes |
 |------|---------|-------|
-| `video` | YouTube/Twitch embed | `videoId` property; 11-char = YouTube, else Twitch |
+| `video` | YouTube/Twitch embed | `videoId` property; YouTube uses 11-char ID directly, Twitch uses `tw:{channel}:{id}` format |
 | `chat` | Chat panel | `chatTab` selects which video's chat to display |
 | `empty` | Placeholder | Drop target for new videos |
 
