@@ -1,5 +1,6 @@
 import { Toolbar } from "@/components/multiview/Toolbar";
 import { MultiviewGrid } from "@/components/multiview/MultiviewGrid";
+import { MultiviewFrames } from "@/components/multiview/MultiviewFrames";
 import { Helmet } from "@dr.pogodin/react-helmet";
 import { AutoLayoutProvider, useAutoLayout } from "@/hooks/useAutoLayout";
 import { useSetAtom, useAtomValue } from "jotai";
@@ -70,7 +71,7 @@ function MultiviewContent() {
   }, [layoutParam, setCells, setContentMap]);
 
   return (
-    <div className="flex flex-col overflow-hidden select-none h-screen w-screen">
+    <div className="overflow-hidden flex flex-col select-none h-screen w-screen">
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
@@ -78,13 +79,16 @@ function MultiviewContent() {
       {/* Toolbar - fixed height */}
       <div
         id="multiview-banner"
-        className="flex shrink-0 z-20 justify-start bg-background/80"
+        className="flex z-20 shrink-0 justify-start bg-background/80"
       >
         <Toolbar />
       </div>
 
       {/* Main grid area - fills remaining space */}
       <div className="relative flex-1 min-h-0">
+        {/* Stable iframe layer - renders all frames using CSS Grid */}
+        <MultiviewFrames />
+        {/* Edit/control layer - uses react-grid-layout */}
         <MultiviewGrid className="h-full w-full" />
       </div>
 

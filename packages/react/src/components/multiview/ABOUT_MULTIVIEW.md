@@ -89,14 +89,20 @@ Multiview (route)
         │   ├── Edit Button
         │   ├── Presets Dropdown
         │   └── Clear/Fullscreen
-        ├── MultiviewGrid
+        ├── MultiviewFrames (CSS Grid - stable iframe layer)
+        │   └── All cells in queue order (preserves DOM order)
+        │       ├── VideoCell | ChatCell (content cells)
+        │       └── Blank iframe (empty cells)
+        ├── MultiviewGrid (edit controls layer)
         │   ├── GridBackground (visual guides)
-        │   └── ReactGridLayout
+        │   └── ReactGridLayout (drag/resize)
         │       └── MultiviewCell (per visible cell)
-        │           ├── VideoCell | ChatCell | EmptyCell
+        │           ├── EmptyCell (drop target)
         │           └── MultiviewEditOverlay (if editMode)
         └── Auto-Layout Dialog
 ```
+
+**Key Architecture Decision**: All iframes are rendered via `MultiviewFrames` in **queue order** using pure CSS Grid positioning. This is completely independent of `react-grid-layout` DOM, preventing iframe reloading when the grid is edited. Empty cells render blank iframes to preserve queue slots for future content.
 
 ---
 
@@ -154,7 +160,8 @@ When `editMode=true`:
 src/
 ├── components/multiview/
 │   ├── MultiviewGrid.tsx      # Main grid, react-grid-layout integration
-│   ├── MultiviewCell.tsx      # Individual cell render logic
+│   ├── MultiviewFrames.tsx    # CSS Grid iframe layer (prevents reload)
+│   ├── MultiviewCell.tsx      # Individual cell edit controls
 │   ├── MultiviewEditOverlay.tsx # Edit mode controls
 │   ├── VideoCell.tsx          # Video player wrapper
 │   ├── ChatCell.tsx           # Chat embed

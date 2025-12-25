@@ -100,10 +100,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
   return (
     <div
       ref={containerRef}
-      className={cn(
-        "relative h-full w-full overflow-hidden bg-black",
-        className,
-      )}
+      className={cn("relative h-full w-full overflow-hidden", className)}
       data-aspect-class={aspectClass}
     >
       {/* Grid background using react-grid-layout's GridBackground */}
@@ -118,7 +115,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           height={containerHeight}
           color="rgba(255, 255, 255, 0.03)"
           borderRadius={0}
-          className="absolute inset-0 pointer-events-none z-0"
+          className="absolute inset-0 pointer-events-none z-5"
         />
       )}
 
@@ -171,7 +168,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           compactor={verticalCompactor}
           onLayoutChange={handleLayoutChange}
           autoSize={true}
-          className="h-full z-5"
+          className="h-full z-10"
           style={{ height: "100%" }}
         >
           {cells
@@ -188,23 +185,6 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
         </ReactGridLayout>
       )}
 
-      {/* Hidden cells - still render iframes but not visible */}
-      {cells
-        .filter((cell) => cell.w <= 0 || cell.h <= 0)
-        .map((cell) => (
-          <div
-            key={cell.id}
-            className="absolute h-0 w-0 overflow-hidden"
-            data-cell-id={cell.id}
-          >
-            <MultiviewCell
-              cell={cell}
-              index={cells.indexOf(cell)}
-              editMode={false}
-            />
-          </div>
-        ))}
-
       {/* Visual grid overlay for edit mode - enhanced visibility */}
       {editMode && bounds?.height && (
         <GridBackground
@@ -217,7 +197,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           height={containerHeight}
           color="rgba(125,125,125,0.15)"
           borderRadius={4}
-          className="absolute inset-0 pointer-events-none z-10"
+          className="absolute inset-0 pointer-events-none z-20"
         />
       )}
     </div>
