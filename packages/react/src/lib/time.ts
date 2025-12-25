@@ -15,3 +15,12 @@ export function formatDuration(millisecs: number): string {
 
   return millisecs < 0 ? `-${formattedTime}` : formattedTime;
 }
+
+export function formatDurationShort(millisecs: number): string {
+  const absSeconds = Math.abs(millisecs) / 1000;
+  const h = absSeconds / (60 * 60);
+  const m = (absSeconds % (60 * 60)) / 60;
+  return h >= 1
+    ? `${Math.floor(h)}:${Math.floor(m).toString().padStart(2, "0")}`
+    : `${Math.floor(m)}m`;
+}

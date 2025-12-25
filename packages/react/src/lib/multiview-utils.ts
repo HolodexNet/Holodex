@@ -120,60 +120,289 @@ export function decodeLayout(encodedStr: string): DecodeResult {
   };
 }
 
+// ============================================================================
+// Preset Generation Helpers
+// ============================================================================
+
+interface CellDef {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  type?: "video" | "chat";
+  chatTab?: number;
+}
+
 /**
- * Default presets for horizontal (12x20) layouts.
- * These presets use the same encoding as the Vue implementation.
- * Base64: A=0, B=1, ... L=11, M=12, ... Y=24, etc.
- * Format: xywh where x=col, y=row, w=width, h=height
+ * Encode a single cell definition to the compact format.
+ */
+function encodeCell(cell: CellDef): string {
+  let encoded = "";
+  encoded += b64[cell.x];
+  encoded += b64[cell.y];
+  encoded += b64[cell.w];
+  encoded += b64[cell.h];
+  if (cell.type === "chat") {
+    encoded += `chat${cell.chatTab ?? 0}`;
+  }
+  return encoded;
+}
+
+/**
+ * Create a preset from human-readable cell definitions.
+ * This makes presets self-documenting and easier to maintain.
+ */
+function createPreset(
+  cells: CellDef[],
+  name: string,
+  defaultCount?: number,
+): LayoutPreset {
+  const layout = cells.map(encodeCell).join(",");
+  return defaultCount !== undefined
+    ? { layout, name, default: defaultCount }
+    : { layout, name };
+}
+
+/**
+ * Default presets for horizontal (12 rows x 20 cols) layouts.
+ * Grid: 20 columns wide, 12 rows tall
  */
 export const horizontalPresets: LayoutPreset[] = [
-  { layout: "AAYY", name: "1🎞️", default: 1 },
-  { layout: "AAUY,UAEYchat0", name: "Side Chat 1" },
-  { layout: "AAMY,MAMY", name: "2🎞️", default: 2 },
-  { layout: "AARM,AMRM,RAHYchat", name: "Side Chat 2" },
-  { layout: "AAOM,AMOM,OAFYchat,TAFYchat", name: "2🎞️, 2💬" },
-  { layout: "AAMY,MAMM,MMMM", name: "1🎞️+2", default: 3 },
-  { layout: "AAMM,AMMM,MAMM,MMGMchat,SMGMchat", name: "3🎞️, 2💬" },
-  { layout: "AAMM,AMMM,MAMM,MMMM", name: "2x2🎞️", default: 4 },
-  { layout: "AAKM,KAKM,UAEMchat0,AMKM,KMKM,UMEMchat0", name: "2x2🎞️ 2💬" },
-  { layout: "AAMP,APIJ,IPIJ,MAMP,QPIJ", name: "5🎞️", default: 5 },
-  { layout: "AAIM,AMIM,IAIM,IMIM,QAIM,QMIM", name: "2x3🎞️", default: 6 },
-  { layout: "AAJM,AMJM,JAJM,JMJM,SAGI,SIGI,SQGI", name: "7🎞️", default: 7 },
-  {
-    layout: "AAKM,AMKM,RAHI,KAHI,RQHI,KQHI,KIHI,RIHI",
-    name: "8🎞️",
-    default: 8,
-  },
-  {
-    layout: "AAII,AIII,AQII,IAII,IIII,IQII,QAII,QIII,QQII",
-    name: "3x3🎞️",
-    default: 9,
-  },
+  // 1 video - full screen
+  createPreset([{ x: 0, y: 0, w: 20, h: 12 }], "1🎞️", 1),
+
+  // 1 video with side chat
+  createPreset(
+    [
+      { x: 0, y: 0, w: 15, h: 12 },
+      { x: 15, y: 0, w: 5, h: 12, type: "chat", chatTab: 0 },
+    ],
+    "Side Chat 1",
+  ),
+
+  // 2 videos - side by side
+  createPreset(
+    [
+      { x: 0, y: 0, w: 10, h: 12 },
+      { x: 10, y: 0, w: 10, h: 12 },
+    ],
+    "2🎞️",
+    2,
+  ),
+
+  // 2 videos with side chat
+  createPreset(
+    [
+      { x: 0, y: 0, w: 8, h: 6 },
+      { x: 0, y: 6, w: 8, h: 6 },
+      { x: 8, y: 0, w: 12, h: 12, type: "chat" },
+    ],
+    "Side Chat 2",
+  ),
+
+  // 1 large + 2 small (picture-in-picture style)
+  createPreset(
+    [
+      { x: 0, y: 0, w: 14, h: 12 },
+      { x: 14, y: 0, w: 6, h: 6 },
+      { x: 14, y: 6, w: 6, h: 6 },
+    ],
+    "1🎞️+2",
+    3,
+  ),
+
+  // 2x2 grid
+  createPreset(
+    [
+      { x: 0, y: 0, w: 10, h: 6 },
+      { x: 10, y: 0, w: 10, h: 6 },
+      { x: 0, y: 6, w: 10, h: 6 },
+      { x: 10, y: 6, w: 10, h: 6 },
+    ],
+    "2x2🎞️",
+    4,
+  ),
+
+  // 5 videos - 2 on top, 3 on bottom
+  createPreset(
+    [
+      { x: 0, y: 0, w: 10, h: 6 },
+      { x: 10, y: 0, w: 10, h: 6 },
+      { x: 0, y: 6, w: 7, h: 6 },
+      { x: 7, y: 6, w: 6, h: 6 },
+      { x: 13, y: 6, w: 7, h: 6 },
+    ],
+    "5🎞️",
+    5,
+  ),
+
+  // 2x3 grid (6 videos)
+  createPreset(
+    [
+      { x: 0, y: 0, w: 7, h: 6 },
+      { x: 7, y: 0, w: 6, h: 6 },
+      { x: 13, y: 0, w: 7, h: 6 },
+      { x: 0, y: 6, w: 7, h: 6 },
+      { x: 7, y: 6, w: 6, h: 6 },
+      { x: 13, y: 6, w: 7, h: 6 },
+    ],
+    "2x3🎞️",
+    6,
+  ),
+
+  // 7 videos - 4 on top, 3 on bottom
+  createPreset(
+    [
+      { x: 0, y: 0, w: 5, h: 6 },
+      { x: 5, y: 0, w: 5, h: 6 },
+      { x: 10, y: 0, w: 5, h: 6 },
+      { x: 15, y: 0, w: 5, h: 6 },
+      { x: 0, y: 6, w: 7, h: 6 },
+      { x: 7, y: 6, w: 6, h: 6 },
+      { x: 13, y: 6, w: 7, h: 6 },
+    ],
+    "7🎞️",
+    7,
+  ),
+
+  // 8 videos - 4x2
+  createPreset(
+    [
+      { x: 0, y: 0, w: 5, h: 6 },
+      { x: 5, y: 0, w: 5, h: 6 },
+      { x: 10, y: 0, w: 5, h: 6 },
+      { x: 15, y: 0, w: 5, h: 6 },
+      { x: 0, y: 6, w: 5, h: 6 },
+      { x: 5, y: 6, w: 5, h: 6 },
+      { x: 10, y: 6, w: 5, h: 6 },
+      { x: 15, y: 6, w: 5, h: 6 },
+    ],
+    "4x2🎞️",
+    8,
+  ),
+
+  // 9 videos - 3x3 (approximate fit within 20x12)
+  createPreset(
+    [
+      { x: 0, y: 0, w: 7, h: 4 },
+      { x: 7, y: 0, w: 6, h: 4 },
+      { x: 13, y: 0, w: 7, h: 4 },
+      { x: 0, y: 4, w: 7, h: 4 },
+      { x: 7, y: 4, w: 6, h: 4 },
+      { x: 13, y: 4, w: 7, h: 4 },
+      { x: 0, y: 8, w: 7, h: 4 },
+      { x: 7, y: 8, w: 6, h: 4 },
+      { x: 13, y: 8, w: 7, h: 4 },
+    ],
+    "3x3🎞️",
+    9,
+  ),
 ];
 
 /**
- * Default presets for square (12x12) layouts.
+ * Default presets for square (12 rows x 12 cols) layouts.
  */
 export const squarePresets: LayoutPreset[] = [
-  { layout: "AALL", name: "1🎞️", default: 1 },
-  { layout: "AALF,AFLF", name: "2🎞️ Side", default: 2 },
-  { layout: "AAFL,AFFL", name: "2🎞️ Stacked" },
-  { layout: "AAFF,FAFF,AFFF,FFFF", name: "2x2🎞️", default: 4 },
-  {
-    layout: "AADD,DADD,HADD,ADDD,DDDD,HDDD,AHDD,DHDD,HHDD",
-    name: "3x3🎞️",
-    default: 9,
-  },
+  // 1 video - full screen
+  createPreset([{ x: 0, y: 0, w: 12, h: 12 }], "1🎞️", 1),
+
+  // 2 videos - side by side
+  createPreset(
+    [
+      { x: 0, y: 0, w: 6, h: 12 },
+      { x: 6, y: 0, w: 6, h: 12 },
+    ],
+    "2🎞️ Side",
+    2,
+  ),
+
+  // 2 videos - stacked
+  createPreset(
+    [
+      { x: 0, y: 0, w: 12, h: 6 },
+      { x: 0, y: 6, w: 12, h: 6 },
+    ],
+    "2🎞️ Stacked",
+  ),
+
+  // 2x2 grid
+  createPreset(
+    [
+      { x: 0, y: 0, w: 6, h: 6 },
+      { x: 6, y: 0, w: 6, h: 6 },
+      { x: 0, y: 6, w: 6, h: 6 },
+      { x: 6, y: 6, w: 6, h: 6 },
+    ],
+    "2x2🎞️",
+    4,
+  ),
+
+  // 3x3 grid
+  createPreset(
+    [
+      { x: 0, y: 0, w: 4, h: 4 },
+      { x: 4, y: 0, w: 4, h: 4 },
+      { x: 8, y: 0, w: 4, h: 4 },
+      { x: 0, y: 4, w: 4, h: 4 },
+      { x: 4, y: 4, w: 4, h: 4 },
+      { x: 8, y: 4, w: 4, h: 4 },
+      { x: 0, y: 8, w: 4, h: 4 },
+      { x: 4, y: 8, w: 4, h: 4 },
+      { x: 8, y: 8, w: 4, h: 4 },
+    ],
+    "3x3🎞️",
+    9,
+  ),
 ];
 
 /**
- * Default presets for vertical (20x12) layouts.
+ * Default presets for vertical (20 rows x 12 cols) layouts.
+ * Grid: 12 columns wide, 20 rows tall
  */
 export const verticalPresets: LayoutPreset[] = [
-  { layout: "AAYI,AIYQchat0", name: "Mobile 1", default: 1 },
-  { layout: "AOYKchat,AAYH,AHYH", name: "Mobile 2", default: 2 },
-  { layout: "AAYI,AIYI,AQYI", name: "Mobile 3", default: 3 },
-  { layout: "AAMM,AMMM,MAMM,MMMM", name: "Mobile 4", default: 4 },
+  // 1 video with chat below
+  createPreset(
+    [
+      { x: 0, y: 0, w: 12, h: 10 },
+      { x: 0, y: 10, w: 12, h: 10, type: "chat", chatTab: 0 },
+    ],
+    "Mobile 1",
+    1,
+  ),
+
+  // 2 videos stacked with chat
+  createPreset(
+    [
+      { x: 0, y: 0, w: 12, h: 7 },
+      { x: 0, y: 7, w: 12, h: 7 },
+      { x: 0, y: 14, w: 12, h: 6, type: "chat" },
+    ],
+    "Mobile 2",
+    2,
+  ),
+
+  // 3 videos stacked
+  createPreset(
+    [
+      { x: 0, y: 0, w: 12, h: 7 },
+      { x: 0, y: 7, w: 12, h: 7 },
+      { x: 0, y: 14, w: 12, h: 6 },
+    ],
+    "Mobile 3",
+    3,
+  ),
+
+  // 2x2 grid
+  createPreset(
+    [
+      { x: 0, y: 0, w: 6, h: 10 },
+      { x: 6, y: 0, w: 6, h: 10 },
+      { x: 0, y: 10, w: 6, h: 10 },
+      { x: 6, y: 10, w: 6, h: 10 },
+    ],
+    "Mobile 4",
+    4,
+  ),
 ];
 
 /**

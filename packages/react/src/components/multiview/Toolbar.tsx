@@ -35,7 +35,7 @@ export function Toolbar() {
   return (
     <div className="flex w-full items-center justify-between gap-2 max-w-full flex-nowrap p-1">
       {/* Video selector - constrained width */}
-      <div className="min-w-0 overflow-hidden flex-1">
+      <div className="min-w-0 overflow-hidden px-1 flex-1">
         <Selector />
       </div>
 
