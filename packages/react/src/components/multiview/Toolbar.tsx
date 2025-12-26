@@ -32,7 +32,7 @@ export function Toolbar() {
   };
 
   return (
-    <div className="flex w-full items-center justify-between gap-2 max-w-full flex-nowrap p-1">
+    <div className="flex w-full items-center justify-between gap-2 max-w-full p-1 flex-nowrap">
       {/* Video selector - constrained width */}
       <div className="min-w-0 overflow-hidden px-1 flex-1">
         <Selector />
@@ -50,20 +50,20 @@ export function Toolbar() {
           }`}
         >
           <span className="h-5 w-5 i-lucide:layout-grid" />
-          <span className="text-[9px] mt-0.5 leading-none">Edit</span>
+          <span className="mt-0.5 leading-none text-[9px]">Edit</span>
         </button>
 
         {/* Preset selector with previews */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex flex-col items-center rounded-md transition-colors justify-center px-2.5 py-1 text-muted-foreground/70 hover:text-foreground hover:bg-accent/50">
+            <button className="flex flex-col items-center rounded-md transition-colors justify-center py-1 px-2.5 text-muted-foreground/70 hover:text-foreground hover:bg-accent/50">
               <span className="h-5 w-5 i-lucide:grid-3x3" />
               <span className="text-[9px] mt-0.5 leading-none">Presets</span>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
-            className="max-h-80 w-56 overflow-y-auto"
+            className="w-56 overflow-y-auto max-h-80"
           >
             <DropdownMenuLabel className="text-xs text-muted-foreground">
               Horizontal (12×20)

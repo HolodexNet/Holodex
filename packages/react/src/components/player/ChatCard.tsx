@@ -27,7 +27,7 @@ export function ChatCard({
     useStateList(CHAT_SIZES_ITER);
 
   return (
-    <div className="flex w-full overflow-hidden h-full flex-col rounded-lg border border-base bg-card">
+    <div className="flex w-full overflow-hidden h-full flex-col border border-base rounded-lg bg-card">
       <Collapsible
         open={chatOpen}
         className={cn("flex flex-col ")}
@@ -51,7 +51,7 @@ export function ChatCard({
                   to="/about/faq#youtube"
                   target="_blank"
                   onClick={(e) => e.stopPropagation()}
-                  className="ml-auto rounded-md px-2 text-xs text-muted-foreground py-0.5 transition-colors bg-muted hover:bg-accent hover:text-accent-foreground"
+                  className="ml-auto rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent py-0.5 bg-muted hover:text-accent-foreground"
                 >
                   Not logged in{" "}
                   <div className="text-xs inline-block align-bottom i-lucide:shield-question-mark"></div>

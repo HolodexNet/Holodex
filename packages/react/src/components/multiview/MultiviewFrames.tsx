@@ -67,7 +67,7 @@ function MultiviewFrameItem({ cell }: MultiviewFrameItemProps) {
   if (isHidden) {
     return (
       <div
-        className="absolute h-0 w-0 overflow-hidden"
+        className="absolute overflow-hidden h-0 w-0"
         data-cell-id={cell.id}
         data-cell-hidden="true"
       >
@@ -76,7 +76,12 @@ function MultiviewFrameItem({ cell }: MultiviewFrameItemProps) {
         )}
         {cell.type === "chat" && <ChatCell chatTab={cell.chatTab ?? 0} />}
         {cell.type === "empty" && (
-          <iframe src={BLANK_IFRAME_URL} className="h-0 w-0" title="blank" />
+          <iframe
+            key={`frame-${cell.id}`}
+            src={BLANK_IFRAME_URL}
+            className="h-0 w-0"
+            title="blank"
+          />
         )}
       </div>
     );
@@ -84,7 +89,7 @@ function MultiviewFrameItem({ cell }: MultiviewFrameItemProps) {
 
   return (
     <div
-      className="overflow-hidden relative pointer-events-auto"
+      className="overflow-hidden pointer-events-auto relative"
       style={{
         gridColumn,
         gridRow,
@@ -98,6 +103,7 @@ function MultiviewFrameItem({ cell }: MultiviewFrameItemProps) {
       {cell.type === "chat" && <ChatCell chatTab={cell.chatTab ?? 0} />}
       {cell.type === "empty" && (
         <iframe
+          key={`frame-${cell.id}`}
           src={BLANK_IFRAME_URL}
           className="h-full w-full border-0"
           title="blank"

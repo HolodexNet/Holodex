@@ -79,16 +79,16 @@ export function Sidebar() {
             onClick={isMobile ? setClose : undefined}
           >
             <Logo className="h-8 w-8 ml-1.5" />
-            <h2 className="font-semibold text-3xl tracking-tight">Holodex</h2>
+            <h2 className="tracking-tight font-semibold text-3xl">Holodex</h2>
           </Link>
           <div className="grow" />
           <Button
             variant="ghost"
-            className="p-4 i-lucide:x md:hidden"
+            className="i-lucide:x p-4 md:hidden"
             onClick={setClose}
           />
         </div>
-        <div className="flex grow flex-col py-2 group/sidebar px-3 space-y-1">
+        <div className="flex grow flex-col py-2 px-3 group/sidebar space-y-1">
           <div className="mb-2">
             <OrgSelectorCombobox setOrg={setOrg} />
           </div>

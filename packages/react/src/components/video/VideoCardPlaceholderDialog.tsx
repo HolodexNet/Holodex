@@ -197,7 +197,7 @@ export default function VideoCardPlaceholder({
     return (
       <Drawer open={open} onOpenChange={setOpen} modal={true}>
         <DrawerContent
-          className="border rounded-lg border-solid p-0"
+          className="border rounded-lg p-0 border-solid"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="h-4"></div>

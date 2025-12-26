@@ -6,7 +6,7 @@ import { useCallback } from "react";
 
 interface MultiviewEditOverlayProps {
   cell: Cell;
-  index: number;
+  id: string;
 }
 
 /**
@@ -14,19 +14,17 @@ interface MultiviewEditOverlayProps {
  * Rendered over cell content when edit mode is active.
  * This overlay blocks iframe mouse events to allow react-grid-layout drag/resize to work.
  */
-export function MultiviewEditOverlay({
-  cell,
-  index,
-}: MultiviewEditOverlayProps) {
+export function MultiviewEditOverlay({ cell, id }: MultiviewEditOverlayProps) {
   const setCells = useSetAtom(cellQueueAtom);
   const setContentMap = useSetAtom(contentMapAtom);
 
   const handleClearContent = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
+      console.log(`Clearing content for cell ${id}`);
       setCells((cells) =>
-        cells.map((c, i) =>
-          i === index
+        cells.map((c) =>
+          c.id === id
             ? {
                 ...c,
                 type: "empty" as const,
@@ -45,13 +43,13 @@ export function MultiviewEditOverlay({
         });
       }
     },
-    [index, cell.videoId, setCells, setContentMap],
+    [id, cell.videoId, setCells, setContentMap],
   );
 
   const handleDeleteCell = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
-      setCells((cells) => cells.map((c, i) => (i === index ? hideCell(c) : c)));
+      setCells((cells) => cells.map((c) => (c.id === id ? hideCell(c) : c)));
       // Remove from content map if video
       if (cell.videoId) {
         setContentMap((map) => {
@@ -61,25 +59,26 @@ export function MultiviewEditOverlay({
         });
       }
     },
-    [index, cell.videoId, setCells, setContentMap],
+    [id, cell.videoId, setCells, setContentMap],
   );
 
   return (
-    <div className="absolute inset-0 bg-black/40">
-      {/* This overlay is intentionally pointer-events-auto to block iframe mouse events 
-          and allow react-grid-layout to handle drag/resize */}
+    <div className="absolute inset-0 bg-black/40 pointer-events-auto">
+      {/* This overlay blocks iframe mouse events to allow react-grid-layout drag/resize */}
 
-      {/* Control buttons */}
-      <div className="absolute flex gap-2 bottom-2 right-2">
+      {/* Control buttons - explicitly clickable */}
+      <div className="absolute flex pointer-events-auto z-50 gap-2 bottom-2 right-2">
         {cell.type !== "empty" && (
           <button
+            type="button"
             onClick={handleClearContent}
-            className="rounded bg-yellow-600 px-2 py-1 text-xs text-white hover:bg-yellow-500"
+            className="rounded px-2 py-1 text-xs bg-yellow-600 text-white hover:bg-yellow-500"
           >
             Clear
           </button>
         )}
         <button
+          type="button"
           onClick={handleDeleteCell}
           className="rounded px-2 py-1 text-xs text-white bg-red-600 hover:bg-red-500"
         >
@@ -95,8 +94,8 @@ export function MultiviewEditOverlay({
       </div>
 
       {/* Drag handle indicator in center */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="py-1 rounded text-white/50 text-sm bg-black/30 px-3">
+      <div className="absolute inset-0 flex items-center justify-center z-10">
+        <div className="py-1 rounded text-sm text-white/50 bg-black/30 px-3 cursor-move drag-handle">
           Drag to move
         </div>
       </div>

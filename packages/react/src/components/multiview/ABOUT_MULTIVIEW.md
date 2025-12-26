@@ -93,11 +93,10 @@ Multiview (route)
         │   └── All cells in queue order (preserves DOM order)
         │       ├── VideoCell | ChatCell (content cells)
         │       └── Blank iframe (empty cells)
-        ├── MultiviewGrid (edit controls layer)
+        ├── MultiviewGrid (React-Grid-Layout Grid - edit controls layer)
         │   ├── GridBackground (visual guides)
-        │   └── ReactGridLayout (drag/resize)
+        │   └── react-grid-layout (drag/resize)
         │       └── MultiviewCell (per visible cell)
-        │           ├── EmptyCell (drop target)
         │           └── MultiviewEditOverlay (if editMode)
         └── Auto-Layout Dialog
 ```
@@ -165,7 +164,6 @@ src/
 │   ├── MultiviewEditOverlay.tsx # Edit mode controls
 │   ├── VideoCell.tsx          # Video player wrapper
 │   ├── ChatCell.tsx           # Chat embed
-│   ├── EmptyCell.tsx          # Empty state
 │   ├── Toolbar.tsx            # Top toolbar
 │   ├── Selector.tsx           # Org picker + live channel list
 │   ├── SelectorLiveItem.tsx   # Live channel item with hover VideoCard

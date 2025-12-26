@@ -23,9 +23,9 @@ export function ChatCell({ chatTab }: ChatCellProps) {
 
   if (!videoId) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-base-3 text-base-11">
+      <div className="flex h-full items-center w-full justify-center bg-base-3 text-base-11">
         <div className="text-center">
-          <div className="mb-2 h-8 w-8 opacity-50 i-lucide:message-square-off" />
+          <div className="h-8 w-8 opacity-50 mb-2 i-lucide:message-square-off" />
           <div className="text-sm">No video for tab {chatTab}</div>
         </div>
       </div>

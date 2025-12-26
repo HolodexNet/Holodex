@@ -76,7 +76,7 @@ export function SelectorLiveItem({ live }: SelectorLiveItemProps) {
           title={`Add ${live.channel?.name} to multiview`}
         >
           <Avatar
-            className="size-10 ring-2 ring-offset-1 ring-offset-background transition-transform hover:scale-105 active:scale-95"
+            className="size-10 ring-offset-background transition-transform ring-2 ring-offset-1 hover:scale-105 active:scale-95"
             style={
               {
                 "--tw-ring-color": isLive

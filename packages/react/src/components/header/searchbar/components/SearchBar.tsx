@@ -120,7 +120,7 @@ export function SearchBar({
         }}
       >
         <PopoverTrigger asChild>
-          <div className="rounded-md p-2 text-sm focus-within: ring-offset-muted bg-input group focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
+          <div className="text-sm focus-within: rounded-md p-2 ring-offset-muted bg-input group focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
             <label className="flex items-center gap-1 flex-wrap">
               {queryPieces.map((queryItem, i) => {
                 return (
@@ -142,7 +142,7 @@ export function SearchBar({
                 onBlur={() => setOpen(false)}
                 onFocus={() => setOpen(true)}
                 placeholder={t("component.search.searchLabel")}
-                className="ml-2 outline-hidden flex-1 bg-transparent placeholder:text-muted-foreground"
+                className="outline-hidden ml-2 flex-1 bg-transparent placeholder:text-muted-foreground"
               />
               <div className="flex ml-auto flex-row opacity-0 group-focus-within:opacity-100">
                 {query.length > 0 && (

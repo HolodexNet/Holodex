@@ -137,7 +137,7 @@ function VideoListScroller({ videos }: VideoListScrollerProps) {
   }, []);
 
   return (
-    <ScrollAreaPrimitive.Root className="overflow-hidden min-w-0 relative">
+    <ScrollAreaPrimitive.Root className="overflow-hidden relative min-w-0">
       <ScrollAreaPrimitive.Viewport
         ref={viewportRef}
         className="px-2 size-full"
@@ -156,7 +156,7 @@ function VideoListScroller({ videos }: VideoListScrollerProps) {
 
       <ScrollAreaPrimitive.ScrollAreaScrollbar
         orientation="horizontal"
-        className="relative w-full h-1.5 touch-none select-none p-px transition-colors"
+        className="relative w-full transition-colors h-1.5 touch-none select-none p-px"
       >
         <ScrollAreaPrimitive.ScrollAreaThumb className="w-full rounded-full bg-blue-500 h-1!" />
       </ScrollAreaPrimitive.ScrollAreaScrollbar>
@@ -236,10 +236,10 @@ export function Selector() {
     <div className="flex items-center min-w-0 gap-2">
       <DropdownMenu>
         <div className="flex flex-col items-start">
-          <span className="text-[10px] text-muted-foreground/80 px-3 font-extrabold leading-tight">
+          <span className="px-3 text-[10px] text-muted-foreground/80 font-extrabold leading-tight">
             Holodex Multiview
           </span>
-          <DropdownMenuTrigger className="flex items-center px-3 text-sm shrink-0 justify-between gap-1 rounded-md py-1.5 ring-accent hover:bg-accent focus-visible:outline-none focus-visible:ring-1 active:scale-[97%]">
+          <DropdownMenuTrigger className="flex items-center px-3 text-sm gap-1 rounded-md shrink-0 justify-between py-1.5 ring-accent hover:bg-accent focus-visible:outline-none focus-visible:ring-1 active:scale-[97%]">
             {currentOrg.name}
             <div className="shrink-0 opacity-50 h-4 w-4 i-lucide:chevrons-down" />
           </DropdownMenuTrigger>

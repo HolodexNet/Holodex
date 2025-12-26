@@ -101,7 +101,7 @@ export const OrgReranker = ({
           >
             {starredOrgs.map((org) => (
               <SortableItem key={"draggable" + org.name} id={org.name}>
-                <div className="flex items-center justify-between p-2 rounded h-10 my-1 cursor-grab">
+                <div className="flex items-center justify-between p-2 rounded my-1 h-10 cursor-grab">
                   <div className="mr-1 i-mdi:drag"></div>
                   <span className="grow">{org.name}</span>
                   <button
@@ -121,13 +121,13 @@ export const OrgReranker = ({
         <h3 className="mb-2 text-center text-lg font-semibold">
           Other Organizations
         </h3>
-        <div className="flex w-full text-sm rounded-md border border-base focus-within: bg-transparent focus-within:ring-2 transition-colors h-9 px-3 shadow-xs rounded-b-none focus-within:outline-hidden">
+        <div className="flex w-full text-sm rounded-md border border-base focus-within: bg-transparent focus-within:ring-2 transition-colors px-3 h-9 shadow-xs rounded-b-none focus-within:outline-hidden">
           <input
             type="text"
             placeholder="Filter organizations..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-transparent outline-hidden placeholder: border-none border-0 border-transparent"
+            className="w-full bg-transparent outline-hidden border-0 placeholder: border-none border-transparent"
           />
         </div>
         <ScrollArea className="rounded-md border px-1 h-60 rounded-b rounded-t-none md:h-80">

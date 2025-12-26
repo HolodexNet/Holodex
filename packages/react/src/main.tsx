@@ -1,4 +1,6 @@
 import React, { Suspense } from "react";
+import { DevTools } from "jotai-devtools";
+import "jotai-devtools/styles.css";
 import ReactDOM from "react-dom/client";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { HelmetProvider } from "@dr.pogodin/react-helmet";
@@ -19,18 +21,8 @@ import { globalQueryClient } from "./lib/query";
 const GOOGLE_CLIENT_ID =
   "275540829388-87s7f9v2ht3ih51ah0tjkqng8pd8bqo2.apps.googleusercontent.com";
 
-const JotaiDevtools = () => null;
-// process.env.NODE_ENV === "development"
-//   ? React.lazy(async () => {
-//       const [moduleExports, _] = await Promise.all([
-//         import("jotai-devtools"),
-//         import("jotai-devtools/styles.css"),
-//       ]);
-//       return { default: moduleExports.DevTools };
-//     })
-//   : () => null;
-
-const ReactQueryDevtools = () => null;
+const ReactQueryDevtools = (_: { position: string; buttonPosition: string }) =>
+  null;
 // process.env.NODE_ENV === "development"
 //   ? React.lazy(async () => {
 //     return {
@@ -53,7 +45,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         {process.env.NODE_ENV === "development" && (
           <Suspense>
             <ReactQueryDevtools position={"right"} buttonPosition="top-right" />
-            <JotaiDevtools position="top-right" />
+            <DevTools position="bottom-right" />
           </Suspense>
         )}
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>

@@ -11,12 +11,11 @@ import { MultiviewCell } from "./MultiviewCell";
 import ReactGridLayout, {
   type LayoutItem,
   type Layout,
-  verticalCompactor,
 } from "react-grid-layout";
 import { GridBackground } from "react-grid-layout/extras";
-import { gridBounds } from "react-grid-layout/core";
-// import "react-grid-layout/css/styles.css";
-// import "react-resizable/css/styles.css";
+import { gridBounds, minMaxSize } from "react-grid-layout/core";
+import { createMultiviewCompactor } from "./multiviewCompactor";
+import "./multiview.css";
 import { Ref, useCallback, useMemo } from "react";
 import useMeasure from "react-use-measure";
 
@@ -88,19 +87,23 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
   const rowHeight = useMemo(() => {
     if (!bounds?.height) return 30;
     const containerHeight = bounds.height;
-    return containerHeight / rows - 1; // -1 for margin
+    return containerHeight / rows;
   }, [bounds?.height, rows]);
 
-  // Calculate container height for GridBackground
-  const containerHeight = useMemo(() => {
-    if (!bounds?.height) return 0;
-    return bounds.height;
-  }, [bounds?.height]);
+  // Create the compactor with actual grid bounds
+  const compactor = useMemo(
+    () => createMultiviewCompactor(cols, rows),
+    [cols, rows],
+  );
 
   return (
     <div
       ref={containerRef}
-      className={cn("relative h-full w-full overflow-hidden", className)}
+      className={cn(
+        "relative h-full w-full overflow-hidden",
+        !editMode ? "hidden" : "",
+        className,
+      )}
       data-aspect-class={aspectClass}
     >
       {/* Grid background using react-grid-layout's GridBackground */}
@@ -112,7 +115,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           margin={[0, 0]}
           containerPadding={[0, 0]}
           rows={rows}
-          height={containerHeight}
+          height={bounds.height}
           color="rgba(255, 255, 255, 0.03)"
           borderRadius={0}
           className="absolute inset-0 pointer-events-none z-5"
@@ -133,6 +136,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           dragConfig={{
             enabled: editMode,
             bounded: true,
+            handle: ".drag-handle",
           }}
           resizeConfig={{
             handleComponent: (axis, ref) => {
@@ -164,22 +168,18 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
             enabled: editMode,
             handles: ["se", "sw", "ne", "nw", "s", "n", "e", "w"],
           }}
-          constraints={[gridBounds]}
-          compactor={verticalCompactor}
+          constraints={[gridBounds, minMaxSize]}
+          compactor={compactor}
           onLayoutChange={handleLayoutChange}
           autoSize={true}
           className="h-full z-10"
-          style={{ height: "100%" }}
+          style={{ height: "100%", display: !editMode ? "none" : "block" }}
         >
           {cells
             .filter((cell) => cell.w > 0 && cell.h > 0)
             .map((cell) => (
               <div key={cell.id} data-cell-id={cell.id}>
-                <MultiviewCell
-                  cell={cell}
-                  index={cells.indexOf(cell)}
-                  editMode={editMode}
-                />
+                <MultiviewCell cell={cell} id={cell.id} editMode={editMode} />
               </div>
             ))}
         </ReactGridLayout>
@@ -194,7 +194,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           margin={[0, 0]}
           containerPadding={[0, 0]}
           rows={rows}
-          height={containerHeight}
+          height={bounds.height}
           color="rgba(125,125,125,0.15)"
           borderRadius={4}
           className="absolute inset-0 pointer-events-none z-20"
