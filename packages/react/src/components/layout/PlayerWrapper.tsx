@@ -9,7 +9,7 @@ import React, { useCallback } from "react";
 import type { OnProgressProps } from "react-player/base";
 import ReactPlayer from "react-player";
 
-export const LazyReactPlayer = React.lazy(() => import("react-player"));
+// export const ReactPlayer = React.lazy(() => import("react-player"));
 
 interface IPlayerWrapper {
   /**
@@ -18,10 +18,14 @@ interface IPlayerWrapper {
   id: string;
   url: string;
   customSetPlayerRef?: React.Ref<ReactPlayer>;
+  /**
+   * Whether to autoplay the video. Defaults to true.
+   */
+  autoplay?: boolean;
 }
 
 export const PlayerWrapper = React.memo(
-  ({ id, url, customSetPlayerRef }: IPlayerWrapper) => {
+  ({ id, url, customSetPlayerRef, autoplay = true }: IPlayerWrapper) => {
     const playerRefAtom = videoPlayerRefAtomFamily(id);
     const setPlayerRef = useSetAtom(playerRefAtom);
 
@@ -52,7 +56,7 @@ export const PlayerWrapper = React.memo(
     // }, [playerRef, updateState]);
 
     return (
-      <LazyReactPlayer
+      <ReactPlayer
         ref={customSetPlayerRef ?? setPlayerRef}
         // pass `key` to prevent flicker issue https://github.com/CookPete/react-player/issues/413#issuecomment-395404630
         key={url}
@@ -68,7 +72,7 @@ export const PlayerWrapper = React.memo(
           youtube: {
             playerVars: {
               origin: window.origin,
-              autoplay: 1,
+              autoplay: autoplay ? 1 : 0,
             },
           },
         }}

@@ -91,44 +91,74 @@ export function AutoLayoutProvider({ children }: AutoLayoutProviderProps) {
   }, [autoLayoutDisabled]);
 
   /**
-   * Apply a new layout, merging existing content.
+   * Apply a new layout, merging existing content while preserving cell IDs.
+   * This prevents React reconciliation issues and iframe reloads by keeping
+   * existing cell IDs stable - only their positions change.
    */
   const applyLayoutWithMerge = useCallback(
     (newCells: Cell[], newVideo?: VideoRef) => {
       const currentCells = cellsRef.current;
 
-      // Get current videos in order
-      const currentVideos = currentCells
-        .filter((c) => c.type === "video" && c.videoId && c.w > 0)
-        .map((c) => c.videoId!);
+      // Get current video cells in order (preserving their IDs)
+      const currentVideoCells = currentCells.filter(
+        (c) => c.type === "video" && c.videoId && c.w > 0,
+      );
 
-      // Assign current videos + new video to empty cells
-      let videoIndex = 0;
-      const mergedCells = newCells.map((c) => {
-        if (c.type === "empty" && videoIndex < currentVideos.length) {
-          const videoId = currentVideos[videoIndex++];
-          return { ...c, type: "video" as const, videoId };
-        }
-        if (
-          c.type === "empty" &&
-          newVideo &&
-          videoIndex === currentVideos.length
-        ) {
-          videoIndex++;
-          return { ...c, type: "video" as const, videoId: newVideo.id };
-        }
-        return c;
-      });
+      // Get positions from the new layout for video slots
+      const videoSlots = newCells.filter((c) => c.type === "empty");
+      const chatSlots = newCells.filter((c) => c.type === "chat");
 
+      const mergedCells: Cell[] = [];
       const newContentMap: Record<
         string,
         { videoCellIndex: number; chatCellIndex?: number }
       > = {};
-      mergedCells.forEach((c, i) => {
-        if (c.type === "video" && c.videoId) {
-          newContentMap[c.videoId] = { videoCellIndex: i };
+
+      // Assign existing videos to new positions, preserving their IDs
+      let slotIndex = 0;
+      for (const existingCell of currentVideoCells) {
+        if (slotIndex < videoSlots.length) {
+          const slot = videoSlots[slotIndex];
+          // Keep the existing cell's ID and videoId, but update position
+          mergedCells.push({
+            ...existingCell,
+            x: slot.x,
+            y: slot.y,
+            w: slot.w,
+            h: slot.h,
+          });
+          newContentMap[existingCell.videoId!] = {
+            videoCellIndex: mergedCells.length - 1,
+          };
+          slotIndex++;
         }
-      });
+      }
+
+      // Add the new video if provided
+      if (newVideo && slotIndex < videoSlots.length) {
+        const slot = videoSlots[slotIndex];
+        mergedCells.push({
+          id: slot.id, // Use the new slot's ID for new videos
+          x: slot.x,
+          y: slot.y,
+          w: slot.w,
+          h: slot.h,
+          type: "video",
+          videoId: newVideo.id,
+        });
+        newContentMap[newVideo.id] = { videoCellIndex: mergedCells.length - 1 };
+        slotIndex++;
+      }
+
+      // Add remaining empty slots
+      for (let i = slotIndex; i < videoSlots.length; i++) {
+        mergedCells.push(videoSlots[i]);
+      }
+
+      // Add chat cells (keep their IDs from the preset)
+      for (const chatCell of chatSlots) {
+        mergedCells.push(chatCell);
+      }
 
       setCells(mergedCells);
       setContentMap(newContentMap);

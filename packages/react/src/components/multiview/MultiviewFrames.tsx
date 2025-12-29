@@ -23,19 +23,38 @@ export function MultiviewFrames() {
   const { rows, cols } = useAtomValue(gridDimensionsAtom);
 
   return (
-    <div
-      className="absolute inset-0 pointer-events-none"
-      style={{
-        display: "grid",
-        gridTemplateColumns: `repeat(${cols}, 1fr)`,
-        gridTemplateRows: `repeat(${rows}, 1fr)`,
-      }}
-    >
-      {/* Render ALL cells in queue order to preserve iframe DOM order */}
-      {cells.map((cell) => (
-        <MultiviewFrameItem key={cell.id} cell={cell} />
-      ))}
-    </div>
+    <>
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${cols}, 1fr)`,
+          gridTemplateRows: `repeat(${rows}, 1fr)`,
+        }}
+      >
+        {/* Render ALL cells in queue order to preserve iframe DOM order */}
+        {cells
+          .filter((cell) => cell.type == "video")
+          .map((cell) => (
+            <MultiviewFrameItem key={cell.id} cell={cell} />
+          ))}
+      </div>
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${cols}, 1fr)`,
+          gridTemplateRows: `repeat(${rows}, 1fr)`,
+        }}
+      >
+        {/* Render ALL chat cells in queue order to preserve iframe DOM order */}
+        {cells
+          .filter((cell) => cell.type == "chat")
+          .map((cell) => (
+            <MultiviewFrameItem key={cell.id} cell={cell} />
+          ))}
+      </div>
+    </>
   );
 }
 
