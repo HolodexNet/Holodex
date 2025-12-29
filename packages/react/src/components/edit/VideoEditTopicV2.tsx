@@ -92,8 +92,8 @@ function EditorSection({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-border bg-card overflow-hidden">
-      <div className="border-border flex items-center justify-between gap-3 px-4 py-3 border-b bg-muted/50">
+    <div className="border bg-card overflow-hidden rounded-xl border-border">
+      <div className="border-border flex items-center justify-between px-4 bg-muted/50 gap-3 py-3 border-b">
         <div className="flex items-center gap-2">
           <div className={clsx("text-primary", icon)} />
           <h3 className="text-sm font-semibold">{title}</h3>
@@ -264,8 +264,8 @@ export function VideoEditTopicV2({ video }: { video: Video }) {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center text-muted-foreground justify-center py-8 text-center">
-              <div className="h-8 w-8 mb-2 opacity-50 i-lucide:user-plus" />
+            <div className="flex flex-col items-center text-muted-foreground justify-center text-center py-8">
+              <div className="opacity-50 h-8 w-8 mb-2 i-lucide:user-plus" />
               <p className="text-sm">No channel mentions yet</p>
               <p className="text-xs mt-1">
                 Use the picker above to add channels that appear in this video

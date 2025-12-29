@@ -66,7 +66,7 @@ export default function VideoCardPlaceholder({
             <h2 className="font-bold text-2xl">{video.title}</h2>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
               <div className="items-center font-semibold">
-                <div className="inline-block text-sm mr-3 i-heroicons:user -mb-1" />
+                <div className="text-sm inline-block mr-3 i-heroicons:user -mb-1" />
                 <span>{nameFn(video.channel)}</span>
               </div>
               {video.mentions &&
@@ -197,7 +197,7 @@ export default function VideoCardPlaceholder({
     return (
       <Drawer open={open} onOpenChange={setOpen} modal={true}>
         <DrawerContent
-          className="border rounded-lg p-0 border-solid"
+          className="border p-0 rounded-lg border-solid"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="h-4"></div>

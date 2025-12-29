@@ -127,7 +127,7 @@ export const OrgReranker = ({
             placeholder="Filter organizations..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-transparent outline-hidden border-0 placeholder: border-none border-transparent"
+            className="w-full bg-transparent outline-hidden placeholder: border-0 border-none border-transparent"
           />
         </div>
         <ScrollArea className="rounded-md border px-1 h-60 rounded-b rounded-t-none md:h-80">

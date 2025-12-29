@@ -54,7 +54,7 @@ export function UserMenu() {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="w-8 overflow-hidden rounded-full z-30 mx-2 shrink-0">
+      <DropdownMenuTrigger className="w-8 overflow-hidden rounded-full shrink-0 z-30 mx-2">
         <img
           src={`https://api.dicebear.com/9.x/shapes/svg?seed=${user.id}`}
           alt="User avatar"
@@ -70,7 +70,7 @@ export function UserMenu() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1 pl-4">
-            <div className="overflow-hidden text-ellipsis font-semibold">
+            <div className="overflow-hidden font-semibold text-ellipsis">
               {user.username}{" "}
               <Badge size="sm">{user.role === "user" ? "" : user.role}</Badge>
             </div>
@@ -88,7 +88,7 @@ export function UserMenu() {
               </div> */}
             </div>
             <div className="flex flex-row capitalize">
-              <div className="mx-1 animate-pulse i-mage:stars-c"></div>
+              <div className="animate-pulse mx-1 i-mage:stars-c"></div>
 
               {user.contribution_count + " " + t("component.mainNav.points")}
             </div>

@@ -120,7 +120,7 @@ export function SearchBar({
         }}
       >
         <PopoverTrigger asChild>
-          <div className="text-sm focus-within: rounded-md p-2 ring-offset-muted bg-input group focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
+          <div className="text-sm rounded-md focus-within: p-2 ring-offset-muted bg-input group focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
             <label className="flex items-center gap-1 flex-wrap">
               {queryPieces.map((queryItem, i) => {
                 return (
@@ -148,7 +148,7 @@ export function SearchBar({
                 {query.length > 0 && (
                   <CommandShortcut className="pointer-events-none opacity-80">
                     {/* <span className="mr-1 rounded-sm  p-0.5">⇪</span> */}
-                    <span className="rounded-sm text-muted-foreground p-0.5">
+                    <span className="text-muted-foreground rounded-sm p-0.5">
                       ↵
                     </span>
                   </CommandShortcut>

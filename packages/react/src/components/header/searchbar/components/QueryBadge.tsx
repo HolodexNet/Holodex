@@ -17,7 +17,7 @@ export function QueryBadge({
     <Badge
       key={queryItem.type + queryItem.value}
       variant="primary"
-      className="px-1 font-normal tracking-tight"
+      className="font-normal px-1 tracking-tight"
     >
       {t(`search.class.${queryItem.type}`, queryItem.type)}
       {": "}
@@ -39,7 +39,7 @@ export function QueryBadge({
         }}
         onClick={onRemoveItem}
       >
-        <div className="hover: text-sm h-3 w-3 i-lucide:x"></div>
+        <div className="text-sm h-3 w-3 i-lucide:x hover:"></div>
       </button>
     </Badge>
   );

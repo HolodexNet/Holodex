@@ -55,14 +55,14 @@ export function Header({ id }: HeaderProps) {
         </Button>
       )}
 
-      <div className="grow hidden md:flex" />
+      <div className="hidden grow md:flex" />
 
       {path !== "/search" && (
         <>
           {/* Mobile-specific search bar */}
           {isMobile &&
             (isSearching ? (
-              <div className="flex w-full items-start mt-3 self-start">
+              <div className="flex mt-3 w-full items-start self-start">
                 <SearchBar className="grow shrink" autoFocus />
                 <Button
                   size="icon"

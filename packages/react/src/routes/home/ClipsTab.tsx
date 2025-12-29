@@ -47,11 +47,11 @@ export function ClipsTab() {
 
   if (clipLangs.length === 0)
     return (
-      <div className="gap-4 px-4 py-2 @container md:px-8">
+      <div className="gap-4 px-4 md:px-8 py-2 @container">
         <div>No language selected</div>
         <div>
           Select language:
-          <ClipLanguageSelector className="px-12 bg-primary hover:bg-primary/90" />
+          <ClipLanguageSelector className="bg-primary px-12 hover:bg-primary/90" />
         </div>
       </div>
     );

@@ -218,7 +218,7 @@ export default function HighlightBar({ video, onTimeJump }: HighlightBarProps) {
 
   if (!bucketsFiltered.length) return <div className="h-2"></div>;
   return (
-    <div className="w-full cursor-pointer hover: relative transition-all ease-out h-[10px] duration-200">
+    <div className="w-full hover: relative transition-all duration-200 cursor-pointer ease-out h-[10px]">
       {bucketsFiltered.map((bucket) => (
         <Tooltip key={`${bucket.time}-${bucket.display}`} delayDuration={0}>
           <TooltipTrigger asChild>
@@ -237,7 +237,7 @@ export default function HighlightBar({ video, onTimeJump }: HighlightBarProps) {
             {bucket.best ? (
               <div className="mt-0.5">
                 <time
-                  className="block opacity-50 font-mono text-xs"
+                  className="block opacity-50 text-xs font-mono"
                   // dateTime={bucket.absolute}
                 >
                   {bucket.display}

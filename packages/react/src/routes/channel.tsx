@@ -68,7 +68,7 @@ export function Channel() {
               : ""
           }
         />
-        <div className="flex flex-col gap-2 bg-card pt-4 z-20 sticky top-0 border-b shadow-lg border-b-base-5">
+        <div className="flex flex-col gap-2 bg-card border-b pt-4 sticky top-0 z-20 shadow-lg border-b-base-5">
           <div className="mx-auto flex gap-4 items-start px-4 container md:px-8 max-sm:flex-col md:items-center">
             <div className="flex gap-4 items-center">
               <ChannelImg
@@ -80,7 +80,7 @@ export function Channel() {
                   {channel?.org}
                   {channel?.group && ` / ${channel?.group}`}
                 </div>
-                <div className="font-bold line-clamp-1 text-lg">
+                <div className="font-bold text-lg line-clamp-1">
                   {preferredName}
                 </div>
                 <div className="text-muted-foreground text-sm">
@@ -94,7 +94,7 @@ export function Channel() {
                         n: channel?.clip_count ?? "0",
                         })}`} */}
                 </div>
-                <div className="flex max-w-full gap-1 mt-1 overflow-x-auto">
+                <div className="flex gap-1 mt-1 max-w-full overflow-x-auto">
                   {channel?.top_topics?.map((topic) => (
                     <TopicBadge
                       key={topic}
