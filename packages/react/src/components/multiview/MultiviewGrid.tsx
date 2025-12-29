@@ -156,7 +156,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
                 nw: (
                   <div
                     ref={ref as unknown as Ref<HTMLDivElement>}
-                    className="absolute w-4 h-4 z-50 transition-all top-1 left-1 cursor-nwse-resize react-resizable-handle hover:brightness-150"
+                    className="absolute z-50 transition-all w-4 h-4 top-1 left-1 cursor-nwse-resize react-resizable-handle hover:brightness-150"
                     style={{ display: editMode ? "block" : "none" }}
                   >
                     <div className="absolute top-0 left-0 w-full h-1 bg-primary"></div>
@@ -200,7 +200,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
                 n: (
                   <div
                     ref={ref as unknown as Ref<HTMLDivElement>}
-                    className="h-1 absolute top-1 z-50 react-resizable-handle w-12 left-1/2 opacity-0 transition-opacity bg-primary/50 cursor-ns-resize -translate-x-1/2 hover:bg-primary group-hover/cell:opacity-100"
+                    className="h-1 absolute top-1 z-50 react-resizable-handle opacity-0 w-12 left-1/2 transition-opacity bg-primary/50 cursor-ns-resize -translate-x-1/2 hover:bg-primary group-hover/cell:opacity-100"
                     style={{ display: editMode ? "block" : "none" }}
                   />
                 ),
@@ -254,7 +254,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
             .filter((cell) => cell.w > 0 && cell.h > 0)
             .map((cell) => (
               <div key={cell.id} data-cell-id={cell.id} className="group/cell">
-                <MultiviewCell cell={cell} id={cell.id} editMode={editMode} />
+                <MultiviewCell cell={cell} id={cell.id} />
               </div>
             ))}
         </ReactGridLayout>

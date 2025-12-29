@@ -39,7 +39,7 @@ export function QueryBadge({
         }}
         onClick={onRemoveItem}
       >
-        <div className="text-sm h-3 w-3 i-lucide:x hover:"></div>
+        <div className="hover: text-sm h-3 w-3 i-lucide:x"></div>
       </button>
     </Badge>
   );

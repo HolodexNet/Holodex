@@ -100,7 +100,7 @@ export default function VideoCardPlaceholder({
               </a>
             </Button>
             <div className="flex flex-row">
-              <div className="grow text-sm text-muted-foreground">
+              <div className="text-sm text-muted-foreground grow">
                 {t("component.placeholderVideo.creditTitleText")}{" "}
                 {video.credits?.discord &&
                   t("component.placeholderVideo.discordCredit", {

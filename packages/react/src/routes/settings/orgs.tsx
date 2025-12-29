@@ -88,7 +88,7 @@ export const OrgReranker = ({
     <div className="grid gap-4 grid-cols-1 min-w-72 lg:grid-cols-2">
       <div>
         <div>
-          <h3 className="font-semibold text-lg mb-2 text-center">Starred</h3>
+          <h3 className="font-semibold mb-2 text-lg text-center">Starred</h3>
         </div>
         <DndContext
           sensors={sensors}
@@ -101,7 +101,7 @@ export const OrgReranker = ({
           >
             {starredOrgs.map((org) => (
               <SortableItem key={"draggable" + org.name} id={org.name}>
-                <div className="flex items-center justify-between p-2 rounded my-1 h-10 cursor-grab">
+                <div className="flex items-center p-2 rounded justify-between my-1 h-10 cursor-grab">
                   <div className="mr-1 i-mdi:drag"></div>
                   <span className="grow">{org.name}</span>
                   <button
@@ -121,13 +121,13 @@ export const OrgReranker = ({
         <h3 className="mb-2 text-center text-lg font-semibold">
           Other Organizations
         </h3>
-        <div className="flex w-full text-sm rounded-md border border-base focus-within: bg-transparent focus-within:ring-2 transition-colors px-3 h-9 shadow-xs rounded-b-none focus-within:outline-hidden">
+        <div className="flex w-full text-sm rounded-md border border-base focus-within: bg-transparent focus-within:ring-2 px-3 transition-colors h-9 shadow-xs rounded-b-none focus-within:outline-hidden">
           <input
             type="text"
             placeholder="Filter organizations..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-transparent outline-hidden placeholder: border-0 border-none border-transparent"
+            className="w-full bg-transparent outline-hidden border-0 border-none border-transparent"
           />
         </div>
         <ScrollArea className="rounded-md border px-1 h-60 rounded-b rounded-t-none md:h-80">
