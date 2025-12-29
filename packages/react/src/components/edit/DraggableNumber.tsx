@@ -28,13 +28,13 @@ const DraggableNumber = ({
       : formatter(+dragInProgressValue.toFixed(precision));
 
   const start = useCallback(
-    (e: React.MouseEvent<HTMLSpanElement>) => {
+    async (e: React.MouseEvent<HTMLSpanElement>) => {
       setDragStartPos(0);
       setDragInProgressValue(value);
       if ((e.target as HTMLSpanElement)?.style) {
         (e.target as HTMLSpanElement).style.cursor = "crosshair";
       }
-      document.body.requestPointerLock();
+      await document.body.requestPointerLock();
 
       function mouseMoveHandler(moveEvent: MouseEvent) {
         const movement = horizontal

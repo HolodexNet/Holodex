@@ -16,18 +16,21 @@
   transition: all 200ms ease;
   transition-property: left, top, width, height;
   border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
-  box-shadow: inset 0 0 30px 30px color-mix(in srgb, var(--background) 70%, transparent);
+  box-shadow: inset 0 0 30px 30px
+    color-mix(in srgb, var(--background) 70%, transparent);
 }
 
 .react-grid-item:hover {
-  box-shadow: inset 0 0 40px 40px color-mix(in srgb, var(--background) 80%, transparent);
+  box-shadow: inset 0 0 40px 40px
+    color-mix(in srgb, var(--background) 80%, transparent);
 }
 
 .react-grid-item.resizing {
   transition: none;
   z-index: 1;
   will-change: width, height;
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--primary) 60%, transparent);
+  box-shadow: inset 0 0 0 2px
+    color-mix(in srgb, var(--primary) 60%, transparent);
 }
 
 .react-grid-item.react-draggable-dragging {
@@ -51,7 +54,6 @@
   user-select: none;
 }
 
-
 /* ========================================
    Grid Background Enhancement
    ======================================== */
@@ -62,7 +64,7 @@
 }
 
 /* Grid cell borders - subtle highlighting */
-.mv-grid-background>rect {
+.mv-grid-background > rect {
   stroke: color-mix(in srgb, var(--border) 20%, transparent);
   stroke-width: 1px;
   fill: transparent;

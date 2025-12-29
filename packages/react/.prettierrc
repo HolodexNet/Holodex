@@ -7,5 +7,10 @@
   "printWidth": 80,
   "useTabs": false,
   "endOfLine": "auto",
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "plugins": [
+    "@prettier/plugin-oxc",
+    "prettier-plugin-tailwindcss"
+  ],
+  "tailwindStylesheet": "./src/pure.css"
 }
