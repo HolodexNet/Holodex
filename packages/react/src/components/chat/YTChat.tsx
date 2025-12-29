@@ -40,7 +40,7 @@ export function YTChat({ id, status, channelId }: YTChatProps) {
       channelId && {
         continuation: replayReloadContinuation({
           videoId: id,
-          channelId: channelId!,
+          channelId: channelId,
         }),
       }),
   }).toString();

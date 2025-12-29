@@ -97,7 +97,7 @@ function scrollToVideoProgress(
 export function TLChat({ videoId }: TLChatProps) {
   const tldexState = useAtomValue(tldexSettingsAtom);
   const roomID = useMemo(
-    () => `${videoId}/${tldexState.liveTlLang}` as RoomIDString,
+    () => `${videoId}/${tldexState.liveTlLang}`,
     [videoId, tldexState.liveTlLang],
   );
   const { chatDB } = useSocket(roomID);
@@ -157,7 +157,7 @@ const TLChatItem = (
 ) => (
   <div
     {...props}
-    className={cn(props.className, "border-b-0  last:border-b-0")}
+    className={cn(props.className, "border-b-0 last:border-b-0")}
   />
 );
 
@@ -186,8 +186,8 @@ function TLChatMessage({
   return (
     <div
       className={cn(
-        "flex flex-col p-1 px-2 hover:cursor-pointer hover:",
-        highlighted && " hover:",
+        "hover: flex flex-col p-1 px-2 hover:cursor-pointer",
+        highlighted && "hover:",
       )}
       onClick={() => {
         player?.seekTo(video_offset, "seconds");
@@ -196,7 +196,7 @@ function TLChatMessage({
     >
       {showHeader && (
         <div
-          className={cn("group flex items-center gap-2 ", {
+          className={cn("group flex items-center gap-2", {
             "text-primary": is_owner,
             "text-secondary":
               !is_owner && (is_verified || is_moderator || is_vtuber),
@@ -241,7 +241,7 @@ function TLChatMessage({
         </div>
       )}
       <div className="break-words">
-        <span className="whitespace-nowrap text-xs mr-2">
+        <span className="mr-2 text-xs whitespace-nowrap">
           {formatDuration(video_offset * 1000)}
         </span>
         {parsed ? (

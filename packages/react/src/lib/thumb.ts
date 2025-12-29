@@ -14,7 +14,7 @@ export function getThumbnailUrl(
   definition: "maxres" | "default",
 ) {
   // Check if imgUrl starts with "http", indicating it's an external URL
-  if (imgUrl.startsWith("http") === false) {
+  if (!imgUrl.startsWith("http")) {
     return imgUrl; // Return the original URL if it's not an external URL
   }
   // Encode the URL and replace characters to make it URL-safe

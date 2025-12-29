@@ -211,7 +211,7 @@ function resolveCollisions(
   const processedIds = new Set([movedItem.i]);
 
   // Sort collisions by size (larger items are harder to place, process first)
-  const sortedCollisions = [...collisions].sort(
+  const sortedCollisions = [...collisions].toSorted(
     (a, b) => b.w * b.h - a.w * a.h,
   );
 

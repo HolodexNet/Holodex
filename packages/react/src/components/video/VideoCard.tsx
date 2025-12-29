@@ -108,7 +108,7 @@ export function VideoCard({
    * Alt clicking always goes to the external link no matter what the context.
    */
   const goToVideoAuxClickHandler = useCallback(
-    (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    (evt: React.MouseEvent<HTMLElement>) => {
       if (evt.button === 1 && !(evt.target as HTMLElement).closest("a")) {
         console.info("goToVideoAuxClickHandler", evt);
         window.open(videoHref, "_blank");
@@ -185,28 +185,28 @@ export function VideoCard({
           className={
             (videoIsPlaceholder &&
               "ticket-mask brightness-75 saturate-[0.75] transition-[filter] duration-300 ease-in-out group-hover:brightness-100 group-hover:saturate-100") +
-            " aspect-video h-full w-full rounded-md object-cover "
+            " aspect-video h-full w-full rounded-md object-cover"
           }
         />
         {video.topic_id && (
-          <span className="rounded-sm text-sm absolute px-1 capitalize left-1 top-1 text-pretty bg-black/80 text-white/80 group-hover:text-white">
+          <span className="absolute top-1 left-1 rounded-sm bg-black/80 px-1 text-sm text-pretty text-white/80 capitalize group-hover:text-white">
             {video.topic_id.replaceAll("_", " ")}
           </span>
         )}
-        <div className="absolute flex gap-1 flex-col bottom-1 right-1 items-end">
+        <div className="absolute right-1 bottom-1 flex flex-col items-end gap-1">
           {video.songcount && (
-            <span className="text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
+            <span className="rounded-sm bg-black/80 px-1 text-sm text-pretty text-white/80 capitalize group-hover:text-white">
               <div
-                className="inline-block align-text-bottom i-fluent:music-note-2-16-regular"
+                className="i-fluent:music-note-2-16-regular inline-block align-text-bottom"
                 // style={{ fontSize: "13px", lineHeight: "1.15rem" }}
               />
               &nbsp;{video.songcount}
             </span>
           )}
           {tlcount > 0 && (
-            <span className="text-pretty rounded-sm bg-black/80 px-1 text-sm capitalize text-white/80 group-hover:text-white">
+            <span className="rounded-sm bg-black/80 px-1 text-sm text-pretty text-white/80 capitalize group-hover:text-white">
               <div
-                className="inline-block align-text-bottom i-fluent:subtitles-16-regular"
+                className="i-fluent:subtitles-16-regular inline-block align-text-bottom"
                 // style={{ fontSize: "13px", lineHeight: "1.15rem" }}
               />
               &nbsp;{tlcount}
@@ -216,7 +216,7 @@ export function VideoCard({
         </div>
       </Link>
       {/* This block contains the entire bottom of the video card, which is the channel thumbnail + Video Text Info + Menu */}
-      <div className="flex grow gap-2 relative @sm:gap-1">
+      <div className="relative flex grow gap-2 @sm:gap-1">
         {/* Channel thumbnail, only drawn on large & medium video cards */}
         {(size == "lg" || size == "md") && video.channel && (
           <Link
@@ -283,7 +283,7 @@ export function VideoCard({
           <Button
             variant="ghost"
             size="icon-lg"
-            className={cn("absolute right-0 top-0 h-8 w-6 rounded-sm", {
+            className={cn("absolute top-0 right-0 h-8 w-6 rounded-sm", {
               "opacity-100": isMobile,
               "opacity-0 group-hover:opacity-100": !isMobile,
             })}
@@ -292,7 +292,7 @@ export function VideoCard({
               e.stopPropagation();
             }}
           >
-            <div className="h-6 w-6 i-heroicons:ellipsis-vertical" />
+            <div className="i-heroicons:ellipsis-vertical h-6 w-6" />
           </Button>
         </VideoMenu>
         {videoIsPlaceholder && (
@@ -314,9 +314,7 @@ export function VideoCard({
   );
 }
 
-function stopPropagation<
-  T extends React.MouseEvent<HTMLDivElement, MouseEvent>,
->(e: T) {
+function stopPropagation<T extends React.MouseEvent<HTMLDivElement>>(e: T) {
   e.stopPropagation();
 }
 
@@ -382,14 +380,14 @@ function ThumbnailDurationBadge({
   return (durationMs ?? status === "upcoming") ? (
     <span
       className={cn(
-        "flex items-center justify-center gap-1 whitespace-nowrap rounded-sm bg-black/80 px-1 text-sm text-white/80 group-hover:text-white",
+        "flex items-center justify-center gap-1 rounded-sm bg-black/80 px-1 text-sm whitespace-nowrap text-white/80 group-hover:text-white",
         { "bg-red-700/80": status === "live" },
         className,
       )}
     >
       {placeholderType && (
         <div
-          className={placeholderIcon + (durationMs ? " " : " my-1 text-lg ")}
+          className={placeholderIcon + (durationMs ? " " : " my-1 text-lg")}
         />
       )}
       {isPremiere

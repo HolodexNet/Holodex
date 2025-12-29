@@ -126,7 +126,7 @@ export function useSearchboxAutocomplete(): UseSearchboxAutocompleteResult {
     const allSuggestions = [...(serverSuggestions || []), ...clientSuggestions];
 
     return allSuggestions
-      .sort((a, b) => {
+      .toSorted((a, b) => {
         const aIndex = CATEGORY_PRIORITY[a.type];
         const bIndex = CATEGORY_PRIORITY[b.type];
         return aIndex - bIndex;

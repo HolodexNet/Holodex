@@ -16,7 +16,7 @@ export function useDefaultVideoCardClickHandler(
   const selectedSet = useAtomValue(selectedVideoSetReadonlyAtom);
 
   return useCallback(
-    (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    (evt: React.MouseEvent<HTMLElement>) => {
       const videoIsPlaceholder = video.type === "placeholder";
       const isTwitch = video.link?.includes("twitch");
       const videoHref =

@@ -60,7 +60,7 @@ export function ChannelCard({
   const channelHref = `/channel/${id}`;
 
   const goToChannelClickHandler = useCallback(
-    (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    (evt: React.MouseEvent<HTMLElement>) => {
       if ((evt.target as HTMLElement).closest("a")) {
         console.info("no action b/c closest element is a link.", evt);
         return;
@@ -93,25 +93,25 @@ export function ChannelCard({
     case "list":
       return (
         <div
-          className="flex gap-2 transition-all rounded-lg items-center md:gap-4 bg-card p-2 md:p-4 hover:cursor-pointer"
+          className="flex items-center gap-2 rounded-lg bg-card p-2 transition-all hover:cursor-pointer md:gap-4 md:p-4"
           onClick={goToChannelClickHandler}
         >
           <Link
             to={channelHref}
-            className="flex items-center gap-2 md:gap-4 grow"
+            className="flex grow items-center gap-2 md:gap-4"
           >
             <div className="relative">
               <ChannelImg
                 className={[
                   "h-12 w-auto md:h-20 lg:h-24",
                   inactive && "opacity-80 saturate-50",
-                  isBlocked && "opacity-80 saturate-50 blur-md",
+                  isBlocked && "opacity-80 blur-md saturate-50",
                 ]}
                 channelId={id}
               />
               {isBlocked && (
-                <div className="flex items-center absolute inset-0 justify-center">
-                  <div className="text-2xl text-muted-foreground i-heroicons:eye-slash" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="i-heroicons:eye-slash text-2xl text-muted-foreground" />
                 </div>
               )}
             </div>
@@ -138,7 +138,7 @@ export function ChannelCard({
                   })}`}
               </div>
               {size === "sm" && (
-                <div className="flex mt-1 max-w-full gap-1 overflow-x-hidden">
+                <div className="mt-1 flex max-w-full gap-1 overflow-x-hidden">
                   {top_topics?.map((topic) => (
                     <TopicBadge
                       size="sm"
@@ -170,8 +170,8 @@ export function ChannelCard({
         // Set min-height because react-virtuoso will break if the height is not fixed
         <div
           className={
-            "flex w-full flex-col bg-card items-center gap-2 p-4 transition-all  group relative h-full min-h-96 rounded-md" +
-            " hover:bg-[color-mix(in_oklch,var(--card)_97%,var(--foreground))] hover:ring hover:ring-secondary hover:cursor-pointer " +
+            "group relative flex h-full min-h-96 w-full flex-col items-center gap-2 rounded-md bg-card p-4 transition-all" +
+            " hover:cursor-pointer hover:bg-[color-mix(in_oklch,var(--card)_97%,var(--foreground))] hover:ring hover:ring-secondary " +
             (inactive && " text-muted-foreground")
           }
           onClick={goToChannelClickHandler}
@@ -203,7 +203,7 @@ export function ChannelCard({
             {
               <ChannelImg
                 className={[
-                  "-z-0 -mb-36 mt-4 h-32 w-32 opacity-20 blur-2xl saturate-150",
+                  "-z-0 mt-4 -mb-36 h-32 w-32 opacity-20 blur-2xl saturate-150",
                   inactive || (isBlocked && "opacity-0"),
                 ]}
                 channelId={id}
@@ -214,13 +214,13 @@ export function ChannelCard({
                 className={[
                   "h-24 w-24",
                   inactive && "opacity-80 saturate-50",
-                  isBlocked && "opacity-80 saturate-50 blur-md",
+                  isBlocked && "opacity-80 blur-md saturate-50",
                 ]}
                 channelId={id}
               />
               {isBlocked && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="i-heroicons:eye-slash text-muted-foreground text-3xl" />
+                  <div className="i-heroicons:eye-slash text-3xl text-muted-foreground" />
                 </div>
               )}
             </div>
@@ -235,7 +235,7 @@ export function ChannelCard({
                   n: formatCount(subscriber_count ?? "0"),
                 })}
               </div>
-              <div className="flex text-sm justify-center flex-wrap gap-x-1 gap-y-0">
+              <div className="flex flex-wrap justify-center gap-x-1 gap-y-0 text-sm">
                 <span className="whitespace-nowrap">
                   {t("component.channelInfo.videoCount", {
                     0: video_count ?? 0,

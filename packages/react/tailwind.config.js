@@ -3,7 +3,7 @@ import * as colors from "@radix-ui/colors";
 function getColorSpace(name) {
   let alpha = false;
   if (name.endsWith("A")) {
-    name = name.substring(0, name.length - 1);
+    name = name.slice(0, name.length - 1);
     alpha = true;
   }
   var colorspace = { DEFAULT: `var(--${name}-${alpha ? "a" : ""}9)` };

@@ -121,7 +121,7 @@ export default function HighlightBar({ video, onTimeJump }: HighlightBarProps) {
 
         if (!matchingSong) {
           const processed = subBucket
-            .sort(
+            .toSorted(
               (a, b) =>
                 b.occurence / b.text!.length - a.occurence / a.text!.length,
             )
@@ -218,17 +218,17 @@ export default function HighlightBar({ video, onTimeJump }: HighlightBarProps) {
 
   if (!bucketsFiltered.length) return <div className="h-2"></div>;
   return (
-    <div className="w-full hover: relative transition-all duration-200 cursor-pointer ease-out h-[10px]">
+    <div className="hover: relative h-[10px] w-full cursor-pointer transition-all duration-200 ease-out">
       {bucketsFiltered.map((bucket) => (
         <Tooltip key={`${bucket.time}-${bucket.display}`} delayDuration={0}>
           <TooltipTrigger asChild>
             <div
-              className="h-full px-4 group absolute block w-2 pl-[3px]"
+              className="group absolute block h-full w-2 px-4 pl-[3px]"
               style={computeItemStyle(bucket.time)}
               onClick={() => onTimeJump?.(bucket.time)}
             >
               <div
-                className="h-full transition-all duration-200 origin-center group-hover:scale-x-150"
+                className="h-full origin-center transition-all duration-200 group-hover:scale-x-150"
                 style={computeTipStyle(bucket)}
               />
             </div>
@@ -237,7 +237,7 @@ export default function HighlightBar({ video, onTimeJump }: HighlightBarProps) {
             {bucket.best ? (
               <div className="mt-0.5">
                 <time
-                  className="block opacity-50 text-xs font-mono"
+                  className="block font-mono text-xs opacity-50"
                   // dateTime={bucket.absolute}
                 >
                   {bucket.display}

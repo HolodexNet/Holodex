@@ -84,12 +84,9 @@ export function splitSearchClassTerms(
   const trimmed_class = q_class.trim();
   const system_class =
     langCategoryReversemapClass[trimmed_class] || trimmed_class;
-  if (JSON_SCHEMA[<SearchableCategory>system_class]) {
+  if (JSON_SCHEMA[system_class]) {
     // q_class is a valid class, ergo:
-    return [
-      <SearchableCategory>langCategoryReversemapClass[trimmed_class],
-      q_value.trim(),
-    ];
+    return [langCategoryReversemapClass[trimmed_class], q_value.trim()];
   } else {
     return [undefined, term.trim()];
   }
@@ -114,7 +111,7 @@ export function getQueryModelFromQuery(
         case "lang":
           vqm[cat] =
             vqm[cat] && typeof vqm[cat] === "object"
-              ? [...(vqm[cat] as string[]), content]
+              ? [...vqm[cat], content]
               : [content];
           break;
         case "search":
@@ -224,7 +221,7 @@ export async function getQueryFromQueryModel(
         JSON_SCHEMA[key].type === "array" &&
         typeof queryModel[key] === "object"
       ) {
-        for (const v of queryModel[key] as string[]) {
+        for (const v of queryModel[key]) {
           yield Promise.resolve<QueryItem>({
             type: key,
             value: v,

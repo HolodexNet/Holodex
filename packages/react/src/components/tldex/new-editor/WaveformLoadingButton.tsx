@@ -103,7 +103,7 @@ export const WaveformLoadingButton = ({ videoId }: { videoId: string }) => {
         const file = await handle.getFile();
         fileContent = await file.text();
       } catch (err) {
-        if ((err as unknown as Error).name !== "AbortError") {
+        if ((err as Error).name !== "AbortError") {
           console.error("Failed to open file:", err);
           alert("Failed to load waveform file.");
         }

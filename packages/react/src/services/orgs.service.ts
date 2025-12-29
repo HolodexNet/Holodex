@@ -12,7 +12,7 @@ export function fetchOrgs() {
 }
 
 export function useOrgs(config?: CommonQueryConfig) {
-  return useQuery<Org[], Error>({
+  return useQuery<Org[]>({
     queryKey: ["orgs"],
     queryFn: fetchOrgs,
     staleTime: 60 * 60 * 1000,

@@ -61,7 +61,7 @@ export function atomWithUndo<T>(targetAtom: PrimitiveAtom<T>, limit: number) {
         // Remove future states if any
         ref.stack = ref.stack.slice(0, ref.index + 1);
         // Push the current state to the history
-        ref.stack.push(history[0] as T);
+        ref.stack.push(history[0]);
         // Limit the history
         ref.stack = ref.stack.slice(-limit);
         // Move the current index to the end

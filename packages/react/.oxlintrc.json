@@ -2,9 +2,12 @@
   "plugins": [
     "unicorn",
     "typescript",
-    "oxc"
+    "oxc",
+    "react"
   ],
-  "categories": {},
+  "categories": {
+    "suspicious": "warn",
+  },
   "rules": {
     "constructor-super": "warn",
     "for-direction": "warn",

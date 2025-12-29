@@ -47,7 +47,7 @@ const DEFAULT_TOPICS = [
 ];
 
 export function useTopics(config?: CommonQueryConfig) {
-  return useQuery<AC_Topic[], Error>({
+  return useQuery<AC_Topic[]>({
     queryKey: ["topics"],
     queryFn: async () =>
       fetch(`${window.location.origin}/api/v2/topics`).then((r) => {

@@ -94,7 +94,7 @@ export function useChatDB(roomId: RoomIDString) {
   function sortRoom() {
     console.log("sorting...", room);
 
-    (room.messages as ParsedMessage[]).sort(ParsedMessageComparator);
+    room.messages.sort(ParsedMessageComparator);
   }
 
   /**

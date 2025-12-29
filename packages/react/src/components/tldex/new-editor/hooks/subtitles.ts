@@ -64,7 +64,7 @@ export const subtitleManagerAtom = atom(
       case "SET_SUBTITLES": {
         set(
           subtitlesAtom,
-          action.payload.sort((a, b) => a.video_offset - b.video_offset),
+          action.payload.toSorted((a, b) => a.video_offset - b.video_offset),
         );
         break;
       }
@@ -89,7 +89,7 @@ export const subtitleManagerAtom = atom(
           pushUndo({ type: "edit", id: updated.id, oldData: prev[index] });
           const newList = [...prev];
           newList[index] = updated;
-          return newList.sort((a, b) => a.video_offset - b.video_offset);
+          return newList.toSorted((a, b) => a.video_offset - b.video_offset);
         });
         break;
       }
@@ -119,7 +119,7 @@ export const subtitleManagerAtom = atom(
 
             case "delete":
               return lastAction.oldData
-                ? [...prev, lastAction.oldData].sort(
+                ? [...prev, lastAction.oldData].toSorted(
                     (a, b) => a.video_offset - b.video_offset,
                   )
                 : prev;
@@ -131,7 +131,9 @@ export const subtitleManagerAtom = atom(
 
               newList = [...prev];
               newList[index] = lastAction.oldData;
-              return newList.sort((a, b) => a.video_offset - b.video_offset);
+              return newList.toSorted(
+                (a, b) => a.video_offset - b.video_offset,
+              );
 
             default:
               return prev;

@@ -438,7 +438,7 @@ export function getDefaultLayout(
   if (!preset) {
     preset = presets
       .filter((p) => p.default !== undefined && p.default >= videoCount)
-      .sort((a, b) => (a.default ?? 0) - (b.default ?? 0))[0];
+      .toSorted((a, b) => (a.default ?? 0) - (b.default ?? 0))[0];
   }
 
   return preset;

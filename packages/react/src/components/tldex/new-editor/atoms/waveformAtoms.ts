@@ -284,7 +284,7 @@ export const generateWaveformAtom = atom(
 
     const iframeCommunicationBus = ProtoframePubsub.parent(
       ytAudioDLProtocol,
-      iframe as HTMLIFrameElement,
+      iframe,
     );
 
     console.log(

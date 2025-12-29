@@ -40,7 +40,7 @@ const FAVORITES_ORG: Org = { name: "Favorites" };
  * Sort videos: live streams first (by start_actual desc), then upcoming (by available_at asc)
  */
 function sortLiveVideos(videos: VideoBase[]): VideoBase[] {
-  return [...videos].sort((a, b) => {
+  return [...videos].toSorted((a, b) => {
     const aIsLive = a.status === "live";
     const bIsLive = b.status === "live";
 
@@ -137,16 +137,16 @@ function VideoListScroller({ videos }: VideoListScrollerProps) {
   }, []);
 
   return (
-    <ScrollAreaPrimitive.Root className="overflow-hidden relative min-w-0">
+    <ScrollAreaPrimitive.Root className="relative min-w-0 overflow-hidden">
       <ScrollAreaPrimitive.Viewport
         ref={viewportRef}
-        className="px-2 size-full"
+        className="size-full px-2"
         onMouseMove={handleInteraction}
         onTouchStart={handleInteraction}
       >
         <div
           id="live-channel-container"
-          className="flex items-center py-2 gap-3 pr-4"
+          className="flex items-center gap-3 py-2 pr-4"
         >
           {videos.map((video) => (
             <SelectorLiveItem key={video.id} live={video} />
@@ -156,9 +156,9 @@ function VideoListScroller({ videos }: VideoListScrollerProps) {
 
       <ScrollAreaPrimitive.ScrollAreaScrollbar
         orientation="horizontal"
-        className="relative w-full transition-colors h-1.5 touch-none select-none p-px"
+        className="relative h-1.5 w-full touch-none p-px transition-colors select-none"
       >
-        <ScrollAreaPrimitive.ScrollAreaThumb className="w-full rounded-full bg-blue-500 h-1!" />
+        <ScrollAreaPrimitive.ScrollAreaThumb className="h-1! w-full rounded-full bg-blue-500" />
       </ScrollAreaPrimitive.ScrollAreaScrollbar>
 
       <ScrollAreaPrimitive.Corner />
@@ -233,22 +233,22 @@ export function Selector() {
   };
 
   return (
-    <div className="flex items-center min-w-0 gap-2">
+    <div className="flex min-w-0 items-center gap-2">
       <DropdownMenu>
         <div className="flex flex-col items-start">
-          <span className="px-3 text-[10px] text-muted-foreground/80 font-extrabold leading-tight">
+          <span className="px-3 text-[10px] leading-tight font-extrabold text-muted-foreground/80">
             Holodex Multiview
           </span>
-          <DropdownMenuTrigger className="flex items-center px-3 text-sm gap-1 rounded-md shrink-0 justify-between py-1.5 ring-accent hover:bg-accent focus-visible:outline-none focus-visible:ring-1 active:scale-[97%]">
+          <DropdownMenuTrigger className="flex shrink-0 items-center justify-between gap-1 rounded-md px-3 py-1.5 text-sm ring-accent hover:bg-accent focus-visible:ring-1 focus-visible:outline-none active:scale-[97%]">
             {currentOrg.name}
-            <div className="shrink-0 opacity-50 h-4 w-4 i-lucide:chevrons-down" />
+            <div className="i-lucide:chevrons-down h-4 w-4 shrink-0 opacity-50" />
           </DropdownMenuTrigger>
         </div>
         <DropdownMenuContent className="z-30 w-48">
           {[FAVORITES_ORG, ...rankedOrgs].map((org) => (
             <DropdownMenuItem
               key={org.name}
-              className="gap-1 py-2 cursor-pointer"
+              className="cursor-pointer gap-1 py-2"
               onClick={() => onSelect(org)}
             >
               {org.name}
