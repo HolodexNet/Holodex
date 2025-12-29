@@ -1,5 +1,5 @@
 import { Loading } from "@/components/common/Loading";
-import { VideoEditTopic } from "@/components/edit/VideoEditTopic";
+import { VideoEditTopicV2 } from "@/components/edit/VideoEditTopicV2";
 import { useVideo } from "@/services/video.service";
 import {
   ResizableHandle,
@@ -32,15 +32,16 @@ export function EditVideo() {
       <Helmet></Helmet>
       <div className="">
         <ResizablePanelGroup
-          className="container mx-auto px-4 min-h-[90vh]"
+          className="px-4 container mx-auto min-h-[90vh]"
           orientation={isHorizontal ? "vertical" : "horizontal"}
           // it's talking about content direction, not the direction of the splitter.
         >
-          <ResizablePanel minSize={10} defaultSize={20}>
+          <ResizablePanel>
             {isSuccess && data && (
               <PlayerWrapper
                 id={data?.id}
                 url={idToVideoURL(data.id, data.link)}
+                autoplay={false}
               ></PlayerWrapper>
             )}
           </ResizablePanel>
@@ -81,7 +82,7 @@ export function EditVideo() {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="topic">
-                  <VideoEditTopic video={data} />
+                  <VideoEditTopicV2 video={data} />
                 </TabsContent>
                 <TabsContent value="music">
                   <VideoEditMusic video={data} />
