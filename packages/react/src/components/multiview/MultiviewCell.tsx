@@ -12,13 +12,6 @@ interface MultiviewCellProps {
 /**
  * Individual cell in the multiview grid - EDIT CONTROLS ONLY.
  *
- * This component no longer renders video/chat iframes.
- * Iframes are rendered by MultiviewFrames using pure CSS Grid
- * to prevent reloading when the react-grid-layout DOM changes.
- *
- * This component only renders:
- * - MultiviewEditOverlay (edit mode controls)
- * - Transparent placeholder for cells (allows drag/resize handles to work)
  */
 export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
   function MultiviewCell({ cell, id }, ref) {
@@ -76,7 +69,7 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
         data-cell-id={id}
         data-cell-type={cell.type}
       >
-        <div className="absolute inset-6 pointer-events-auto">
+        <div className="absolute inset-6 pointer-events-auto size-full">
           {/* This overlay blocks iframe mouse events to allow react-grid-layout drag/resize */}
 
           {/* Cell info */}

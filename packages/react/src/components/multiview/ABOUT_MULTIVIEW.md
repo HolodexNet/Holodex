@@ -94,10 +94,9 @@ Multiview (route)
         │       ├── VideoCell | ChatCell (content cells)
         │       └── Blank iframe (empty cells)
         ├── MultiviewGrid (React-Grid-Layout Grid - edit controls layer)
-        │   ├── GridBackground (visual guides)
+        │   ├── GridBackground & GridCornerDots (visual guides)
         │   └── react-grid-layout (drag/resize)
         │       └── MultiviewCell (per visible cell)
-        │           └── MultiviewEditOverlay (if editMode)
         └── Auto-Layout Dialog
 ```
 
@@ -125,7 +124,7 @@ Managed by `useAutoLayout` hook with React Context.
 ## Edit Mode
 
 When `editMode=true`:
-- `MultiviewEditOverlay` renders over each cell
+- `MultiviewCell` renders over each cell
 - Overlay blocks iframe pointer events (critical for drag/resize to work)
 - Exposes Clear/Delete buttons per cell
 - Enhanced grid background visibility
@@ -161,7 +160,6 @@ src/
 │   ├── MultiviewGrid.tsx      # Main grid, react-grid-layout integration
 │   ├── MultiviewFrames.tsx    # CSS Grid iframe layer (prevents reload)
 │   ├── MultiviewCell.tsx      # Individual cell edit controls
-│   ├── MultiviewEditOverlay.tsx # Edit mode controls
 │   ├── VideoCell.tsx          # Video player wrapper
 │   ├── ChatCell.tsx           # Chat embed
 │   ├── Toolbar.tsx            # Top toolbar

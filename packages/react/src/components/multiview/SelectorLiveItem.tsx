@@ -80,8 +80,8 @@ export function SelectorLiveItem({ live }: SelectorLiveItemProps) {
             style={
               {
                 "--tw-ring-color": isLive
-                  ? "rgb(239 68 68)"
-                  : "rgb(59 130 246)",
+                  ? "var(--color-red-600)"
+                  : "color-mix(in srgb, var(--primary), var(--background) 20%)",
               } as React.CSSProperties
             }
           >
@@ -102,7 +102,7 @@ export function SelectorLiveItem({ live }: SelectorLiveItemProps) {
             <span
               className={cn(
                 "absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-sm px-1 text-[10px] font-medium leading-tight text-white",
-                isLive ? "bg-red-600" : "bg-blue-600",
+                isLive ? "bg-red-600" : "bg-primary text-primary-foreground",
               )}
             >
               {displayDuration}
