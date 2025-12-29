@@ -15,22 +15,26 @@
 .react-grid-item {
   transition: all 200ms ease;
   transition-property: left, top, width, height;
+  border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  box-shadow: inset 0 0 30px 30px color-mix(in srgb, var(--background) 70%, transparent);
 }
 
-.react-grid-item.cssTransforms {
-  transition-property: transform, width, height;
+.react-grid-item:hover {
+  box-shadow: inset 0 0 40px 40px color-mix(in srgb, var(--background) 80%, transparent);
 }
 
 .react-grid-item.resizing {
   transition: none;
   z-index: 1;
   will-change: width, height;
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--primary) 60%, transparent);
 }
 
 .react-grid-item.react-draggable-dragging {
   transition: none;
   z-index: 3;
   will-change: transform;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
 .react-grid-item.dropping {
@@ -38,102 +42,34 @@
 }
 
 .react-grid-item.react-grid-placeholder {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px dashed rgba(255, 255, 255, 0.3);
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  border: 2px dashed color-mix(in srgb, var(--primary) 50%, transparent);
   border-radius: 8px;
-  opacity: 0.8;
+  opacity: 0.9;
   transition-duration: 100ms;
   z-index: 2;
   user-select: none;
 }
 
-/* ========================================
-   Resize Handle Styles
-   ======================================== */
-
-.react-resizable-handle {
-  position: absolute;
-  box-sizing: border-box;
-}
-
-/* Hide resize handles by default, shown via inline styles when editMode is true */
-.react-resizable-handle {
-  opacity: 0;
-  transition: opacity 150ms ease;
-}
-
-.react-grid-item:hover .react-resizable-handle {
-  opacity: 1;
-}
-
-/* ========================================
-   Multiview Cell Styles
-   ======================================== */
-
-.multiview-cell {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
-.multiview-cell-content {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Drag handle styling */
-.drag-handle {
-  cursor: grab;
-}
-
-.drag-handle:active {
-  cursor: grabbing;
-}
-
-/* ========================================
-   Edit Mode Enhancements
-   ======================================== */
-
-.react-grid-item[data-edit-mode="true"] {
-  /* Subtle border to show cell boundaries in edit mode */
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-.react-grid-item[data-edit-mode="true"]:hover {
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
-}
 
 /* ========================================
    Grid Background Enhancement
    ======================================== */
 
-.multiview-grid-background {
+.mv-grid {
   pointer-events: none;
   user-select: none;
 }
 
-/* ========================================
-   Animations
-   ======================================== */
-
-@keyframes multiview-fade-in {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* Grid cell borders - subtle highlighting */
+.mv-grid-background>rect {
+  stroke: color-mix(in srgb, var(--border) 20%, transparent);
+  stroke-width: 1px;
+  fill: transparent;
 }
 
-.multiview-cell-enter {
-  animation: multiview-fade-in 200ms ease-out;
+/* Plus mark (+) highlights at grid intersections */
+.mv-grid-corner-mark line {
+  stroke: color-mix(in srgb, var(--destructive) 50%, transparent);
+  stroke-width: 1px;
 }

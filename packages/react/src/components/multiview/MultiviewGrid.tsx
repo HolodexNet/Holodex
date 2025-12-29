@@ -8,6 +8,7 @@ import {
 } from "@/store/multiview";
 import { useAtom, useAtomValue } from "jotai";
 import { MultiviewCell } from "./MultiviewCell";
+import { GridCornerDots } from "./GridCornerDots";
 import ReactGridLayout, {
   type LayoutItem,
   type Layout,
@@ -106,7 +107,18 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
       )}
       data-aspect-class={aspectClass}
     >
-      {/* Grid background using react-grid-layout's GridBackground */}
+      {/* Corner plus signs at grid intersections */}
+      {bounds?.height && (
+        <GridCornerDots
+          width={bounds.width}
+          height={bounds.height}
+          cols={cols}
+          rows={rows}
+          markSize={6}
+          className="absolute inset-0 pointer-events-none z-6"
+        />
+      )}
+      {/* Visual grid overlay */}
       {bounds?.height && (
         <GridBackground
           width={bounds.width}
@@ -116,12 +128,11 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           containerPadding={[0, 0]}
           rows={rows}
           height={bounds.height}
-          color="rgba(255, 255, 255, 0.03)"
+          color="color-mix(in srgb, var(--muted-foreground) 15%, transparent)"
           borderRadius={0}
-          className="absolute inset-0 pointer-events-none z-5"
+          className="absolute inset-0 pointer-events-none z-5 mv-grid mv-grid-background"
         />
       )}
-
       {bounds?.height && (
         <ReactGridLayout
           layout={layout}
@@ -140,27 +151,91 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           }}
           resizeConfig={{
             handleComponent: (axis, ref) => {
-              // Base styles for all handles
-              const baseStyles = `absolute transition-all duration-150 z-50 react-resizable-handle `;
-
-              // Direction-specific styling
-              const handleStyles: Record<string, string> = {
-                // Edge handles - bar style
-                n: `${baseStyles} top-0 left-1/2 -translate-x-1/2 h-3 w-14 cursor-ns-resize rounded-b-full bg-white/20 hover:bg-white/50 hover:h-4`,
-                s: `${baseStyles} bottom-0 left-1/2 -translate-x-1/2 h-3 w-14 cursor-ns-resize rounded-t-full bg-white/20 hover:bg-white/50 hover:h-4`,
-                e: `${baseStyles} right-0 top-1/2 -translate-y-1/2 w-3 h-14 cursor-ew-resize rounded-l-full bg-white/20 hover:bg-white/50 hover:w-4`,
-                w: `${baseStyles} left-0 top-1/2 -translate-y-1/2 w-3 h-14 cursor-ew-resize rounded-r-full bg-white/20 hover:bg-white/50 hover:w-4`,
-                // Corner handles - dot/corner style
-                ne: `${baseStyles} top-0 right-0 size-4 cursor-nesw-resize rounded-bl-full bg-white/30 hover:bg-white/60 hover:size-5`,
-                nw: `${baseStyles} top-0 left-0 size-4 cursor-nwse-resize rounded-br-full bg-white/30 hover:bg-white/60 hover:size-5`,
-                se: `${baseStyles} bottom-0 right-0 size-4 cursor-nwse-resize rounded-tl-full bg-white/30 hover:bg-white/60 hover:size-5`,
-                sw: `${baseStyles} bottom-0 left-0 size-4 cursor-nesw-resize rounded-tr-full bg-white/30 hover:bg-white/60 hover:size-5`,
+              // Corner handles - L-shaped with two perpendicular bars
+              const cornerHandles: Record<string, React.ReactNode> = {
+                nw: (
+                  <div
+                    ref={ref as unknown as Ref<HTMLDivElement>}
+                    className="absolute w-4 h-4 z-50 transition-all top-1 left-1 cursor-nwse-resize react-resizable-handle hover:brightness-150"
+                    style={{ display: editMode ? "block" : "none" }}
+                  >
+                    <div className="absolute top-0 left-0 w-full h-1 bg-primary"></div>
+                    <div className="absolute top-0 left-0 bg-primary h-full w-1"></div>
+                  </div>
+                ),
+                ne: (
+                  <div
+                    ref={ref as unknown as Ref<HTMLDivElement>}
+                    className="absolute top-1 w-4 h-4 z-50 hover:brightness-150 transition-all react-resizable-handle right-1 cursor-nesw-resize"
+                    style={{ display: editMode ? "block" : "none" }}
+                  >
+                    <div className="absolute top-0 w-full h-1 bg-primary right-0"></div>
+                    <div className="absolute top-0 right-0 h-full w-1 bg-primary"></div>
+                  </div>
+                ),
+                sw: (
+                  <div
+                    ref={ref as unknown as Ref<HTMLDivElement>}
+                    className="absolute left-1 w-4 h-4 cursor-nesw-resize z-50 hover:brightness-150 transition-all react-resizable-handle bottom-1"
+                    style={{ display: editMode ? "block" : "none" }}
+                  >
+                    <div className="absolute left-0 w-full h-1 bg-primary bottom-0"></div>
+                    <div className="absolute bottom-0 left-0 h-full w-1 bg-primary"></div>
+                  </div>
+                ),
+                se: (
+                  <div
+                    ref={ref as unknown as Ref<HTMLDivElement>}
+                    className="absolute bottom-1 right-1 w-4 h-4 cursor-nwse-resize z-50 hover:brightness-150 transition-all react-resizable-handle"
+                    style={{ display: editMode ? "block" : "none" }}
+                  >
+                    <div className="absolute bottom-0 right-0 w-full h-1 bg-primary"></div>
+                    <div className="absolute bottom-0 right-0 h-full w-1 bg-primary"></div>
+                  </div>
+                ),
               };
 
+              // Edge handles - bar style, visible on hover with group-hover
+              const edgeHandles: Record<string, React.ReactNode> = {
+                n: (
+                  <div
+                    ref={ref as unknown as Ref<HTMLDivElement>}
+                    className="h-1 absolute top-1 z-50 react-resizable-handle w-12 left-1/2 opacity-0 transition-opacity bg-primary/50 cursor-ns-resize -translate-x-1/2 hover:bg-primary group-hover/cell:opacity-100"
+                    style={{ display: editMode ? "block" : "none" }}
+                  />
+                ),
+                s: (
+                  <div
+                    ref={ref as unknown as Ref<HTMLDivElement>}
+                    className="w-12 h-1 absolute bottom-1 left-1/2 -translate-x-1/2 bg-primary/50 cursor-ns-resize z-50 hover:bg-primary opacity-0 group-hover/cell:opacity-100 transition-opacity react-resizable-handle"
+                    style={{ display: editMode ? "block" : "none" }}
+                  />
+                ),
+                w: (
+                  <div
+                    ref={ref as unknown as Ref<HTMLDivElement>}
+                    className="w-1 absolute left-1 bg-primary/50 z-50 hover:bg-primary opacity-0 group-hover/cell:opacity-100 transition-opacity react-resizable-handle h-12 cursor-ew-resize top-1/2 -translate-y-1/2"
+                    style={{ display: editMode ? "block" : "none" }}
+                  />
+                ),
+                e: (
+                  <div
+                    ref={ref as unknown as Ref<HTMLDivElement>}
+                    className="w-1 h-12 absolute top-1/2 -translate-y-1/2 right-1 bg-primary/50 cursor-ew-resize z-50 hover:bg-primary opacity-0 group-hover/cell:opacity-100 transition-opacity react-resizable-handle"
+                    style={{ display: editMode ? "block" : "none" }}
+                  />
+                ),
+              };
+
+              // Return appropriate handle
+              if (cornerHandles[axis]) return cornerHandles[axis];
+              if (edgeHandles[axis]) return edgeHandles[axis];
+
+              // Fallback
               return (
                 <div
                   ref={ref as unknown as Ref<HTMLDivElement>}
-                  className={handleStyles[axis] || baseStyles}
+                  className="absolute z-50 react-resizable-handle"
                   style={{ display: editMode ? "block" : "none" }}
                 />
               );
@@ -178,27 +253,11 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           {cells
             .filter((cell) => cell.w > 0 && cell.h > 0)
             .map((cell) => (
-              <div key={cell.id} data-cell-id={cell.id}>
+              <div key={cell.id} data-cell-id={cell.id} className="group/cell">
                 <MultiviewCell cell={cell} id={cell.id} editMode={editMode} />
               </div>
             ))}
         </ReactGridLayout>
-      )}
-
-      {/* Visual grid overlay for edit mode - enhanced visibility */}
-      {editMode && bounds?.height && (
-        <GridBackground
-          width={bounds.width}
-          cols={cols}
-          rowHeight={rowHeight}
-          margin={[0, 0]}
-          containerPadding={[0, 0]}
-          rows={rows}
-          height={bounds.height}
-          color="rgba(125,125,125,0.15)"
-          borderRadius={4}
-          className="absolute inset-0 pointer-events-none z-20"
-        />
       )}
     </div>
   );
