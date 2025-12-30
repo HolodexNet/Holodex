@@ -125,7 +125,7 @@ export const langs = [
 
 export type SupportedLangCodes = (typeof langs)[number]["val"];
 
-i18n
+void i18n
   .use(ChainedBackend)
   .use(ICU)
   .use(LanguageDetector)

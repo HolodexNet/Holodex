@@ -152,3 +152,17 @@ export const gridDimensionsAtom = atom((get) => {
   const aspectClass = get(aspectClassAtom);
   return GRID_DIMENSIONS[aspectClass];
 });
+
+// ============================================================================
+// Multiview Playback Control
+// ============================================================================
+
+/**
+ * Shared volume level for all multiview videos (0-100).
+ */
+export const multiviewVolumeAtom = atom(80);
+
+/**
+ * Whether all videos should be muted.
+ */
+export const multiviewMutedAtom = atom(false);

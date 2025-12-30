@@ -251,7 +251,12 @@ export function ChannelCard({
             </div>
             <div className="mt-1 flex flex-wrap justify-center gap-0.5">
               {top_topics?.map((topic) => (
-                <TopicBadge size="sm" topic={topic} className="capitalize" />
+                <TopicBadge
+                  key={"ck-topic" + topic + id}
+                  size="sm"
+                  topic={topic}
+                  className="capitalize"
+                />
               ))}
             </div>
           </Link>

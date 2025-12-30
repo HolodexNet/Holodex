@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import { defineConfig, PluginOption } from "vite";
 
 // Faster React using swc apparently, but can't use it atm.

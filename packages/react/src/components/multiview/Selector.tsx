@@ -64,6 +64,36 @@ function sortLiveVideos(videos: VideoBase[]): VideoBase[] {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// AddCellButton - Empty cell placeholder for creating new cells
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * A button styled like SelectorLiveItem but for adding empty cells.
+ * Currently a placeholder - functionality will be added later.
+ */
+function AddCellButton() {
+  const handleClick = () => {
+    // TODO: Implement add empty cell functionality
+    alert("You thought this button was implemented, but it was me Dio!");
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className="group relative shrink-0 cursor-pointer focus:outline-none"
+      title="Add empty cell"
+    >
+      <div className="flex size-10 items-center justify-center rounded-full border-2 border-dashed border-muted-foreground/40 transition-all group-hover:border-primary group-hover:bg-primary/10 hover:scale-105">
+        <span className="i-lucide:plus h-5 w-5 text-muted-foreground/60 transition-colors group-hover:text-primary" />
+      </div>
+      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-sm bg-muted px-1 text-[10px] leading-tight font-medium whitespace-nowrap text-muted-foreground">
+        Add
+      </span>
+    </button>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // VideoListScroller - Shared scroll area with auto-scroll animation
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -74,6 +104,7 @@ interface VideoListScrollerProps {
 /**
  * Horizontal scrolling list of live/upcoming videos with auto-scroll animation.
  * Features thin blue scrollbar and auto-scrolls left after inactivity.
+ * Shows gradient fadeout on right when not scrolled to end.
  */
 function VideoListScroller({ videos }: VideoListScrollerProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -85,9 +116,23 @@ function VideoListScroller({ videos }: VideoListScrollerProps) {
     startScrollLeft: number;
   }>({ isAnimating: false, startTime: 0, startScrollLeft: 0 });
 
+  // Track if scrolled to end (for gradient fadeout)
+  const [isAtEnd, setIsAtEnd] = useState(true);
+
   const handleInteraction = useCallback(() => {
     lastInteractionRef.current = Date.now();
     animationStateRef.current.isAnimating = false;
+  }, []);
+
+  // Check scroll position to determine if we're at the end
+  const checkScrollEnd = useCallback(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = viewport;
+    const threshold = 20; // pixels from end to consider "at end"
+    const atEnd = scrollLeft + clientWidth >= scrollWidth - threshold;
+    setIsAtEnd(atEnd);
   }, []);
 
   useEffect(() => {
@@ -124,6 +169,9 @@ function VideoListScroller({ videos }: VideoListScrollerProps) {
         }
       }
 
+      // Check scroll end position periodically
+      checkScrollEnd();
+
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
@@ -134,7 +182,13 @@ function VideoListScroller({ videos }: VideoListScrollerProps) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, []);
+  }, [checkScrollEnd]);
+
+  // Also check on scroll events
+  const handleScroll = useCallback(() => {
+    handleInteraction();
+    checkScrollEnd();
+  }, [handleInteraction, checkScrollEnd]);
 
   return (
     <ScrollAreaPrimitive.Root className="relative min-w-0 overflow-hidden">
@@ -143,16 +197,24 @@ function VideoListScroller({ videos }: VideoListScrollerProps) {
         className="size-full px-2"
         onMouseMove={handleInteraction}
         onTouchStart={handleInteraction}
+        onScroll={handleScroll}
       >
         <div
           id="live-channel-container"
           className="flex items-center gap-3 py-2 pr-4"
         >
+          {/* Add cell button at the start */}
+          <AddCellButton />
           {videos.map((video) => (
             <SelectorLiveItem key={video.id} live={video} />
           ))}
         </div>
       </ScrollAreaPrimitive.Viewport>
+
+      {/* Gradient fadeout overlay when not at end */}
+      {!isAtEnd && (
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-linear-to-l from-background to-transparent" />
+      )}
 
       <ScrollAreaPrimitive.ScrollAreaScrollbar
         orientation="horizontal"

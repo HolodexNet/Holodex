@@ -1,12 +1,7 @@
 {
-  "plugins": [
-    "unicorn",
-    "typescript",
-    "oxc",
-    "react"
-  ],
+  "plugins": ["unicorn", "typescript", "oxc", "react"],
   "categories": {
-    "suspicious": "warn",
+    // "suspicious": "warn",
   },
   "rules": {
     "constructor-super": "warn",
@@ -112,7 +107,11 @@
     "unicorn/no-useless-length-check": "warn",
     "unicorn/no-useless-spread": "warn",
     "unicorn/prefer-set-size": "warn",
-    "unicorn/prefer-string-starts-ends-with": "warn"
+    "unicorn/prefer-string-starts-ends-with": "warn",
+    "no-unsafe-type-assertion": "allow",
+    "no-unnecessary-boolean-literal-compare": "allow",
+    "no-floating-promises": "allow",
+    "unbound-method": "allow"
   },
   "settings": {
     "jsx-a11y": {
@@ -133,8 +132,5 @@
     "builtin": true
   },
   "globals": {},
-  "ignorePatterns": [
-    "public/**",
-    "**/ffprobe-core.js"
-  ]
+  "ignorePatterns": ["public/**", "**/ffprobe-core.js", "Oxidus/**"]
 }
