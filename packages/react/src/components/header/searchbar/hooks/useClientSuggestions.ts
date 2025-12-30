@@ -23,7 +23,7 @@ const STATIC_SUGGESTIONS: Record<string, QueryItem[]> = {
 export function useClientSuggestions(
   searchCategory: SearchableCategory | undefined,
   searchString: string,
-  t: TFunction<"translation">,
+  t: TFunction,
 ): QueryItem[] {
   console.log(
     "client suggestions",
