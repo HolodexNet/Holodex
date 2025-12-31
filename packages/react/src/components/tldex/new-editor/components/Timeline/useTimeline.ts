@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useSyncExternalStore } from "react";
 import { Timeline, TimelineOptions } from ".";
-import ReactPlayer from "react-player";
+import type ReactPlayer from "react-player";
 
 type TimelineState = {
   currentTime: number;

@@ -131,6 +131,12 @@ export function CopyrightNotice() {
 
 const LazyVideoReportDialog = React.lazy(() => import("../video/VideoReport"));
 
+const LazySelectionFooter = React.lazy(
+  () => import("../layout/SelectionFooter"),
+);
+
+const LazyMiniPlayer = React.lazy(() => import("../player/MiniPlayer"));
+
 export function Frame() {
   console.log("rerendered frame!");
   const resize = useSetAtom(onResizeAtom);
@@ -194,7 +200,7 @@ export function Frame() {
           </ErrorBoundary>
           <CopyrightNotice />
         </main>
-        <SelectionFooter />
+        <LazySelectionFooter />
         {reportedVideo && (
           <LazyVideoReportDialog
             open={!!reportedVideo}
@@ -204,7 +210,7 @@ export function Frame() {
         )}
 
         {isMobile && <Footer />}
-        {miniPlayer && <MiniPlayer />}
+        {miniPlayer && <LazyMiniPlayer />}
         <Toaster />
         <CalendarGeneratorPopup />
         <GlobalReactivity />

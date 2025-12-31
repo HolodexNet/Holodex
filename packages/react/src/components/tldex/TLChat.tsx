@@ -12,7 +12,7 @@ import { HTMLAttributes, useEffect, useMemo, useRef } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import "./tlchat.css";
 import React from "react";
-import ReactPlayer from "react-player";
+import type ReactPlayer from "react-player";
 
 interface TLChatProps {
   videoId: string;
