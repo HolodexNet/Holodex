@@ -1,10 +1,15 @@
 import { Toolbar } from "@/components/multiview/Toolbar";
+import { SyncToolbar } from "@/components/multiview/SyncToolbar";
 import { MultiviewGrid } from "@/components/multiview/MultiviewGrid";
 import { MultiviewFrames } from "@/components/multiview/MultiviewFrames";
 import { Helmet } from "@dr.pogodin/react-helmet";
 import { AutoLayoutProvider, useAutoLayout } from "@/hooks/useAutoLayout";
 import { useSetAtom, useAtomValue } from "jotai";
-import { aspectClassAtom, editModeAtom } from "@/store/multiview";
+import {
+  aspectClassAtom,
+  editModeAtom,
+  syncToolbarOpenAtom,
+} from "@/store/multiview";
 import { getAspectClass } from "@/lib/multiview-utils";
 import { useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
@@ -28,6 +33,7 @@ function MultiviewContent() {
   const setCells = useSetAtom(cellQueueAtom);
   const setContentMap = useSetAtom(contentMapAtom);
   const editMode = useAtomValue(editModeAtom);
+  const syncToolbarOpen = useAtomValue(syncToolbarOpenAtom);
   const makeHeaderHide = useSetAtom(headerHiddenAtom);
 
   useEffect(() => {
@@ -71,7 +77,7 @@ function MultiviewContent() {
   }, [layoutParam, setCells, setContentMap]);
 
   return (
-    <div className="overflow-hidden flex flex-col select-none h-screen w-screen">
+    <div className="flex h-screen w-screen flex-col overflow-hidden select-none">
       <Helmet>
         <title>Multiview - Holodex</title>
       </Helmet>
@@ -79,18 +85,25 @@ function MultiviewContent() {
       {/* Toolbar - fixed height */}
       <div
         id="multiview-banner"
-        className="flex z-20 shrink-0 justify-start bg-background/80"
+        className="z-20 flex shrink-0 justify-start bg-background/80"
       >
         <Toolbar />
       </div>
 
       {/* Main grid area - fills remaining space */}
-      <div className="relative flex-1 min-h-0">
+      <div className="relative min-h-0 flex-1">
         {/* Stable iframe layer - renders all frames using CSS Grid */}
         <MultiviewFrames />
         {/* Edit/control layer - uses react-grid-layout */}
         <MultiviewGrid className="h-full w-full" />
       </div>
+
+      {/* Sync toolbar - appears at bottom when active */}
+      {syncToolbarOpen && (
+        <div className="z-20 shrink-0">
+          <SyncToolbar />
+        </div>
+      )}
 
       {/* Auto-layout confirmation dialog */}
       <AlertDialog open={showPrompt}>
@@ -115,7 +128,7 @@ function MultiviewContent() {
 
       {/* Keyboard shortcut hint */}
       {editMode && (
-        <div className="text-xs text-muted-foreground fixed bottom-4 right-4">
+        <div className="fixed right-4 bottom-4 text-xs text-muted-foreground">
           Press ESC to exit edit mode
         </div>
       )}

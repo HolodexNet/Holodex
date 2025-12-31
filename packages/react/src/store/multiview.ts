@@ -90,6 +90,11 @@ export const aspectClassAtom = atom<AspectClass>("horizontal");
 export const editModeAtom = atom(false);
 
 /**
+ * Sync toolbar visibility toggle.
+ */
+export const syncToolbarOpenAtom = atom(false);
+
+/**
  * Whether the user has made manual edits (disables auto-layout).
  */
 export const autoLayoutDisabledAtom = atom(false);

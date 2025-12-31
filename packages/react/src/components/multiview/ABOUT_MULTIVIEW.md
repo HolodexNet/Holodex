@@ -39,6 +39,7 @@ Uses `react-grid-layout` library for:
 | `contentMapAtom` | `ContentMapping` | videoId → cell index lookup |
 | `aspectClassAtom` | `AspectClass` | Current viewport classification |
 | `editModeAtom` | `boolean` | Edit mode toggle |
+| `syncToolbarOpenAtom` | `boolean` | Sync toolbar visibility toggle |
 | `autoLayoutDisabledAtom` | `boolean` | True after manual edits; disables auto-layout |
 | `userPresetsAtom` | Persisted | Custom presets per aspect class |
 | `persistedLayoutAtom` | Persisted | Saved layout state |
@@ -87,6 +88,7 @@ Multiview (route)
         ├── Toolbar
         │   ├── Selector (video picker)
         │   ├── Edit Button
+        │   ├── Sync Button
         │   ├── Presets Dropdown
         │   └── Clear/Fullscreen
         ├── MultiviewFrames (CSS Grid - stable iframe layer)
@@ -97,6 +99,7 @@ Multiview (route)
         │   ├── GridBackground & GridCornerDots (visual guides)
         │   └── react-grid-layout (drag/resize)
         │       └── MultiviewCell (per visible cell)
+        ├── SyncToolbar (bottom toolbar - shown when sync mode active)
         └── Auto-Layout Dialog
 ```
 
@@ -163,6 +166,7 @@ src/
 │   ├── VideoCell.tsx          # Video player wrapper
 │   ├── ChatCell.tsx           # Chat embed
 │   ├── Toolbar.tsx            # Top toolbar
+│   ├── SyncToolbar.tsx        # Bottom sync toolbar
 │   ├── Selector.tsx           # Org picker + live channel list
 │   ├── SelectorLiveItem.tsx   # Live channel item with hover VideoCard
 │   └── PresetPreview.tsx      # Preset thumbnail

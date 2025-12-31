@@ -1,5 +1,5 @@
 import { Selector } from "./Selector";
-import { editModeAtom } from "@/store/multiview";
+import { editModeAtom, syncToolbarOpenAtom } from "@/store/multiview";
 import { useAtom } from "jotai";
 import { useAutoLayout } from "@/hooks/useAutoLayout";
 import { useMultiviewPlayback } from "@/hooks/useMultiviewPlayback";
@@ -40,7 +40,7 @@ function PlaybackControls({ isExpanded, onToggle }: PlaybackControlsProps) {
         className="flex flex-col items-center justify-center rounded-md px-2.5 py-1 text-muted-foreground/70 transition-colors hover:bg-accent/50 hover:text-foreground"
         title="Show playback controls"
       >
-        <span className="i-lucide:sliders-horizontal h-5 w-5" />
+        <span className="i-tabler:adjustments h-5 w-5 rotate-90" />
         <span className="mt-0.5 text-[9px] leading-none">Control</span>
       </button>
     );
@@ -48,14 +48,14 @@ function PlaybackControls({ isExpanded, onToggle }: PlaybackControlsProps) {
 
   // Expanded state - show all controls
   return (
-    <div className="flex items-center gap-0.5 rounded-lg bg-accent/30 px-1 py-0.5">
+    <div className="flex items-center gap-0.5 rounded-lg border border-border bg-card px-1 py-0.5 shadow">
       {/* Collapse button */}
       <button
         onClick={onToggle}
-        className="flex items-center justify-center rounded-md p-1.5 text-muted-foreground/70 transition-colors hover:bg-accent/50 hover:text-foreground"
+        className="flex items-center justify-center rounded-md bg-accent/20 p-1.5 text-muted-foreground/70 transition-colors hover:bg-accent/50 hover:text-foreground"
         title="Hide playback controls"
       >
-        <span className="i-lucide:chevron-right h-4 w-4" />
+        <span className="i-heroicons:chevron-right-16-solid h-4 w-4" />
       </button>
 
       {/* Play/Pause */}
@@ -66,7 +66,7 @@ function PlaybackControls({ isExpanded, onToggle }: PlaybackControlsProps) {
         title={isAnyPlaying ? "Pause all" : "Play all"}
       >
         <span
-          className={`h-4 w-4 ${isAnyPlaying ? "i-lucide:pause" : "i-lucide:play"}`}
+          className={`h-4 w-4 ${isAnyPlaying ? "i-heroicons:pause-16-solid" : "i-heroicons:play-16-solid"}`}
         />
       </button>
 
@@ -78,18 +78,20 @@ function PlaybackControls({ isExpanded, onToggle }: PlaybackControlsProps) {
         title={isMuted ? "Unmute all" : "Mute all"}
       >
         <span
-          className={`h-4 w-4 ${isMuted ? "i-lucide:volume-x" : "i-lucide:volume-2"}`}
+          className={`h-4 w-4 ${isMuted ? "i-heroicons:speaker-x-mark-16-solid" : "i-heroicons:speaker-wave-16-solid"}`}
         />
       </button>
 
       {/* Volume slider */}
       <Slider
+        color="default"
+        size="sm"
         min={0}
         max={100}
         value={[volume]}
         onValueChange={handleVolumeChange}
         disabled={videoCount === 0}
-        className="h-1 w-16 cursor-pointer"
+        className="mr-1 h-1 w-8 cursor-pointer"
         title={`Volume: ${volume}%`}
       />
 
@@ -100,7 +102,7 @@ function PlaybackControls({ isExpanded, onToggle }: PlaybackControlsProps) {
         className="flex items-center justify-center rounded-md p-1.5 text-muted-foreground/70 transition-colors hover:bg-accent/50 hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
         title="Reload all videos"
       >
-        <span className="i-lucide:refresh-cw h-4 w-4" />
+        <span className="i-heroicons:arrow-path-rounded-square-16-solid h-4 w-4" />
       </button>
     </div>
   );
@@ -112,11 +114,13 @@ function PlaybackControls({ isExpanded, onToggle }: PlaybackControlsProps) {
 
 export function Toolbar() {
   const [editMode, setEditMode] = useAtom(editModeAtom);
+  const [syncOpen, setSyncOpen] = useAtom(syncToolbarOpenAtom);
   const { clearAll } = useAutoLayout();
   const [playbackExpanded, setPlaybackExpanded] = useState(true);
 
   const toggleEditMode = () => setEditMode((prev) => !prev);
   const togglePlaybackExpanded = () => setPlaybackExpanded((prev) => !prev);
+  const toggleSync = () => setSyncOpen((prev) => !prev);
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
@@ -149,14 +153,27 @@ export function Toolbar() {
               : "text-muted-foreground/70 hover:bg-accent/50 hover:text-foreground"
           }`}
         >
-          <span className="i-lucide:layout-grid h-5 w-5" />
+          <span className="i-tabler:aspect-ratio h-5 w-5" />
           <span className="mt-0.5 text-[9px] leading-none">Edit</span>
+        </button>
+
+        {/* Sync toggle */}
+        <button
+          onClick={toggleSync}
+          className={`flex flex-col items-center justify-center rounded-md px-2.5 py-1 transition-colors ${
+            syncOpen
+              ? "bg-primary/20 text-primary"
+              : "text-muted-foreground/70 hover:bg-accent/50 hover:text-foreground"
+          }`}
+        >
+          <span className="i-tabler:keyframe-align-vertical h-5 w-5" />
+          <span className="mt-0.5 text-[9px] leading-none">Sync</span>
         </button>
 
         {/* Preset selector with previews */}
         <PresetMenu>
           <button className="flex flex-col items-center justify-center rounded-md px-2.5 py-1 text-muted-foreground/70 transition-colors hover:bg-accent/50 hover:text-foreground">
-            <span className="i-lucide:grid-3x3 h-5 w-5" />
+            <span className="i-tabler:layout-board-split h-5 w-5" />
             <span className="mt-0.5 text-[9px] leading-none">Presets</span>
           </button>
         </PresetMenu>
@@ -166,7 +183,7 @@ export function Toolbar() {
           onClick={clearAll}
           className="flex flex-col items-center justify-center rounded-md px-2.5 py-1 text-muted-foreground/70 transition-colors hover:bg-destructive/10 hover:text-destructive"
         >
-          <span className="i-lucide:trash-2 h-5 w-5" />
+          <span className="i-tabler:trash h-5 w-5" />
           <span className="mt-0.5 text-[9px] leading-none">Clear</span>
         </button>
 
@@ -175,8 +192,10 @@ export function Toolbar() {
           onClick={toggleFullScreen}
           className="flex flex-col items-center justify-center rounded-md px-2.5 py-1 text-muted-foreground/70 transition-colors hover:bg-accent/50 hover:text-foreground"
         >
-          <span className="i-lucide:maximize h-5 w-5" />
-          <span className="mt-0.5 text-[9px] leading-none">Fullscreen</span>
+          <span className="i-tabler:maximize h-5 w-5" />
+          <span className="mt-0.5 text-[9px] leading-none tracking-tight">
+            Fullscrn
+          </span>
         </button>
       </div>
     </div>

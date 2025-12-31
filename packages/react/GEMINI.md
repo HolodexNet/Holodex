@@ -24,3 +24,16 @@ This project uses **shadcn's semantic color system** defined in `src/pure.css`. 
 | Popovers | `bg-popover` | `text-popover-foreground` | - |
 
 For opacity variants, use Tailwind's opacity modifiers: `bg-primary/50`, `border-border/50`, etc.
+
+### Iconography (Iconify)
+Follow these preferences for icon packs based on functional grouping. Use the `i-<pack>:<icon>` class format.
+
+| Grouping | Preferred Pack | Rationale / Examples |
+|----------|----------------|----------------------|
+| **Multiview / Dense UI** | `i-heroicons` + `i-tabler` | Clean, sharp, consistent with shadcn style. |
+| **Video Authoring** | `i-lucide` + `i-fluent` | `lucide` for basic actions; `fluent` for specialized/admin sub-tools. |
+| **Navigation & Sidebar** | `i-heroicons` | Primary pack for site-wide navigation (e.g. `cog-6-tooth`, `home`, `heart`). |
+| **Player Controls** | `i-heroicons` | Traditional player UI (e.g. `play`, `pause`, `chat-bubble`). |
+| **Video Cards & Status** | `i-tabler` | Excellent for dense status icons (e.g. `calendar`, `clock`, `brand-twitch`). |
+| **Granular Controls** | `i-mdi` | Good for specialized technical icons (e.g. `chevron-double`, `drag`). |
+| **Social Logos** | `i-logos` | Use for colored brand identities (Discord, Google, etc.). | 
