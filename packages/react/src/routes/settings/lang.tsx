@@ -41,17 +41,17 @@ export function SettingsLang() {
                 role="combobox"
                 aria-expanded={langOpen}
                 className={cn(
-                  "inline-flex min-h-8 w-full min-w-48 items-center justify-between rounded-md  py-1 pl-4 pr-2",
-                  "text-left text-lg font-medium  transition",
-                  "hover: focus-visible:outline-hidden focus-visible:ring-1 focus-visible: active:scale-[97%] active: disabled:pointer-events-none disabled:opacity-50",
-                  langOpen && " ring-2  hover:",
+                  "inline-flex min-h-8 w-full min-w-48 items-center justify-between rounded-md py-1 pr-2 pl-4",
+                  "text-left text-lg font-medium transition",
+                  "hover: focus-visible: active: focus-visible:ring-1 focus-visible:outline-hidden active:scale-[97%] disabled:pointer-events-none disabled:opacity-50",
+                  langOpen && "hover: ring-2",
                 )}
               >
                 {langs.find(({ val }) => i18n.language === val)?.display}
-                <div className="h-4 shrink-0 w-4 ml-2 opacity-50 i-lucide:chevrons-up-down" />
+                <div className="i-lucide:chevrons-up-down ml-2 h-4 w-4 shrink-0 opacity-50" />
               </button>
             </PopoverTrigger>
-            <PopoverContent className="p-0 w-fit min-w-[240px]">
+            <PopoverContent className="w-fit min-w-[240px] p-0">
               <Command>
                 <CommandInput
                   placeholder={t("views.settings.languageSearch")}

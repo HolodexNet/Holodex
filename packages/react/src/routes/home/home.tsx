@@ -101,8 +101,8 @@ function StickyTabsList({
   return (
     <TabsList
       className={cn(
-        "w-full top-0 z-20 flex items-stretch overflow-hidden bg-background transition-all duration-200 mb-4",
-        "border-b px-4 md:px-8 h-auto rounded-none",
+        "top-0 z-20 mb-4 flex w-full items-stretch overflow-hidden bg-background transition-all duration-200",
+        "h-auto rounded-none border-b px-4 md:px-8",
         !open ? "sticky" : isFullScreen ? "" : "sticky",
       )}
     >
@@ -123,7 +123,7 @@ function StickyTabsList({
           <TabsTrigger value="members">{membersTabLabel}</TabsTrigger>
         </div>
 
-        <div className="flex items-center ml-auto space-x-2">
+        <div className="ml-auto flex items-center space-x-2">
           {activeTab === "clips" && <ClipLanguageSelector />}
 
           {activeTab !== "members" && (

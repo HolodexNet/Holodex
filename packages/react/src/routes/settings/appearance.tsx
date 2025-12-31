@@ -91,7 +91,7 @@ export const SettingsTheme = () => {
       <SettingsItem label={t("views.settings.theme")} fullWidth>
         <div className="flex items-center justify-between">
           <div
-            className="flex items-center grow cursor-pointer gap-3"
+            className="flex grow cursor-pointer items-center gap-3"
             onClick={() => setDark(!dark)}
           >
             <div
@@ -103,7 +103,7 @@ export const SettingsTheme = () => {
               <div
                 className={cn(
                   "h-5 w-5",
-                  dark ? "i-heroicons:moon " : "i-heroicons:sun ",
+                  dark ? "i-heroicons:moon" : "i-heroicons:sun",
                 )}
               />
             </div>
@@ -120,7 +120,7 @@ export const SettingsTheme = () => {
             variant="outline"
             size="lg"
             onClick={() => setDark(!dark)}
-            className={cn("h-10 w-24 p-0  transition-colors", dark ? "" : "")}
+            className={cn("h-10 w-24 p-0 transition-colors", dark ? "" : "")}
           >
             <div
               className={cn(
@@ -130,15 +130,15 @@ export const SettingsTheme = () => {
             />
           </Button>
         </div>
-        <div className="pt-4 space-y-4">
+        <div className="space-y-4 pt-4">
           {/* We need to wrap ColorPicker in a way that doesn't crash. 
                The previous crash might have been due to missing CSS import or Portal issues. 
                Adding the CSS import here just in case. 
            */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <Label className="mb-2 block">Primary Color</Label>
-              <div className="border rounded-lg p-2 bg-card">
+              <div className="rounded-lg border bg-card p-2">
                 <ColorPicker
                   color={primaryColor}
                   onChange={setPrimaryColor}
@@ -150,7 +150,7 @@ export const SettingsTheme = () => {
             </div>
             <div>
               <Label className="mb-2 block">Secondary Color</Label>
-              <div className="border rounded-lg p-2 bg-card">
+              <div className="rounded-lg border bg-card p-2">
                 <ColorPicker
                   color={secondaryColor}
                   onChange={setSecondaryColor}

@@ -54,13 +54,13 @@ export function UserMenu() {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="w-8 overflow-hidden rounded-full shrink-0 z-30 mx-2">
+      <DropdownMenuTrigger className="z-30 mx-2 w-8 shrink-0 overflow-hidden rounded-full">
         <img
           src={`https://api.dicebear.com/9.x/shapes/svg?seed=${user.id}`}
           alt="User avatar"
         />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="z-30 relative right-8 w-72">
+      <DropdownMenuContent className="relative right-8 z-30 w-72">
         <DropdownMenuItem className="flex flex-row">
           <Avatar className="mx-2">
             <AvatarImage
@@ -88,7 +88,7 @@ export function UserMenu() {
               </div> */}
             </div>
             <div className="flex flex-row capitalize">
-              <div className="animate-pulse mx-1 i-mage:stars-c"></div>
+              <div className="i-mage:stars-c mx-1 animate-pulse"></div>
 
               {user.contribution_count + " " + t("component.mainNav.points")}
             </div>

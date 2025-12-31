@@ -69,7 +69,7 @@ export function StatusTweetEmbed({
 
   if (error) {
     return (
-      <TwitterFeed className="flex justify-center h-[900px] max-w-[min(500px,calc(100vw-40px))]" />
+      <TwitterFeed className="flex h-[900px] max-w-[min(500px,calc(100vw-40px))] justify-center" />
     );
   }
 
@@ -84,7 +84,7 @@ export function StatusTweetEmbed({
   return (
     <div
       {...props}
-      className={cn("p-4  ", props.className)}
+      className={cn("p-4", props.className)}
       style={{ minWidth: "min(500px, 100vw)" }}
       ref={ref}
     >

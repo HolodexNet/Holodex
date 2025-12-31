@@ -23,11 +23,7 @@ export const StyledExternalLink = ({
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        `
-        flex grow basis-1 items-center gap-2 rounded-lg border-2 px-4
-        py-2 transition-all duration-300 ease-in-out
-        focus:outline-hidden focus:ring-2 focus: focus:ring-offset-2
-      `,
+        `focus: flex grow basis-1 items-center gap-2 rounded-lg border-2 px-4 py-2 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-hidden`,
         className,
       )}
       style={style}
@@ -74,7 +70,7 @@ export const QuickLinks = () => {
     },
   ];
   return (
-    <div className="flex flex-wrap w-full gap-4 rounded-lg p-4">
+    <div className="flex w-full flex-wrap gap-4 rounded-lg p-4">
       {quickLinks.map((link, index) => (
         <StyledExternalLink key={index} {...link} />
       ))}

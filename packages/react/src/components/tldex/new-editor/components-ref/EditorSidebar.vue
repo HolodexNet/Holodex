@@ -1,9 +1,9 @@
 <template>
   <div
-    class="tle-sidebar flex h-full flex-col rounded-lg border border-bgColor-100"
+    class="tle-sidebar border-bgColor-100 flex h-full flex-col rounded-lg border"
   >
     <div
-      class="flex h-6 flex-nowrap items-center gap-1 border-b border-b-bgColor-50 px-1"
+      class="border-b-bgColor-50 flex h-6 flex-nowrap items-center gap-1 border-b px-1"
     >
       <div class="shrink-0 basis-4 text-sm">
         <div :class="icons.sidebar_settings" />
@@ -12,7 +12,7 @@
         <b class="text-center text-sm">Timing</b>
       </div>
       <div
-        class="my-0 h-full w-0 overflow-clip border-l border-solid border-bgColor-50"
+        class="border-bgColor-50 my-0 h-full w-0 overflow-clip border-l border-solid"
       />
       <div class="subs">
         <b class="text-center text-sm">Text</b>

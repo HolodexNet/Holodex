@@ -40,7 +40,7 @@ const TheaterModeChat = ({
   if (!currentVideo || (!chatOpen && !tlOpen)) return null;
 
   return (
-    <div className="hidden @screen-lg:flex min-w-[24rem]">
+    <div className="hidden min-w-[24rem] @screen-lg:flex">
       <ChatCard {...currentVideo} />
     </div>
   );
@@ -67,7 +67,7 @@ const VideoContent = ({
       })}
     >
       {/* min-w-0 and shrink are necessary here for the player to shrink on Chrome (specifically Chrome) */}
-      <div className="grow shrink min-w-0">
+      <div className="min-w-0 shrink grow">
         <PlayerWrapper id={currentVideo?.id} url={url} />
       </div>
       {theaterMode && <TheaterModeChat currentVideo={currentVideo} />}
@@ -114,7 +114,7 @@ const VideoAsideLists = ({
   const { videos } = useCurrentVideoList();
 
   return (
-    <div className="hidden flex-col @screen-lg:flex shrink-0 gap-4 w-96">
+    <div className="hidden w-96 shrink-0 flex-col gap-4 @screen-lg:flex">
       {!!videos.length && <CurrentVideoList currentId={currentVideo?.id} />}
       {(currentVideo?.type === "stream" || currentVideo?.status === "live") && (
         <div
@@ -219,10 +219,10 @@ export function Watch() {
         <meta name="description" content={currentVideo?.description} />
       </Helmet>
 
-      <div className="flex w-full h-full @container">
+      <div className="@container flex h-full w-full">
         <div className={containerClasses}>
           {/* Container adds padding and width constraint */}
-          <div className="flex grow shrink min-w-0 flex-col gap-4">
+          <div className="flex min-w-0 shrink grow flex-col gap-4">
             <div className={playerContainerClasses}>
               <VideoContent
                 currentVideo={currentVideo}

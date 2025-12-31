@@ -34,21 +34,21 @@ export function SettingsUser() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex my-4 items-center gap-6">
+      <div className="my-4 flex items-center gap-6">
         <div className="flex flex-col items-center">
           <img
-            className="w-24 rounded-full h-24"
+            className="h-24 w-24 rounded-full"
             src={`https://api.dicebear.com/9.x/shapes/svg?seed=${user.id}`}
           />
           <Badge className="-mt-2">{user.role}</Badge>
         </div>
         <div className="flex flex-col gap-2">
-          <div className="font-bold text-2xl md:text-4xl">{user.username}</div>
+          <div className="text-2xl font-bold md:text-4xl">{user.username}</div>
           <div className="capitalize">
             {user.contribution_count}
             {t("component.mainNav.points")}
           </div>
-          <div className="flex gap-2 flex-wrap text-sm">
+          <div className="flex flex-wrap gap-2 text-sm">
             <Badge className="border-base" variant="outline">
               <kbd className="font-bold">#{user.id}</kbd>
             </Badge>
@@ -56,10 +56,10 @@ export function SettingsUser() {
               <Tooltip>
                 <TooltipTrigger>
                   <Badge
-                    className={user.discord_id ? " " : "border-base "}
+                    className={user.discord_id ? " " : "border-base"}
                     variant="outline"
                   >
-                    <div className="md:mr-1 i-carbon:logo-discord" />
+                    <div className="i-carbon:logo-discord md:mr-1" />
                     <span className="hidden md:block">Discord</span>
                   </Badge>
                 </TooltipTrigger>
@@ -72,10 +72,10 @@ export function SettingsUser() {
               <Tooltip>
                 <TooltipTrigger>
                   <Badge
-                    className={user.google_id ? " " : "border-base "}
+                    className={user.google_id ? " " : "border-base"}
                     variant="outline"
                   >
-                    <div className="md:mr-1 i-mdi:google" />
+                    <div className="i-mdi:google md:mr-1" />
                     <span className="hidden md:block">Google</span>
                   </Badge>
                 </TooltipTrigger>
@@ -88,10 +88,10 @@ export function SettingsUser() {
               <Tooltip>
                 <TooltipTrigger>
                   <Badge
-                    className={user.twitter_id ? " " : "border-base "}
+                    className={user.twitter_id ? " " : "border-base"}
                     variant="outline"
                   >
-                    <div className="md:mr-1 i-mdi:twitter" />
+                    <div className="i-mdi:twitter md:mr-1" />
                     <span className="hidden md:block">Twitter</span>
                   </Badge>
                 </TooltipTrigger>
@@ -102,7 +102,7 @@ export function SettingsUser() {
             </TooltipProvider>
           </div>
         </div>
-        <div className="hidden flex-col gap-2 ml-auto xl:flex">
+        <div className="ml-auto hidden flex-col gap-2 xl:flex">
           {user?.role !== "user" && (
             <Button variant="base-outline" asChild>
               <Link
@@ -132,7 +132,7 @@ export function SettingsUser() {
         <LoginButtons />
       </SettingsItem>
       <SettingsItem label={t("views.login.username")} fullWidth>
-        <div className="ml-auto flex items-center gap-2 w-full max-w-md">
+        <div className="ml-auto flex w-full max-w-md items-center gap-2">
           <Input placeholder={user.username} />
           <Button className="whitespace-nowrap">
             {t("views.watch.uploadPanel.usernameChange")}

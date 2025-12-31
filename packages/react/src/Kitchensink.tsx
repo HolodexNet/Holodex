@@ -11,7 +11,7 @@ export function Kitchensink() {
 
   if (count) throw new Error("Test error");
   return (
-    <div className="p-4 space-y-4">
+    <div className="space-y-4 p-4">
       <h3>This page is for testing components and styling.</h3>
 
       <hr className="border-base" />
@@ -27,7 +27,7 @@ export function Kitchensink() {
       <hr className="border-base" />
 
       <h3>Color and variants:</h3>
-      <div className="flex flex-row flex-wrap items-start justify-start gap-4 max-w-5xl">
+      <div className="flex max-w-5xl flex-row flex-wrap items-start justify-start gap-4">
         <Button>Default button</Button>
         <Button variant="ghost" onClick={() => setCount(count + 1)}>
           Ghost button
@@ -100,7 +100,7 @@ export function Kitchensink() {
 
       <hr className="border-base" />
       <h3>Toggles and Checkboxes</h3>
-      <div className="flex space-x-2 items-center">
+      <div className="flex items-center space-x-2">
         <Switch id="airplane-mode" />
         <Label htmlFor="airplane-mode">Airplane Mode</Label>
       </div>
@@ -108,7 +108,7 @@ export function Kitchensink() {
         <Checkbox id="terms" />
         <label
           htmlFor="terms"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           Accept terms and conditions
         </label>

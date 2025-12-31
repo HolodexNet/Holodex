@@ -11,7 +11,7 @@ export function AboutHeading(
     <h3
       {...props}
       className={cn(
-        "mb-2 mt-6 text-2xl tracking-tight first:mt-2 md:text-3xl",
+        "mt-6 mb-2 text-2xl tracking-tight first:mt-2 md:text-3xl",
         props.className,
       )}
     />

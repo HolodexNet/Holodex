@@ -65,15 +65,15 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
     return (
       <div
         ref={ref}
-        className={cn("relative overflow-hidden h-full w-full")}
+        className={cn("relative h-full w-full overflow-hidden")}
         data-cell-id={id}
         data-cell-type={cell.type}
       >
-        <div className="absolute inset-6 pointer-events-auto size-full">
+        <div className="pointer-events-auto absolute inset-6 size-full">
           {/* This overlay blocks iframe mouse events to allow react-grid-layout drag/resize */}
 
           {/* Cell info */}
-          <div className="text-sm mb-2 text-white/70">
+          <div className="mb-2 text-sm text-white/70">
             {cell.type === "video" && cell.videoId && `Video: ${cell.videoId}`}
             {cell.type === "chat" && `Chat (Tab ${cell.chatTab})`}
             {cell.type === "empty" && "Empty Cell"}
@@ -85,7 +85,7 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
               <button
                 type="button"
                 onClick={handleClearContent}
-                className="rounded px-2 py-1 text-xs bg-yellow-600 text-white hover:bg-yellow-500"
+                className="rounded bg-yellow-600 px-2 py-1 text-xs text-white hover:bg-yellow-500"
               >
                 Clear
               </button>
@@ -93,15 +93,15 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
             <button
               type="button"
               onClick={handleDeleteCell}
-              className="rounded px-2 py-1 text-xs text-white bg-red-600 hover:bg-red-500"
+              className="rounded bg-red-600 px-2 py-1 text-xs text-white hover:bg-red-500"
             >
               Delete
             </button>
           </div>
 
           {/* Drag handle indicator in center */}
-          <div className="absolute flex items-center inset-0 justify-center z-10">
-            <div className="py-1 rounded text-sm text-white/50 bg-black/30 px-3 cursor-move drag-handle">
+          <div className="absolute inset-0 z-10 flex items-center justify-center">
+            <div className="drag-handle cursor-move rounded bg-black/30 px-3 py-1 text-sm text-white/50">
               Drag to move
             </div>
           </div>

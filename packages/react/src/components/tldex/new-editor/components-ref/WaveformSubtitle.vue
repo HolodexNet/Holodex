@@ -1,18 +1,18 @@
 <template>
   <div class="wf-sub-container pointer-events-none hover:ring-3">
     <div
-      class="handle left-0 top-0 cursor-col-resize"
+      class="handle top-0 left-0 cursor-col-resize"
       @mousedown.stop="$emit('dragHandle', true)"
     />
     <div
-      class="pointer-events-auto line-clamp-3 w-full select-none bg-blue-400 bg-opacity-20 px-1"
+      class="bg-opacity-20 pointer-events-auto line-clamp-3 w-full bg-blue-400 px-1 select-none"
       @click="$emit('goto', message.video_offset + 0.01)"
       @mousedown.stop="$emit('dragFull')"
     >
       {{ message.message }}
     </div>
     <div
-      class="handle right-0 top-0 cursor-col-resize"
+      class="handle top-0 right-0 cursor-col-resize"
       @mousedown.stop="$emit('dragHandle', false)"
     />
   </div>

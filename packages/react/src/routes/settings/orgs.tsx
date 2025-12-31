@@ -85,10 +85,10 @@ export const OrgReranker = ({
   );
 
   return (
-    <div className="grid gap-4 grid-cols-1 min-w-72 lg:grid-cols-2">
+    <div className="grid min-w-72 grid-cols-1 gap-4 lg:grid-cols-2">
       <div>
         <div>
-          <h3 className="font-semibold mb-2 text-lg text-center">Starred</h3>
+          <h3 className="mb-2 text-center text-lg font-semibold">Starred</h3>
         </div>
         <DndContext
           sensors={sensors}
@@ -101,14 +101,14 @@ export const OrgReranker = ({
           >
             {starredOrgs.map((org) => (
               <SortableItem key={"draggable" + org.name} id={org.name}>
-                <div className="flex items-center p-2 rounded justify-between my-1 h-10 cursor-grab">
-                  <div className="mr-1 i-mdi:drag"></div>
+                <div className="my-1 flex h-10 cursor-grab items-center justify-between rounded p-2">
+                  <div className="i-mdi:drag mr-1"></div>
                   <span className="grow">{org.name}</span>
                   <button
                     onClick={() => toggleStar(org, true)}
                     className="text-yellow-500 hover:text-yellow-600"
                   >
-                    <div className="text-lg i-fluent:star-off-16-regular" />
+                    <div className="i-fluent:star-off-16-regular text-lg" />
                   </button>
                 </div>
               </SortableItem>
@@ -121,16 +121,16 @@ export const OrgReranker = ({
         <h3 className="mb-2 text-center text-lg font-semibold">
           Other Organizations
         </h3>
-        <div className="flex w-full text-sm rounded-md border border-base focus-within: bg-transparent focus-within:ring-2 px-3 transition-colors h-9 shadow-xs rounded-b-none focus-within:outline-hidden">
+        <div className="border-base focus-within: flex h-9 w-full rounded-md rounded-b-none border bg-transparent px-3 text-sm shadow-xs transition-colors focus-within:ring-2 focus-within:outline-hidden">
           <input
             type="text"
             placeholder="Filter organizations..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-transparent outline-hidden border-0 border-none border-transparent"
+            className="w-full border-0 border-none border-transparent bg-transparent outline-hidden"
           />
         </div>
-        <ScrollArea className="rounded-md border px-1 h-60 rounded-b rounded-t-none md:h-80">
+        <ScrollArea className="h-60 rounded-md rounded-t-none rounded-b border px-1 md:h-80">
           {filteredUnstarredOrgs.map((org) => (
             <div
               key={"unstarred-" + org.name}
@@ -141,7 +141,7 @@ export const OrgReranker = ({
                 onClick={() => toggleStar(org)}
                 className="text-gray-500 hover:text-gray-600"
               >
-                <div className="text-lg i-heroicons:star" />
+                <div className="i-heroicons:star text-lg" />
               </button>
             </div>
           ))}{" "}

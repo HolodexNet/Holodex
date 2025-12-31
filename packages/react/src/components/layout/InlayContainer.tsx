@@ -19,7 +19,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
     <div className="flex justify-center gap-4 p-4 md:p-8">
       <div
         className={cn(
-          "flex h-fit w-full shrink-0 flex-col gap-2 rounded-lg p-2 md:w-72 xl:w-80 bg-card border",
+          "flex h-fit w-full shrink-0 flex-col gap-2 rounded-lg border bg-card p-2 md:w-72 xl:w-80",
           { "hidden md:flex": itemSelected },
         )}
       >
@@ -27,7 +27,7 @@ export function InlayContainer({ routes }: InlayContainerProps) {
           <Button
             key={href + label}
             asChild
-            className="gap-4 px-4 justify-start"
+            className="justify-start gap-4 px-4"
             size="lg"
             variant={href === location.pathname ? "default" : "ghost"}
           >
@@ -40,31 +40,31 @@ export function InlayContainer({ routes }: InlayContainerProps) {
       </div>
       <div
         className={cn(
-          "hidden w-full max-w-(--breakpoint-lg) md:block border rounded-lg",
+          "hidden w-full max-w-(--breakpoint-lg) rounded-lg border md:block",
           {
             "flex flex-col gap-4": itemSelected,
           },
         )}
       >
-        <div className="flex flex-row items-center p-2 w-full rounded-lg bg-card md:hidden">
+        <div className="flex w-full flex-row items-center rounded-lg bg-card p-2 md:hidden">
           <Button
             size="lg"
             variant="link"
-            className="justify-start w-12 px-2"
+            className="w-12 justify-start px-2"
             onClick={() => navigate(-1)}
           >
             <div className="i-heroicons:chevron-left" />
           </Button>
-          <h2 className="flex-1 text-center text-lg font-semibold mr-12 md:text-2xl">
+          <h2 className="mr-12 flex-1 text-center text-lg font-semibold md:text-2xl">
             {routes.find(({ href }) => href === location.pathname)?.label}
           </h2>
         </div>
-        <div className="w-full rounded-lg p-2 bg-card md:p-4 xl:p-8">
+        <div className="w-full rounded-lg bg-card p-2 md:p-4 xl:p-8">
           <Suspense fallback={<Loading size="xl" />}>
             <Outlet />
           </Suspense>
         </div>
-        <div className="w-full rounded-lg p-2 md:hidden bg-card block">
+        <div className="block w-full rounded-lg bg-card p-2 md:hidden">
           <Button
             size="lg"
             variant="link"

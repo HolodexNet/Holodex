@@ -5,7 +5,7 @@ export function Mentions({ mentions }: { mentions: ShortChannel[] }) {
   return (
     <div className="rounded-lg p-1">
       <ScrollArea type="hover" className="p-1">
-        <div className="flex w-full gap-2 flex-row">
+        <div className="flex w-full flex-row gap-2">
           {mentions.map((mention) => (
             <ChannelImg
               key={mention.id}

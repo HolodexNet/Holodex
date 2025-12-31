@@ -66,7 +66,7 @@ export default function StatComponent({
     <Card>
       <CardContent>
         <CardDescription>{title}</CardDescription>
-        <CardTitle className="from-primary max-w-min to-foreground bg-linear-to-r bg-clip-text text-3xl text-transparent drop-shadow-[2px_1px_24px_var(--primary)] transition-all duration-300 dark:from-foreground dark:to-primary">
+        <CardTitle className="max-w-min bg-linear-to-r from-primary to-foreground bg-clip-text text-3xl text-transparent drop-shadow-[2px_1px_24px_var(--primary)] transition-all duration-300 dark:from-foreground dark:to-primary">
           {displayAmount.toLocaleString()}
         </CardTitle>
         {change !== undefined && (

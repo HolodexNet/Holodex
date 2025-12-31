@@ -77,13 +77,13 @@ export const WaveformEditor = ({ videoId }: { videoId: string }) => {
           }}
         />
       </div>
-      <div className="relative max-w-full shrink h-24" ref={containerRef}>
+      <div className="relative h-24 max-w-full shrink" ref={containerRef}>
         <canvas
-          className="absolute top-0 h-full w-full left-0"
+          className="absolute top-0 left-0 h-full w-full"
           ref={bgCanvasRef}
         />
         <canvas
-          className="absolute left-0 top-0 h-full w-full"
+          className="absolute top-0 left-0 h-full w-full"
           ref={canvasRef}
         />
         {/* <div className="pointer-events-none absolute z-10 -mt-10 flex w-full justify-between text-xs">

@@ -111,9 +111,9 @@ const SubtitleItem = React.memo(
     return (
       <div
         className={clsx(
-          "flex border-b  py-1 hover:",
+          "hover: flex border-b py-1",
           progress > subtitle.video_offset && progress < subtitle.end && " ",
-          progress >= subtitle.end && " opacity-80",
+          progress >= subtitle.end && "opacity-80",
         )}
       >
         <div className="flex flex-col justify-between space-y-1 brightness-50">
@@ -125,7 +125,7 @@ const SubtitleItem = React.memo(
             }
             title="Delete"
           >
-            <i className="text-base i-mdi:delete" />
+            <i className="i-mdi:delete text-base" />
           </Button>
           <Button
             size="sm"
@@ -134,7 +134,7 @@ const SubtitleItem = React.memo(
             title="Merge"
             disabled={!nextSubtitleId}
           >
-            <i className="text-base i-mdi:call-merge" />
+            <i className="i-mdi:call-merge text-base" />
           </Button>
           <Button
             size="sm"

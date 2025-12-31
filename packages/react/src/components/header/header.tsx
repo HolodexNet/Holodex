@@ -33,10 +33,10 @@ export function Header({ id }: HeaderProps) {
       <Button
         size="icon"
         variant="ghost"
-        className="p-4 h-12 w-12"
+        className="h-12 w-12 p-4"
         onClick={frameToggleSidebar}
       >
-        <div className="rounded-md p-3 i-heroicons:bars-3" />
+        <div className="i-heroicons:bars-3 rounded-md p-3" />
       </Button>
 
       {!isSearching && (
@@ -44,7 +44,7 @@ export function Header({ id }: HeaderProps) {
           size="icon"
           variant="link"
           className={clsx(
-            "h-12 w-12 p-0 opacity-100 transition-all starting:opacity-0 starting:-translate-y-6  duration-1000 hover:",
+            "hover: h-12 w-12 p-0 opacity-100 transition-all duration-1000 starting:-translate-y-6 starting:opacity-0",
             isSidebarOpen && "hidden",
           )}
           asChild
@@ -62,31 +62,31 @@ export function Header({ id }: HeaderProps) {
           {/* Mobile-specific search bar */}
           {isMobile &&
             (isSearching ? (
-              <div className="flex mt-3 w-full items-start self-start">
-                <SearchBar className="grow shrink" autoFocus />
+              <div className="mt-3 flex w-full items-start self-start">
+                <SearchBar className="shrink grow" autoFocus />
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="text-lg ml-2"
+                  className="ml-2 text-lg"
                   onClick={() => setIsSearching(false)}
                 >
-                  <div className="h-8 w-8 i-lucide:x" />
+                  <div className="i-lucide:x h-8 w-8" />
                 </Button>
               </div>
             ) : (
               <Button
                 size="icon"
                 variant="ghost"
-                className="h-12 w-12 ml-auto text-xl"
+                className="ml-auto h-12 w-12 text-xl"
                 onClick={() => setIsSearching(true)}
               >
-                <div className="h-8 w-8 i-heroicons:magnifying-glass" />
+                <div className="i-heroicons:magnifying-glass h-8 w-8" />
               </Button>
             ))}
 
           {/* Desktop-specific search bar */}
           {!isMobile && (
-            <SearchBar className="mt-3 self-start max-w-lg md:mr-1 lg:mr-2" />
+            <SearchBar className="mt-3 max-w-lg self-start md:mr-1 lg:mr-2" />
           )}
         </>
       )}

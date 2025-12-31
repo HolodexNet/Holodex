@@ -62,7 +62,7 @@ export function ChannelSocials({
           to={`https://www.youtube.com/channel/${id}`}
           target={isSmall ? undefined : "_blank"}
         >
-          <div className="text-3xl i-mdi:youtube" />
+          <div className="i-mdi:youtube text-3xl" />
         </Link>
       </Button>
 
@@ -142,7 +142,7 @@ export function ChannelSocials({
     </Button>
   ) : (
     <Button
-      className="w-full group/fav"
+      className="group/fav w-full"
       variant={isFavorited ? "outline" : "secondary"}
       disabled={isPending}
       onClick={toggleFavorite}
@@ -169,7 +169,7 @@ export function ChannelSocials({
       {favoriteButton}
     </div>
   ) : (
-    <div className="flex w-full gap-2 flex-col">
+    <div className="flex w-full flex-col gap-2">
       {favoriteButton}
       <div className="flex w-full gap-2">
         {socialButtons}

@@ -15,7 +15,7 @@ export function AboutRequest() {
   const [type, setType] = useState("");
 
   return (
-    <div className="flex gap-2 flex-col">
+    <div className="flex flex-col gap-2">
       <AboutHeading>{t("channelRequest.RequestType")}</AboutHeading>
       <RadioGroup className="flex flex-col gap-2" onValueChange={setType}>
         <RadioGroupItem value="addVtuber" className="sr-only" id="addVtuber" />

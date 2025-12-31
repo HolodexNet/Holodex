@@ -83,7 +83,7 @@ export function VirtuosoLoadingFooter({
 
 export function GlobalLoading() {
   return (
-    <div className="h-full w-full fixed left-0 top-0">
+    <div className="fixed top-0 left-0 h-full w-full">
       <Loading size="xl" />
     </div>
   );

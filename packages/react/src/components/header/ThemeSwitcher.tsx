@@ -45,9 +45,9 @@ export function ThemeSwitcher() {
           <span className="sr-only">Open Theme Switcher</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-4 w-80">
-        <div className="flex items-center justify-between mb-4">
-          <h4 className="font-medium leading-none">Theme Customizer</h4>
+      <PopoverContent className="w-80 p-4">
+        <div className="mb-4 flex items-center justify-between">
+          <h4 className="leading-none font-medium">Theme Customizer</h4>
           <Button
             variant="ghost"
             size="icon"

@@ -24,7 +24,7 @@ export function CurrentVideoList({ currentId }: { currentId?: string }) {
   return (
     <Collapsible
       open={open}
-      className="flex flex-col overflow-hidden rounded-lg border border-base gap-2 @container"
+      className="border-base @container flex flex-col gap-2 overflow-hidden rounded-lg border"
     >
       <CollapsibleTrigger asChild>
         <Button
@@ -43,7 +43,7 @@ export function CurrentVideoList({ currentId }: { currentId?: string }) {
       </CollapsibleTrigger>
       <CollapsibleContent>
         {open && (
-          <div className="flex flex-col overflow-y-auto max-h-[40vh]">
+          <div className="flex max-h-[40vh] flex-col overflow-y-auto">
             <div className="flex justify-between">
               <NewPlaylistDialog
                 triggerElement={

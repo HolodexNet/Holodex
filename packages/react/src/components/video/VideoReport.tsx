@@ -243,7 +243,7 @@ export function ReportDialogMenu({
                           control={form.control}
                           name="reasons"
                           render={({ field }) => (
-                            <FormItem className="flex items-start space-x-3 space-y-0">
+                            <FormItem className="flex items-start space-y-0 space-x-3">
                               <FormControl>
                                 <Checkbox
                                   checked={field.value?.includes(reason.value)}

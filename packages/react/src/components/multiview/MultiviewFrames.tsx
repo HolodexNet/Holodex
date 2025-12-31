@@ -25,7 +25,7 @@ export function MultiviewFrames() {
   return (
     <>
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="pointer-events-none absolute inset-0"
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${cols}, 1fr)`,
@@ -40,7 +40,7 @@ export function MultiviewFrames() {
           ))}
       </div>
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="pointer-events-none absolute inset-0"
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${cols}, 1fr)`,
@@ -86,7 +86,7 @@ function MultiviewFrameItem({ cell }: MultiviewFrameItemProps) {
   if (isHidden) {
     return (
       <div
-        className="absolute overflow-hidden h-0 w-0"
+        className="absolute h-0 w-0 overflow-hidden"
         data-cell-id={cell.id}
         data-cell-hidden="true"
       >
@@ -108,7 +108,7 @@ function MultiviewFrameItem({ cell }: MultiviewFrameItemProps) {
 
   return (
     <div
-      className="overflow-hidden pointer-events-auto relative"
+      className="pointer-events-auto relative overflow-hidden"
       style={{
         gridColumn,
         gridRow,

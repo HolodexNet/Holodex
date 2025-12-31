@@ -104,7 +104,7 @@ const PullToRefresh: React.FC<PullToRefreshProps> = ({
   return (
     <div ref={containerRef} className="relative">
       <div
-        className="fixed inset-x-0 z-50 flex items-center justify-center overflow-hidden top-0 transition ease-out -translate-y-10"
+        className="fixed inset-x-0 top-0 z-50 flex -translate-y-10 items-center justify-center overflow-hidden transition ease-out"
         style={{
           transform: `translateY(${pullDistance}px)`,
           opacity: pullDistance / (pullDownThreshold / 1.8),
@@ -114,7 +114,7 @@ const PullToRefresh: React.FC<PullToRefreshProps> = ({
         <div className="flex flex-col items-center">
           <div
             className={cn(
-              "rounded-full  p-4 text-2xl",
+              "rounded-full p-4 text-2xl",
               pullDistance > pullDownThreshold && "bg-green-6",
             )}
           >
@@ -129,7 +129,7 @@ const PullToRefresh: React.FC<PullToRefreshProps> = ({
         </div>
       </div>
       <div
-        className="ease-out transition-transform"
+        className="transition-transform ease-out"
         style={{
           transform: `translateY(${pullDistance}px)`,
         }}

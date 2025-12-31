@@ -23,9 +23,9 @@ export function ChatCell({ chatTab }: ChatCellProps) {
 
   if (!videoId) {
     return (
-      <div className="flex h-full items-center w-full justify-center bg-base-3 text-base-11">
+      <div className="bg-base-3 text-base-11 flex h-full w-full items-center justify-center">
         <div className="text-center">
-          <div className="h-8 w-8 opacity-50 mb-2 i-lucide:message-square-off" />
+          <div className="i-lucide:message-square-off mb-2 h-8 w-8 opacity-50" />
           <div className="text-sm">No video for tab {chatTab}</div>
         </div>
       </div>
@@ -36,7 +36,7 @@ export function ChatCell({ chatTab }: ChatCellProps) {
   const chatUrl = `https://www.youtube.com/live_chat?v=${videoId}&embed_domain=${window.location.hostname}`;
 
   return (
-    <div className="h-full w-full bg-base-1">
+    <div className="bg-base-1 h-full w-full">
       <iframe
         src={chatUrl}
         className="h-full w-full border-0"

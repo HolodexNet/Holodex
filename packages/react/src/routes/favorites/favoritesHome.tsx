@@ -48,7 +48,7 @@ export function FavoritesLive() {
           videos={nowLiveSorted}
         />
         {!liveLoading && nowLiveSorted.length == 0 && <EmptyQuip />}
-        <Separator className="mb-4 mt-2 w-full lg:mb-6 lg:mt-4" />
+        <Separator className="mt-2 mb-4 w-full lg:mt-4 lg:mb-6" />
         <MainVideoListing
           isLoading={liveLoading}
           size={cardSize}

@@ -21,7 +21,7 @@ const LiveStatusBadge = React.memo(
     const { t } = useTranslation();
 
     return (
-      <div className={cn("flex gap-1 ", className)}>
+      <div className={cn("flex gap-1", className)}>
         {start_date || viewers ? (
           <span className="text-red-500">
             {t("component.videoCard.liveNow")}
@@ -75,7 +75,7 @@ const ScheduleTooltip = ({
         </span>
       </TooltipTrigger>
       <TooltipContent
-        className="p-1.5 drop-shadow-muted drop-shadow-lg"
+        className="p-1.5 drop-shadow-lg drop-shadow-muted"
         variant="secondary"
         side="bottom"
       >
@@ -170,7 +170,7 @@ export function VideoScheduleInfo({
       );
       return (
         <ScheduleTooltip id={video.id} timestamp={tick} className={className}>
-          <div className="inline-block align-text-bottom opacity-80 i-ph:image-broken" />
+          <div className="i-ph:image-broken inline-block align-text-bottom opacity-80" />
           &nbsp;{tick.format("LLL")}
         </ScheduleTooltip>
       );
@@ -210,7 +210,7 @@ const WorldTimeContent = React.memo(
     return (
       <div className="w-64">
         {isLikely && (
-          <div className="rounded-md px-1 text-xs mb-2 text-primary-foreground">
+          <div className="mb-2 rounded-md px-1 text-xs text-primary-foreground">
             {t("component.videoCard.uncertainPlaceholder")}
           </div>
         )}
@@ -223,7 +223,7 @@ const WorldTimeContent = React.memo(
             return (
               <div
                 key={`${id}_${timezone}`}
-                className="flex items-center rounded-sm px-1 justify-between odd:bg-background/20"
+                className="flex items-center justify-between rounded-sm px-1 odd:bg-background/20"
               >
                 <div className="flex flex-col">
                   <span className="text-sm font-medium">{cityName}</span>

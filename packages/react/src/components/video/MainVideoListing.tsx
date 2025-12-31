@@ -22,7 +22,7 @@ function LoadMoreCard({ onClick, isLoading, size }: LoadMoreCardProps) {
       onClick={onClick}
       disabled={isLoading}
       className={cn(
-        "group relative flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-base-6 bg-base-3 transition-all duration-200 hover:border-primary hover:bg-base-4 disabled:cursor-wait disabled:opacity-70",
+        "group border-base-6 bg-base-3 hover:bg-base-4 relative flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed transition-all duration-200 hover:border-primary disabled:cursor-wait disabled:opacity-70",
         {
           // Match the aspect ratio behavior of video cards for different sizes
           "aspect-video": size !== "list",
@@ -32,13 +32,13 @@ function LoadMoreCard({ onClick, isLoading, size }: LoadMoreCardProps) {
     >
       {isLoading ? (
         <div className="flex flex-col items-center gap-2">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-base-6 border-t-primary" />
-          <span className="text-sm text-base-11">{t("views.app.loading")}</span>
+          <div className="border-base-6 h-8 w-8 animate-spin rounded-full border-4 border-t-primary" />
+          <span className="text-base-11 text-sm">{t("views.app.loading")}</span>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-2">
-          <div className="text-base-11 h-10 w-10 transition-colors i-heroicons:arrow-down-circle group-hover:text-primary" />
-          <span className="text-sm text-base-11 transition-colors group-hover:text-primary font-medium">
+          <div className="text-base-11 i-heroicons:arrow-down-circle h-10 w-10 transition-colors group-hover:text-primary" />
+          <span className="text-base-11 text-sm font-medium transition-colors group-hover:text-primary">
             {t("component.mainVideoListing.loadMore")}
           </span>
         </div>

@@ -123,7 +123,7 @@ export default function CalendarUsage({
   const getTypeIcon = (type: string) => {
     switch (type) {
       case "channel":
-        return <div className="rounded-md p-3 i-heroicons:tv" />;
+        return <div className="i-heroicons:tv rounded-md p-3" />;
       case "org":
         return <Users className="h-4 w-4" />;
       case "topic":
@@ -134,7 +134,7 @@ export default function CalendarUsage({
   };
 
   return (
-    <div className="rounded-lg space-y-6">
+    <div className="space-y-6 rounded-lg">
       <div className="space-y-2">
         <Label>{t("Live Calendar (iCal)")}</Label>
         <div className="flex gap-2">
@@ -149,7 +149,7 @@ export default function CalendarUsage({
             size="icon-lg"
             onClick={() => handleCopy(getLiveCalendarURL())}
           >
-            <div className="size-4 i-heroicons:clipboard" />
+            <div className="i-heroicons:clipboard size-4" />
           </Button>
         </div>
       </div>
@@ -193,7 +193,7 @@ export default function CalendarUsage({
         </CommandList>
       </Command>
 
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex flex-wrap gap-2">
         {query.map((item) => (
           <Badge
             key={item.value + item.type}
@@ -204,7 +204,7 @@ export default function CalendarUsage({
             <span>{item.text}</span>
             <Button
               variant="ghost"
-              className="w-auto p-0 h-auto text-current hover:bg-transparent"
+              className="h-auto w-auto p-0 text-current hover:bg-transparent"
               onClick={() =>
                 setQuery(query.filter((q) => q.value !== item.value))
               }

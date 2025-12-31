@@ -14,7 +14,7 @@ export function AboutGeneral() {
   const dark = useAtomValue(darkAtom);
 
   return (
-    <article className="w-full @container">
+    <article className="@container w-full">
       <AboutHeading>{t("about.quicklinks")}</AboutHeading>
       <QuickLinks />
       <AboutHeading>{t("about.general.summary.title")}</AboutHeading>
@@ -91,7 +91,7 @@ function StatsBlock() {
   }
 
   return (
-    <div className="w-full grid grid-cols-1 gap-4 mx-auto min-w-min @md:max-w-2xl @md:grid-cols-2 @lg:max-w-4xl">
+    <div className="mx-auto grid w-full min-w-min grid-cols-1 gap-4 @md:max-w-2xl @md:grid-cols-2 @lg:max-w-4xl">
       <StatComponent
         title={"Vtubers"}
         amount={stats.statistics.channelCount.vtuber || 0}

@@ -115,7 +115,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           cols={cols}
           rows={rows}
           markSize={6}
-          className="absolute inset-0 pointer-events-none z-6"
+          className="pointer-events-none absolute inset-0 z-6"
         />
       )}
       {/* Visual grid overlay */}
@@ -130,7 +130,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           height={bounds.height}
           color="color-mix(in srgb, var(--muted-foreground) 15%, transparent)"
           borderRadius={0}
-          className="absolute inset-0 pointer-events-none z-5 mv-grid mv-grid-background"
+          className="mv-grid mv-grid-background pointer-events-none absolute inset-0 z-5"
         />
       )}
       {bounds?.height && (
@@ -156,41 +156,41 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
                 nw: (
                   <div
                     ref={ref as unknown as Ref<HTMLDivElement>}
-                    className="absolute z-50 transition-all w-4 h-4 top-1 left-1 cursor-nwse-resize react-resizable-handle hover:brightness-150"
+                    className="react-resizable-handle absolute top-1 left-1 z-50 h-4 w-4 cursor-nwse-resize transition-all hover:brightness-150"
                     style={{ display: editMode ? "block" : "none" }}
                   >
-                    <div className="absolute top-0 left-0 w-full h-1 bg-primary"></div>
-                    <div className="absolute top-0 left-0 bg-primary h-full w-1"></div>
+                    <div className="absolute top-0 left-0 h-1 w-full bg-primary"></div>
+                    <div className="absolute top-0 left-0 h-full w-1 bg-primary"></div>
                   </div>
                 ),
                 ne: (
                   <div
                     ref={ref as unknown as Ref<HTMLDivElement>}
-                    className="absolute top-1 w-4 h-4 z-50 hover:brightness-150 transition-all react-resizable-handle right-1 cursor-nesw-resize"
+                    className="react-resizable-handle absolute top-1 right-1 z-50 h-4 w-4 cursor-nesw-resize transition-all hover:brightness-150"
                     style={{ display: editMode ? "block" : "none" }}
                   >
-                    <div className="absolute top-0 w-full h-1 bg-primary right-0"></div>
+                    <div className="absolute top-0 right-0 h-1 w-full bg-primary"></div>
                     <div className="absolute top-0 right-0 h-full w-1 bg-primary"></div>
                   </div>
                 ),
                 sw: (
                   <div
                     ref={ref as unknown as Ref<HTMLDivElement>}
-                    className="absolute left-1 w-4 h-4 cursor-nesw-resize z-50 hover:brightness-150 transition-all react-resizable-handle bottom-1"
+                    className="react-resizable-handle absolute bottom-1 left-1 z-50 h-4 w-4 cursor-nesw-resize transition-all hover:brightness-150"
                     style={{ display: editMode ? "block" : "none" }}
                   >
-                    <div className="absolute left-0 w-full h-1 bg-primary bottom-0"></div>
+                    <div className="absolute bottom-0 left-0 h-1 w-full bg-primary"></div>
                     <div className="absolute bottom-0 left-0 h-full w-1 bg-primary"></div>
                   </div>
                 ),
                 se: (
                   <div
                     ref={ref as unknown as Ref<HTMLDivElement>}
-                    className="absolute bottom-1 right-1 w-4 h-4 cursor-nwse-resize z-50 hover:brightness-150 transition-all react-resizable-handle"
+                    className="react-resizable-handle absolute right-1 bottom-1 z-50 h-4 w-4 cursor-nwse-resize transition-all hover:brightness-150"
                     style={{ display: editMode ? "block" : "none" }}
                   >
-                    <div className="absolute bottom-0 right-0 w-full h-1 bg-primary"></div>
-                    <div className="absolute bottom-0 right-0 h-full w-1 bg-primary"></div>
+                    <div className="absolute right-0 bottom-0 h-1 w-full bg-primary"></div>
+                    <div className="absolute right-0 bottom-0 h-full w-1 bg-primary"></div>
                   </div>
                 ),
               };
@@ -200,28 +200,28 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
                 n: (
                   <div
                     ref={ref as unknown as Ref<HTMLDivElement>}
-                    className="h-1 absolute top-1 z-50 react-resizable-handle opacity-0 w-12 left-1/2 transition-opacity bg-primary/50 cursor-ns-resize -translate-x-1/2 hover:bg-primary group-hover/cell:opacity-100"
+                    className="react-resizable-handle absolute top-1 left-1/2 z-50 h-1 w-12 -translate-x-1/2 cursor-ns-resize bg-primary/50 opacity-0 transition-opacity group-hover/cell:opacity-100 hover:bg-primary"
                     style={{ display: editMode ? "block" : "none" }}
                   />
                 ),
                 s: (
                   <div
                     ref={ref as unknown as Ref<HTMLDivElement>}
-                    className="w-12 h-1 absolute bottom-1 left-1/2 -translate-x-1/2 bg-primary/50 cursor-ns-resize z-50 hover:bg-primary opacity-0 group-hover/cell:opacity-100 transition-opacity react-resizable-handle"
+                    className="react-resizable-handle absolute bottom-1 left-1/2 z-50 h-1 w-12 -translate-x-1/2 cursor-ns-resize bg-primary/50 opacity-0 transition-opacity group-hover/cell:opacity-100 hover:bg-primary"
                     style={{ display: editMode ? "block" : "none" }}
                   />
                 ),
                 w: (
                   <div
                     ref={ref as unknown as Ref<HTMLDivElement>}
-                    className="w-1 absolute left-1 bg-primary/50 z-50 hover:bg-primary opacity-0 group-hover/cell:opacity-100 transition-opacity react-resizable-handle h-12 cursor-ew-resize top-1/2 -translate-y-1/2"
+                    className="react-resizable-handle absolute top-1/2 left-1 z-50 h-12 w-1 -translate-y-1/2 cursor-ew-resize bg-primary/50 opacity-0 transition-opacity group-hover/cell:opacity-100 hover:bg-primary"
                     style={{ display: editMode ? "block" : "none" }}
                   />
                 ),
                 e: (
                   <div
                     ref={ref as unknown as Ref<HTMLDivElement>}
-                    className="w-1 h-12 absolute top-1/2 -translate-y-1/2 right-1 bg-primary/50 cursor-ew-resize z-50 hover:bg-primary opacity-0 group-hover/cell:opacity-100 transition-opacity react-resizable-handle"
+                    className="react-resizable-handle absolute top-1/2 right-1 z-50 h-12 w-1 -translate-y-1/2 cursor-ew-resize bg-primary/50 opacity-0 transition-opacity group-hover/cell:opacity-100 hover:bg-primary"
                     style={{ display: editMode ? "block" : "none" }}
                   />
                 ),
@@ -235,7 +235,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
               return (
                 <div
                   ref={ref as unknown as Ref<HTMLDivElement>}
-                  className="absolute z-50 react-resizable-handle"
+                  className="react-resizable-handle absolute z-50"
                   style={{ display: editMode ? "block" : "none" }}
                 />
               );
@@ -247,7 +247,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           compactor={compactor}
           onLayoutChange={handleLayoutChange}
           autoSize={true}
-          className="h-full z-10"
+          className="z-10 h-full"
           style={{ height: "100%", display: !editMode ? "none" : "block" }}
         >
           {cells

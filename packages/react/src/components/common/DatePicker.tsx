@@ -39,12 +39,12 @@ export function DatePicker(
         <Button
           variant="outline"
           className={cn(
-            "h-9 justify-start  text-left text-sm font-normal focus:border-blue-6 ",
+            "focus:border-blue-6 h-9 justify-start text-left text-sm font-normal",
             !date && "",
             className,
           )}
         >
-          <div className="h-4 mr-2 w-4 i-heroicons:calendar" />
+          <div className="i-heroicons:calendar mr-2 h-4 w-4" />
           {date ? (
             dayjs(date).tz(timezone).format(dateFormat)
           ) : (
@@ -52,13 +52,13 @@ export function DatePicker(
           )}
           {clearable && date && (
             <button
-              className="ring-offset-background ml-auto rounded-sm opacity-70 transition-opacity focus:ring-ring hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none"
+              className="ml-auto rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none"
               onClick={(e) => {
                 e.stopPropagation();
                 onSelect(undefined);
               }}
             >
-              <div className="h-4 w-4 i-heroicons:x-mark"></div>
+              <div className="i-heroicons:x-mark h-4 w-4"></div>
               <span className="sr-only">Close</span>
             </button>
           )}

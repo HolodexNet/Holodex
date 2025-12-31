@@ -17,7 +17,7 @@ export function QueryBadge({
     <Badge
       key={queryItem.type + queryItem.value}
       variant="primary"
-      className="font-normal px-1 tracking-tight"
+      className="px-1 font-normal tracking-tight"
     >
       {t(`search.class.${queryItem.type}`, queryItem.type)}
       {": "}
@@ -27,7 +27,7 @@ export function QueryBadge({
           ? queryItem.value
           : queryItem.text}
       <button
-        className="focus: rounded-full ml-1 outline-hidden ring-offset-base-2 focus:ring-2 focus:ring-offset-2"
+        className="focus: ring-offset-base-2 ml-1 rounded-full outline-hidden focus:ring-2 focus:ring-offset-2"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             onRemoveItem();
@@ -39,7 +39,7 @@ export function QueryBadge({
         }}
         onClick={onRemoveItem}
       >
-        <div className="hover: text-sm h-3 w-3 i-lucide:x"></div>
+        <div className="hover: i-lucide:x h-3 w-3 text-sm"></div>
       </button>
     </Badge>
   );

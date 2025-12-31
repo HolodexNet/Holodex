@@ -57,7 +57,7 @@ export function SongSearch({
           ref={buttonRef}
           role="combobox"
           aria-expanded={open}
-          className="flex w-full cursor-pointer items-center justify-center gap-2 border border-base px-4 rounded-md min-h-12 py-2"
+          className="border-base flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-md border px-4 py-2"
         >
           {value ? (
             <SongItem {...value} />
@@ -68,10 +68,10 @@ export function SongSearch({
             <Button
               size="icon"
               variant="ghost"
-              className="ml-auto text-red-11"
+              className="text-red-11 ml-auto"
               onClick={() => onSelect()}
             >
-              <div className="text-lg i-mdi:close" />
+              <div className="i-mdi:close text-lg" />
             </Button>
           )}
         </div>

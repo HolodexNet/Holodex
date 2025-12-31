@@ -31,7 +31,7 @@ export function PresetPreview({
 
   return (
     <div
-      className={cn("relative bg-base-3 rounded overflow-hidden", className)}
+      className={cn("bg-base-3 relative overflow-hidden rounded", className)}
       style={{
         width: `${gridSize}px`,
         height: `${gridSize}px`,
@@ -45,7 +45,7 @@ export function PresetPreview({
           <div
             key={i}
             className={cn(
-              "absolute border border-base-6",
+              "border-base-6 absolute border",
               isVideo && "bg-primary/60",
               isChat && "bg-secondary/60",
             )}

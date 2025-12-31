@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex h-16 flex-nowrap items-center gap-1 border-b border-b-bgColor-50 px-1"
+    class="border-b-bgColor-50 flex h-16 flex-nowrap items-center gap-1 border-b px-1"
     :class="{
       'current-shadow': current,
       'bg-secondary-700 bg-opacity-50': focus,
@@ -40,7 +40,7 @@
       <!-- <input class="input input-xs" value="1325" /> -->
     </div>
     <div
-      class="my-0 h-full w-0 overflow-clip border-l border-solid border-bgColor-50"
+      class="border-bgColor-50 my-0 h-full w-0 overflow-clip border-l border-solid"
     />
     <div class="subs">
       <EditableText v-model="modelValue.message" />

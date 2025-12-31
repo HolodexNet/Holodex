@@ -60,29 +60,29 @@ export default function VideoCardPlaceholder({
           <VideoThumbnail
             src={thumbnailSrc}
             alt="Stream Thumbnail"
-            className="rounded-sm w-full object-cover aspect-video bg-black max-h-[50vh]"
+            className="aspect-video max-h-[50vh] w-full rounded-sm bg-black object-cover"
           />
-          <div className="gap-2 grid mx-4">
-            <h2 className="font-bold text-2xl">{video.title}</h2>
+          <div className="mx-4 grid gap-2">
+            <h2 className="text-2xl font-bold">{video.title}</h2>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
               <div className="items-center font-semibold">
-                <div className="text-sm inline-block mr-3 i-heroicons:user -mb-1" />
+                <div className="i-heroicons:user mr-3 -mb-1 inline-block text-sm" />
                 <span>{nameFn(video.channel)}</span>
               </div>
               {video.mentions &&
                 video.mentions.map((mention) => (
                   <div className="items-center">
-                    <div className="-mb-1 mr-3 inline-block text-sm i-heroicons:user-plus" />
+                    <div className="i-heroicons:user-plus mr-3 -mb-1 inline-block text-sm" />
                     <span>{nameFn(mention)}</span>
                   </div>
                 ))}
             </div>
             <div className="flex items-center gap-2">
-              <div className="-mb-1 inline-block text-sm mr-1 i-heroicons:clock" />
+              <div className="i-heroicons:clock mr-1 -mb-1 inline-block text-sm" />
               <VideoScheduleInfo video={video} />
             </div>
           </div>
-          <div className="flex flex-col p-4 gap-4">
+          <div className="flex flex-col gap-4 p-4">
             <Button size="lg" variant="default" className="h-12 py-4" asChild>
               <a href={video.link} target="_blank" rel="noopener noreferrer">
                 <div
@@ -100,7 +100,7 @@ export default function VideoCardPlaceholder({
               </a>
             </Button>
             <div className="flex flex-row">
-              <div className="text-sm text-muted-foreground grow">
+              <div className="grow text-sm text-muted-foreground">
                 {t("component.placeholderVideo.creditTitleText")}{" "}
                 {video.credits?.discord &&
                   t("component.placeholderVideo.discordCredit", {
@@ -111,7 +111,7 @@ export default function VideoCardPlaceholder({
                           href={`https://discord.gg/${video.credits.discord.link}`}
                           className="inline-block"
                         >
-                          <div className="mr-1 inline-block i-logos:discord-icon" />
+                          <div className="i-logos:discord-icon mr-1 inline-block" />
                           {video.credits.discord.guildName}
                         </a>
                       </strong>
@@ -124,7 +124,7 @@ export default function VideoCardPlaceholder({
                     })}
                     <strong>
                       <a href={video.credits.datasource.link}>
-                        <div className="mr-1 inline-block i-heroicons:arrow-top-right-on-square" />
+                        <div className="i-heroicons:arrow-top-right-on-square mr-1 inline-block" />
                         {video.credits.datasource.link}
                       </a>
                     </strong>
@@ -153,8 +153,8 @@ export default function VideoCardPlaceholder({
                 )}
               </div>
               {user && user.role !== "user" && (
-                <div className="flex flex-row items-center gap-2 flex-nowrap pl-6">
-                  <code className="text-sm text-muted-foreground rounded-md px-2 py-1 my-2">
+                <div className="flex flex-row flex-nowrap items-center gap-2 pl-6">
+                  <code className="my-2 rounded-md px-2 py-1 text-sm text-muted-foreground">
                     {video.id}
                   </code>
                   <Button variant="default" className="" asChild>
@@ -197,7 +197,7 @@ export default function VideoCardPlaceholder({
     return (
       <Drawer open={open} onOpenChange={setOpen} modal={true}>
         <DrawerContent
-          className="border p-0 rounded-lg border-solid"
+          className="rounded-lg border border-solid p-0"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="h-4"></div>
@@ -211,7 +211,7 @@ export default function VideoCardPlaceholder({
     <Dialog open={open} onOpenChange={setOpen} modal={true}>
       <DialogTitle hidden>Holodex Placeholder Event</DialogTitle>
       <DialogContent
-        className="rounded-lg border border-solid p-0 w-[80%] sm:max-w-[980px]"
+        className="w-[80%] rounded-lg border border-solid p-0 sm:max-w-[980px]"
         onClick={(e) => e.stopPropagation()}
       >
         {content}

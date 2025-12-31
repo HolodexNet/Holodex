@@ -21,15 +21,15 @@ export default function PlaylistEntry({
   const user = useAtomValue(userAtom);
 
   return (
-    <div className="flex items-center rounded-lg p-4 gap-4 shadow-xs max-md:flex-col">
-      <div className="shrink-0 aspect-video max-md:w-full md:h-24">
+    <div className="flex items-center gap-4 rounded-lg p-4 shadow-xs max-md:flex-col">
+      <div className="aspect-video shrink-0 max-md:w-full md:h-24">
         {video_ids && video_ids.length > 0 ? (
           <VideoThumbnail
             className="h-full rounded-md object-cover"
             src={makeThumbnailUrl(video_ids[0], "sm")}
           />
         ) : (
-          <div className="h-full rounded-md p-4 grid place-content-center">
+          <div className="grid h-full place-content-center rounded-md p-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="4em"
@@ -66,12 +66,12 @@ export default function PlaylistEntry({
         <span className="text-sm">
           {video_ids?.length || 0} {t("views.channel.video")}
         </span>
-        <span className="text-sm ml-4">
+        <span className="ml-4 text-sm">
           {t("views.playlist.item-last-updated") +
             " " +
             dayjs(updated_at).format("LLL")}
         </span>
-        <div className="flex gap-2 mt-2 max-md:justify-between">
+        <div className="mt-2 flex gap-2 max-md:justify-between">
           {video_ids && video_ids.length > 0 && (
             <Button
               name="Play Playlist"
@@ -93,7 +93,7 @@ export default function PlaylistEntry({
             asChild
           >
             <Link to={`/playlist/${id}`}>
-              <span className="mr-1 i-heroicons:pencil-square-solid" />
+              <span className="i-heroicons:pencil-square-solid mr-1" />
               {t("component.videoCard.edit")}
             </Link>
           </Button>

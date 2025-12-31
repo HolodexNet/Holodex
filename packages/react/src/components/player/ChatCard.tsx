@@ -27,10 +27,10 @@ export function ChatCard({
     useStateList(CHAT_SIZES_ITER);
 
   return (
-    <div className="flex w-full overflow-hidden h-full flex-col border border-base rounded-lg bg-card">
+    <div className="border-base flex h-full w-full flex-col overflow-hidden rounded-lg border bg-card">
       <Collapsible
         open={chatOpen}
-        className={cn("flex flex-col ")}
+        className={cn("flex flex-col")}
         style={{ flexGrow: chatOpen ? (tlOpen ? chatBasis : 1) : 0 }}
       >
         <CollapsibleTrigger asChild>
@@ -51,10 +51,10 @@ export function ChatCard({
                   to="/about/faq#youtube"
                   target="_blank"
                   onClick={(e) => e.stopPropagation()}
-                  className="ml-auto rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent py-0.5 bg-muted hover:text-accent-foreground"
+                  className="ml-auto rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                 >
                   Not logged in{" "}
-                  <div className="text-xs inline-block align-bottom i-lucide:shield-question-mark"></div>
+                  <div className="i-lucide:shield-question-mark inline-block align-bottom text-xs"></div>
                 </Link>
                 <Button
                   size="icon"

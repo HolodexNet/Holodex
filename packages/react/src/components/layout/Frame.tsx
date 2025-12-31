@@ -101,9 +101,9 @@ export function CopyrightNotice() {
     return null;
   }
   return (
-    <div className="text-sm text-center mt-16">
+    <div className="mt-16 text-center text-sm">
       © 2020-2026 Holodex v{lastTag}.{commitsSinceLastTag}
-      <small className="ml-2 opacity-80 inline-block">
+      <small className="ml-2 inline-block opacity-80">
         b.{abbreviatedSha} / {dayjs(new Date(committerDate)).format("lll")}
       </small>{" "}
       /{" "}

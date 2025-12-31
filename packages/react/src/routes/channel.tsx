@@ -68,9 +68,9 @@ export function Channel() {
               : ""
           }
         />
-        <div className="flex flex-col gap-2 bg-card border-b pt-4 sticky top-0 z-20 shadow-lg border-b-base-5">
-          <div className="mx-auto flex gap-4 items-start px-4 container md:px-8 max-sm:flex-col md:items-center">
-            <div className="flex gap-4 items-center">
+        <div className="border-b-base-5 sticky top-0 z-20 flex flex-col gap-2 border-b bg-card pt-4 shadow-lg">
+          <div className="container mx-auto flex items-start gap-4 px-4 max-sm:flex-col md:items-center md:px-8">
+            <div className="flex items-center gap-4">
               <ChannelImg
                 className="size-16 md:size-24"
                 channelId={channel?.id}
@@ -80,10 +80,10 @@ export function Channel() {
                   {channel?.org}
                   {channel?.group && ` / ${channel?.group}`}
                 </div>
-                <div className="font-bold text-lg line-clamp-1">
+                <div className="line-clamp-1 text-lg font-bold">
                   {preferredName}
                 </div>
-                <div className="text-muted-foreground text-sm">
+                <div className="text-sm text-muted-foreground">
                   {t("component.channelInfo.subscriberCount", {
                     n: formatCount(channel?.subscriber_count ?? "0"),
                   })}
@@ -94,7 +94,7 @@ export function Channel() {
                         n: channel?.clip_count ?? "0",
                         })}`} */}
                 </div>
-                <div className="flex gap-1 mt-1 max-w-full overflow-x-auto">
+                <div className="mt-1 flex max-w-full gap-1 overflow-x-auto">
                   {channel?.top_topics?.map((topic) => (
                     <TopicBadge
                       key={topic}
@@ -126,7 +126,7 @@ export function Channel() {
               tab !== "music" && navigate(`/channel/${channel?.id}/${tab}`)
             }
           >
-            <TabsList className="container mx-auto overflow-x-auto md:px-8 bg-transparent">
+            <TabsList className="container mx-auto overflow-x-auto bg-transparent md:px-8">
               <TabsTrigger value="">{t("views.channel.video")}</TabsTrigger>
               <TabsTrigger value="clips">
                 {t("views.channel.clips")}
@@ -140,7 +140,7 @@ export function Channel() {
                   to={MUSICDEX_URL + "/channel/" + channel?.id}
                 >
                   {t("views.channel.music")}
-                  <div className="text-lg i-lucide:external-link" />
+                  <div className="i-lucide:external-link text-lg" />
                 </Link>
               </TabsTrigger>
               <TabsTrigger value="about">

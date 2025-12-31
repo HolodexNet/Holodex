@@ -102,14 +102,14 @@ export function ErrorFallback({
 
         <CardContent className="space-y-4">
           <Alert>
-            <AlertDescription className="text-center block">
+            <AlertDescription className="block text-center">
               <Trans
                 i18nKey="component.apiError.text"
                 components={{
                   twitter: (
                     <a
                       key="twitterlink"
-                      className="font-medium inline text-primary-foreground hover:underline"
+                      className="inline font-medium text-primary-foreground hover:underline"
                       href="https://x.com/holodex"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -117,7 +117,7 @@ export function ErrorFallback({
                   ),
                   discord: (
                     <a
-                      className="font-medium inline text-primary-foreground hover:underline"
+                      className="inline font-medium text-primary-foreground hover:underline"
                       href="https://discord.gg/jctkgHBt4b"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -135,7 +135,7 @@ export function ErrorFallback({
               onClick={() => window.location.reload()}
               className="gap-2"
             >
-              <div className="h-4 w-4 i-lucide:refresh-ccw" />
+              <div className="i-lucide:refresh-ccw h-4 w-4" />
               {t("component.apiError.reload")}
             </Button>
             <Button
@@ -149,7 +149,7 @@ export function ErrorFallback({
               }}
               className="gap-2"
             >
-              <div className="h-4 w-4 i-lucide:log-out" />
+              <div className="i-lucide:log-out h-4 w-4" />
               {t("component.apiError.logoutAndClearCache")}
             </Button>
           </div>
@@ -159,7 +159,7 @@ export function ErrorFallback({
             onOpenChange={setIsDebugOpen}
             className=""
           >
-            <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg p-4 font-medium border hover:bg-muted">
+            <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border p-4 font-medium hover:bg-muted">
               Debug Information
               <div
                 className={`i-lucide:chevron-down h-4 w-4 transition-transform duration-200 ${
@@ -168,10 +168,10 @@ export function ErrorFallback({
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="">
-              <code className="w-full rounded-lg px-4 my-2 block bg-muted/50 overflow-x-auto whitespace-pre-wrap">
+              <code className="my-2 block w-full overflow-x-auto rounded-lg bg-muted/50 px-4 whitespace-pre-wrap">
                 {error?.message}
               </code>
-              <code className="bg-muted/50 block w-full overflow-x-auto rounded-lg px-4 text-xs">
+              <code className="block w-full overflow-x-auto rounded-lg bg-muted/50 px-4 text-xs">
                 {error?.stack?.split("\n").slice(0, 6).join("\n")}
               </code>
             </CollapsibleContent>

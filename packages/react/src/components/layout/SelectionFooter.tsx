@@ -51,7 +51,7 @@ const SelectedVideosModal = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="flex flex-col overflow-x-hidden gap-0 overflow-y-auto px-0 py-6"
+        className="flex flex-col gap-0 overflow-x-hidden overflow-y-auto px-0 py-6"
         style={{
           maxHeight: "50vh",
           minWidth: "min-content",
@@ -69,7 +69,7 @@ const SelectedVideosModal = ({
             <Button
               variant="ghost"
               size="icon-lg"
-              className="shrink-0 size-10"
+              className="size-10 shrink-0"
               onClick={() =>
                 setSelectedVideos((prev) =>
                   prev.filter((v) => v.id !== video.id),
@@ -81,7 +81,7 @@ const SelectedVideosModal = ({
             </Button>
             <Link
               to={`/watch/${video.id}`}
-              className="shrink-0 block overflow-hidden rounded w-24"
+              className="block w-24 shrink-0 overflow-hidden rounded"
             >
               <VideoThumbnail
                 src={getThumbnailSrc(video)}
@@ -90,7 +90,7 @@ const SelectedVideosModal = ({
               />
             </Link>
             <div className="min-w-80">
-              <h3 className="font-semibold line-clamp-2">{video.title}</h3>
+              <h3 className="line-clamp-2 font-semibold">{video.title}</h3>
               <p className="text-sm text-gray-500">{video.channel?.name}</p>
             </div>
           </div>
@@ -119,7 +119,7 @@ const SelectionFooter = () => {
   return (
     <footer
       id="selectionFooter"
-      className="z-50 border p-2 fixed left-1/2 min-w-[80vw] sm:min-w-[60vw] rounded-2xl bg-background/95 shadow-2xl backdrop-blur -translate-x-1/2 supports-[backdrop-filter]:bg-background/60"
+      className="fixed left-1/2 z-50 min-w-[80vw] -translate-x-1/2 rounded-2xl border bg-background/95 p-2 shadow-2xl backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:min-w-[60vw]"
       style={{
         bottom: "calc(1.5rem + var(--footer-height-clearance, 0px))",
         maxWidth: "90vw",
@@ -138,7 +138,7 @@ const SelectionFooter = () => {
           className="size-8 shrink-0 rounded-full"
           onClick={exit}
         >
-          <span className="text-xl i-mdi:close" />
+          <span className="i-mdi:close text-xl" />
         </Button>
 
         <div className="flex items-center">
@@ -176,7 +176,7 @@ export const SelectionMainPage = ({
             onClick={clearSelection}
             className="flex items-center"
           >
-            <span className="mr-2 i-material-symbols:deselect" />
+            <span className="i-material-symbols:deselect mr-2" />
             Deselect
           </Button>
 
@@ -186,7 +186,7 @@ export const SelectionMainPage = ({
             onClick={() => setShowVideos(true)}
             className="flex items-center"
           >
-            <span className="mr-2 i-mdi:select-search" />
+            <span className="i-mdi:select-search mr-2" />
             Show {selectedVideos.length} Videos
           </Button>
         </>
@@ -197,7 +197,7 @@ export const SelectionMainPage = ({
         size="sm"
         disabled={!selectedVideos.length}
       >
-        <span className="mr-2 i-heroicons:rectangle-group" />
+        <span className="i-heroicons:rectangle-group mr-2" />
         Open in Multiview
       </Button>
 
@@ -209,9 +209,9 @@ export const SelectionMainPage = ({
             disabled={!selectedVideos.length}
             className="flex items-center"
           >
-            <span className="mr-2 i-material-symbols:list-alt-outline" />
+            <span className="i-material-symbols:list-alt-outline mr-2" />
             Playlist
-            <div className="ml-2 size-4 i-lucide:chevron-up"></div>
+            <div className="i-lucide:chevron-up ml-2 size-4"></div>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -232,7 +232,7 @@ export const SelectionMainPage = ({
             disabled={selectedVideos.length === 0}
             className="flex items-center"
           >
-            <span className="mr-2 i-lucide:tag" />
+            <span className="i-lucide:tag mr-2" />
             Modify Attributes
             <div className="i-lucide:chevron-up ml-2 size-4"></div>
           </Button>
@@ -271,7 +271,7 @@ export const SelectionMentionsPage = () => {
               onClick={() => setPage(0)}
               className="flex cursor-pointer items-center text-sm font-medium transition-colors hover:text-primary"
             >
-              <div className="mr-1 i-lucide:chevron-left" />
+              <div className="i-lucide:chevron-left mr-1" />
               Back
             </div>
           </li>
@@ -287,7 +287,7 @@ export const SelectionMentionsPage = () => {
         <input
           type="text"
           placeholder="Search channels..."
-          className="rounded-md border text-sm px-2 py-1"
+          className="rounded-md border px-2 py-1 text-sm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -312,7 +312,7 @@ export const SelectionSourcesPage = () => {
           <li>
             <div
               onClick={() => setPage(0)}
-              className="flex cursor-pointer items-center text-sm font-medium hover:text-primary transition-colors"
+              className="flex cursor-pointer items-center text-sm font-medium transition-colors hover:text-primary"
             >
               <div className="i-lucide:chevron-left mr-1" />
               Back
@@ -349,12 +349,12 @@ export const SelectionTopicPage = () => {
 
   return (
     <div className="flex w-full items-center justify-between gap-4">
-      <nav className="flex items-center shrink-0" aria-label="Breadcrumb">
+      <nav className="flex shrink-0 items-center" aria-label="Breadcrumb">
         <ol className="flex items-center space-x-2">
           <li>
             <div
               onClick={() => setPage(0)}
-              className="flex cursor-pointer items-center text-sm font-medium hover:text-primary transition-colors"
+              className="flex cursor-pointer items-center text-sm font-medium transition-colors hover:text-primary"
             >
               <div className="i-lucide:chevron-left mr-1" />
               Back
@@ -391,7 +391,7 @@ function SelectionModifyPlaylistMenu({ disabled }: { disabled: boolean }) {
           disabled={disabled}
           className="flex items-center"
         >
-          <span className="mr-2 i-heroicons:folder-open" />
+          <span className="i-heroicons:folder-open mr-2" />
           {t("component.mainNav.playlist")}
           <div className="i-lucide:chevron-up ml-2 size-4"></div>
         </Button>
@@ -471,7 +471,7 @@ function SelectionModifyPlaylistSubmenu() {
           ))}
           {isLoading && (
             <DropdownMenuItem className="justify-center" disabled>
-              <div className="animate-spin leading-none i-lucide:loader-2" />
+              <div className="i-lucide:loader-2 animate-spin leading-none" />
             </DropdownMenuItem>
           )}
           {data?.length || isLoading ? <DropdownMenuSeparator /> : null}

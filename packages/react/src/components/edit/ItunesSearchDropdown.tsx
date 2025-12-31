@@ -58,7 +58,7 @@ export function ItunesSearchDropdown({
       />
       {open &&
         (autocomplete?.length ? (
-          <CommandList className="absolute w-full z-10 border border-base top-10 rounded-b-md border-solid">
+          <CommandList className="border-base absolute top-10 z-10 w-full rounded-b-md border border-solid">
             <CommandGroup heading={<div>Search Results</div>} />
             <CommandSeparator />
             <CommandGroup className="h-full">
@@ -104,7 +104,7 @@ function SongItem({
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <img className="rounded-sm h-10 w-10" src={artworkUrl100 || ""} />
+      <img className="h-10 w-10 rounded-sm" src={artworkUrl100 || ""} />
       <div className="flex flex-col">
         <span className="font-bold">{trackName}</span>
         <span className="text-sm">
@@ -127,7 +127,7 @@ const TrackItem = ({ item }: { item: IdentifiedItunesTrack }) => {
   };
 
   return (
-    <div className="flex w-full gap-2 flex-row">
+    <div className="flex w-full flex-row gap-2">
       <div className="h-10 w-10">
         {item.artworkUrl100 && (
           <img
@@ -139,11 +139,11 @@ const TrackItem = ({ item }: { item: IdentifiedItunesTrack }) => {
       </div>
 
       <div className="grow">
-        <div className="font-bold float-right">
+        <div className="float-right font-bold">
           {formatDuration(item.trackTimeMillis)}
         </div>
         <div className="">
-          <div className="text-sm mr-1 inline-block i-heroicons:musical-note -mb-1"></div>
+          <div className="i-heroicons:musical-note mr-1 -mb-1 inline-block text-sm"></div>
           <span className="font-bold">{item.trackName}</span>
         </div>
         {/* float the duration to the right instead */}
@@ -152,7 +152,7 @@ const TrackItem = ({ item }: { item: IdentifiedItunesTrack }) => {
           {item.collectionName && ` / ${item.collectionName}`}
           {item.releaseDate ? ` / ${item.releaseDate.slice(0, 7)}` : ""}
           <span
-            className="inline-block rounded text-xs font-bold ml-5 px-1"
+            className="ml-5 inline-block rounded px-1 text-xs font-bold"
             style={{ fontSize: "0.75rem" }}
           >
             {item.src}

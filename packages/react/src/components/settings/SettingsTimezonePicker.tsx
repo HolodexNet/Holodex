@@ -39,12 +39,12 @@ export default function TimezoneSelector() {
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex flex-wrap gap-2">
         {selectedTimezones.map((timezone) => (
           <Badge
             key={timezone}
             variant="primary"
-            className="flex cursor-pointer items-center gap-1 p-1 pr-2 h-7 rounded-sm"
+            className="flex h-7 cursor-pointer items-center gap-1 rounded-sm p-1 pr-2"
           >
             <div className="i-mdi:clock-outline" />
             {timezone}
@@ -52,7 +52,7 @@ export default function TimezoneSelector() {
               onClick={() => handleTimezoneRemove(timezone)}
               className="hover: ml-1"
             >
-              <div className="h-4 w-4 i-mdi:close" />
+              <div className="i-mdi:close h-4 w-4" />
             </button>
           </Badge>
         ))}
@@ -60,13 +60,13 @@ export default function TimezoneSelector() {
         <Select onValueChange={handleTimezoneAdd}>
           <SelectTrigger
             size="sm"
-            className="flex items-center rounded-sm p-0 justify-center w-12 max-h-7 border-none"
+            className="flex max-h-7 w-12 items-center justify-center rounded-sm border-none p-0"
             showIcon={false}
           >
-            <div className="h-7 w-7 i-mdi:plus" />
+            <div className="i-mdi:plus h-7 w-7" />
           </SelectTrigger>
           <SelectContent>
-            <SelectGroup className="overflow-auto max-h-[300px]">
+            <SelectGroup className="max-h-[300px] overflow-auto">
               {timezoneOptions.map(({ label, value, offset }) => (
                 <SelectItem
                   key={value}

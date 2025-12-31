@@ -88,7 +88,7 @@ export const VideoListSettingsMenu: React.FC<{
         </Button>
       </PopoverTrigger>
       <PopoverContent className="max-w-[80vw]">
-        <div role="menu" className="gap-4 grid">
+        <div role="menu" className="grid gap-4">
           {activeTab === "live" && <SortBySelect />}
           {(activeTab === "archive" || activeTab === "clips") && (
             <UploadedBeforeDatePicker />

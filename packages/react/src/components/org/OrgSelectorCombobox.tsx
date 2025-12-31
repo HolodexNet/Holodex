@@ -45,14 +45,14 @@ export function OrgSelectorCombobox({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "inline-flex min-h-8 w-full items-center justify-between rounded-md  py-1 pl-4 pr-2",
+            "inline-flex min-h-8 w-full items-center justify-between rounded-md py-1 pr-2 pl-4",
             "text-left text-lg font-medium transition",
-            "hover:bg-primary/40 focus-visible:ring-primary/80 focus-visible:outline-hidden focus-visible:ring-1 active:scale-[97%] disabled:pointer-events-none disabled:opacity-50",
-            open && " ring-2 ring-primary",
+            "hover:bg-primary/40 focus-visible:ring-1 focus-visible:ring-primary/80 focus-visible:outline-hidden active:scale-[97%] disabled:pointer-events-none disabled:opacity-50",
+            open && "ring-2 ring-primary",
           )}
         >
           {t("Go to...")}
-          <div className="ml-2 inline-block h-4 w-4 shrink-0 align-middle opacity-50 i-lucide:chevrons-up-down"></div>
+          <div className="i-lucide:chevrons-up-down ml-2 inline-block h-4 w-4 shrink-0 align-middle opacity-50"></div>
         </button>
       </PopoverTrigger>
       <PopoverContent className="max-w-[80vw] p-0">
@@ -71,7 +71,7 @@ export function OrgSelectorCombobox({
                   }}
                 >
                   <img
-                    className="rounded-full mr-2 h-8 w-8"
+                    className="mr-2 h-8 w-8 rounded-full"
                     src={getThumbnailForOrg(org.icon)}
                   ></img>
                   {org.name}

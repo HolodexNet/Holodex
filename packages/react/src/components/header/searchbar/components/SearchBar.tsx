@@ -120,8 +120,8 @@ export function SearchBar({
         }}
       >
         <PopoverTrigger asChild>
-          <div className="text-sm focus-within: rounded-md p-2 ring-offset-muted bg-input group focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
-            <label className="flex items-center gap-1 flex-wrap">
+          <div className="focus-within: group rounded-md bg-input p-2 text-sm ring-offset-muted focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
+            <label className="flex flex-wrap items-center gap-1">
               {queryPieces.map((queryItem, i) => {
                 return (
                   <QueryBadge
@@ -142,25 +142,25 @@ export function SearchBar({
                 onBlur={() => setOpen(false)}
                 onFocus={() => setOpen(true)}
                 placeholder={t("component.search.searchLabel")}
-                className="outline-hidden ml-2 flex-1 bg-transparent placeholder:text-muted-foreground"
+                className="ml-2 flex-1 bg-transparent outline-hidden placeholder:text-muted-foreground"
               />
-              <div className="flex ml-auto flex-row opacity-0 group-focus-within:opacity-100">
+              <div className="ml-auto flex flex-row opacity-0 group-focus-within:opacity-100">
                 {query.length > 0 && (
                   <CommandShortcut className="pointer-events-none opacity-80">
                     {/* <span className="mr-1 rounded-sm  p-0.5">⇪</span> */}
-                    <span className="text-muted-foreground rounded-sm p-0.5">
+                    <span className="rounded-sm p-0.5 text-muted-foreground">
                       ↵
                     </span>
                   </CommandShortcut>
                 )}
                 <button
                   type="submit"
-                  className="flex items-center rounded-md hover: hover: transition-all size-8 -my-2 -mr-1"
+                  className="hover: hover: -my-2 -mr-1 flex size-8 items-center rounded-md transition-all"
                   disabled={query.length === 0}
                   onClick={() => doSearch()}
                   onSubmit={() => doSearch()}
                 >
-                  <div className="mx-auto i-carbon:search"></div>
+                  <div className="i-carbon:search mx-auto"></div>
                 </button>
               </div>
             </label>
@@ -182,7 +182,7 @@ export function SearchBar({
           >
             <CommandList className="">
               <div
-                className="rounded-md bg-input outline-hidden border border-base min-w-80 animate-in fade-in-20 slide-in-from-top-2 sm:left-auto sm:w-full"
+                className="border-base min-w-80 animate-in rounded-md border bg-input outline-hidden fade-in-20 slide-in-from-top-2 sm:left-auto sm:w-full"
                 style={{
                   boxShadow:
                     "0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)",
@@ -195,7 +195,7 @@ export function SearchBar({
                       {t("search.options_menu_header")}
                       <span className="float-right">
                         <CommandShortcut className="pointer-events-none opacity-80">
-                          <span className="rounded-sm p-0.5 mr-1">↕</span>
+                          <span className="mr-1 rounded-sm p-0.5">↕</span>
                         </CommandShortcut>
                       </span>
                     </div>

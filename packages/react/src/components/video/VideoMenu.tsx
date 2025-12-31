@@ -68,7 +68,7 @@ export function VideoMenu({ children, video, url }: VideoMenuProps) {
         <DropdownMenuContent
           onClick={(e) => e.stopPropagation()}
           // className=""
-          className="tracking-tight border-border"
+          className="border-border tracking-tight"
         >
           {isQueued ? (
             <DropdownMenuItem
@@ -228,7 +228,7 @@ function PlaylistMenuItems({ videoId }: { videoId: string }) {
           ))}
           {isLoading && (
             <DropdownMenuItem className="justify-center" disabled>
-              <div className="animate-spin leading-none i-lucide:loader-2" />
+              <div className="i-lucide:loader-2 animate-spin leading-none" />
             </DropdownMenuItem>
           )}
           {data?.length || isLoading ? <DropdownMenuSeparator /> : null}

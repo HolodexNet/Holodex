@@ -76,7 +76,7 @@ export function SelectorLiveItem({ live }: SelectorLiveItemProps) {
           title={`Add ${live.channel?.name} to multiview`}
         >
           <Avatar
-            className="size-10 ring-offset-background transition-transform ring-2 ring-offset-1 hover:scale-105 active:scale-95"
+            className="size-10 ring-2 ring-offset-1 ring-offset-background transition-transform hover:scale-105 active:scale-95"
             style={
               {
                 "--tw-ring-color": isLive
@@ -101,7 +101,7 @@ export function SelectorLiveItem({ live }: SelectorLiveItemProps) {
           {displayDuration && (
             <span
               className={cn(
-                "absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-sm px-1 text-[10px] font-medium leading-tight text-white",
+                "absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-sm px-1 text-[10px] leading-tight font-medium whitespace-nowrap text-white",
                 isLive ? "bg-red-600" : "bg-primary text-primary-foreground",
               )}
             >
@@ -114,7 +114,7 @@ export function SelectorLiveItem({ live }: SelectorLiveItemProps) {
         side="bottom"
         align="start"
         sideOffset={8}
-        className="overflow-hidden w-72 p-0"
+        className="w-72 overflow-hidden p-0"
       >
         {/* Render the VideoCard on hover */}
         <VideoCard

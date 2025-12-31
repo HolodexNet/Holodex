@@ -17,12 +17,12 @@ export function PlayerDescription({
   return (
     <div className="flex flex-col gap-2 rounded-lg p-4">
       <div
-        className={cn("whitespace-pre-wrap break-all text-sm", {
+        className={cn("text-sm break-all whitespace-pre-wrap", {
           "line-clamp-3": !isExpanded,
         })}
       >
-        <LinkItUrl className="hover: underline text-primary">
-          <LinkItTwitter className="text-primary underline hover:">
+        <LinkItUrl className="hover: text-primary underline">
+          <LinkItTwitter className="hover: text-primary underline">
             {description}
           </LinkItTwitter>
         </LinkItUrl>

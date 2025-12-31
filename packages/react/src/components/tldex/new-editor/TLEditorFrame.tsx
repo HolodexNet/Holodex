@@ -113,7 +113,7 @@ export function TLEditorFrame() {
 
   return (
     // <div className="h-full w-full">
-    <div className="p-4 tl-frame">
+    <div className="tl-frame p-4">
       <TLEditorHeader onSave={handleSave} onExit={handleExit} />
       {!id && !currentVideo && <VideoIdInput />}
       {id && (isVideoPending || isScriptLoading) && <Loading size="md" />}
@@ -130,8 +130,8 @@ export function TLEditorContent() {
     <>
       <ResizablePanelGroup orientation="horizontal" className="content">
         <ResizablePanel defaultSize={60} minSize={40}>
-          <div className="flex flex-col size-full">
-            <div className="overflow-hidden flex-1 rounded">
+          <div className="flex size-full flex-col">
+            <div className="flex-1 overflow-hidden rounded">
               <PlayerWrapper
                 id={id || "x"}
                 customSetPlayerRef={setPlayerRef}

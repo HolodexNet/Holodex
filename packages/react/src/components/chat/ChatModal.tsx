@@ -28,7 +28,7 @@ export function ChatModal({ ...data }: ChatModalProps) {
   return (
     <div
       className={cn(
-        "flex w-full rounded-t-lg bg-base transition-all will-change-transform starting:h-0 starting:translate-y-full lg:hidden",
+        "bg-base flex w-full rounded-t-lg transition-all will-change-transform lg:hidden starting:h-0 starting:translate-y-full",
         // use top-[...] and h-[...] for fixed chat modal
         // since container query disables fixed element on screen (cannot use bottom-0)
         // Top position: top padding (1rem) + video height ((100cqw - x padding) * 0.5625) + controlbar height (4rem?)

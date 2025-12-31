@@ -118,10 +118,10 @@ export default function Search() {
         <title>{t("component.search.searchLabel")} - Holodex</title>
       </Helmet>
 
-      <div className="container p-4 space-y-4">
+      <div className="container space-y-4 p-4">
         {/* Search Controls */}
-        <div className="flex flex-col gap-4 md:items-center md:justify-between md:flex-row">
-          <div className="flex-1 max-w-xl">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-xl flex-1">
             <SearchBar />
           </div>
           <div className="flex items-center gap-2">
@@ -170,7 +170,7 @@ export default function Search() {
         {/* Results */}
         {isLoading ? (
           <div className="flex justify-center p-8">
-            <div className="animate-spin text-4xl i-lucide:loader-2" />
+            <div className="i-lucide:loader-2 animate-spin text-4xl" />
           </div>
         ) : (
           <>

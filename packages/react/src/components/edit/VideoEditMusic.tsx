@@ -27,9 +27,9 @@ export function VideoEditMusic({ video }: { video: Video }) {
   const [artist, setArtist] = useState("");
 
   return (
-    <div className="flex flex-col gap-4 p-4 justify-items-stretch">
+    <div className="flex flex-col justify-items-stretch gap-4 p-4">
       <TypographyH4 className="">
-        <div className="mr-1 inline-block align-middle i-lucide:list-plus"></div>
+        <div className="i-lucide:list-plus mr-1 inline-block align-middle"></div>
         Add New Song / Select song from Tracklist to modify
       </TypographyH4>
 
@@ -46,7 +46,7 @@ export function VideoEditMusic({ video }: { video: Video }) {
         />
       </div>
       <div className="flex flex-row flex-wrap gap-2">
-        <div className="grow gap-1 grid min-w-80">
+        <div className="grid min-w-80 grow gap-1">
           <Label htmlFor="track_name">Track Name</Label>
           <Input
             type="text"
@@ -69,7 +69,7 @@ export function VideoEditMusic({ video }: { video: Video }) {
       </div>
       <div className="grid gap-1">
         <Label htmlFor="track_name">Track Timing Controls</Label>
-        <div className="flex justify-center rounded-md border border-solid focus-within: pb-6 pt-2 border-input focus-within:ring-2">
+        <div className="focus-within: flex justify-center rounded-md border border-solid border-input pt-2 pb-6 focus-within:ring-2">
           <div>
             <TimeAdjuster
               videoId={video.id}
@@ -80,7 +80,7 @@ export function VideoEditMusic({ video }: { video: Video }) {
           <TooltipProvider>
             <Tooltip delayDuration={100}>
               <TooltipTrigger asChild>
-                <div className="mx-1 cursor-pointer rounded-sm p-2 mb-1 mt-5">
+                <div className="mx-1 mt-5 mb-1 cursor-pointer rounded-sm p-2">
                   <div className="i-ic:sharp-start"></div>
                 </div>
               </TooltipTrigger>
@@ -99,7 +99,7 @@ export function VideoEditMusic({ video }: { video: Video }) {
           <TooltipProvider>
             <Tooltip delayDuration={100}>
               <TooltipTrigger asChild>
-                <div className="mx-1 mb-1 mt-5 cursor-pointer rounded-sm p-2">
+                <div className="mx-1 mt-5 mb-1 cursor-pointer rounded-sm p-2">
                   <div className="i-ic:sharp-keyboard-tab"></div>
                 </div>
               </TooltipTrigger>
@@ -127,10 +127,10 @@ export function VideoEditMusic({ video }: { video: Video }) {
       </div>
       <hr className="" />
       <TypographyH4 className="">
-        <div className="mr-1 inline-block align-middle i-lucide:list-music"></div>
+        <div className="i-lucide:list-music mr-1 inline-block align-middle"></div>
         Tracklist:
       </TypographyH4>
-      <div className="rounded-lg min-h-4"></div>
+      <div className="min-h-4 rounded-lg"></div>
     </div>
   );
 }

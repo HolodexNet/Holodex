@@ -129,10 +129,10 @@ export function AddSubberForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit, onInvalid)}
-        className="flex gap-4 flex-col"
+        className="flex flex-col gap-4"
       >
         <Alert variant="default" hasIcon="yes">
-          <div className="text-4xl i-icon-park-outline:guide-board" />
+          <div className="i-icon-park-outline:guide-board text-4xl" />
           <AlertDescription
             dangerouslySetInnerHTML={{
               __html: t("channelRequest.ClipperRequirementText"),

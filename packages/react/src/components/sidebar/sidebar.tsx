@@ -67,19 +67,19 @@ export function Sidebar() {
 
   return (
     <aside
-      className="z-40 border-r border-r-base pb-12 bg-sidebar"
+      className="border-r-base z-40 border-r bg-sidebar pb-12"
       id="sidebar"
       ref={ref}
     >
-      <div className="flex flex-col min-h-dvh">
-        <div className="flex items-center gap-2 px-4 pb-2 justify-end pt-4">
+      <div className="flex min-h-dvh flex-col">
+        <div className="flex items-center justify-end gap-2 px-4 pt-4 pb-2">
           <Link
             to="/"
             className="flex items-center gap-2 overflow-hidden"
             onClick={isMobile ? setClose : undefined}
           >
-            <Logo className="h-8 w-8 ml-1.5" />
-            <h2 className="tracking-tight font-semibold text-3xl">Holodex</h2>
+            <Logo className="ml-1.5 h-8 w-8" />
+            <h2 className="text-3xl font-semibold tracking-tight">Holodex</h2>
           </Link>
           <div className="grow" />
           <Button
@@ -88,7 +88,7 @@ export function Sidebar() {
             onClick={setClose}
           />
         </div>
-        <div className="flex grow flex-col py-2 px-3 group/sidebar space-y-1">
+        <div className="group/sidebar flex grow flex-col space-y-1 px-3 py-2">
           <div className="mb-2">
             <OrgSelectorCombobox setOrg={setOrg} />
           </div>
@@ -116,13 +116,13 @@ export function Sidebar() {
             to="/settings/content"
             className={cn(
               // Base styles
-              `w-full justify-start rounded-md px-4 py-1.5 h-9 mt-1`,
+              `mt-1 h-9 w-full justify-start rounded-md px-4 py-1.5`,
 
               // Text and font styles
               `text-center text-sm font-semibold tracking-tight`,
 
               // Transition and hover effect
-              `transition-opacity duration-300 hover:`,
+              `hover: transition-opacity duration-300`,
               {
                 // Visible state when fs is true
                 "visible opacity-70": fs,
@@ -168,7 +168,7 @@ export function Sidebar() {
             onClose={setClose}
           />
           <Button
-            className={cn("w-full justify-start", "font-light cursor-pointer")}
+            className={cn("w-full justify-start", "cursor-pointer font-light")}
             variant={"ghost"}
             onClick={() => setTldexOpen((o) => !o)}
           >
@@ -176,7 +176,7 @@ export function Sidebar() {
             TLDex
           </Button>
           {tldexOpen && (
-            <div className="space-y-1 animate-in pl-2 zoom-in-75">
+            <div className="animate-in space-y-1 pl-2 zoom-in-75">
               <SidebarItem
                 className=""
                 label={t("component.mainNav.tlclient")}
@@ -237,8 +237,8 @@ function SidebarItem({
     <Button
       asChild
       className={cn("w-full justify-start", className, {
-        " font-semibold tracking-tight": isHere,
-        " font-light": !isHere,
+        "font-semibold tracking-tight": isHere,
+        "font-light": !isHere,
       })}
       variant={isHere ? "primary" : "ghost"}
       onClick={isMobile ? onClose : undefined}

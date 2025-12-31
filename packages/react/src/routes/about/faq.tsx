@@ -78,7 +78,7 @@ export function AboutFaq() {
             <AboutDescription>
               {t("about.faq.autoplayContent")}
             </AboutDescription>
-            <h4 className="text-xl py-2 font-bold">Safari:</h4>
+            <h4 className="py-2 text-xl font-bold">Safari:</h4>
             <img src="https://www.imore.com/sites/imore.com/files/styles/large/public/field/image/2017/07/safari-custom-settings-websites-mac-screenshot-06.jpg?itok=ONVYTcno" />
             <h4 className="py-2 text-xl font-bold">Firefox:</h4>
             <img src="https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/firefox/files/2019/04/Screen-Shot-2019-04-01-at-11.21.21-AM.png" />
@@ -100,7 +100,7 @@ export function AboutFaq() {
               </li>
               <li>
                 {t("about.faq.mobile.content.ios.0")}
-                <span className="inline-block i-heroicons:arrow-up-on-square" />
+                <span className="i-heroicons:arrow-up-on-square inline-block" />
                 {t("about.faq.mobile.content.ios.1")}
               </li>
             </ul>
@@ -177,12 +177,7 @@ export function AboutFaq() {
                 href="https://ko-fi.com/holodex"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`
-              flex grow basis-1 items-center gap-2 rounded-lg border-2 border-red-10
-              px-4 py-2 text-red-10 transition-all
-              duration-300 ease-in-out
-              focus:outline-hidden focus:ring-2 focus:ring-gray-8 focus:ring-offset-2
-            `}
+                className={`border-red-10 text-red-10 focus:ring-gray-8 flex grow basis-1 items-center gap-2 rounded-lg border-2 px-4 py-2 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-hidden`}
               >
                 <span className="i-cib:ko-fi"></span>
                 <span>Ko-fi: Support Holodex</span>
@@ -191,12 +186,7 @@ export function AboutFaq() {
                 href="https://patreon.com/holodex"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`
-              flex grow basis-1 items-center gap-2 rounded-lg border-2 border-red-10
-              px-4 py-2 text-red-10 transition-all
-              duration-300 ease-in-out
-              focus:outline-hidden focus:ring-2 focus:ring-gray-8 focus:ring-offset-2
-            `}
+                className={`border-red-10 text-red-10 focus:ring-gray-8 flex grow basis-1 items-center gap-2 rounded-lg border-2 px-4 py-2 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-hidden`}
               >
                 <span className="i-cib:patreon"></span>
                 <span>Patreon: Support Holodex</span>

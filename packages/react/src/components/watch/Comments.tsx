@@ -29,14 +29,14 @@ const TruncatedText = ({ text }: TruncatedTextProps) => {
     <div>
       <div
         ref={contentRef}
-        className={`whitespace-pre-wrap break-words ${!expanded ? `line-clamp-5` : ""}`}
+        className={`break-words whitespace-pre-wrap ${!expanded ? `line-clamp-5` : ""}`}
       >
         <span dangerouslySetInnerHTML={{ __html: text }} />
       </div>
       {isClamped && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-xs hover: mt-1"
+          className="hover: mt-1 text-xs"
         >
           {expanded ? "Show less" : "Read more"}
         </button>
@@ -72,13 +72,13 @@ const Comment = ({
   );
 
   return (
-    <div className="group relative border-l-2 px-4 py-1 my-3 min-h-0">
+    <div className="group relative my-3 min-h-0 border-l-2 px-4 py-1">
       <TruncatedText text={parsedMessage} />
       <a
         href={`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute top-0 hidden hover: right-0 group-hover:block"
+        className="hover: absolute top-0 right-0 hidden group-hover:block"
       >
         <ExternalLink className="h-4 w-4" />
       </a>
