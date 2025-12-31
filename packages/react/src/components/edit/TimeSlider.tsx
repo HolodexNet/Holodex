@@ -1,8 +1,10 @@
 import { Slider } from "@/shadcn/ui/slider";
-import { SliderProps } from "@radix-ui/react-slider";
 import { useState } from "react";
 
-export function SongTimeSlider({ onValueChange, ...rest }: SliderProps) {
+export function SongTimeSlider({
+  onValueChange,
+  ...rest
+}: { onValueChange?: (value: number) => void } & Parameters<typeof Slider>[0]) {
   const [value, setValue] = useState(5);
 
   return (

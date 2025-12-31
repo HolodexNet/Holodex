@@ -97,7 +97,7 @@ function scrollToVideoProgress(
 export function TLChat({ videoId }: TLChatProps) {
   const tldexState = useAtomValue(tldexSettingsAtom);
   const roomID = useMemo(
-    () => `${videoId}/${tldexState.liveTlLang}`,
+    () => `${videoId}/${tldexState.liveTlLang}` as const,
     [videoId, tldexState.liveTlLang],
   );
   const { chatDB } = useSocket(roomID);
