@@ -115,80 +115,47 @@ export const cellQueueAtom = atom<CellEntry[]>([]);
  *
  * This is the core "coerce cellQueue to match LayoutPreset" operation.
  */
-export const applyLayoutAtom = atom(
-  null, // read returns null (write-only)
-  (get, set, layoutString: string) => {
-    // Import decodeLayout dynamically to avoid circular deps
-    // (multiview-utils imports from this file)
-    const decoded = decodeLayout(layoutString);
+export const applyLayoutAtom = atom(null, (get, set, layoutString: string) => {
+  const decoded = decodeLayout(layoutString);
+  const currentQueue = get(cellQueueAtom);
 
-    const currentQueue = get(cellQueueAtom);
-
-    // Gather existing video cells in order (these have content we want to preserve)
-    const existingVideoCells: Cell[] = [];
-    for (const entry of currentQueue) {
-      const state = get(entry.atom);
-      if (
-        state.visibility === "visible" &&
-        state.type === "video" &&
-        state.videoId
-      ) {
-        existingVideoCells.push(state);
-      }
-    }
-
-    // Separate preset slots by type
-    const videoSlots = decoded.cells.filter(
-      (c) => c.type === "empty" || c.type === "video",
+  // Gather existing video cells (content to preserve)
+  const existingVideos = currentQueue
+    .map((e) => get(e.atom))
+    .filter(
+      (s) => s.visibility === "visible" && s.type === "video" && s.videoId,
     );
-    const chatSlots = decoded.cells.filter((c) => c.type === "chat");
 
-    const newEntries: CellEntry[] = [];
+  // Separate preset slots by type
+  const videoSlots = decoded.cells.filter(
+    (c) => c.type === "empty" || c.type === "video",
+  );
+  const chatSlots = decoded.cells.filter((c) => c.type === "chat");
 
-    // Assign existing videos to new video slot positions
-    let videoIndex = 0;
-    for (const slot of videoSlots) {
-      if (videoIndex < existingVideoCells.length) {
-        // Existing video → new position (preserve ID and videoId)
-        const existingVideo = existingVideoCells[videoIndex];
-        newEntries.push(
-          createCellEntry({
-            ...existingVideo,
+  // Map video slots: reuse existing videos or create empty slots
+  const videoEntries = videoSlots.map((slot, i) =>
+    createCellEntry(
+      i < existingVideos.length
+        ? {
+            ...existingVideos[i],
             x: slot.x,
             y: slot.y,
             w: slot.w,
             h: slot.h,
             visibility: "visible",
-          }),
-        );
-        videoIndex++;
-      } else {
-        // No more existing videos → create empty slot
-        newEntries.push(
-          createCellEntry({
-            ...slot,
-            type: "empty",
-            videoId: undefined,
-            visibility: "visible",
-          }),
-        );
-      }
-    }
+          }
+        : { ...slot, type: "empty", videoId: undefined, visibility: "visible" },
+    ),
+  );
 
-    // Add chat slots (keep preset positions and chatTab)
-    for (const chatSlot of chatSlots) {
-      newEntries.push(
-        createCellEntry({
-          ...chatSlot,
-          visibility: "visible",
-        }),
-      );
-    }
+  // Map chat slots directly
+  const chatEntries = chatSlots.map((slot) =>
+    createCellEntry({ ...slot, visibility: "visible" }),
+  );
 
-    set(cellQueueAtom, newEntries);
-    set(autoLayoutDisabledAtom, false); // Reset since we just applied a preset
-  },
-);
+  set(cellQueueAtom, [...videoEntries, ...chatEntries]);
+  set(autoLayoutDisabledAtom, false);
+});
 
 // ============================================================================
 // Cell Mutator Atoms
@@ -266,7 +233,6 @@ export const hideCellAtom = atom(null, (get, set, cellId: string) => {
 /**
  * Refresh a cell by regenerating its ID.
  * This forces a new iframe/player instance while keeping content and position.
- * Write: cellId string
  */
 export const refreshCellAtom = atom(null, (get, set, cellId: string) => {
   const currentQueue = get(cellQueueAtom);
@@ -290,77 +256,63 @@ export const refreshCellAtom = atom(null, (get, set, cellId: string) => {
  * Convert a cell to a chat cell.
  * Hides the current cell and creates a new chat cell at the same position.
  * The chat tab is set to the first video that doesn't already have a chat cell.
- * Write: cellId string
  */
 export const convertToChatAtom = atom(null, (get, set, cellId: string) => {
   const currentQueue = get(cellQueueAtom);
-
-  // Find the cell to convert
-  const targetEntry = currentQueue.find((entry) => entry.id === cellId);
+  const targetEntry = currentQueue.find((e) => e.id === cellId);
   if (!targetEntry) return;
 
   const targetState = get(targetEntry.atom);
+  const states = currentQueue.map((e) => get(e.atom));
 
-  // Gather all visible video cells (excluding the one being converted)
-  const videoCells: { index: number; cell: Cell }[] = [];
-  currentQueue.forEach((entry, idx) => {
-    const state = get(entry.atom);
-    if (
-      state.visibility === "visible" &&
-      state.type === "video" &&
-      state.videoId &&
-      entry.id !== cellId
-    ) {
-      videoCells.push({ index: idx, cell: state });
-    }
-  });
+  // Count visible video cells (excluding the one being converted)
+  const videoCount = states.filter(
+    (s) =>
+      s.visibility === "visible" &&
+      s.type === "video" &&
+      s.videoId &&
+      s.id !== cellId,
+  ).length;
 
-  // Find which video tabs already have chat cells
-  const existingChatTabs = new Set<number>();
-  currentQueue.forEach((entry) => {
-    const state = get(entry.atom);
-    if (
-      state.visibility === "visible" &&
-      state.type === "chat" &&
-      state.chatTab !== undefined
-    ) {
-      existingChatTabs.add(state.chatTab);
-    }
-  });
+  // Find existing chat tabs
+  const existingChatTabs = new Set(
+    states
+      .filter(
+        (s) =>
+          s.visibility === "visible" &&
+          s.type === "chat" &&
+          s.chatTab !== undefined,
+      )
+      .map((s) => s.chatTab),
+  );
 
-  // Find first video index without an existing chat
-  let chatTabTarget = 0;
-  for (let i = 0; i < videoCells.length; i++) {
-    if (!existingChatTabs.has(i)) {
-      chatTabTarget = i;
-      break;
-    }
-  }
+  // First video index without a chat, or 0
+  const chatTabTarget =
+    Array.from({ length: videoCount }, (_, i) => i).find(
+      (i) => !existingChatTabs.has(i),
+    ) ?? 0;
 
-  // Hide the original cell and add a new chat cell at the same position
-  const updatedQueue = currentQueue.map((entry) => {
-    if (entry.id === cellId) {
-      return createCellEntry({
-        ...targetState,
-        visibility: "hidden" as const,
-      });
-    }
-    return entry;
-  });
+  // Hide original, append new chat cell
+  const updatedQueue = currentQueue.map((e) =>
+    e.id === cellId
+      ? createCellEntry({ ...targetState, visibility: "hidden" })
+      : e,
+  );
 
-  const newChatCell: Cell = {
-    id: generateContentId(),
-    x: targetState.x,
-    y: targetState.y,
-    w: targetState.w,
-    h: targetState.h,
-    type: "chat",
-    chatTab: chatTabTarget,
-    visibility: "visible",
-  };
-
-  set(cellQueueAtom, [...updatedQueue, createCellEntry(newChatCell)]);
-  set(autoLayoutDisabledAtom, true); // Manual edit
+  set(cellQueueAtom, [
+    ...updatedQueue,
+    createCellEntry({
+      id: generateContentId(),
+      x: targetState.x,
+      y: targetState.y,
+      w: targetState.w,
+      h: targetState.h,
+      type: "chat",
+      chatTab: chatTabTarget,
+      visibility: "visible",
+    }),
+  ]);
+  set(autoLayoutDisabledAtom, true);
 });
 
 /**
