@@ -1,9 +1,12 @@
 import { useMemo } from "react";
+import { useAtomValue } from "jotai";
 import type { TFunction } from "i18next";
 import { useOrgs } from "@/services/orgs.service";
+import { localeAtom } from "@/store/i18n";
 import { FIRST_SEARCH } from "../helper";
 import { QueryItem, SearchableCategory } from "../types";
 import { CLIPPER_LANGS } from "@/lib/consts";
+import { parseDate } from "./useDateParser";
 
 const STATIC_SUGGESTIONS: Record<string, QueryItem[]> = {
   has_song: ["none", "non-zero", "one", "many"].map((value) => ({
@@ -33,6 +36,7 @@ export function useClientSuggestions(
     searchString,
   );
   const { data: orgs } = useOrgs({ enabled: !!searchString });
+  const locale = useAtomValue(localeAtom);
 
   return useMemo(() => {
     const suggestions: QueryItem[] = [];
@@ -59,6 +63,21 @@ export function useClientSuggestions(
           })) || [];
 
       suggestions.push(...orgSuggestions);
+    }
+
+    // Handle date suggestions for 'from' and 'to' categories
+    else if (
+      (searchCategory === "from" || searchCategory === "to") &&
+      searchString
+    ) {
+      const parsedDate = parseDate(searchString, locale.lang);
+      if (parsedDate) {
+        suggestions.push({
+          type: searchCategory,
+          value: parsedDate.isoString,
+          text: parsedDate.displayText,
+        });
+      }
     }
 
     // Handle category-specific static suggestions that only show up when a category is specified
@@ -94,5 +113,5 @@ export function useClientSuggestions(
     }
 
     return suggestions;
-  }, [orgs, searchCategory, searchString, t]);
+  }, [orgs, searchCategory, searchString, t, locale.lang]);
 }

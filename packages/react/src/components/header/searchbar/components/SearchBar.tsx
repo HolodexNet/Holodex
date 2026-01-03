@@ -23,6 +23,7 @@ import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { getQueryModelFromQuery } from "../helper";
 import { useNavigate } from "react-router-dom";
 import { stringify } from "picoquery";
+import { useSearchParametersOptional } from "../context/SearchParameterContext";
 
 export function SearchBar({
   className,
@@ -35,6 +36,9 @@ export function SearchBar({
   const [queryPieces, setQueryPieces] = useAtom(splitQueryAtom);
   const { search, updateSearch, autocomplete } = useSearchboxAutocomplete();
   const navigate = useNavigate();
+
+  // Check if we're inside a SearchParameterProvider context
+  const searchParamsContext = useSearchParametersOptional();
 
   const handleItemSelect = useCallback(
     (item: QueryItem) => {
@@ -68,17 +72,23 @@ export function SearchBar({
     if (query.length > 0) {
       const qm = getQueryModelFromQuery(query);
       if (!qm) return;
-      navigate({
-        pathname: "/search",
-        search:
-          "?" +
-          stringify({
-            q: qm,
-            sort: "latest",
-          } satisfies VideoQueryContainer),
-      });
+
+      const queryContainer: VideoQueryContainer = {
+        q: qm,
+        sort: "latest",
+      };
+
+      // Use context if available, otherwise fall back to direct navigation
+      if (searchParamsContext) {
+        searchParamsContext.doSearch(queryContainer);
+      } else {
+        navigate({
+          pathname: "/search",
+          search: "?" + stringify(queryContainer),
+        });
+      }
     }
-  }, [navigate, query]);
+  }, [navigate, query, searchParamsContext]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -121,13 +131,18 @@ export function SearchBar({
       >
         <PopoverTrigger asChild>
           <div className="focus-within: group rounded-md bg-input p-2 text-sm ring-offset-muted focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-1">
-            <label className="flex flex-wrap items-center gap-1">
+            <label
+              className="flex flex-wrap items-center gap-1"
+              htmlFor="search-input"
+              onClick={() => inputRef.current?.focus()}
+            >
               {queryPieces.map((queryItem, i) => {
                 return (
                   <QueryBadge
                     item={queryItem}
                     key={"badge" + i}
                     onRemoveItem={() => {
+                      console.log("remove", queryItem, "from", queryPieces);
                       setQueryPieces({ type: "remove", atom: queryItem });
                     }}
                   />
@@ -135,6 +150,7 @@ export function SearchBar({
               })}
               {/* Avoid having the "Search" Icon */}
               <CommandPrimitive.Input
+                id="search-input"
                 ref={inputRef}
                 value={search}
                 autoFocus={autoFocus}
