@@ -1,12 +1,13 @@
 import { cn } from "@/lib/utils";
 import {
   aspectClassAtom,
-  cellQueueAtom,
   editModeAtom,
   gridDimensionsAtom,
+  visibleCellsAtom,
+  updateLayoutAtom,
   type Cell,
 } from "@/store/multiview";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { MultiviewCell } from "./MultiviewCell";
 import { GridCornerDots } from "./GridCornerDots";
 import ReactGridLayout, {
@@ -34,7 +35,7 @@ function cellToLayoutItem(cell: Cell): LayoutItem {
     y: cell.y,
     w: cell.w,
     h: cell.h,
-    static: !cell.w || !cell.h, // Hidden cells are static
+    static: cell.visibility !== "visible",
   };
 }
 
@@ -43,7 +44,8 @@ function cellToLayoutItem(cell: Cell): LayoutItem {
  * Uses react-grid-layout for drag and resize functionality.
  */
 export function MultiviewGrid({ className }: MultiviewGridProps) {
-  const [cells, setCells] = useAtom(cellQueueAtom);
+  const visibleCells = useAtomValue(visibleCellsAtom);
+  const updateLayout = useSetAtom(updateLayoutAtom);
   const { rows, cols } = useAtomValue(gridDimensionsAtom);
   const editMode = useAtomValue(editModeAtom);
   const aspectClass = useAtomValue(aspectClassAtom);
@@ -52,43 +54,21 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
 
   // Convert cells to react-grid-layout format
   const layout: Layout = useMemo(() => {
-    return cells
-      .filter((cell) => cell.w > 0 && cell.h > 0) // Only visible cells
-      .map(cellToLayoutItem);
-  }, [cells]);
+    return visibleCells.map(cellToLayoutItem);
+  }, [visibleCells]);
 
   // Handle layout changes from react-grid-layout
   const handleLayoutChange = useCallback(
     (newLayout: Layout) => {
-      setCells((prevCells) => {
-        // Create a map of new positions by ID
-        const layoutMap = new Map(newLayout.map((item) => [item.i, item]));
-
-        return prevCells.map((cell) => {
-          const layoutItem = layoutMap.get(cell.id);
-          if (layoutItem && (cell.w > 0 || cell.h > 0)) {
-            // Only update visible cells
-            return {
-              ...cell,
-              x: layoutItem.x,
-              y: layoutItem.y,
-              w: layoutItem.w,
-              h: layoutItem.h,
-            };
-          }
-          return cell;
-        });
-      });
+      updateLayout(newLayout);
     },
-    [setCells],
+    [updateLayout],
   );
 
   // Calculate row height based on container height
-  // We want the grid to fill the container exactly
   const rowHeight = useMemo(() => {
     if (!bounds?.height) return 30;
-    const containerHeight = bounds.height;
-    return containerHeight / rows;
+    return bounds.height / rows;
   }, [bounds?.height, rows]);
 
   // Create the compactor with actual grid bounds
@@ -250,13 +230,11 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           className="z-10 h-full"
           style={{ height: "100%", display: !editMode ? "none" : "block" }}
         >
-          {cells
-            .filter((cell) => cell.w > 0 && cell.h > 0)
-            .map((cell) => (
-              <div key={cell.id} data-cell-id={cell.id} className="group/cell">
-                <MultiviewCell cell={cell} id={cell.id} />
-              </div>
-            ))}
+          {visibleCells.map((cell) => (
+            <div key={cell.id} data-cell-id={cell.id} className="group/cell">
+              <MultiviewCell cell={cell} id={cell.id} />
+            </div>
+          ))}
         </ReactGridLayout>
       )}
     </div>

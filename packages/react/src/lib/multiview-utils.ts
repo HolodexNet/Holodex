@@ -1,124 +1,6 @@
 import type { AspectClass, Cell, LayoutPreset } from "@/store/multiview";
-import { GRID_DIMENSIONS } from "@/store/multiview";
-
-// Base64 characters for encoding
-const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-
-/**
- * Generate a random 8-character base64 ID for cell identification.
- */
-export function generateContentId(): string {
-  return Array.from({ length: 8 })
-    .map(() => b64[Math.floor(Math.random() * b64.length)])
-    .join("");
-}
-
-/**
- * Determine aspect class from viewport dimensions.
- */
-export function getAspectClass(width: number, height: number): AspectClass {
-  const ratio = width / height;
-  if (ratio >= 1.5) return "horizontal";
-  if (ratio <= 0.75) return "vertical";
-  return "square";
-}
-
-// ============================================================================
-// Layout Encoding/Decoding
-// ============================================================================
-
-interface EncodeOptions {
-  cells: Cell[];
-  includeVideo?: boolean;
-}
-
-/**
- * Encode a layout to a compact URL-safe string.
- * Format: "xywh[content],xywh[content],..."
- * - x, y, w, h are base64 encoded (single char each, max 63)
- * - content is either empty, "chat{tab}", or video ID
- */
-export function encodeLayout({
-  cells,
-  includeVideo = false,
-}: EncodeOptions): string {
-  const parts: string[] = [];
-
-  for (const cell of cells) {
-    // Skip hidden cells (w=0 or h=0)
-    if (cell.w <= 0 || cell.h <= 0) continue;
-
-    // Validate coordinates fit in base64 range
-    if (cell.x >= 64 || cell.y >= 64 || cell.w >= 64 || cell.h >= 64) continue;
-
-    let encoded = "";
-    encoded += b64[cell.x];
-    encoded += b64[cell.y];
-    encoded += b64[cell.w];
-    encoded += b64[cell.h];
-
-    if (cell.type === "chat") {
-      encoded += `chat${cell.chatTab ?? 0}`;
-    } else if (cell.type === "video" && includeVideo && cell.videoId) {
-      encoded += cell.videoId;
-    }
-
-    parts.push(encoded);
-  }
-
-  return parts.join(",");
-}
-
-interface DecodeResult {
-  id: string;
-  cells: Cell[];
-  videoCellCount: number;
-}
-
-/**
- * Decode a layout string back to cells and content.
- */
-export function decodeLayout(encodedStr: string): DecodeResult {
-  const cells: Cell[] = [];
-  let videoCellCount = 0;
-
-  const parts = encodedStr.split(",").filter(Boolean);
-  parts.sort(); // Maintain consistent ordering
-
-  for (const str of parts) {
-    const id = generateContentId();
-    const xywh = str.substring(0, 4);
-    const content = str.substring(4);
-
-    const isChat = content.startsWith("chat");
-    const chatTab =
-      isChat && content.length > 4 ? parseInt(content[4], 10) : undefined;
-    const videoId = !isChat && content.length === 11 ? content : undefined;
-
-    const cell: Cell = {
-      id,
-      x: b64.indexOf(xywh[0]),
-      y: b64.indexOf(xywh[1]),
-      w: b64.indexOf(xywh[2]),
-      h: b64.indexOf(xywh[3]),
-      type: isChat ? "chat" : videoId ? "video" : "empty",
-      ...(videoId && { videoId }),
-      ...(chatTab !== undefined && { chatTab }),
-    };
-
-    cells.push(cell);
-
-    if (!isChat) {
-      videoCellCount++;
-    }
-  }
-
-  return {
-    id: encodedStr,
-    cells,
-    videoCellCount,
-  };
-}
+import { GRID_DIMENSIONS } from "./multiview-layout";
+import { b64, encodeLayout } from "./multiview-layout";
 
 // ============================================================================
 // Preset Generation Helpers
@@ -449,11 +331,11 @@ export function getDefaultLayout(
 // ============================================================================
 
 /**
- * Find the first empty cell in the layout.
+ * Find the first visible empty cell in the layout.
  */
 export function findEmptyCell(cells: Cell[]): Cell | undefined {
   return cells.find(
-    (cell) => cell.type === "empty" && cell.w > 0 && cell.h > 0,
+    (cell) => cell.type === "empty" && cell.visibility === "visible",
   );
 }
 
@@ -471,10 +353,10 @@ export function isPresetLayout(
 }
 
 /**
- * Hide a cell by setting its dimensions to 0 (for append-only queue).
+ * Hide a cell by setting visibility to 'hidden' (for append-only queue).
  */
 export function hideCell(cell: Cell): Cell {
-  return { ...cell, w: 0, h: 0 };
+  return { ...cell, visibility: "hidden" };
 }
 
 /**

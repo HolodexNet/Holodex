@@ -1,17 +1,19 @@
 import { useCallback, useMemo } from "react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useStore } from "jotai";
 import {
   activeVideosAtom,
   multiviewVolumeAtom,
   multiviewMutedAtom,
   cellQueueAtom,
+  visibleCellsAtom,
+  createCellEntry,
 } from "@/store/multiview";
 import {
   videoPlayerRefAtomFamily,
   videoStatusAtomFamily,
 } from "@/store/player";
-import { useStore } from "jotai";
-import { generateContentId } from "@/lib/multiview-utils";
+import { generateContentId } from "@/lib/multiview-layout";
 
 /**
  * Hook for controlling all multiview video players.
@@ -22,7 +24,6 @@ export function useMultiviewPlayback() {
   const activeVideos = useAtomValue(activeVideosAtom);
   const [volume, setVolumeAtom] = useAtom(multiviewVolumeAtom);
   const [isMuted, setMutedAtom] = useAtom(multiviewMutedAtom);
-  const setCellQueue = useSetAtom(cellQueueAtom);
 
   // Get all video IDs from active cells
   const videoIds = useMemo(
@@ -38,7 +39,6 @@ export function useMultiviewPlayback() {
   // ─────────────────────────────────────────────────────────────────────────────
 
   // Derived atom: checks if ANY video is currently playing
-  // Jotai automatically subscribes to all videoStatusAtomFamily members
   const isAnyPlayingAtom = useMemo(
     () =>
       atom((get) => {
@@ -63,7 +63,7 @@ export function useMultiviewPlayback() {
     [videoIds],
   );
 
-  // Consume derived atoms - components using this hook will re-render on changes
+  // Consume derived atoms
   const isAnyPlaying = useAtomValue(isAnyPlayingAtom);
   const areAllPlaying = useAtomValue(areAllPlayingAtom);
 
@@ -71,7 +71,6 @@ export function useMultiviewPlayback() {
   // Player ref access (non-reactive, for imperative control)
   // ─────────────────────────────────────────────────────────────────────────────
 
-  // Get all player refs for active videos
   const getPlayerRefs = useCallback(() => {
     return videoIds
       .map((id) => {
@@ -89,13 +88,10 @@ export function useMultiviewPlayback() {
     const players = getPlayerRefs();
     for (const { player } of players) {
       if (player) {
-        // ReactPlayer's internal player access
         const internal = player.getInternalPlayer();
         if (internal?.playVideo) {
-          // YouTube player
           internal.playVideo();
         } else if (internal?.play) {
-          // HTML5 player
           internal.play();
         }
       }
@@ -108,10 +104,8 @@ export function useMultiviewPlayback() {
       if (player) {
         const internal = player.getInternalPlayer();
         if (internal?.pauseVideo) {
-          // YouTube player
           internal.pauseVideo();
         } else if (internal?.pause) {
-          // HTML5 player
           internal.pause();
         }
       }
@@ -125,10 +119,8 @@ export function useMultiviewPlayback() {
       if (player) {
         const internal = player.getInternalPlayer();
         if (internal?.mute) {
-          // YouTube player
           internal.mute();
         } else if (internal && "muted" in internal) {
-          // HTML5 player
           internal.muted = true;
         }
       }
@@ -142,10 +134,8 @@ export function useMultiviewPlayback() {
       if (player) {
         const internal = player.getInternalPlayer();
         if (internal?.unMute) {
-          // YouTube player
           internal.unMute();
         } else if (internal && "muted" in internal) {
-          // HTML5 player
           internal.muted = false;
         }
       }
@@ -170,10 +160,8 @@ export function useMultiviewPlayback() {
         if (player) {
           const internal = player.getInternalPlayer();
           if (internal?.setVolume) {
-            // YouTube player uses 0-100
             internal.setVolume(clampedVolume);
           } else if (internal && "volume" in internal) {
-            // HTML5 player uses 0-1
             internal.volume = clampedVolume / 100;
           }
         }
@@ -183,16 +171,15 @@ export function useMultiviewPlayback() {
   );
 
   const reloadAll = useCallback(() => {
-    // Condense cellQueue: filter only cells with h > 0 and assign new IDs
+    // Condense cellQueue: filter only visible cells and assign new IDs
     // This forces a remount of all video players
-    setCellQueue((prev) =>
-      prev
-        .filter((cell) => cell.h > 0)
-        .map((cell) => ({ ...cell, id: generateContentId() })),
+    const visibleCells = store.get(visibleCellsAtom);
+    const newQueue = visibleCells.map((cell) =>
+      createCellEntry({ ...cell, id: generateContentId() }),
     );
-  }, [setCellQueue]);
+    store.set(cellQueueAtom, newQueue);
+  }, [store]);
 
-  // Toggle play/pause based on current reactive state
   const togglePlayPause = useCallback(() => {
     if (isAnyPlaying) {
       pauseAll();
@@ -202,14 +189,11 @@ export function useMultiviewPlayback() {
   }, [isAnyPlaying, playAll, pauseAll]);
 
   return {
-    // Reactive state (auto-updates when underlying atoms change)
     volume,
     isMuted,
     videoCount: videoIds.length,
     isAnyPlaying,
     areAllPlaying,
-
-    // Actions
     playAll,
     pauseAll,
     togglePlayPause,

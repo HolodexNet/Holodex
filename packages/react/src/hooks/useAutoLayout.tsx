@@ -1,24 +1,18 @@
-import React, {
-  createContext,
-  useContext,
-  useCallback,
-  useState,
-  useRef,
-  useEffect,
-} from "react";
-import { useAtom, useAtomValue } from "jotai";
+import React, { createContext, useContext, useCallback, useState } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { useStore } from "jotai";
 import {
   aspectClassAtom,
   autoLayoutDisabledAtom,
-  cellQueueAtom,
-  contentMapAtom,
+  visibleCellsAtom,
   userPresetsAtom,
-  type Cell,
+  applyLayoutAtom,
+  fillCellAtom,
+  addEmptyCellAtom,
+  clearAllCellsAtom,
 } from "@/store/multiview";
 import {
-  decodeLayout,
   findEmptyCell,
-  generateContentId,
   getDefaultLayout,
   isPresetLayout,
 } from "@/lib/multiview-utils";
@@ -49,159 +43,54 @@ interface AutoLayoutProviderProps {
 interface AutoLayoutState {
   pendingVideo: VideoRef | null;
   showPrompt: boolean;
-  pendingLayout: Cell[] | null;
+  pendingPresetLayout: string | null;
 }
 
 /**
  * Provider for auto-layout functionality.
- * Must wrap any component that uses useAutoLayout.
+ * Delegates to store atoms for core operations.
  */
 export function AutoLayoutProvider({ children }: AutoLayoutProviderProps) {
-  const [cells, setCells] = useAtom(cellQueueAtom);
-  const [contentMap, setContentMap] = useAtom(contentMapAtom);
-  const [autoLayoutDisabled, setAutoLayoutDisabled] = useAtom(
-    autoLayoutDisabledAtom,
-  );
-  const aspectClass = useAtomValue(aspectClassAtom);
+  const store = useStore();
   const userPresets = useAtomValue(userPresetsAtom);
+
+  // Store mutators
+  const applyLayout = useSetAtom(applyLayoutAtom);
+  const fillCell = useSetAtom(fillCellAtom);
+  const addEmpty = useSetAtom(addEmptyCellAtom);
+  const clearAllCells = useSetAtom(clearAllCellsAtom);
+  const setAutoLayoutDisabled = useSetAtom(autoLayoutDisabledAtom);
 
   const [state, setState] = useState<AutoLayoutState>({
     pendingVideo: null,
     showPrompt: false,
-    pendingLayout: null,
+    pendingPresetLayout: null,
   });
-
-  // Use refs to get current values without stale closures
-  const cellsRef = useRef(cells);
-  const aspectClassRef = useRef(aspectClass);
-  const userPresetsRef = useRef(userPresets);
-  const autoLayoutDisabledRef = useRef(autoLayoutDisabled);
-
-  useEffect(() => {
-    cellsRef.current = cells;
-  }, [cells]);
-  useEffect(() => {
-    aspectClassRef.current = aspectClass;
-  }, [aspectClass]);
-  useEffect(() => {
-    userPresetsRef.current = userPresets;
-  }, [userPresets]);
-  useEffect(() => {
-    autoLayoutDisabledRef.current = autoLayoutDisabled;
-  }, [autoLayoutDisabled]);
-
-  /**
-   * Apply a new layout, merging existing content while preserving cell IDs.
-   * This prevents React reconciliation issues and iframe reloads by keeping
-   * existing cell IDs stable - only their positions change.
-   */
-  const applyLayoutWithMerge = useCallback(
-    (newCells: Cell[], newVideo?: VideoRef) => {
-      const currentCells = cellsRef.current;
-
-      // Get current video cells in order (preserving their IDs)
-      const currentVideoCells = currentCells.filter(
-        (c) => c.type === "video" && c.videoId && c.w > 0,
-      );
-
-      // Get positions from the new layout for video slots
-      const videoSlots = newCells.filter((c) => c.type === "empty");
-      const chatSlots = newCells.filter((c) => c.type === "chat");
-
-      const mergedCells: Cell[] = [];
-      const newContentMap: Record<
-        string,
-        { videoCellIndex: number; chatCellIndex?: number }
-      > = {};
-
-      // Assign existing videos to new positions, preserving their IDs
-      let slotIndex = 0;
-      for (const existingCell of currentVideoCells) {
-        if (slotIndex < videoSlots.length) {
-          const slot = videoSlots[slotIndex];
-          // Keep the existing cell's ID and videoId, but update position
-          mergedCells.push({
-            ...existingCell,
-            x: slot.x,
-            y: slot.y,
-            w: slot.w,
-            h: slot.h,
-          });
-          newContentMap[existingCell.videoId!] = {
-            videoCellIndex: mergedCells.length - 1,
-          };
-          slotIndex++;
-        }
-      }
-
-      // Add the new video if provided
-      if (newVideo && slotIndex < videoSlots.length) {
-        const slot = videoSlots[slotIndex];
-        mergedCells.push({
-          id: slot.id, // Use the new slot's ID for new videos
-          x: slot.x,
-          y: slot.y,
-          w: slot.w,
-          h: slot.h,
-          type: "video",
-          videoId: newVideo.id,
-        });
-        newContentMap[newVideo.id] = { videoCellIndex: mergedCells.length - 1 };
-        slotIndex++;
-      }
-
-      // Add remaining empty slots
-      for (let i = slotIndex; i < videoSlots.length; i++) {
-        mergedCells.push(videoSlots[i]);
-      }
-
-      // Add chat cells (keep their IDs from the preset)
-      for (const chatCell of chatSlots) {
-        mergedCells.push(chatCell);
-      }
-
-      setCells(mergedCells);
-      setContentMap(newContentMap);
-    },
-    [setCells, setContentMap],
-  );
 
   const fillCellWithVideo = useCallback(
     (cellId: string, video: VideoRef) => {
-      setCells((current) =>
-        current.map((c) =>
-          c.id === cellId
-            ? { ...c, type: "video" as const, videoId: video.id }
-            : c,
-        ),
-      );
-
-      const cellIndex = cellsRef.current.findIndex((c) => c.id === cellId);
-      setContentMap((map) => ({
-        ...map,
-        [video.id]: { videoCellIndex: cellIndex },
-      }));
+      fillCell({ cellId, videoId: video.id });
     },
-    [setCells, setContentMap],
+    [fillCell],
   );
 
   const addVideo = useCallback(
     (video: VideoRef) => {
-      const currentCells = cellsRef.current;
-      const currentAspectClass = aspectClassRef.current;
-      const currentUserPresets = userPresetsRef.current;
-      const currentAutoLayoutDisabled = autoLayoutDisabledRef.current;
+      // Read fresh values from store
+      const currentVisibleCells = store.get(visibleCellsAtom);
+      const currentAspectClass = store.get(aspectClassAtom);
+      const currentAutoLayoutDisabled = store.get(autoLayoutDisabledAtom);
 
       console.log(
         "Adding video:",
         video.id,
-        "Current cells:",
-        currentCells.length,
+        "Current visible cells:",
+        currentVisibleCells.length,
       );
 
       // Check if video already exists
-      const existingCell = currentCells.find(
-        (c) => c.type === "video" && c.videoId === video.id && c.w > 0,
+      const existingCell = currentVisibleCells.find(
+        (c) => c.type === "video" && c.videoId === video.id,
       );
       if (existingCell) {
         console.warn("Video already in multiview:", video.id);
@@ -209,12 +98,12 @@ export function AutoLayoutProvider({ children }: AutoLayoutProviderProps) {
       }
 
       // Count current active videos
-      const activeVideoCount = currentCells.filter(
-        (c) => c.type === "video" && c.w > 0 && c.videoId,
+      const activeVideoCount = currentVisibleCells.filter(
+        (c) => c.type === "video" && c.videoId,
       ).length;
 
       // Check for empty cell first
-      const emptyCell = findEmptyCell(currentCells);
+      const emptyCell = findEmptyCell(currentVisibleCells);
 
       if (emptyCell) {
         console.log("Filling empty cell:", emptyCell.id);
@@ -226,7 +115,7 @@ export function AutoLayoutProvider({ children }: AutoLayoutProviderProps) {
       const newPreset = getDefaultLayout(
         activeVideoCount + 1,
         currentAspectClass,
-        currentUserPresets,
+        userPresets,
       );
 
       if (!newPreset) {
@@ -235,37 +124,62 @@ export function AutoLayoutProvider({ children }: AutoLayoutProviderProps) {
       }
 
       console.log("Applying preset:", newPreset.name, newPreset.layout);
-      const newLayout = decodeLayout(newPreset.layout);
 
       const isPreset = isPresetLayout(
-        currentCells,
+        currentVisibleCells,
         currentAspectClass,
-        currentUserPresets,
+        userPresets,
       );
 
-      if (currentCells.length === 0 || isPreset || !currentAutoLayoutDisabled) {
-        applyLayoutWithMerge(newLayout.cells, video);
+      if (
+        currentVisibleCells.length === 0 ||
+        isPreset ||
+        !currentAutoLayoutDisabled
+      ) {
+        // Apply the layout preset, then fill the empty slot with the video
+        applyLayout(newPreset.layout);
+        // After applying, find the empty slot and fill it
+        const newVisibleCells = store.get(visibleCellsAtom);
+        const newEmptyCell = findEmptyCell(newVisibleCells);
+        if (newEmptyCell) {
+          fillCellWithVideo(newEmptyCell.id, video);
+        }
         return;
       }
 
+      // Prompt user before overriding manual layout
       setState({
         pendingVideo: video,
         showPrompt: true,
-        pendingLayout: newLayout.cells,
+        pendingPresetLayout: newPreset.layout,
       });
     },
-    [fillCellWithVideo, applyLayoutWithMerge],
+    [store, userPresets, fillCellWithVideo, applyLayout],
   );
 
   const confirmAutoLayout = useCallback(() => {
-    if (state.pendingLayout && state.pendingVideo) {
-      applyLayoutWithMerge(state.pendingLayout, state.pendingVideo);
+    if (state.pendingPresetLayout && state.pendingVideo) {
+      applyLayout(state.pendingPresetLayout);
+      // Fill the empty slot with the pending video
+      const newVisibleCells = store.get(visibleCellsAtom);
+      const newEmptyCell = findEmptyCell(newVisibleCells);
+      if (newEmptyCell) {
+        fillCellWithVideo(newEmptyCell.id, state.pendingVideo);
+      }
     }
-    setState({ pendingVideo: null, showPrompt: false, pendingLayout: null });
-  }, [state, applyLayoutWithMerge]);
+    setState({
+      pendingVideo: null,
+      showPrompt: false,
+      pendingPresetLayout: null,
+    });
+  }, [state, applyLayout, store, fillCellWithVideo]);
 
   const cancelAutoLayout = useCallback(() => {
-    setState({ pendingVideo: null, showPrompt: false, pendingLayout: null });
+    setState({
+      pendingVideo: null,
+      showPrompt: false,
+      pendingPresetLayout: null,
+    });
   }, []);
 
   const markEdited = useCallback(() => {
@@ -274,34 +188,21 @@ export function AutoLayoutProvider({ children }: AutoLayoutProviderProps) {
 
   const addEmptyCell = useCallback(
     (x: number, y: number, w: number, h: number) => {
-      const newCell: Cell = {
-        id: generateContentId(),
-        x,
-        y,
-        w,
-        h,
-        type: "empty",
-      };
-      setCells((current) => [...current, newCell]);
-      markEdited();
+      addEmpty({ x, y, w, h });
     },
-    [setCells, markEdited],
+    [addEmpty],
   );
 
   const applyPreset = useCallback(
     (presetLayout: string) => {
-      const decoded = decodeLayout(presetLayout);
-      applyLayoutWithMerge(decoded.cells);
-      setAutoLayoutDisabled(false);
+      applyLayout(presetLayout);
     },
-    [applyLayoutWithMerge, setAutoLayoutDisabled],
+    [applyLayout],
   );
 
   const clearAll = useCallback(() => {
-    setCells([]);
-    setContentMap({});
-    setAutoLayoutDisabled(false);
-  }, [setCells, setContentMap, setAutoLayoutDisabled]);
+    clearAllCells();
+  }, [clearAllCells]);
 
   const value: AutoLayoutContextValue = {
     addVideo,

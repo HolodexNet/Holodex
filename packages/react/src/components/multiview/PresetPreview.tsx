@@ -1,4 +1,4 @@
-import { decodeLayout } from "@/lib/multiview-utils";
+import { decodeLayout } from "@/lib/multiview-layout";
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
 

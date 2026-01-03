@@ -9,12 +9,10 @@ import {
   aspectClassAtom,
   editModeAtom,
   syncToolbarOpenAtom,
+  applyLayoutAtom,
 } from "@/store/multiview";
-import { getAspectClass } from "@/lib/multiview-utils";
 import { useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { decodeLayout } from "@/lib/multiview-utils";
-import { cellQueueAtom, contentMapAtom } from "@/store/multiview";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,12 +24,12 @@ import {
   AlertDialogTitle,
 } from "@/shadcn/ui/alert-dialog";
 import { headerHiddenAtom } from "@/hooks/useFrame";
+import { getAspectClass } from "@/lib/multiview-layout";
 
 function MultiviewContent() {
   const { layout: layoutParam } = useParams<{ layout?: string }>();
   const setAspectClass = useSetAtom(aspectClassAtom);
-  const setCells = useSetAtom(cellQueueAtom);
-  const setContentMap = useSetAtom(contentMapAtom);
+  const applyLayout = useSetAtom(applyLayoutAtom);
   const editMode = useAtomValue(editModeAtom);
   const syncToolbarOpen = useAtomValue(syncToolbarOpenAtom);
   const makeHeaderHide = useSetAtom(headerHiddenAtom);
@@ -60,21 +58,12 @@ function MultiviewContent() {
   useEffect(() => {
     if (layoutParam) {
       try {
-        const decoded = decodeLayout(layoutParam);
-        setCells(decoded.cells);
-
-        const newContentMap: Record<string, { videoCellIndex: number }> = {};
-        decoded.cells.forEach((cell, index) => {
-          if (cell.type === "video" && cell.videoId) {
-            newContentMap[cell.videoId] = { videoCellIndex: index };
-          }
-        });
-        setContentMap(newContentMap);
+        applyLayout(layoutParam);
       } catch (e) {
         console.error("Failed to decode layout:", e);
       }
     }
-  }, [layoutParam, setCells, setContentMap]);
+  }, [layoutParam, applyLayout]);
 
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden select-none">
