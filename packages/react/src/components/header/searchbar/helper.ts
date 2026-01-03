@@ -248,7 +248,7 @@ export async function getQueryFromQueryModel(
   return await gen2array(generator());
 }
 
-type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+// type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 // export function useSearch(
 //   queryModel: VideoQueryModel,
 //   queryContainer: WithOptional<VideoQueryContainer, "query">,

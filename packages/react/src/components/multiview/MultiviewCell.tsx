@@ -7,8 +7,9 @@ import {
   type Cell,
 } from "@/store/multiview";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
-import { forwardRef, useCallback } from "react";
-import { useSetAtom } from "jotai";
+import { forwardRef } from "react";
+import { useAtom, useSetAtom } from "jotai";
+import { videoStatusAtomFamily } from "@/store/player";
 
 interface MultiviewCellProps {
   cell: Cell;
@@ -25,39 +26,8 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
     const refreshCell = useSetAtom(refreshCellAtom);
     const convertToChat = useSetAtom(convertToChatAtom);
 
-    const handleClearContent = useCallback(
-      (e: React.MouseEvent) => {
-        e.stopPropagation();
-        console.log(`Clearing content for cell ${id}`);
-        clearCell(id);
-      },
-      [id, clearCell],
-    );
-
-    const handleDeleteCell = useCallback(
-      (e: React.MouseEvent) => {
-        e.stopPropagation();
-        hideCell(id);
-      },
-      [id, hideCell],
-    );
-
-    const handleRefreshCell = useCallback(
-      (e: React.MouseEvent) => {
-        e.stopPropagation();
-        console.log(`Refreshing cell ${id}`);
-        refreshCell(id);
-      },
-      [id, refreshCell],
-    );
-
-    const handleConvertToChat = useCallback(
-      (e: React.MouseEvent) => {
-        e.stopPropagation();
-        console.log(`Converting cell ${id} to chat`);
-        convertToChat(id);
-      },
-      [id, convertToChat],
+    const [cellData] = useAtom(
+      videoStatusAtomFamily(cell.videoId ?? "unknown"),
     );
 
     return (
@@ -78,6 +48,13 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
               (cell.videoId ? `Chat: ${cell.videoId}` : "Chat (empty)")}
           </div>
 
+          {/* Cell status */}
+          <div className="mb-2 text-sm text-white/70">
+            <div>
+              <pre>{JSON.stringify(cellData, null, 2)}</pre>
+            </div>
+          </div>
+
           {/* Control buttons - explicitly clickable */}
           <div className="flex flex-wrap gap-2">
             {/* Refresh button - reloads the video/chat iframe */}
@@ -86,7 +63,7 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
                 <TooltipTrigger asChild>
                   <button
                     type="button"
-                    onClick={handleRefreshCell}
+                    onClick={() => refreshCell(id)}
                     className="flex items-center gap-1 rounded bg-blue-600 px-2 py-1 text-xs text-white hover:bg-blue-500"
                   >
                     <span className="i-heroicons:arrow-path size-3.5" />
@@ -105,7 +82,7 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
                 <TooltipTrigger asChild>
                   <button
                     type="button"
-                    onClick={handleConvertToChat}
+                    onClick={() => convertToChat(id)}
                     className="flex items-center gap-1 rounded bg-purple-600 px-2 py-1 text-xs text-white hover:bg-purple-500"
                   >
                     <span className="i-heroicons:chat-bubble-left-right size-3.5" />
@@ -124,7 +101,7 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
                 <TooltipTrigger asChild>
                   <button
                     type="button"
-                    onClick={handleClearContent}
+                    onClick={() => clearCell(id)}
                     className="flex items-center gap-1 rounded bg-yellow-600 px-2 py-1 text-xs text-white hover:bg-yellow-500"
                   >
                     <span className="i-heroicons:x-circle size-3.5" />
@@ -142,7 +119,7 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  onClick={handleDeleteCell}
+                  onClick={() => hideCell(id)}
                   className="flex items-center gap-1 rounded bg-red-600 px-2 py-1 text-xs text-white hover:bg-red-500"
                 >
                   <span className="i-heroicons:trash size-3.5" />

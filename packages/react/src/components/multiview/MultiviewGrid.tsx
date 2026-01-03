@@ -88,7 +88,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
       data-aspect-class={aspectClass}
     >
       {/* Corner plus signs at grid intersections */}
-      {bounds?.height && (
+      {bounds?.height && editMode && (
         <GridCornerDots
           width={bounds.width}
           height={bounds.height}
@@ -99,7 +99,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
         />
       )}
       {/* Visual grid overlay */}
-      {bounds?.height && (
+      {bounds?.height && editMode && (
         <GridBackground
           width={bounds.width}
           cols={cols}
@@ -228,7 +228,7 @@ export function MultiviewGrid({ className }: MultiviewGridProps) {
           onLayoutChange={handleLayoutChange}
           autoSize={true}
           className="z-10 h-full"
-          style={{ height: "100%", display: !editMode ? "none" : "block" }}
+          style={{ height: "100%" }}
         >
           {visibleCells.map((cell) => (
             <div key={cell.id} data-cell-id={cell.id} className="group/cell">

@@ -7,7 +7,8 @@ import { useAtomValue } from "jotai";
 import { VideoCell } from "./VideoCell";
 import { ChatCell } from "./ChatCell";
 
-const BLANK_IFRAME_URL = "https://www.webpagetest.org/blank.html";
+const BLANK_IFRAME_URL =
+  "data:text/html,<!DOCTYPE html><html><head></head><body></body></html>";
 
 /**
  * Pure CSS Grid-based iframe rendering layer.
@@ -88,11 +89,11 @@ function MultiviewFrameItem({ cell }: MultiviewFrameItemProps) {
         <iframe
           key={`frame-${cell.id}`}
           src={BLANK_IFRAME_URL}
-          className="h-full w-full border-0"
+          className="h-full w-full border border-dashed border-accent bg-background/40"
           title="blank"
         />
       ) : cell.type === "video" ? (
-        <VideoCell videoId={cell.videoId} />
+        <VideoCell videoId={cell.videoId} cell={cell} />
       ) : cell.type === "chat" ? (
         <ChatCell videoId={cell.videoId} />
       ) : null}
