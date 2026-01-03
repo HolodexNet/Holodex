@@ -137,19 +137,33 @@ export function getChannelBannerImages(url: string) {
   };
 }
 
-export function debounce<T extends (...args: unknown[]) => unknown>(
+export function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(
   func: T,
   wait?: number,
   immediate?: boolean,
 ) {
   let timeout: NodeJS.Timeout | undefined;
-  return function (...args: unknown[]) {
+  return function (...args: Parameters<T>) {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       timeout = undefined;
       if (!immediate) func.apply({}, args);
     }, wait);
     if (immediate && !timeout) func.apply({}, args);
+  };
+}
+
+export function throttle<T extends (...args: Parameters<T>) => ReturnType<T>>(
+  func: T,
+  timeFrame: number,
+) {
+  let lastTime = 0;
+  return function (...args: Parameters<T>) {
+    const now = Date.now();
+    if (now - lastTime >= timeFrame) {
+      func(...args);
+      lastTime = now;
+    }
   };
 }
 
