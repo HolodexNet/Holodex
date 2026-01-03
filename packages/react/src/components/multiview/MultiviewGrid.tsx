@@ -17,7 +17,6 @@ import ReactGridLayout, {
 import { GridBackground } from "react-grid-layout/extras";
 import { gridBounds, minMaxSize } from "react-grid-layout/core";
 import { createMultiviewCompactor } from "./multiviewCompactor";
-import "./multiview.css";
 import { Ref, useCallback, useMemo } from "react";
 import useMeasure from "react-use-measure";
 

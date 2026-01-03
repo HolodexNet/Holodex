@@ -25,6 +25,7 @@ import {
 } from "@/shadcn/ui/alert-dialog";
 import { headerHiddenAtom } from "@/hooks/useFrame";
 import { getAspectClass } from "@/lib/multiview-layout";
+import "@/components/multiview/multiview.css";
 
 function MultiviewContent() {
   const { layout: layoutParam } = useParams<{ layout?: string }>();

@@ -297,7 +297,7 @@ export function Selector() {
   return (
     <div className="flex min-w-0 items-center gap-2">
       <DropdownMenu>
-        <div className="flex flex-col items-start">
+        <div className="flex min-w-32 flex-col items-stretch">
           <span className="px-3 text-[10px] leading-tight font-extrabold text-muted-foreground/80">
             Holodex Multiview
           </span>

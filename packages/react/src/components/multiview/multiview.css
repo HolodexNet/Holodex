@@ -14,10 +14,19 @@
 
 .react-grid-item {
   transition: all 200ms ease;
-  transition-property: left, top, width, height;
+  transition-property: opacity, box-shadow, left, top, width, height;
+  opacity: 1;
   border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
   box-shadow: inset 0 0 30px 30px
     color-mix(in srgb, var(--background) 70%, transparent);
+}
+
+@starting-style {
+  .react-grid-item {
+    opacity: 0;
+    box-shadow: inset 0 0 0px 0px
+      color-mix(in srgb, var(--background) 10%, transparent);
+  }
 }
 
 .react-grid-item:hover {
@@ -74,4 +83,86 @@
 .mv-grid-corner-mark line {
   stroke: color-mix(in srgb, var(--destructive) 50%, transparent);
   stroke-width: 1px;
+}
+
+/* ========================================
+   Toolbar Styles
+   ======================================== */
+
+.toolbar-main-btn {
+  /* // @ apply cannot be used */
+  height: calc(var(--spacing) * 12);
+  width: calc(var(--spacing) * 12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 8px;
+}
+
+/* ========================================
+   Sync Bar Styles
+   ======================================== */
+
+.sync-bar {
+  box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sync-progress-slider {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted-foreground) transparent;
+}
+
+.sync-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.sync-slider:focus {
+  outline: none;
+}
+
+/* WebKit (Chrome, Safari, Edge Chromium) */
+.sync-slider::-webkit-slider-runnable-track {
+  height: 100%;
+  background: transparent;
+}
+
+.sync-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 3px;
+  height: 76px;
+  background: var(--primary);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.sync-slider:hover::-webkit-slider-thumb {
+  opacity: 1;
+}
+
+/* Firefox */
+.sync-slider::-moz-range-track {
+  height: 100%;
+  background: transparent;
+}
+
+.sync-slider::-moz-range-thumb {
+  appearance: none;
+  width: 3px;
+  height: 76px;
+  background: var(--primary);
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.sync-slider:hover::-moz-range-thumb {
+  opacity: 1;
 }
