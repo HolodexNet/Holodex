@@ -39,7 +39,7 @@ export function PresetPreview({
     >
       {cells.map((cell, i) => {
         const isChat = cell.type === "chat";
-        const isVideo = cell.type === "video" || cell.type === "empty";
+        const isVideo = cell.type === "video";
 
         return (
           <div

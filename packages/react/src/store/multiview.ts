@@ -10,7 +10,7 @@ import { atomWithStorage } from "jotai/utils";
 // Types
 // ============================================================================
 
-export type CellType = "video" | "chat" | "empty";
+export type CellType = "video" | "chat";
 
 /**
  * Cell visibility state:
@@ -30,6 +30,9 @@ export type AspectClass = "horizontal" | "square" | "vertical";
 /**
  * Cell is the mutable state for a single cell.
  * Each cell in the queue holds an atom<Cell>.
+ *
+ * Empty state is indicated by `videoId === undefined` (for both video and chat types).
+ * Chat cells reference a video directly via videoId instead of an index.
  */
 export interface Cell {
   /** Unique identifier for this cell (8-char base64) */
@@ -42,12 +45,10 @@ export interface Cell {
   w: number;
   /** Height in grid units */
   h: number;
-  /** Content type */
+  /** Content type: 'video' for video players, 'chat' for chat panels */
   type: CellType;
-  /** Video ID if type is 'video' */
+  /** Video ID for this cell. If undefined, the cell is empty. For chat cells, this is the video whose chat to display. */
   videoId?: string;
-  /** For chat cells: which video index to show chat for */
-  chatTab?: number;
   /** Visibility state, once hidden it is effectively deleted */
   visibility: CellVisibility;
 }
@@ -126,31 +127,61 @@ export const applyLayoutAtom = atom(null, (get, set, layoutString: string) => {
       (s) => s.visibility === "visible" && s.type === "video" && s.videoId,
     );
 
-  // Separate preset slots by type
-  const videoSlots = decoded.cells.filter(
-    (c) => c.type === "empty" || c.type === "video",
+  // Track which videos already have chat cells
+  const videosWithChat = new Set(
+    currentQueue
+      .map((e) => get(e.atom))
+      .filter(
+        (s) => s.visibility === "visible" && s.type === "chat" && s.videoId,
+      )
+      .map((s) => s.videoId),
   );
+
+  // Separate preset slots by type
+  const videoSlots = decoded.cells.filter((c) => c.type === "video");
   const chatSlots = decoded.cells.filter((c) => c.type === "chat");
 
-  // Map video slots: reuse existing videos or create empty slots
+  // Map video slots: reuse existing videos or create empty video slots
   const videoEntries = videoSlots.map((slot, i) =>
     createCellEntry(
       i < existingVideos.length
         ? {
             ...existingVideos[i],
+            type: "video" as const,
             x: slot.x,
             y: slot.y,
             w: slot.w,
             h: slot.h,
             visibility: "visible",
           }
-        : { ...slot, type: "empty", videoId: undefined, visibility: "visible" },
+        : {
+            ...slot,
+            type: "video" as const,
+            videoId: undefined,
+            visibility: "visible",
+          },
     ),
   );
 
-  // Map chat slots directly
-  const chatEntries = chatSlots.map((slot) =>
-    createCellEntry({ ...slot, visibility: "visible" }),
+  // Collect videoIds that will be assigned to video cells
+  const assignedVideoIds = videoEntries
+    .map((e) => get(e.atom).videoId)
+    .filter((id): id is string => !!id);
+
+  // Find videos that don't have a chat cell assigned yet
+  const videosNeedingChat = assignedVideoIds.filter(
+    (id) => !videosWithChat.has(id),
+  );
+
+  // Map chat slots: auto-assign videos that don't have chat yet
+  const chatEntries = chatSlots.map((slot, i) =>
+    createCellEntry({
+      ...slot,
+      type: "chat" as const,
+      // Ignore chatTab from preset, assign next video without chat
+      videoId: videosNeedingChat[i],
+      visibility: "visible",
+    }),
   );
 
   set(cellQueueAtom, [...videoEntries, ...chatEntries]);
@@ -196,11 +227,10 @@ export const clearCellAtom = atom(null, (get, set, cellId: string) => {
   const updatedQueue = currentQueue.map((entry) => {
     if (entry.id === cellId) {
       const currentState = get(entry.atom);
+      // Clear content by setting videoId to undefined (keeps type)
       return createCellEntry({
         ...currentState,
-        type: "empty" as const,
         videoId: undefined,
-        chatTab: undefined,
       });
     }
     return entry;
@@ -265,32 +295,26 @@ export const convertToChatAtom = atom(null, (get, set, cellId: string) => {
   const targetState = get(targetEntry.atom);
   const states = currentQueue.map((e) => get(e.atom));
 
-  // Count visible video cells (excluding the one being converted)
-  const videoCount = states.filter(
+  // Find videos that already have a chat cell
+  const videosWithChat = new Set(
+    states
+      .filter(
+        (s) => s.visibility === "visible" && s.type === "chat" && s.videoId,
+      )
+      .map((s) => s.videoId),
+  );
+
+  // Find first video without a chat cell
+  const videosWithoutChat = states.filter(
     (s) =>
       s.visibility === "visible" &&
       s.type === "video" &&
       s.videoId &&
-      s.id !== cellId,
-  ).length;
-
-  // Find existing chat tabs
-  const existingChatTabs = new Set(
-    states
-      .filter(
-        (s) =>
-          s.visibility === "visible" &&
-          s.type === "chat" &&
-          s.chatTab !== undefined,
-      )
-      .map((s) => s.chatTab),
+      !videosWithChat.has(s.videoId),
   );
 
-  // First video index without a chat, or 0
-  const chatTabTarget =
-    Array.from({ length: videoCount }, (_, i) => i).find(
-      (i) => !existingChatTabs.has(i),
-    ) ?? 0;
+  // Use the first video without chat, or undefined if all have chats
+  const targetVideoId = videosWithoutChat[0]?.videoId;
 
   // Hide original, append new chat cell
   const updatedQueue = currentQueue.map((e) =>
@@ -308,7 +332,7 @@ export const convertToChatAtom = atom(null, (get, set, cellId: string) => {
       w: targetState.w,
       h: targetState.h,
       type: "chat",
-      chatTab: chatTabTarget,
+      videoId: targetVideoId,
       visibility: "visible",
     }),
   ]);
@@ -333,7 +357,7 @@ export const addEmptyCellAtom = atom(
       y,
       w,
       h,
-      type: "empty",
+      type: "video",
       visibility: "visible",
     };
 
@@ -505,6 +529,7 @@ export const visibleCellsAtom = atom((get) => {
  */
 export const activeVideosAtom = atom((get) => {
   const states = get(visibleCellsAtom);
+  // Active videos: video cells with a videoId (non-empty)
   return states.filter((cell) => cell.type === "video" && cell.videoId);
 });
 
@@ -513,7 +538,8 @@ export const activeVideosAtom = atom((get) => {
  */
 export const nonChatCellCountAtom = atom((get) => {
   const states = get(visibleCellsAtom);
-  return states.filter((cell) => cell.type !== "chat").length;
+  // Count video cells (both filled and empty)
+  return states.filter((cell) => cell.type === "video").length;
 });
 
 /**

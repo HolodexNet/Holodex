@@ -14,7 +14,7 @@ Multiview allows users to watch multiple video streams simultaneously with live 
 
 | Concept | Description |
 |---------|-------------|
-| **Cell** | Atomic unit of the grid. Contains content (`video`, `chat`, `empty`) + position (`x`, `y`, `w`, `h`) + `visibility` state. |
+| **Cell** | Atomic unit of the grid. Contains content (`video`, `chat`) + position (`x`, `y`, `w`, `h`) + `visibility` state. Empty state is indicated by `videoId === undefined`. |
 | **CellEntry** | Wrapper containing `{ id: string, atom: PrimitiveAtom<Cell> }` for granular subscriptions. |
 | **Cell Queue** | Append-only array of `CellEntry[]`. Cells are marked `visibility: 'hidden'` rather than deleted. |
 | **LayoutPreset** | Pure positional data encoded as URL-safe string. Defines slot positions and types. |
@@ -79,11 +79,11 @@ Uses `react-grid-layout` library for:
 Compact URL-safe string format: `xywh[content],xywh[content],...`
 
 - `x, y, w, h`: Base64 encoded (single char each, max 63)
-- `content`: Empty, `chat{tab}`, or 11-char video ID
+- `content`: Empty (video slot), `chat`, or 11-char video ID
 
 **Examples**:
-- `AACC` → Cell at (0,0) with size 2×2
-- `AACCchat0` → Chat cell, tab 0
+- `AACC` → Video cell at (0,0) with size 2×2 (empty, no content)
+- `AACCchat` → Chat cell (videoId assigned at apply time)
 - `AACCdQw4w9WgXcQ` → Video cell with YouTube ID
 
 ---

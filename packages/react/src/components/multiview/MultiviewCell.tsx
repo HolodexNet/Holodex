@@ -72,15 +72,16 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
 
           {/* Cell info */}
           <div className="mb-2 text-sm text-white/70">
-            {cell.type === "video" && cell.videoId && `Video: ${cell.videoId}`}
-            {cell.type === "chat" && `Chat (Tab ${cell.chatTab})`}
-            {cell.type === "empty" && "Empty Cell"}
+            {cell.type === "video" &&
+              (cell.videoId ? `Video: ${cell.videoId}` : "Empty Cell")}
+            {cell.type === "chat" &&
+              (cell.videoId ? `Chat: ${cell.videoId}` : "Chat (empty)")}
           </div>
 
           {/* Control buttons - explicitly clickable */}
           <div className="flex flex-wrap gap-2">
             {/* Refresh button - reloads the video/chat iframe */}
-            {cell.type !== "empty" && (
+            {cell.videoId && (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
@@ -93,7 +94,7 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
                   </button>
                 </TooltipTrigger>
                 <TooltipContent side="bottom">
-                  <p>Reload this cell's content (recreates the iframe)</p>
+                  <p>Reload this cell's content</p>
                 </TooltipContent>
               </Tooltip>
             )}
@@ -118,7 +119,7 @@ export const MultiviewCell = forwardRef<HTMLDivElement, MultiviewCellProps>(
             )}
 
             {/* Clear button - removes content but keeps the cell */}
-            {cell.type !== "empty" && (
+            {cell.videoId && (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button

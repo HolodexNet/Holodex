@@ -12,7 +12,6 @@ interface CellDef {
   w: number;
   h: number;
   type?: "video" | "chat";
-  chatTab?: number;
 }
 
 /**
@@ -25,7 +24,7 @@ function encodeCell(cell: CellDef): string {
   encoded += b64[cell.w];
   encoded += b64[cell.h];
   if (cell.type === "chat") {
-    encoded += `chat${cell.chatTab ?? 0}`;
+    encoded += "chat";
   }
   return encoded;
 }
@@ -57,7 +56,7 @@ export const horizontalPresets: LayoutPreset[] = [
   createPreset(
     [
       { x: 0, y: 0, w: 15, h: 12 },
-      { x: 15, y: 0, w: 5, h: 12, type: "chat", chatTab: 0 },
+      { x: 15, y: 0, w: 5, h: 12, type: "chat" },
     ],
     "Side Chat 1",
   ),
@@ -246,7 +245,7 @@ export const verticalPresets: LayoutPreset[] = [
   createPreset(
     [
       { x: 0, y: 0, w: 12, h: 10 },
-      { x: 0, y: 10, w: 12, h: 10, type: "chat", chatTab: 0 },
+      { x: 0, y: 10, w: 12, h: 10, type: "chat" },
     ],
     "Mobile 1",
     1,
@@ -332,10 +331,12 @@ export function getDefaultLayout(
 
 /**
  * Find the first visible empty cell in the layout.
+ * An empty cell is a video cell with no videoId.
  */
 export function findEmptyCell(cells: Cell[]): Cell | undefined {
   return cells.find(
-    (cell) => cell.type === "empty" && cell.visibility === "visible",
+    (cell) =>
+      cell.type === "video" && !cell.videoId && cell.visibility === "visible",
   );
 }
 

@@ -45,7 +45,7 @@ interface EncodeOptions {
  * Encode a layout to a compact URL-safe string.
  * Format: "xywh[content],xywh[content],..."
  * - x, y, w, h are base64 encoded (single char each, max 63)
- * - content is either empty, "chat{tab}", or video ID
+ * - content is either empty, "chat", or video ID
  */
 export function encodeLayout({
   cells,
@@ -67,7 +67,7 @@ export function encodeLayout({
     encoded += b64[cell.h];
 
     if (cell.type === "chat") {
-      encoded += `chat${cell.chatTab ?? 0}`;
+      encoded += cell.videoId ? `chat${cell.videoId}` : "chat";
     } else if (cell.type === "video" && includeVideo && cell.videoId) {
       encoded += cell.videoId;
     }
@@ -100,20 +100,25 @@ export function decodeLayout(encodedStr: string): DecodeResult {
     const content = str.substring(4);
 
     const isChat = content.startsWith("chat");
-    const chatTab =
-      isChat && content.length > 4 ? parseInt(content[4], 10) : undefined;
-    const videoId = !isChat && content.length === 11 ? content : undefined;
+    // For chat cells: content is "chat" (empty) or "chat{videoId}"
+    // For video cells: content is empty (slot) or videoId (min 5 chars)
+    const videoId = isChat
+      ? content.length > 4
+        ? content.substring(4)
+        : undefined
+      : content.length >= 5
+        ? content
+        : undefined;
 
     const cell: Cell = {
       id,
-      visibility: "visible",
+      visibility: "visible" as const,
       x: b64.indexOf(xywh[0]),
       y: b64.indexOf(xywh[1]),
       w: b64.indexOf(xywh[2]),
       h: b64.indexOf(xywh[3]),
-      type: isChat ? "chat" : videoId ? "video" : "empty",
+      type: isChat ? ("chat" as const) : ("video" as const),
       ...(videoId && { videoId }),
-      ...(chatTab !== undefined && { chatTab }),
     };
 
     cells.push(cell);

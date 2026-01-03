@@ -84,18 +84,18 @@ function MultiviewFrameItem({ cell }: MultiviewFrameItemProps) {
       data-cell-id={cell.id}
       data-cell-type={cell.type}
     >
-      {cell.type === "video" && cell.videoId && (
-        <VideoCell videoId={cell.videoId} />
-      )}
-      {cell.type === "chat" && <ChatCell chatTab={cell.chatTab ?? 0} />}
-      {cell.type === "empty" && (
+      {!cell.videoId ? (
         <iframe
           key={`frame-${cell.id}`}
           src={BLANK_IFRAME_URL}
           className="h-full w-full border-0"
           title="blank"
         />
-      )}
+      ) : cell.type === "video" ? (
+        <VideoCell videoId={cell.videoId} />
+      ) : cell.type === "chat" ? (
+        <ChatCell videoId={cell.videoId} />
+      ) : null}
     </div>
   );
 }
