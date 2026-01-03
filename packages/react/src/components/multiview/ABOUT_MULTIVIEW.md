@@ -83,8 +83,8 @@ Compact URL-safe string format: `xywh[content],xywh[content],...`
 
 **Examples**:
 - `AACC` → Video cell at (0,0) with size 2×2 (empty, no content)
-- `AACCchat` → Chat cell (videoId assigned at apply time)
-- `AACCdQw4w9WgXcQ` → Video cell with YouTube ID
+- `AACCchat{videoIdOptional}` → Chat cell, will find a video ID to attach to, if not provisioned at apply-time.
+- `AACC{videoId}` → Video cell with YouTube ID
 
 ---
 
@@ -149,6 +149,7 @@ src/
 │   ├── MultiviewGrid.tsx      # Uses updateLayoutAtom
 │   ├── MultiviewFrames.tsx    # Uses visibleCellsAtom
 │   ├── MultiviewCell.tsx      # Uses clearCellAtom, hideCellAtom
+│   ├── SyncToolbar.tsx        # Archive video synchronization
 │   └── ...
 ├── hooks/
 │   ├── useAutoLayout.tsx      # Orchestrates video addition
@@ -159,9 +160,54 @@ src/
 
 ---
 
+## Sync System
+
+The SyncToolbar enables synchronized playback of archived (past) videos based on their original stream times.
+
+### Key Concepts
+
+| Concept | Description |
+|---------|-------------|
+| **Overlapping Videos** | Videos whose streams occurred within 1 hour of each other. Only these are synced. |
+| **Timeline** | Unified timeline spanning `minTs` to `maxTs` across all overlapping videos. |
+| **Offset** | Per-video adjustment (in seconds) to fine-tune sync. Persisted in localStorage. |
+
+### State & Atoms
+
+| Atom/State | Location | Purpose |
+|------------|----------|---------|
+| `syncToolbarOpenAtom` | `store/multiview.ts` | Controls visibility of SyncToolbar |
+| `syncOffsetsAtom` | `SyncToolbar.tsx` | Per-video sync offsets (localStorage) |
+| `videoStatusAtomFamily` | `store/player.ts` | Provides current playback position per video |
+| `videoPlayerRefAtomFamily` | `store/player.ts` | Imperative player control (seek, play, pause) |
+
+### Integration Points
+
+- **Reads `activeVideosAtom`** to discover which videos are currently in the multiview
+- **Fetches video metadata** via `/api/v2/videos/:id` to get `start_actual`/`available_at` and `duration`
+- **Controls players imperatively** via `videoPlayerRefAtomFamily` for seeking and play/pause
+- **Reads playback state** via `videoStatusAtomFamily` to detect desync
+
+### URL Parameters (Optional)
+
+| Param | Format | Description |
+|-------|--------|-------------|
+| `t` | Unix timestamp | Initial sync position |
+| `offsets` | Comma-separated numbers | Per-video offsets in same order as overlapping videos |
+
+### Behavior Notes
+
+- Only YouTube archives are synced (Twitch filtered out via `tw:` prefix check)
+- Sync loop runs every 500ms, adjusting videos that drift > 1.5s from expected time
+- Videos outside their timeline window are paused automatically
+
+---
+
 ## Known Constraints
 
 - **Max 63** for any grid coordinate (base64 encoding limit)
 - **Iframe DOM order** must be preserved for video continuity
 - **Edit overlay** must block pointer events or drag/resize breaks
 - **Fullscreen** requires user gesture
+- **Sync only works for archived videos** with valid `start_actual` or `available_at` timestamps
+

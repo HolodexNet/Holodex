@@ -4,11 +4,15 @@ import {
   useState,
   useCallback,
   useMemo,
+  useEffect,
   ReactNode,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { parse, stringify } from "picoquery";
-import { VideoQueryContainer, SORT_OPTIONS } from "../types";
+import { VideoQueryContainer, SORT_OPTIONS, QueryItem } from "../types";
+import { useSetAtom } from "jotai";
+import { queryAtom } from "../hooks/useAutocomplete";
+import { getQueryModelFromQuery } from "../helper";
 
 /**
  * Interface for the search parameter context.
@@ -136,6 +140,8 @@ interface StateSearchParameterProviderProps {
   children: ReactNode;
   /** Initial query container, if any */
   initialQueryContainer?: VideoQueryContainer;
+  /** Initial query items to populate the search bar with */
+  initialQueryItems?: QueryItem[];
   /** Callback when a search is performed */
   onSearch?: (queryContainer: VideoQueryContainer) => void;
 }
@@ -148,14 +154,43 @@ interface StateSearchParameterProviderProps {
 export function StateSearchParameterProvider({
   children,
   initialQueryContainer,
+  initialQueryItems,
   onSearch,
 }: StateSearchParameterProviderProps) {
+  const setQuery = useSetAtom(queryAtom);
+
+  // Compute initial query container from query items if provided
+  const computedInitialContainer = useMemo<
+    VideoQueryContainer | undefined
+  >(() => {
+    if (initialQueryContainer) return initialQueryContainer;
+    if (initialQueryItems && initialQueryItems.length > 0) {
+      const qm = getQueryModelFromQuery(initialQueryItems);
+      if (qm) {
+        return { q: qm, sort: "latest" };
+      }
+    }
+    return undefined;
+  }, [initialQueryContainer, initialQueryItems]);
+
+  // Populate queryAtom with initial items on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally only run on mount/unmount
+  useEffect(() => {
+    if (initialQueryItems && initialQueryItems.length > 0) {
+      setQuery(initialQueryItems);
+    }
+    // Clear query when unmounting
+    return () => {
+      setQuery([]);
+    };
+  }, []);
+
   const [queryContainer, setQueryContainer] = useState<
     VideoQueryContainer | undefined
-  >(initialQueryContainer);
+  >(computedInitialContainer);
   const [sortOption, setSortOptionState] = useState<
     (typeof SORT_OPTIONS)[number]
-  >(initialQueryContainer?.sort || "score");
+  >(computedInitialContainer?.sort || "latest");
   const [currentPage, setCurrentPage] = useState(1);
 
   const setSortOption = useCallback((sort: (typeof SORT_OPTIONS)[number]) => {

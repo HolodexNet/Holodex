@@ -11,6 +11,8 @@ import { SelectorLiveItem } from "./SelectorLiveItem";
 import { useVideoFilter } from "@/hooks/useVideoFilter";
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 import { useAtomValue } from "jotai";
+import { QueryItem } from "@/components/header/searchbar/types";
+import dayjs from "dayjs";
 
 /** Auto-scroll delay in milliseconds (how long to wait after last interaction before scrolling left) */
 const AUTO_SCROLL_DELAY = 8000;
@@ -67,29 +69,72 @@ function sortLiveVideos(videos: VideoBase[]): VideoBase[] {
 // AddCellButton - Empty cell placeholder for creating new cells
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { AddVideoSheet } from "./AddVideoSheet";
+
+interface AddCellButtonProps {
+  /** The org name to pre-filter search, undefined for favorites */
+  orgName?: string;
+}
+
 /**
- * A button styled like SelectorLiveItem but for adding empty cells.
- * Currently a placeholder - functionality will be added later.
+ * A button styled like SelectorLiveItem but for adding archived videos.
+ * Opens a sheet with search functionality to add videos to multiview.
+ * Pre-populates search with: org (unless favorites), type=Stream, to=now, sort=latest
  */
-function AddCellButton() {
-  const handleClick = () => {
-    // TODO: Implement add empty cell functionality
-    alert("You thought this button was implemented, but it was me Dio!");
-  };
+function AddCellButton({ orgName }: AddCellButtonProps) {
+  const [sheetOpen, setSheetOpen] = useState(false);
+
+  // Build initial query items for the search
+  const initialQueryItems = useMemo<QueryItem[]>(() => {
+    const items: QueryItem[] = [];
+
+    // Add org filter (unless favorites/undefined)
+    if (orgName) {
+      items.push({
+        type: "org",
+        value: orgName,
+        text: orgName,
+      });
+    }
+
+    // Add type=Stream filter
+    items.push({
+      type: "type",
+      value: "stream",
+      text: "Stream",
+    });
+
+    // Add to=current date filter
+    const now = dayjs();
+    items.push({
+      type: "to",
+      value: now.toISOString(),
+      text: now.format("YYYY-MM-DD HH:mm:ss Z"),
+    });
+
+    return items;
+  }, [orgName]);
 
   return (
-    <button
-      onClick={handleClick}
-      className="group relative shrink-0 cursor-pointer focus:outline-none"
-      title="Add empty cell"
-    >
-      <div className="flex size-10 items-center justify-center rounded-full border-2 border-dashed border-muted-foreground/40 transition-all group-hover:border-primary group-hover:bg-primary/10 hover:scale-105">
-        <span className="i-lucide:plus h-5 w-5 text-muted-foreground/60 transition-colors group-hover:text-primary" />
-      </div>
-      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-sm bg-muted px-1 text-[10px] leading-tight font-medium whitespace-nowrap text-muted-foreground">
-        Add
-      </span>
-    </button>
+    <>
+      <button
+        onClick={() => setSheetOpen(true)}
+        className="group relative shrink-0 cursor-pointer focus:outline-none"
+        title="Add archived video"
+      >
+        <div className="flex size-10 items-center justify-center rounded-full border-2 border-dashed border-muted-foreground/40 transition-all group-hover:border-primary group-hover:bg-primary/10 hover:scale-105">
+          <span className="i-lucide:archive h-5 w-5 text-muted-foreground/60 transition-colors group-hover:text-primary" />
+        </div>
+        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-sm bg-muted px-1 text-[10px] leading-tight font-medium whitespace-nowrap text-muted-foreground">
+          Archive
+        </span>
+      </button>
+      <AddVideoSheet
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
+        initialQueryItems={initialQueryItems}
+      />
+    </>
   );
 }
 
@@ -99,6 +144,8 @@ function AddCellButton() {
 
 interface VideoListScrollerProps {
   videos: VideoBase[];
+  /** The org name to pass to AddCellButton, undefined for favorites */
+  orgName?: string;
 }
 
 /**
@@ -106,7 +153,7 @@ interface VideoListScrollerProps {
  * Features thin blue scrollbar and auto-scrolls left after inactivity.
  * Shows gradient fadeout on right when not scrolled to end.
  */
-function VideoListScroller({ videos }: VideoListScrollerProps) {
+function VideoListScroller({ videos, orgName }: VideoListScrollerProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const lastInteractionRef = useRef<number>(Date.now());
   const animationFrameRef = useRef<number | null>(null);
@@ -204,7 +251,7 @@ function VideoListScroller({ videos }: VideoListScrollerProps) {
           className="flex items-center gap-3 py-2 pr-4"
         >
           {/* Add cell button at the start */}
-          <AddCellButton />
+          <AddCellButton orgName={orgName} />
           {videos.map((video) => (
             <SelectorLiveItem key={video.id} live={video} />
           ))}
@@ -250,7 +297,7 @@ function OrgVideoList({ orgName }: OrgVideoListProps) {
     [filteredVideos],
   );
 
-  return <VideoListScroller videos={sortedVideos} />;
+  return <VideoListScroller videos={sortedVideos} orgName={orgName} />;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -271,7 +318,7 @@ function FavoriteVideoList() {
     [filteredVideos],
   );
 
-  return <VideoListScroller videos={sortedVideos} />;
+  return <VideoListScroller videos={sortedVideos} orgName={undefined} />;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

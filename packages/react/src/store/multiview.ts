@@ -367,6 +367,40 @@ export const addEmptyCellAtom = atom(
 );
 
 /**
+ * Add a new video cell at specified position with content already filled.
+ * Write: { x, y, w, h, videoId }
+ */
+export const addVideoCellAtom = atom(
+  null,
+  (
+    get,
+    set,
+    {
+      x,
+      y,
+      w,
+      h,
+      videoId,
+    }: { x: number; y: number; w: number; h: number; videoId: string },
+  ) => {
+    const currentQueue = get(cellQueueAtom);
+    const newCell: Cell = {
+      id: generateContentId(),
+      x,
+      y,
+      w,
+      h,
+      type: "video",
+      videoId,
+      visibility: "visible",
+    };
+
+    set(cellQueueAtom, [...currentQueue, createCellEntry(newCell)]);
+    set(autoLayoutDisabledAtom, true); // Manual edit
+  },
+);
+
+/**
  * Clear all cells (reset to empty queue).
  */
 export const clearAllCellsAtom = atom(null, (get, set) => {
