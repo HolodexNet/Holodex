@@ -54,6 +54,8 @@ export const PlayerWrapper = React.memo(
     //     clearInterval(intervalId);
     //   };
     // }, [playerRef, updateState]);
+    console.log("autoplay", autoplay);
+    console.log("hi");
 
     return (
       <ReactPlayer
