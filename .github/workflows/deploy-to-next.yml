@@ -19,6 +19,7 @@ jobs:
           script_stop: true
           script: |
             cd /opt/next_web/packages/react || { echo "No directory found"; exit 1; } 
+            nvm use
             git pull origin next
             npm ci
             npm run build
