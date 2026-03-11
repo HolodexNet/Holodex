@@ -12,7 +12,10 @@ export const preferredTimezonesAtom = atomWithStorage("preferred_timezones", [
 ]);
 
 export const localeAtom = atom({
-  lang: window.localStorage.getItem("i18nextLng") ?? navigator.language,
+  lang:
+    (typeof window !== "undefined"
+      ? window.localStorage.getItem("i18nextLng")
+      : null) ?? (typeof navigator !== "undefined" ? navigator.language : "en"),
   dayjs: (...args: Parameters<typeof dayjs>) => dayjs(...args),
 });
 

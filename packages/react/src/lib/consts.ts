@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape,max-len */
 export const MUSICDEX_URL =
-  window.location.origin === "https://holodex.net"
+  typeof window !== "undefined" && window.location.origin === "https://holodex.net"
     ? "https://music.holodex.net"
     : "https://music-staging.holodex.net";
 
