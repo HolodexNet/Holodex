@@ -144,7 +144,7 @@ export const langConversion = Object.freeze({
     "lol-UWU": "en",
     zh: "zh-Hant",
     "zh-CN": "zh-Hans",
-    "en-GB": "enm"
+    "en-GB": "enm",
 });
 
 export const companionExtensionId = "jkdnofimdhpbhdjbcdlgnccfjjkidlgp";
