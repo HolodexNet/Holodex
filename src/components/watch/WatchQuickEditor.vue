@@ -106,11 +106,10 @@
           </ChannelChip>
         </template>
         <v-autocomplete
-          v-model="fake"
+          v-model="selectedChannel"
           :search-input.sync="search"
           :items="searchResults"
           hide-no-data
-          multiple
           hide-details
           :rules="[]"
           return-object
@@ -119,22 +118,8 @@
           no-filter
           style="min-width: 300px"
         >
-          <template #selection="selection">
-            <ChannelChip
-              :key="selection.item.id + 'chip'"
-              :channel="selection.item"
-              :size="60"
-            >
-              <v-btn icon @click.stop.prevent="deleteMention(selection.item)">
-                <v-icon>{{ icons.mdiClose }}</v-icon>
-              </v-btn>
-            </ChannelChip>
-          </template>
           <template #item="dropdownItem">
-            <v-list-item-content
-              class="py-1 pt-1"
-              @click.stop="addMention(dropdownItem.item)"
-            >
+            <v-list-item-content class="py-1 pt-1">
               <v-list-item-subtitle class="text--primary">
                 {{ getChannelName(dropdownItem.item) }}
               </v-list-item-subtitle>
@@ -197,9 +182,8 @@ export default {
             mentions: [],
             search: "",
             searchResults: [],
-            fake: [],
+            selectedChannel: null,
 
-            hasError: false,
             showSuccessAlert: false,
             showErrorAlert: false,
             errorMessage: "",
@@ -242,10 +226,12 @@ export default {
                     );
                 });
         }, 400),
-        fake(nv: [any] | null) {
-            if (nv && nv.length && nv.length > 0) {
-                this.addMention(nv[0]);
-                this.fake = null;
+        selectedChannel(val) {
+            if (val) {
+                this.search = "";
+                this.searchResults = [];
+                this.selectedChannel = null;
+                this.addMention(val);
             }
         },
     },
@@ -264,14 +250,10 @@ export default {
             backendApi
                 .getMentions(this.video.id)
                 .then(({ data }) => {
-                    // this.isLoading = false;
                     this.mentions = data;
-                    this.searchResults = [];
-                    this.search = "";
                 })
                 .catch((e) => {
                     console.error(e);
-                    // this.hasError = true;
                 });
         },
         getChannelName(channel) {
@@ -354,7 +336,6 @@ export default {
                 });
         },
         addMention(channel) {
-            this.isLoading = true;
             backendApi
                 .addMention(this.video.id, channel.id, this.$store.state.userdata.jwt)
                 .then(({ data }) => {
