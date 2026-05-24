@@ -186,29 +186,26 @@ export default {
                 }
             },
         },
-        $route(to) {
-            // on non-channel pages, remove default channel query if it exists
-            if (this.query[0]?.$default && !to.path.startsWith("/channel/")) {
-                this.query.splice(0, 1);
+        "$route.name": function (name) {
+            // when navigating away from channel/video pages, $store.state.channel/watch aren't reset,
+            // so need this $route hook to remove default channel query item if it exists
+            if (name !== "channel" && name !== "watch") {
+                this.query = this.query.filter((item) => !item.isDefault);
             }
         },
         "$store.state.channel.channel": function () {
             // on channel pages, default the query to include channel
-            // console.log("$store.state.channel:", structuredClone(this.$store.state.channel), "query[0]:", this.query[0]);
-            if (this.query.length > 0 && !this.query[0].$default) return;
             const { channel } = this.$store.state;
-            if (!channel?.channel || channel.isLoading || channel.hasError) return;
-            const defaultQuery = {
-                type: "channel",
-                value: channel.channel.id,
-                text: channel.channel.name,
-                $default: true,
-            };
-            if (this.query.length === 0) {
-                this.query.push(defaultQuery);
-            } else {
-                this.query.splice(0, 1, defaultQuery);
-            }
+            // console.log("$store.state.channel:", structuredClone(channel));
+            if (!channel.channel || channel.isLoading || channel.hasError) return;
+            this.addDefaultChannel(channel.channel);
+        },
+        "$store.state.watch.video.channel": function () {
+            // likewise on watch pages, default the query to include channel
+            const { watch } = this.$store.state;
+            // console.log("$store.state.watch:", structuredClone(watch));
+            if (!watch.video.channel || watch.isLoading || watch.hasError) return;
+            this.addDefaultChannel(watch.video.channel);
         },
         // eslint-disable-next-line func-names
         search: debounce(function (val) {
@@ -313,6 +310,22 @@ export default {
         addItem(item) {
             // console.log(item);
             this.query.push({ ...item });
+        },
+        addDefaultChannel(channel) {
+            // console.log("addDefaultChannel:", channel, "existing query:", this.query);
+            const defaultQuery = {
+                type: "channel",
+                value: channel.id,
+                text: channel.name,
+                isDefault: true,
+            };
+            if (this.query.length === 0) {
+                this.query.push(defaultQuery);
+            } else {
+                // replace any existing (assumed singular) default channel
+                const index = this.query.findIndex((item) => item.isDefault);
+                if (index >= 0) this.$set(this.query, index, defaultQuery);
+            }
         },
         onInput() {
             this.search = null;
