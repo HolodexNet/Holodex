@@ -187,7 +187,7 @@ export default {
             },
         },
         "$route.name": function (name) {
-            // when navigating away from channel/video pages, $store.state.channel/watch aren't reset,
+            // when navigating away from channel/watch pages, $store.state.channel/watch aren't reset,
             // so need this $route hook to remove default channel query item if it exists
             if (name !== "channel" && name !== "watch") {
                 this.query = this.query.filter((item) => !item.isDefault);
@@ -196,14 +196,12 @@ export default {
         "$store.state.channel.channel": function () {
             // on channel pages, default the query to include channel
             const { channel } = this.$store.state;
-            // console.log("$store.state.channel:", structuredClone(channel));
             if (!channel.channel || channel.isLoading || channel.hasError) return;
             this.addDefaultChannel(channel.channel);
         },
         "$store.state.watch.video.channel": function () {
             // likewise on watch pages, default the query to include channel
             const { watch } = this.$store.state;
-            // console.log("$store.state.watch:", structuredClone(watch));
             if (!watch.video.channel || watch.isLoading || watch.hasError) return;
             this.addDefaultChannel(watch.video.channel);
         },
@@ -308,11 +306,9 @@ export default {
             }
         },
         addItem(item) {
-            // console.log(item);
             this.query.push({ ...item });
         },
         addDefaultChannel(channel) {
-            // console.log("addDefaultChannel:", channel, "existing query:", this.query);
             const defaultQuery = {
                 type: "channel",
                 value: channel.id,
