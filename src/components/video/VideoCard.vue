@@ -1,5 +1,5 @@
 <template>
-  <a
+  <div
     class="video-card no-decoration d-flex"
     :class="{
       'video-card-fluid': fluid,
@@ -9,17 +9,16 @@
       'video-card-multiview-active': inMultiViewActiveVideos,
       'flex-column': !horizontal && !denseList,
     }"
-    :target="redirectMode ? '_blank' : ''"
-    :href="href"
-    rel="noopener"
     draggable="true"
     style="position: relative"
-    @click.exact="onThumbnailClicked"
     @dragstart="drag"
   >
     <!-- Video Image with Duration -->
-    <div
+    <a
       v-if="!denseList"
+      :target="redirectMode ? '_blank' : ''"
+      :href="href"
+      rel="noopener"
       style="position: relative; width: 100%"
       class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
       :style="
@@ -27,6 +26,7 @@
           !shouldHideThumbnail &&
           `background: url(${imageSrc}) center/cover;`
       "
+      @click.exact="onThumbnailClicked"
     >
       <PlaceholderOverlay
         v-if="shouldShowPlaceholderOverlay"
@@ -135,7 +135,7 @@
         width="100%"
         :aspect-ratio="60 / 9"
       />
-    </div>
+    </a>
     <a
       class="d-flex flex-row flex-grow-1 no-decoration video-card-text"
       :href="watchLink"
@@ -281,17 +281,23 @@
     >
       <template v-if="activePlaylistItem">
         <button @click.stop.prevent="move(data.id, 'up')">
-          <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
+          <v-icon small>
+            {{ icons.mdiChevronUp }}
+          </v-icon>
         </button>
         <button
           @click.stop.prevent="
             $store.commit('playlist/removeVideoByID', data.id)
           "
         >
-          <v-icon small> {{ icons.mdiDelete }} </v-icon>
+          <v-icon small>
+            {{ icons.mdiDelete }}
+          </v-icon>
         </button>
         <button @click.stop.prevent="move(data.id, 'down')">
-          <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
+          <v-icon small>
+            {{ icons.mdiChevronDown }}
+          </v-icon>
         </button>
       </template>
       <slot name="action" />
@@ -303,7 +309,7 @@
       v-model="placeholderOpen"
       :video="data"
     />
-  </a>
+  </div>
 </template>
 
 <script lang="ts">
