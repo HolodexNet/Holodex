@@ -604,7 +604,20 @@ export default {
                     // It also can't regain focus because it's hidden after menu opening, unless it's temporarily made visible again.
                     // Instead, it's easier to just focus the generated content div when the activator element loses focus.
                     const menu = this.$refs.videoMenu;
-                    menu?.getActivator().addEventListener("blur", this.ensureVideoMenuFocusHandler);
+                    if (!menu) return;
+                    menu.getActivator().addEventListener("blur", this.ensureVideoMenuFocusHandler);
+
+                    // Prevent a visible, mispositioned render by hiding it (via a class) until its contents are loaded and its
+                    // dimensions are (re)measurable, which is guaranteed by the time the menu open transition ends.
+                    const { content } = menu.$refs;
+                    if (content) {
+                        content.classList.add("video-card-menu-content-loading");
+                        content.addEventListener("transitionend", (e) => {
+                            if (e.currentTarget !== content) return; // shouldn't be any nested transitions, but just in case
+                            menu.updateDimensions();
+                            content.classList.remove("video-card-menu-content-loading");
+                        }, { once: true });
+                    }
                 });
             }
         },
@@ -984,5 +997,11 @@ export default {
 /* prevent focus ring on menu */
 .video-card-menu-content:focus-visible {
   outline: none;
+}
+
+/* hide menu content until it's positioned to avoid visible misplacement */
+.video-card-menu-content-loading {
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 </style>
