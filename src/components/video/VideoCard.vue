@@ -257,7 +257,6 @@
         nudge-top="20px"
         nudge-left="40px"
         content-class="video-card-menu-content"
-        transition="false"
       >
         <template #activator="{ on, attrs }">
           <v-btn
@@ -272,11 +271,7 @@
             <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
           </v-btn>
         </template>
-        <video-card-menu
-          :video="data"
-          @closeMenu="showMenu = false"
-          @ready="menuReady = true"
-        />
+        <video-card-menu :video="data" @closeMenu="showMenu = false" />
       </v-menu>
     </a>
     <!-- optional breaker object to row-break into a new row. -->
@@ -424,7 +419,6 @@ export default {
             },
             placeholderOpen: false,
             showMenu: false,
-            menuReady: null,
         };
     },
     computed: {
@@ -610,16 +604,8 @@ export default {
                     // It also can't regain focus because it's hidden after menu opening, unless it's temporarily made visible again.
                     // Instead, it's easier to just focus the generated content div when the activator element loses focus.
                     this.$refs.videoMenu?.getActivator().addEventListener("blur", this.ensureVideoMenuFocusHandler);
-                    this.menuReady ||= false;
                 });
             }
-        },
-        menuReady(val) {
-            // Prevent a visible, mispositioned render by initially hiding it, then repositioning and showing it when it's ready.
-            const menu = this.$refs.videoMenu;
-            if (!menu) return;
-            if (val) menu.updateDimensions();
-            menu.$refs.content?.classList.toggle("video-card-menu-content-loading", !val);
         },
     },
     created() {
@@ -997,11 +983,5 @@ export default {
 /* prevent focus ring on menu */
 .video-card-menu-content:focus-visible {
   outline: none;
-}
-
-/* hide menu content until it's positioned to avoid visible misplacement */
-.video-card-menu-content-loading {
-  visibility: hidden !important;
-  pointer-events: none !important;
 }
 </style>

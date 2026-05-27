@@ -138,8 +138,8 @@
       {{ $t("component.reportDialog.title") }}
     </v-list-item>
 
-    <template v-if="hasEditor">
-      <watch-quick-editor :video="video" @ready="$emit('ready')" />
+    <template v-if="$store.getters['isSuperuser']">
+      <watch-quick-editor :video="video" />
     </template>
   </v-list>
 </template>
@@ -147,11 +147,12 @@
 <script>
 import { dayjs } from "@/utils/time";
 import copyToClipboard from "@/mixins/copyToClipboard";
+import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 import VideoQuickPlaylist from "@/components/playlist/VideoQuickPlaylist.vue";
 
 export default {
     components: {
-        WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
+        WatchQuickEditor,
         VideoQuickPlaylist,
     },
     mixins: [copyToClipboard],
@@ -198,12 +199,6 @@ export default {
             }
             return true;
         },
-        hasEditor() {
-            return this.$store.getters.isSuperuser;
-        },
-    },
-    mounted() {
-        if (!this.hasEditor) this.$emit("ready");
     },
     methods: {
         // Open google calendar to add the time specified in the element

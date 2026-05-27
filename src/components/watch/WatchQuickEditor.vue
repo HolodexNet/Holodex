@@ -252,14 +252,8 @@ export default {
         },
     },
     mounted() {
-        Promise.allSettled([
-            this.updateCurrentTopic(),
-            this.updateMentions(),
-        ]).then(() => {
-            this.$nextTick(() => {
-                this.$emit("ready");
-            });
-        });
+        this.updateMentions();
+        this.updateCurrentTopic();
     },
     beforeDestroy() {},
     methods: {
