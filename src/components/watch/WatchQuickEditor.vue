@@ -27,7 +27,7 @@
               v-bind="attrs"
               rounded
               left
-              size="40"
+              size="60"
               v-on="on"
             >
               <v-btn icon @click.stop.prevent="applyDeleteMentions()">
@@ -55,7 +55,7 @@
               v-bind="attrs"
               rounded
               left
-              size="40"
+              size="60"
               v-on="on"
             >
               <v-btn icon @click.stop.prevent="toggleMentionSelection()">
@@ -72,7 +72,7 @@
           <span v-else>Select All</span>
         </v-tooltip>
 
-        <!-- <v-avatar rounded left size="40">
+        <!-- <v-avatar rounded left size="60">
           <v-icon size="25" color="grey darken-2">
             {{ mdiAt }}
           </v-icon>
@@ -145,12 +145,12 @@
       </v-col>
       <v-divider vertical />
       <v-col v-if="video.type === 'stream' || video.type === 'placeholder'" cols="auto">
-        <!-- <v-avatar rounded left size="40">
+        <!-- <v-avatar rounded left size="60">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiPencil }}
           </v-icon>
         </v-avatar> -->
-        <v-avatar rounded left size="40">
+        <v-avatar rounded left size="60">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiAnimationPlay }}
           </v-icon>
