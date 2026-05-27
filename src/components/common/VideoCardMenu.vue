@@ -138,12 +138,8 @@
       {{ $t("component.reportDialog.title") }}
     </v-list-item>
 
-    <template v-if="$store.getters['isSuperuser']">
-      <!-- <v-list-item> -->
-      <v-lazy>
-        <watch-quick-editor :video="video" />
-      </v-lazy>
-      <!-- </v-list-item> -->
+    <template v-if="hasEditor">
+      <watch-quick-editor :video="video" @ready="$emit('ready')" />
     </template>
   </v-list>
 </template>
@@ -202,6 +198,12 @@ export default {
             }
             return true;
         },
+        hasEditor() {
+            return this.$store.getters.isSuperuser;
+        },
+    },
+    mounted() {
+        if (!this.hasEditor) this.$emit("ready");
     },
     methods: {
         // Open google calendar to add the time specified in the element

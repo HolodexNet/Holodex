@@ -252,18 +252,29 @@ export default {
         },
     },
     mounted() {
-        this.updateMentions();
-        this.updateCurrentTopic();
+        Promise.allSettled([
+            this.updateCurrentTopic(),
+            this.updateMentions(),
+        ]).then(() => {
+            this.$nextTick(() => {
+                this.$emit("ready");
+            });
+        });
     },
     beforeDestroy() {},
     methods: {
         updateCurrentTopic() {
-            backendApi.getVideoTopic(this.video.id).then(({ data }) => {
-                this.currentTopic = data.topic_id;
-            });
+            return backendApi
+                .getVideoTopic(this.video.id)
+                .then(({ data }) => {
+                    this.currentTopic = data.topic_id;
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
         },
         updateMentions() {
-            backendApi
+            return backendApi
                 .getMentions(this.video.id)
                 .then(({ data }) => {
                     // this.isLoading = false;

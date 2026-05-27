@@ -257,6 +257,7 @@
         nudge-top="20px"
         nudge-left="40px"
         content-class="video-card-menu-content"
+        transition="false"
       >
         <template #activator="{ on, attrs }">
           <v-btn
@@ -271,7 +272,11 @@
             <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
           </v-btn>
         </template>
-        <video-card-menu :video="data" @closeMenu="showMenu = false" />
+        <video-card-menu
+          :video="data"
+          @closeMenu="showMenu = false"
+          @ready="menuReady = true"
+        />
       </v-menu>
     </a>
     <!-- optional breaker object to row-break into a new row. -->
@@ -419,6 +424,7 @@ export default {
             },
             placeholderOpen: false,
             showMenu: false,
+            menuReady: null,
         };
     },
     computed: {
@@ -603,23 +609,17 @@ export default {
                     // menu items or another video card are hovered, page is scrolled, page loses focus, and possibly other cases.
                     // It also can't regain focus because it's hidden after menu opening, unless it's temporarily made visible again.
                     // Instead, it's easier to just focus the generated content div when the activator element loses focus.
-                    const menu = this.$refs.videoMenu;
-                    if (!menu) return;
-                    menu.getActivator().addEventListener("blur", this.ensureVideoMenuFocusHandler);
-
-                    // Prevent a visible, mispositioned render by hiding it (via a class) until its contents are loaded and its
-                    // dimensions are (re)measurable, which is guaranteed by the time the menu open transition ends.
-                    const { content } = menu.$refs;
-                    if (content) {
-                        content.classList.add("video-card-menu-content-loading");
-                        content.addEventListener("transitionend", (e) => {
-                            if (e.currentTarget !== content) return; // shouldn't be any nested transitions, but just in case
-                            menu.updateDimensions();
-                            content.classList.remove("video-card-menu-content-loading");
-                        }, { once: true });
-                    }
+                    this.$refs.videoMenu?.getActivator().addEventListener("blur", this.ensureVideoMenuFocusHandler);
+                    this.menuReady ||= false;
                 });
             }
+        },
+        menuReady(val) {
+            // Prevent a visible, mispositioned render by initially hiding it, then repositioning and showing it when it's ready.
+            const menu = this.$refs.videoMenu;
+            if (!menu) return;
+            if (val) menu.updateDimensions();
+            menu.$refs.content?.classList.toggle("video-card-menu-content-loading", !val);
         },
     },
     created() {
