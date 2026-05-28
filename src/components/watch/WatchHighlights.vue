@@ -229,7 +229,7 @@ export default {
         formatDuration,
         computeItemStyle(ts: number) {
             return {
-                marginLeft: `${Math.floor((ts / this.video.duration) * 1000) / 10}%`,
+                marginLeft: `${Math.floor((ts / this.video.duration) * 400) / 4}%`,
             };
         },
         computeTipStyle(bucket) {
