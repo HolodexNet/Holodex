@@ -109,13 +109,13 @@
           v-model="selectedChannel"
           :search-input.sync="search"
           :items="searchResults"
+          no-filter
           hide-no-data
           hide-details
-          :rules="[]"
+          auto-select-first
           return-object
           item-value="id"
           label="Add Mentioned Channels"
-          no-filter
           style="min-width: 300px"
         >
           <template #item="dropdownItem">
@@ -147,8 +147,8 @@
           v-model="newTopic"
           :items="topics"
           :filter="topicFilter"
-          inline
           hide-details
+          auto-select-first
           label="Topic (leave empty to unset)"
           :append-outer-icon="mdiContentSave"
           @click="loadTopics"
