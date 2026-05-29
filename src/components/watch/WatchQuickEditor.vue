@@ -107,8 +107,8 @@
         </template>
         <v-autocomplete
           v-model="selectedChannel"
-          :search-input.sync="search"
-          :items="searchResults"
+          :search-input.sync="inputChannel"
+          :items="searchChannels"
           no-filter
           hide-no-data
           hide-details
@@ -180,8 +180,8 @@ export default {
     data() {
         return {
             mentions: [],
-            search: "",
-            searchResults: [],
+            inputChannel: "",
+            searchChannels: [],
             selectedChannel: null,
 
             showSuccessAlert: false,
@@ -195,6 +195,7 @@ export default {
             topics: [],
             newTopic: null,
             currentTopic: null,
+
             isSelectedAll: false,
             isApplyingBulkEdit: false,
             deletionSet: new Set(),
@@ -207,18 +208,18 @@ export default {
     },
     watch: {
         // eslint-disable-next-line func-names
-        search: debounce(function () {
-            if (!this.search) {
-                this.searchResults = [];
+        inputChannel: debounce(function () {
+            if (!this.inputChannel) {
+                this.searchChannels = [];
                 return;
             }
             backendApi
                 .searchChannel({
                     type: CHANNEL_TYPES.VTUBER,
-                    queryText: this.search,
+                    queryText: this.inputChannel,
                 })
                 .then(({ data }) => {
-                    this.searchResults = data.filter(
+                    this.searchChannels = data.filter(
                         (d) => !(
                             this.video.channel.id === d.id
                             || this.mentions.find((m) => m.id === d.id)
@@ -226,12 +227,12 @@ export default {
                     );
                 });
         }, 400),
-        selectedChannel(val) {
-            if (val) {
-                this.search = "";
-                this.searchResults = [];
+        selectedChannel(channel) {
+            if (channel) {
+                this.inputChannel = "";
+                this.searchChannels = [];
                 this.selectedChannel = null;
-                this.addMention(val);
+                this.addMention(channel);
             }
         },
     },
