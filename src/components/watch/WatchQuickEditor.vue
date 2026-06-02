@@ -109,23 +109,15 @@
           v-model="selectedChannel"
           :search-input.sync="inputChannel"
           :items="searchChannels"
-          no-filter
           hide-no-data
           hide-details
           auto-select-first
           return-object
           item-value="id"
+          :item-text="getChannelName"
           label="Add Mentioned Channels"
           style="min-width: 300px"
-        >
-          <template #item="dropdownItem">
-            <v-list-item-content class="py-1 pt-1">
-              <v-list-item-subtitle class="text--primary">
-                {{ getChannelName(dropdownItem.item) }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </template>
-        </v-autocomplete>
+        />
       </v-col>
       <v-divider vertical />
       <v-col v-if="video.type === 'stream' || video.type === 'placeholder'" cols="auto">
