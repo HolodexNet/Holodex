@@ -136,11 +136,15 @@
         }}</span>
         <span class="primary--text text-overline "> {{ currentTopic }} </span>
         <v-autocomplete
-          v-model="newTopic"
+          v-model="selectedTopic"
+          :search-input.sync="inputTopic"
           :items="topics"
-          :filter="topicFilter"
+          :filter="filterTopic"
           hide-details
           auto-select-first
+          return-object
+          item-value="id"
+          :item-text="getTopicItemText"
           label="Topic (leave empty to unset)"
           :append-outer-icon="mdiContentSave"
           @click="loadTopics"
@@ -225,6 +229,18 @@ export default {
                 this.searchChannels = [];
                 this.selectedChannel = null;
                 this.addMention(channel);
+            }
+        },
+        selectedTopic(topic) {
+            if (topic) {
+                // Update input value to be topic id rather than selected dropdown item text.
+                // This needs to be in a $nextTick in a watcher rather than in a @input/@change handler,
+                // because such handlers (even with $nextTick) fire too early.
+                // Also, not using the alternative solution of a #selection slot to display topic id for the input,
+                // since that results in e.g. backspace deleting the whole input instead of a single character.
+                this.$nextTick(() => {
+                    this.inputTopic = topic.id;
+                });
             }
         },
     },
@@ -360,22 +376,23 @@ export default {
         },
         async loadTopics() {
             if (this.topics.length > 0) return;
-            this.topics = (await backendApi.topics()).data.map((topic) => ({
-                value: topic.id,
-                text: `${topic.id} (${topic.count ?? 0})`,
-            }));
+            this.topics = (await backendApi.topics()).data;
+        },
+        getTopicItemText(topic) {
+            return `${topic.id} (${topic.count ?? 0})`;
+        },
         },
         saveTopic() {
+            const topicId = this.selectedTopic?.id || null;
             backendApi.topicSet(
-                this.newTopic,
+                topicId,
                 this.video.id,
                 this.$store.state.userdata.jwt,
             ).then(() => {
-                this.showSuccess(`Updated Topic to ${this.newTopic}`);
+                this.showSuccess(`Updated Topic to ${topicId}`);
             });
-            this.topic = this.newTopic;
         },
-        topicFilter(_, queryText, itemText) { // same as default filter, just also converting whitespace to underscore
+        filterTopic(_, queryText, itemText) { // same as default filter, just also converting whitespace to underscore
             return itemText.toString().replace(/\s+/g, "_").toLocaleLowerCase()
                 .indexOf(queryText.toString().replace(/\s+/g, "_").toLocaleLowerCase()) > -1;
         },
