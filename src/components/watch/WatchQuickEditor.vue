@@ -136,6 +136,7 @@
         }}</span>
         <span class="primary--text text-overline "> {{ currentTopic }} </span>
         <v-autocomplete
+          ref="topicAutocomplete"
           v-model="selectedTopic"
           :search-input.sync="inputTopic"
           :items="topics"
@@ -149,6 +150,7 @@
           :append-outer-icon="mdiContentSave"
           @click="loadTopics"
           @click:append-outer="saveTopic"
+          @keydown.enter="onTopicEnterKeyDown"
         />
       </v-col>
     </div>
@@ -189,7 +191,8 @@ export default {
             mdiContentSave,
 
             topics: [],
-            newTopic: null,
+            inputTopic: "",
+            selectedTopic: null,
             currentTopic: null,
 
             isSelectedAll: false,
@@ -381,6 +384,18 @@ export default {
         getTopicItemText(topic) {
             return `${topic.id} (${topic.count ?? 0})`;
         },
+        onTopicEnterKeyDown() {
+            // When dropdown menu is closed and enter key is pressed, save the topic.
+            // Also suppress v-autocomplete/v-select automatically activating the menu on enter key:
+            // There's no direct way to disable it and the menu activation is done after this handler is called,
+            // so the workaround is to force the menu closed in a $nextTick that's flushed before rendering.
+            const { topicAutocomplete } = this.$refs;
+            if (!topicAutocomplete.isMenuActive) {
+                this.$nextTick(() => {
+                    topicAutocomplete.isMenuActive = false;
+                });
+                this.saveTopic();
+            }
         },
         saveTopic() {
             const topicId = this.selectedTopic?.id || null;
