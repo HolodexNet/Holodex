@@ -186,6 +186,7 @@ export default {
                 }
             },
         },
+        // eslint-disable-next-line func-names
         "$route.name": function (name) {
             // when navigating away from channel/watch pages, $store.state.channel/watch aren't reset,
             // so need this $route hook to remove default channel query item if it exists
@@ -193,12 +194,14 @@ export default {
                 this.query = this.query.filter((item) => !item.isDefault);
             }
         },
+        // eslint-disable-next-line func-names
         "$store.state.channel.channel": function () {
             // on channel pages, default the query to include channel
             const { channel } = this.$store.state;
             if (!channel.channel || channel.isLoading || channel.hasError) return;
             this.addDefaultChannel(channel.channel);
         },
+        // eslint-disable-next-line func-names
         "$store.state.watch.video.channel": function () {
             // likewise on watch pages, default the query to include channel
             const { watch } = this.$store.state;
