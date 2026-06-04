@@ -14,7 +14,7 @@
       dense
     />
     <!-- Render skeleton items when data hasn't loaded yet -->
-    <SkeletonCardList v-if="isLoading" :cols="cols" dense />
+    <SkeletonCardList v-if="isLoading" :cols="colSizes" dense />
   </generic-list-loader>
 </template>
 
