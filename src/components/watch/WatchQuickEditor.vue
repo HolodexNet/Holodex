@@ -258,17 +258,12 @@ export default {
     beforeDestroy() {},
     methods: {
         updateCurrentTopic() {
-            return backendApi
-                .getVideoTopic(this.video.id)
-                .then(({ data }) => {
-                    this.currentTopic = data.topic_id;
-                })
-                .catch((e) => {
-                    console.error(e);
-                });
+            backendApi.getVideoTopic(this.video.id).then(({ data }) => {
+                this.currentTopic = data.topic_id;
+            });
         },
         updateMentions() {
-            return backendApi
+            backendApi
                 .getMentions(this.video.id)
                 .then(({ data }) => {
                     // this.isLoading = false;
