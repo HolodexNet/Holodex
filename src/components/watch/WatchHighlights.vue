@@ -229,7 +229,7 @@ export default {
         formatDuration,
         computeItemStyle(ts: number) {
             return {
-                marginLeft: `${Math.round((ts / this.video.duration) * 100)}%`,
+                marginLeft: `${Math.floor((ts / this.video.duration) * 400) / 4}%`,
             };
         },
         computeTipStyle(bucket) {
@@ -269,7 +269,7 @@ export default {
 </script>
 <style lang="scss">
 .highlight-container {
-  padding: 12px;
+  padding: 12px 36px;
   height: 30px;
   transition: all 0.2s ease-out;
 
