@@ -243,7 +243,7 @@ export default {
             return (
                 (cid
                     && !cid[0].includes("/c/")
-                    && (cid[1].length > 12 || cid[0].includes('@'))
+                    && (cid[1].length > 12 || cid[0].includes("@"))
                     && cid[0].startsWith("ht"))
                 || this.$t("channelRequest.ChannelURLErrorFeedback")
             );
@@ -270,8 +270,8 @@ export default {
                 const regex = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel\/|@)([\w\-_]*)/gi;
                 const matches = [...this.link.matchAll(regex)];
                 let id = matches?.[0]?.[1];
-                handle = this.link.includes('@')
-                id = handle ? '@' + id.toLowerCase() : id;
+                handle = this.link.includes("@");
+                id = handle ? `@${id.toLowerCase()}` : id;
 
                 try {
                     const exists = id && (await backendApi.channel(id));
@@ -355,7 +355,11 @@ export default {
                     })
                     .catch((e) => {
                         this.error = true;
-                        this.errorMessage = e;
+                        if (e.response && typeof e.response.data === "string") {
+                            this.errorMessage = e.response.data;
+                        } else {
+                            this.errorMessage = e;
+                        }
                     });
             } else {
                 this.error = true;

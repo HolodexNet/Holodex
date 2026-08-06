@@ -118,6 +118,7 @@
           label="Add Mentioned Channels"
           no-filter
           style="min-width: 300px"
+          @keydown.stop
         >
           <template #selection="selection">
             <ChannelChip
@@ -168,6 +169,7 @@
           :append-outer-icon="mdiContentSave"
           @click="loadTopics"
           @click:append-outer="saveTopic"
+          @keydown.stop
         />
       </v-col>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <a
+  <div
     class="video-card no-decoration d-flex"
     :class="{
       'video-card-fluid': fluid,
@@ -9,17 +9,16 @@
       'video-card-multiview-active': inMultiViewActiveVideos,
       'flex-column': !horizontal && !denseList,
     }"
-    :target="redirectMode ? '_blank' : ''"
-    :href="href"
-    rel="noopener"
     draggable="true"
     style="position: relative"
-    @click.exact="onThumbnailClicked"
     @dragstart="drag"
   >
     <!-- Video Image with Duration -->
-    <div
+    <a
       v-if="!denseList"
+      :target="redirectMode ? '_blank' : ''"
+      :href="href"
+      rel="noopener"
       style="position: relative; width: 100%"
       class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
       :style="
@@ -27,6 +26,7 @@
           !shouldHideThumbnail &&
           `background: url(${imageSrc}) center/cover;`
       "
+      @click.exact="onThumbnailClicked"
     >
       <PlaceholderOverlay
         v-if="shouldShowPlaceholderOverlay"
@@ -135,7 +135,7 @@
         width="100%"
         :aspect-ratio="60 / 9"
       />
-    </div>
+    </a>
     <a
       class="d-flex flex-row flex-grow-1 no-decoration video-card-text"
       :href="watchLink"
@@ -249,12 +249,14 @@
       </div>
       <!-- Vertical dots menu -->
       <v-menu
+        ref="videoMenu"
         v-model="showMenu"
         bottom
         left
         :close-on-content-click="false"
         nudge-top="20px"
         nudge-left="40px"
+        content-class="video-card-menu-content"
       >
         <template #activator="{ on, attrs }">
           <v-btn
@@ -279,17 +281,23 @@
     >
       <template v-if="activePlaylistItem">
         <button @click.stop.prevent="move(data.id, 'up')">
-          <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
+          <v-icon small>
+            {{ icons.mdiChevronUp }}
+          </v-icon>
         </button>
         <button
           @click.stop.prevent="
             $store.commit('playlist/removeVideoByID', data.id)
           "
         >
-          <v-icon small> {{ icons.mdiDelete }} </v-icon>
+          <v-icon small>
+            {{ icons.mdiDelete }}
+          </v-icon>
         </button>
         <button @click.stop.prevent="move(data.id, 'down')">
-          <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
+          <v-icon small>
+            {{ icons.mdiChevronDown }}
+          </v-icon>
         </button>
       </template>
       <slot name="action" />
@@ -301,7 +309,7 @@
       v-model="placeholderOpen"
       :video="data"
     />
-  </a>
+  </div>
 </template>
 
 <script lang="ts">
@@ -586,6 +594,20 @@ export default {
     // created() {
     //     this.data = this.video || this.source;
     // },
+    watch: {
+        showMenu(val) {
+            if (val) {
+                this.$nextTick(() => {
+                    // Menu keyboard navigation works as long as either the activator element or the generated content div has focus.
+                    // The activator element is initially be focused when the menu opens, but it loses its focus when
+                    // menu items or another video card are hovered, page is scrolled, page loses focus, and possibly other cases.
+                    // It also can't regain focus because it's hidden after menu opening, unless it's temporarily made visible again.
+                    // Instead, it's easier to just focus the generated content div when the activator element loses focus.
+                    this.$refs.videoMenu?.getActivator().addEventListener("blur", this.ensureVideoMenuFocusHandler);
+                });
+            }
+        },
+    },
     created() {
         this.$store.getters["history/hasWatched"](this.data.id)
             .then((x) => {
@@ -614,6 +636,7 @@ export default {
             clearInterval(this.updatecycle);
             this.updatecycle = null;
         }
+        this.$refs.videoMenu?.getActivator()?.removeEventListener("blur", this.ensureVideoMenuFocusHandler);
     },
     methods: {
         formatDuration,
@@ -702,6 +725,13 @@ export default {
                 throw new Error("can't move stuff to beyond the end");
             }
             this.$store.commit("playlist/reorder", { from: curIdx, to: toIdx });
+        },
+        ensureVideoMenuFocusHandler() {
+            // note: this is its own method so that multiple addEventListener(..., this handler) is idempotent
+            const menuContent = this.$refs.videoMenu?.$refs.content;
+            if (!menuContent) return;
+            if (menuContent.tabIndex === -1) menuContent.tabIndex = 0; // ensure its focusable
+            menuContent.focus({ preventScroll: true });
         },
     },
 };
@@ -948,5 +978,10 @@ export default {
 }
 .plain-button:hover:before {
   background-color: transparent;
+}
+
+/* prevent focus ring on menu */
+.video-card-menu-content:focus-visible {
+  outline: none;
 }
 </style>

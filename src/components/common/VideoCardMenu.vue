@@ -139,11 +139,7 @@
     </v-list-item>
 
     <template v-if="$store.getters['isSuperuser']">
-      <!-- <v-list-item> -->
-      <v-lazy>
-        <watch-quick-editor :video="video" />
-      </v-lazy>
-      <!-- </v-list-item> -->
+      <watch-quick-editor :video="video" />
     </template>
   </v-list>
 </template>
@@ -151,11 +147,12 @@
 <script>
 import { dayjs } from "@/utils/time";
 import copyToClipboard from "@/mixins/copyToClipboard";
+import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 import VideoQuickPlaylist from "@/components/playlist/VideoQuickPlaylist.vue";
 
 export default {
     components: {
-        WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
+        WatchQuickEditor,
         VideoQuickPlaylist,
     },
     mixins: [copyToClipboard],

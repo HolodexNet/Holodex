@@ -32,6 +32,7 @@
         :player-vars="{
           playsinline: 1,
           cc_lang_pref: getLang,
+          hl: getLang,
         }"
         :mute="muted"
         manual-update

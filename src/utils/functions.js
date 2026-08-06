@@ -140,11 +140,11 @@ export function forwardTransformSearchToAPIQuery(obj, initialObject) {
         switch (item.type) {
             case "title & desc":
                 req.conditions.push({
-                    text: item.text.trim(),
+                    text: item.text.toString().trim(),
                 });
                 break;
             case "comments":
-                req.comment = [item.text.trim()];
+                req.comment = [item.text.toString().trim()];
                 break;
             case "channel":
                 req.vch.push(item.value);

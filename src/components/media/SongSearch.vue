@@ -20,6 +20,8 @@
     hide-details
     @input="onInput"
     @keydown.enter="onEnterKeyDown"
+    @compositionstart="onCompositionStart"
+    @compositionend="onCompositionEnd"
   >
     <template #selection="x">
       <div class="ma-n1 py-0 pl-3 pr-1 d-flex" style="width: 100%">
@@ -128,6 +130,7 @@ export default {
             isLoading: false,
             search: null,
             fromApi: [],
+            isComposing: false,
         };
     },
     computed: {
@@ -141,11 +144,8 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         search: debounce(function (val) {
-            if (!val) return;
-            this.fromApi = [];
-            const entropy = encodeURIComponent(val).length;
-            if (entropy <= 2) return;
-            this.getAutocomplete(val);
+            if (this.isComposing) return;
+            this.performSearch(val);
         }, 500),
         query() {
             if (this.query) this.$emit("input", this.query);
@@ -153,12 +153,27 @@ export default {
     },
     methods: {
         formatDuration,
+        onCompositionStart() {
+            this.isComposing = true;
+        },
+        onCompositionEnd() {
+            this.isComposing = false;
+            // Trigger search immediately after composition ends
+            this.performSearch(this.search);
+        },
+        performSearch(val) {
+            if (!val) return;
+            this.fromApi = [];
+            const entropy = encodeURIComponent(val).length;
+            if (entropy <= 2) return;
+            this.getAutocomplete(val);
+        },
         async getAutocomplete(query) {
             this.isLoading = true;
             const [md, res, resEn] = await Promise.all([
                 this.searchMusicdex(query),
-                this.searchRegionsAlternative(query, "JP"),  // this.searchRegions(query, "ja_jp"),
-                this.searchRegionsAlternative(query, "US"),  // this.searchRegions(query, "en_us"),
+                this.searchRegionsAlternative(query, "JP"), // this.searchRegions(query, "ja_jp"),
+                this.searchRegionsAlternative(query, "US"), // this.searchRegions(query, "en_us"),
             ]);
             const lookupEn = resEn || [];
             console.log(lookupEn);
@@ -221,36 +236,36 @@ export default {
                 lang,
             });
         },
-        async searchRegions(query, lang = "ja_jp", regions: Array<String> = ['JP', 'US']) {
+        async searchRegions(query, lang = "ja_jp", regions: Array<String> = ["JP", "US"]) {
             // Order regions by highest to lowest priority; missing IDs will merge in.
             const regionSongs = [];
-            let parsedIDs = [];
+            const parsedIDs = [];
             for (const r of regions) {
                 const queryed = await this.searchAutocomplete(query, lang, r);
                 const currentSongs = queryed.results || [];
                 for (const song of currentSongs) {
                     if (!parsedIDs.includes(song.trackId)) {
-                        parsedIDs.push(song.trackId)
-                        regionSongs.push(song)
+                        parsedIDs.push(song.trackId);
+                        regionSongs.push(song);
                     }
                 }
-            };
+            }
             return regionSongs;
         },
-        async searchRegionsAlternative(query, lang = "JP", regions: Array<String> = ["ja_jp", 'en_us']) {
+        async searchRegionsAlternative(query, lang = "JP", regions: Array<String> = ["ja_jp", "en_us"]) {
             // Order langs by highest to lowest priority; missing IDs will merge in.
             const regionSongs = [];
-            let parsedIDs = [];
+            const parsedIDs = [];
             for (const r of regions) {
                 const queryed = await this.searchAutocomplete(query, r, lang);
                 const currentSongs = queryed.results || [];
                 for (const song of currentSongs) {
                     if (!parsedIDs.includes(song.trackId)) {
-                        parsedIDs.push(song.trackId)
-                        regionSongs.push(song)
+                        parsedIDs.push(song.trackId);
+                        regionSongs.push(song);
                     }
                 }
-            };
+            }
             return regionSongs;
         },
         async searchMusicdex(query) {
@@ -314,7 +329,7 @@ export default {
                         trackViewUrl: _source.amUrl,
                         artworkUrl100: _source.art,
                         src: "Musicdex",
-                        index: `Musicdex${_source.itunesid || _source.name+_source.original_artist}`,
+                        index: `Musicdex${_source.itunesid || _source.name + _source.original_artist}`,
                     })) || []
                 );
             } catch (e) {

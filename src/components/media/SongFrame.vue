@@ -19,6 +19,7 @@
           rel: 0,
           cc_load_policy: 0,
           cc_lang_pref: getLang,
+          hl: getLang,
           iv_load_policy: 3,
         }"
         v-on="$listeners"

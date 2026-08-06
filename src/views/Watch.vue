@@ -35,6 +35,7 @@
               autoplay: isPlaylist ? 1 : 0,
               playsinline: 1,
               cc_lang_pref: getLang,
+              hl: getLang,
             }"
             @ready="ready"
             @playing="playing"
@@ -335,7 +336,10 @@ export default {
             if (!update?.status || !update?.start_actual) return;
             this.video.live_viewers = update.live_viewers;
             this.video.status = update.status;
-            this.video.start_actual = update.start_actual;
+            // papers over an issue with socket sending a placeholder object in start_actual
+            if (typeof update.start_actual === "string") {
+                this.video.start_actual = update.start_actual;
+            }
         },
         handleCurrentTime(time) {
             this.currentTime = time;
