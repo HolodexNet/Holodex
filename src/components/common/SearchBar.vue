@@ -187,6 +187,28 @@ export default {
             },
         },
         // eslint-disable-next-line func-names
+        "$route.name": function (name) {
+            // when navigating away from channel/watch pages, $store.state.channel/watch aren't reset,
+            // so need this $route hook to remove default channel query item if it exists
+            if (name !== "channel" && name !== "watch") {
+                this.query = this.query.filter((item) => !item.isDefault);
+            }
+        },
+        // eslint-disable-next-line func-names
+        "$store.state.channel.channel": function () {
+            // on channel pages, default the query to include channel
+            const { channel } = this.$store.state;
+            if (!channel.channel || channel.isLoading || channel.hasError) return;
+            this.addDefaultChannel(channel.channel);
+        },
+        // eslint-disable-next-line func-names
+        "$store.state.watch.video.channel": function () {
+            // likewise on watch pages, default the query to include channel
+            const { watch } = this.$store.state;
+            if (!watch.video.channel || watch.isLoading || watch.hasError) return;
+            this.addDefaultChannel(watch.video.channel);
+        },
+        // eslint-disable-next-line func-names
         search: debounce(function (val) {
             if (!val) return;
             this.fromApi = [];
@@ -287,8 +309,22 @@ export default {
             }
         },
         addItem(item) {
-            // console.log(item);
             this.query.push({ ...item });
+        },
+        addDefaultChannel(channel) {
+            const defaultQuery = {
+                type: "channel",
+                value: channel.id,
+                text: channel.name,
+                isDefault: true,
+            };
+            if (this.query.length === 0) {
+                this.query.push(defaultQuery);
+            } else {
+                // replace any existing (assumed singular) default channel
+                const index = this.query.findIndex((item) => item.isDefault);
+                if (index >= 0) this.$set(this.query, index, defaultQuery);
+            }
         },
         onInput() {
             this.search = null;
