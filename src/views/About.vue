@@ -439,13 +439,13 @@
             <div class="d-flex flex-column" style="margin-left: 0px">
               <v-btn
                 class="text-left mt-4 white--text grey"
-                href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://holodex.net/watch/'+v)})()"
+                href="javascript:!function(){let t=new URL(window.location);if(t.hostname.includes('youtube')){let a=t.searchParams.get('v')||(t.pathname.includes('/shorts/')?t.pathname.replace('/shorts/',''):t.pathname.includes('/live/')?t.pathname.replace('/live/',''):null);if(!a)return;t.searchParams.delete('v');window.location='https://holodex.net/watch/'+a+'?'+t.searchParams.toString()}}();"
               >
                 Open in Holodex
               </v-btn>
               <v-btn
                 class="text-left mt-4 white--text grey"
-                href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://staging.holodex.net/watch/'+v)})()"
+                href="javascript:!function(){let t=new URL(window.location);if(t.hostname.includes('youtube')){let a=t.searchParams.get('v')||(t.pathname.includes('/shorts/')?t.pathname.replace('/shorts/',''):t.pathname.includes('/live/')?t.pathname.replace('/live/',''):null);if(!a)return;t.searchParams.delete('v');window.location='https://staging.holodex.net/watch/'+a+'?'+t.searchParams.toString()}}();"
               >
                 Open in Holodex Beta
               </v-btn>
