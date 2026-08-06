@@ -370,5 +370,21 @@ export default [
       },
     },
   },
+  {
+    name: "Niko",
+    id: 23,
+    themes: {
+      dark: {
+        background: "#1f1c1f",
+        primary: "#f98d30",
+        secondary: "#ffdf82",
+      },
+      light: {
+        background: "#eddccc",
+        primary: "#322f2f",
+        secondary: "#d77834",
+      },
+    },
+  },
 
 ];
