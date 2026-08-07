@@ -166,6 +166,7 @@ views:
       all: Todos
       official: VODs
       subber: Clipes
+      collabs: Collabs
   library:
     savedVideosTitle: Vídeos Salvos
     createYtPlaylistButton: Criar uma Playlist no Youtube ({0})

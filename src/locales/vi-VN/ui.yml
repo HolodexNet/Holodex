@@ -181,6 +181,7 @@ views:
       all: Tất cả
       official: Lưu trữ
       subber: Clip
+      collabs: Collab
   library:
     savedVideosTitle: Video đã lưu
     createYtPlaylistButton: Tạo Youtube Playlist ({0})
