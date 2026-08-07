@@ -30,6 +30,7 @@ const initialState = {
     ignoredTopics: [],
     // Valid values: "grid" | "list" | "denseList"
     homeViewMode: "grid",
+    watchViewReversed: false,
 
     // Live TL Window Settings
     liveTlStickBottom: false,
@@ -122,6 +123,7 @@ const mutations = {
         "hidePlaceholder",
         "hideMissing",
         "homeViewMode",
+        "watchViewReversed",
     ]),
     resetState(state) {
         Object.assign(state, initialState);
