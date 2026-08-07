@@ -207,6 +207,9 @@
           :channel="video.channel"
           show-delete
           hide-yt
+          hide-bluesky
+          hide-twitch
+          hide-fav
           vertical
           class="d-inline-block ml-4"
         />

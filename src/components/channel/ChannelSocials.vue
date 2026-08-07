@@ -37,6 +37,18 @@
         {{ mdiTwitch }}
       </v-icon>
     </v-btn>
+    <v-btn
+      v-if="channel.bluesky && !hideBluesky"
+      icon
+      large
+      :href="`https://bsky.app/profile/${channel.bluesky}`"
+      rel="noreferrer"
+      target="_blank"
+    >
+      <v-icon color="#0F73FF">
+        {{ icons.bluesky }}
+      </v-icon>
+    </v-btn>
     <v-tooltip v-if="channel.type === 'vtuber' && !hideFav" bottom>
       <template #activator="{ on, attrs }">
         <v-btn
@@ -103,6 +115,11 @@ export default {
             required: false,
         },
         hideTwitch: {
+            type: Boolean,
+            default: false,
+            required: false,
+        },
+        hideBluesky: {
             type: Boolean,
             default: false,
             required: false,

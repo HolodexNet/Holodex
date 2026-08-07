@@ -17,6 +17,8 @@
             vertical
             hide-yt
             hide-twitter
+            hide-bluesky
+            hide-twitch
           />
         </v-list-item>
       </template>
