@@ -100,7 +100,7 @@
             <ChatCell
               v-if="layoutContent[item.i] && layoutContent[item.i].type === 'chat'"
               :item="item"
-              :tl="layoutContent[item.i].initAsTL"
+              :mode="layoutContent[item.i].mode"
               :cell-width="columnWidth * item.w"
               @delete="handleDelete"
             />

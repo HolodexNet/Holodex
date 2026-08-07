@@ -21,7 +21,7 @@
           color="teal darken-1"
           rounded-sm
           large
-          @click="setItemAsChat(item, false)"
+          @click="setItemAsChat(item, 1)"
         >
           <v-icon left>
             {{ icons.ytChat }}
@@ -33,7 +33,7 @@
           color="teal darken-1"
           rounded-sm
           large
-          @click="setItemAsChat(item, true)"
+          @click="setItemAsChat(item, 2)"
         >
           <v-icon left>
             {{ icons.tlChat }}
@@ -41,6 +41,22 @@
           TL
         </v-btn>
       </div>
+      <v-btn
+        class="mt-2"
+        color="teal darken-1"
+        rounded-sm
+        width="190px"
+        large
+        @click="setItemAsChat(item, 3)"
+      >
+        <v-icon left>
+          {{ icons.ytChat }}
+        </v-icon>
+        <v-icon left>
+          {{ icons.tlChat }}
+        </v-icon>
+        Chat + TL
+      </v-btn>
     </div>
     <CellControl :play-icon="icons.mdiPlay" class="mx-1 mb-2" @delete="deleteCell" />
   </div>
@@ -62,12 +78,12 @@ export default {
         };
     },
     methods: {
-        setItemAsChat(item, initAsTL) {
+        setItemAsChat(item, mode) {
             this.$store.commit("multiview/setLayoutContentById", {
                 id: item.i,
                 content: {
                     type: "chat",
-                    initAsTL,
+                    mode,
                 },
             });
         },
