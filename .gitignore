@@ -27,3 +27,5 @@ pnpm-debug.log*
 
 # rollup-bundle-visualizer output
 stats.html
+*.tsbuildinfo
+/qa/
