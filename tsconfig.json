@@ -1,46 +1,18 @@
 {
   "compilerOptions": {
-    "strict": false,
-    "noImplicitAny": false,
-
-    "target": "esnext",
-    "module": "esnext",
-    "jsx": "preserve",
-    "isolatedModules": true,
-    "importHelpers": true,
-    "moduleResolution": "node",
-    "allowJs": true,
-    "importsNotUsedAsValues": "error",
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
     "skipLibCheck": true,
-    // TODO: work towards enabling this
-    // "strictNullChecks": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "outDir": "./dist",
-    "types": [
-      "chrome",
-      "vite-plugin-pwa/client"
-    ],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "types": ["vite/client", "node"],
+    "paths": { "@/*": ["./src/*"] }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src", "vite.config.ts", "eslint.config.js"]
 }

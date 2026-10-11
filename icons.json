@@ -1,0 +1,7 @@
+{
+  "$schema": "https://saas-js.dev/icons/schema.json",
+  "outputDir": "./src/components/icons",
+  "defaultIconSet": "ph",
+  "iconSize": "1em",
+  "generateIndex": true
+}

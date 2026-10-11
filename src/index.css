@@ -1,0 +1,898 @@
+@import "tailwindcss" source(".");
+@import "tw-animate-css";
+/* ejected from shadcn@4.21.4 */
+@theme inline {
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(
+        --radix-accordion-content-height,
+        var(--accordion-panel-height, auto)
+      );
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(
+        --radix-accordion-content-height,
+        var(--accordion-panel-height, auto)
+      );
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/* Custom variants */
+@custom-variant data-open {
+  &:where([data-state="open"]),
+  &:where([data-open]:not([data-open="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-closed {
+  &:where([data-state="closed"]),
+  &:where([data-closed]:not([data-closed="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-checked {
+  &:where([data-state="checked"]),
+  &:where([data-checked]:not([data-checked="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-unchecked {
+  &:where([data-state="unchecked"]),
+  &:where([data-unchecked]:not([data-unchecked="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-selected {
+  &:where([data-selected="true"]) {
+    @slot;
+  }
+}
+
+@custom-variant data-disabled {
+  &:where([data-disabled="true"]),
+  &:where([data-disabled]:not([data-disabled="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-active {
+  &:where([data-state="active"]),
+  &:where([data-active]:not([data-active="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-horizontal {
+  &:where([data-orientation="horizontal"]) {
+    @slot;
+  }
+}
+
+@custom-variant data-vertical {
+  &:where([data-orientation="vertical"]) {
+    @slot;
+  }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* scroll-fade */
+@property --scroll-fade-t {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --scroll-fade-b {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --scroll-fade-s {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --scroll-fade-e {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --scroll-fade-mask {
+  syntax: "*";
+  inherits: false;
+}
+
+@theme inline {
+  @keyframes scroll-fade-reveal-t {
+    from {
+      --scroll-fade-t: 0px;
+    }
+    to {
+      --scroll-fade-t: var(
+        --_scroll-fade-size-t,
+        var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+      );
+    }
+  }
+  @keyframes scroll-fade-reveal-b {
+    from {
+      --scroll-fade-b: var(
+        --_scroll-fade-size-b,
+        var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+      );
+    }
+    to {
+      --scroll-fade-b: 0px;
+    }
+  }
+  @keyframes scroll-fade-reveal-s {
+    from {
+      --scroll-fade-s: 0px;
+    }
+    to {
+      --scroll-fade-s: var(
+        --_scroll-fade-size-s,
+        var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+      );
+    }
+  }
+  @keyframes scroll-fade-reveal-e {
+    from {
+      --scroll-fade-e: var(
+        --_scroll-fade-size-e,
+        var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+      );
+    }
+    to {
+      --scroll-fade-e: 0px;
+    }
+  }
+}
+
+@utility scroll-fade {
+  --_scroll-fade-size-t: var(
+    --scroll-fade-t-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --_scroll-fade-size-b: var(
+    --scroll-fade-b-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-block: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 var(--scroll-fade-t, 0px),
+    #000 calc(100% - var(--scroll-fade-b, 0px)),
+    transparent 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));
+  mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation:
+      scroll-fade-reveal-t 1ms ease-in-out,
+      scroll-fade-reveal-b 1ms ease-in-out;
+    animation-timeline: scroll(self y), scroll(self y);
+    animation-range:
+      0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)),
+      calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-t: var(--_scroll-fade-size-t);
+    --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+}
+
+@utility scroll-fade-y {
+  --_scroll-fade-size-t: var(
+    --scroll-fade-t-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --_scroll-fade-size-b: var(
+    --scroll-fade-b-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-block: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 var(--scroll-fade-t, 0px),
+    #000 calc(100% - var(--scroll-fade-b, 0px)),
+    transparent 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));
+  mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation:
+      scroll-fade-reveal-t 1ms ease-in-out,
+      scroll-fade-reveal-b 1ms ease-in-out;
+    animation-timeline: scroll(self y), scroll(self y);
+    animation-range:
+      0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)),
+      calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-t: var(--_scroll-fade-size-t);
+    --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+}
+
+@utility scroll-fade-x {
+  --_scroll-fade-size-s: var(
+    --scroll-fade-s-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --_scroll-fade-size-e: var(
+    --scroll-fade-e-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-inline: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--scroll-fade-s, 0px),
+    #000 calc(100% - var(--scroll-fade-e, 0px)),
+    transparent 100%
+  );
+  &:where([dir="rtl"], [dir="rtl"] *) {
+    --scroll-fade-inline: linear-gradient(
+      to left,
+      transparent 0,
+      #000 var(--scroll-fade-s, 0px),
+      #000 calc(100% - var(--scroll-fade-e, 0px)),
+      transparent 100%
+    );
+  }
+  -webkit-mask-image: var(--scroll-fade-mask, var(--scroll-fade-inline));
+  mask-image: var(--scroll-fade-mask, var(--scroll-fade-inline));
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation:
+      scroll-fade-reveal-s 1ms ease-in-out,
+      scroll-fade-reveal-e 1ms ease-in-out;
+    animation-timeline: scroll(self inline), scroll(self inline);
+    animation-range:
+      0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)),
+      calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-s: var(--_scroll-fade-size-s);
+    --scroll-fade-e: var(--_scroll-fade-size-e);
+  }
+}
+
+@utility scroll-fade-t {
+  --_scroll-fade-size-t: var(
+    --scroll-fade-t-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 var(--scroll-fade-t, 0px),
+    #000 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-t 1ms ease-in-out;
+    animation-timeline: scroll(self y);
+    animation-range: 0 var(--scroll-fade-reveal, calc(var(--spacing) * 24));
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-t: var(--_scroll-fade-size-t);
+  }
+}
+
+@utility scroll-fade-b {
+  --_scroll-fade-size-b: var(
+    --scroll-fade-b-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - var(--scroll-fade-b, 0px)),
+    transparent 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-b 1ms ease-in-out;
+    animation-timeline: scroll(self y);
+    animation-range: calc(
+        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))
+      )
+      100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+}
+
+@utility scroll-fade-l {
+  --_scroll-fade-size-s: var(
+    --scroll-fade-s-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--scroll-fade-s, 0px),
+    #000 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-s 1ms ease-in-out;
+    animation-timeline: scroll(self x);
+    animation-range: 0 var(--scroll-fade-reveal, calc(var(--spacing) * 24));
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-s: var(--_scroll-fade-size-s);
+  }
+}
+
+@utility scroll-fade-r {
+  --_scroll-fade-size-e: var(
+    --scroll-fade-e-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to right,
+    #000 0,
+    #000 calc(100% - var(--scroll-fade-e, 0px)),
+    transparent 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-e 1ms ease-in-out;
+    animation-timeline: scroll(self x);
+    animation-range: calc(
+        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))
+      )
+      100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-e: var(--_scroll-fade-size-e);
+  }
+}
+
+@utility scroll-fade-s {
+  --_scroll-fade-size-s: var(
+    --scroll-fade-s-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--scroll-fade-s, 0px),
+    #000 100%
+  );
+  &:where([dir="rtl"], [dir="rtl"] *) {
+    --scroll-fade-mask: linear-gradient(
+      to left,
+      transparent 0,
+      #000 var(--scroll-fade-s, 0px),
+      #000 100%
+    );
+  }
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-s 1ms ease-in-out;
+    animation-timeline: scroll(self inline);
+    animation-range: 0 var(--scroll-fade-reveal, calc(var(--spacing) * 24));
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-s: var(--_scroll-fade-size-s);
+  }
+}
+
+@utility scroll-fade-e {
+  --_scroll-fade-size-e: var(
+    --scroll-fade-e-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to right,
+    #000 0,
+    #000 calc(100% - var(--scroll-fade-e, 0px)),
+    transparent 100%
+  );
+  &:where([dir="rtl"], [dir="rtl"] *) {
+    --scroll-fade-mask: linear-gradient(
+      to left,
+      #000 0,
+      #000 calc(100% - var(--scroll-fade-e, 0px)),
+      transparent 100%
+    );
+  }
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-e 1ms ease-in-out;
+    animation-timeline: scroll(self inline);
+    animation-range: calc(
+        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))
+      )
+      100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-e: var(--_scroll-fade-size-e);
+  }
+}
+
+@utility scroll-fade-* {
+  --scroll-fade-size: calc(var(--spacing) * --value(integer));
+  --scroll-fade-size: --value([length], [percentage]);
+}
+
+@utility scroll-fade-t-* {
+  --scroll-fade-t-size: calc(var(--spacing) * --value(integer));
+  --scroll-fade-t-size: --value([length], [percentage]);
+}
+
+@utility scroll-fade-b-* {
+  --scroll-fade-b-size: calc(var(--spacing) * --value(integer));
+  --scroll-fade-b-size: --value([length], [percentage]);
+}
+
+@utility scroll-fade-s-* {
+  --scroll-fade-s-size: calc(var(--spacing) * --value(integer));
+  --scroll-fade-s-size: --value([length], [percentage]);
+}
+
+@utility scroll-fade-e-* {
+  --scroll-fade-e-size: calc(var(--spacing) * --value(integer));
+  --scroll-fade-e-size: --value([length], [percentage]);
+}
+
+@utility scroll-fade-none {
+  --scroll-fade-mask: none;
+}
+
+/* shimmer */
+@property --shimmer-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 20deg;
+}
+@property --shimmer-image {
+  syntax: "*";
+  inherits: false;
+}
+@property --shimmer-text-fill {
+  syntax: "*";
+  inherits: false;
+}
+
+@theme inline {
+  @keyframes tw-shimmer {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+  }
+}
+
+@utility shimmer {
+  --_spread: var(--shimmer-spread, calc(3ch + 40px));
+  --_base: currentColor;
+  --_highlight: var(
+    --shimmer-color,
+    oklch(from currentColor l c h / calc(alpha* 0.2))
+  );
+
+  background-image: var(
+    --shimmer-image,
+    linear-gradient(
+      calc(90deg + var(--shimmer-angle)),
+      var(--_base) calc(50% - var(--_spread)),
+      color-mix(in oklch, var(--_highlight), var(--_base) 50%)
+        calc(50% - var(--_spread) * 0.5),
+      var(--_highlight) 50%,
+      color-mix(in oklch, var(--_highlight), var(--_base) 50%)
+        calc(50% + var(--_spread) * 0.5),
+      var(--_base) calc(50% + var(--_spread))
+    )
+  );
+  background-repeat: no-repeat;
+  background-size: calc(200% + var(--_spread) * 2) 100%;
+  background-position: 0 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: var(--shimmer-text-fill, transparent);
+  animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite;
+
+  @variant dark {
+    --_highlight: var(
+      --shimmer-color,
+      oklch(from currentColor max(0.8, calc(l + 0.4)) c h / calc(alpha + 0.4))
+    );
+  }
+
+  &:where([dir="rtl"], [dir="rtl"] *) {
+    animation-direction: reverse;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+@utility shimmer-once {
+  animation-iteration-count: 1;
+}
+
+@utility shimmer-reverse {
+  animation-direction: reverse;
+}
+
+@utility shimmer-none {
+  --shimmer-image: none;
+  --shimmer-text-fill: currentColor;
+}
+
+@utility shimmer-color-* {
+  --shimmer-color: --value(--color, [color]);
+  --shimmer-color: color-mix(
+    in oklch,
+    --value(--color, [color]) calc(--modifier(integer) * 1%),
+    transparent
+  );
+}
+
+@utility shimmer-duration-* {
+  --shimmer-duration: calc(--value(integer) * 1ms);
+}
+
+@utility shimmer-spread-* {
+  --shimmer-spread: calc(var(--spacing) * --value(integer));
+  --shimmer-spread: --value([length], [percentage]);
+}
+
+@utility shimmer-angle-* {
+  --shimmer-angle: calc(--value(integer) * 1deg);
+}
+
+/* Kept for backwards compatibility. Unlayered, so it still wins over other
+   utilities on a plain .shimmer element. Variants are handled in the utility. */
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+@import "@fontsource-variable/inter";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-primary-ink: var(--primary-ink);
+  --font-heading: var(--font-sans);
+  --font-sans: "Inter Variable", sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+  }
+  body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: color-mix(in oklch, var(--primary), transparent 75%);
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  a,
+  button,
+  input,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .nav-item {
+    @apply flex h-10 items-center gap-3 rounded-xl px-3 text-[12px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground;
+  }
+  .nav-item > svg {
+    @apply size-[18px] shrink-0;
+  }
+  .nav-active {
+    @apply bg-accent text-accent-foreground hover:bg-accent hover:text-accent-foreground;
+  }
+  .nav-count {
+    @apply ml-auto rounded-md bg-primary/15 px-1.5 py-0.5 text-[10px] text-primary-ink;
+  }
+  .page-tab {
+    @apply h-12 rounded-none text-[12px] after:bottom-0! after:bg-primary! data-active:text-primary-ink!;
+  }
+  .video-grid {
+    @apply grid grid-cols-1 gap-x-5 gap-y-7 min-[500px]:grid-cols-2 min-[1180px]:grid-cols-3 min-[1660px]:grid-cols-4;
+  }
+  .video-list {
+    @apply grid grid-cols-1 gap-4 min-[1500px]:grid-cols-2;
+  }
+  .video-card-list {
+    @apply flex gap-4 rounded-xl border bg-card p-3;
+  }
+  .video-card-list .thumbnail {
+    @apply w-36 shrink-0 self-start sm:w-52;
+  }
+  .video-card-list .card-details {
+    @apply min-w-0 flex-1 pt-0;
+  }
+  .settings-section {
+    @apply scroll-mt-24 rounded-2xl border bg-card p-5 sm:p-6;
+  }
+  .settings-heading {
+    @apply mb-5;
+  }
+  .settings-heading h2 {
+    @apply text-[15px] font-semibold tracking-tight;
+  }
+  .settings-heading p {
+    @apply mt-1.5 text-xs leading-5 text-muted-foreground;
+  }
+  [data-density="compact"] .video-grid {
+    @apply gap-x-4 gap-y-5 min-[1180px]:grid-cols-4 min-[1660px]:grid-cols-5;
+  }
+  [data-density="compact"] .video-card .card-details {
+    @apply pt-2;
+  }
+}
+
+@media (max-width: 499px) {
+  .video-card-list {
+    gap: 10px;
+  }
+  .video-card-list .thumbnail {
+    width: 112px;
+  }
+  .video-card-list .card-details > div:first-child > span {
+    display: none;
+  }
+  .video-card-list .card-details > div:last-child {
+    padding-left: 0;
+    flex-wrap: wrap;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #f06292;
+  --primary-foreground: #17151b;
+  --primary-ink: oklch(0.43 0.12 350);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.681 0.162 75.834);
+  --sidebar-primary-foreground: oklch(0.987 0.026 102.212);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.795 0.184 86.047);
+  --primary-foreground: oklch(0.421 0.095 57.708);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.795 0.184 86.047);
+  --sidebar-primary-foreground: oklch(0.987 0.026 102.212);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    @apply font-sans;
+  }
+}

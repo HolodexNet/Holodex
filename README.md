@@ -18,21 +18,21 @@
 
 ## Setup for Development
 
-### Important: the bulk of development is currently happening on the `next` branch!!! If you would like to participate in Holodex React development, please check out the `next` branch and PR against it! The contribution/development readme is in `/package/react/README.md`!
+The active frontend uses React, Vite, TypeScript, Tailwind CSS, and shadcn/ui. Use Node 22.12+ or Node 24+. The backend defaults to `http://localhost:2434`; see [the UI migration guide](docs/ui-rewrite.md) for API configuration, implemented features, and remaining migrations.
 
 ```
 git clone git@github.com:HolodexNet/Holodex.git
-npm install
-# By default the api is proxied to staging, copy, rename and edit the .env.placeholder to change API_BASE_URL
-npm run serve
+npm ci
+npm run dev
+# Open http://127.0.0.1:8080
 ```
 
 ## Building
 
 ```
 npm run build
-# Analyzing build bundle size
-npm run analyze-build
+npm run lint:check
+# No tests are required for this UI rewrite.
 ```
 
 ## Contributing
@@ -43,22 +43,23 @@ Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) fo
 ## Project Structure
 
 ```
-docs    # Changelog, hosted on Github Pages
-public  # Static resources
+dev-docs-handoff            # Backend integration contracts
+docs                       # Migration notes and historical changelog
+legacy                     # Previous Vue/Vuetify source, outside the active build
+public                     # Static assets
 src
-├── components              # Vue components
-├── locales                 # UI text translations for each languages
-├── plugins                 # Vuetify, i18n and other plugin definitions
-├── mixins                  # Vue mixins commonly used across components
-├── external                # External components we imported into the project for maintenance / updating
-├── router                  # Router definitions for path and views
-├── store                   # Vuex store modules, each file loosley corresponds to each page.
-├── utils                   # Utility declarations
-├── views                   # Vue Page defintions
-└── App.vue                 # Main entry point, sets up router-view
+├── components/ui          # shadcn / Base UI primitives
+├── components/icons       # Iconx-generated Phosphor and Ionicons
+├── components             # App shell, cards, shared controls
+├── lib                    # API client, types, persisted preferences, theme algorithm
+├── pages                  # React route views
+├── app.tsx                # Router and providers
+└── main.tsx               # Entry point
 ```
 
-## Roadmap
+## Historical roadmap
+
+The list below describes the previous application. See [the UI migration guide](docs/ui-rewrite.md) for the scope of the current React frontend.
 
 - [x] Watch Page refresh
 - [x] Make repo public
