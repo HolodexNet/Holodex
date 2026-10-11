@@ -5,6 +5,9 @@ component:
     textAfterTwitter: ' or report an error through the'
     aboutPage: About page
     afterAboutPageHyperlink: .
+    generic: The content could not be loaded. Check your connection and try again.
+    rateLimited: Too many requests at once. Give it a moment, then try again.
+    retry: Try again
   channelList:
     signInToFavorite: Sign in to favorite
     unfavoriteAllInGroup: Unfavorite all in group
@@ -25,6 +28,14 @@ component:
     unblock: Unblock this channel
     block: Block this channel's content across Holodex
     blocked: Blocked
+  loadMore: Load more
+  orgSelector:
+    change: Change organization (currently {0})
+    hint: Star the organizations you follow to keep them in the quick switcher.
+    star: Star {0}
+    moveUp: Move {0} up
+    moveDown: Move {0} down
+    noMatch: No organization matches.
   mainNav:
     home: Home
     favorites: Favorites
@@ -40,6 +51,7 @@ component:
     multiview: MultiView
     points: pts
     playlist: Playlist
+    toggleSidebar: Toggle navigation
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Watching'
@@ -60,6 +72,9 @@ component:
     openScriptEditor: Open Script Editor
     popoutChat: Popout YouTube Chat
     uploadScript: Upload TL Script
+    copyFailed: Could not copy the link.
+    moreActions: More actions
+    viewChannel: View channel
   videoDescription:
     description: Description
   video:
@@ -75,6 +90,11 @@ component:
       all: All
   search:
     searchLabel: Search
+    placeholder: Search videos, channels, topics
+    removeFilter: Remove {0}
+    noMatch: No matches
+    typeToSearch: Type to search
+    searching: Searching…
     type:
       channel: channel
       topic: topic
@@ -207,6 +227,14 @@ views:
     liveOrUpcomingHeading: Live / Upcoming
     recentVideosHeading: Recent Videos
     noStreams: No live or upcoming streams at the moment
+    noVideos: No videos to show
+    filters: Filters
+    sortStartTime: Start time
+    sortViewers: Most viewers
+    uploadedBefore: Uploaded before
+    viewGrid: Grid
+    viewList: List
+    viewCompact: Compact list
     recentVideoToggles:
       all: All
       official: Archive
@@ -242,6 +270,10 @@ views:
       dateaddedLatestFirst: Date Added to Library, latest first
       dateuploadedLatestFirst: Upload date, latest first
       dateuploadedEarliestFirst: Upload date, earliest first
+  notReady:
+    title: This page is being rebuilt
+    description: It is not part of the new Holodex yet. You can still use it on the current site.
+    openLegacy: Open on holodex.net
   notFound:
     title: Content not found
     back: Return Home
@@ -250,6 +282,9 @@ views:
       newest: Newest
       oldest: Oldest
       longest: Longest
+      shortest: Shortest
+      relevance: Relevance
+      views: Most viewed
     type:
       all: All
       official: Official
@@ -259,6 +294,25 @@ views:
       is not supported. No <b>clips</b> will show up.
     sortByLabel: Sort By
     typeDropdownLabel: Type
+    searchIn: Search in
+    inTitles: Titles and channels
+    inComments: Timestamp comments
+    dateRange: Date range
+    dateFrom: From
+    dateTo: To
+    songs: Songs
+    songsAny: Any
+    songsNone: No songs
+    songsOne: One song
+    songsMany: Multiple songs
+    clipLanguages: Clip languages
+    clipLanguagesDefault: Using the clip languages from your settings.
+    resultCount: '{0} results'
+    promptTitle: Search Holodex
+    promptDescription: Type in the search bar, or narrow things down with the filters above.
+    noResults: No results
+    noResultsHint: Try different words or fewer filters.
+    clearFilters: Clear filters
   settings:
     title: Settings
     darkModeLabel: Dark Mode
@@ -304,6 +358,26 @@ views:
     ignoredTopicsMsg: Hide videos with these topics from the Home and Favorites pages
     theme: Theme
     moreSettings: More Settings
+    interfaceLanguage: Interface language
+    themeMode: Appearance
+    themeLight: Light
+    themeDark: Dark
+    themeSystem: System
+    primaryColor: Primary color
+    customColor: Custom
+    resetColor: Reset
+    computedPalette: Base colors
+    computedPaletteMsg: Backgrounds and surfaces are computed from your primary color, so they always complement it.
+    palettePrimary: Primary
+    paletteComplement: Complement
+    paletteHeader: Header
+    paletteSurface: Surface
+    paletteBase: Base
+    scrollModeDescription: Load more videos automatically as you scroll. When off, a button loads the next page.
+    hidePlaceholderStreamsMsg: Hide events and streams on other platforms that Holodex cannot play.
+    hideMissingStreamsMsg: Hide streams that were deleted or made private.
+    blockedDescription: Videos from blocked channels are hidden everywhere on Holodex.
+    unblock: Unblock
   app:
     update_available: An update is available
     update_btn: Update
@@ -387,6 +461,7 @@ views:
       per account. After getting a new key, the old key will expire within 0-24
       hours.
     apikeyNew: Get new API Key
+    failed: Login failed. Please try again.
     ownedYtChannel: Owned Youtube Channel
     futureYtcOwnerMessage: >-
       In the future, we plan on providing more services to channel owners like

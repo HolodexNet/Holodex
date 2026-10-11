@@ -1,0 +1,8 @@
+node_modules/
+dist/
+legacy/
+dev-docs-handoff/
+docs/
+src/components/icons/
+src/locales/
+package-lock.json

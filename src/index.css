@@ -1,0 +1,179 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/inter";
+
+/* The previous Vue UI is kept for reference only; never scan it for classes. */
+@source not "../legacy";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Inter Variable', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic UI', 'Microsoft JhengHei', 'Malgun Gothic', sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    /* Holodex additions, all derived from the primary colour at runtime. */
+    --color-brand: var(--brand);
+    --color-complement: var(--complement);
+    --color-complement-soft: var(--complement-soft);
+    --color-header: var(--header);
+    --color-live: var(--live);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+ * Colour tokens below are the theme engine's output for the default primary
+ * (aqua-iro pink, #f06292). At runtime src/lib/theme recomputes them from
+ * whatever primary the viewer picked and overrides them on <html>; these
+ * copies only cover the first paint. Regenerate with
+ * `node scripts/theme-defaults.ts` after changing the palette algorithm.
+ */
+:root {
+    --radius: 0.625rem;
+    --header-height: 3.5rem;
+    --destructive: oklch(0.577 0.245 27.325);
+    --live: oklch(0.6 0.235 25);
+
+    --background: oklch(0.983 0.005 241.96);
+    --foreground: oklch(0.215 0.022 241.96);
+    --card: oklch(0.998 0.002 241.96);
+    --card-foreground: oklch(0.215 0.022 241.96);
+    --popover: oklch(0.998 0.002 241.96);
+    --popover-foreground: oklch(0.215 0.022 241.96);
+    --primary: oklch(0.6878 0.1797 1.96);
+    --primary-foreground: oklch(0.99 0.01 1.96);
+    --brand: oklch(0.56 0.1797 1.96);
+    --complement: oklch(0.5 0.13 241.96);
+    --complement-soft: oklch(0.9 0.045 241.96);
+    --secondary: oklch(0.932 0.016 241.96);
+    --secondary-foreground: oklch(0.215 0.022 241.96);
+    --muted: oklch(0.951 0.009 241.96);
+    --muted-foreground: oklch(0.49 0.024 241.96);
+    --accent: oklch(0.951 0.009 241.96);
+    --accent-foreground: oklch(0.215 0.022 241.96);
+    --border: oklch(0.895 0.014 241.96);
+    --input: oklch(0.895 0.014 241.96);
+    --ring: oklch(0.56 0.1797 1.96 / 55%);
+    --header: oklch(0.96 0.02 241.96);
+    --sidebar: oklch(0.968 0.008 241.96);
+    --sidebar-foreground: oklch(0.215 0.022 241.96);
+    --sidebar-primary: oklch(0.6878 0.1797 1.96);
+    --sidebar-primary-foreground: oklch(0.99 0.01 1.96);
+    --sidebar-accent: oklch(0.951 0.009 241.96);
+    --sidebar-accent-foreground: oklch(0.215 0.022 241.96);
+    --sidebar-border: oklch(0.895 0.014 241.96);
+    --sidebar-ring: oklch(0.56 0.1797 1.96 / 55%);
+}
+
+.dark {
+    --destructive: oklch(0.704 0.191 22.216);
+    --live: oklch(0.66 0.23 25);
+
+    --background: oklch(0.165 0.014 241.96);
+    --foreground: oklch(0.972 0.006 241.96);
+    --card: oklch(0.205 0.017 241.96);
+    --card-foreground: oklch(0.972 0.006 241.96);
+    --popover: oklch(0.225 0.019 241.96);
+    --popover-foreground: oklch(0.972 0.006 241.96);
+    --primary: oklch(0.6878 0.1797 1.96);
+    --primary-foreground: oklch(0.99 0.01 1.96);
+    --brand: oklch(0.74 0.1797 1.96);
+    --complement: oklch(0.77 0.115 241.96);
+    --complement-soft: oklch(0.36 0.06 241.96);
+    --secondary: oklch(0.285 0.026 241.96);
+    --secondary-foreground: oklch(0.972 0.006 241.96);
+    --muted: oklch(0.262 0.019 241.96);
+    --muted-foreground: oklch(0.715 0.022 241.96);
+    --accent: oklch(0.262 0.019 241.96);
+    --accent-foreground: oklch(0.972 0.006 241.96);
+    --border: oklch(0.93 0.03 241.96 / 11%);
+    --input: oklch(0.93 0.03 241.96 / 16%);
+    --ring: oklch(0.74 0.1797 1.96 / 55%);
+    --header: oklch(0.215 0.034 241.96);
+    --sidebar: oklch(0.188 0.016 241.96);
+    --sidebar-foreground: oklch(0.972 0.006 241.96);
+    --sidebar-primary: oklch(0.6878 0.1797 1.96);
+    --sidebar-primary-foreground: oklch(0.99 0.01 1.96);
+    --sidebar-accent: oklch(0.262 0.019 241.96);
+    --sidebar-accent-foreground: oklch(0.972 0.006 241.96);
+    --sidebar-border: oklch(0.93 0.03 241.96 / 11%);
+    --sidebar-ring: oklch(0.74 0.1797 1.96 / 55%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklch, var(--muted-foreground) 45%, transparent) transparent;
+    }
+  html {
+    @apply font-sans;
+    /* Keep the layout from shifting when a page gains a scrollbar. */
+    scrollbar-gutter: stable;
+    -webkit-text-size-adjust: 100%;
+    }
+  body {
+    @apply bg-background text-foreground antialiased;
+    overscroll-behavior-y: contain;
+    }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+    }
+  ::selection {
+    background: color-mix(in oklch, var(--primary) 35%, transparent);
+    }
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/*
+ * Feeds can hold several hundred cards ("All Vtubers" live). Skipping layout
+ * and paint for off-screen cards keeps scrolling smooth without the bookkeeping
+ * of a virtual list.
+ */
+@utility card-offscreen {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 16rem;
+}
+
+@utility row-offscreen {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 3rem;
+}
