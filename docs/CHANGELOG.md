@@ -4,6 +4,19 @@
 
 - If you are a **React UI engineer/designer** and would like to contribute to Holodex v3 React development, drop by our discord!
 
+### 2.40.3 Holodex [*October 17th, 2026*]
+
+- Added the Niko theme (thanks LiviaMedeiros)
+- Fixed video card menu positioning and keyboard navigation, including conflicts with quick editor dropdowns (thanks lbmaian)
+- Fixed video card links and cards briefly showing the wrong dimensions while channel pages load (thanks lbmaian)
+- Better aligned highlight markers with YouTube's seek bar and reduced overlapping markers (thanks FlaminSarge)
+- The "Open in Holodex" bookmarklets now support YouTube Shorts and live URLs, preserve URL options, and avoid broken redirects (thanks FlaminSarge)
+- Live streams now appear in Favorites even when their scheduled start time is far in the future (thanks meepzh)
+- Fixed elapsed stream times breaking after live viewer updates (thanks FlaminSarge)
+- YouTube players now try to match the site's language (thanks Nelo)
+- Improved song search when typing with an input method editor, and fixed searches with numeric text
+- Improved error messages when submitting a recently requested channel
+
 ### 2.40.2 Holodex [*March 4th, 2025*]
 
 - Made placeholders look a bit different
