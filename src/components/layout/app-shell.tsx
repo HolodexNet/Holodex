@@ -1,5 +1,5 @@
 import { useEffect, type CSSProperties } from "react"
-import { Outlet, ScrollRestoration } from "react-router"
+import { Outlet, ScrollRestoration, useLocation } from "react-router"
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { Toaster } from "@/components/ui/sonner"
@@ -32,6 +32,7 @@ function useSessionRefresh() {
 }
 
 export function AppShell() {
+  const location = useLocation()
   const lang = useSettings((s) => s.lang)
   const sidebarOpen = useUi((s) => s.sidebarOpen)
   const setSidebarOpen = useUi((s) => s.setSidebarOpen)
@@ -48,8 +49,15 @@ export function AppShell() {
       <SidebarProvider
         open={sidebarOpen}
         onOpenChange={setSidebarOpen}
-        className="flex-col"
-        style={{ "--sidebar-width": "15rem" } as CSSProperties}
+        className={
+          location.pathname === "/" ? "home-shell flex-col" : "flex-col"
+        }
+        style={
+          {
+            "--sidebar-width": "15rem",
+            "--sidebar-width-icon": "4rem",
+          } as CSSProperties
+        }
       >
         <Header />
         <div className="flex flex-1">

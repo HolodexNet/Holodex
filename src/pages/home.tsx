@@ -7,6 +7,8 @@ import { SimpleSelect } from "@/components/common/simple-select"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import {
   HeartIcon,
+  BroadcastIcon,
+  CalendarBlankIcon,
   SlidersHorizontalIcon,
   TelevisionSimpleIcon,
 } from "@/components/icons"
@@ -87,7 +89,10 @@ function FilterPopover({
           <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-primary ring-2 ring-background" />
         )}
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-[min(22rem,calc(100vw-1.5rem))] gap-3">
+      <PopoverContent
+        align="end"
+        className="w-[min(22rem,calc(100vw-1.5rem))] gap-3"
+      >
         {tab === "live" ? (
           <div className="flex items-center justify-between gap-3">
             <label htmlFor={sortId} className="text-sm font-medium">
@@ -130,9 +135,7 @@ function FilterPopover({
 function sortUpcoming(videos: Video[]): Video[] {
   return [...videos].sort((a, b) => {
     if (a.available_at !== b.available_at) return 0
-    return (
-      Number(a.type === "placeholder") - Number(b.type === "placeholder")
-    )
+    return Number(a.type === "placeholder") - Number(b.type === "placeholder")
   })
 }
 
@@ -144,6 +147,7 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
   const tab = TAB_BY_HASH[location.hash] ?? "live"
   const [liveSort, setLiveSort] = useState<LiveSort>("latest")
   const [before, setBefore] = useState("")
+  const upcomingHeadingId = useId()
 
   const loggedIn = useAuth((s) => !!s.jwt)
   const orgName = useOrgStore((s) => s.currentOrg.name)
@@ -249,14 +253,18 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
     /^(.+?)\s*([/／・].+)$/.exec(t("views.home.liveOrUpcomingHeading")) ?? []
 
   const toolbar = (
-    <div className="sticky top-[calc(var(--header-height)+env(safe-area-inset-top,0px))] z-30 -mx-3 flex items-center border-b bg-background/85 px-3 backdrop-blur-md md:-mx-6 md:px-6">
+    <div className="sticky top-[calc(var(--header-height)+env(safe-area-inset-top,0px))] z-30 -mx-3 flex items-center border-b border-border/50 bg-background/95 px-3 backdrop-blur-md md:-mx-8 md:px-8">
       <Tabs
         value={tab}
         onValueChange={(value) => setTab(value as HomeTab)}
         className="min-w-0 flex-1"
       >
-        <TabsList variant="line" className="h-11! w-full justify-start gap-2 overflow-x-auto sm:w-fit sm:gap-3">
+        <TabsList
+          variant="line"
+          className="h-11! w-full [scrollbar-width:none] justify-start gap-2 overflow-x-auto overflow-y-hidden sm:w-fit sm:gap-3"
+        >
           <TabsTrigger value="live" className="flex-none px-1">
+            <BroadcastIcon className="size-4 text-brand" />
             {liveLabel ?? t("views.home.liveOrUpcomingHeading")}
             <CountBadge value={liveVideos.live.length} live />
             {upcomingLabel}
@@ -310,9 +318,17 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
     )
   } else if (tab === "live") {
     if (live.isPending) {
-      content = <VideoListSkeleton mode={mode} gridSize={gridSize} />
+      content = (
+        <VideoListSkeleton
+          mode={mode}
+          gridSize={gridSize}
+          className={!favorites && mode === "grid" ? "home-shelf" : undefined}
+        />
+      )
     } else if (live.isError && !live.data) {
-      content = <ErrorMessage error={live.error} onRetry={() => live.refetch()} />
+      content = (
+        <ErrorMessage error={live.error} onRetry={() => live.refetch()} />
+      )
     } else if (liveVideos.all.length === 0) {
       content = (
         <StateMessage
@@ -327,12 +343,44 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
       content = (
         <>
           {liveVideos.live.length > 0 && (
-            <VideoList videos={liveVideos.live} gridSize={gridSize} />
+            <VideoList
+              discovery={!favorites}
+              videos={liveVideos.live}
+              gridSize={gridSize}
+              className={!favorites ? "home-shelf" : undefined}
+            />
           )}
-          {liveVideos.live.length > 0 && liveVideos.upcoming.length > 0 && (
-            <Separator className="my-6" />
+          {liveVideos.live.length > 0 &&
+            liveVideos.upcoming.length > 0 && <Separator className="my-6" />}
+          {liveVideos.upcoming.length > 0 && (
+            <section
+              aria-labelledby={!favorites ? upcomingHeadingId : undefined}
+              className={
+                !favorites && liveVideos.live.length > 0 ? "mt-9" : undefined
+              }
+            >
+              {!favorites && (
+                <div className="mb-4 flex min-h-8 items-center gap-2.5">
+                  <CalendarBlankIcon className="size-5 text-brand" />
+                  <h2
+                    id={upcomingHeadingId}
+                    className="text-sm font-semibold tracking-wide"
+                  >
+                    {t("views.home.upcomingStreams")}
+                  </h2>
+                  <span className="text-xs text-muted-foreground tabular-nums">
+                    {liveVideos.upcoming.length}
+                  </span>
+                </div>
+              )}
+              <VideoList
+                discovery={!favorites}
+                videos={liveVideos.upcoming}
+                gridSize={gridSize}
+                className={!favorites ? "home-shelf" : undefined}
+              />
+            </section>
           )}
-          <VideoList videos={liveVideos.upcoming} gridSize={gridSize} />
         </>
       )
     }
@@ -362,14 +410,20 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
   }
 
   return (
-    <div className="flex flex-1 flex-col px-3 pb-8 md:px-6">
+    <div className="flex flex-1 flex-col px-3 pb-10 md:px-8">
       {toolbar}
-      <div className="flex flex-1 flex-col pt-4">{content}</div>
+      <div className="flex flex-1 flex-col pt-6">{content}</div>
     </div>
   )
 }
 
-function CountBadge({ value, live = false }: { value: number; live?: boolean }) {
+function CountBadge({
+  value,
+  live = false,
+}: {
+  value: number
+  live?: boolean
+}) {
   return (
     <span
       className={

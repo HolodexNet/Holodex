@@ -15,7 +15,12 @@ import {
 } from "@/components/icons"
 import { useNowMinutes, useNowSeconds } from "@/hooks/use-now"
 import { useT } from "@/lib/i18n"
-import { formatAbsolute, formatCount, formatDistance, formatDuration } from "@/lib/time"
+import {
+  formatAbsolute,
+  formatCount,
+  formatDistance,
+  formatDuration,
+} from "@/lib/time"
 import type { ChannelSummary, Video } from "@/lib/types"
 import {
   channelName,
@@ -37,6 +42,7 @@ interface VideoCardProps {
   variant?: VideoCardVariant
   /** Smaller type for the compact grid sizes. */
   compact?: boolean
+  discovery?: boolean
   /** Extra content under the card, e.g. matching comments in search. */
   children?: ReactNode
 }
@@ -99,7 +105,8 @@ function PlaceholderIcon({ video }: { video: Video }) {
   if (video.link?.includes("twitch.tv")) return <LogoTwitchIcon />
   if (video.link?.includes("/i/spaces/")) return <LogoTwitterIcon />
   if (video.placeholderType === "event") return <CalendarBlankIcon />
-  if (video.placeholderType === "scheduled-yt-stream") return <LogoYoutubeIcon />
+  if (video.placeholderType === "scheduled-yt-stream")
+    return <LogoYoutubeIcon />
   return <BroadcastIcon />
 }
 
@@ -243,6 +250,7 @@ function VideoCardImpl({
   video,
   variant = "grid",
   compact = false,
+  discovery = false,
   children,
 }: VideoCardProps) {
   const translator = useT()
@@ -275,7 +283,11 @@ function VideoCardImpl({
     : isPlaceholder
       ? { href: watchHref, onClick: openPlaceholder }
       : redirectMode
-        ? { href: youtubeUrl(video.id), target: "_blank", rel: "noopener noreferrer" }
+        ? {
+            href: youtubeUrl(video.id),
+            target: "_blank",
+            rel: "noopener noreferrer",
+          }
         : null
 
   const time =
@@ -295,7 +307,9 @@ function VideoCardImpl({
   let detail: ReactNode = null
   if (!isPlaceholder && clips > 0) {
     detail = (
-      <span className="text-brand">{tc("component.videoCard.clips", clips)}</span>
+      <span className="text-brand">
+        {tc("component.videoCard.clips", clips)}
+      </span>
     )
   } else if (isLive && viewers > 0) {
     detail = t("component.videoCard.watching", [formatCount(viewers, lang)])
@@ -304,7 +318,8 @@ function VideoCardImpl({
   const thumbnail = !hideThumbnail && variant !== "dense" && (
     <div
       className={cn(
-        "relative aspect-video shrink-0 overflow-hidden rounded-xl bg-muted",
+        "relative aspect-video shrink-0 overflow-hidden bg-muted",
+        discovery ? "rounded-md" : "rounded-xl",
         variant === "list" ? "w-40 sm:w-48" : "w-full"
       )}
     >
@@ -337,7 +352,12 @@ function VideoCardImpl({
     </>
   )
   const titleLink = isPlaceholder ? (
-    <a href={watchHref} onClick={openPlaceholder} className={titleClass} title={title}>
+    <a
+      href={watchHref}
+      onClick={openPlaceholder}
+      className={titleClass}
+      title={title}
+    >
       {titleContent}
     </a>
   ) : (
@@ -371,7 +391,9 @@ function VideoCardImpl({
     <span className="truncate">
       <time
         dateTime={
-          video.available_at ? new Date(video.available_at).toISOString() : undefined
+          video.available_at
+            ? new Date(video.available_at).toISOString()
+            : undefined
         }
         title={formatAbsolute(video.available_at, lang)}
         className={cn(isLive && "font-medium text-live")}
@@ -398,8 +420,13 @@ function VideoCardImpl({
 
   if (variant === "dense") {
     return (
-      <article className="group/card row-offscreen flex items-center gap-3 border-b py-1.5 text-[13px] last:border-b-0">
-        <Link to={channelHref} tabIndex={-1} aria-hidden="true" className="flex">
+      <article className="group/card flex items-center gap-3 border-b py-1.5 text-[13px] row-offscreen last:border-b-0">
+        <Link
+          to={channelHref}
+          tabIndex={-1}
+          aria-hidden="true"
+          className="flex"
+        >
           <ChannelAvatar channel={video.channel} size={28} />
         </Link>
         <div className="grid min-w-0 flex-1 gap-x-4 md:grid-cols-[minmax(0,1fr)_12rem_13rem] md:items-center">
@@ -416,11 +443,16 @@ function VideoCardImpl({
   return (
     <article
       className={cn(
-        "group/card card-offscreen relative flex min-w-0",
+        "group/card relative flex min-w-0 card-offscreen",
         variant === "list" ? "flex-row gap-3" : "flex-col gap-2.5"
       )}
     >
       {thumbnail}
+      {discovery && (
+        <div className="flex min-w-0 text-xs text-muted-foreground">
+          {timeLine}
+        </div>
+      )}
       <div className="flex min-w-0 flex-1 gap-2.5">
         {variant === "grid" && !compact && (
           <Link
@@ -440,7 +472,9 @@ function VideoCardImpl({
         >
           {titleLink}
           <div className="flex min-w-0">{channelLink}</div>
-          <div className="flex min-w-0 text-muted-foreground">{timeLine}</div>
+          {!discovery && (
+            <div className="flex min-w-0 text-muted-foreground">{timeLine}</div>
+          )}
           {children}
         </div>
         {menu}

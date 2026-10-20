@@ -10,8 +10,8 @@ interface UiStore {
 export const useUi = create<UiStore>()(
   persist(
     (set) => ({
-      // Start expanded only where there is room for it next to the feed.
-      sidebarOpen: window.matchMedia("(min-width: 1200px)").matches,
+      // Keep discovery focused on thumbnails; the full navigation is one click away.
+      sidebarOpen: false,
       setSidebarOpen: (sidebarOpen) => set({ sidebarOpen }),
     }),
     { name: "holodex-v3/ui", version: 1 }

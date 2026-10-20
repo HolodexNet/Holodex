@@ -37,6 +37,7 @@ interface VideoListProps extends LayoutProps {
   /** Renders below the text of a card, e.g. comments that matched a search. */
   renderExtra?: (video: Video) => ReactNode
   className?: string
+  discovery?: boolean
 }
 
 export function VideoList({
@@ -45,11 +46,13 @@ export function VideoList({
   gridSize = 0,
   renderExtra,
   className,
+  discovery = false,
 }: VideoListProps) {
   return (
     <div
       className={cn(layoutClass(mode, gridSize), className)}
       style={layoutStyle(gridSize)}
+      data-grid-size={gridSize}
     >
       {videos.map((video) => (
         <VideoCard
@@ -57,6 +60,7 @@ export function VideoList({
           video={video}
           variant={variantOf(mode)}
           compact={mode === "grid" && gridSize > 0}
+          discovery={discovery && mode === "grid"}
         >
           {renderExtra?.(video)}
         </VideoCard>
@@ -69,7 +73,8 @@ export function VideoListSkeleton({
   mode = "grid",
   gridSize = 0,
   count = 12,
-}: LayoutProps & { count?: number }) {
+  className,
+}: LayoutProps & { count?: number; className?: string }) {
   const items = Array.from({ length: count }, (_, i) => i)
 
   if (mode === "denseList") {
@@ -88,8 +93,9 @@ export function VideoListSkeleton({
 
   return (
     <div
-      className={layoutClass(mode, gridSize)}
+      className={cn(layoutClass(mode, gridSize), className)}
       style={layoutStyle(gridSize)}
+      data-grid-size={gridSize}
       aria-hidden="true"
     >
       {items.map((i) => (
