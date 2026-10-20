@@ -1,7 +1,7 @@
 import { useId, useMemo, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router"
 
-import { FeedFilters } from "@/components/common/feed-filters"
+import { FeedFilters, SwitchRow } from "@/components/common/feed-filters"
 import { LoadMore } from "@/components/common/load-more"
 import { SimpleSelect } from "@/components/common/simple-select"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
@@ -20,6 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
+import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { VideoList, VideoListSkeleton } from "@/components/video/video-list"
 import { ViewMenu } from "@/components/video/view-menu"
@@ -47,6 +48,34 @@ const TAB_BY_HASH: Record<string, HomeTab> = {
   "#clips": "clips",
 }
 
+function LiveSortControl({
+  value,
+  onChange,
+}: {
+  value: LiveSort
+  onChange: (sort: LiveSort) => void
+}) {
+  const { t } = useT()
+  const id = useId()
+  return (
+    <div className="flex items-center justify-between gap-2">
+      <label htmlFor={id} className="shrink-0 text-xs text-muted-foreground">
+        {t("views.search.sortByLabel")}
+      </label>
+      <SimpleSelect<LiveSort>
+        id={id}
+        size="sm"
+        value={value}
+        onChange={onChange}
+        options={[
+          { value: "latest", label: t("views.home.sortStartTime") },
+          { value: "viewers", label: t("views.home.sortViewers") },
+        ]}
+      />
+    </div>
+  )
+}
+
 function FilterPopover({
   tab,
   liveSort,
@@ -61,8 +90,9 @@ function FilterPopover({
   onBefore: (date: string) => void
 }) {
   const { t } = useT()
-  const sortId = useId()
   const dateId = useId()
+  const collateCollabs = useSettings((s) => s.collateCollabs)
+  const set = useSettings((s) => s.set)
   const filterCount = useSettings(
     (s) =>
       s.ignoredTopics.length +
@@ -94,20 +124,15 @@ function FilterPopover({
         className="w-[min(22rem,calc(100vw-1.5rem))] gap-3"
       >
         {tab === "live" ? (
-          <div className="flex items-center justify-between gap-3">
-            <label htmlFor={sortId} className="text-sm font-medium">
-              {t("views.search.sortByLabel")}
-            </label>
-            <SimpleSelect<LiveSort>
-              id={sortId}
-              size="sm"
-              value={liveSort}
-              onChange={onLiveSort}
-              options={[
-                { value: "latest", label: t("views.home.sortStartTime") },
-                { value: "viewers", label: t("views.home.sortViewers") },
-              ]}
+          <div className="xl:hidden">
+            <LiveSortControl value={liveSort} onChange={onLiveSort} />
+            <SwitchRow
+              label={t("views.home.collateCollabs")}
+              description={t("views.home.collateCollabsHint")}
+              checked={collateCollabs}
+              onChange={(value) => set("collateCollabs", value)}
             />
+            <Separator className="mt-2" />
           </div>
         ) : (
           <div className="flex items-center justify-between gap-3">
@@ -124,7 +149,7 @@ function FilterPopover({
             />
           </div>
         )}
-        <Separator />
+        {tab !== "live" && <Separator />}
         <FeedFilters />
       </PopoverContent>
     </Popover>
@@ -278,6 +303,22 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
           </TabsTrigger>
         </TabsList>
       </Tabs>
+      {tab === "live" && (
+        <div className="mr-3 hidden shrink-0 items-center gap-4 xl:flex">
+          <LiveSortControl value={liveSort} onChange={setLiveSort} />
+          <label
+            className="flex cursor-pointer items-center gap-2 text-xs text-muted-foreground"
+            title={t("views.home.collateCollabsHint")}
+          >
+            <Switch
+              size="sm"
+              checked={settings.collateCollabs}
+              onCheckedChange={(value) => settings.set("collateCollabs", value)}
+            />
+            {t("views.home.collateCollabs")}
+          </label>
+        </div>
+      )}
       <FilterPopover
         tab={tab}
         liveSort={liveSort}
@@ -337,7 +378,13 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
         />
       )
     } else if (mode !== "grid") {
-      content = <VideoList videos={liveVideos.all} mode={mode} />
+      content = (
+        <VideoList
+          videos={liveVideos.all}
+          mode={mode}
+          collateCollabs={settings.collateCollabs}
+        />
+      )
     } else {
       // The grid keeps what is on air apart from what is scheduled.
       content = (
@@ -346,12 +393,14 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
             <VideoList
               discovery={!favorites}
               videos={liveVideos.live}
+              collateCollabs={settings.collateCollabs}
               gridSize={gridSize}
               className={!favorites ? "home-shelf" : undefined}
             />
           )}
-          {liveVideos.live.length > 0 &&
-            liveVideos.upcoming.length > 0 && <Separator className="my-6" />}
+          {liveVideos.live.length > 0 && liveVideos.upcoming.length > 0 && (
+            <Separator className="my-6" />
+          )}
           {liveVideos.upcoming.length > 0 && (
             <section
               aria-labelledby={!favorites ? upcomingHeadingId : undefined}
@@ -376,6 +425,7 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
               <VideoList
                 discovery={!favorites}
                 videos={liveVideos.upcoming}
+                collateCollabs={settings.collateCollabs}
                 gridSize={gridSize}
                 className={!favorites ? "home-shelf" : undefined}
               />

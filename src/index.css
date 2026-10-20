@@ -208,6 +208,55 @@
   grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-min)), 1fr));
 }
 
+/* Only span two tracks when the feed actually has room for two columns. */
+.video-feed[data-view-mode="grid"] {
+  container-type: inline-size;
+}
+
+/* Later single cards fill the row-end holes that wide collab cards leave. */
+.video-feed {
+  grid-auto-flow: row dense;
+}
+
+/* Split layouts set --collab-span: 2 and let the perspectives fill the row. */
+.collaboration-card[data-variant="grid"] {
+  grid-column: span var(--collab-span, 1);
+  grid-template-columns: repeat(var(--collab-span, 1), minmax(0, 1fr));
+}
+
+.collaboration-perspectives {
+  height: var(--collab-panel-height, 12rem);
+  align-self: stretch;
+}
+
+/* Thresholds are two --card-min tracks plus the column gap. */
+@media (min-width: 640px) {
+  @container (min-width: 35rem) {
+    .video-feed[data-view-mode="grid"] > .collaboration-card { --collab-span: 2; --collab-panel-height: auto; }
+  }
+  @container (min-width: 28rem) {
+    .video-feed[data-view-mode="grid"][data-grid-size="1"] > .collaboration-card { --collab-span: 2; --collab-panel-height: auto; }
+  }
+  @container (min-width: 23rem) {
+    .video-feed[data-view-mode="grid"][data-grid-size="2"] > .collaboration-card { --collab-span: 2; --collab-panel-height: auto; }
+  }
+}
+
+@media (max-width: 639px) {
+  .video-feed[data-view-mode="grid"]:not([data-grid-size="0"]) > .collaboration-card { --collab-span: 2; --collab-panel-height: auto; }
+}
+
+@media (min-width: 1024px) {
+  .collaboration-card:is([data-variant="list"], [data-variant="dense"]) {
+    --collab-panel-height: auto;
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) 14rem;
+  }
+  .collaboration-card:is([data-variant="list"], [data-variant="dense"]) > .collaboration-perspectives {
+    min-height: 8rem;
+  }
+}
+
 @media (min-width: 1280px) {
   .home-shelf {
     grid-template-columns: repeat(5, minmax(0, 1fr));

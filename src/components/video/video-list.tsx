@@ -1,10 +1,12 @@
-import type { CSSProperties, ReactNode } from "react"
+import { useMemo, type CSSProperties, type ReactNode } from "react"
 import { cn } from "cn"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import type { Video } from "@/lib/types"
+import { collateCollaborations } from "@/lib/collaborations"
 import type { GridSize, HomeViewMode } from "@/stores/settings"
 import { VideoCard } from "./video-card"
+import { CollaborationCard } from "./collaboration-card"
 
 interface LayoutProps {
   mode?: HomeViewMode
@@ -38,6 +40,7 @@ interface VideoListProps extends LayoutProps {
   renderExtra?: (video: Video) => ReactNode
   className?: string
   discovery?: boolean
+  collateCollabs?: boolean
 }
 
 export function VideoList({
@@ -47,24 +50,44 @@ export function VideoList({
   renderExtra,
   className,
   discovery = false,
+  collateCollabs = false,
 }: VideoListProps) {
+  const groups = useMemo(
+    () =>
+      collateCollabs
+        ? collateCollaborations(videos)
+        : videos.map((video) => [video]),
+    [videos, collateCollabs]
+  )
   return (
     <div
-      className={cn(layoutClass(mode, gridSize), className)}
+      className={cn("video-feed", layoutClass(mode, gridSize), className)}
       style={layoutStyle(gridSize)}
       data-grid-size={gridSize}
+      data-view-mode={mode}
     >
-      {videos.map((video) => (
-        <VideoCard
-          key={video.id}
-          video={video}
-          variant={variantOf(mode)}
-          compact={mode === "grid" && gridSize > 0}
-          discovery={discovery && mode === "grid"}
-        >
-          {renderExtra?.(video)}
-        </VideoCard>
-      ))}
+      {groups.map((group) =>
+        group.length > 1 ? (
+          <CollaborationCard
+            key={group[0].id}
+            videos={group}
+            variant={variantOf(mode)}
+            compact={mode === "grid" && gridSize > 0}
+            discovery={discovery && mode === "grid"}
+            renderExtra={renderExtra}
+          />
+        ) : (
+          <VideoCard
+            key={group[0].id}
+            video={group[0]}
+            variant={variantOf(mode)}
+            compact={mode === "grid" && gridSize > 0}
+            discovery={discovery && mode === "grid"}
+          >
+            {renderExtra?.(group[0])}
+          </VideoCard>
+        )
+      )}
     </div>
   )
 }

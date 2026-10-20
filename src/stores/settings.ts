@@ -30,6 +30,8 @@ export interface Settings {
   /** Load more results on scroll instead of on request. */
   scrollMode: boolean
   homeViewMode: HomeViewMode
+  /** Combine simultaneous collaboration perspectives in live/upcoming feeds. */
+  collateCollabs: boolean
   gridSize: GridSize
 
   hideThumbnail: boolean
@@ -48,7 +50,16 @@ interface SettingsStore extends Settings {
   reset: () => void
 }
 
-const ENGLISH_NAME_LANGS = new Set(["en", "es", "fr", "id", "pt", "de", "ru", "it"])
+const ENGLISH_NAME_LANGS = new Set([
+  "en",
+  "es",
+  "fr",
+  "id",
+  "pt",
+  "de",
+  "ru",
+  "it",
+])
 
 function browserLang(): string {
   return navigator.language || "en"
@@ -80,6 +91,7 @@ function defaults(): Settings {
     redirectMode: false,
     scrollMode: true,
     homeViewMode: "grid",
+    collateCollabs: false,
     gridSize: 0,
     hideThumbnail: false,
     hidePlaceholder: false,

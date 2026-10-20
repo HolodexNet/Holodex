@@ -227,6 +227,12 @@ views:
     favoritesAreEmpty: You have no favorites!
     blockedAreEmpty: You have no blocked channels.
   home:
+    collateCollabs: Group collabs
+    collateCollabsHint: Group streams that all mention each other, share a topic, and start within 30 minutes. Every perspective stays available.
+    collabPerspectives: '{n} perspective | {n} perspectives'
+    collabViewers: '{0} across streams'
+    previewPerspective: 'Preview {0} perspective'
+    watchPerspective: 'Watch {0} perspective'
     upcomingStreams: Coming up
     liveOrUpcomingHeading: Live / Upcoming
     recentVideosHeading: Recent Videos
