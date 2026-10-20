@@ -5,7 +5,6 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
   CaretDownIcon,
-  CheckIcon,
   MagnifyingGlassIcon,
   StarFillIcon,
   StarIcon,
@@ -19,12 +18,17 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  Command,
+  CommandEmpty,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import {
   InputGroup,
   InputGroupAddon,
@@ -41,18 +45,23 @@ const ALL_ORG: Org = { name: ALL_VTUBERS, short: "Vtuber" }
 export const orgShortName = (org: Org) =>
   ORGS_PREFIX[org.name] ?? org.short ?? org.name
 
-function OrgIcon({ org }: { org: Org }) {
-  const [failed, setFailed] = useState(false)
+function OrgIcon({ org, className }: { org: Org; className?: string }) {
+  const [failedIcon, setFailedIcon] = useState<string | null>(null)
   return (
-    <span className="flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-[11px] font-medium text-muted-foreground">
-      {org.icon && !failed ? (
+    <span
+      className={cn(
+        "flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-[11px] font-medium text-muted-foreground",
+        className
+      )}
+    >
+      {org.icon && org.icon !== failedIcon ? (
         <img
           src={`/statics/channelImg/${org.icon}/50.png`}
           alt=""
           loading="lazy"
           decoding="async"
           className="size-full object-cover"
-          onError={() => setFailed(true)}
+          onError={() => setFailedIcon(org.icon!)}
         />
       ) : (
         org.name.slice(0, 1)
@@ -62,48 +71,110 @@ function OrgIcon({ org }: { org: Org }) {
 }
 
 /**
- * The "<Org>dex" wordmark doubles as the organization switcher: starred
- * organizations are one click away, the full directory is behind "Show all".
+ * Search the full organization directory, with starred organizations first.
+ * Resolve stored selections against the feed so existing preferences get icons.
  */
 export function OrgSelector() {
   const { t } = useT()
+  const orgs = useOrgs()
   const currentOrg = useOrgStore((s) => s.currentOrg)
   const favorites = useOrgStore((s) => s.orgFavorites)
   const setCurrentOrg = useOrgStore((s) => s.setCurrentOrg)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [open, setOpen] = useState(false)
+  const organizations = useMemo(() => {
+    const byName = new Map(
+      [ALL_ORG, ...(orgs.data ?? [])].map((org) => [org.name, org])
+    )
+    if (!byName.has(currentOrg.name)) byName.set(currentOrg.name, currentOrg)
+    const starred = favorites.map((org) => byName.get(org.name) ?? org)
+    const starredNames = new Set(favorites.map((org) => org.name))
+    return [
+      ...starred,
+      ...[...byName.values()].filter((org) => !starredNames.has(org.name)),
+    ]
+  }, [orgs.data, favorites, currentOrg])
+  const selected =
+    organizations.find((org) => org.name === currentOrg.name) ?? currentOrg
 
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger
           render={
             <button
               type="button"
               aria-label={t("component.orgSelector.change", [currentOrg.name])}
-              className="group flex h-9 min-w-0 items-center rounded-xl px-1.5 text-xl font-medium tracking-tight outline-none hover:bg-foreground/5 focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-expanded:bg-foreground/5"
+              className="group flex h-9 max-w-44 min-w-0 items-center gap-2 rounded-lg border border-border bg-background/40 px-3 text-sm font-medium outline-none hover:bg-foreground/5 focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-expanded:bg-foreground/5"
             />
           }
         >
-          <span className="truncate">{orgShortName(currentOrg)}</span>
-          <span className="text-brand">dex</span>
-          <CaretDownIcon className="ml-1 size-3.5 shrink-0 text-muted-foreground transition-transform group-aria-expanded:rotate-180" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-auto min-w-56">
-          {favorites.map((org) => (
-            <DropdownMenuItem key={org.name} onClick={() => setCurrentOrg(org)}>
-              <span className="flex-1">{org.name}</span>
-              {org.name === currentOrg.name && <CheckIcon className="text-brand" />}
-            </DropdownMenuItem>
-          ))}
-          {favorites.length > 0 && <DropdownMenuSeparator />}
-          <DropdownMenuItem
-            className="text-brand focus:text-brand!"
-            onClick={() => setDialogOpen(true)}
+          <OrgIcon org={selected} className="size-5" />
+          <span className="truncate">{selected.name}</span>
+          <CaretDownIcon className="size-3.5 shrink-0 text-muted-foreground transition-transform group-aria-expanded:rotate-180" />
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="w-[min(20rem,calc(100vw-1rem))] gap-0 overflow-hidden p-0"
+        >
+          <Command
+            className="rounded-none"
+            label={t("views.channels.sortOptions.org")}
+            defaultValue={currentOrg.name}
           >
-            {t("views.favorites.showall")}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+            <CommandInput
+              autoFocus
+              placeholder={t("component.orgSelector.search")}
+              aria-label={t("component.orgSelector.search")}
+            />
+            <CommandList>
+              <CommandEmpty>
+                {t(
+                  orgs.isPending
+                    ? "component.orgSelector.loading"
+                    : "component.orgSelector.noMatch"
+                )}
+              </CommandEmpty>
+              {organizations.map((org) => (
+                <CommandItem
+                  key={org.name}
+                  value={org.name}
+                  keywords={[org.name_jp ?? "", orgShortName(org)]}
+                  data-checked={org.name === currentOrg.name}
+                  onSelect={() => {
+                    setCurrentOrg({ ...org, short: orgShortName(org) })
+                    setOpen(false)
+                  }}
+                >
+                  <OrgIcon org={org} />
+                  <span className="min-w-0 flex-1 truncate">{org.name}</span>
+                </CommandItem>
+              ))}
+            </CommandList>
+          </Command>
+          <div className="border-t p-1">
+            <Button
+              variant="ghost"
+              className="w-full justify-start rounded-xl text-xs text-brand"
+              onClick={() => {
+                setOpen(false)
+                setDialogOpen(true)
+              }}
+            >
+              {t("component.orgSelector.manage")}
+            </Button>
+            {orgs.isError && (
+              <Button
+                variant="ghost"
+                className="w-full text-xs"
+                onClick={() => void orgs.refetch()}
+              >
+                {t("component.apiError.retry")}
+              </Button>
+            )}
+          </div>
+        </PopoverContent>
+      </Popover>
 
       <OrgDialog open={dialogOpen} onOpenChange={setDialogOpen} />
     </>
@@ -156,7 +227,9 @@ function OrgDialog({
       <DialogContent className="flex max-h-[min(44rem,calc(100svh-2rem))] flex-col gap-4 p-4 sm:max-w-lg sm:p-5">
         <DialogHeader className="px-1">
           <DialogTitle>{t("views.channels.sortOptions.org")}</DialogTitle>
-          <DialogDescription>{t("component.orgSelector.hint")}</DialogDescription>
+          <DialogDescription>
+            {t("component.orgSelector.hint")}
+          </DialogDescription>
         </DialogHeader>
         <InputGroup>
           <InputGroupAddon>
@@ -225,7 +298,9 @@ function OrgDialog({
                       variant="ghost"
                       size="icon-sm"
                       disabled={index === favorites.length - 1}
-                      aria-label={t("component.orgSelector.moveDown", [org.name])}
+                      aria-label={t("component.orgSelector.moveDown", [
+                        org.name,
+                      ])}
                       onClick={() => moveFavorite(org.name, 1)}
                     >
                       <ArrowDownIcon />

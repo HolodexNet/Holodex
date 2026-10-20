@@ -2,7 +2,11 @@ import { useState } from "react"
 import { Link } from "react-router"
 
 import { Logo } from "@/components/common/logo"
-import { ArrowLeftIcon, ListIcon, MagnifyingGlassIcon } from "@/components/icons"
+import {
+  ArrowLeftIcon,
+  ListIcon,
+  MagnifyingGlassIcon,
+} from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { useSidebar } from "@/components/ui/sidebar"
 import { useT } from "@/lib/i18n"
@@ -49,22 +53,25 @@ export function Header() {
               <ListIcon className="size-5" />
             </Button>
 
-            <div className="flex min-w-0 items-center md:w-52 lg:w-60">
+            <div className="flex min-w-0 items-center gap-2 sm:gap-3 md:max-w-[40%]">
               <Link
                 to={HOME_PATHS[defaultOpen]}
                 aria-label="Holodex"
-                className="hidden shrink-0 rounded-lg p-1 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:block"
+                className="flex shrink-0 items-center gap-2 rounded-lg p-1 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
               >
                 <Logo />
+                <span className="hidden text-xl font-medium tracking-tight sm:inline">
+                  Holo<span className="text-brand">dex</span>
+                </span>
               </Link>
               <OrgSelector />
             </div>
 
-            <div className="mx-auto hidden w-full max-w-xl md:block">
+            <div className="mx-auto hidden w-full max-w-xl min-w-0 md:mx-6 md:block">
               <SearchBar />
             </div>
 
-            <div className="ml-auto flex items-center md:ml-0 md:w-24 md:justify-end lg:w-40">
+            <div className="ml-auto flex shrink-0 items-center md:w-24 md:justify-end lg:w-40">
               <Button
                 variant="ghost"
                 size="icon"

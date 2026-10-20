@@ -30,6 +30,9 @@ component:
     blocked: Blocked
   loadMore: Load more
   orgSelector:
+    search: Search organizations…
+    loading: Loading organizations…
+    manage: Manage organizations
     change: Change organization (currently {0})
     hint: Star the organizations you follow to keep them in the quick switcher.
     star: Star {0}
