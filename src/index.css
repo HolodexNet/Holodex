@@ -218,43 +218,72 @@
   grid-auto-flow: row dense;
 }
 
-/* Split layouts set --collab-span: 2 and let the perspectives fill the row. */
+/* A shared surface gives most of the width to the selected preview. */
 .collaboration-card[data-variant="grid"] {
   grid-column: span var(--collab-span, 1);
-  grid-template-columns: repeat(var(--collab-span, 1), minmax(0, 1fr));
+  grid-template-columns: var(--collab-columns, minmax(0, 1fr));
 }
 
 .collaboration-perspectives {
-  height: var(--collab-panel-height, 12rem);
   align-self: stretch;
+  border-top: var(--collab-border-top, 1px) solid var(--border);
+  border-left: var(--collab-border-left, 0px) solid var(--border);
+}
+
+.collaboration-perspectives-content {
+  /* Split panels follow the preview; stacked panels hug their rows. */
+  position: var(--collab-panel-position, relative);
+  max-height: var(--collab-panel-max-height, 16rem);
 }
 
 /* Thresholds are two --card-min tracks plus the column gap. */
 @media (min-width: 640px) {
   @container (min-width: 35rem) {
-    .video-feed[data-view-mode="grid"] > .collaboration-card { --collab-span: 2; --collab-panel-height: auto; }
+    .video-feed[data-view-mode="grid"] > .collaboration-card {
+      --collab-span: 2;
+      --collab-columns: minmax(0, 3fr) minmax(0, 2fr);
+      --collab-panel-position: absolute;
+      --collab-panel-max-height: 100%;
+      --collab-border-top: 0px;
+      --collab-border-left: 1px;
+    }
   }
   @container (min-width: 28rem) {
-    .video-feed[data-view-mode="grid"][data-grid-size="1"] > .collaboration-card { --collab-span: 2; --collab-panel-height: auto; }
+    .video-feed[data-view-mode="grid"][data-grid-size="1"] > .collaboration-card {
+      --collab-span: 2;
+      --collab-columns: minmax(0, 3fr) minmax(0, 2fr);
+      --collab-panel-position: absolute;
+      --collab-panel-max-height: 100%;
+      --collab-border-top: 0px;
+      --collab-border-left: 1px;
+    }
   }
   @container (min-width: 23rem) {
-    .video-feed[data-view-mode="grid"][data-grid-size="2"] > .collaboration-card { --collab-span: 2; --collab-panel-height: auto; }
+    .video-feed[data-view-mode="grid"][data-grid-size="2"] > .collaboration-card {
+      --collab-span: 2;
+      --collab-columns: minmax(0, 3fr) minmax(0, 2fr);
+      --collab-panel-position: absolute;
+      --collab-panel-max-height: 100%;
+      --collab-border-top: 0px;
+      --collab-border-left: 1px;
+    }
   }
 }
 
 @media (max-width: 639px) {
-  .video-feed[data-view-mode="grid"]:not([data-grid-size="0"]) > .collaboration-card { --collab-span: 2; --collab-panel-height: auto; }
+  .video-feed[data-view-mode="grid"]:not([data-grid-size="0"]) > .collaboration-card {
+    --collab-span: 2;
+  }
 }
 
-@media (min-width: 1024px) {
-  .collaboration-card:is([data-variant="list"], [data-variant="dense"]) {
-    --collab-panel-height: auto;
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 1fr) 14rem;
-  }
-  .collaboration-card:is([data-variant="list"], [data-variant="dense"]) > .collaboration-perspectives {
-    min-height: 8rem;
-  }
+.collaboration-card:is([data-variant="list"], [data-variant="dense"]) {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.collaboration-card:is([data-variant="list"], [data-variant="dense"]) .collaboration-perspectives-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
 }
 
 @media (min-width: 1280px) {

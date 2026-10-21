@@ -43,6 +43,8 @@ interface VideoCardProps {
   /** Smaller type for the compact grid sizes. */
   compact?: boolean
   discovery?: boolean
+  /** Parent card surface: flush thumbnail, inset details, single-line title. */
+  embedded?: boolean
   /** Extra content under the card, e.g. matching comments in search. */
   children?: ReactNode
 }
@@ -59,7 +61,7 @@ function LiveTimer({ start }: { start: string | number }) {
 /** Shared with preloads so they warm the same srcset candidate. */
 export const THUMBNAIL_SIZES = "(min-width: 640px) 320px, 100vw"
 
-function Thumbnail({ video }: { video: Video }) {
+export function VideoThumbnail({ video }: { video: Video }) {
   const { src, srcSet } = videoThumbnail(video)
   const [failed, setFailed] = useState<string | null>(null)
 
@@ -254,6 +256,7 @@ function VideoCardImpl({
   variant = "grid",
   compact = false,
   discovery = false,
+  embedded = false,
   children,
 }: VideoCardProps) {
   const translator = useT()
@@ -328,11 +331,11 @@ function VideoCardImpl({
     >
       {thumbnailProps ? (
         <a {...thumbnailProps} tabIndex={-1} aria-hidden="true">
-          <Thumbnail video={video} />
+          <VideoThumbnail video={video} />
         </a>
       ) : (
         <Link to={watchHref} tabIndex={-1} aria-hidden="true">
-          <Thumbnail video={video} />
+          <VideoThumbnail video={video} />
         </Link>
       )}
       <ThumbnailOverlay video={video} preferEnglish={preferEnglish} />
@@ -340,7 +343,8 @@ function VideoCardImpl({
   )
 
   const titleClass = cn(
-    "line-clamp-2 font-medium wrap-anywhere text-foreground outline-none hover:text-brand focus-visible:underline",
+    "font-medium text-foreground outline-none hover:text-brand focus-visible:underline",
+    embedded ? "block truncate" : "line-clamp-2 wrap-anywhere",
     compact ? "text-[13px] leading-[1.3]" : "text-sm leading-snug"
   )
   const titleContent = (
@@ -423,7 +427,12 @@ function VideoCardImpl({
 
   if (variant === "dense") {
     return (
-      <article className="group/card flex items-center gap-3 border-b py-1.5 text-[13px] row-offscreen last:border-b-0">
+      <article
+        className={cn(
+          "group/card flex items-center gap-3 border-b py-1.5 text-[13px] row-offscreen last:border-b-0",
+          embedded && "px-2"
+        )}
+      >
         <Link
           to={channelHref}
           tabIndex={-1}
@@ -452,11 +461,18 @@ function VideoCardImpl({
     >
       {thumbnail}
       {discovery && (
-        <div className="flex min-w-0 text-xs text-muted-foreground">
+        <div
+          className={cn(
+            "flex min-w-0 text-xs text-muted-foreground",
+            embedded && "px-2"
+          )}
+        >
           {timeLine}
         </div>
       )}
-      <div className="flex min-w-0 flex-1 gap-2.5">
+      <div
+        className={cn("flex min-w-0 flex-1 gap-2.5", embedded && "px-2 pb-2")}
+      >
         {variant === "grid" && !compact && (
           <Link
             to={channelHref}
