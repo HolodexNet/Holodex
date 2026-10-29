@@ -1,5 +1,6 @@
 import { intlLocale, type Translator } from "@/lib/i18n"
 import type { WireDate } from "@/lib/types"
+import { formatWithTimeZoneAbbreviation } from "@/lib/time-zone"
 
 const MINUTE = 60_000
 const HOUR = 60 * MINUTE
@@ -18,6 +19,31 @@ function dateFormat(locale: string, options: Intl.DateTimeFormatOptions) {
 }
 
 const relativeFormatters = new Map<string, Intl.RelativeTimeFormat>()
+
+export const LOCAL_TIME_ZONE = "local"
+
+const FALLBACK_TIME_ZONES = [
+  "Africa/Abidjan",
+  "America/Los_Angeles",
+  "America/New_York",
+  "Asia/Tokyo",
+  "Australia/Sydney",
+  "Europe/London",
+]
+
+/** Canonical IANA time zones available in this browser, plus local time. */
+export function getSupportedTimeZones(): string[] {
+  const supported = Intl.supportedValuesOf?.("timeZone") ?? FALLBACK_TIME_ZONES
+  return [
+    LOCAL_TIME_ZONE,
+    "UTC",
+    ...new Set(supported.filter((zone) => zone !== "UTC")),
+  ]
+}
+
+export function getLocalTimeZone(): string {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"
+}
 
 function relative(locale: string, ms: number): string {
   let fmt = relativeFormatters.get(locale)
@@ -113,6 +139,60 @@ export function formatAbsolute(
     timeZone: "Asia/Tokyo",
   }).format(date)
   return local === tokyo ? local : `${local}\n${tokyo}`
+}
+
+/** Format an absolute timestamp once for every selected time zone. */
+export function formatAbsoluteInTimeZones(
+  time: WireDate | null | undefined,
+  lang: string,
+  timeZones: string[]
+): { timeZone: string; value: string }[] {
+  if (!time) return []
+
+  const date = new Date(time)
+  const locale = intlLocale(lang)
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZoneName: "short",
+  }
+  const selected = timeZones.length
+    ? [...new Set(timeZones)]
+    : [LOCAL_TIME_ZONE]
+  const formatted: { timeZone: string; value: string }[] = []
+  const localTimeZone = getLocalTimeZone()
+  const usedTimeZones = new Set<string>()
+
+  for (const timeZone of selected) {
+    const effectiveTimeZone =
+      timeZone === LOCAL_TIME_ZONE ? localTimeZone : timeZone
+    if (usedTimeZones.has(effectiveTimeZone)) continue
+
+    try {
+      const formatter =
+        timeZone === LOCAL_TIME_ZONE
+          ? dateFormat(locale, options)
+          : dateFormat(locale, { ...options, timeZone })
+      formatted.push({
+        timeZone,
+        value: formatWithTimeZoneAbbreviation(formatter, date),
+      })
+      usedTimeZones.add(effectiveTimeZone)
+    } catch {
+      // Ignore stale or invalid values from older settings data.
+    }
+  }
+
+  if (!formatted.length) {
+    formatted.push({
+      timeZone: LOCAL_TIME_ZONE,
+      value: formatWithTimeZoneAbbreviation(dateFormat(locale, options), date),
+    })
+  }
+  return formatted
 }
 
 const countFormatters = new Map<string, Intl.NumberFormat>()

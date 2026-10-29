@@ -3,6 +3,7 @@ import { cn } from "cn"
 
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { FeedFilters, SwitchRow } from "@/components/common/feed-filters"
+import { MultiCombobox } from "@/components/common/multi-combobox"
 import { SimpleSelect } from "@/components/common/simple-select"
 import {
   ArrowCounterClockwiseIcon,
@@ -34,6 +35,11 @@ import {
 } from "@/lib/consts"
 import { useT } from "@/lib/i18n"
 import { queryClient } from "@/lib/queries"
+import {
+  getLocalTimeZone,
+  getSupportedTimeZones,
+  LOCAL_TIME_ZONE,
+} from "@/lib/time"
 import { isHexColor, normalizeHex } from "@/lib/theme/color"
 import {
   isThemeColor,
@@ -52,6 +58,8 @@ import {
   type GridSize,
   type ThemeMode,
 } from "@/stores/settings"
+
+const TIME_ZONE_OPTIONS = getSupportedTimeZones()
 
 function Section({
   title,
@@ -474,7 +482,12 @@ export function SettingsPage() {
   const { t, tl } = useT()
   const settings = useSettings()
   const { set } = settings
-  const ids = { lang: useId(), page: useId(), grid: useId() }
+  const ids = {
+    lang: useId(),
+    page: useId(),
+    grid: useId(),
+    timeZones: useId(),
+  }
 
   useDocumentTitle(t("component.mainNav.settings"))
 
@@ -487,6 +500,17 @@ export function SettingsPage() {
       : settings.clipLangs.filter((l) => l !== lang)
     // Sorted so identical selections hit the same cached responses.
     set("clipLangs", [...new Set(next)].sort())
+  }
+
+  const setTimestampTimeZones = (timeZones: string[]) => {
+    set(
+      "timestampTimeZones",
+      [...new Set(timeZones)].sort((a, b) => {
+        if (a === LOCAL_TIME_ZONE) return -1
+        if (b === LOCAL_TIME_ZONE) return 1
+        return a.localeCompare(b)
+      })
+    )
   }
 
   return (
@@ -530,6 +554,29 @@ export function SettingsPage() {
               </label>
             ))}
           </div>
+        </Row>
+      </Section>
+
+      <Section
+        title={t("views.settings.timestampTooltips")}
+        description={t("views.settings.timestampTimeZonesDescription")}
+      >
+        <Row label={t("views.settings.timestampTimeZonesLabel")} stacked>
+          <MultiCombobox
+            id={ids.timeZones}
+            aria-label={t("views.settings.timestampTimeZonesLabel")}
+            items={TIME_ZONE_OPTIONS}
+            value={settings.timestampTimeZones}
+            onChange={setTimestampTimeZones}
+            label={(zone) =>
+              zone === LOCAL_TIME_ZONE
+                ? t("views.settings.localTimeZone", {
+                    zone: getLocalTimeZone(),
+                  })
+                : zone
+            }
+            placeholder={t("views.settings.timeZoneSearch")}
+          />
         </Row>
       </Section>
 

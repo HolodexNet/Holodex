@@ -21,6 +21,8 @@ export interface Settings {
   useEnglishName: boolean
   /** Language used for the "has translations" badge on video cards. */
   liveTlLang: string
+  /** Time zones shown in video timestamp tooltips. "local" follows this device. */
+  timestampTimeZones: string[]
 
   themeMode: ThemeMode
   primaryColor: string
@@ -88,6 +90,7 @@ function defaults(): Settings {
     clipLangs: [contentLang],
     useEnglishName: ENGLISH_NAME_LANGS.has(contentLang),
     liveTlLang: contentLang,
+    timestampTimeZones: ["local", "Asia/Tokyo"],
     themeMode: "dark",
     primaryColor: DEFAULT_PRIMARY,
     themeColorOverrides: {},

@@ -372,6 +372,11 @@ views:
     theme: Theme
     moreSettings: More Settings
     interfaceLanguage: Interface language
+    timestampTooltips: Timestamp tooltips
+    timestampTimeZonesLabel: Time zones shown
+    timestampTimeZonesDescription: Choose which time zones appear when hovering over video timestamps. If none are selected, local time is shown.
+    timeZoneSearch: Search time zones…
+    localTimeZone: Local time ({zone})
     themeMode: Appearance
     themeLight: Light
     themeDark: Dark

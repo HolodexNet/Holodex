@@ -5,6 +5,11 @@ import { cn } from "cn"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { useSelectableVideo } from "@/components/selection/use-selectable-video"
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import {
   BroadcastIcon,
   CalendarBlankIcon,
   ChatbubblesIcon,
@@ -17,10 +22,10 @@ import {
 import { useNowMinutes, useNowSeconds } from "@/hooks/use-now"
 import { useT } from "@/lib/i18n"
 import {
-  formatAbsolute,
   formatCount,
   formatDistance,
   formatDuration,
+  formatAbsoluteInTimeZones,
 } from "@/lib/time"
 import type { ChannelSummary, Video } from "@/lib/types"
 import {
@@ -266,6 +271,7 @@ function VideoCardImpl({
   const preferEnglish = useSettings((s) => s.useEnglishName)
   const redirectMode = useSettings((s) => s.redirectMode)
   const hideThumbnail = useSettings((s) => s.hideThumbnail)
+  const timestampTimeZones = useSettings((s) => s.timestampTimeZones)
   const [placeholderOpen, setPlaceholderOpen] = useState(false)
 
   const isPlaceholder = video.type === "placeholder"
@@ -415,17 +421,47 @@ function VideoCardImpl({
 
   const timeLine = (
     <span className="truncate">
-      <time
-        dateTime={
-          video.available_at
-            ? new Date(video.available_at).toISOString()
-            : undefined
-        }
-        title={formatAbsolute(video.available_at, lang)}
-        className={cn(isLive && "font-medium text-live")}
-      >
-        {time}
-      </time>
+      {video.available_at ? (
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <time
+                dateTime={new Date(video.available_at).toISOString()}
+                tabIndex={0}
+                className={cn(
+                  "rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                  isLive && "font-medium text-live"
+                )}
+              >
+                {time}
+              </time>
+            }
+          />
+          <TooltipContent
+            side="top"
+            align="start"
+            sideOffset={8}
+            className="block max-w-[min(20rem,calc(100vw_-_1rem))] rounded-xl border border-border bg-popover px-3.5 py-1 text-left font-normal whitespace-normal text-popover-foreground shadow-lg [&>[aria-hidden=true]]:bg-popover"
+          >
+            <div className="divide-y divide-border">
+              {formatAbsoluteInTimeZones(
+                video.available_at,
+                lang,
+                timestampTimeZones
+              ).map(({ timeZone, value }) => (
+                <p
+                  key={timeZone}
+                  className="py-2 text-[13px] leading-snug font-medium break-words tabular-nums"
+                >
+                  {value}
+                </p>
+              ))}
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        <time className={cn(isLive && "font-medium text-live")}>{time}</time>
+      )}
       {detail && <> • {detail}</>}
     </span>
   )
