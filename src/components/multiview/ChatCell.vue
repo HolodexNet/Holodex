@@ -221,15 +221,26 @@ export default {
             if (!this.showTlChat) this.showYtChat = true;
         },
         handleVideoUpdate(update) {
-            const v = this.layoutContent[this.videoCellId].video;
-            if (v.id !== update.id || !update?.status || !update?.start_actual) return;
-            if (v.status !== update.status || v.start_actual !== update.start_actual) {
-                this.$store.commit("multiview/setLayoutContentWithKey", {
-                    id: this.videoCellId,
-                    key: "video",
-                    value: { ...v, ...update },
-                });
+            const cellId = this.videoCellId;
+            if (!cellId) return;
+            const v = this.layoutContent[cellId].video;
+            if (v.id !== update.id) return;
+            const next = { ...v };
+            if (update.live_viewers != null) next.live_viewers = update.live_viewers;
+            if (update?.status && update?.start_actual) {
+                next.status = update.status;
+                if (typeof update.start_actual === "string") {
+                    next.start_actual = update.start_actual;
+                }
             }
+            if (next.live_viewers === v.live_viewers
+                && next.status === v.status
+                && next.start_actual === v.start_actual) return;
+            this.$store.commit("multiview/setLayoutContentWithKey", {
+                id: cellId,
+                key: "video",
+                value: next,
+            });
         },
     },
 };

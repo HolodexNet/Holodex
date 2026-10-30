@@ -62,6 +62,15 @@
                 <v-list-item-title class="primary--text">
                   {{ cellState.video.title || cellState.video.channel.name }}
                 </v-list-item-title>
+                <v-list-item-subtitle v-if="cellState.video?.status === 'live' && cellState.video?.live_viewers > 0">
+                  {{
+                    $tc(
+                      "component.videoCard.watching",
+                      formatCount(cellState.video.live_viewers, lang),
+                      [formatCount(cellState.video.live_viewers, lang)]
+                    )
+                  }}
+                </v-list-item-subtitle>
                 <v-list-item-action class="flex-row justify-start ma-0 mt-1 flex-wrap">
                   <v-btn icon @click="cellState.setPlaying(cellState.editMode)">
                     <v-icon color="grey lighten-1">
@@ -120,7 +129,7 @@ import {
     mdiPause, mdiFastForward,
 } from "@mdi/js";
 import { mapState, mapGetters } from "vuex";
-import { getChannelPhoto, syncState } from "@/utils/functions";
+import { getChannelPhoto, syncState, formatCount } from "@/utils/functions";
 
 export default {
     name: "MediaControls",
@@ -158,6 +167,9 @@ export default {
         uiUrl() {
             return window.location.origin;
         },
+        lang() {
+            return this.$store.state.settings.lang;
+        },
     },
     watch: {
         // Refresh player status when mediaControls is shown
@@ -185,6 +197,7 @@ export default {
         }
     },
     methods: {
+        formatCount,
         getChannelPhoto,
         setAllVolume(val) {
             this.cells.forEach((c) => c.setVolume(val));

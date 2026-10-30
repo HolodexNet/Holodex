@@ -232,6 +232,7 @@ export default {
             showPresetSelector: false,
             showPresetEditor: false,
             showMediaControls: false,
+            liveRefreshTimer: null,
         };
     },
     computed: {
@@ -345,6 +346,14 @@ export default {
         } else {
             this.$store.dispatch("multiview/fetchVideoData", { refreshLive: true });
         }
+        this.liveRefreshTimer = setInterval(() => {
+            if (this.activeVideos.some((v) => v?.status === "live" || v?.status === "upcoming")) {
+                this.$store.dispatch("multiview/fetchVideoData", { refreshLive: true });
+            }
+        }, 30000);
+    },
+    beforeDestroy() {
+        if (this.liveRefreshTimer) clearInterval(this.liveRefreshTimer);
     },
     methods: {
         // prompt user for layout change

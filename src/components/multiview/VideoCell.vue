@@ -48,6 +48,18 @@
         @volume="volume = $event"
       />
       <portal-target :name="`${video.id}-overlay`" style="font-size: 18px;" />
+      <span
+        v-if="showLiveViewers"
+        class="mv-live-viewers live-viewers caption white--text px-2 py-1"
+      >
+        {{
+          $tc(
+            "component.videoCard.watching",
+            formatCount(video.live_viewers, lang),
+            [formatCount(video.live_viewers, lang)]
+          )
+        }}
+      </span>
     </div>
     <cell-control
       v-if="editMode"
@@ -60,7 +72,7 @@
 
 <script>
 import { mapMutations } from "vuex";
-import { getYTLangFromState } from "@/utils/functions";
+import { formatCount, getYTLangFromState } from "@/utils/functions";
 import YoutubePlayer from "../player/YoutubePlayer.vue";
 import CellMixin from "./CellMixin";
 import CellControl from "./CellControl.vue";
@@ -129,6 +141,14 @@ export default {
         getLang() {
             return getYTLangFromState(this.$store.state);
         },
+        lang() {
+            return this.$store.state.settings.lang;
+        },
+        showLiveViewers() {
+            return this.video?.status === "live"
+                && this.video.live_viewers > 0
+                && !this.editMode;
+        },
     },
     watch: {
         cellContent(nw, old) {
@@ -156,6 +176,7 @@ export default {
         this.timer && clearInterval(this.timer);
     },
     methods: {
+        formatCount,
         ...mapMutations("multiview", ["muteOthers"]),
         refresh() {
             this.uniqueId = Date.now();
@@ -250,5 +271,15 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+.mv-live-viewers {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.65);
+    border-radius: 4px;
+    pointer-events: none;
 }
 </style>
