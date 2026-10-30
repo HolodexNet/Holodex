@@ -9,6 +9,7 @@ import { AppShell } from "@/components/layout/app-shell"
 import { setLanguage } from "@/lib/i18n"
 import { queryClient } from "@/lib/queries"
 import { applyTheme, systemMode } from "@/lib/theme/apply"
+import { WatchPage } from "@/pages/watch"
 import { HomePage } from "@/pages/home"
 import { LoginPage } from "@/pages/login"
 import { NotFoundPage, NotReadyPage } from "@/pages/not-ready"
@@ -37,7 +38,6 @@ if (
 
 /** Routes of the previous UI that have not been rebuilt yet. */
 const PENDING_ROUTES = [
-  "/watch/:id?",
   "/channel",
   "/channel/:id/*",
   "/edit/video/:id/:tab?",
@@ -61,6 +61,7 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/home", element: <Navigate to="/" replace /> },
       { path: "/favorites", element: <HomePage favorites /> },
+      { path: "/watch/:id?", element: <WatchPage /> },
       { path: "/search", element: <SearchPage /> },
       { path: "/settings", element: <SettingsPage /> },
       { path: "/login", element: <LoginPage /> },

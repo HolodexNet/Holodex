@@ -35,8 +35,8 @@ import {
   videoThumbnail,
   videoTitle,
   watchPath,
-  youtubeUrl,
 } from "@/lib/video"
+import { isVideoPlaceholder, videoSource } from "@/lib/video-source"
 import { useSettings } from "@/stores/settings"
 import { PlaceholderDialog } from "./placeholder-dialog"
 import { VideoMenu } from "./video-menu"
@@ -105,7 +105,8 @@ export function VideoThumbnail({ video }: { video: Video }) {
       }}
       className={cn(
         "absolute inset-0 size-full object-cover",
-        video.placeholderType === "scheduled-yt-stream" &&
+        isVideoPlaceholder(video) &&
+          video.placeholderType === "scheduled-yt-stream" &&
           "opacity-60 transition-opacity group-hover/card:opacity-100"
       )}
     />
@@ -113,7 +114,6 @@ export function VideoThumbnail({ video }: { video: Video }) {
 }
 
 function PlaceholderIcon({ video }: { video: Video }) {
-  if (video.link?.includes("twitch.tv")) return <LogoTwitchIcon />
   if (video.link?.includes("/i/spaces/")) return <LogoTwitterIcon />
   if (video.placeholderType === "event") return <CalendarBlankIcon />
   if (video.placeholderType === "scheduled-yt-stream")
@@ -162,7 +162,8 @@ function ThumbnailOverlay({
 }) {
   const { t } = useT()
   const liveTlLang = useSettings((s) => s.liveTlLang)
-  const isPlaceholder = video.type === "placeholder"
+  const isPlaceholder = isVideoPlaceholder(video)
+  const source = videoSource(video)
   const isLive = video.status === "live"
 
   const archivedTls =
@@ -227,6 +228,14 @@ function ThumbnailOverlay({
               <ChatbubblesIcon className="size-3.5" />
             </span>
           )}
+          {source.provider === "twitch" && (
+            <span
+              className={cn(overlayChip, "flex items-center gap-1")}
+              title="Twitch"
+            >
+              <LogoTwitchIcon className="size-4" />
+            </span>
+          )}
           {isPlaceholder ? (
             <span className={cn(overlayChip, "flex items-center gap-1")}>
               {placeholderLabel && (
@@ -274,7 +283,8 @@ function VideoCardImpl({
   const timestampTimeZones = useSettings((s) => s.timestampTimeZones)
   const [placeholderOpen, setPlaceholderOpen] = useState(false)
 
-  const isPlaceholder = video.type === "placeholder"
+  const isPlaceholder = isVideoPlaceholder(video)
+  const source = videoSource(video)
   const isLive = video.status === "live"
   const title = videoTitle(video, preferEnglish)
   const name = channelName(video.channel, preferEnglish)
@@ -289,16 +299,16 @@ function VideoCardImpl({
     setPlaceholderOpen(true)
   }
 
-  // Thumbnails honour "open on YouTube"; titles always stay on Holodex.
+  // Redirect only providers with a usable external destination.
   const externalStream =
-    isPlaceholder && video.placeholderType === "external-stream" && video.link
+    isPlaceholder && video.placeholderType === "external-stream" && source.url
   const thumbnailProps = externalStream
-    ? { href: video.link!, target: "_blank", rel: "noopener noreferrer" }
+    ? { href: source.url!, target: "_blank", rel: "noopener noreferrer" }
     : isPlaceholder
       ? { href: watchHref, onClick: openPlaceholder }
-      : redirectMode
+      : redirectMode && source.url
         ? {
-            href: youtubeUrl(video.id),
+            href: source.url!,
             target: "_blank",
             rel: "noopener noreferrer",
           }

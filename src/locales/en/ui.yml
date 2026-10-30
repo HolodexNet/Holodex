@@ -56,6 +56,7 @@ component:
     playlist: Playlist
     toggleSidebar: Toggle navigation
   videoCard:
+    openOnPlatform: Open on {platform}
     clips: '{n} Clips'
     watching: '{0} Watching'
     liveNow: Live Now
@@ -452,6 +453,7 @@ views:
   about:
     add_my_channel: Channel Request
   watch:
+    loading: Loading video…
     theaterMode: Theater Mode (alt + t)
     mentionIconLabel: MENTIONS
     chat:

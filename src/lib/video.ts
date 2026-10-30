@@ -1,3 +1,4 @@
+import { isVideoPlaceholder, videoSource } from "./video-source"
 import { ALL_VTUBERS } from "@/lib/consts"
 import type { ChannelSummary, Video } from "@/lib/types"
 import type { Settings } from "@/stores/settings"
@@ -7,7 +8,7 @@ export function decodeEntities(str: string): string {
 }
 
 export function videoTitle(video: Video, preferEnglish: boolean): string {
-  if (video.type === "placeholder") {
+  if (video.type === "placeholder" || video.type === "legacy-placeholder") {
     const title = preferEnglish
       ? (video.title ?? video.jp_name)
       : (video.jp_name ?? video.title)
@@ -43,14 +44,22 @@ export interface Thumbnail {
 }
 
 export function videoThumbnail(video: Video): Thumbnail {
-  if (video.thumbnail) {
-    const encoded = btoa(video.thumbnail)
+  const source = videoSource(video)
+  const thumbnail =
+    video.thumbnail ||
+    (source.provider === "twitch" && source.channel
+      ? `https://static-cdn.jtvnw.net/previews-ttv/live_user_${source.channel}-640x360.jpg`
+      : null)
+  if (thumbnail) {
+    const encoded = btoa(
+      String.fromCharCode(...new TextEncoder().encode(thumbnail))
+    )
       .replace(/\+/g, "-")
       .replace(/\//g, "_")
       .replace(/=+$/, "")
     return { src: `/statics/thumbnail/default/${encoded}.jpg` }
   }
-  if (video.type === "placeholder") {
+  if (source.provider !== "youtube") {
     return {
       src: `/statics/channelImg/${video.channel_id ?? video.channel.id}.png`,
     }
@@ -110,7 +119,7 @@ export function createVideoFilter({
 
     if (blocked.has(channelId)) return false
     if (video.topic_id && ignoredTopics.has(video.topic_id)) return false
-    if (settings.hidePlaceholder && video.type === "placeholder") return false
+    if (settings.hidePlaceholder && isVideoPlaceholder(video)) return false
     if (settings.hideMissing && video.status === "missing") return false
     if (isGroupHidden(channel)) return false
 

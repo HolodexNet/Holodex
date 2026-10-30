@@ -71,10 +71,12 @@ export interface Video {
   description?: string | null
   comments?: VideoComment[] | null
 
-  // Placeholder-only fields
+  // Optional remote thumbnail (also used by Twitch streams).
+  thumbnail?: string | null
+
+  // Compatibility metadata for external streams and placeholders.
   jp_name?: string | null
   link?: string | null
-  thumbnail?: string | null
   certainty?: "certain" | "likely" | null
   placeholderType?: "scheduled-yt-stream" | "external-stream" | "event" | null
 }

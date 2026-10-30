@@ -206,6 +206,13 @@ export const api = {
       signal,
     }),
 
+  video: async (id: string, signal?: AbortSignal) =>
+    withMentionAdditions(
+      await request<Video>(`${API}/v3/videos/${encodeURIComponent(id)}`, {
+        signal,
+      })
+    ),
+
   // -- Schedules and lists ---------------------------------------------------
   async live(org: string, signal?: AbortSignal): Promise<Video[]> {
     const res = await request<V3VideoList>(`${API}/v3/live`, {

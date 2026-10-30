@@ -10,6 +10,8 @@ import {
   EyeSlashIcon,
   LinkIcon,
   LogoYoutubeIcon,
+  LogoTwitchIcon,
+  ArrowSquareOutIcon,
   NotePencilIcon,
   TrashIcon,
   UserIcon,
@@ -32,7 +34,8 @@ import {
   videoActionIssue,
 } from "@/lib/selection-actions"
 import type { Video } from "@/lib/types"
-import { videoTitle, watchPath, youtubeUrl } from "@/lib/video"
+import { videoTitle, watchPath } from "@/lib/video"
+import { isVideoPlaceholder, videoSource } from "@/lib/video-source"
 import { useSettings } from "@/stores/settings"
 import { useAuth } from "@/stores/auth"
 import { useSelectionAction } from "@/stores/selection-action"
@@ -51,8 +54,7 @@ function googleCalendarUrl(video: Video, title: string): string {
     video.start_scheduled ?? video.available_at ?? Date.now()
   )
   const end = new Date(start.getTime() + (video.duration || 3600) * 1000)
-  const link =
-    video.type === "placeholder" ? (video.link ?? "") : youtubeUrl(video.id)
+  const link = videoSource(video).url ?? ""
   const params = new URLSearchParams({
     action: "TEMPLATE",
     text: title,
@@ -79,7 +81,8 @@ export function VideoMenu({
     s.blockedChannels.some((c) => c.id === video.channel.id)
   )
   const toggleBlocked = useSettings((s) => s.toggleBlocked)
-  const isPlaceholder = video.type === "placeholder"
+  const isPlaceholder = isVideoPlaceholder(video)
+  const source = videoSource(video)
   const title = videoTitle(video, preferEnglish)
   // Group-only actions belong in the selection tray, not on a single video.
   const editActions = availableVideoActions(user)
@@ -113,18 +116,24 @@ export function VideoMenu({
         <DotsThreeVerticalIcon className="size-5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={6} className={menuClassName}>
-        {!isPlaceholder && (
+        {!isPlaceholder && source.url && (
           <DropdownMenuItem
             render={
-              <a
-                href={youtubeUrl(video.id)}
-                target="_blank"
-                rel="noopener noreferrer"
-              />
+              <a href={source.url!} target="_blank" rel="noopener noreferrer" />
             }
           >
-            <LogoYoutubeIcon className="text-muted-foreground" />
-            {t("views.settings.redirectModeLabel")}
+            {source.provider === "twitch" ? (
+              <LogoTwitchIcon className="text-muted-foreground" />
+            ) : source.provider === "youtube" ? (
+              <LogoYoutubeIcon className="text-muted-foreground" />
+            ) : (
+              <ArrowSquareOutIcon className="text-muted-foreground" />
+            )}
+            {source.provider === "youtube"
+              ? t("views.settings.redirectModeLabel")
+              : source.provider === "twitch"
+                ? t("component.videoCard.openOnPlatform", { platform: "Twitch" })
+                : t("component.placeholderVideo.streamPageBtn")}
           </DropdownMenuItem>
         )}
         {!isPlaceholder && (
