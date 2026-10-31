@@ -1,4 +1,5 @@
 What's there
+Channel talent-home experiment (`attempt-3-channel-try-2`): channel URLs now open an identity-led Overview with live/next/latest watch panel, recent uploads, language-filtered clips, collabs, description/topics and Musicdex. Directory cards lead into the same visual treatment. Deep archive tabs remain paginated. See dev-docs-handoff/channel-talent-home.md for design, data rules, visual review and limitations.
 Stack: React 19, Vite 8, TypeScript 6, Tailwind 4, shadcn preset bbazw9o, react-router, TanStack Query, zustand. Vuetify/MDI are gone, and I swapped the lucide icons inside the shadcn components for iconx ones. 86 iconx components: Phosphor for interface icons, Ionicons for brand logos and media glyphs.
 Layout: full-width header with the Holodex org switcher, search and user menu; a sidebar that collapses to an icon rail, with the favorites list; bottom nav and a drawer on phones.
 Home / Favorites: Live·Upcoming / Archive / Clips tabs, five view modes (three grid sizes, list, compact list), and the feed filters from the old UI. Live and lists use v3/live and v3/videos.

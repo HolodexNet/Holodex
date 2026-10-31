@@ -3,10 +3,16 @@ import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 import { cn } from "cn"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { ChannelActions } from "@/components/common/channel-actions"
+import { ChannelBanner } from "@/components/common/channel-banner"
 import { LoadMore } from "@/components/common/load-more"
 import { SimpleSelect } from "@/components/common/simple-select"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
-import { GridFourIcon, RowsIcon, UsersThreeIcon } from "@/components/icons"
+import {
+  CaretRightIcon,
+  GridFourIcon,
+  RowsIcon,
+  UsersThreeIcon,
+} from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useDocumentTitle } from "@/hooks/use-document-title"
@@ -15,6 +21,7 @@ import { ALL_VTUBERS } from "@/lib/consts"
 import { useT } from "@/lib/i18n"
 import { useOrgs } from "@/lib/queries"
 import type { Channel } from "@/lib/types"
+import { formatCount } from "@/lib/time"
 import { channelName } from "@/lib/video"
 import { useOrgStore } from "@/stores/org"
 import { useSettings } from "@/stores/settings"
@@ -32,21 +39,29 @@ export function ChannelCard({
   return (
     <article
       className={cn(
-        "group relative flex rounded-xl border bg-card transition-colors hover:border-primary/40",
-        list
-          ? "items-center gap-3 p-3"
-          : "flex-col items-center gap-3 p-5 text-center"
+        "group relative flex overflow-hidden rounded-2xl border bg-card transition-colors hover:border-primary/50",
+        list ? "items-center gap-3 p-3" : "flex-col"
       )}
     >
       <Link
         to={`/channel/${channel.id}`}
         className={cn(
-          "flex min-w-0 flex-1 items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-primary",
-          !list && "w-full flex-col"
+          "flex min-w-0 flex-1 gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-primary",
+          list ? "items-center" : "w-full flex-col"
         )}
       >
-        <ChannelAvatar channel={channel} size={list ? 48 : 88} />
-        <div className="min-w-0">
+        {!list && <ChannelBanner channel={channel} className="h-20 w-full" />}
+        <div
+          className={cn(
+            !list &&
+              "relative z-10 -mt-10 ml-4 w-fit rounded-full ring-4 ring-card"
+          )}
+        >
+          <ChannelAvatar channel={channel} size={list ? 48 : 64} />
+        </div>
+        <div
+          className={cn("min-w-0", !list && "flex flex-1 flex-col px-4 pb-4")}
+        >
           <h3 className="line-clamp-2 text-sm font-semibold group-hover:text-brand">
             {name}
           </h3>
@@ -59,18 +74,39 @@ export function ChannelCard({
             {channel.org}
             {channel.inactive ? ` · ${t("channelPages.inactive")}` : ""}
           </p>
-          {channel.subscriber_count != null && (
-            <p className="mt-1 text-xs text-muted-foreground">
-              {t("component.channelInfo.subscriberCount", {
-                n: new Intl.NumberFormat(lang, { notation: "compact" }).format(
-                  Number(channel.subscriber_count)
-                ),
-              })}
-            </p>
+          {channel.subscriber_count != null &&
+            Number.isFinite(Number(channel.subscriber_count)) && (
+              <p className="mt-1 text-xs text-muted-foreground">
+                {t("component.channelInfo.subscriberCount", {
+                  n: formatCount(channel.subscriber_count, lang),
+                })}
+              </p>
+            )}
+          {!list && (
+            <>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {channel.top_topics?.slice(0, 2).map((topic) => (
+                  <span
+                    key={topic}
+                    className="max-w-full truncate rounded bg-muted px-2 py-1 text-[10px] text-muted-foreground capitalize"
+                  >
+                    {topic.replace(/_/g, " ")}
+                  </span>
+                ))}
+              </div>
+              <span className="mt-auto flex items-center gap-1 pt-4 text-xs font-medium text-brand">
+                {t("talentHome.visitProfile")}
+                <CaretRightIcon className="size-3" />
+              </span>
+            </>
           )}
         </div>
       </Link>
-      <div className={cn(!list && "absolute top-2 right-2")}>
+      <div
+        className={cn(
+          !list && "absolute top-3 right-3 rounded-full bg-card/95 shadow-sm"
+        )}
+      >
         <ChannelActions channel={channel} compact />
       </div>
     </article>
@@ -121,15 +157,24 @@ export function ChannelsPage() {
   useDocumentTitle(`${org} · ${t("component.mainNav.channels")}`)
   return (
     <main className="mx-auto w-full max-w-[1600px] p-4 md:p-8">
+      <div className="relative mb-7 overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/10 via-card to-complement/10 px-5 py-8 md:px-8 md:py-10">
+        <div className="pointer-events-none absolute -top-20 -right-16 size-80 rounded-full border-[40px] border-primary/5" />
+        <p className="relative mb-3 text-[11px] font-bold tracking-[0.18em] text-brand uppercase">
+          {t("talentHome.directoryEyebrow")}
+        </p>
+        <h1 className="relative max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
+          {t("talentHome.directoryTitle")}
+        </h1>
+        <p className="relative mt-4 max-w-lg text-sm leading-6 text-muted-foreground">
+          {t("talentHome.directoryHint")}
+        </p>
+      </div>
       <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="mb-1 text-xs font-medium tracking-wider text-brand uppercase">
-            Holodex
-          </p>
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h2 className="text-xl font-semibold tracking-tight">{org}</h2>
+          <p className="mt-1 text-xs text-muted-foreground">
             {t("component.mainNav.channels")}
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">{org}</p>
+          </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <SimpleSelect
@@ -210,7 +255,7 @@ export function ChannelsPage() {
             className={
               list
                 ? "grid gap-2 xl:grid-cols-2"
-                : "grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:gap-4"
+                : "grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] sm:gap-4"
             }
           >
             {items.map((channel) => (

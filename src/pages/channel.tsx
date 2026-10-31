@@ -1,8 +1,9 @@
-import { useState } from "react"
 import { Link, NavLink, useParams } from "react-router"
 import { cn } from "cn"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { ChannelActions } from "@/components/common/channel-actions"
+import { ChannelBanner } from "@/components/common/channel-banner"
+import { ChannelOverview } from "@/components/channel/channel-overview"
 import { LoadMore } from "@/components/common/load-more"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import { ArrowLeftIcon, ArrowSquareOutIcon } from "@/components/icons"
@@ -18,9 +19,10 @@ import {
   type ChannelTab,
 } from "@/lib/channel-queries"
 import { musicdexURL } from "@/lib/consts"
-import { useT } from "@/lib/i18n"
+import { intlLocale, useT } from "@/lib/i18n"
 import { flattenPages } from "@/lib/queries"
 import type { Channel } from "@/lib/types"
+import { formatCount } from "@/lib/time"
 import { channelName } from "@/lib/video"
 import { useSettings } from "@/stores/settings"
 
@@ -145,7 +147,7 @@ export function ChannelAbout({ channel }: { channel: Channel }) {
               <dd className="font-medium tabular-nums">
                 {value == null || !Number.isFinite(Number(value))
                   ? "—"
-                  : Number(value).toLocaleString(lang)}
+                  : Number(value).toLocaleString(intlLocale(lang))}
               </dd>
             </div>
           ))}
@@ -160,10 +162,9 @@ export function ChannelPage() {
   const query = useChannel(id)
   const { t, lang } = useT()
   const english = useSettings((s) => s.useEnglishName)
-  const [failedBanner, setFailedBanner] = useState<string | null>(null)
   const channel = query.data
   const name = channel ? channelName(channel, english) : undefined
-  const tab = routeTab ?? "videos"
+  const tab = routeTab ?? "overview"
   useDocumentTitle(name)
   if (query.isPending)
     return (
@@ -198,15 +199,8 @@ export function ChannelPage() {
       </main>
     )
   const base = `/channel/${encodeURIComponent(channel.id)}`
-  const banner =
-    channel.banner && /^https?:\/\//.test(channel.banner)
-      ? /^https:\/\/(yt3\.googleusercontent\.com|yt3\.ggpht\.com)\//.test(
-          channel.banner
-        )
-        ? `${channel.banner.split("=")[0]}=w2276-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`
-        : channel.banner
-      : null
   const tabs = [
+    { id: "overview", label: t("talentHome.overview") },
     { id: "videos", label: t("views.channel.video") },
     { id: "clips", label: t("views.channel.clips") },
     { id: "collabs", label: t("views.channel.collabs") },
@@ -214,16 +208,8 @@ export function ChannelPage() {
   ]
   return (
     <main className="mx-auto w-full max-w-[1600px]">
-      <div className="relative h-32 overflow-hidden bg-gradient-to-br from-primary/20 via-muted to-complement/20 sm:h-48 lg:h-60">
-        {banner && failedBanner !== banner && (
-          <img
-            src={banner}
-            alt=""
-            referrerPolicy="no-referrer"
-            className="size-full object-cover"
-            onError={() => setFailedBanner(banner)}
-          />
-        )}
+      <div className="relative">
+        <ChannelBanner channel={channel} className="h-28 sm:h-52 lg:h-64" />
         <Link
           to={`/channel?${new URLSearchParams({ org: channel.org ?? "All Vtubers" })}`}
           className="absolute top-3 left-3 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-2 text-xs shadow-sm backdrop-blur-sm hover:bg-background"
@@ -232,19 +218,21 @@ export function ChannelPage() {
           {t("component.mainNav.channels")}
         </Link>
       </div>
-      <header className="border-b bg-background px-4 pt-5 md:px-8">
-        <div className="mb-5 flex flex-wrap items-center justify-between gap-5">
-          <div className="flex min-w-0 items-center gap-4">
-            <ChannelAvatar
-              channel={channel}
-              size={88}
-              className="ring-4 ring-background"
-            />
+      <header className="relative border-b bg-background px-4 md:px-8">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-5 pt-5 md:pt-6">
+          <div className="flex min-w-0 basis-full items-start gap-4 sm:flex-1 sm:basis-auto sm:gap-5">
+            <div className="-mt-12 rounded-full ring-[6px] ring-background sm:-mt-14">
+              <ChannelAvatar
+                channel={channel}
+                size={104}
+                className="shadow-lg"
+              />
+            </div>
             <div className="min-w-0">
               <p className="mb-1 text-xs font-medium text-muted-foreground">
                 {[channel.org, channel.group].filter(Boolean).join(" / ")}
               </p>
-              <h1 className="text-xl font-bold break-words sm:text-2xl">
+              <h1 className="text-2xl font-bold tracking-tight break-words sm:text-3xl">
                 {name}
               </h1>
               {channel.english_name && name !== channel.english_name && (
@@ -253,11 +241,10 @@ export function ChannelPage() {
                 </p>
               )}
               <p className="mt-1 text-sm text-muted-foreground">
-                {channel.subscriber_count != null
+                {channel.subscriber_count != null &&
+                Number.isFinite(Number(channel.subscriber_count))
                   ? t("component.channelInfo.subscriberCount", {
-                      n: new Intl.NumberFormat(lang, {
-                        notation: "compact",
-                      }).format(Number(channel.subscriber_count)),
+                      n: formatCount(channel.subscriber_count, lang),
                     })
                   : t("component.channelInfo.subscriberNA")}
               </p>
@@ -270,19 +257,6 @@ export function ChannelPage() {
             {t("component.channelInfo.inactiveChannel")}
           </p>
         )}
-        {!!channel.top_topics?.length && (
-          <div className="mb-4 flex flex-wrap gap-2">
-            {channel.top_topics.map((topic) => (
-              <Link
-                key={topic}
-                to={`/search?${new URLSearchParams({ ch: channel.id, topic })}`}
-                className="rounded-full border bg-muted/40 px-3 py-1 text-xs capitalize hover:bg-accent"
-              >
-                {topic.replace(/_/g, " ")}
-              </Link>
-            ))}
-          </div>
-        )}
         <nav
           aria-label={t("channelPages.navigation")}
           className="flex items-center gap-1 overflow-x-auto"
@@ -291,7 +265,7 @@ export function ChannelPage() {
             <NavLink
               key={item.id}
               end
-              to={item.id === "videos" ? base : `${base}/${item.id}`}
+              to={item.id === "overview" ? base : `${base}/${item.id}`}
               aria-current={tab === item.id ? "page" : undefined}
               className={cn(
                 "shrink-0 border-b-2 px-4 py-3 text-sm font-medium transition-colors",
@@ -315,7 +289,9 @@ export function ChannelPage() {
         </nav>
       </header>
       <div className="p-4 md:p-8">
-        {tab === "about" ? (
+        {tab === "overview" ? (
+          <ChannelOverview key={channel.id} channel={channel} />
+        ) : tab === "about" ? (
           <ChannelAbout channel={channel} />
         ) : ["videos", "clips", "collabs"].includes(tab) ? (
           <ChannelVideos

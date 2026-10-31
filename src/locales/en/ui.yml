@@ -1,3 +1,37 @@
+talentHome:
+  overview: Overview
+  startWatching: Start watching
+  freshFrom: 'From {name}’s world'
+  liveNow: Live now
+  upNext: Next stream
+  latestUpload: Latest upload
+  recentClip: Recent clip
+  recentCollab: Recent collaboration
+  joinStream: Join the stream
+  openStream: Open stream
+  watchVideo: Watch video
+  noVideos: A new world to explore
+  officialChannel: Visit official channel
+  noVideosHint: No watchable videos are available here yet. Visit the official channel or come back for new uploads.
+  recentUploads: Fresh from the channel
+  uploadsHint: Recent uploads, in their own words.
+  clipsTitle: A little more of their world
+  clipsHint: Recent clips from the community, in your selected languages.
+  collabsTitle: Better together
+  collabsHint: Recent videos featuring this talent on other channels.
+  viewAll: View all
+  getToKnow: Behind the avatar
+  fullProfile: Read the full profile
+  exploreHint: Explore their uploads, community clips and collaborations, or visit their official channel.
+  musicTitle: Find their sound
+  musicHint: Explore indexed songs and performances on Musicdex.
+  recentMusic: Music in recent uploads
+  openMusicdex: Explore Musicdex
+  noSchedule: No live or upcoming stream is currently listed. Check the official channel for announcements.
+  directoryTitle: Find your next favorite.
+  directoryHint: Every channel has a world of its own. Step inside for streams, clips, music and a place to start.
+  directoryEyebrow: Meet the talents
+  visitProfile: Explore channel
 channelPages:
   other: Other
   independent: Independent

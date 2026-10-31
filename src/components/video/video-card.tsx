@@ -67,7 +67,13 @@ function LiveTimer({ start }: { start: string | number }) {
 /** Shared with preloads so they warm the same srcset candidate. */
 export const THUMBNAIL_SIZES = "(min-width: 640px) 320px, 100vw"
 
-export function VideoThumbnail({ video }: { video: Video }) {
+export function VideoThumbnail({
+  video,
+  sizes = THUMBNAIL_SIZES,
+}: {
+  video: Video
+  sizes?: string
+}) {
   const { src, srcSet } = videoThumbnail(video)
   const [failed, setFailed] = useState<string | null>(null)
 
@@ -90,7 +96,7 @@ export function VideoThumbnail({ video }: { video: Video }) {
     <img
       src={src}
       srcSet={srcSet}
-      sizes={srcSet ? THUMBNAIL_SIZES : undefined}
+      sizes={srcSet ? sizes : undefined}
       alt=""
       loading="lazy"
       decoding="async"
