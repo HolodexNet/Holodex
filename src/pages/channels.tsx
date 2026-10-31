@@ -159,9 +159,6 @@ export function ChannelsPage() {
     <main className="mx-auto w-full max-w-[1600px] p-4 md:p-8">
       <div className="relative mb-7 overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/10 via-card to-complement/10 px-5 py-8 md:px-8 md:py-10">
         <div className="pointer-events-none absolute -top-20 -right-16 size-80 rounded-full border-[40px] border-primary/5" />
-        <p className="relative mb-3 text-[11px] font-bold tracking-[0.18em] text-brand uppercase">
-          {t("talentHome.directoryEyebrow")}
-        </p>
         <h1 className="relative max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
           {t("talentHome.directoryTitle")}
         </h1>

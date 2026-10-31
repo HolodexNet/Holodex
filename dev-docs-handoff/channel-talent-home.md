@@ -25,4 +25,6 @@ Final checks: production build and focused ESLint passed; `git diff --check` is 
 
 ## Limits
 
+User-requested visual correction: removed the decorative directory and biography preheadings and redundant watch-panel tagline. Factual stream/upload labels and the recent-music description use ordinary sentence-case text without letter spacing or all-caps styling.
+
 Overview recommendations summarize the first loaded archive page, not an exhaustive or curated career introduction. The clip sample may be empty when none of those 24 results match the viewer's language preferences; the deeper tab keeps pagination available. Music detection does not infer genre or musical identity. Organization schedules can include a large response for independent channels. Social destinations, watch routes and account actions use existing app behavior. Existing build warnings about bundle size and Tailwind sourcemaps are unchanged.

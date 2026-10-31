@@ -159,14 +159,11 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
             </span>
             {t("talentHome.startWatching")}
           </h2>
-          <p className="hidden text-xs text-muted-foreground sm:block">
-            {t("talentHome.freshFrom", { name })}
-          </p>
         </div>
         {spotlight ? (
           isVideoPlaceholder(spotlight) ? (
             <div className="p-5">
-              <p className="mb-3 text-xs font-semibold text-brand">
+              <p className="mb-3 text-xs font-medium text-muted-foreground">
                 {t(`talentHome.${label}`)}
               </p>
               <VideoCard video={spotlight} />
@@ -197,8 +194,8 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
               <div className="flex flex-col justify-center p-4 md:p-7 lg:p-8">
                 <p
                   className={cn(
-                    "mb-3 flex items-center gap-2 text-[11px] font-bold tracking-[0.15em] uppercase",
-                    onAir ? "text-live" : "text-brand"
+                    "mb-3 flex items-center gap-2 text-xs font-medium",
+                    onAir ? "text-live" : "text-muted-foreground"
                   )}
                 >
                   {onAir && <span className="size-2 rounded-full bg-live" />}
@@ -299,9 +296,6 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
           )}
         >
           <section className="rounded-2xl border bg-card p-5">
-            <p className="mb-4 text-[10px] font-bold tracking-[0.16em] text-brand uppercase">
-              {t("talentHome.getToKnow")}
-            </p>
             <h2 className="mb-3 text-lg font-semibold">{name}</h2>
             {channel.description ? (
               <p className="line-clamp-5 text-sm leading-6 break-words whitespace-pre-line text-muted-foreground">
@@ -365,7 +359,7 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
             </p>
             {music[0] && (
               <div className="mt-4 border-t pt-4">
-                <p className="mb-2 text-[10px] font-semibold tracking-wide text-brand uppercase">
+                <p className="mb-2 text-xs text-muted-foreground">
                   {t("talentHome.recentMusic")}
                 </p>
                 <VideoCard video={music[0]} compact />

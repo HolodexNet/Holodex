@@ -1,7 +1,6 @@
 talentHome:
   overview: Overview
   startWatching: Start watching
-  freshFrom: 'From {name}’s world'
   liveNow: Live now
   upNext: Next stream
   latestUpload: Latest upload
@@ -20,7 +19,6 @@ talentHome:
   collabsTitle: Better together
   collabsHint: Recent videos featuring this talent on other channels.
   viewAll: View all
-  getToKnow: Behind the avatar
   fullProfile: Read the full profile
   exploreHint: Explore their uploads, community clips and collaborations, or visit their official channel.
   musicTitle: Find their sound
@@ -30,7 +28,6 @@ talentHome:
   noSchedule: No live or upcoming stream is currently listed. Check the official channel for announcements.
   directoryTitle: Find your next favorite.
   directoryHint: Every channel has a world of its own. Step inside for streams, clips, music and a place to start.
-  directoryEyebrow: Meet the talents
   visitProfile: Explore channel
 channelPages:
   other: Other
