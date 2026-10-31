@@ -999,6 +999,55 @@ curation:
     rateLimited: The server rate limit was reached. Wait before reviewing another attempt.
     rejected: The server rejected the edit. Check the selected videos and target.
     unknown: The request outcome is uncertain. Check current results before reviewing another attempt.
+discovery:
+  eyebrow: Your next rabbit hole
+  title: 'Find your next '
+  titleAccent: favorite.
+  description: Explore VTubers by what they stream. Find someone live, follow a familiar voice, or discover a whole new corner of your world.
+  liveTalents: channels live now
+  scheduledTalents: with upcoming streams
+  filters: Discover channels
+  moreFilters: Filters
+  searchPlaceholder: Search talents or topics…
+  organization: Organization
+  group: Group
+  topic: Topic
+  language: Language
+  allGroups: All groups
+  allTopics: All topics
+  allLanguages: All languages
+  exploreTopics: Explore topics
+  liveFirst: Live first
+  nameSort: Name A–Z
+  status: Channel status
+  browseAll: Current
+  liveNow: Live now
+  upcoming: Upcoming
+  archived: Archived
+  streaming: Streaming now
+  untitledStream: Untitled stream
+  watchLive: Watch live
+  viewStream: View stream
+  profile: Profile
+  subscribers: '{count} subs'
+  archiveHint: Inactive channel. Explore their uploads and clips.
+  noSchedule: No stream in the current schedule. Explore their channel.
+  scheduleUnknown: Stream schedule is not available yet.
+  results: Your discoveries
+  directory: Explore the directory
+  complete: 'All {count} channels loaded. Filters cover this entire directory.'
+  loadingDirectory: 'Loading the whole directory… {count} channels loaded. Matches may still arrive.'
+  partial: 'Only {count} channels loaded. Retry below to search the rest.'
+  clearFilters: Clear filters
+  scheduleError: Schedule unavailable. Live and upcoming status cannot be confirmed.
+  scheduleLoading: Checking the stream schedule…
+  retry: Retry
+  noMatches: No talents match these filters
+  noMatchesYet: No matches in the loaded channels yet
+  emptyHint: Try a different name or clear your filters to explore more talents.
+  partialHint: The directory is not complete. More matches may appear as channels load.
+  showMore: 'Show more talents ({count} remaining)'
+  dataNote: Topics come from channel metadata. Live and upcoming signals reflect the tracked schedule and refresh every two minutes. Archived means marked inactive in Holodex.
 channelRequest:
   RequestType: 'Request Type:'
   Types:

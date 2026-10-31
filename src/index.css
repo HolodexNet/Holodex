@@ -183,6 +183,29 @@
   background: var(--background);
 }
 
+/* Discovery surfaces follow the viewer's palette, including custom themes. */
+.discovery-hero {
+  background: radial-gradient(ellipse at 85% 30%, color-mix(in oklch, var(--primary) 14%, transparent), transparent 55%),
+    linear-gradient(125deg, var(--card), color-mix(in oklch, var(--complement-soft) 38%, var(--card)));
+}
+
+.discovery-hero::after {
+  content: "";
+  position: absolute;
+  width: 24rem;
+  height: 24rem;
+  right: -6rem;
+  top: -10rem;
+  border: 1px solid color-mix(in oklch, var(--complement) 14%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3.5rem color-mix(in oklch, var(--complement) 4%, transparent), 0 0 0 7rem color-mix(in oklch, var(--complement) 3%, transparent);
+  pointer-events: none;
+}
+
+.discovery-card-wash {
+  background: linear-gradient(120deg, color-mix(in oklch, var(--primary) 14%, var(--card)), color-mix(in oklch, var(--complement-soft) 55%, var(--card)));
+}
+
 .home-shell [data-slot="sidebar-menu-button"] {
   border-radius: 0.5rem;
 }

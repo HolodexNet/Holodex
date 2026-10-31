@@ -235,7 +235,7 @@ export function ChannelPage() {
       </div>
       <header className="border-b bg-background px-4 pt-5 md:px-8">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-5">
-          <div className="flex min-w-0 items-center gap-4">
+          <div className="flex w-full min-w-0 items-center gap-4 sm:w-auto">
             <ChannelAvatar
               channel={channel}
               size={88}

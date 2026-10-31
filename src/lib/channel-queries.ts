@@ -1,8 +1,37 @@
+import { useEffect } from "react"
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query"
 import { api } from "@/lib/api"
 import { queryClient } from "@/lib/queries"
 
 export type ChannelTab = "videos" | "clips" | "collabs"
+
+/** Load every page so local discovery facets never stop at the first 48 talents. */
+export function useChannelDirectory(org: string) {
+  const query = useInfiniteQuery({
+    queryKey: ["channel-directory", org],
+    initialPageParam: 0,
+    queryFn: ({ pageParam, signal }) =>
+      api.channels(
+        {
+          org,
+          type: "vtuber",
+          sort: "suborg",
+          order: "asc",
+          limit: 100,
+          offset: pageParam,
+        },
+        signal
+      ),
+    getNextPageParam: (last, _pages, offset) =>
+      last.length === 100 ? offset + last.length : undefined,
+    staleTime: 3 * 60_000,
+  })
+  const { hasNextPage, isFetching, isError, fetchNextPage } = query
+  useEffect(() => {
+    if (hasNextPage && !isFetching && !isError) void fetchNextPage()
+  }, [hasNextPage, isFetching, isError, fetchNextPage])
+  return query
+}
 
 export function useChannels(org: string, sort: string, type = "vtuber") {
   return useInfiniteQuery({
