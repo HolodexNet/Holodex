@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { Link, useParams, useSearchParams } from "react-router"
+import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 import { cn } from "cn"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { ChannelActions } from "@/components/common/channel-actions"
@@ -80,6 +80,7 @@ export function ChannelCard({
 export function ChannelsPage() {
   const { t } = useT()
   const [params, setParams] = useSearchParams()
+  const navigate = useNavigate()
   const { org: routeOrg } = useParams()
   const currentOrg = useOrgStore((s) => s.currentOrg.name)
   const org = routeOrg ?? params.get("org") ?? currentOrg
@@ -92,12 +93,12 @@ export function ChannelsPage() {
   const channels = useChannels(org, sort)
   const orgs = useOrgs()
   const scroll = useSettings((s) => s.scrollMode)
-  const update = (key: string, value: string) =>
-    setParams((previous) => {
-      const next = new URLSearchParams(previous)
-      next.set(key, value)
-      return next
-    })
+  const update = (key: string, value: string) => {
+    const next = new URLSearchParams(params)
+    next.set(key, value)
+    if (key === "org" && routeOrg) void navigate(`/channel?${next}`)
+    else setParams(next)
+  }
   const groups = useMemo(() => {
     const result = new Map<string, Channel[]>()
     const seen = new Set<string>()

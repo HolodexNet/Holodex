@@ -16,4 +16,6 @@ Goal: make a channel feel like a talent's home, with an immediate useful answer 
 
 ## Validation scope
 
+Migration validation: production build and focused ESLint passed. Visually inspected the Hololive directory and Shirakami Fubuki profile with real existing data, including the 390 × 844 phone layout. No tests were added or run; no account changes were made. Existing build warnings concern the shared bundle size and Tailwind sourcemaps.
+
 Do not add tests or run unit/e2e suites. Run the production build and focused lint/type checks as needed. Use browser screenshots only to assess visual quality at desktop and phone widths, with existing data and a sparse-data case. Do not make account mutations during visual review. Commit and push each branch individually, without merging experiments together.

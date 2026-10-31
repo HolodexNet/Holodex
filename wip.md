@@ -10,7 +10,8 @@ Build: the bundle visualizer produces stats.html; rollup-plugin-visualizer suppo
 i18n: all 20 existing locale files are used as they are; new strings went into en/ui.yml only and fall back to English elsewhere.
 Things you should know
 The Vue app moved to legacy/ as git renames, for reference only. It is not runnable from there, because the locales stayed at src/locales for Crowdin.
-Unported routes (channels, multiview, playlists, about, TL tools, and non-Twitch watch pages) show a stopgap page linking to the same path on holodex.net.
+Channels: ported the directory and profiles from next to attempt-3-channels. Grouped grid/list organization browsing, subscriber/view sorting, favorite/block controls, profile banners, Videos/Clips/Collabs/About, Musicdex and social links. Supports /channel, /channels and /org/:org/channels. Related feeds resolve handles through canonical IDs. Missing imagery has themed/initial fallbacks and absent stats stay unknown. Two independent design branches are planned in dev-docs-handoff/channel-design-experiments.md.
+Unported routes (multiview, playlists, about, TL tools, and non-Twitch watch pages) show a stopgap page linking to the same path on holodex.net.
 Login page: a minimal one supports Google, Discord, and the Twitter return path. The user tried login and reported that it works.
 Existing users: first run imports settings, org, theme and login from the old holodex-v2 localStorage. Also untested against real old data.
 Comment search still uses v2/search/commentSearch (no v3 equivalent). That route times out on the local database after 30s, so I could not see results render.
