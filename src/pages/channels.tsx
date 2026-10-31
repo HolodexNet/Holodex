@@ -122,9 +122,6 @@ export function ChannelsPage() {
     <main className="mx-auto w-full max-w-[1600px] p-4 md:p-8">
       <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="mb-1 text-xs font-medium tracking-wider text-brand uppercase">
-            Holodex
-          </p>
           <h1 className="text-2xl font-bold tracking-tight">
             {t("component.mainNav.channels")}
           </h1>
