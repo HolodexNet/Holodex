@@ -34,11 +34,16 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    experimental: {
+      bundledDev: true,
+    },
     plugins: [
       yaml(),
-      react(),
+      react({
+        compiler: true,
+      }),
       tailwindcss(),
-      visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true }),
+      visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true, template: 'treemap' }),
     ],
     resolve: {
       alias: {
@@ -47,11 +52,18 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       sourcemap: true,
+      chunkImportMap: true,
       rollupOptions: {
         input: {
           main: resolve(import.meta.dirname, "index.html"),
           seo: resolve(import.meta.dirname, "seo.html"),
         },
+        output: {
+          codeSplitting: true,
+          // Keep the React Refresh preamble ahead of shared app chunks in bundledDev.
+          // https://github.com/vitejs/vite-plugin-react/issues/1191
+          strictExecutionOrder: true,
+        }
       },
     },
     server: {
