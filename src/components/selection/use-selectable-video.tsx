@@ -20,11 +20,10 @@ function selectionTarget(
   )
 }
 
-export function warnSelectionLimit() {
-  if (Object.keys(useSelection.getState().items).length >= SELECTION_LIMIT)
-    toast.info(getT().t("selection.limit", { count: SELECTION_LIMIT }), {
-      id: "selection-limit",
-    })
+export function toastSelectionLimit() {
+  toast.info(getT().t("selection.limit", { count: SELECTION_LIMIT }), {
+    id: "selection-limit",
+  })
 }
 
 export function useSelectableVideo(video: Video) {
@@ -40,9 +39,11 @@ export function useSelectableVideo(video: Video) {
   const toggle = (range = false) => {
     if (!scope || !selecting) return
     activate()
-    if (range) useSelection.getState().range(scope.id, scope.videos, video.id)
-    else useSelection.getState().toggle(video, scope.id)
-    warnSelectionLimit()
+    const { range: selectRange, toggle } = useSelection.getState()
+    const limited = range
+      ? selectRange(scope.id, scope.videos, video.id)
+      : toggle(video, scope.id)
+    if (limited) toastSelectionLimit()
   }
   const click = (event: MouseEvent<HTMLElement>) => {
     if (!enabled || !selectionTarget(event.target, event.currentTarget)) return
@@ -59,8 +60,7 @@ export function useSelectableVideo(video: Video) {
           onPointerDownCapture: activate,
           onKeyDown: (event) => {
             if (
-              (event.key.toLowerCase() !== "x" &&
-                !(selecting && event.key === " ")) ||
+              (event.key.toLowerCase() !== "x" && event.key !== " ") ||
               event.ctrlKey ||
               event.metaKey ||
               event.altKey ||
@@ -126,8 +126,8 @@ export function CollaborationSelection({ videos }: { videos: Video[] }) {
       className="size-5"
       onCheckedChange={() => {
         useSelectionScopes.getState().activate(scope.id)
-        useSelection.getState().set(videos, count !== videos.length)
-        warnSelectionLimit()
+        if (useSelection.getState().set(videos, count !== videos.length))
+          toastSelectionLimit()
       }}
     />
   )

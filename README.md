@@ -37,6 +37,9 @@ npm run analyze-build
 
 ## Contributing
 
+See [translation tooling](docs/i18n.md) for the current app's x18n configuration
+and translation workflow.
+
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) for things being planned
 

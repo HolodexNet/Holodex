@@ -24,7 +24,7 @@ import { useAuth } from "@/stores/auth"
 import { useSelection, useSelectionScopes } from "@/stores/selection"
 import { useSelectionAction } from "@/stores/selection-action"
 import { useSettings } from "@/stores/settings"
-import { warnSelectionLimit } from "./use-selectable-video"
+import { toastSelectionLimit } from "./use-selectable-video"
 
 export function SelectionTray() {
   const { t } = useT()
@@ -40,8 +40,8 @@ export function SelectionTray() {
   const editActions = actions.filter((action) => action.id !== "copy-links")
   const loaded = active ? scopes[active] : undefined
   const selectLoaded = () => {
-    if (loaded) useSelection.getState().set(loaded, true)
-    warnSelectionLimit()
+    if (loaded && useSelection.getState().set(loaded, true))
+      toastSelectionLimit()
   }
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -69,8 +69,7 @@ export function SelectionTray() {
         const videos = state.active ? state.scopes[state.active] : undefined
         if (!videos) return
         event.preventDefault()
-        useSelection.getState().set(videos, true)
-        warnSelectionLimit()
+        if (useSelection.getState().set(videos, true)) toastSelectionLimit()
       }
     }
     document.addEventListener("keydown", onKey)
