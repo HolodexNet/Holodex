@@ -15,6 +15,7 @@ import { ALL_VTUBERS } from "@/lib/consts"
 import { useT } from "@/lib/i18n"
 import { useOrgs } from "@/lib/queries"
 import type { Channel } from "@/lib/types"
+import { formatCount } from "@/lib/time"
 import { channelName } from "@/lib/video"
 import { useOrgStore } from "@/stores/org"
 import { useSettings } from "@/stores/settings"
@@ -62,9 +63,7 @@ export function ChannelCard({
           {channel.subscriber_count != null && (
             <p className="mt-1 text-xs text-muted-foreground">
               {t("component.channelInfo.subscriberCount", {
-                n: new Intl.NumberFormat(lang, { notation: "compact" }).format(
-                  Number(channel.subscriber_count)
-                ),
+                n: formatCount(channel.subscriber_count, lang),
               })}
             </p>
           )}
