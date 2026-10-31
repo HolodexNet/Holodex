@@ -460,10 +460,6 @@ export function ChannelsPage() {
       <header className="discovery-hero relative mb-5 overflow-hidden rounded-3xl border p-5 md:p-7">
         <div className="relative z-10 flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
           <div className="max-w-xl">
-            <p className="mb-3 flex items-center gap-2 text-[11px] font-bold tracking-[0.18em] text-complement uppercase">
-              <BroadcastIcon className="size-4" />
-              {t("discovery.eyebrow")}
-            </p>
             <h1 className="max-w-lg text-3xl leading-[1.12] font-bold tracking-tight md:text-[2.65rem]">
               {t("discovery.title")}
               <span className="text-brand">{t("discovery.titleAccent")}</span>

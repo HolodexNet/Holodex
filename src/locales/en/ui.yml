@@ -1000,10 +1000,9 @@ curation:
     rejected: The server rejected the edit. Check the selected videos and target.
     unknown: The request outcome is uncertain. Check current results before reviewing another attempt.
 discovery:
-  eyebrow: Your next rabbit hole
   title: 'Find your next '
   titleAccent: favorite.
-  description: Explore VTubers by what they stream. Find someone live, follow a familiar voice, or discover a whole new corner of your world.
+  description: Find VTubers by name, group, or topic, and see who is live or streaming next.
   liveTalents: channels live now
   scheduledTalents: with upcoming streams
   filters: Discover channels
@@ -1033,8 +1032,8 @@ discovery:
   archiveHint: Inactive channel. Explore their uploads and clips.
   noSchedule: No stream in the current schedule. Explore their channel.
   scheduleUnknown: Stream schedule is not available yet.
-  results: Your discoveries
-  directory: Explore the directory
+  results: Matching channels
+  directory: VTuber channels
   complete: 'All {count} channels loaded. Filters cover this entire directory.'
   loadingDirectory: 'Loading the whole directory… {count} channels loaded. Matches may still arrive.'
   partial: 'Only {count} channels loaded. Retry below to search the rest.'

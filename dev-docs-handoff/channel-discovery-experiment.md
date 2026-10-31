@@ -36,6 +36,12 @@ Actual local API data:
 
 Screenshots are in [`../artifacts/channel-discovery/`](../artifacts/channel-discovery/). `desktop-discovery.jpg`, `desktop-cards.jpg`, `phone-discovery.jpg`, and `phone-cards.jpg` show the final main views. Supporting captures cover sparse/list/archived/empty data and global loading/unavailable schedules.
 
+## Copy correction
+
+Copy correction: removed the decorative all-caps eyebrow entirely, shortened the introduction to describe the available controls, and changed decorative result labels to “Matching channels” / “VTuber channels.” Meaningful headings and factual schedule/status labels remain. No replacement tagline.
+
+Focused desktop and 390×844 phone screenshots confirmed the corrected header; `desktop-discovery.jpg` and `phone-discovery.jpg` were refreshed. No tests were run for this copy/removal update.
+
 ## Limits
 
 The local global schedule request failed during visual review and remained unavailable after a manual retry; Hololive's organization schedule succeeded. The global directory still completed and remained searchable, but honestly showed unknown live/upcoming status, an unavailable message, and Retry. Live/upcoming filter counts also remain unknown until a schedule is confirmed. No streams or statuses were fabricated to fill that gap.
