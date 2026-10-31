@@ -18,7 +18,8 @@ import {
   type ChannelTab,
 } from "@/lib/channel-queries"
 import { musicdexURL } from "@/lib/consts"
-import { useT } from "@/lib/i18n"
+import { intlLocale, useT } from "@/lib/i18n"
+import { formatCount } from "@/lib/time"
 import { flattenPages } from "@/lib/queries"
 import type { Channel } from "@/lib/types"
 import { channelName } from "@/lib/video"
@@ -145,7 +146,7 @@ export function ChannelAbout({ channel }: { channel: Channel }) {
               <dd className="font-medium tabular-nums">
                 {value == null || !Number.isFinite(Number(value))
                   ? "—"
-                  : Number(value).toLocaleString(lang)}
+                  : Number(value).toLocaleString(intlLocale(lang))}
               </dd>
             </div>
           ))}
@@ -255,9 +256,7 @@ export function ChannelPage() {
               <p className="mt-1 text-sm text-muted-foreground">
                 {channel.subscriber_count != null
                   ? t("component.channelInfo.subscriberCount", {
-                      n: new Intl.NumberFormat(lang, {
-                        notation: "compact",
-                      }).format(Number(channel.subscriber_count)),
+                      n: formatCount(channel.subscriber_count, lang),
                     })
                   : t("component.channelInfo.subscriberNA")}
               </p>
