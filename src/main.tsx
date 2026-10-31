@@ -10,6 +10,8 @@ import { setLanguage } from "@/lib/i18n"
 import { queryClient } from "@/lib/queries"
 import { applyTheme, systemMode } from "@/lib/theme/apply"
 import { WatchPage } from "@/pages/watch"
+import { ChannelPage } from "@/pages/channel"
+import { ChannelsPage } from "@/pages/channels"
 import { HomePage } from "@/pages/home"
 import { LoginPage } from "@/pages/login"
 import { NotFoundPage, NotReadyPage } from "@/pages/not-ready"
@@ -38,8 +40,6 @@ if (
 
 /** Routes of the previous UI that have not been rebuilt yet. */
 const PENDING_ROUTES = [
-  "/channel",
-  "/channel/:id/*",
   "/edit/video/:id/:tab?",
   "/add_placeholder",
   "/multiview/:layout?",
@@ -62,6 +62,9 @@ const router = createBrowserRouter([
       { path: "/home", element: <Navigate to="/" replace /> },
       { path: "/favorites", element: <HomePage favorites /> },
       { path: "/watch/:id?", element: <WatchPage /> },
+      { path: "/channel", element: <ChannelsPage /> },
+      { path: "/org/:org", element: <ChannelsPage /> },
+      { path: "/channel/:id/:tab?", element: <ChannelPage /> },
       { path: "/search", element: <SearchPage /> },
       { path: "/settings", element: <SettingsPage /> },
       { path: "/login", element: <LoginPage /> },

@@ -29,6 +29,18 @@ export interface FavoriteChannel extends ChannelSummary {
   clip_count?: number | string | null
 }
 
+/** Directory and detail payloads; absent metadata must not become zero stats. */
+export interface Channel extends FavoriteChannel {
+  description?: string | null
+  banner?: string | null
+  twitch?: string | null
+  view_count?: number | string | null
+  lang?: string | null
+  published_at?: string | null
+  top_topics?: string[] | null
+  yt_handle?: string[] | string | null
+}
+
 export interface VideoRef {
   id: string
   title?: string

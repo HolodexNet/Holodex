@@ -1,3 +1,15 @@
+channelPages:
+  other: Other
+  independent: Independent
+  inactive: Inactive
+  noChannels: No channels found
+  noDescription: This channel has not provided a description yet.
+  emptyTab: Try another tab or load more videos. Clips also follow your language and blocked channel settings.
+  notFound: Channel or page not found
+  navigation: Channel navigation
+  videoCount: Videos
+  clipCount: Clips
+  totalViews: Total views
 component:
   apiError:
     title: Gomenasorry!

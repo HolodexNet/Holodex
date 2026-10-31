@@ -1,0 +1,152 @@
+import { Link, useLocation } from "react-router"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
+import {
+  HeartIcon,
+  HeartFillIcon,
+  LogoYoutubeIcon,
+  LogoTwitterIcon,
+  LogoTwitchIcon,
+  ProhibitIcon,
+} from "@/components/icons"
+import { useT } from "@/lib/i18n"
+import { useFavorites } from "@/lib/queries"
+import { useFavoriteMutation } from "@/lib/channel-queries"
+import type { Channel } from "@/lib/types"
+import { useAuth } from "@/stores/auth"
+import { useSettings } from "@/stores/settings"
+
+export function ChannelActions({
+  channel,
+  compact = false,
+}: {
+  channel: Channel
+  compact?: boolean
+}) {
+  const { t } = useT()
+  const location = useLocation()
+  const loggedIn = useAuth((s) => !!s.jwt)
+  const {
+    favorites,
+    isPending: favoritesPending,
+    isError: favoritesError,
+  } = useFavorites()
+  const mutation = useFavoriteMutation()
+  const favorite = favorites.some((c) => c.id === channel.id)
+  const blocked = useSettings((s) =>
+    s.blockedChannels.some((c) => c.id === channel.id)
+  )
+  const toggleBlocked = useSettings((s) => s.toggleBlocked)
+  const label = t(
+    `component.channelSocials.${favorite ? "removeFromFavorites" : "addToFavorites"}`
+  )
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      {loggedIn ? (
+        <Button
+          size={compact ? "icon-sm" : "default"}
+          variant={favorite ? "outline" : "default"}
+          aria-label={label}
+          aria-pressed={favorite}
+          title={label}
+          disabled={mutation.isPending || favoritesPending || favoritesError}
+          onClick={() =>
+            mutation.mutate(
+              { id: channel.id, favorite: !favorite },
+              { onError: () => toast.error(t("component.apiError.generic")) }
+            )
+          }
+        >
+          {favorite ? <HeartFillIcon /> : <HeartIcon />}
+          {!compact && label}
+        </Button>
+      ) : (
+        <Button
+          nativeButton={false}
+          size={compact ? "icon-sm" : "default"}
+          variant="outline"
+          title={t("component.channelList.signInToFavorite")}
+          aria-label={t("component.channelList.signInToFavorite")}
+          render={
+            <Link
+              to={`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`}
+            />
+          }
+        >
+          <HeartIcon />
+          {!compact && t("component.channelList.signInToFavorite")}
+        </Button>
+      )}
+      {!compact && (
+        <>
+          <Button
+            nativeButton={false}
+            variant="outline"
+            size="icon"
+            aria-label="YouTube"
+            title="YouTube"
+            render={
+              <a
+                href={`https://www.youtube.com/channel/${channel.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+          >
+            <LogoYoutubeIcon />
+          </Button>
+          {channel.twitter && (
+            <Button
+              nativeButton={false}
+              variant="outline"
+              size="icon"
+              aria-label="X / Twitter"
+              title="X / Twitter"
+              render={
+                <a
+                  href={`https://x.com/${encodeURIComponent(channel.twitter.replace(/^@/, ""))}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              }
+            >
+              <LogoTwitterIcon />
+            </Button>
+          )}
+          {channel.twitch && (
+            <Button
+              nativeButton={false}
+              variant="outline"
+              size="icon"
+              aria-label="Twitch"
+              title="Twitch"
+              render={
+                <a
+                  href={`https://twitch.tv/${encodeURIComponent(channel.twitch)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              }
+            >
+              <LogoTwitchIcon />
+            </Button>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-pressed={blocked}
+            title={t(
+              `component.channelSocials.${blocked ? "unblock" : "block"}`
+            )}
+            aria-label={t(
+              `component.channelSocials.${blocked ? "unblock" : "block"}`
+            )}
+            onClick={() => toggleBlocked(channel)}
+          >
+            <ProhibitIcon />
+          </Button>
+        </>
+      )}
+    </div>
+  )
+}

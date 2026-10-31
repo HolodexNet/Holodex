@@ -31,6 +31,13 @@ export function ChannelAvatar({
       )}
       style={{ width: size, height: size }}
     >
+      <span
+        aria-hidden="true"
+        className="absolute inset-0 flex items-center justify-center bg-primary/10 text-[0.45em] font-semibold text-brand"
+        style={{ fontSize: size * 0.32 }}
+      >
+        {channel.name.trim().slice(0, 2)}
+      </span>
       {failedSrc !== src && (
         <img
           src={src}
@@ -40,7 +47,7 @@ export function ChannelAvatar({
           loading="lazy"
           decoding="async"
           referrerPolicy="no-referrer"
-          className="size-full object-cover"
+          className="relative size-full object-cover"
           onError={() => setFailedSrc(src)}
         />
       )}

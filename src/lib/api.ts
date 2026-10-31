@@ -9,6 +9,7 @@ import {
 } from "@/lib/selection-actions/smart"
 import type {
   AutocompleteResult,
+  Channel,
   ChannelSummary,
   FavoriteChannel,
   Org,
@@ -194,6 +195,52 @@ export interface CommentSearchPage {
 }
 
 export const api = {
+  channels: (
+    query: {
+      org?: string
+      sort: string
+      order: string
+      limit: number
+      offset: number
+      type?: string
+    },
+    signal?: AbortSignal
+  ) =>
+    request<Channel[]>(`${API}/v2/channels`, {
+      query: { ...query, org: query.org ? orgParam(query.org) : undefined },
+      signal,
+    }),
+
+  channel: (id: string, signal?: AbortSignal) =>
+    request<Channel>(`${API}/v2/channels/${encodeURIComponent(id)}`, {
+      signal,
+    }),
+
+  channelVideos: async (
+    id: string,
+    tab: "videos" | "clips" | "collabs",
+    offset: number,
+    signal?: AbortSignal
+  ) => {
+    const result = await request<Video[] | { items: Video[] }>(
+      `${API}/v2/channels/${encodeURIComponent(id)}/${tab}`,
+      {
+        query: { limit: 24, offset, include: "mentions" },
+        signal,
+      }
+    )
+    return (Array.isArray(result) ? result : (result.items ?? [])).map(
+      withMentionAdditions
+    )
+  },
+
+  setFavorite: (id: string, favorite: boolean) =>
+    request(`${API}/v2/users/favorites`, {
+      method: "PATCH",
+      auth: "required",
+      body: [{ op: favorite ? "add" : "remove", channel_id: id }],
+    }),
+
   // -- Public metadata (static routes, not rate limited) --------------------
   orgs: (signal?: AbortSignal) =>
     request<Org[]>("/statics/orgsV2.json", { signal }),
