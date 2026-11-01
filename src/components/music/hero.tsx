@@ -1,5 +1,6 @@
 import { Link } from "react-router"
 import { toast } from "sonner"
+import { cn } from "cn"
 import { CaretRightIcon, PlayIcon, PlusIcon } from "@/components/icons"
 import { MusicArtwork } from "@/components/music/artwork"
 import { PlayPlaylistButton } from "@/components/music/play-playlist"
@@ -67,6 +68,16 @@ export function AddToQueueButton({
   )
 }
 
+const heroCover =
+  "absolute max-w-[280px] transition-[transform] duration-[0.35s] ease-[ease] motion-reduce:transition-none [&_.music-artwork]:!rounded-[9px] [&_.music-artwork]:border-5 [&_.music-artwork]:border-solid [&_.music-artwork]:border-[color-mix(in_oklch,var(--card)_90%,transparent)] [&_.music-artwork]:shadow-[0_20px_36px_#0004]"
+const heroCoverLayout = [
+  "top-10 left-[10%] z-3 w-[53%] [transform:rotate(-8deg)] [&:hover]:[transform:rotate(-3deg)_translateY(-5px)] max-md:top-[18px] max-md:left-[18%] max-md:w-[45%]",
+  "top-[62px] left-[33%] z-2 w-[48%] [transform:rotate(9deg)] max-md:top-[30px] max-md:left-[40%] max-md:w-[41%]",
+  "top-[86px] left-[51%] z-1 w-[40%] opacity-75 [transform:rotate(19deg)] max-md:top-[52px] max-md:left-[58%] max-md:w-[32%]",
+]
+const heroCaption =
+  "absolute z-4 flex min-w-0 items-center gap-2.5 bottom-[23px] left-[7%] right-[8%] text-[12px] font-[550] [&_.music-eyebrow]:shrink-0 [&_.music-eyebrow]:!text-[8px] [&_.music-eyebrow]:!tracking-[0.09em] max-[1101px]:[&_.music-eyebrow]:!hidden max-md:bottom-[15px] max-md:left-[18%]"
+
 export function MusicHero({
   scope,
   playlists,
@@ -104,22 +115,22 @@ export function MusicHero({
       ].slice(0, 3)
     : []
   return (
-    <section className="music-hero">
-      <div className="music-hero-copy">
-        <h1>
+    <section className="relative isolate grid min-h-87.5 grid-cols-[1.1fr_1fr] overflow-clip rounded-[22px] border border-[color-mix(in_oklch,var(--complement)_13%,var(--border))] bg-[color-mix(in_oklch,var(--complement-soft)_22%,var(--card))] before:absolute before:right-[-8%] before:bottom-[-65%] before:-z-1 before:aspect-square before:w-[45%] before:rounded-full before:bg-primary before:opacity-[0.14] before:blur-[100px] before:content-[''] max-md:grid-cols-[minmax(0,1fr)]">
+      <div className="relative z-5 self-center px-[clamp(24px,3vw,48px)] py-10 max-md:px-6 max-md:pt-7 max-md:pb-2.5">
+        <h1 className="mt-6 max-w-140 text-[clamp(38px,4.6vw,68px)] leading-[1.04] font-[760] tracking-[-0.065em] text-balance max-md:mt-5 max-md:text-[44px]">
           {favorites
             ? "Your favorites"
             : scope === "All Vtubers"
               ? "The whole scene"
               : scope}
-          <span>on repeat.</span>
+          <span className="block text-brand">on repeat.</span>
         </h1>
-        <p className="music-hero-description">
+        <p className="mt-4.75 max-w-77.5 text-[13px] leading-[1.8] text-muted-foreground max-md:mt-4 max-md:hidden max-md:max-w-65 max-md:text-[12px]">
           {favorites
             ? "Familiar voices. Favorite performances. A little more of what you love."
             : "The covers, originals, and late-night karaoke that stay with you."}
         </p>
-        <div className="music-hero-actions">
+        <div className="mt-6.5 flex flex-wrap items-center gap-5.5 *:data-[slot=button]:h-10.5 *:data-[slot=button]:px-5 *:data-[slot=button]:shadow-[0_5px_20px_color-mix(in_oklch,var(--primary)_18%,transparent)] max-md:mt-5 max-md:gap-4">
           {favorites && songs.length ? (
             <PlaySongsButton
               songs={songs}
@@ -142,15 +153,18 @@ export function MusicHero({
           )}
           <Link
             to={favorites ? "/music/liked" : "/music/radios"}
-            className="music-text-link"
+            className="inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
           >
             {favorites ? "Your liked songs" : "Find a radio"}
             <CaretRightIcon className="size-4" />
           </Link>
         </div>
       </div>
-      <div className="music-hero-records">
-        <div className="music-hero-orbit" aria-hidden="true" />
+      <div className="relative min-h-85 min-w-0 max-md:mx-4 max-md:min-h-50">
+        <div
+          className="absolute top-[-15%] left-[10%] aspect-square w-[85%] rounded-full border border-[color-mix(in_oklch,var(--foreground)_8%,transparent)] shadow-[0_0_0_38px_color-mix(in_oklch,var(--foreground)_2%,transparent),0_0_0_76px_color-mix(in_oklch,var(--foreground)_2%,transparent)] max-md:-top-6.25 max-md:left-[20%] max-md:w-[75%]"
+          aria-hidden="true"
+        />
         {covers.length ? (
           covers.map((playlist, index) => {
             const cover = formatMusicPlaylist(playlist, english)
@@ -158,7 +172,7 @@ export function MusicHero({
               <Link
                 to={cover.href}
                 key={playlist.id}
-                className={`music-hero-cover music-hero-cover-${index}`}
+                className={cn(heroCover, heroCoverLayout[index])}
                 aria-label={
                   index === 0
                     ? `Featured collection: ${cover.title}`
@@ -182,14 +196,14 @@ export function MusicHero({
             {[0, 1, 2].map((index) => (
               <div
                 key={index}
-                className={`music-hero-cover music-hero-cover-${index}`}
+                className={cn(heroCover, heroCoverLayout[index])}
               >
                 <Skeleton className="aspect-square rounded-lg border-5 border-card/90 shadow-xl" />
               </div>
             ))}
           </div>
         ) : (
-          <div className="music-hero-cover music-hero-cover-0">
+          <div className={cn(heroCover, heroCoverLayout[0])}>
             <MusicArtwork
               title="Your next favorite"
               seed={scope}
@@ -198,13 +212,13 @@ export function MusicHero({
           </div>
         )}
         {formatted ? (
-          <Link to={formatted.href} className="music-hero-caption">
+          <Link to={formatted.href} className={heroCaption}>
             <span className="music-eyebrow">IN THE SPOTLIGHT</span>
             <span className="truncate">{formatted.title}</span>
             <CaretRightIcon className="size-4 shrink-0" />
           </Link>
         ) : loading ? (
-          <div className="music-hero-caption" aria-hidden="true">
+          <div className={heroCaption} aria-hidden="true">
             <Skeleton className="h-4 w-2/3" />
           </div>
         ) : null}

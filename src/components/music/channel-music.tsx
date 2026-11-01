@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react"
 import { Link, useSearchParams } from "react-router"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
+import { cn } from "cn"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import {
@@ -12,7 +13,14 @@ import {
   PlaylistIcon,
 } from "@/components/icons"
 import { MusicArtwork } from "@/components/music/artwork"
-import { MusicPlaylistCard } from "@/components/music/discovery/sections"
+import {
+  MusicPlaylistCard,
+  musicArtistCardClass,
+  musicArtistPhotoClass,
+  musicCardCaptionClass,
+  musicCardPlayClass,
+  musicCardTitleClass,
+} from "@/components/music/discovery/sections"
 import { MusicSectionHeading } from "@/components/music/page-header"
 import { PlayPlaylistButton } from "@/components/music/play-playlist"
 import {
@@ -221,11 +229,17 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
               </Button>
             )}
             <div className="music-channel-catalog-links">
-              <Link to={search} className="music-text-link">
+              <Link
+                to={search}
+                className="music-text-link inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
+              >
                 <MagnifyingGlassIcon className="size-4" />
                 Search songs
               </Link>
-              <Link to={`${base}?songs=all`} className="music-text-link">
+              <Link
+                to={`${base}?songs=all`}
+                className="music-text-link inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
+              >
                 <ListBulletsIcon className="size-4" />
                 See all songs
               </Link>
@@ -257,12 +271,12 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
                 return (
                   <article
                     key={video.id}
-                    className="music-collection-card music-channel-stream group"
+                    className="music-collection-card music-channel-stream group min-w-0"
                   >
                     <div className="relative">
                       <Link
                         to={formatted.href}
-                        className="music-cover-link"
+                        className="block rounded-[12px] outline-offset-4"
                         aria-label={video.title || formatted.title}
                       >
                         <MusicArtwork
@@ -276,14 +290,17 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
                       </Link>
                       <PlayPlaylistButton
                         playlist={playlist!}
-                        className="music-card-play"
+                        className={musicCardPlayClass}
                       />
                     </div>
-                    <Link to={formatted.href} className="music-card-title">
+                    <Link
+                      to={formatted.href}
+                      className={cn(musicCardTitleClass, "hover:text-brand")}
+                    >
                       {video.title || formatted.title}
                     </Link>
                     {performed && (
-                      <p className="music-card-caption">
+                      <p className={musicCardCaptionClass}>
                         Performed {performed}
                       </p>
                     )}
@@ -315,17 +332,17 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
                 <Link
                   to={`/channel/${encodeURIComponent(artist.id)}/music`}
                   key={artist.id}
-                  className="music-artist-card"
+                  className={cn("music-artist-card", musicArtistCardClass)}
                 >
                   <ChannelAvatar
                     channel={artist}
                     size={100}
-                    className="music-artist-photo"
+                    className={musicArtistPhotoClass}
                   />
-                  <span className="music-card-title">
+                  <span className={musicCardTitleClass}>
                     {channelName(artist, english)}
                   </span>
-                  <span className="music-card-caption">
+                  <span className={musicCardCaptionClass}>
                     {artist.song_count.toLocaleString()} performances
                   </span>
                 </Link>
@@ -367,7 +384,7 @@ function ChannelSongs({ channel }: { channel: Channel }) {
     <section className="music-channel-catalog space-y-5">
       <Link
         to={`/channel/${encodeURIComponent(channel.id)}/music`}
-        className="music-text-link"
+        className="inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
       >
         <CaretLeftIcon className="size-4" />
         Back to music overview
@@ -381,7 +398,7 @@ function ChannelSongs({ channel }: { channel: Channel }) {
         }
       >
         <Link
-          className="music-text-link"
+          className="inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
           to={`/music/search?${new URLSearchParams({ channelId: channel.id })}`}
         >
           <MagnifyingGlassIcon className="size-4" />

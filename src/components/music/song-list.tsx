@@ -18,18 +18,24 @@ import { useAuth } from "@/stores/auth"
 import { useMusicPlayer, type MusicSource } from "@/stores/music-player"
 import { useSettings } from "@/stores/settings"
 
+// `music-track-row` stays as a hook: channel-music.css targets it.
+const trackRowBase =
+  "music-track-row flex min-w-0 items-center gap-3 rounded-md px-2 py-2.5 transition-[background] duration-150 ease-[ease] max-md:px-1"
+
 function SongRow({
   song,
   index,
   onPlay,
   liked,
   contextChannelId,
+  previewGrid,
 }: {
   song: Song
   index: number
   onPlay: () => void
   liked: boolean
   contextChannelId?: string
+  previewGrid: boolean
 }) {
   const preferEnglish = useSettings((s) => s.useEnglishName)
   const loggedIn = useAuth((s) => !!s.jwt)
@@ -61,8 +67,9 @@ function SongRow({
   return (
     <div
       className={cn(
-        "music-track-row group flex items-center gap-3",
-        current && "is-current"
+        trackRowBase,
+        "group",
+        current ? "bg-primary/9" : "hover:bg-foreground/4"
       )}
     >
       <Button
@@ -91,11 +98,14 @@ function SongRow({
         }
         alt=""
         loading="lazy"
-        className="music-track-art object-cover"
+        className="size-10.5 shrink-0 rounded-sm object-cover"
       />
       <div className="min-w-0 flex-1">
         <button
-          className="music-song-title block max-w-full truncate text-left text-sm font-medium hover:underline"
+          className={cn(
+            "music-song-title block max-w-full truncate text-left text-sm font-medium hover:underline",
+            current && "text-brand"
+          )}
           onClick={onPlay}
         >
           {song.name}
@@ -130,7 +140,10 @@ function SongRow({
           href={sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="music-track-date hidden shrink-0 text-xs text-muted-foreground hover:underline lg:block"
+          className={cn(
+            "hidden shrink-0 text-xs text-muted-foreground hover:underline",
+            !previewGrid && "lg:block"
+          )}
           title="Open this performance on YouTube"
         >
           <time dateTime={performed.toISOString()}>
@@ -156,7 +169,7 @@ function SongRow({
       <Button
         variant="ghost"
         size="icon-sm"
-        className="music-track-secondary-action"
+        className={previewGrid ? "hidden" : undefined}
         aria-label="Add to queue"
         onClick={() => {
           useMusicPlayer.getState().queueSongs([song])
@@ -175,13 +188,16 @@ export function SongListSkeleton() {
     <div role="status" aria-label="Loading songs">
       <span className="sr-only">Loading songs</span>
       <div
-        className="music-track-list music-track-list-preview"
+        className="grid min-w-0 grid-cols-2 gap-x-6 gap-y-1 max-[1101px]:grid-cols-1"
         aria-hidden="true"
       >
         {Array.from({ length: 6 }, (_, index) => (
-          <div key={index} className="music-track-row flex items-center gap-3">
+          <div
+            key={index}
+            className={cn(trackRowBase, "hover:bg-foreground/4")}
+          >
             <Skeleton className="hidden size-7 shrink-0 sm:block" />
-            <Skeleton className="music-track-art" />
+            <Skeleton className="size-10.5 shrink-0 rounded-sm" />
             <div className="min-w-0 flex-1 space-y-2">
               <Skeleton className="h-4 w-3/4" />
               <Skeleton className="h-3 w-1/2" />
@@ -217,6 +233,7 @@ export function SongList({
   const loggedIn = useAuth((s) => !!s.jwt)
   const [visibleCount, setVisibleCount] = useState(100)
   const visible = songs.slice(0, preview ?? visibleCount)
+  const previewGrid = !!preview && previewLayout === "grid"
   const ids = visible.map((song) => song.id)
   const checks = useQuery({
     queryKey: ["musicdex", "like-check", user?.id, ids.join(",")],
@@ -234,18 +251,24 @@ export function SongList({
   return (
     <div>
       {!preview && (
-        <div className="music-track-head" aria-hidden="true">
+        <div
+          className="mb-2 flex items-center gap-4 border-b border-border px-2 py-3 text-[9px] font-[650] tracking-widest text-muted-foreground uppercase max-md:hidden"
+          aria-hidden="true"
+        >
           <span className="w-8 text-center">#</span>
           <span className="flex-1">Track / Artist</span>
-          <span className="music-track-date hidden lg:block">Performed</span>
+          <span className="ml-auto hidden w-30 text-right lg:block">
+            Performed
+          </span>
           <span className="hidden w-12 text-right sm:block">Time</span>
           <span className="w-28" />
         </div>
       )}
       <div
         className={cn(
-          "music-track-list",
-          preview && previewLayout === "grid" && "music-track-list-preview"
+          "min-w-0",
+          previewGrid &&
+            "grid grid-cols-2 gap-x-6 gap-y-1 max-[1101px]:grid-cols-1"
         )}
       >
         {visible.map((song, index) => (
@@ -255,6 +278,7 @@ export function SongList({
             index={index + indexOffset}
             liked={checks.data?.[index] ?? !!song.liked}
             contextChannelId={contextChannelId}
+            previewGrid={previewGrid}
             onPlay={() =>
               useMusicPlayer
                 .getState()

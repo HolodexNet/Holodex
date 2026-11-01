@@ -18,6 +18,7 @@ import { MusicArtwork } from "@/components/music/artwork"
 import {
   MusicNavigation,
   MusicSectionHeading,
+  musicCollectionGridClass,
 } from "@/components/music/page-header"
 import { PlusIcon } from "@/components/icons"
 
@@ -35,7 +36,7 @@ function PlaylistGrid({
       </p>
     )
   return (
-    <div className="music-collection-grid">
+    <div className={musicCollectionGridClass}>
       {items.map((playlist) => (
         <MusicPlaylistCard playlist={playlist} key={playlist.id} />
       ))}
@@ -98,13 +99,15 @@ export function MusicLibraryPage() {
     if (title.trim() && user) create.mutate()
   }
   return (
-    <main className="music-page">
+    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
       <MusicNavigation />
       {!loggedIn ? (
-        <div className="music-library-empty">
-          <div>
-            <h2>A place for your good finds.</h2>
-            <p>
+        <div className="relative flex min-h-72.5 items-center justify-between gap-9 overflow-hidden rounded-2xl border border-border bg-[color-mix(in_oklch,var(--complement-soft)_13%,var(--card))] p-[clamp(24px,4vw,48px)] max-md:min-h-70 max-md:p-6.5">
+          <div className="max-md:relative max-md:z-1">
+            <h2 className="text-[clamp(24px,3vw,36px)] leading-[1.2] font-bold tracking-tighter">
+              A place for your good finds.
+            </h2>
+            <p className="mt-3 mb-6 max-w-97.5 text-[13px] leading-[1.8] text-muted-foreground">
               Make a mix for the commute, keep a favorite karaoke session, or
               save an artist radio for later.
             </p>
@@ -112,7 +115,7 @@ export function MusicLibraryPage() {
               Sign in to start collecting
             </Button>
           </div>
-          <div className="music-library-empty-art">
+          <div className="mr-6 w-[220px] shrink-0 rotate-[9deg] max-md:pointer-events-none max-md:absolute max-md:-right-[115px] max-md:-bottom-[30px] max-md:w-[250px] max-md:opacity-15">
             <MusicArtwork
               title="Your collection"
               seed="library"
@@ -196,9 +199,7 @@ export function MusicLibraryPage() {
             )}
           </section>
           <section className="space-y-4">
-            <MusicSectionHeading
-              title="Saved Playlists & Radios"
-            />
+            <MusicSectionHeading title="Saved Playlists & Radios" />
             {starred.isLoading ? (
               <p>Loading starred items…</p>
             ) : starred.isError ? (

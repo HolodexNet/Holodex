@@ -198,10 +198,13 @@ export default function MusicSearch() {
   if (selected.to) chip("to", `To ${selected.to}`, { to: "" })
 
   return (
-    <main className="music-page">
+    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
       <MusicNavigation />
-      <form onSubmit={submit} className="music-search-form">
-        <div className="flex gap-2">
+      <form
+        onSubmit={submit}
+        className="rounded-[16px] border border-border bg-card/75 p-5 max-md:p-4"
+      >
+        <div className="flex gap-2.5">
           <div className="relative flex-1">
             <MagnifyingGlassIcon
               aria-hidden
@@ -210,13 +213,15 @@ export default function MusicSearch() {
             <Input
               aria-label="Search music"
               placeholder="Search songs or artists"
-              className="pl-10"
+              className="h-11 rounded-lg bg-background pr-4 pl-10"
               autoFocus
               value={draft.q}
               onChange={(event) => update("q", event.target.value)}
             />
           </div>
-          <Button type="submit">Search</Button>
+          <Button type="submit" className="h-11 px-6">
+            Search
+          </Button>
         </div>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

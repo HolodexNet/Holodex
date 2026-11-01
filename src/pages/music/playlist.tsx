@@ -314,7 +314,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
   })
   if (query.isLoading)
     return (
-      <main className="music-page">
+      <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
         <MusicNavigation />
         <MusicDetailSkeleton radio={radio} />
       </main>
@@ -347,7 +347,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
     0
   )
   return (
-    <main className="music-page">
+    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
       <MusicNavigation />
       {query.isError && (
         <p role="alert" className="text-sm text-destructive">
@@ -357,8 +357,8 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
           </button>
         </p>
       )}
-      <header className="music-detail-hero">
-        <div className="music-detail-cover">
+      <header className="relative isolate flex items-center gap-8 overflow-hidden rounded-[20px] bg-[color-mix(in_oklch,var(--complement-soft)_20%,var(--card))] p-8 max-md:block max-md:p-6">
+        <div className="w-[clamp(160px,20vw,230px)] shrink-0 rounded-[12px] shadow-[0_12px_30px_#0003] max-md:mx-auto max-md:mb-6.25 max-md:w-42.5">
           <MusicArtwork
             src={formatted.image}
             title={title}
@@ -367,7 +367,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
             label={formatted.coverLabel}
           />
         </div>
-        <div className="music-detail-copy">
+        <div className="relative min-w-0">
           <Link
             to={radio ? "/music/radios" : "/music"}
             className="music-eyebrow"
@@ -376,9 +376,15 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
             <CaretRightIcon className="size-3" />
             {formatted.kind}
           </Link>
-          <h1>{title}</h1>
-          {description && <p className="whitespace-pre-wrap">{description}</p>}
-          <div className="music-detail-meta">
+          <h1 className="mt-3.5 text-[clamp(30px,3.5vw,52px)] leading-[1.08] font-[760] tracking-[-0.055em] wrap-anywhere max-md:text-[33px]">
+            {title}
+          </h1>
+          {description && (
+            <p className="mt-3.75 max-w-150 text-[13px] leading-[1.7] whitespace-pre-wrap text-muted-foreground max-md:text-[12px]">
+              {description}
+            </p>
+          )}
+          <div className="mt-4.5 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground [&>span+span]:before:mr-2 [&>span+span]:before:opacity-60 [&>span+span]:before:content-['·']">
             <span>
               {songs.length} {radio ? "songs to get you started" : "songs"}
             </span>
@@ -403,8 +409,9 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
         />
       ) : (
         <>
-          <div className="music-detail-controls">
+          <div className="flex flex-wrap items-center gap-2.5 border-b border-border pt-1 pb-4">
             <Button
+              className="h-11 px-6 shadow-[0_4px_16px_color-mix(in_oklch,var(--primary)_16%,transparent)]"
               disabled={!songs.length}
               onClick={() =>
                 active

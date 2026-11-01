@@ -40,11 +40,14 @@ function TrackRowsSkeleton({
 export function MusicDetailSkeleton({ radio = false }: { radio?: boolean }) {
   return (
     <>
-      <header className="music-detail-hero" aria-hidden="true">
-        <div className="music-detail-cover">
+      <header
+        className="relative isolate flex items-center gap-8 overflow-hidden rounded-[20px] bg-[color-mix(in_oklch,var(--complement-soft)_20%,var(--card))] p-8 max-md:block max-md:p-6"
+        aria-hidden="true"
+      >
+        <div className="w-[clamp(160px,20vw,230px)] shrink-0 rounded-[12px] shadow-[0_12px_30px_#0003] max-md:mx-auto max-md:mb-6.25 max-md:w-42.5">
           <Skeleton className="music-skeleton-cover" />
         </div>
-        <div className="music-detail-copy music-skeleton-copy">
+        <div className="music-skeleton-copy relative min-w-0">
           <Skeleton className="music-skeleton-eyebrow" />
           <Skeleton className="music-skeleton-title" />
           <Skeleton className="music-skeleton-line-long" />
@@ -52,7 +55,10 @@ export function MusicDetailSkeleton({ radio = false }: { radio?: boolean }) {
           <Skeleton className="music-skeleton-meta" />
         </div>
       </header>
-      <div className="music-detail-controls" aria-hidden="true">
+      <div
+        className="flex flex-wrap items-center gap-2.5 border-b border-border pt-1 pb-4"
+        aria-hidden="true"
+      >
         <Skeleton className="music-skeleton-button-primary" />
         <Skeleton className="music-skeleton-button-secondary" />
       </div>
@@ -65,7 +71,10 @@ export function MusicDetailSkeleton({ radio = false }: { radio?: boolean }) {
 export function MusicLikedSkeleton() {
   return (
     <>
-      <div className="music-detail-controls" aria-hidden="true">
+      <div
+        className="flex flex-wrap items-center gap-2.5 border-b border-border pt-1 pb-4"
+        aria-hidden="true"
+      >
         <Skeleton className="music-skeleton-button-primary" />
       </div>
       <TrackRowsSkeleton label="Loading liked songs" />

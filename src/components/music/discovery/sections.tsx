@@ -9,7 +9,10 @@ import {
   PlayIcon,
 } from "@/components/icons"
 import { MusicArtwork } from "@/components/music/artwork"
-import { MusicSectionHeading } from "@/components/music/page-header"
+import {
+  MusicSectionHeading,
+  musicCollectionGridClass,
+} from "@/components/music/page-header"
 import { PlayPlaylistButton } from "@/components/music/play-playlist"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -17,20 +20,47 @@ import { formatMusicPlaylist } from "@/lib/musicdex/format"
 import type { MusicDiscovery, PlaylistStub } from "@/lib/musicdex/types"
 import { useSettings } from "@/stores/settings"
 
-export function MusicPlaylistCard({ playlist }: { playlist: PlaylistStub }) {
+const railClass =
+  "flex min-w-0 max-w-full snap-x snap-proximity scrollbar-none gap-5 overflow-x-auto px-px pt-[5px] pb-3 [&::-webkit-scrollbar]:hidden"
+const collectionRailCardClass =
+  "w-[clamp(160px,16vw,206px)] shrink-0 snap-start max-md:w-[150px]"
+
+export const musicCardTitleClass =
+  "line-clamp-2 mt-[13px] text-[13px] font-semibold leading-normal tracking-[-0.015em] transition-colors duration-200 ease-[ease] max-md:mt-2.5 max-md:text-[12px]"
+
+export const musicCardCaptionClass =
+  "flex items-center gap-1.5 mt-1 text-[11px] leading-[1.6] text-muted-foreground max-md:text-[10px]"
+
+export const musicCardPlayClass =
+  "absolute bottom-3 right-3 z-4 size-[42px] translate-y-2 opacity-0 shadow-[0_5px_16px_#0005] transition-[opacity,translate] duration-200 ease-[ease] group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none [@media(hover:none)]:right-[9px] [@media(hover:none)]:bottom-[9px] [@media(hover:none)]:size-[34px] [@media(hover:none)]:translate-none [@media(hover:none)]:opacity-100"
+
+export const musicArtistCardClass =
+  "group/artist flex w-[136px] shrink-0 flex-col items-center py-1 text-center"
+
+export const musicArtistPhotoClass =
+  "shadow-[0_0_0_5px_color-mix(in_oklch,var(--foreground)_3%,transparent)] transition-[box-shadow,translate] duration-250 ease-[ease] group-hover/artist:-translate-y-[3px] group-hover/artist:shadow-[0_0_0_5px_color-mix(in_oklch,var(--primary)_18%,transparent)] motion-reduce:transition-none"
+
+export function MusicPlaylistCard({
+  playlist,
+  className,
+}: {
+  playlist: PlaylistStub
+  className?: string
+}) {
   const english = useSettings((s) => s.useEnglishName)
   const formatted = formatMusicPlaylist(playlist, english)
   return (
     <article
       className={cn(
-        "music-collection-card group",
+        "music-collection-card group min-w-0",
+        className,
         formatted.radio && "music-radio-card"
       )}
     >
       <div className="relative">
         <Link
           to={formatted.href}
-          className="music-cover-link"
+          className="block rounded-[12px] outline-offset-4"
           aria-label={formatted.title}
         >
           <MusicArtwork
@@ -41,14 +71,20 @@ export function MusicPlaylistCard({ playlist }: { playlist: PlaylistStub }) {
             label={formatted.coverLabel}
           />
         </Link>
-        <PlayPlaylistButton playlist={playlist} className="music-card-play" />
+        <PlayPlaylistButton
+          playlist={playlist}
+          className={musicCardPlayClass}
+        />
       </div>
-      <Link to={formatted.href} className="music-card-title">
+      <Link
+        to={formatted.href}
+        className={cn(musicCardTitleClass, "hover:text-brand")}
+      >
         {formatted.title}
       </Link>
-      <p className="music-card-caption">
+      <p className={musicCardCaptionClass}>
         {formatted.radio && (
-          <BroadcastIcon className="music-radio-icon" aria-hidden />
+          <BroadcastIcon className="size-3 flex-none text-brand" aria-hidden />
         )}
         {formatted.kind}
       </p>
@@ -83,7 +119,10 @@ export function PlaylistCards({
   )
   if (!loading && !visible.length)
     return seeAll ? (
-      <Link to={seeAll} className="music-text-link">
+      <Link
+        to={seeAll}
+        className="inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
+      >
         Explore {title.toLowerCase()}
         <CaretRightIcon className="size-4" />
       </Link>
@@ -99,7 +138,10 @@ export function PlaylistCards({
     <section className="min-w-0 space-y-5" aria-busy={loading}>
       <MusicSectionHeading title={title} description={description}>
         {seeAll && (
-          <Link className="music-see-all" to={seeAll}>
+          <Link
+            className="inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
+            to={seeAll}
+          >
             See all
             <CaretRightIcon className="size-3.5" />
           </Link>
@@ -129,26 +171,40 @@ export function PlaylistCards({
       </MusicSectionHeading>
       <div
         ref={rail}
-        className={grid ? "music-collection-grid" : "music-collection-rail"}
+        className={
+          grid
+            ? musicCollectionGridClass
+            : cn(
+                railClass,
+                "max-md:-mr-4 max-md:max-w-[calc(100%_+_16px)] max-md:gap-4 max-md:pr-4"
+              )
+        }
       >
         {loading
           ? Array.from({ length: 6 }, (_, index) => (
               <div
                 key={index}
-                className="music-collection-card"
+                className={cn(
+                  "music-collection-card min-w-0",
+                  !grid && collectionRailCardClass
+                )}
                 aria-hidden="true"
               >
                 <Skeleton className="aspect-square rounded-xl" />
-                <div className="music-card-title">
+                <div className={musicCardTitleClass}>
                   <Skeleton className="h-[1.5em] w-4/5" />
                 </div>
-                <div className="music-card-caption">
+                <div className={musicCardCaptionClass}>
                   <Skeleton className="h-[1.6em] w-1/2" />
                 </div>
               </div>
             ))
           : visible.map((playlist) => (
-              <MusicPlaylistCard key={playlist.id} playlist={playlist} />
+              <MusicPlaylistCard
+                key={playlist.id}
+                playlist={playlist}
+                className={!grid ? collectionRailCardClass : undefined}
+              />
             ))}
       </div>
     </section>
@@ -178,7 +234,7 @@ export function DiscoverySections({
       !blocked.some((channel) => channel.id === stream.video.channel?.id)
   )
   return (
-    <div className="music-discovery-sections" aria-busy={loading}>
+    <div className="grid min-w-0 gap-11 max-md:gap-8" aria-busy={loading}>
       {loading && (
         <span role="status" className="sr-only">
           Loading music discovery
@@ -209,19 +265,19 @@ export function DiscoverySections({
             title="Fresh from the stage"
             description="Latest songs"
           />
-          <div className="music-session-rail">
+          <div className={railClass}>
             {loading &&
               Array.from({ length: 4 }, (_, index) => (
                 <div
                   key={index}
-                  className="music-session-card"
+                  className="w-[min(340px,80%)] shrink-0 snap-start"
                   aria-hidden="true"
                 >
                   <Skeleton className="aspect-video rounded-xl" />
-                  <div className="music-card-title">
+                  <div className={musicCardTitleClass}>
                     <Skeleton className="h-[1.5em] w-4/5" />
                   </div>
-                  <div className="music-session-artist">
+                  <div className="mt-2 flex items-center gap-1.75 text-[11px] text-muted-foreground">
                     <Skeleton className="size-5 rounded-full" />
                     <Skeleton className="h-3 w-24" />
                   </div>
@@ -230,15 +286,22 @@ export function DiscoverySections({
             {streams.map(({ video, playlist }) => {
               const formatted = formatMusicPlaylist(playlist!, english)
               return (
-                <article className="music-session-card group" key={video.id}>
+                <article
+                  className="group w-[min(340px,80%)] shrink-0 snap-start"
+                  key={video.id}
+                >
                   <div className="relative">
-                    <Link to={formatted.href} className="music-session-image">
+                    <Link
+                      to={formatted.href}
+                      className="relative block aspect-video overflow-hidden rounded-[12px] bg-muted"
+                    >
                       <img
                         src={`https://i.ytimg.com/vi/${encodeURIComponent(video.id)}/hqdefault.jpg`}
                         alt=""
+                        className="size-full object-cover transition-transform duration-300 ease-[ease] group-hover:scale-[1.035]"
                         loading="lazy"
                       />
-                      <span className="music-session-badge">
+                      <span className="absolute bottom-[10px] left-[10px] flex items-center gap-[5px] rounded-[5px] bg-[#0009] px-[7px] py-[5px] text-[9px] font-semibold text-white backdrop-blur-[10px]">
                         <PlayIcon className="size-3" />
                         {playlist!.content!.length}{" "}
                         {playlist!.content!.length === 1
@@ -248,16 +311,19 @@ export function DiscoverySections({
                     </Link>
                     <PlayPlaylistButton
                       playlist={playlist!}
-                      className="music-card-play"
+                      className={musicCardPlayClass}
                     />
                   </div>
-                  <Link to={formatted.href} className="music-card-title">
+                  <Link
+                    to={formatted.href}
+                    className={cn(musicCardTitleClass, "hover:text-brand")}
+                  >
                     {video.title || formatted.title}
                   </Link>
                   {video.channel && (
                     <Link
                       to={`/channel/${encodeURIComponent(video.channel.id)}/music`}
-                      className="music-session-artist"
+                      className="mt-2 flex items-center gap-1.75 text-[11px] text-muted-foreground"
                     >
                       <ChannelAvatar channel={video.channel} size={20} />
                       <span>
@@ -282,19 +348,24 @@ export function DiscoverySections({
       {(loading || !!channels.length) && (
         <section className="min-w-0 space-y-5">
           <MusicSectionHeading title="Meet your next favorite voice" />
-          <div className="music-artist-rail">
+          <div className={railClass}>
             {loading &&
               Array.from({ length: 8 }, (_, index) => (
                 <div
                   key={index}
-                  className="music-artist-card"
+                  className={cn("music-artist-card", musicArtistCardClass)}
                   aria-hidden="true"
                 >
-                  <Skeleton className="music-artist-photo size-25 rounded-full" />
-                  <div className="music-card-title w-4/5">
+                  <Skeleton
+                    className={cn(
+                      musicArtistPhotoClass,
+                      "size-25 rounded-full"
+                    )}
+                  />
+                  <div className={cn(musicCardTitleClass, "w-4/5")}>
                     <Skeleton className="h-[1.5em] w-full" />
                   </div>
-                  <div className="music-card-caption w-3/5">
+                  <div className={cn(musicCardCaptionClass, "w-3/5")}>
                     <Skeleton className="h-[1.6em] w-full" />
                   </div>
                 </div>
@@ -303,17 +374,17 @@ export function DiscoverySections({
               <Link
                 to={`/channel/${encodeURIComponent(channel.id)}/music`}
                 key={channel.id}
-                className="music-artist-card"
+                className={cn("music-artist-card", musicArtistCardClass)}
               >
                 <ChannelAvatar
                   channel={channel}
                   size={100}
-                  className="music-artist-photo"
+                  className={musicArtistPhotoClass}
                 />
-                <span className="music-card-title">
+                <span className={musicCardTitleClass}>
                   {(english && channel.english_name) || channel.name}
                 </span>
-                <span className="music-card-caption">
+                <span className={musicCardCaptionClass}>
                   {channel.song_count.toLocaleString()} performances
                 </span>
               </Link>

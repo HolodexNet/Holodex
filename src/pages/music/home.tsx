@@ -9,7 +9,11 @@ import {
 import { Button } from "@/components/ui/button"
 import { SongList, SongListSkeleton } from "@/components/music/song-list"
 import { Skeleton } from "@/components/ui/skeleton"
-import { AddToQueueButton, MusicHero, PlaySongsButton } from "@/components/music/hero"
+import {
+  AddToQueueButton,
+  MusicHero,
+  PlaySongsButton,
+} from "@/components/music/hero"
 import {
   MusicNavigation,
   MusicSectionHeading,
@@ -45,7 +49,7 @@ export default function MusicHome() {
       (song) => !blocked.some((channel) => channel.id === song.channel_id)
     ) ?? []
   return (
-    <main className="music-page">
+    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
       <MusicNavigation />
       <MusicHero
         scope={org}
@@ -65,7 +69,7 @@ export default function MusicHome() {
           loading={discovery.isPending}
         />
       )}
-      <section className="music-rotation">
+      <section className="rounded-[16px] border border-border bg-[color-mix(in_oklch,var(--card)_70%,transparent)] p-6 max-md:px-2.5 max-md:py-[18px] [&_.music-section-heading]:mb-[18px] max-md:[&_.music-section-heading]:px-1.5 max-md:[&_.music-section-heading_button]:text-[11px]">
         <MusicSectionHeading
           title="Popular songs"
           description="Trending songs according to listeners on musicdex."
@@ -148,12 +152,14 @@ export function MusicFavorites() {
   })
   if (!userId)
     return (
-      <main className="music-page">
+      <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
         <MusicNavigation />
-        <div className="music-library-empty">
-          <div>
-            <h2>Make yourself at home.</h2>
-            <p>
+        <div className="relative flex min-h-72.5 items-center justify-between gap-9 overflow-hidden rounded-2xl border border-border bg-[color-mix(in_oklch,var(--complement-soft)_13%,var(--card))] p-[clamp(24px,4vw,48px)] max-md:min-h-70 max-md:p-6.5">
+          <div className="max-md:relative max-md:z-1">
+            <h2 className="text-[clamp(24px,3vw,36px)] leading-[1.2] font-bold tracking-tighter">
+              Make yourself at home.
+            </h2>
+            <p className="mt-3 mb-6 max-w-97.5 text-[13px] leading-[1.8] text-muted-foreground">
               Sign in with your Holodex account to bring your favorite channels
               into the listening room.
             </p>
@@ -161,14 +167,14 @@ export function MusicFavorites() {
               Sign in to Holodex
             </Button>
           </div>
-          <div className="music-library-empty-art">
+          <div className="mr-6 w-[220px] shrink-0 rotate-[9deg] max-md:pointer-events-none max-md:absolute max-md:-right-[115px] max-md:-bottom-[30px] max-md:w-[250px] max-md:opacity-15">
             <MusicArtwork title="Your favorites" seed="favorites" radio />
           </div>
         </div>
       </main>
     )
   return (
-    <main className="music-page">
+    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
       <MusicNavigation />
       <MusicHero
         scope="Favorites"
@@ -287,7 +293,7 @@ export function MusicLiked() {
     .map((song) => ({ ...song, liked: true }))
   const source = { id: "liked", title: "Liked songs" }
   return (
-    <main className="music-page">
+    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
       <MusicNavigation />
       {liked.isPending ? (
         <MusicLikedSkeleton />
@@ -365,7 +371,7 @@ export function MusicRadios() {
         playlist.id.startsWith(":hot")
     ) ?? []
   return (
-    <main className="music-page">
+    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
       <MusicNavigation />
       {!!userId && (
         <section>
@@ -438,7 +444,7 @@ export function MusicBrowse() {
   })
   const items = listing.data?.pages.flatMap((page) => page.items) ?? []
   return (
-    <main className="music-page">
+    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
       <MusicNavigation />
       {listing.isPending ? (
         <MusicLoading label="Loading playlists" />
