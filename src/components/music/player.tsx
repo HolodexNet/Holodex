@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
+import { AnimatePresence, domMax, LazyMotion, MotionConfig } from "motion/react"
+import * as m from "motion/react-m"
 import {
   ArrowCounterClockwiseIcon,
   ArrowClockwiseIcon,
@@ -100,7 +102,25 @@ function loadYouTube(): Promise<YTGlobal> {
 const time = (seconds: number) =>
   `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.floor(Math.max(0, seconds) % 60)).padStart(2, "0")}`
 
+/** Shared by every part of the player so they travel as one surface. */
+const PLAYER_TRANSITION = { type: "spring", duration: 0.45, bounce: 0 } as const
+
 export function MusicPlayer() {
+  const hasMusic = useMusicPlayer((s) => !!s.current)
+  // This module is already a lazy chunk, so loading domMax here keeps Motion out
+  // of the main bundle without leaving the bar hidden behind a second request.
+  return (
+    <LazyMotion features={domMax} strict>
+      <MotionConfig reducedMotion="user" transition={PLAYER_TRANSITION}>
+        <AnimatePresence>
+          {hasMusic && <MusicPlayerBar key="player" />}
+        </AnimatePresence>
+      </MotionConfig>
+    </LazyMotion>
+  )
+}
+
+function MusicPlayerBar() {
   const current = useMusicPlayer((s) => s.current)
   const playing = useMusicPlayer((s) => s.playing)
   const playbackId = useMusicPlayer((s) => s.playbackId)
@@ -130,6 +150,9 @@ export function MusicPlayer() {
     message: string
   } | null>(null)
   const [radioRetry, setRadioRetry] = useState(0)
+  // Closing clears the store, but the last song stays visible as the bar leaves.
+  const [shown, setShown] = useState(current)
+  if (current && current !== shown) setShown(current)
 
   useEffect(() => {
     if (!current || !host.current) return
@@ -453,15 +476,19 @@ export function MusicPlayer() {
         previousFocus.focus({ preventScroll: true })
     }
   }, [expanded])
-  if (!current) return null
+  if (!shown) return null
   const actions = useMusicPlayer.getState()
-  const artist =
-    (english && current.channel?.english_name) || current.channel?.name
+  const artist = (english && shown.channel?.english_name) || shown.channel?.name
   const artwork =
-    current.art || `https://i.ytimg.com/vi/${current.video_id}/hqdefault.jpg`
+    shown.art || `https://i.ytimg.com/vi/${shown.video_id}/hqdefault.jpg`
+  // layoutDependency keeps the seek timer's re-renders from measuring layout.
   return (
-    <div
+    <m.div
       ref={overlay}
+      layoutRoot
+      initial={{ y: "100%", opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: "100%", opacity: 0 }}
       role={expanded ? "dialog" : "region"}
       aria-modal={expanded ? true : undefined}
       aria-label={expanded ? "Music player" : "Now playing"}
@@ -471,34 +498,64 @@ export function MusicPlayer() {
         expanded ? "music-player-expanded" : "music-player-compact"
       )}
     >
-      <img
-        src={artwork}
-        alt=""
+      <m.div
+        layout
+        layoutDependency={expanded}
         aria-hidden="true"
-        className="music-player-atmosphere"
+        className="music-player-surface"
       />
+      {expanded && (
+        <m.img
+          src={artwork}
+          alt=""
+          aria-hidden="true"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.12 }}
+          className="music-player-atmosphere"
+        />
+      )}
       <div
         className={expanded ? "music-listening-layout" : "music-dock-layout"}
       >
         <div className="music-player-video">
-          <div
+          <m.div
             ref={host}
+            layout
+            layoutDependency={expanded}
+            style={{ borderRadius: 12 }}
             className="music-youtube-host [&_iframe]:h-full [&_iframe]:w-full"
           />
         </div>
         <div className="music-player-track">
-          <div className="music-player-thumb">
-            <MusicArtwork src={artwork} seed={current.id} />
-          </div>
-          <div className="min-w-0">
-            <div className="music-player-song">{current.name}</div>
-            <Link
-              to={`/channel/${encodeURIComponent(current.channel_id)}/music`}
-              onClick={() => actions.setExpanded(false)}
-              className="music-player-artist"
+          {!expanded && (
+            <m.div
+              key={shown.id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="music-player-thumb"
             >
-              {artist || "Unknown artist"}
-            </Link>
+              <MusicArtwork src={artwork} seed={shown.id} />
+            </m.div>
+          )}
+          <m.div
+            layout="position"
+            layoutDependency={expanded}
+            className="min-w-0"
+          >
+            <m.div
+              key={shown.id}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="music-player-song">{shown.name}</div>
+              <Link
+                to={`/channel/${encodeURIComponent(shown.channel_id)}/music`}
+                onClick={() => actions.setExpanded(false)}
+                className="music-player-artist"
+              >
+                {artist || "Unknown artist"}
+              </Link>
+            </m.div>
             {expanded && source && (
               <p className="mt-1 truncate text-xs text-muted-foreground">
                 From {source.title}
@@ -539,7 +596,7 @@ export function MusicPlayer() {
                 </button>
               </div>
             )}
-          </div>
+          </m.div>
           {playing && (
             <span
               className="music-equalizer ml-3 hidden shrink-0 lg:inline-flex"
@@ -551,7 +608,11 @@ export function MusicPlayer() {
             </span>
           )}
         </div>
-        <div className="music-player-transport">
+        <m.div
+          layout
+          layoutDependency={expanded}
+          className="music-player-transport"
+        >
           <Button
             className={cn("music-extra-control", shuffle && "text-brand")}
             variant="ghost"
@@ -611,8 +672,12 @@ export function MusicPlayer() {
             )}
             {repeat === "one" && <span className="text-[9px]">1</span>}
           </Button>
-        </div>
-        <div className="music-player-seek">
+        </m.div>
+        <m.div
+          layout="position"
+          layoutDependency={expanded}
+          className="music-player-seek"
+        >
           <span>{time(position)}</span>
           <input
             aria-label="Seek"
@@ -625,14 +690,18 @@ export function MusicPlayer() {
               const value = Number(event.target.value)
               setPosition(value)
               player.current?.seekTo(
-                Math.max(0, current.start || 0) + value,
+                Math.max(0, shown.start || 0) + value,
                 true
               )
             }}
           />
           <span>{time(duration)}</span>
-        </div>
-        <div className="music-player-tools">
+        </m.div>
+        <m.div
+          layout="position"
+          layoutDependency={expanded}
+          className="music-player-tools"
+        >
           <label className="music-player-volume">
             <span className="sr-only">Volume</span>
             <MusicalNotesIcon className="size-4 text-muted-foreground" />
@@ -705,15 +774,23 @@ export function MusicPlayer() {
           >
             <XIcon />
           </Button>
-        </div>
+        </m.div>
         {expanded && (
-          <aside className="music-player-up-next">
+          <m.aside
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="music-player-up-next"
+          >
             <MusicQueue />
-          </aside>
+          </m.aside>
         )}
       </div>
       {expanded && (
-        <div className="music-listening-heading">
+        <m.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="music-listening-heading"
+        >
           <span className="music-wordmark">
             <MusicalNotesIcon className="size-4 text-brand" />
             musicdex.
@@ -721,9 +798,9 @@ export function MusicPlayer() {
           <p className="music-eyebrow">
             {radio ? "ON AIR / ARTIST RADIO" : "NOW PLAYING"}
           </p>
-        </div>
+        </m.div>
       )}
-    </div>
+    </m.div>
   )
 }
 

@@ -15,9 +15,12 @@ import { MusicArtwork } from "@/components/music/artwork"
 import { MusicPlaylistCard } from "@/components/music/discovery/sections"
 import { MusicSectionHeading } from "@/components/music/page-header"
 import { PlayPlaylistButton } from "@/components/music/play-playlist"
+import {
+  ChannelDiscoverySkeleton,
+  PopularSkeleton,
+} from "@/components/music/skeletons"
 import { SongList } from "@/components/music/song-list"
 import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
 import { intlLocale } from "@/lib/i18n"
 import { musicApi } from "@/lib/musicdex/api"
 import { formatMusicPlaylist } from "@/lib/musicdex/format"
@@ -437,54 +440,5 @@ function ChannelSongs({ channel }: { channel: Channel }) {
         </>
       )}
     </section>
-  )
-}
-
-function PopularSkeleton() {
-  return (
-    <div role="status" aria-label="Loading popular songs">
-      <span className="sr-only">Loading songs</span>
-      {Array.from({ length: 5 }, (_, index) => (
-        <div
-          className="music-track-row flex items-center gap-3"
-          key={index}
-          aria-hidden="true"
-        >
-          <Skeleton className="hidden size-8 shrink-0 sm:block" />
-          <Skeleton className="music-track-art" />
-          <div className="min-w-0 flex-1 space-y-2">
-            <Skeleton className="h-3 w-2/5" />
-            <Skeleton className="h-2.5 w-1/4" />
-          </div>
-          <Skeleton className="h-3 w-12" />
-        </div>
-      ))}
-    </div>
-  )
-}
-
-function ChannelDiscoverySkeleton() {
-  return (
-    <div
-      role="status"
-      aria-label="Loading artist collections"
-      className="space-y-8"
-    >
-      <span className="sr-only">Loading artist collections</span>
-      {["Latest streams", "Featuring this artist"].map((title) => (
-        <section key={title} className="space-y-5" aria-hidden="true">
-          <Skeleton className="h-6 w-44" />
-          <div className="music-channel-rail">
-            {Array.from({ length: 4 }, (_, index) => (
-              <div className="music-collection-card space-y-3" key={index}>
-                <Skeleton className="aspect-square rounded-xl" />
-                <Skeleton className="h-3 w-4/5" />
-                <Skeleton className="h-2.5 w-1/2" />
-              </div>
-            ))}
-          </div>
-        </section>
-      ))}
-    </div>
   )
 }

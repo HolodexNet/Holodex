@@ -16,6 +16,7 @@ import {
   MusicLoading,
 } from "@/components/music/page-header"
 import { MusicArtwork } from "@/components/music/artwork"
+import { MusicLikedSkeleton } from "@/components/music/skeletons"
 import { useDocumentTitle } from "@/hooks/use-document-title"
 import { musicApi } from "@/lib/musicdex/api"
 import { musicHomeQueryOptions } from "@/lib/musicdex/queries"
@@ -289,7 +290,7 @@ export function MusicLiked() {
     <main className="music-page">
       <MusicNavigation />
       {liked.isPending ? (
-        <p>Loading songs…</p>
+        <MusicLikedSkeleton />
       ) : liked.isError ? (
         <ErrorMessage
           error={liked.error}

@@ -15,6 +15,7 @@ import { PauseIcon, ShuffleIcon } from "@/components/music/player/icons"
 import { MusicArtwork } from "@/components/music/artwork"
 import { AddToQueueButton } from "@/components/music/hero"
 import { MusicNavigation } from "@/components/music/page-header"
+import { MusicDetailSkeleton } from "@/components/music/skeletons"
 import { formatMusicPlaylist } from "@/lib/musicdex/format"
 import { useSettings } from "@/stores/settings"
 import { SongList } from "@/components/music/song-list"
@@ -312,7 +313,12 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
     onError: () => toast.error("Could not delete playlist"),
   })
   if (query.isLoading)
-    return <main className="p-8">Loading {radio ? "radio" : "playlist"}…</main>
+    return (
+      <main className="music-page">
+        <MusicNavigation />
+        <MusicDetailSkeleton radio={radio} />
+      </main>
+    )
   if (!query.data)
     return (
       <main className="space-y-3 p-8">

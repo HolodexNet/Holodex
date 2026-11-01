@@ -8,6 +8,7 @@ import { ChannelOverview } from "@/components/channel/channel-overview"
 import { LoadMore } from "@/components/common/load-more"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import { ArrowLeftIcon } from "@/components/icons"
+import { ChannelMusicSkeleton } from "@/components/music/skeletons"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { VideoList, VideoListSkeleton } from "@/components/video/video-list"
@@ -290,7 +291,7 @@ export function ChannelPage() {
         {tab === "overview" ? (
           <ChannelOverview key={channel.id} channel={channel} />
         ) : tab === "music" ? (
-          <Suspense fallback={<Skeleton className="h-64 w-full" />}>
+          <Suspense fallback={<ChannelMusicSkeleton />}>
             <ChannelMusic key={channel.id} channel={channel} />
           </Suspense>
         ) : tab === "about" ? (

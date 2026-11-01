@@ -1,0 +1,156 @@
+/* Loading placeholders for musicdex. Sizes match the live layouts they stand in for. */
+
+.music-skeleton-stack {
+  display: grid;
+  gap: 32px;
+  min-width: 0;
+}
+
+.music-skeleton-shelf {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.music-skeleton-heading {
+  width: 176px;
+  height: 24px;
+}
+
+.music-skeleton-cover {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.music-skeleton-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  flex: 1;
+  gap: 12px;
+}
+
+.music-skeleton-eyebrow {
+  width: 120px;
+  height: 12px;
+}
+
+.music-skeleton-title {
+  width: min(100%, 340px);
+  height: clamp(30px, 3.5vw, 52px);
+}
+
+.music-skeleton-line-long {
+  width: min(100%, 460px);
+  height: 12px;
+}
+
+.music-skeleton-line-short {
+  width: min(100%, 260px);
+  height: 12px;
+}
+
+.music-skeleton-meta {
+  width: 200px;
+  height: 11px;
+}
+
+.music-skeleton-button-primary {
+  width: 150px;
+  height: 44px;
+}
+
+.music-skeleton-button-secondary {
+  width: 110px;
+  height: 36px;
+}
+
+.music-skeleton-tracks {
+  min-width: 0;
+}
+
+.music-skeleton-track {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 10px 8px;
+}
+
+.music-skeleton-track-popular {
+  padding-block: 9px;
+  border-bottom: 1px solid var(--border);
+}
+
+.music-skeleton-index {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.music-skeleton-art {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+
+.music-skeleton-track-meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+}
+
+.music-skeleton-track-title {
+  width: 55%;
+  height: 14px;
+}
+
+.music-skeleton-track-artist {
+  width: 35%;
+  height: 12px;
+}
+
+.music-skeleton-track-time {
+  width: 32px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.music-skeleton-rail {
+  display: flex;
+  gap: 20px;
+  min-width: 0;
+  overflow: hidden;
+  padding: 4px 2px 12px;
+}
+
+.music-skeleton-card {
+  display: grid;
+  gap: 10px;
+  width: 180px;
+  max-width: 70vw;
+  flex-shrink: 0;
+}
+
+.music-skeleton-card-art {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.music-skeleton-card-title {
+  width: 80%;
+  height: 12px;
+}
+
+.music-skeleton-card-caption {
+  width: 50%;
+  height: 10px;
+}
+
+@media (max-width: 639px) {
+  .music-skeleton-index {
+    display: none;
+  }
+}

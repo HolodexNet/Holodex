@@ -23,6 +23,7 @@
     "class-variance-authority": "^0.7.1",
     "cmdk-base": "^1.0.0",
     "cn": "^0.4.0",
+    "motion": "^14.9.0",
     "oxc-transform-react": "^0.152.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

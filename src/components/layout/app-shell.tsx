@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, type CSSProperties } from "react"
+import { lazy, Suspense, useEffect, useState, type CSSProperties } from "react"
 import { Outlet, ScrollRestoration, useLocation } from "react-router"
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
@@ -46,6 +46,9 @@ export function AppShell() {
   const sidebarOpen = useUi((s) => s.sidebarOpen)
   const setSidebarOpen = useUi((s) => s.setSidebarOpen)
   const hasMusic = useMusicPlayer((s) => !!s.current)
+  // Stays mounted after the first song so the player can animate its own exit.
+  const [playerLoaded, setPlayerLoaded] = useState(hasMusic)
+  if (hasMusic && !playerLoaded) setPlayerLoaded(true)
 
   useSessionRefresh()
 
@@ -87,7 +90,7 @@ export function AppShell() {
           </SidebarInset>
         </div>
         <BottomNav />
-        {hasMusic && (
+        {playerLoaded && (
           <Suspense fallback={null}>
             <MusicPlayer />
           </Suspense>
