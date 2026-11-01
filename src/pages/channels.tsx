@@ -30,9 +30,11 @@ import { useSettings } from "@/stores/settings"
 export function ChannelCard({
   channel,
   list = false,
+  showOrg,
 }: {
   channel: Channel
   list?: boolean
+  showOrg: boolean
 }) {
   const { t, lang } = useT()
   const english = useSettings((s) => s.useEnglishName)
@@ -96,9 +98,11 @@ export function ChannelCard({
               {channel.english_name}
             </p>
           )}
-          <p className="mt-1 truncate text-xs text-muted-foreground">
-            {channel.org}
-          </p>
+          {showOrg && (
+            <p className="mt-1 truncate text-xs text-muted-foreground">
+              {channel.org}
+            </p>
+          )}
           {channel.subscriber_count != null &&
             Number.isFinite(Number(channel.subscriber_count)) && (
               <p className="mt-1 text-xs text-muted-foreground">
@@ -182,13 +186,7 @@ export function ChannelsPage() {
   useDocumentTitle(`${org} · ${t("component.mainNav.channels")}`)
   return (
     <main className="mx-auto w-full max-w-[1600px] p-4 md:p-8">
-      <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-semibold tracking-tight">{org}</h2>
-          <p className="mt-1 text-xs text-muted-foreground">
-            {t("component.mainNav.channels")}
-          </p>
-        </div>
+      <header className="mb-6 flex flex-wrap justify-end gap-4">
         <div className="flex flex-wrap items-center gap-2">
           <SimpleSelect
             value={org}
@@ -272,7 +270,12 @@ export function ChannelsPage() {
             }
           >
             {items.map((channel) => (
-              <ChannelCard key={channel.id} channel={channel} list={list} />
+              <ChannelCard
+                key={channel.id}
+                channel={channel}
+                list={list}
+                showOrg={org === ALL_VTUBERS}
+              />
             ))}
           </div>
         </section>

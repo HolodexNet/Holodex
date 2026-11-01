@@ -39,14 +39,9 @@ export function ChannelBanner({
   }, [needsDetail])
   const detail = useChannel(channel.id, needsDetail && visible)
   const rawBanner = channel.banner ?? detail.data?.banner
-  const banner =
-    rawBanner && /^https?:\/\//.test(rawBanner)
-      ? /^https:\/\/(yt3\.googleusercontent\.com|yt3\.ggpht\.com)\//.test(
-          rawBanner
-        )
-        ? `${rawBanner.split("=")[0]}=w${curved ? 640 : 2276}-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`
-        : rawBanner
-      : null
+  const banner = rawBanner
+    ? `/statics/channelImg/${encodeURIComponent(channel.id)}/banner/1.jpeg`
+    : null
   return (
     <div
       ref={ref}

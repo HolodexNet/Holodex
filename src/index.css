@@ -196,10 +196,6 @@
   padding-block: 1rem;
 }
 
-.home-shelf {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-min)), 1fr));
-}
-
 /* Only span two tracks when the feed actually has room for two columns. */
 .video-feed[data-view-mode="grid"] {
   container-type: inline-size;
@@ -278,23 +274,8 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
 }
 
-@media (min-width: 1280px) {
-  .home-shelf {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-  .home-shelf[data-grid-size="1"] {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-  .home-shelf[data-grid-size="2"] {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 639px) {
   .home-shell { --header-height: 3.5rem; }
-  .home-shelf { grid-template-columns: minmax(0, 1fr); }
-  .home-shelf[data-grid-size="1"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .home-shelf[data-grid-size="2"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* Reserve the persistent player's height throughout the shared app shell. */

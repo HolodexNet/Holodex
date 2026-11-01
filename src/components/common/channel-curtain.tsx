@@ -1,9 +1,9 @@
 import { useState } from "react"
-import curtainTexture from "@/assets/graduation-curtain.webp"
+import curtainArtwork from "@/assets/graduation-curtain.svg"
 import type { Channel } from "@/lib/types"
 import { channelPhoto } from "@/lib/video"
 
-/** Closed fabric, dyed with the artwork's colors without reading remote pixels. */
+/** Keep the fabric's lighting while taking color from the channel's artwork. */
 export function ChannelCurtain({
   channel,
   banner,
@@ -29,14 +29,13 @@ export function ChannelCurtain({
           onError={() => setFailed((sources) => new Set(sources).add(artwork))}
         />
       )}
-      {/* Luminosity keeps the fabric relief and takes hue from the blurred art.
-          A separate isolated layer also keeps the blend off the card's text. */}
+      {/* Isolate the blend from the card's text and preserve the SVG's lighting. */}
       <img
-        src={curtainTexture}
+        src={curtainArtwork}
         alt=""
         loading="lazy"
         decoding="async"
-        className="absolute inset-0 size-full object-cover mix-blend-luminosity"
+        className="absolute inset-0 size-full object-fill mix-blend-luminosity"
       />
     </div>
   )

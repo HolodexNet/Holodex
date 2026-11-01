@@ -365,7 +365,6 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
         <VideoListSkeleton
           mode={mode}
           gridSize={gridSize}
-          className={!favorites && mode === "grid" ? "home-shelf" : undefined}
         />
       )
     } else if (live.isError && !live.data) {
@@ -399,7 +398,6 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
               videos={liveVideos.live}
               collateCollabs={settings.collateCollabs}
               gridSize={gridSize}
-              className={!favorites ? "home-shelf" : undefined}
             />
           )}
           {liveVideos.live.length > 0 && liveVideos.upcoming.length > 0 && (
@@ -432,7 +430,6 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
                 videos={liveVideos.upcoming}
                 collateCollabs={settings.collateCollabs}
                 gridSize={gridSize}
-                className={!favorites ? "home-shelf" : undefined}
               />
             </section>
           )}

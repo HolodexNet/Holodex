@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="320" viewBox="0 0 960 320" preserveAspectRatio="none">
+  <title>Closed silver-grey theatre curtains</title>
+  <desc>Heavy drapes meet at the centre. A bright, sharply defined spotlight falls on the lower left, with a little light escaping beneath the hem.</desc>
+  <defs>
+    <linearGradient id="stage" x2="0" y2="1">
+      <stop stop-color="#37383e"/>
+      <stop offset="1" stop-color="#17191e"/>
+    </linearGradient>
+    <linearGradient id="fold">
+      <stop stop-color="#45474e"/>
+      <stop offset=".12" stop-color="#62646b"/>
+      <stop offset=".29" stop-color="#929399"/>
+      <stop offset=".43" stop-color="#797b82"/>
+      <stop offset=".65" stop-color="#50525a"/>
+      <stop offset=".84" stop-color="#303239"/>
+      <stop offset="1" stop-color="#45474e"/>
+    </linearGradient>
+    <linearGradient id="crease">
+      <stop stop-color="#16191f" stop-opacity="0"/>
+      <stop offset=".54" stop-color="#16191f" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#16191f" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="overhead" x2="0" y2="1">
+      <stop stop-color="#11131a" stop-opacity=".57"/>
+      <stop offset=".38" stop-color="#23252c" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#23252c" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="seam">
+      <stop stop-color="#15171e" stop-opacity="0"/>
+      <stop offset=".48" stop-color="#15171e" stop-opacity=".7"/>
+      <stop offset=".55" stop-color="#101218" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#15171e" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="spotlight" gradientUnits="userSpaceOnUse" cx="230" cy="218" r="205" gradientTransform="translate(230 218) rotate(-22) scale(1 .78) translate(-230 -218)">
+      <stop stop-color="#fffaf0" stop-opacity="1"/>
+      <stop offset=".78" stop-color="#fffaf0" stop-opacity="1"/>
+      <stop offset=".88" stop-color="#fffaf0" stop-opacity=".96"/>
+      <stop offset=".93" stop-color="#fffaf0" stop-opacity=".12"/>
+      <stop offset=".97" stop-color="#fffaf0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx=".43" cy=".63" r=".74">
+      <stop offset=".22" stop-color="#101219" stop-opacity="0"/>
+      <stop offset="1" stop-color="#101219" stop-opacity=".57"/>
+    </radialGradient>
+    <radialGradient id="footlight">
+      <stop stop-color="#fff2cf" stop-opacity=".72"/>
+      <stop offset=".26" stop-color="#e9d8b7" stop-opacity=".36"/>
+      <stop offset=".65" stop-color="#c9c0ae" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#c9c0ae" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hemLight">
+      <stop stop-color="#e4d3ac" stop-opacity="0"/>
+      <stop offset=".17" stop-color="#fff0ce" stop-opacity=".75"/>
+      <stop offset=".35" stop-color="#fff1d5" stop-opacity=".9"/>
+      <stop offset=".58" stop-color="#f4e2bd" stop-opacity=".52"/>
+      <stop offset=".83" stop-color="#ddc99e" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#ddc99e" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="hemShade" x2="0" y2="1">
+      <stop stop-color="#14161c" stop-opacity="0"/>
+      <stop offset="1" stop-color="#14161c" stop-opacity=".4"/>
+    </linearGradient>
+    <pattern id="weave" width="4" height="4" patternUnits="userSpaceOnUse">
+      <path d="M.5 0V4M2.5 0V4" stroke="#fff" stroke-opacity=".018" stroke-width=".5"/>
+      <path d="M0 1.5H4M0 3.5H4" stroke="#11131a" stroke-opacity=".028" stroke-width=".5"/>
+    </pattern>
+    <filter id="soft" x="-20%" y="-150%" width="140%" height="400%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <path id="hem" d="M-20 279C-4 279 6 284 22 284S50 278 66 278S94 284 110 284S138 279 154 279S182 285 198 285S226 280 242 280S270 284 286 284S314 279 330 279S358 284 374 284S402 280 418 280S446 285 462 285Q474 285 480 282Q490 280 506 280C522 280 534 284 550 284S578 278 594 278S622 284 638 284S666 279 682 279S710 285 726 285S754 280 770 280S798 284 814 284S842 279 858 279S886 284 902 284S930 280 946 280S974 284 990 284"/>
+    <clipPath id="cloth">
+      <path d="M-20-20V279C-4 279 6 284 22 284S50 278 66 278S94 284 110 284S138 279 154 279S182 285 198 285S226 280 242 280S270 284 286 284S314 279 330 279S358 284 374 284S402 280 418 280S446 285 462 285Q474 285 480 282Q490 280 506 280C522 280 534 284 550 284S578 278 594 278S622 284 638 284S666 279 682 279S710 285 726 285S754 280 770 280S798 284 814 284S842 279 858 279S886 284 902 284S930 280 946 280S974 284 990 284V-20Z"/>
+    </clipPath>
+    <g id="pleat">
+      <path d="M0-20C5 42-6 100-2 157S5 238 0 294H48C44 244 53 208 49 148S44 43 48-20Z" fill="url(#fold)"/>
+      <path d="M31-20C27 55 37 110 34 170S29 254 33 294H46C42 232 48 214 44 153S40 44 44-20Z" fill="url(#crease)" opacity=".55"/>
+      <path d="M13-20C19 48 10 113 14 171S18 252 14 294" fill="none" stroke="#e9e8e4" stroke-opacity=".12" stroke-width="1.2"/>
+    </g>
+  </defs>
+
+  <!-- A shallow stage and soft light beneath the fully closed cloth. -->
+  <path fill="url(#stage)" d="M0 0H960V320H0Z"/>
+  <ellipse cx="376" cy="289" rx="448" ry="35" fill="url(#footlight)"/>
+  <path d="M106 283L72 320H182L211 282ZM307 283L293 320H359L356 282ZM492 284L514 320H555L531 282ZM688 282L731 320H796L732 282Z" fill="#efddba" opacity=".065" filter="url(#soft)"/>
+  <use href="#hem" fill="none" stroke="url(#hemLight)" stroke-width="7" filter="url(#soft)"/>
+  <use href="#hem" fill="none" stroke="url(#hemLight)" stroke-width="1.7" transform="translate(0 1.5)"/>
+
+  <g clip-path="url(#cloth)">
+    <path fill="#575960" d="M0 0H960V296H0Z"/>
+    <!-- Slightly different widths and lean give the heavy pleats a natural fall. -->
+    <use href="#pleat" transform="translate(-18) scale(1.08 1)"/>
+    <use href="#pleat" transform="translate(30) scale(.92 1)"/>
+    <use href="#pleat" transform="translate(73) scale(1.04 1)"/>
+    <use href="#pleat" transform="translate(121) scale(.86 1)"/>
+    <use href="#pleat" transform="translate(161) scale(1.12 1)"/>
+    <use href="#pleat" transform="translate(213) scale(.96 1)"/>
+    <use href="#pleat" transform="translate(258) scale(.87 1)"/>
+    <use href="#pleat" transform="translate(298) scale(1.1 1)"/>
+    <use href="#pleat" transform="translate(349) scale(.93 1)"/>
+    <use href="#pleat" transform="translate(392) scale(1.04 1)"/>
+    <use href="#pleat" transform="translate(440) scale(.86 1)"/>
+    <g transform="translate(960) scale(-1 1)">
+      <use href="#pleat" transform="translate(-12) scale(.98 1)"/>
+      <use href="#pleat" transform="translate(33) scale(1.06 1)"/>
+      <use href="#pleat" transform="translate(82) scale(.94 1)"/>
+      <use href="#pleat" transform="translate(126) scale(1.1 1)"/>
+      <use href="#pleat" transform="translate(177) scale(.87 1)"/>
+      <use href="#pleat" transform="translate(217) scale(.98 1)"/>
+      <use href="#pleat" transform="translate(262) scale(1.06 1)"/>
+      <use href="#pleat" transform="translate(311) scale(.91 1)"/>
+      <use href="#pleat" transform="translate(353) scale(1.02 1)"/>
+      <use href="#pleat" transform="translate(400) scale(.87 1)"/>
+      <use href="#pleat" transform="translate(440) scale(.86 1)"/>
+    </g>
+    <path d="M470-10C477 76 472 134 477 201S476 262 475 291H488C484 243 491 205 486 145S487 42 488-10Z" fill="url(#seam)"/>
+    <path d="M480-10C483 85 478 159 481 217S480 265 480 290" fill="none" stroke="#1a1c23" stroke-opacity=".55" stroke-width="1.5"/>
+    <path fill="url(#overhead)" d="M0 0H960V296H0Z"/>
+    <!-- The light brightens the existing folds instead of flattening their relief. -->
+    <path fill="url(#spotlight)" style="mix-blend-mode:soft-light" d="M0 0H960V296H0Z"/>
+    <path fill="url(#weave)" d="M0 0H960V296H0Z"/>
+    <path fill="url(#hemShade)" d="M0 259H960V296H0Z"/>
+    <path fill="url(#vignette)" d="M0 0H960V296H0Z"/>
+    <use href="#hem" fill="none" stroke="#171920" stroke-opacity=".45" stroke-width="3" transform="translate(0 -2)"/>
+    <use href="#hem" fill="none" stroke="#d2cdc1" stroke-opacity=".18" stroke-width=".8" transform="translate(0 -6)"/>
+  </g>
+</svg>
