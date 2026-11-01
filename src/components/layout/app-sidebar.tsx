@@ -379,8 +379,9 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <NavList items={site} />
+            <div className="mt-1" />
             {showTools && <NavList items={tools} />}
-            <SidebarMenu>
+            <SidebarMenu className="mt-1">
               <SidebarMenuItem>
                 <SidebarMenuButton
                   size="sm"

@@ -65,6 +65,8 @@ function LiveSortControl({
       <SimpleSelect<LiveSort>
         id={id}
         size="sm"
+        variant="text"
+        className="text-xs"
         value={value}
         onChange={onChange}
         options={[

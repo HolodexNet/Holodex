@@ -45,7 +45,12 @@ export function ChannelActions({
       {loggedIn ? (
         <Button
           size={compact ? "icon-sm" : "default"}
-          variant={favorite ? "outline" : "default"}
+          variant={favorite ? "default" : "outline"}
+          className={
+            favorite
+              ? "shadow-sm ring-2 ring-primary/25 ring-offset-2 ring-offset-card"
+              : "bg-card/90 text-muted-foreground hover:text-brand"
+          }
           aria-label={label}
           aria-pressed={favorite}
           title={label}
@@ -65,6 +70,7 @@ export function ChannelActions({
           nativeButton={false}
           size={compact ? "icon-sm" : "default"}
           variant="outline"
+          className="bg-card/90 text-muted-foreground hover:text-brand"
           title={t("component.channelList.signInToFavorite")}
           aria-label={t("component.channelList.signInToFavorite")}
           render={

@@ -26,11 +26,11 @@ export function useChannels(org: string, sort: string, type = "vtuber") {
   })
 }
 
-export function useChannel(id: string) {
+export function useChannel(id: string, enabled = true) {
   return useQuery({
     queryKey: ["channel", id],
     queryFn: ({ signal }) => api.channel(id, signal),
-    enabled: !!id,
+    enabled: !!id && enabled,
     staleTime: 20 * 60_000,
   })
 }

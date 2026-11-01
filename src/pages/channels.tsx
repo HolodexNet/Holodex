@@ -9,6 +9,7 @@ import { SimpleSelect } from "@/components/common/simple-select"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import {
   CaretRightIcon,
+  GraduationCapIcon,
   GridFourIcon,
   RowsIcon,
   UsersThreeIcon,
@@ -36,28 +37,53 @@ export function ChannelCard({
   const { t, lang } = useT()
   const english = useSettings((s) => s.useEnglishName)
   const name = channelName(channel, english)
+  // Keep some color at rest; inactive talent should feel quiet, not memorialized.
+  const inactiveStyle = channel.inactive
+    ? "saturate-45 transition-[filter] duration-300 ease-out group-hover:saturate-100 group-focus-within:saturate-100 motion-reduce:transition-none"
+    : undefined
   return (
     <article
       className={cn(
         "group relative flex overflow-hidden rounded-2xl border bg-card transition-colors hover:border-primary/50",
-        list ? "items-center gap-3 p-3" : "flex-col"
+        list ? "items-center gap-3 p-3" : "flex-col",
+        channel.inactive && "focus-within:border-primary/50"
       )}
     >
       <Link
         to={`/channel/${channel.id}`}
         className={cn(
           "flex min-w-0 flex-1 gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-primary",
-          list ? "items-center" : "w-full flex-col"
+          list ? "items-center" : "w-full flex-col",
+          inactiveStyle
         )}
       >
-        {!list && <ChannelBanner channel={channel} className="h-20 w-full" />}
+        {!list && (
+          <ChannelBanner
+            channel={channel}
+            curved
+            resolveBanner={!channel.inactive}
+            curtain={!!channel.inactive}
+            className="h-24 w-full"
+          />
+        )}
         <div
           className={cn(
-            !list &&
-              "relative z-10 -mt-10 ml-4 w-fit rounded-full ring-4 ring-card"
+            "relative shrink-0",
+            !list && "z-10 -mt-10 ml-4 w-fit rounded-full ring-4 ring-card"
           )}
         >
           <ChannelAvatar channel={channel} size={list ? 48 : 64} />
+          {channel.inactive && (
+            <span
+              aria-hidden="true"
+              className={cn(
+                "pointer-events-none absolute -right-1 -bottom-1 flex items-center justify-center rounded-full border border-complement/20 bg-complement-soft text-complement ring-2 ring-card",
+                list ? "size-5" : "size-6"
+              )}
+            >
+              <GraduationCapIcon className={list ? "size-3.5" : "size-4"} />
+            </span>
+          )}
         </div>
         <div
           className={cn("min-w-0", !list && "flex flex-1 flex-col px-4 pb-4")}
@@ -72,7 +98,6 @@ export function ChannelCard({
           )}
           <p className="mt-1 truncate text-xs text-muted-foreground">
             {channel.org}
-            {channel.inactive ? ` · ${t("channelPages.inactive")}` : ""}
           </p>
           {channel.subscriber_count != null &&
             Number.isFinite(Number(channel.subscriber_count)) && (
@@ -157,15 +182,6 @@ export function ChannelsPage() {
   useDocumentTitle(`${org} · ${t("component.mainNav.channels")}`)
   return (
     <main className="mx-auto w-full max-w-[1600px] p-4 md:p-8">
-      <div className="relative mb-7 overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/10 via-card to-complement/10 px-5 py-8 md:px-8 md:py-10">
-        <div className="pointer-events-none absolute -top-20 -right-16 size-80 rounded-full border-[40px] border-primary/5" />
-        <h1 className="relative max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
-          {t("talentHome.directoryTitle")}
-        </h1>
-        <p className="relative mt-4 max-w-lg text-sm leading-6 text-muted-foreground">
-          {t("talentHome.directoryHint")}
-        </p>
-      </div>
       <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 className="text-xl font-semibold tracking-tight">{org}</h2>

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import type { ComponentProps, ReactNode } from "react"
 
 import {
   Select,
@@ -23,6 +23,7 @@ interface SimpleSelectProps<T extends string | number> {
   id?: string
   "aria-label"?: string
   size?: "sm" | "default"
+  variant?: ComponentProps<typeof SelectTrigger>["variant"]
   className?: string
 }
 
@@ -33,6 +34,7 @@ export function SimpleSelect<T extends string | number>({
   options,
   id,
   size,
+  variant,
   className,
   ...props
 }: SimpleSelectProps<T>) {
@@ -47,6 +49,7 @@ export function SimpleSelect<T extends string | number>({
       <SelectTrigger
         id={id}
         size={size}
+        variant={variant}
         className={className}
         aria-label={props["aria-label"]}
       >

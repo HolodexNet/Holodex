@@ -31,6 +31,7 @@ export { FunnelIcon } from "./funnel-icon";
 export { GearSixFillIcon } from "./gear-six-fill-icon";
 export { GearSixIcon } from "./gear-six-icon";
 export { GlobeIcon } from "./globe-icon";
+export { GraduationCapIcon } from "./graduation-cap-icon";
 export { GridFourIcon } from "./grid-four-icon";
 export { GridNineIcon } from "./grid-nine-icon";
 export { HashIcon } from "./hash-icon";
