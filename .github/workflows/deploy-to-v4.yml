@@ -1,0 +1,38 @@
+name: Deploy to v4
+
+on:
+  push:
+    branches:
+      - v4
+
+concurrency:
+  group: deploy-v4
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24.x'
+        cache: npm
+    - run: npm ci
+    - run: npm run build
+    - name: Upload to v4 box
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        KEY: ${{ secrets.KEY }}
+      run: |
+        install -m 700 -d "$HOME/.ssh"
+        printf '%s\n' "$KEY" > "$HOME/.ssh/deploy_key"
+        chmod 600 "$HOME/.ssh/deploy_key"
+        rsync -az --no-owner --no-group --chmod=D755,F644 --delete-delay --delay-updates \
+          -e "ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
+          dist/ "$USERNAME@$HOST:/var/www/html/v4.holodex.net/"
