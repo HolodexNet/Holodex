@@ -67,7 +67,7 @@ export default function MusicHome() {
       <section className="music-rotation">
         <MusicSectionHeading
           title="Popular songs"
-          description="The performances listeners keep coming back to."
+          description="Trending songs according to listeners on musicdex."
         >
           {trending.isPending ? (
             <Skeleton className="h-8 w-24" aria-hidden="true" />
@@ -95,7 +95,7 @@ export default function MusicHome() {
           <SongList
             songs={songs}
             source={{ id: `trending:${org}`, title: `Trending ${org} songs` }}
-            preview={6}
+            preview={20}
           />
         ) : (
           <p className="text-sm text-muted-foreground">
