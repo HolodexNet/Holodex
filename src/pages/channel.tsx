@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react"
 import { Link, NavLink, useParams } from "react-router"
 import { cn } from "cn"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
@@ -6,7 +7,7 @@ import { ChannelBanner } from "@/components/common/channel-banner"
 import { ChannelOverview } from "@/components/channel/channel-overview"
 import { LoadMore } from "@/components/common/load-more"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
-import { ArrowLeftIcon, ArrowSquareOutIcon } from "@/components/icons"
+import { ArrowLeftIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { VideoList, VideoListSkeleton } from "@/components/video/video-list"
@@ -18,13 +19,18 @@ import {
   useChannelVideos,
   type ChannelTab,
 } from "@/lib/channel-queries"
-import { musicdexURL } from "@/lib/consts"
 import { intlLocale, useT } from "@/lib/i18n"
 import { flattenPages } from "@/lib/queries"
 import type { Channel } from "@/lib/types"
 import { formatCount } from "@/lib/time"
 import { channelName } from "@/lib/video"
 import { useSettings } from "@/stores/settings"
+
+const ChannelMusic = lazy(() =>
+  import("@/components/music/channel-music").then((module) => ({
+    default: module.ChannelMusic,
+  }))
+)
 
 function ChannelVideos({ id, tab }: { id: string; tab: ChannelTab }) {
   const { t } = useT()
@@ -204,6 +210,7 @@ export function ChannelPage() {
     { id: "videos", label: t("views.channel.video") },
     { id: "clips", label: t("views.channel.clips") },
     { id: "collabs", label: t("views.channel.collabs") },
+    { id: "music", label: t("views.channel.music") },
     { id: "about", label: t("views.channel.about") },
   ]
   return (
@@ -277,20 +284,15 @@ export function ChannelPage() {
               {item.label}
             </NavLink>
           ))}
-          <a
-            href={`${musicdexURL}/channel/${channel.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex shrink-0 items-center gap-1 px-4 py-3 text-sm text-muted-foreground hover:text-foreground"
-          >
-            {t("views.channel.music")}
-            <ArrowSquareOutIcon className="size-3" />
-          </a>
         </nav>
       </header>
       <div className="p-4 md:p-8">
         {tab === "overview" ? (
           <ChannelOverview key={channel.id} channel={channel} />
+        ) : tab === "music" ? (
+          <Suspense fallback={<Skeleton className="h-64 w-full" />}>
+            <ChannelMusic key={channel.id} channel={channel} />
+          </Suspense>
         ) : tab === "about" ? (
           <ChannelAbout channel={channel} />
         ) : ["videos", "clips", "collabs"].includes(tab) ? (

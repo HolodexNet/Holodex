@@ -1,0 +1,130 @@
+.music-channel-overview {
+  display: grid;
+  gap: 32px;
+  min-width: 0;
+}
+
+.music-channel-overview > * {
+  min-width: 0;
+}
+
+.music-channel-overview .music-section-heading h2,
+.music-channel-catalog .music-section-heading h2 {
+  font-size: 21px;
+}
+
+.music-channel-popular > .music-section-heading {
+  margin-bottom: 8px;
+}
+
+.music-channel-popular .music-track-row {
+  gap: 12px;
+  padding: 9px 8px;
+  border-radius: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.music-channel-popular-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.music-channel-popular-footer > button {
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+
+.music-channel-catalog-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-left: auto;
+}
+
+.music-channel-catalog-links .music-text-link {
+  color: var(--brand);
+  font-size: 11px;
+}
+
+.music-channel-shelf {
+  min-width: 0;
+}
+
+.music-channel-shelf > .music-section-heading {
+  margin-bottom: 16px;
+  min-height: 32px;
+}
+
+.music-channel-rail {
+  display: flex;
+  gap: 20px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.music-channel-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.music-channel-rail > .music-collection-card {
+  width: 180px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.music-channel-rail > .music-artist-card {
+  scroll-snap-align: start;
+}
+
+.music-channel-stream-count {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: #0009;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 639px) {
+  .music-channel-overview {
+    gap: 28px;
+  }
+
+  .music-channel-popular .music-track-row {
+    gap: 8px;
+    padding-inline: 4px;
+  }
+
+  .music-channel-rail {
+    gap: 16px;
+  }
+
+  .music-channel-rail > .music-collection-card {
+    width: 150px;
+  }
+
+  .music-channel-catalog-links {
+    gap: 14px;
+  }
+
+  .music-channel-catalog-links .music-text-link {
+    font-size: 10px;
+  }
+
+  .music-channel-catalog > .music-section-heading {
+    align-items: flex-start;
+  }
+}

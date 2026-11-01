@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/inter";
+@import "./components/music/music.css";
 
 /* The previous Vue UI is kept for reference only; never scan it for classes. */
 @source not "../legacy";
@@ -294,4 +295,15 @@
   .home-shelf { grid-template-columns: minmax(0, 1fr); }
   .home-shelf[data-grid-size="1"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .home-shelf[data-grid-size="2"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Reserve the persistent player's height throughout the shared app shell. */
+[data-music-playing] {
+  --music-player-height: 4.5rem;
+}
+
+@media (min-width: 768px) {
+  [data-music-playing] {
+    --music-player-height: 5rem;
+  }
 }

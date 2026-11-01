@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router"
 import { cn } from "cn"
 
 import { ChannelAvatar } from "@/components/common/channel-avatar"
+import { MusicSidebar } from "@/components/music/sidebar"
 import {
   CaretDownIcon,
   CoffeeIcon,
@@ -29,7 +30,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -37,7 +37,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useNowMinutes } from "@/hooks/use-now"
-import { musicdexURL, UI_LANGS } from "@/lib/consts"
+import { UI_LANGS } from "@/lib/consts"
 import { useT } from "@/lib/i18n"
 import { queryClient, useFavorites, useFavoritesLive } from "@/lib/queries"
 import { formatAbsolute, formatShortDistance } from "@/lib/time"
@@ -54,21 +54,6 @@ interface NavItem {
   icon: ReactNode
   activeIcon?: ReactNode
   external?: boolean
-}
-
-function MusicdexIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        className="fill-primary"
-        d="M4.5 2a2 2 0 0 1 3-1.7L23 9.6a2 2 0 0 1 0 3.5L7.6 22.4a2 2 0 0 1-3-1.7V2Z"
-      />
-      <path
-        className="fill-complement"
-        d="M0 2A2 2 0 0 1 3 .3l15.5 9.3a2 2 0 0 1 0 3.5L3.1 22.4A2 2 0 0 1 0 20.7V2Z"
-      />
-    </svg>
-  )
 }
 
 /** Scrolls up and refreshes when the page you are already on is clicked. */
@@ -319,12 +304,6 @@ export function AppSidebar() {
       to: "/multiview",
       icon: <SquaresFourIcon />,
     },
-    {
-      label: "Musicdex",
-      to: musicdexURL,
-      icon: <MusicdexIcon />,
-      external: true,
-    },
   ]
   const site: NavItem[] = [
     {
@@ -349,7 +328,7 @@ export function AppSidebar() {
   return (
     <Sidebar
       collapsible="icon"
-      className="top-[calc(var(--header-height)+env(safe-area-inset-top,0px))] h-[calc(100svh-var(--header-height)-env(safe-area-inset-top,0px))]!"
+      className="top-[calc(var(--header-height)+env(safe-area-inset-top,0px))] h-[calc(100svh-var(--header-height)-env(safe-area-inset-top,0px)-var(--music-player-height,0px))]!"
     >
       <SidebarContent className="gap-0">
         <OrgSidebar />
@@ -369,6 +348,8 @@ export function AppSidebar() {
             <NavList items={main} />
           </SidebarGroupContent>
         </SidebarGroup>
+        <SidebarSeparator className="mx-0" />
+        <MusicSidebar />
         <SidebarSeparator className="mx-0" />
         <SidebarGroup>
           <SidebarGroupContent>

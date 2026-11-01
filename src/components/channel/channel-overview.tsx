@@ -10,7 +10,6 @@ import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import { Skeleton } from "@/components/ui/skeleton"
 import { VideoCard, VideoThumbnail } from "@/components/video/video-card"
 import { useChannelVideos } from "@/lib/channel-queries"
-import { musicdexURL } from "@/lib/consts"
 import { intlLocale, useT } from "@/lib/i18n"
 import { flattenPages, useOrgLive } from "@/lib/queries"
 import type { Channel, Video } from "@/lib/types"
@@ -365,15 +364,13 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
                 <VideoCard video={music[0]} compact />
               </div>
             )}
-            <a
-              href={`${musicdexURL}/channel/${channel.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to={`/channel/${encodeURIComponent(channel.id)}/music`}
               className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-brand hover:underline"
             >
               {t("talentHome.openMusicdex")}
-              <ArrowSquareOutIcon className="size-3" />
-            </a>
+              <CaretRightIcon className="size-3" />
+            </Link>
           </section>
           {!onAir && !next && !schedule.isPending && !schedule.isError && (
             <p className="px-2 text-xs leading-5 text-muted-foreground">

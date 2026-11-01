@@ -82,7 +82,7 @@ export function SelectionTray() {
       <div
         role="region"
         aria-label={t("selection.label")}
-        className="fixed inset-x-3 bottom-[calc(4rem+env(safe-area-inset-bottom,0px))] z-40 mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-2 rounded-2xl border bg-popover p-3 text-popover-foreground shadow-xl md:bottom-5"
+        className="fixed inset-x-3 bottom-[calc(var(--music-player-height,0px)+4rem+env(safe-area-inset-bottom,0px))] z-40 mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-2 rounded-2xl border bg-popover p-3 text-popover-foreground shadow-xl md:bottom-[calc(var(--music-player-height,0px)+1.25rem)]"
       >
         <Popover open={reviewing} onOpenChange={setReviewing}>
           <PopoverTrigger

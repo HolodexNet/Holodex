@@ -1,15 +1,26 @@
 import { useState } from "react"
-import { Link } from "react-router"
+import { Link, useLocation } from "react-router"
 
 import { Logo } from "@/components/common/logo"
 import {
   ArrowLeftIcon,
   ListIcon,
   MagnifyingGlassIcon,
+  MusicalNotesIcon,
+  VideoCameraIcon,
+  CaretDownIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useSidebar } from "@/components/ui/sidebar"
+import { MusicSearchBar } from "@/components/music/search-bar"
 import { useT } from "@/lib/i18n"
+import { isMusicPath } from "@/lib/music-route"
 import { useSettings } from "@/stores/settings"
 import { SearchBar } from "./search-bar"
 import { UserMenu } from "./user-menu"
@@ -20,11 +31,54 @@ const HOME_PATHS = {
   multiview: "/multiview",
 } as const
 
+function SearchControl({
+  music,
+  autoFocus,
+  onCommit,
+}: {
+  music: boolean
+  autoFocus?: boolean
+  onCommit?: () => void
+}) {
+  return (
+    <div className="flex min-w-0 flex-1 items-center gap-1">
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          aria-label={`Search scope: ${music ? "Musicdex" : "Holodex videos"}`}
+          render={<Button variant="ghost" size="sm" className="gap-1 px-2" />}
+        >
+          {music ? <MusicalNotesIcon /> : <VideoCameraIcon />}
+          <span className="hidden text-xs lg:inline">
+            {music ? "Music" : "Videos"}
+          </span>
+          <CaretDownIcon className="size-3" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem render={<Link to="/search" onClick={onCommit} />}>
+            <VideoCameraIcon /> Holodex Video Search
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            render={<Link to="/music/search" onClick={onCommit} />}
+          >
+            <MusicalNotesIcon /> Musicdex Search
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      {music ? (
+        <MusicSearchBar autoFocus={autoFocus} onCommit={onCommit} />
+      ) : (
+        <SearchBar autoFocus={autoFocus} onCommit={onCommit} />
+      )}
+    </div>
+  )
+}
+
 export function Header() {
   const { t } = useT()
   const { toggleSidebar } = useSidebar()
   const defaultOpen = useSettings((s) => s.defaultOpen)
   const [mobileSearch, setMobileSearch] = useState(false)
+  const music = isMusicPath(useLocation().pathname)
 
   return (
     <header className="sticky top-0 z-40 border-b bg-header pt-safe">
@@ -39,7 +93,11 @@ export function Header() {
             >
               <ArrowLeftIcon className="size-5" />
             </Button>
-            <SearchBar autoFocus onCommit={() => setMobileSearch(false)} />
+            <SearchControl
+              music={music}
+              autoFocus
+              onCommit={() => setMobileSearch(false)}
+            />
           </>
         ) : (
           <>
@@ -66,7 +124,7 @@ export function Header() {
             </div>
 
             <div className="ml-auto hidden max-w-xl min-w-0 flex-1 md:block">
-              <SearchBar />
+              <SearchControl music={music} />
             </div>
 
             <div className="ml-auto flex shrink-0 items-center md:ml-0">

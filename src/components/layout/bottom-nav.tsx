@@ -6,52 +6,85 @@ import {
   HeartIcon,
   HouseFillIcon,
   HouseIcon,
+  MagnifyingGlassIcon,
+  MusicalNotesIcon,
   PlaylistIcon,
   UsersThreeFillIcon,
   UsersThreeIcon,
 } from "@/components/icons"
 import { useT } from "@/lib/i18n"
+import { isMusicPath } from "@/lib/music-route"
 import { queryClient } from "@/lib/queries"
 
 /** Thumb-reach navigation for phones; the sidebar covers larger screens. */
 export function BottomNav() {
   const { t } = useT()
   const location = useLocation()
+  const music = isMusicPath(location.pathname)
 
-  const items = [
-    {
-      label: t("component.mainNav.home"),
-      to: "/",
-      icon: <HouseIcon />,
-      activeIcon: <HouseFillIcon />,
-    },
-    {
-      label: t("component.mainNav.favorites"),
-      to: "/favorites",
-      icon: <HeartIcon />,
-      activeIcon: <HeartFillIcon />,
-    },
-    {
-      label: t("component.mainNav.channels"),
-      to: "/channel",
-      icon: <UsersThreeIcon />,
-      activeIcon: <UsersThreeFillIcon />,
-    },
-    {
-      label: t("component.mainNav.playlist"),
-      to: "/playlists",
-      icon: <PlaylistIcon />,
-      activeIcon: <PlaylistIcon />,
-    },
-  ]
+  const items = music
+    ? [
+        {
+          label: "Musicdex",
+          to: "/music",
+          icon: <MusicalNotesIcon />,
+          activeIcon: <MusicalNotesIcon />,
+        },
+        {
+          label: t("component.mainNav.favorites"),
+          to: "/music/favorites",
+          icon: <HeartIcon />,
+          activeIcon: <HeartFillIcon />,
+        },
+        {
+          label: "Music search",
+          to: "/music/search",
+          icon: <MagnifyingGlassIcon />,
+          activeIcon: <MagnifyingGlassIcon />,
+        },
+        {
+          label: "Musicdex Playlists",
+          to: "/music/playlists",
+          icon: <PlaylistIcon />,
+          activeIcon: <PlaylistIcon />,
+        },
+      ]
+    : [
+        {
+          label: t("component.mainNav.home"),
+          to: "/",
+          icon: <HouseIcon />,
+          activeIcon: <HouseFillIcon />,
+        },
+        {
+          label: t("component.mainNav.favorites"),
+          to: "/favorites",
+          icon: <HeartIcon />,
+          activeIcon: <HeartFillIcon />,
+        },
+        {
+          label: t("component.mainNav.channels"),
+          to: "/channel",
+          icon: <UsersThreeIcon />,
+          activeIcon: <UsersThreeFillIcon />,
+        },
+        {
+          label: t("component.mainNav.playlist"),
+          to: "/playlists",
+          icon: <PlaylistIcon />,
+          activeIcon: <PlaylistIcon />,
+        },
+      ]
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t bg-header pb-safe md:hidden">
       <ul className="flex h-14">
         {items.map((item) => {
           const active =
-            item.to === "/"
-              ? location.pathname === "/"
+            item.to === "/" || item.to === "/music"
+              ? location.pathname === item.to ||
+                (item.to === "/music" &&
+                  location.pathname.startsWith("/music/org/"))
               : location.pathname.startsWith(item.to)
           return (
             <li key={item.to} className="flex-1">
@@ -66,7 +99,9 @@ export function BottomNav() {
                   if (location.pathname !== item.to) return
                   event.preventDefault()
                   window.scrollTo({ top: 0, behavior: "smooth" })
-                  void queryClient.invalidateQueries({ queryKey: ["live"] })
+                  void queryClient.invalidateQueries({
+                    queryKey: [music ? "musicdex" : "live"],
+                  })
                 }}
               >
                 {active ? item.activeIcon : item.icon}

@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react"
+import { useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router"
 import { cn } from "cn"
 
@@ -13,6 +13,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useT } from "@/lib/i18n"
+import { isMusicPath } from "@/lib/music-route"
 import { useOrgs } from "@/lib/queries"
 import type { Org } from "@/lib/types"
 import { useOrgStore } from "@/stores/org"
@@ -29,13 +30,14 @@ export function OrgSidebar() {
   const favorites = useOrgStore((s) => s.orgFavorites)
   const setCurrentOrg = useOrgStore((s) => s.setCurrentOrg)
   const [manageOpen, setManageOpen] = useState(false)
+  const music = isMusicPath(location.pathname)
   // Organization links keep the feed's archive/clips tab when switching orgs.
   const hash =
     ["/", "/favorites"].includes(location.pathname) &&
     ["#archive", "#clips"].includes(location.hash)
       ? location.hash
       : ""
-  const to = `/${hash}`
+  const to = music ? "/music" : `/${hash}`
   const select = (org: Org) => {
     setCurrentOrg({ ...org, short: orgShortName(org) })
     navigate(to)
@@ -54,7 +56,10 @@ export function OrgSidebar() {
               const org =
                 orgs.data?.find((org) => org.name === favorite.name) ?? favorite
               const active =
-                location.pathname === "/" && currentOrg.name === org.name
+                (location.pathname === "/" ||
+                  location.pathname === "/music" ||
+                  location.pathname.startsWith("/music/org/")) &&
+                currentOrg.name === org.name
               return (
                 <SidebarMenuItem key={org.name}>
                   <SidebarMenuButton
