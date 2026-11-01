@@ -2,7 +2,11 @@ import { useEffect, useRef } from "react"
 import { useLocation, useNavigate } from "react-router"
 
 import { MagnifyingGlassIcon } from "@/components/icons"
-import { Button } from "@/components/ui/button"
+import {
+  SEARCH_BAR_FRAME_CLASS,
+  SEARCH_BAR_INPUT_CLASS,
+  SEARCH_BAR_SUBMIT_CLASS,
+} from "@/components/search/search-bar-styles"
 
 /** Keeps song queries and filters separate from Holodex video search. */
 export function MusicSearchBar({
@@ -42,7 +46,7 @@ export function MusicSearchBar({
     <form
       role="search"
       aria-label="Musicdex search"
-      className="flex min-w-0 flex-1 items-center gap-1 rounded-2xl border border-input bg-input/30 pr-1 pl-3 focus-within:ring-2 focus-within:ring-ring/50"
+      className={`${SEARCH_BAR_FRAME_CLASS} min-w-0 flex-1`}
       onSubmit={(event) => {
         event.preventDefault()
         const params = new URLSearchParams(onSearchPage ? location.search : "")
@@ -61,20 +65,19 @@ export function MusicSearchBar({
         autoFocus={autoFocus}
         aria-label="Search Musicdex songs and artists"
         placeholder="Search songs and artists"
-        type="search"
+        type="text"
         inputMode="search"
         enterKeyHint="search"
         autoComplete="off"
-        className="h-9 min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+        className={SEARCH_BAR_INPUT_CLASS}
       />
-      <Button
+      <button
         type="submit"
-        variant="ghost"
-        size="icon-sm"
         aria-label="Search music"
+        className={SEARCH_BAR_SUBMIT_CLASS}
       >
         <MagnifyingGlassIcon className="size-4" />
-      </Button>
+      </button>
     </form>
   )
 }

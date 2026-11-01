@@ -22,6 +22,11 @@ import {
   XIcon,
 } from "@/components/icons"
 import { Spinner } from "@/components/ui/spinner"
+import {
+  SEARCH_BAR_FRAME_CLASS,
+  SEARCH_BAR_INPUT_CLASS,
+  SEARCH_BAR_SUBMIT_CLASS,
+} from "@/components/search/search-bar-styles"
 import { useDebounced } from "@/hooks/use-debounced"
 import { api } from "@/lib/api"
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "@/lib/consts"
@@ -339,10 +344,7 @@ export function SearchBar({ autoFocus, onCommit, className }: SearchBarProps) {
       }}
     >
       <div
-        className={cn(
-          "flex min-h-9 w-full cursor-text flex-wrap items-center gap-1 rounded-2xl border border-input bg-background/60 py-1 pr-1 pl-3 transition-colors",
-          "focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/40"
-        )}
+        className={SEARCH_BAR_FRAME_CLASS}
         onClick={() => inputRef.current?.focus()}
       >
         {tokens.map((token) => (
@@ -391,7 +393,7 @@ export function SearchBar({ autoFocus, onCommit, className }: SearchBarProps) {
           aria-activedescendant={
             showList ? `${listId}-${activeIndex}` : undefined
           }
-          className="h-7 min-w-24 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+          className={SEARCH_BAR_INPUT_CLASS}
         />
         {autocomplete.isFetching && canLookup && (
           <Spinner className="text-muted-foreground" />
@@ -399,7 +401,7 @@ export function SearchBar({ autoFocus, onCommit, className }: SearchBarProps) {
         <button
           type="button"
           aria-label={t("component.search.searchLabel")}
-          className="flex size-7 shrink-0 items-center justify-center rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground"
+          className={SEARCH_BAR_SUBMIT_CLASS}
           onClick={(event) => {
             event.stopPropagation()
             commit()

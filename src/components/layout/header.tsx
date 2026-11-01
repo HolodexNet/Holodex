@@ -8,15 +8,9 @@ import {
   MagnifyingGlassIcon,
   MusicalNotesIcon,
   VideoCameraIcon,
-  CaretDownIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { ButtonGroup } from "@/components/ui/button-group"
 import { useSidebar } from "@/components/ui/sidebar"
 import { MusicSearchBar } from "@/components/music/search-bar"
 import { useT } from "@/lib/i18n"
@@ -42,28 +36,43 @@ function SearchControl({
 }) {
   return (
     <div className="flex min-w-0 flex-1 items-center gap-1">
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          aria-label={`Search scope: ${music ? "Musicdex" : "Holodex videos"}`}
-          render={<Button variant="ghost" size="sm" className="gap-1 px-2" />}
+      <ButtonGroup
+        aria-label="Search type"
+        className="shrink-0 gap-0.5 rounded-xl border border-input bg-background/60 p-0.5"
+      >
+        <Button
+          variant={music ? "ghost" : "secondary"}
+          size="icon-sm"
+          className="rounded-lg"
+          render={
+            <Link
+              to="/search"
+              aria-label="Video"
+              title="Video"
+              aria-current={!music ? "page" : undefined}
+              onClick={onCommit}
+            />
+          }
         >
-          {music ? <MusicalNotesIcon /> : <VideoCameraIcon />}
-          <span className="hidden text-xs lg:inline">
-            {music ? "Music" : "Videos"}
-          </span>
-          <CaretDownIcon className="size-3" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem render={<Link to="/search" onClick={onCommit} />}>
-            <VideoCameraIcon /> Holodex Video Search
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            render={<Link to="/music/search" onClick={onCommit} />}
-          >
-            <MusicalNotesIcon /> Musicdex Search
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          <VideoCameraIcon />
+        </Button>
+        <Button
+          variant={music ? "secondary" : "ghost"}
+          size="icon-sm"
+          className="rounded-lg"
+          render={
+            <Link
+              to="/music/search"
+              aria-label="Music"
+              title="Music"
+              aria-current={music ? "page" : undefined}
+              onClick={onCommit}
+            />
+          }
+        >
+          <MusicalNotesIcon />
+        </Button>
+      </ButtonGroup>
       {music ? (
         <MusicSearchBar autoFocus={autoFocus} onCommit={onCommit} />
       ) : (

@@ -8,7 +8,6 @@ import { LoadMore } from "@/components/common/load-more"
 import { SimpleSelect } from "@/components/common/simple-select"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import {
-  CaretRightIcon,
   GraduationCapIcon,
   GridFourIcon,
   RowsIcon,
@@ -112,22 +111,16 @@ export function ChannelCard({
               </p>
             )}
           {!list && (
-            <>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {channel.top_topics?.slice(0, 2).map((topic) => (
-                  <span
-                    key={topic}
-                    className="max-w-full truncate rounded bg-muted px-2 py-1 text-[10px] text-muted-foreground capitalize"
-                  >
-                    {topic.replace(/_/g, " ")}
-                  </span>
-                ))}
-              </div>
-              <span className="mt-auto flex items-center gap-1 pt-4 text-xs font-medium text-brand">
-                {t("talentHome.visitProfile")}
-                <CaretRightIcon className="size-3" />
-              </span>
-            </>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {channel.top_topics?.slice(0, 2).map((topic) => (
+                <span
+                  key={topic}
+                  className="max-w-full truncate rounded bg-muted px-2 py-1 text-[10px] text-muted-foreground capitalize"
+                >
+                  {topic.replace(/_/g, " ")}
+                </span>
+              ))}
+            </div>
           )}
         </div>
       </Link>

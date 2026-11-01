@@ -219,108 +219,96 @@ export default function MusicSearch() {
           <Button type="submit">Search</Button>
         </div>
 
-        <details
-          open={advancedOpen}
-          onToggle={(event) => setAdvancedOpen(event.currentTarget.open)}
-        >
-          <summary className="cursor-pointer text-sm font-medium select-none">
-            <SlidersHorizontalIcon className="size-4" />
-            Advanced filters
-            {activeAdvanced.length > 0 && (
-              <Badge variant="secondary">{activeAdvanced.length}</Badge>
-            )}
-          </summary>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="space-y-1.5 text-sm">
-              <span className="font-medium">Type</span>
-              <ToggleGroup
-                variant="outline"
-                spacing={0}
-                aria-label="Type"
-                value={selected.type ? [draft.type] : []}
-                onValueChange={(next) => choose({ type: next[0] ?? "" })}
-              >
-                <ToggleGroupItem value="mv">Music video</ToggleGroupItem>
-                <ToggleGroupItem value="stream">Stream</ToggleGroupItem>
-              </ToggleGroup>
-            </div>
-            <label className="space-y-1.5 text-sm">
-              <span className="font-medium">Song name</span>
-              <Input
-                value={draft.song}
-                onChange={(event) => update("song", event.target.value)}
-                placeholder="Title of the song"
-              />
-            </label>
-            <label className="space-y-1.5 text-sm">
-              <span className="font-medium">Original artist</span>
-              <Input
-                value={draft.artist}
-                onChange={(event) => update("artist", event.target.value)}
-                placeholder="Who wrote or first sang it"
-              />
-            </label>
-            <div className="space-y-1.5 text-sm sm:col-span-2 lg:col-span-3">
-              <label htmlFor="music-channel" className="font-medium">
-                Channels
-              </label>
-              <ChannelPicker
-                id="music-channel"
-                placeholder="Type a talent's name"
-                value={channelIds}
-                onChange={(ids) => choose({ channelId: ids.join("\n") })}
-              />
-            </div>
-            {showOrg && (
-              <div className="space-y-1.5 text-sm">
-                <label htmlFor="music-org" className="font-medium">
-                  Organization
-                </label>
-                <SimpleSelect
-                  id="music-org"
-                  className="w-full"
-                  value={draft.org}
-                  onChange={(value) => choose({ org: value, suborg: "" })}
-                  options={orgOptions}
-                />
-              </div>
-            )}
-            {showSuborg && (
-              <div className="space-y-1.5 text-sm sm:col-span-2">
-                <label htmlFor="music-suborg" className="font-medium">
-                  Sub-organizations
-                </label>
-                <MultiCombobox
-                  id="music-suborg"
-                  placeholder="Any sub-organization"
-                  items={[
-                    ...new Set([...(result.data?.suborgs ?? []), ...suborgs]),
-                  ]}
-                  value={suborgs}
-                  onChange={(values) => choose({ suborg: values.join("\n") })}
-                />
-              </div>
-            )}
-            <label className="space-y-1.5 text-sm">
-              <span className="font-medium">From date</span>
-              <Input
-                type="date"
-                value={draft.from}
-                max={draft.to || undefined}
-                onChange={(event) => update("from", event.target.value)}
-              />
-            </label>
-            <label className="space-y-1.5 text-sm">
-              <span className="font-medium">To date</span>
-              <Input
-                type="date"
-                value={draft.to}
-                min={draft.from || undefined}
-                onChange={(event) => update("to", event.target.value)}
-              />
-            </label>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="space-y-1.5 text-sm">
+            <span className="font-medium">Type</span>
+            <ToggleGroup
+              variant="outline"
+              spacing={0}
+              aria-label="Type"
+              value={selected.type ? [draft.type] : []}
+              onValueChange={(next) => choose({ type: next[0] ?? "" })}
+            >
+              <ToggleGroupItem value="mv">Music video</ToggleGroupItem>
+              <ToggleGroupItem value="stream">Stream</ToggleGroupItem>
+            </ToggleGroup>
           </div>
-        </details>
+          <label className="space-y-1.5 text-sm">
+            <span className="font-medium">Song name</span>
+            <Input
+              value={draft.song}
+              onChange={(event) => update("song", event.target.value)}
+              placeholder="Title of the song"
+            />
+          </label>
+          <label className="space-y-1.5 text-sm">
+            <span className="font-medium">Original artist</span>
+            <Input
+              value={draft.artist}
+              onChange={(event) => update("artist", event.target.value)}
+              placeholder="Who wrote or first sang it"
+            />
+          </label>
+          <div className="space-y-1.5 text-sm sm:col-span-2 lg:col-span-3">
+            <label htmlFor="music-channel" className="font-medium">
+              Channels
+            </label>
+            <ChannelPicker
+              id="music-channel"
+              placeholder="Type a talent's name"
+              value={channelIds}
+              onChange={(ids) => choose({ channelId: ids.join("\n") })}
+            />
+          </div>
+          {showOrg && (
+            <div className="space-y-1.5 text-sm">
+              <label htmlFor="music-org" className="font-medium">
+                Organization
+              </label>
+              <SimpleSelect
+                id="music-org"
+                className="w-full"
+                value={draft.org}
+                onChange={(value) => choose({ org: value, suborg: "" })}
+                options={orgOptions}
+              />
+            </div>
+          )}
+          {showSuborg && (
+            <div className="space-y-1.5 text-sm sm:col-span-2">
+              <label htmlFor="music-suborg" className="font-medium">
+                Sub-organizations
+              </label>
+              <MultiCombobox
+                id="music-suborg"
+                placeholder="Any sub-organization"
+                items={[
+                  ...new Set([...(result.data?.suborgs ?? []), ...suborgs]),
+                ]}
+                value={suborgs}
+                onChange={(values) => choose({ suborg: values.join("\n") })}
+              />
+            </div>
+          )}
+          <label className="space-y-1.5 text-sm">
+            <span className="font-medium">From date</span>
+            <Input
+              type="date"
+              value={draft.from}
+              max={draft.to || undefined}
+              onChange={(event) => update("from", event.target.value)}
+            />
+          </label>
+          <label className="space-y-1.5 text-sm">
+            <span className="font-medium">To date</span>
+            <Input
+              type="date"
+              value={draft.to}
+              min={draft.from || undefined}
+              onChange={(event) => update("to", event.target.value)}
+            />
+          </label>
+        </div>
       </form>
 
       <section className="space-y-4">
