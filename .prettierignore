@@ -6,3 +6,4 @@ docs/
 src/components/icons/
 src/locales/
 package-lock.json
+src/components/music/music.css
