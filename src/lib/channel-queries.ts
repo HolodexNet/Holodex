@@ -1,10 +1,16 @@
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query"
 import { api } from "@/lib/api"
 import { queryClient } from "@/lib/queries"
+import type { ChannelType } from "@/lib/types"
 
 export type ChannelTab = "videos" | "clips" | "collabs"
+export type ChannelSort = "suborg" | "subscriber_count" | "view_count"
 
-export function useChannels(org: string, sort: string, type = "vtuber") {
+export function useChannels(
+  org: string,
+  sort: ChannelSort,
+  type: ChannelType = "vtuber"
+) {
   return useInfiniteQuery({
     queryKey: ["channels", org, sort, type],
     initialPageParam: 0,

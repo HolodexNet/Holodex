@@ -3,11 +3,13 @@ import { toast } from "sonner"
 import { cn } from "cn"
 import { CaretRightIcon, PlayIcon, PlusIcon } from "@/components/icons"
 import { MusicArtwork } from "@/components/music/artwork"
+import type { DiscoveryScope } from "@/components/music/discovery/sections"
 import { PlayPlaylistButton } from "@/components/music/play-playlist"
 import { PauseIcon } from "@/components/music/player/icons"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { Skeleton } from "@/components/ui/skeleton"
+import { ALL_VTUBERS } from "@/lib/consts"
 import { formatMusicPlaylist } from "@/lib/musicdex/format"
 import type { PlaylistStub, Song } from "@/lib/musicdex/types"
 import { useMusicPlayer, type MusicSource } from "@/stores/music-player"
@@ -85,7 +87,7 @@ export function MusicHero({
   songs = [],
   loading = false,
 }: {
-  scope: string
+  scope: Extract<DiscoveryScope, { type: "org" | "favorites" }>
   playlists: PlaylistStub[]
   favorites?: boolean
   songs?: Song[]
@@ -114,15 +116,16 @@ export function MusicHero({
         ...picks.filter((playlist) => playlist.id !== featured.id),
       ].slice(0, 3)
     : []
+  const label = scope.type === "org" ? scope.name : "Favorites"
   return (
     <section className="relative isolate grid min-h-87.5 grid-cols-[1.1fr_1fr] overflow-clip rounded-[22px] border border-[color-mix(in_oklch,var(--complement)_13%,var(--border))] bg-[color-mix(in_oklch,var(--complement-soft)_22%,var(--card))] before:absolute before:right-[-8%] before:bottom-[-65%] before:-z-1 before:aspect-square before:w-[45%] before:rounded-full before:bg-primary before:opacity-[0.14] before:blur-[100px] before:content-[''] max-md:grid-cols-[minmax(0,1fr)]">
       <div className="relative z-5 self-center px-[clamp(24px,3vw,48px)] py-10 max-md:px-6 max-md:pt-7 max-md:pb-2.5">
         <h1 className="mt-6 max-w-140 text-[clamp(38px,4.6vw,68px)] leading-[1.04] font-[760] tracking-[-0.065em] text-balance max-md:mt-5 max-md:text-[44px]">
           {favorites
             ? "Your favorites"
-            : scope === "All Vtubers"
+            : label === ALL_VTUBERS
               ? "The whole scene"
-              : scope}
+              : label}
           <span className="block text-brand">on repeat.</span>
         </h1>
         <p className="mt-4.75 max-w-77.5 text-[13px] leading-[1.8] text-muted-foreground max-md:mt-4 max-md:hidden max-md:max-w-65 max-md:text-[12px]">
@@ -206,7 +209,7 @@ export function MusicHero({
           <div className={cn(heroCover, heroCoverLayout[0])}>
             <MusicArtwork
               title="Your next favorite"
-              seed={scope}
+              seed={label}
               label="MUSICDEX"
             />
           </div>

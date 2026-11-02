@@ -142,11 +142,10 @@ export function ChannelsPage() {
   const { org: routeOrg } = useParams()
   const currentOrg = useOrgStore((s) => s.currentOrg.name)
   const org = routeOrg ?? params.get("org") ?? currentOrg
-  const sort = ["subscriber_count", "view_count"].includes(
-    params.get("sort") ?? ""
-  )
-    ? params.get("sort")!
-    : "suborg"
+  const sort =
+    (["subscriber_count", "view_count"] as const).find(
+      (value) => value === params.get("sort")
+    ) ?? "suborg"
   const list = params.get("view") === "list"
   const channels = useChannels(org, sort)
   const orgs = useOrgs()

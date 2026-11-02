@@ -61,7 +61,7 @@ export function MusicHomeTab() {
   return (
     <div className="container mx-auto space-y-9 max-md:space-y-7">
       <MusicHero
-        scope={org}
+        scope={{ type: "org", name: org }}
         playlists={discovery.data?.recommended?.playlists ?? []}
         loading={discovery.isPending}
       />
@@ -184,7 +184,7 @@ export function MusicFavoritesTab() {
   return (
     <div className="space-y-9 max-md:space-y-7">
       <MusicHero
-        scope="Favorites"
+        scope={{ type: "favorites" }}
         playlists={playlists}
         favorites
         songs={(liked.data?.content ?? []).filter(
