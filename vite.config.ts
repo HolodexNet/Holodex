@@ -43,7 +43,12 @@ export default defineConfig(({ mode }) => {
         compiler: true,
       }),
       tailwindcss(),
-      visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true, template: 'treemap' }),
+      visualizer({
+        filename: "stats.html",
+        gzipSize: true,
+        brotliSize: true,
+        template: "treemap",
+      }),
     ],
     resolve: {
       alias: {
@@ -63,7 +68,7 @@ export default defineConfig(({ mode }) => {
           // Keep the React Refresh preamble ahead of shared app chunks in bundledDev.
           // https://github.com/vitejs/vite-plugin-react/issues/1191
           strictExecutionOrder: true,
-        }
+        },
       },
     },
     server: {

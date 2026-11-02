@@ -56,8 +56,7 @@ export function OrgSidebar() {
               const org =
                 orgs.data?.find((org) => org.name === favorite.name) ?? favorite
               const active =
-                location.pathname === "/" &&
-                currentOrg.name === org.name
+                location.pathname === "/" && currentOrg.name === org.name
               return (
                 <SidebarMenuItem key={org.name}>
                   <SidebarMenuButton

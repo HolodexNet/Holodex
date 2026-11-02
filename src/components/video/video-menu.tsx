@@ -132,7 +132,9 @@ export function VideoMenu({
             {source.provider === "youtube"
               ? t("views.settings.redirectModeLabel")
               : source.provider === "twitch"
-                ? t("component.videoCard.openOnPlatform", { platform: "Twitch" })
+                ? t("component.videoCard.openOnPlatform", {
+                    platform: "Twitch",
+                  })
                 : t("component.placeholderVideo.streamPageBtn")}
           </DropdownMenuItem>
         )}
