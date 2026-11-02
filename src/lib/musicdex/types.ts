@@ -69,6 +69,11 @@ export interface MusicDiscovery {
     song_count: number
   }[]
 }
+/** `mv` narrows to music videos; `stream` to singing streams. */
+export const MUSIC_SEARCH_TYPES = ["mv", "stream"] as const
+export type MusicSearchType = (typeof MUSIC_SEARCH_TYPES)[number]
+export const MUSIC_SEARCH_SORTS = ["relevance", "latest", "oldest"] as const
+export type MusicSearchSort = (typeof MUSIC_SEARCH_SORTS)[number]
 export interface MusicSearchParams {
   q: string
   song?: string
@@ -76,8 +81,8 @@ export interface MusicSearchParams {
   channelId?: string
   org?: string
   suborg?: string
-  type?: string
-  sort?: string
+  type?: MusicSearchType
+  sort?: MusicSearchSort
   from?: string
   to?: string
   blockedIds?: string[]

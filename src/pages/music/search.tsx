@@ -7,7 +7,6 @@ import { MultiCombobox } from "@/components/common/multi-combobox"
 import { SongList } from "@/components/music/song-list"
 import {
   MagnifyingGlassIcon,
-  SlidersHorizontalIcon,
   XIcon,
 } from "@/components/icons"
 import { Badge } from "@/components/ui/badge"
@@ -17,6 +16,11 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useDocumentTitle } from "@/hooks/use-document-title"
 import { useChannelInfos } from "@/lib/queries"
 import { useMusicSearch } from "@/lib/musicdex/queries"
+import {
+  MUSIC_SEARCH_SORTS,
+  MUSIC_SEARCH_TYPES,
+  type MusicSearchSort,
+} from "@/lib/musicdex/types"
 import { channelName } from "@/lib/video"
 import { useSettings } from "@/stores/settings"
 import { MusicNavigation } from "@/components/music/page-header"
@@ -67,6 +71,12 @@ function storedSort() {
   }
 }
 
+// URL and storage values are untrusted; anything unknown falls back to unset.
+const parseType = (value: string) =>
+  MUSIC_SEARCH_TYPES.find((option) => option === value)
+const parseSort = (value: string) =>
+  MUSIC_SEARCH_SORTS.find((option) => option === value)
+
 export default function MusicSearch() {
   useDocumentTitle("Music Search")
   const [url, setUrl] = useSearchParams()
@@ -79,15 +89,16 @@ export default function MusicSearch() {
   const blocked = useSettings((s) => s.blockedChannels)
   const preferEnglish = useSettings((s) => s.useEnglishName)
   const selected = fromParams(url)
-  const sort = selected.sort || storedSort() || "relevance"
+  const type = parseType(selected.type)
+  const sort = parseSort(selected.sort || storedSort()) ?? "relevance"
   const page = Math.min(
     209,
     Math.max(1, Number.parseInt(url.get("page") || "1", 10) || 1)
   )
   const activeAdvanced = advancedFields.filter((field) => selected[field])
-  const [advancedOpen, setAdvancedOpen] = useState(activeAdvanced.length > 0)
   const result = useMusicSearch({
     ...selected,
+    type,
     sort,
     q: selected.q.trim() || "*",
     page,
@@ -142,7 +153,7 @@ export default function MusicSearch() {
     else next.set("page", String(nextPage))
     setUrl(next)
   }
-  function changeSort(value: string) {
+  function changeSort(value: MusicSearchSort) {
     try {
       localStorage.setItem(SORT_KEY, value)
     } catch {
@@ -174,8 +185,8 @@ export default function MusicSearch() {
   if (selected.song) chip("song", `Song: ${selected.song}`, { song: "" })
   if (selected.artist)
     chip("artist", `Artist: ${selected.artist}`, { artist: "" })
-  if (selected.type)
-    chip("type", selected.type === "mv" ? "Music video" : "Stream", {
+  if (type)
+    chip("type", type === "mv" ? "Music video" : "Stream", {
       type: "",
     })
   if (selected.org)

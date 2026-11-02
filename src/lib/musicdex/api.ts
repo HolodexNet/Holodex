@@ -134,8 +134,7 @@ export const musicApi = {
     const channelIds = params.channelId?.split("\n").filter(Boolean) ?? []
     const suborgs = params.suborg?.split("\n").filter(Boolean) ?? []
     if (channelIds.length) filter.push({ terms: { channel_id: channelIds } })
-    if (params.type === "mv" || params.type === "stream")
-      filter.push({ term: { is_mv: params.type === "mv" } })
+    if (params.type) filter.push({ term: { is_mv: params.type === "mv" } })
     if (params.from || params.to)
       filter.push({
         range: {
