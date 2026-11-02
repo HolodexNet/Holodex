@@ -10,7 +10,7 @@ import {
   CaretUpIcon,
   PlayIcon,
   XIcon,
-  MusicalNotesIcon,
+  MusicNotesFillIcon,
   PlaylistIcon,
 } from "@/components/icons"
 import { MusicArtwork } from "@/components/music/artwork"
@@ -780,7 +780,7 @@ function MusicPlayerBar() {
             )}
           >
             <span className="sr-only">Volume</span>
-            <MusicalNotesIcon className="size-4 text-muted-foreground" />
+            <MusicNotesFillIcon className="size-4 text-muted-foreground" />
             <input
               aria-label="Volume"
               type="range"
@@ -872,7 +872,7 @@ function MusicPlayerBar() {
           className="music-listening-heading pointer-events-none absolute top-6 left-12 flex items-center gap-9 max-[1101px]:left-7 max-md:top-5.75 max-md:left-5"
         >
           <span className="inline-flex items-center gap-2 text-[18px] font-[750] tracking-tighter max-[1101px]:text-[16px] max-md:mb-3.75">
-            <MusicalNotesIcon className="size-4 text-brand" />
+            <MusicNotesFillIcon className="size-4 text-brand" />
             musicdex.
           </span>
           <p className="music-eyebrow">

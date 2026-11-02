@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { Link, useLocation } from "react-router"
 import { cn } from "cn"
-import { MagnifyingGlassIcon, MusicalNotesIcon } from "@/components/icons"
+import { MagnifyingGlassIcon, MusicNotesFillIcon } from "@/components/icons"
 import { Skeleton } from "@/components/ui/skeleton"
 
 const navLinkClass =
@@ -30,7 +30,7 @@ export function MusicNavigation() {
         aria-label="Musicdex home"
         className="inline-flex items-center gap-2 text-[18px] font-[750] tracking-tighter max-[1101px]:text-[16px] max-md:mb-3.75"
       >
-        <MusicalNotesIcon className="size-4 text-brand" />
+        <MusicNotesFillIcon className="size-4 text-brand" />
         <span>
           musicdex<span className="text-brand">.</span>
         </span>

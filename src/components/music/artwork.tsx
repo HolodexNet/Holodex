@@ -1,6 +1,6 @@
 import { useState, type CSSProperties } from "react"
 import { cn } from "cn"
-import { MusicalNotesIcon, RadioIcon } from "@/components/icons"
+import { MusicNotesFillIcon, RadioIcon } from "@/components/icons"
 
 /** Keep unavailable channel artwork from leaving broken images in the catalog. */
 export function MusicArtwork({
@@ -37,7 +37,7 @@ export function MusicArtwork({
     >
       <div className="music-artwork-fallback" aria-hidden="true">
         <span className="music-artwork-orbit" />
-        {radio ? <RadioIcon /> : <MusicalNotesIcon />}
+        {radio ? <RadioIcon /> : <MusicNotesFillIcon />}
         {!hasImage && title && !label && <strong>{title}</strong>}
       </div>
       {(!mix || hasImage) && (

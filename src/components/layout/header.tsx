@@ -6,7 +6,7 @@ import {
   ArrowLeftIcon,
   ListIcon,
   MagnifyingGlassIcon,
-  MusicalNotesIcon,
+  MusicNotesFillIcon,
   VideoCameraIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -70,7 +70,7 @@ function SearchControl({
             />
           }
         >
-          <MusicalNotesIcon />
+          <MusicNotesFillIcon />
         </Button>
       </ButtonGroup>
       {music ? (

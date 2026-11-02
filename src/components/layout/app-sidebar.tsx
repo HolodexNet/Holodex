@@ -287,6 +287,11 @@ export function AppSidebar() {
   ]
   const main: NavItem[] = [
     {
+      label: t("component.mainNav.multiview"),
+      to: "/multiview",
+      icon: <SquaresFourIcon />,
+    },
+    {
       label: t("component.mainNav.channels"),
       to: `/channel?${new URLSearchParams({ org: orgName })}`,
       icon: <UsersThreeIcon />,
@@ -296,13 +301,6 @@ export function AppSidebar() {
       label: t("component.mainNav.playlist"),
       to: "/playlists",
       icon: <PlaylistIcon />,
-    },
-  ]
-  const apps: NavItem[] = [
-    {
-      label: t("component.mainNav.multiview"),
-      to: "/multiview",
-      icon: <SquaresFourIcon />,
     },
   ]
   const site: NavItem[] = [
@@ -350,12 +348,12 @@ export function AppSidebar() {
         </SidebarGroup>
         <SidebarSeparator className="mx-0" />
         <MusicSidebar />
-        <SidebarSeparator className="mx-0" />
+        {/* <SidebarSeparator className="mx-0" />
         <SidebarGroup>
           <SidebarGroupContent>
             <NavList items={apps} />
           </SidebarGroupContent>
-        </SidebarGroup>
+        </SidebarGroup> */}
         <SidebarSeparator className="mx-0" />
         <SidebarGroup>
           <SidebarGroupContent>

@@ -3,7 +3,7 @@ import { cn } from "cn"
 import {
   ArrowSquareOutIcon,
   CaretRightIcon,
-  MusicalNotesIcon,
+  MusicNotesFillIcon,
   PlayIcon,
 } from "@/components/icons"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
@@ -351,7 +351,7 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
             )}
           </section>
           <section className="overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/10 via-card to-complement/10 p-5">
-            <MusicalNotesIcon className="mb-5 size-7 text-brand" />
+            <MusicNotesFillIcon className="mb-5 size-7 text-brand" />
             <h2 className="font-semibold">{t("talentHome.musicTitle")}</h2>
             <p className="mt-2 text-xs leading-5 text-muted-foreground">
               {t("talentHome.musicHint")}

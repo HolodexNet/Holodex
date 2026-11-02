@@ -17,7 +17,7 @@ import {
   LogoTwitchIcon,
   LogoTwitterIcon,
   LogoYoutubeIcon,
-  MusicalNotesIcon,
+  MusicNotesFillIcon,
 } from "@/components/icons"
 import { useNowMinutes, useNowSeconds } from "@/hooks/use-now"
 import { useT } from "@/lib/i18n"
@@ -218,7 +218,7 @@ function ThumbnailOverlay({
               title={t("component.videoCard.totalSongs")}
             >
               {video.songcount > 1 && video.songcount}
-              <MusicalNotesIcon className="size-3.5" />
+              <MusicNotesFillIcon className="size-3.5" />
             </span>
           )}
           {!isPlaceholder && hasTls && (

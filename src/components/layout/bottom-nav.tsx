@@ -7,7 +7,7 @@ import {
   HouseFillIcon,
   HouseIcon,
   MagnifyingGlassIcon,
-  MusicalNotesIcon,
+  MusicNotesFillIcon,
   PlaylistIcon,
   UsersThreeFillIcon,
   UsersThreeIcon,
@@ -27,8 +27,8 @@ export function BottomNav() {
         {
           label: "Musicdex",
           to: "/#music",
-          icon: <MusicalNotesIcon />,
-          activeIcon: <MusicalNotesIcon />,
+          icon: <MusicNotesFillIcon />,
+          activeIcon: <MusicNotesFillIcon />,
         },
         {
           label: t("component.mainNav.favorites"),

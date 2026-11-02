@@ -57,7 +57,7 @@ export { MagnifyingGlassIcon } from "./magnifying-glass-icon";
 export { MinusIcon } from "./minus-icon";
 export { MonitorIcon } from "./monitor-icon";
 export { MoonIcon } from "./moon-icon";
-export { MusicalNotesIcon } from "./musical-notes-icon";
+export { MusicNotesFillIcon } from "./music-notes-fill-icon";
 export { NotePencilIcon } from "./note-pencil-icon";
 export { PaletteIcon } from "./palette-icon";
 export { PlayIcon } from "./play-icon";

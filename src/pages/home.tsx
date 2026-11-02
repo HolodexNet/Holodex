@@ -8,7 +8,7 @@ import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import {
   HeartIcon,
   BroadcastIcon,
-  MusicalNotesIcon,
+  MusicNotesFillIcon,
   CalendarBlankIcon,
   SlidersHorizontalIcon,
   TelevisionSimpleIcon,
@@ -322,7 +322,7 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
             {t("views.home.recentVideoToggles.subber")}
           </TabsTrigger>
           <TabsTrigger value="music" className="flex-none px-1">
-            <MusicalNotesIcon className="size-4 text-brand" />
+            <MusicNotesFillIcon className="size-4 text-brand" />
             Musicdex
           </TabsTrigger>
         </TabsList>

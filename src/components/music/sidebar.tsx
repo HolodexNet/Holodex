@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router"
 import {
   HeartIcon,
   MagnifyingGlassIcon,
-  MusicalNotesIcon,
+  MusicNotesFillIcon,
   PlaylistIcon,
   RadioIcon,
   StarIcon,
@@ -94,7 +94,7 @@ export function MusicSidebar() {
   const location = useLocation()
   const { setOpenMobile } = useSidebar()
   const nav = [
-    { to: "/#music", label: "Musicdex", icon: <MusicalNotesIcon /> },
+    { to: "/#music", label: "Musicdex", icon: <MusicNotesFillIcon /> },
     {
       to: "/music/search",
       label: "Search music",
