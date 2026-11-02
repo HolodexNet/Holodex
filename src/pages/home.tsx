@@ -1,4 +1,4 @@
-import { useId, useMemo, useState } from "react"
+import { lazy, Suspense, useId, useMemo, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router"
 
 import { FeedFilters, SwitchRow } from "@/components/common/feed-filters"
@@ -8,6 +8,7 @@ import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import {
   HeartIcon,
   BroadcastIcon,
+  MusicalNotesIcon,
   CalendarBlankIcon,
   SlidersHorizontalIcon,
   TelevisionSimpleIcon,
@@ -40,13 +41,25 @@ import { useAuth } from "@/stores/auth"
 import { useOrgStore } from "@/stores/org"
 import { useSettings } from "@/stores/settings"
 
-type HomeTab = "live" | "archive" | "clips"
+type HomeTab = "live" | "archive" | "clips" | "music"
 type LiveSort = "latest" | "viewers"
 
 const TAB_BY_HASH: Record<string, HomeTab> = {
   "#archive": "archive",
   "#clips": "clips",
+  "#music": "music",
 }
+
+const MusicHomeTab = lazy(() =>
+  import("@/pages/music/home").then((module) => ({
+    default: module.MusicHomeTab,
+  }))
+)
+const MusicFavoritesTab = lazy(() =>
+  import("@/pages/music/home").then((module) => ({
+    default: module.MusicFavoritesTab,
+  }))
+)
 
 function LiveSortControl({
   value,
@@ -189,8 +202,10 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
 
   useDocumentTitle(favorites ? t("component.mainNav.favorites") : null)
 
-  const orgLive = useOrgLive(orgName, !favorites)
-  const favoritesLive = useFavoritesLive(favorites && hasFavorites)
+  const orgLive = useOrgLive(orgName, !favorites && tab !== "music")
+  const favoritesLive = useFavoritesLive(
+    favorites && hasFavorites && tab !== "music"
+  )
   const live = favorites ? favoritesLive : orgLive
 
   const {
@@ -260,7 +275,10 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
       // Keeps far-future "missing" frames out of the archive.
       max_upcoming_hours: 1,
     },
-    { favorites, enabled: tab !== "live" && feedEnabled }
+    {
+      favorites,
+      enabled: (tab === "archive" || tab === "clips") && feedEnabled,
+    }
   )
   const feedVideos = useMemo(
     () => flattenPages(feed.data?.pages).filter(filter),
@@ -303,6 +321,10 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
           <TabsTrigger value="clips" className="flex-none px-1">
             {t("views.home.recentVideoToggles.subber")}
           </TabsTrigger>
+          <TabsTrigger value="music" className="flex-none px-1">
+            <MusicalNotesIcon className="size-4 text-brand" />
+            Musicdex
+          </TabsTrigger>
         </TabsList>
       </Tabs>
       {tab === "live" && (
@@ -321,19 +343,31 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
           </label>
         </div>
       )}
-      <FilterPopover
-        tab={tab}
-        liveSort={liveSort}
-        onLiveSort={setLiveSort}
-        before={before}
-        onBefore={setBefore}
-      />
-      <ViewMenu />
+      {tab !== "music" && (
+        <>
+          <FilterPopover
+            tab={tab}
+            liveSort={liveSort}
+            onLiveSort={setLiveSort}
+            before={before}
+            onBefore={setBefore}
+          />
+          <ViewMenu />
+        </>
+      )}
     </div>
   )
 
   let content: React.ReactNode
-  if (favorites && !loggedIn) {
+  if (tab === "music") {
+    content = (
+      <Suspense
+        fallback={<VideoListSkeleton mode={mode} gridSize={gridSize} />}
+      >
+        {favorites ? <MusicFavoritesTab /> : <MusicHomeTab />}
+      </Suspense>
+    )
+  } else if (favorites && !loggedIn) {
     content = (
       <StateMessage
         icon={<HeartIcon />}
@@ -361,12 +395,7 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
     )
   } else if (tab === "live") {
     if (live.isPending) {
-      content = (
-        <VideoListSkeleton
-          mode={mode}
-          gridSize={gridSize}
-        />
-      )
+      content = <VideoListSkeleton mode={mode} gridSize={gridSize} />
     } else if (live.isError && !live.data) {
       content = (
         <ErrorMessage error={live.error} onRetry={() => live.refetch()} />

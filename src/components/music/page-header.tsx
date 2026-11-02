@@ -15,8 +15,8 @@ export const musicCollectionGridClass =
 export function MusicNavigation() {
   const { pathname } = useLocation()
   const items = [
-    ["Discover", "/music"],
-    ["Favorites", "/music/favorites"],
+    ["Discover", "/#music"],
+    ["Favorites", "/favorites#music"],
     ["Radio", "/music/radios"],
     ["Musicdex Playlists", "/music/playlists"],
   ]
@@ -26,7 +26,7 @@ export function MusicNavigation() {
       className="flex min-w-0 items-center gap-6 border-b border-border pb-4.5 max-[1101px]:gap-4 max-md:block max-md:pb-0"
     >
       <Link
-        to="/music"
+        to="/#music"
         aria-label="Musicdex home"
         className="inline-flex items-center gap-2 text-[18px] font-[750] tracking-tighter max-[1101px]:text-[16px] max-md:mb-3.75"
       >

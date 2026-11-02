@@ -1,18 +1,13 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { QueryClientProvider } from "@tanstack/react-query"
-import {
-  createBrowserRouter,
-  Navigate,
-  type LoaderFunctionArgs,
-} from "react-router"
+import { createBrowserRouter, Navigate } from "react-router"
 import { RouterProvider } from "react-router/dom"
 
 import "./index.css"
 import { AppShell } from "@/components/layout/app-shell"
 import { Spinner } from "@/components/ui/spinner"
 import { setLanguage } from "@/lib/i18n"
-import { musicHomeQueryOptions } from "@/lib/musicdex/queries"
 import { queryClient } from "@/lib/queries"
 import { applyTheme, systemMode } from "@/lib/theme/apply"
 import { WatchPage } from "@/pages/watch"
@@ -24,7 +19,6 @@ import { NotFoundPage, NotReadyPage } from "@/pages/not-ready"
 import { SearchPage } from "@/pages/search"
 import { SettingsPage } from "@/pages/settings"
 import { useSettings } from "@/stores/settings"
-import { useOrgStore } from "@/stores/org"
 
 const settings = useSettings.getState()
 
@@ -61,16 +55,6 @@ const PENDING_ROUTES = [
   "/addChannel",
 ]
 
-function loadMusicHome({ params }: LoaderFunctionArgs) {
-  const queries = musicHomeQueryOptions(
-    params.org ?? useOrgStore.getState().currentOrg.name
-  )
-  // Start alongside the lazy route import; neither request blocks the page shell.
-  void queryClient.prefetchQuery(queries.discovery)
-  void queryClient.prefetchQuery(queries.trending)
-  return null
-}
-
 const router = createBrowserRouter([
   {
     element: <AppShell />,
@@ -92,16 +76,9 @@ const router = createBrowserRouter([
       { path: "/org/:org/channels", element: <ChannelsPage /> },
       { path: "/channel/:id/:tab?", element: <ChannelPage /> },
       { path: "/search", element: <SearchPage /> },
-      {
-        path: "/music",
-        loader: loadMusicHome,
-        lazy: async () => ({
-          Component: (await import("@/pages/music/home")).default,
-        }),
-      },
+      { path: "/music", element: <Navigate to="/#music" replace /> },
       {
         path: "/music/org/:org",
-        loader: loadMusicHome,
         lazy: async () => ({
           Component: (await import("@/pages/music/home")).default,
         }),

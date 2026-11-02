@@ -34,10 +34,10 @@ export function OrgSidebar() {
   // Organization links keep the feed's archive/clips tab when switching orgs.
   const hash =
     ["/", "/favorites"].includes(location.pathname) &&
-    ["#archive", "#clips"].includes(location.hash)
+    ["#archive", "#clips", "#music"].includes(location.hash)
       ? location.hash
       : ""
-  const to = music ? "/music" : `/${hash}`
+  const to = music ? "/#music" : `/${hash}`
   const select = (org: Org) => {
     setCurrentOrg({ ...org, short: orgShortName(org) })
     navigate(to)
@@ -56,9 +56,7 @@ export function OrgSidebar() {
               const org =
                 orgs.data?.find((org) => org.name === favorite.name) ?? favorite
               const active =
-                (location.pathname === "/" ||
-                  location.pathname === "/music" ||
-                  location.pathname.startsWith("/music/org/")) &&
+                location.pathname === "/" &&
                 currentOrg.name === org.name
               return (
                 <SidebarMenuItem key={org.name}>

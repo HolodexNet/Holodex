@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router"
+import { Link, Navigate, useParams } from "react-router"
 import { useInfiniteQuery, useQueries, useQuery } from "@tanstack/react-query"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import {
@@ -29,18 +29,28 @@ import { useAuth } from "@/stores/auth"
 import { useOrgStore } from "@/stores/org"
 import { useSettings } from "@/stores/settings"
 
-export default function MusicHome() {
+/** The old standalone /music/favorites address. */
+export function MusicFavorites() {
+  return <Navigate to="/favorites#music" replace />
+}
+
+/** The old standalone /music/org/:org address: pick that org, land on the home tab. */
+export default function MusicOrgRedirect() {
   const { org: routeOrg } = useParams()
-  const currentOrg = useOrgStore((s) => s.currentOrg)
   const setCurrentOrg = useOrgStore((s) => s.setCurrentOrg)
   const orgs = useOrgs()
-  const blocked = useSettings((s) => s.blockedChannels)
-  const org = routeOrg || currentOrg.name
+  const match = orgs.data?.find((item) => item.name === routeOrg)
   useEffect(() => {
-    const match = orgs.data?.find((item) => item.name === routeOrg)
-    if (match && match.name !== currentOrg.name) setCurrentOrg(match)
-  }, [routeOrg, orgs.data, currentOrg.name, setCurrentOrg])
-  useDocumentTitle(`${org} Music`)
+    if (match) setCurrentOrg(match)
+  }, [match, setCurrentOrg])
+  if (orgs.isPending) return <MusicLoading label="Loading music" />
+  return <Navigate to="/#music" replace />
+}
+
+/** The Musicdex discovery page, shown as a tab of the main home page. */
+export function MusicHomeTab() {
+  const org = useOrgStore((s) => s.currentOrg.name)
+  const blocked = useSettings((s) => s.blockedChannels)
   const queries = musicHomeQueryOptions(org)
   const discovery = useQuery(queries.discovery)
   const trending = useQuery(queries.trending)
@@ -49,8 +59,7 @@ export default function MusicHome() {
       (song) => !blocked.some((channel) => channel.id === song.channel_id)
     ) ?? []
   return (
-    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
-      <MusicNavigation />
+    <div className="container mx-auto space-y-9 max-md:space-y-7">
       <MusicHero
         scope={org}
         playlists={discovery.data?.recommended?.playlists ?? []}
@@ -64,7 +73,7 @@ export default function MusicHome() {
       ) : (
         <DiscoverySections
           discovery={discovery.data}
-          scope={org}
+          scope={{ type: "org", name: org }}
           browse
           loading={discovery.isPending}
         />
@@ -108,12 +117,12 @@ export default function MusicHome() {
           </p>
         )}
       </section>
-    </main>
+    </div>
   )
 }
 
-export function MusicFavorites() {
-  useDocumentTitle("Favorite Music")
+/** Musicdex for favorited channels, shown as a tab of the favorites page. */
+export function MusicFavoritesTab() {
   const userId = useAuth((s) => s.user?.id ?? null)
   const favorites = useFavorites()
   const blocked = useSettings((s) => s.blockedChannels)
@@ -152,8 +161,7 @@ export function MusicFavorites() {
   })
   if (!userId)
     return (
-      <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
-        <MusicNavigation />
+      <div className="space-y-9 max-md:space-y-7">
         <div className="relative flex min-h-72.5 items-center justify-between gap-9 overflow-hidden rounded-2xl border border-border bg-[color-mix(in_oklch,var(--complement-soft)_13%,var(--card))] p-[clamp(24px,4vw,48px)] max-md:min-h-70 max-md:p-6.5">
           <div className="max-md:relative max-md:z-1">
             <h2 className="text-[clamp(24px,3vw,36px)] leading-[1.2] font-bold tracking-tighter">
@@ -171,11 +179,10 @@ export function MusicFavorites() {
             <MusicArtwork title="Your favorites" seed="favorites" radio />
           </div>
         </div>
-      </main>
+      </div>
     )
   return (
-    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
-      <MusicNavigation />
+    <div className="space-y-9 max-md:space-y-7">
       <MusicHero
         scope="Favorites"
         playlists={playlists}
@@ -201,7 +208,7 @@ export function MusicFavorites() {
               recommended: { playlists },
               recentSingingStreams: streams,
             }}
-            scope="Favorites"
+            scope={{ type: "favorites" }}
           />
           {discovery.some((item) => item.isPending) && (
             <p className="text-sm text-muted-foreground">
@@ -264,7 +271,7 @@ export function MusicFavorites() {
           <p className="text-sm text-muted-foreground">No liked songs yet.</p>
         )}
       </section>
-    </main>
+    </div>
   )
 }
 

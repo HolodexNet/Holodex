@@ -369,7 +369,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
         </div>
         <div className="relative min-w-0">
           <Link
-            to={radio ? "/music/radios" : "/music"}
+            to={radio ? "/music/radios" : "/#music"}
             className="music-eyebrow"
           >
             MUSICDEX

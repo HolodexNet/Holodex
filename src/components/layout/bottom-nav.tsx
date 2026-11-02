@@ -26,13 +26,13 @@ export function BottomNav() {
     ? [
         {
           label: "Musicdex",
-          to: "/music",
+          to: "/#music",
           icon: <MusicalNotesIcon />,
           activeIcon: <MusicalNotesIcon />,
         },
         {
           label: t("component.mainNav.favorites"),
-          to: "/music/favorites",
+          to: "/favorites#music",
           icon: <HeartIcon />,
           activeIcon: <HeartFillIcon />,
         },

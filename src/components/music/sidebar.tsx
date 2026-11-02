@@ -94,7 +94,7 @@ export function MusicSidebar() {
   const location = useLocation()
   const { setOpenMobile } = useSidebar()
   const nav = [
-    { to: "/music", label: "Musicdex", icon: <MusicalNotesIcon /> },
+    { to: "/#music", label: "Musicdex", icon: <MusicalNotesIcon /> },
     {
       to: "/music/search",
       label: "Search music",

@@ -211,6 +211,9 @@ export function PlaylistCards({
   )
 }
 
+export type DiscoveryScope =
+  { type: "org"; name: string } | { type: "favorites" } | { type: "channel" }
+
 export function DiscoverySections({
   discovery,
   scope,
@@ -218,7 +221,7 @@ export function DiscoverySections({
   loading = false,
 }: {
   discovery?: MusicDiscovery
-  scope: string
+  scope: DiscoveryScope
   browse?: boolean
   loading?: boolean
 }) {
@@ -243,9 +246,9 @@ export function DiscoverySections({
       <PlaylistCards
         title="Musicdex Mixes"
         description={
-          scope === "this channel"
+          scope.type === "channel"
             ? "More of the voice you came for."
-            : `A different way into ${scope === "Favorites" ? "your favorite voices" : scope}.`
+            : `A different way into ${scope.type === "favorites" ? "your favorite voices" : scope.name}.`
         }
         seeAll={browse ? "/music/browse/sgp" : undefined}
         playlists={playlists.filter(
