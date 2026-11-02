@@ -212,7 +212,7 @@ export function PlaylistCards({
 }
 
 export type DiscoveryScope =
-  { type: "org"; name: string } | { type: "favorites" } | { type: "channel" }
+  { type: "org"; name: string } | { type: "favorites" }
 
 export function DiscoverySections({
   discovery,
@@ -244,11 +244,8 @@ export function DiscoverySections({
         </span>
       )}
       <PlaylistCards
-        title="Musicdex Mixes"
-        description={
-          scope.type === "channel"
-            ? "More of the voice you came for."
-            : `A different way into ${scope.type === "favorites" ? "your favorite voices" : scope.name}.`
+        title={
+          scope.type === "favorites" ? "Oshi Mixes" : `${scope.name} Mixes`
         }
         seeAll={browse ? "/music/browse/sgp" : undefined}
         playlists={playlists.filter(
@@ -257,7 +254,9 @@ export function DiscoverySections({
         loading={loading}
       />
       <PlaylistCards
-        title="Musicdex Radios"
+        title={
+          scope.type === "favorites" ? "Oshi Radios" : `${scope.name} Radios`
+        }
         seeAll={browse ? "/music/radios" : undefined}
         playlists={playlists.filter((p) => p.type?.startsWith("radio"))}
         loading={loading}
@@ -342,7 +341,7 @@ export function DiscoverySections({
         </section>
       )}
       <PlaylistCards
-        title="From one fan to another"
+        title="From the community"
         description="Fan-curated collections."
         seeAll={browse ? "/music/browse/ugp" : undefined}
         playlists={playlists.filter((p) => p.type === "ugp")}

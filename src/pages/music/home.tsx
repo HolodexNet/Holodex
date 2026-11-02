@@ -182,7 +182,7 @@ export function MusicFavoritesTab() {
       </div>
     )
   return (
-    <div className="space-y-9 max-md:space-y-7">
+    <div className="container mx-auto space-y-9 max-md:space-y-7">
       <MusicHero
         scope={{ type: "favorites" }}
         playlists={playlists}
