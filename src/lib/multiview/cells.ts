@@ -40,6 +40,10 @@ export const activeVideos = (cells: readonly Cell[]): MultiviewVideo[] =>
 export const audibleCells = (cells: readonly Cell[]): VideoCell[] =>
   videoCells(cells).filter((cell) => !cell.content.muted)
 
+/** The one stream a command for a single video means, when none is named. */
+export const mainVideoCell = (cells: readonly Cell[]): VideoCell | undefined =>
+  audibleCells(cells)[0] ?? videoCells(cells)[0]
+
 /** The stream Audio Focus is letting through, once exactly one has sound. */
 export function soleAudibleCell(cells: readonly Cell[]): CellId | null {
   const audible = audibleCells(cells)

@@ -33,25 +33,42 @@ export interface AudioHandoff {
   from: CellId | null
 }
 
+/** Brief feedback for something the keyboard did, which has no button to show it. */
+export interface CellNotice {
+  id: number
+  /** The stream it concerns, or `null` for the whole view. */
+  cellId: CellId | null
+  icon: "sound" | "muted"
+  text: string
+}
+
 interface MultiviewUiStore {
   toolbarCollapsed: boolean
   syncBarOpen: boolean
   mediaControlsOpen: boolean
   presetDialogOpen: boolean
   saveDialogOpen: boolean
+  helpOpen: boolean
   picker: PickerPurpose | null
   prompt: LayoutPrompt | null
   /** Video cell to outline, while pointing at a chat that serves it. */
   highlightedCell: CellId | null
   audioHandoff: AudioHandoff | null
+  notice: CellNotice | null
   /** Bumped per cell to remount its player. */
   reloads: Record<CellId, number>
 
   set: (patch: Partial<MultiviewUiState>) => void
   reload: (ids: CellId[]) => void
+  showNotice: (notice: Omit<CellNotice, "id">) => void
 }
 
-type MultiviewUiState = Omit<MultiviewUiStore, "set" | "reload" | "reloads">
+type MultiviewUiState = Omit<
+  MultiviewUiStore,
+  "set" | "reload" | "reloads" | "showNotice"
+>
+
+let notices = 0
 
 /** Which panels are open right now; nothing here survives leaving the page. */
 export const useMultiviewUi = create<MultiviewUiStore>()((set) => ({
@@ -60,10 +77,12 @@ export const useMultiviewUi = create<MultiviewUiStore>()((set) => ({
   mediaControlsOpen: false,
   presetDialogOpen: false,
   saveDialogOpen: false,
+  helpOpen: false,
   picker: null,
   prompt: null,
   highlightedCell: null,
   audioHandoff: null,
+  notice: null,
   reloads: {},
 
   set: (patch) => set(patch),
@@ -73,4 +92,5 @@ export const useMultiviewUi = create<MultiviewUiStore>()((set) => ({
       for (const id of ids) reloads[id] = (reloads[id] ?? 0) + 1
       return { reloads }
     }),
+  showNotice: (notice) => set({ notice: { ...notice, id: ++notices } }),
 }))

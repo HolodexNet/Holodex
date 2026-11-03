@@ -1,6 +1,7 @@
 import {
   FastForwardIcon,
   GridFourIcon,
+  KeyboardIcon,
   PencilSimpleIcon,
   SlidersHorizontalIcon,
   VideoCameraIcon,
@@ -40,6 +41,11 @@ export function Hints() {
           4.
           <PencilSimpleIcon className={iconClass} />
           {t("views.multiview.editHint")}
+        </p>
+        <p>
+          5.
+          <KeyboardIcon className={iconClass} />
+          {t("views.multiview.shortcuts.hint")}
         </p>
       </div>
     </div>

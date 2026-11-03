@@ -5,14 +5,15 @@ function subscribe(listener: () => void) {
   return () => document.removeEventListener("fullscreenchange", listener)
 }
 
+export function toggleFullscreen() {
+  if (document.fullscreenElement) void document.exitFullscreen()
+  else void document.documentElement.requestFullscreen()
+}
+
 export function useFullscreen() {
   const isFullscreen = useSyncExternalStore(
     subscribe,
     () => !!document.fullscreenElement
   )
-  const toggleFullscreen = () => {
-    if (document.fullscreenElement) void document.exitFullscreen()
-    else void document.documentElement.requestFullscreen()
-  }
   return { isFullscreen, toggleFullscreen }
 }

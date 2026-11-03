@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo } from "react"
+import { memo, useMemo } from "react"
 import { cn } from "cn"
 import { AnimatePresence, useTransform } from "motion/react"
 import * as m from "motion/react-m"
@@ -453,39 +453,4 @@ function CellChrome({
       </div>
     </div>
   )
-}
-
-/** Keyboard shortcuts for the mode as a whole. */
-export function useEditShortcuts() {
-  useEffect(() => {
-    const isTyping = (target: EventTarget | null) =>
-      target instanceof HTMLElement &&
-      (target.isContentEditable ||
-        ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName))
-
-    const onKey = (event: KeyboardEvent) => {
-      if (isTyping(event.target)) return
-      if (document.querySelector('[role="dialog"]')) return
-      const store = useMultiview.getState()
-      const mod = event.ctrlKey || event.metaKey
-      if (!mod && !event.altKey && event.key.toLowerCase() === "e") {
-        if (store.editing) store.exitEditing()
-        else store.enterEditing()
-        return
-      }
-      if (!store.editing) return
-      if (event.key === "Escape") {
-        store.exitEditing()
-      } else if (mod && event.key.toLowerCase() === "z") {
-        event.preventDefault()
-        if (event.shiftKey) store.redo()
-        else store.undo()
-      } else if (mod && event.key.toLowerCase() === "y") {
-        event.preventDefault()
-        store.redo()
-      }
-    }
-    window.addEventListener("keydown", onKey)
-    return () => window.removeEventListener("keydown", onKey)
-  }, [])
 }

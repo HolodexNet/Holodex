@@ -611,6 +611,46 @@ views:
       hearing: Now hearing {0}
       paused: '{0} has the sound, but is paused'
       silenced: Muted
+      soundOff: Sound off
+      soundOn: Sound on
+      volume: '{0}: {1}%'
+    shortcuts:
+      title: Keyboard Shortcuts
+      detail: Click a key to change it. Shortcuts stay out of the way while you are typing, or using a slider or menu.
+      hint: Press ? to see every keyboard shortcut, and change any of them
+      groupPlayback: Playback
+      groupAudio: Audio
+      groupLayout: Layout
+      groupEditing: While editing the layout
+      playPause: Play or pause everything
+      seekBack: Back 10 seconds
+      seekForward: Forward 10 seconds
+      mute: Mute everything, or bring the sound back
+      hearPrevious: Move the sound to the previous stream
+      hearNext: Move the sound to the next stream
+      volumeUp: Volume up
+      volumeDown: Volume down
+      toolbar: Show or hide the toolbar
+      help: Show this list
+      syncBar: Show or hide the sync bar
+      syncPlayPause: Play or pause the timeline
+      syncBack: Timeline back 10 seconds
+      syncForward: Timeline forward 10 seconds
+      syncSlower: Slower
+      syncFaster: Faster
+      displaced: 'That key was on "{0}", which now has no key.'
+      reserved: That key is needed for getting around the page, so pick another.
+      characterKeys: Single-key shortcuts
+      characterKeysDetail: Letters, numbers and symbols on their own. Turn these off if they clash with a screen reader or voice control; shortcuts with Ctrl, Alt or Command keep working.
+      resetAll: Reset all
+      reset: Reset {0}
+      change: 'Change the key for {0}, currently {1}'
+      none: None
+      pressKey: Press a key…
+      editMove: Move the focused cell
+      editResize: Resize the focused cell
+      editDelete: Delete the focused cell
+      editLeave: Cancel a drag, or leave Edit Layout
     autoLayoutTip: Click on a channel to start watching using auto layout mode
     createLayoutTip: Create your own layout by adding a cell, or using a preset
     openToolbarTip: Open the toolbar to start using multiview

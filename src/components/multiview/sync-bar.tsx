@@ -39,10 +39,10 @@ import { videoCells } from "@/lib/multiview/cells"
 import { formatDuration } from "@/lib/time"
 import { useMultiview } from "@/stores/multiview"
 import { usePlayerStatus } from "@/stores/multiview-playback"
+import { SEEK_SECONDS } from "./media-actions"
+import { ShortcutBadge, useShortcutLabel } from "./shortcut-hint"
 import { StreamAvatar } from "./stream-badge"
 import { useArchiveSync } from "./use-archive-sync"
-
-const SKIP_SECONDS = 10
 
 /** A shared timeline for watching overlapping archives together. */
 export function SyncBar() {
@@ -53,6 +53,16 @@ export function SyncBar() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [hover, setHover] = useState<number | null>(null)
   const { timeline, currentTs, paused, rate } = sync
+  const backHint = useShortcutLabel("sync-back", `-${SEEK_SECONDS}s`)
+  const forwardHint = useShortcutLabel("sync-forward", `+${SEEK_SECONDS}s`)
+  const playHint = useShortcutLabel(
+    "sync-play-pause",
+    paused ? t("views.multiview.play") : t("views.multiview.pause")
+  )
+  const rateHint = useShortcutLabel(
+    "sync-faster",
+    t("views.multiview.sync.playbackRate")
+  )
 
   const share = async () => {
     if (!timeline) return
@@ -91,30 +101,37 @@ export function SyncBar() {
           <Button
             variant="ghost"
             size="icon-xs"
-            aria-label={`-${SKIP_SECONDS}s`}
-            title={`-${SKIP_SECONDS}s`}
-            onClick={() => sync.seek(currentTs - SKIP_SECONDS)}
+            className="relative"
+            aria-label={`-${SEEK_SECONDS}s`}
+            {...backHint}
+            onClick={() => sync.seek(currentTs - SEEK_SECONDS)}
           >
             <RewindIcon />
+            <ShortcutBadge id="sync-back" />
           </Button>
           <Button
             variant="ghost"
             size="icon-sm"
+            className="relative"
             aria-label={
               paused ? t("views.multiview.play") : t("views.multiview.pause")
             }
+            {...playHint}
             onClick={() => sync.setPaused(!paused)}
           >
             {paused ? <PlayIcon /> : <PauseIcon />}
+            <ShortcutBadge id="sync-play-pause" />
           </Button>
           <Button
             variant="ghost"
             size="icon-xs"
-            aria-label={`+${SKIP_SECONDS}s`}
-            title={`+${SKIP_SECONDS}s`}
-            onClick={() => sync.seek(currentTs + SKIP_SECONDS)}
+            className="relative"
+            aria-label={`+${SEEK_SECONDS}s`}
+            {...forwardHint}
+            onClick={() => sync.seek(currentTs + SEEK_SECONDS)}
           >
             <FastForwardIcon />
+            <ShortcutBadge id="sync-forward" />
           </Button>
         </div>
         <div className="flex items-center">
@@ -135,7 +152,7 @@ export function SyncBar() {
                   size="xs"
                   className="px-1 tabular-nums"
                   aria-label={t("views.multiview.sync.playbackRate")}
-                  title={t("views.multiview.sync.playbackRate")}
+                  {...rateHint}
                 />
               }
             >

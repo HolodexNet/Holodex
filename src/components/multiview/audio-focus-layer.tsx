@@ -13,7 +13,11 @@ import { soleAudibleCell } from "@/lib/multiview/cells"
 import type { Cell, CellId, MultiviewVideo } from "@/lib/multiview/types"
 import { useMultiview } from "@/stores/multiview"
 import { useMuteSettling, usePlayerStatus } from "@/stores/multiview-playback"
-import { useMultiviewUi, type AudioHandoff } from "@/stores/multiview-ui"
+import {
+  useMultiviewUi,
+  type AudioHandoff,
+  type CellNotice,
+} from "@/stores/multiview-ui"
 import { cellMotion } from "./cell-motion"
 import { rectStyle } from "./frame-layer"
 import { StreamAvatar, useStreamName } from "./stream-badge"
@@ -62,6 +66,7 @@ export function AudioFocusLayer() {
   const audioFocus = useMultiview((s) => s.muteOthers)
   const cells = useMultiview((s) => s.cells)
   const handoff = useMultiviewUi((s) => s.audioHandoff)
+  const notice = useMultiviewUi((s) => s.notice)
   const heard = audioFocus ? soleAudibleCell(cells) : null
   const incoming = videoIn(cells, handoff?.to ?? null)
 
@@ -80,7 +85,45 @@ export function AudioFocusLayer() {
           <HandoffNotice key={handoff.id} handoff={handoff} video={incoming} />
         )}
       </AnimatePresence>
+      <AnimatePresence>
+        {notice && <Notice key={notice.id} notice={notice} />}
+      </AnimatePresence>
     </>
+  )
+}
+
+function Notice({ notice }: { notice: CellNotice }) {
+  const { id, cellId, icon, text } = notice
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const ui = useMultiviewUi.getState()
+      if (ui.notice?.id === id) ui.set({ notice: null })
+    }, LINGER_MS)
+    return () => clearTimeout(timer)
+  }, [id])
+
+  const Icon = icon === "muted" ? SpeakerSlashIcon : SpeakerHighIcon
+  const pill = (
+    <m.div
+      role="status"
+      className="flex max-w-full items-center gap-2 rounded-full bg-black/80 px-3 py-1.5 text-sm text-white shadow-lg"
+      initial={{ opacity: 0, y: -4 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+    >
+      <Icon className="size-4 shrink-0" />
+      <span className="truncate">{text}</span>
+    </m.div>
+  )
+  return cellId ? (
+    <OverCell cellId={cellId} className="z-10 flex justify-center p-2">
+      <div className="max-w-full">{pill}</div>
+    </OverCell>
+  ) : (
+    <div className="pointer-events-none absolute inset-x-0 top-4 z-10 flex justify-center px-2">
+      {pill}
+    </div>
   )
 }
 

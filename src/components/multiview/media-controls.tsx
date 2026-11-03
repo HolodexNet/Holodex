@@ -27,10 +27,16 @@ import type { VideoCell } from "@/lib/multiview/types"
 import { useMultiview } from "@/stores/multiview"
 import { playbackHub, usePlayerStatus } from "@/stores/multiview-playback"
 import { useMultiviewUi } from "@/stores/multiview-ui"
+import {
+  catchUp,
+  FAST_RATE,
+  pauseAll,
+  playAll,
+  reloadAll,
+} from "./media-actions"
+import { ShortcutBadge, ShortcutKeys, useShortcutLabel } from "./shortcut-hint"
 import { StreamAvatar, useStreamName } from "./stream-badge"
 import { useMultiviewCommands } from "./use-commands"
-
-const FAST_RATE = 2
 
 function VolumeSlider({
   value,
@@ -59,15 +65,26 @@ export function MediaControls() {
   const { t } = useT()
   const open = useMultiviewUi((s) => s.mediaControlsOpen)
   const setUi = useMultiviewUi((s) => s.set)
-  const reload = useMultiviewUi((s) => s.reload)
   const allCells = useMultiview((s) => s.cells)
   const setAllMuted = useMultiview((s) => s.setAllMuted)
   const muteOthers = useMultiview((s) => s.muteOthers)
   const setMuteOthers = useMultiview((s) => s.setMuteOthers)
   const cells = useMemo(() => videoCells(allCells), [allCells])
-
-  const each = (action: (cell: VideoCell) => void) => cells.forEach(action)
-  const controller = (cell: VideoCell) => playbackHub.controller(cell.id)
+  const playHint = useShortcutLabel("play-pause", t("views.multiview.playAll"))
+  const pauseHint = useShortcutLabel(
+    "play-pause",
+    t("views.multiview.pauseAll")
+  )
+  const catchUpHint = useShortcutLabel("catch-up", t("views.multiview.syncAll"))
+  const reloadHint = useShortcutLabel(
+    "reload-all",
+    t("views.multiview.reloadAll")
+  )
+  const unmuteHint = useShortcutLabel(
+    "unmute-all",
+    t("views.multiview.unmuteAll")
+  )
+  const muteHint = useShortcutLabel("mute", t("views.multiview.muteAll"))
 
   return (
     <Sheet
@@ -85,67 +102,69 @@ export function MediaControls() {
           <Button
             variant="ghost"
             size="icon-sm"
+            className="relative"
             aria-label={t("views.multiview.playAll")}
-            title={t("views.multiview.playAll")}
-            onClick={() => each((cell) => controller(cell)?.play())}
+            {...playHint}
+            onClick={playAll}
           >
             <PlayIcon />
+            <ShortcutBadge id="play-pause" />
           </Button>
           <Button
             variant="ghost"
             size="icon-sm"
+            className="relative"
             aria-label={t("views.multiview.syncAll")}
-            title={t("views.multiview.syncAll")}
-            onClick={() =>
-              each((cell) => {
-                // Live streams catch up at double speed, until they hit the live
-                // edge; anything else simply toggles between speeds.
-                const player = controller(cell)
-                if (!player) return
-                const rate = playbackHub.getStatus(cell.id)?.playbackRate ?? 1
-                const live = cell.content.video.status === "live"
-                player.setPlaybackRate(live || rate === 1 ? FAST_RATE : 1)
-              })
-            }
+            {...catchUpHint}
+            onClick={catchUp}
           >
             <FastForwardIcon />
+            <ShortcutBadge id="catch-up" />
           </Button>
           <Button
             variant="ghost"
             size="icon-sm"
+            className="relative"
             aria-label={t("views.multiview.pauseAll")}
-            title={t("views.multiview.pauseAll")}
-            onClick={() => each((cell) => controller(cell)?.pause())}
+            {...pauseHint}
+            onClick={pauseAll}
           >
             <PauseIcon />
+            <ShortcutBadge id="play-pause" />
           </Button>
           <Button
             variant="ghost"
             size="icon-sm"
+            className="relative"
             aria-label={t("views.multiview.reloadAll")}
-            title={t("views.multiview.reloadAll")}
-            onClick={() => reload(cells.map((cell) => cell.id))}
+            {...reloadHint}
+            onClick={reloadAll}
           >
             <ArrowClockwiseIcon />
+            <ShortcutBadge id="reload-all" />
           </Button>
           <Button
             variant="ghost"
             size="icon-sm"
+            className="relative"
             aria-label={t("views.multiview.unmuteAll")}
-            title={t("views.multiview.unmuteAll")}
+            {...unmuteHint}
             disabled={muteOthers}
             onClick={() => setAllMuted(false)}
           >
             <SpeakerHighIcon />
+            <ShortcutBadge id="unmute-all" />
           </Button>
           <Button
             variant="ghost"
             size="icon-sm"
+            className="relative"
             aria-label={t("views.multiview.muteAll")}
-            title={t("views.multiview.muteAll")}
+            {...muteHint}
             onClick={() => setAllMuted(true)}
           >
             <SpeakerSlashIcon />
+            <ShortcutBadge id="mute" />
           </Button>
           <MasterVolume cells={cells} />
         </div>
@@ -165,7 +184,10 @@ export function MediaControls() {
             htmlFor="mv-mute-others"
             className="flex-col items-start gap-0.5"
           >
-            {t("views.multiview.muteOthers")}
+            <span className="flex items-center gap-1.5">
+              {t("views.multiview.muteOthers")}
+              <ShortcutKeys id="audio-focus" />
+            </span>
             <span className="text-xs font-normal text-muted-foreground">
               {t("views.multiview.muteOthersDetail")}
             </span>

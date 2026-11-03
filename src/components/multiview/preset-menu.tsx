@@ -38,6 +38,7 @@ import { useMultiview } from "@/stores/multiview"
 import { useMultiviewPresets } from "@/stores/multiview-presets"
 import { useMultiviewUi } from "@/stores/multiview-ui"
 import { LayoutPreview } from "./layout-preview"
+import { ShortcutBadge, useShortcutLabel } from "./shortcut-hint"
 import { cancelLayoutPrompt, confirmLayoutPrompt } from "./use-commands"
 
 function usePresetGroups() {
@@ -99,6 +100,7 @@ export function PresetMenu({ className }: { className?: string }) {
   const apply = useApplyPreset()
   const { groups } = usePresetGroups()
   const count = activeVideos(cells).length
+  const hint = useShortcutLabel("presets", t("views.multiview.presets"))
 
   const quick = isMobile
     ? MOBILE_PRESETS
@@ -113,13 +115,14 @@ export function PresetMenu({ className }: { className?: string }) {
           <Button
             variant="ghost"
             size="icon-sm"
-            className={className}
+            className={cn("relative", className)}
             aria-label={t("views.multiview.presets")}
-            title={t("views.multiview.presets")}
+            {...hint}
           />
         }
       >
         <GridFourIcon />
+        <ShortcutBadge id="presets" />
       </PopoverTrigger>
       <PopoverContent
         align="end"

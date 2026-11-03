@@ -8,7 +8,7 @@ import {
 } from "motion/react"
 
 import { AudioFocusLayer } from "@/components/multiview/audio-focus-layer"
-import { EditLayer, useEditShortcuts } from "@/components/multiview/edit-layer"
+import { EditLayer } from "@/components/multiview/edit-layer"
 import { DropShield } from "@/components/multiview/drop-shield"
 import { FrameLayer, HighlightLayer } from "@/components/multiview/frame-layer"
 import { Hints } from "@/components/multiview/hints"
@@ -18,10 +18,12 @@ import {
   PresetDialog,
   SaveLayoutDialog,
 } from "@/components/multiview/preset-menu"
+import { ShortcutHelp } from "@/components/multiview/shortcut-help"
 import { StageSizeProvider } from "@/components/multiview/stage-size"
 import { SyncBar } from "@/components/multiview/sync-bar"
 import { Toolbar } from "@/components/multiview/toolbar"
 import { requestLayout } from "@/components/multiview/use-commands"
+import { useShortcuts } from "@/components/multiview/use-shortcuts"
 import { useVideoDetails } from "@/components/multiview/use-video-details"
 import { VideoPickerDialog } from "@/components/multiview/video-picker-dialog"
 import { useDocumentTitle } from "@/hooks/use-document-title"
@@ -77,7 +79,7 @@ export default function MultiviewPage() {
   useDocumentTitle(t("component.mainNav.multiview"))
   usePermalink(layout)
   useVideoDetails({ refreshLive: !layout })
-  useEditShortcuts()
+  useShortcuts()
 
   // Streams have audio of their own; music should not play over them.
   useEffect(() => {
@@ -116,6 +118,7 @@ export default function MultiviewPage() {
         <SaveLayoutDialog />
         <LayoutPromptDialog />
         <MediaControls />
+        <ShortcutHelp />
       </MotionConfig>
     </LazyMotion>
   )

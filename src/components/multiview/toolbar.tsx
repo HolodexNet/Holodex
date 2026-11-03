@@ -23,6 +23,7 @@ import {
   HeadphonesIcon,
   HeartIcon,
   HouseLineIcon,
+  KeyboardIcon,
   LinkSimpleIcon,
   MagnifyingGlassPlusIcon,
   PencilSimpleIcon,
@@ -46,9 +47,11 @@ import {
 } from "@/components/ui/popover"
 import { useT } from "@/lib/i18n"
 import { permalinkPath } from "@/lib/multiview/codec"
+import type { ShortcutId } from "@/lib/multiview/shortcuts"
 import { useMultiview } from "@/stores/multiview"
 import { useMultiviewUi } from "@/stores/multiview-ui"
 import { PresetMenu } from "./preset-menu"
+import { ShortcutBadge, ShortcutKeys, useShortcutLabel } from "./shortcut-hint"
 import { useMultiviewCommands } from "./use-commands"
 import { useFullscreen } from "./use-fullscreen"
 import { VideoTray } from "./video-tray"
@@ -76,23 +79,27 @@ interface ToolAction {
   onClick: () => void
   collapse?: Collapse
   active?: boolean
+  shortcut?: ShortcutId
 }
 
 function ToolButton({ action }: { action: ToolAction }) {
+  const hint = useShortcutLabel(action.shortcut, action.label)
   return (
     <Button
       variant="ghost"
       size="icon-sm"
       aria-label={action.label}
-      title={action.label}
+      {...hint}
       aria-pressed={action.active}
       className={cn(
+        "relative",
         action.collapse && IN_BAR[action.collapse],
         action.active && "bg-muted text-primary"
       )}
       onClick={action.onClick}
     >
       {action.icon}
+      {action.shortcut && <ShortcutBadge id={action.shortcut} />}
     </Button>
   )
 }
@@ -123,6 +130,9 @@ function OverflowMenu({ actions }: { actions: ToolAction[] }) {
           >
             {action.icon}
             {action.label}
+            {action.shortcut && (
+              <ShortcutKeys id={action.shortcut} className="ml-auto" />
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
@@ -238,16 +248,18 @@ function ShareButton({ className }: { className?: string }) {
 function AddVideoButton() {
   const { t } = useT()
   const setUi = useMultiviewUi((s) => s.set)
+  const hint = useShortcutLabel("add-video", t("views.multiview.addVideo"))
   return (
     <Button
       variant="ghost"
       size="icon-sm"
-      className="shrink-0"
+      className="relative shrink-0"
       aria-label={t("views.multiview.addVideo")}
-      title={t("views.multiview.addVideo")}
+      {...hint}
       onClick={() => setUi({ picker: { kind: "auto" } })}
     >
       <MagnifyingGlassPlusIcon />
+      <ShortcutBadge id="add-video" />
     </Button>
   )
 }
@@ -256,19 +268,20 @@ function AddVideoButton() {
 function EditToggle() {
   const { t } = useT()
   const enterEditing = useMultiview((s) => s.enterEditing)
+  const hint = useShortcutLabel("edit", t("views.multiview.edit.enter"))
   return (
     <Button
       variant="secondary"
       size="sm"
       className="shrink-0"
-      aria-keyshortcuts="E"
-      title={`${t("views.multiview.edit.enter")} (E)`}
+      {...hint}
       onClick={enterEditing}
     >
       <PencilSimpleIcon data-icon="inline-start" />
       <span className="hidden sm:inline">
         {t("views.multiview.edit.enter")}
       </span>
+      <ShortcutKeys id="edit" className="hidden lg:inline-flex" />
     </Button>
   )
 }
@@ -282,6 +295,10 @@ function ViewActions() {
   const setAudioFocus = useMultiview((s) => s.setMuteOthers)
   const { addCell } = useMultiviewCommands()
   const { isFullscreen, toggleFullscreen } = useFullscreen()
+  const collapseHint = useShortcutLabel(
+    "toolbar",
+    t("views.multiview.collapseToolbar")
+  )
 
   const actions: ToolAction[] = [
     {
@@ -290,6 +307,7 @@ function ViewActions() {
       icon: <PlusIcon />,
       onClick: addCell,
       collapse: "sm",
+      shortcut: "add-cell",
     },
     {
       id: "audio-focus",
@@ -297,12 +315,14 @@ function ViewActions() {
       icon: <HeadphonesIcon />,
       onClick: () => setAudioFocus(!audioFocus),
       active: audioFocus,
+      shortcut: "audio-focus",
     },
     {
       id: "media",
       label: t("views.multiview.mediaControls"),
       icon: <SlidersHorizontalIcon />,
       onClick: () => setUi({ mediaControlsOpen: true }),
+      shortcut: "media-controls",
     },
     {
       id: "sync",
@@ -311,6 +331,7 @@ function ViewActions() {
       onClick: () => setUi({ syncBarOpen: !syncBarOpen }),
       active: syncBarOpen,
       collapse: "sm",
+      shortcut: "sync-bar",
     },
     {
       id: "save",
@@ -332,6 +353,15 @@ function ViewActions() {
       icon: isFullscreen ? <CornersInIcon /> : <CornersOutIcon />,
       onClick: toggleFullscreen,
       collapse: "lg",
+      shortcut: "fullscreen",
+    },
+    {
+      id: "shortcuts",
+      label: t("views.multiview.shortcuts.title"),
+      icon: <KeyboardIcon />,
+      onClick: () => setUi({ helpOpen: true }),
+      collapse: "lg",
+      shortcut: "help",
     },
   ]
 
@@ -347,11 +377,13 @@ function ViewActions() {
       <Button
         variant="ghost"
         size="icon-sm"
+        className="relative"
         aria-label={t("views.multiview.collapseToolbar")}
-        title={t("views.multiview.collapseToolbar")}
+        {...collapseHint}
         onClick={() => setUi({ toolbarCollapsed: true })}
       >
         <CaretUpIcon />
+        <ShortcutBadge id="toolbar" />
       </Button>
     </>
   )
@@ -368,6 +400,9 @@ function EditActions() {
   const exitEditing = useMultiview((s) => s.exitEditing)
   const clearAll = useMultiview((s) => s.clearAll)
   const { addCell } = useMultiviewCommands()
+  const undoHint = useShortcutLabel("undo", t("views.multiview.edit.undo"))
+  const redoHint = useShortcutLabel("redo", t("views.multiview.edit.redo"))
+  const addHint = useShortcutLabel("add-cell", t("views.multiview.addframe"))
 
   return (
     <>
@@ -375,31 +410,37 @@ function EditActions() {
         variant="ghost"
         size="icon-sm"
         disabled={!canUndo}
+        className="relative"
         aria-label={t("views.multiview.edit.undo")}
-        title={`${t("views.multiview.edit.undo")} (Ctrl+Z)`}
+        {...undoHint}
         onClick={undo}
       >
         <ArrowUUpLeftIcon />
+        <ShortcutBadge id="undo" />
       </Button>
       <Button
         variant="ghost"
         size="icon-sm"
         disabled={!canRedo}
+        className="relative"
         aria-label={t("views.multiview.edit.redo")}
-        title={`${t("views.multiview.edit.redo")} (Ctrl+Shift+Z)`}
+        {...redoHint}
         onClick={redo}
       >
         <ArrowUUpRightIcon />
+        <ShortcutBadge id="redo" />
       </Button>
       <PresetMenu />
       <Button
         variant="ghost"
         size="icon-sm"
+        className="relative"
         aria-label={t("views.multiview.addframe")}
-        title={t("views.multiview.addframe")}
+        {...addHint}
         onClick={addCell}
       >
         <PlusIcon />
+        <ShortcutBadge id="add-cell" />
       </Button>
       <Button
         variant="ghost"
@@ -438,6 +479,10 @@ export function Toolbar() {
   const editing = useMultiview((s) => s.editing)
   const collapsed = useMultiviewUi((s) => s.toolbarCollapsed)
   const setUi = useMultiviewUi((s) => s.set)
+  const expandHint = useShortcutLabel(
+    "toolbar",
+    t("views.multiview.expandToolbar")
+  )
 
   if (collapsed) {
     return (
@@ -446,7 +491,7 @@ export function Toolbar() {
         size="icon-xs"
         className="absolute top-0 right-0 z-40 rounded-none rounded-bl-md opacity-50 hover:opacity-100"
         aria-label={t("views.multiview.expandToolbar")}
-        title={t("views.multiview.expandToolbar")}
+        {...expandHint}
         onClick={() => setUi({ toolbarCollapsed: false })}
       >
         <CaretDownIcon />

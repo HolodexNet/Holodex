@@ -31,6 +31,7 @@ components/multiview, pages/multiview  Rendering and input
 | `playback` | `PlaybackHub`: owns live players and polls them, so fast-changing values never touch the persisted store |
 | `archive-clock` | `ArchiveClock`: the one clock behind archive sync, running while anything on screen shows it |
 | `flip` | The transform maths for animations |
+| `shortcuts` | The keyboard map as data: commands, bindings, and which key presses count |
 | `legacy` | Importing the previous UI's saved layout |
 | `lib/player/*` | `PlayerController`, with one adapter per embed |
 
@@ -39,6 +40,7 @@ components/multiview, pages/multiview  Rendering and input
 | `multiview` | Cells, mute settings, sync offsets, URL history, edit session and undo | Yes, except the edit session; per tab |
 | `multiview-presets` | Saved layouts, auto-layout table | Yes; shared between tabs |
 | `multiview-ui` | Which panels and dialogs are open, reload counters | No |
+| `multiview-shortcuts` | Keys the viewer has changed, whether single-key shortcuts are on | Yes; shared between tabs |
 | `multiview-playback` | The `PlaybackHub` instance, wired to the store | No |
 | `multiview-sync` | The `ArchiveClock` instance, wired to the store and the hub | No |
 
@@ -61,6 +63,23 @@ One button (or `E`) puts the whole view into editing mode, replacing the old pau
 | Esc | Abandons the gesture in progress, otherwise leaves edit mode |
 
 Handles sit inside their own cell, so neighbours never compete for the same pixels: which side of a shared edge you grab says which cell you mean. Undo restores layout only, keeping stream details and mute state learned since (`restoreLayout`).
+
+## Keyboard
+
+`?` lists every shortcut, grouped by playback, audio, layout and archive sync, and is where they get changed. Clicking a key and pressing another rebinds it, taking the key from whatever had it and saying so; Delete clears one. Only differences from the defaults are stored, so a new default reaches everyone who has not changed that key.
+
+Commands live in `SHORTCUTS`, with what each one does in `use-shortcuts` and the actions themselves in `media-actions`, which the mixer shares. To add a shortcut, add it to the table and to the two records keyed by it: the compiler insists on both. Show it beside its action with `ShortcutBadge` on an icon button or `ShortcutKeys` where there is room, so that hints follow any rebinding.
+
+Keys stay out of the way when they would get in someone's way (`targetOwnsKey`):
+
+- Typing, sliders, menus and other widgets that use plain keys keep every key.
+- A focused button keeps Space and Enter, but letters still work from one, because a button clicked with the mouse stays focused and that should not switch the keyboard off.
+- Nothing runs while a dialog or menu is open.
+- Single-key shortcuts can be turned off as a group, as WCAG 2.1.4 asks, for people whose screen reader or voice control would set them off by accident. Combinations with Ctrl, Alt or Command keep working.
+
+Keys are read by what they type, except that on a layout that does not type Latin letters the key in M's position counts as M, so the defaults work on Russian and Korean keyboards.
+
+Keys typed into a player never reach the page at all; see below.
 
 ## Chat
 
