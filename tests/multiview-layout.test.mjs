@@ -14,6 +14,10 @@ import {
   singleVideoPath,
 } from "../src/lib/multiview/codec.ts"
 import { neighbourTarget, resolveChats } from "../src/lib/multiview/chat.ts"
+import {
+  clampWindow,
+  toggleControlPanel,
+} from "../src/lib/multiview/control.ts"
 import { GRID_SIZE, rectsCollide } from "../src/lib/multiview/grid.ts"
 import {
   addCell,
@@ -395,6 +399,44 @@ test("mute others silences everything but the chosen video", () => {
   const first = videoCells(focusAudio(cells))
   assert.equal(first[0].content.muted, false)
   assert.equal(first[1].content.muted, true)
+})
+
+test("the control panel always keeps one half showing", () => {
+  const both = { media: true, sync: true }
+  assert.deepEqual(toggleControlPanel(both, "sync"), {
+    media: true,
+    sync: false,
+  })
+  const media = { media: true, sync: false }
+  assert.deepEqual(toggleControlPanel(media, "media"), {
+    media: false,
+    sync: true,
+  })
+  const sync = { media: false, sync: true }
+  assert.deepEqual(toggleControlPanel(sync, "sync"), {
+    media: true,
+    sync: false,
+  })
+  assert.deepEqual(toggleControlPanel(media, "sync"), both)
+})
+
+test("a floating window stays on screen", () => {
+  const size = { width: 400, height: 300 }
+  const screen = { width: 1000, height: 800 }
+  assert.deepEqual(clampWindow({ x: 50, y: 60 }, size, screen), {
+    x: 50,
+    y: 60,
+  })
+  assert.deepEqual(clampWindow({ x: -5, y: -9 }, size, screen), { x: 0, y: 0 })
+  assert.deepEqual(clampWindow({ x: 900, y: 900 }, size, screen), {
+    x: 600,
+    y: 500,
+  })
+  // Too big to fit, so the header stays where it can be reached.
+  assert.deepEqual(
+    clampWindow({ x: 50, y: 50 }, size, { width: 300, height: 200 }),
+    { x: 0, y: 0 }
+  )
 })
 
 test("turning Audio Focus on keeps what is being heard", () => {

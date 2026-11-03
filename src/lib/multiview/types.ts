@@ -71,6 +71,12 @@ export interface ChatContent {
   panels: ChatPanels
 }
 
+/** The halves of the control panel. At least one is always shown. */
+export interface ControlPanels {
+  media: boolean
+  sync: boolean
+}
+
 export type CellContent = VideoContent | ChatContent
 
 export interface Cell {

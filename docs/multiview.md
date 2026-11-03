@@ -31,6 +31,7 @@ components/multiview, pages/multiview  Rendering and input
 | `playback` | `PlaybackHub`: owns live players and polls them, so fast-changing values never touch the persisted store |
 | `archive-clock` | `ArchiveClock`: the one clock behind archive sync, running while anything on screen shows it |
 | `flip` | The transform maths for animations |
+| `control` | The control panel's halves, and keeping its window on screen |
 | `shortcuts` | The keyboard map as data: commands, bindings, and which key presses count |
 | `legacy` | Importing the previous UI's saved layout |
 | `lib/player/*` | `PlayerController`, with one adapter per embed |
@@ -63,6 +64,12 @@ One button (or `E`) puts the whole view into editing mode, replacing the old pau
 | Esc | Abandons the gesture in progress, otherwise leaves edit mode |
 
 Handles sit inside their own cell, so neighbours never compete for the same pixels: which side of a shared edge you grab says which cell you mean. Undo restores layout only, keeping stream details and mute state learned since (`restoreLayout`).
+
+## Controls
+
+`ControlPanel` holds audio, playback and archive sync in one place, and does not mind where it is put. `ControlWindow` floats it above the stage, draggable by its header. Unlike the sheet it replaced it covers neither the view nor the keyboard, so streams can be watched and worked at the same time. The sync half is off until asked for, because showing it starts the clock, which moves every archive onto the shared timeline.
+
+The sync bar along the bottom is the same controls again, and any number of them can be up at once: they all show one `ArchiveClock`.
 
 ## Keyboard
 
@@ -109,7 +116,7 @@ Links from the previous UI still work. The format is documented in `codec.ts`, a
 
 ## Compared with the previous UI
 
-Reorder Layout's separate dialog is gone, because edit mode swaps cells directly with the real videos in place. Other changes in behaviour:
+Reorder Layout's separate dialog is gone, because edit mode swaps cells directly with the real videos in place. The Media Controls sheet became a window that leaves the view uncovered. Other changes in behaviour:
 
 - A cell can no longer be placed off the bottom of the grid to scroll to; the stage does not scroll, and Add Cell shrinks the new cell or reports that there is no room.
 - Toggling a chat panel off keeps the chat loaded, so turning it back on does not reload it.

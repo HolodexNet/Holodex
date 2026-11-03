@@ -290,6 +290,7 @@ function ViewActions() {
   const { t } = useT()
   const setUi = useMultiviewUi((s) => s.set)
   const syncBarOpen = useMultiviewUi((s) => s.syncBarOpen)
+  const controlsOpen = useMultiviewUi((s) => s.mediaControlsOpen)
   const clearAll = useMultiview((s) => s.clearAll)
   const audioFocus = useMultiview((s) => s.muteOthers)
   const setAudioFocus = useMultiview((s) => s.setMuteOthers)
@@ -321,7 +322,8 @@ function ViewActions() {
       id: "media",
       label: t("views.multiview.mediaControls"),
       icon: <SlidersHorizontalIcon />,
-      onClick: () => setUi({ mediaControlsOpen: true }),
+      onClick: () => setUi({ mediaControlsOpen: !controlsOpen }),
+      active: controlsOpen,
       shortcut: "media-controls",
     },
     {

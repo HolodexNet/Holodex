@@ -9,11 +9,11 @@ import {
 
 import { AudioFocusLayer } from "@/components/multiview/audio-focus-layer"
 import { EditLayer } from "@/components/multiview/edit-layer"
+import { ControlWindow } from "@/components/multiview/control-window"
 import { DropShield } from "@/components/multiview/drop-shield"
 import { FrameLayer, HighlightLayer } from "@/components/multiview/frame-layer"
 import { Hints } from "@/components/multiview/hints"
 import { KeyboardFocusTab } from "@/components/multiview/keyboard-focus-tab"
-import { MediaControls } from "@/components/multiview/media-controls"
 import {
   LayoutPromptDialog,
   PresetDialog,
@@ -21,7 +21,7 @@ import {
 } from "@/components/multiview/preset-menu"
 import { ShortcutHelp } from "@/components/multiview/shortcut-help"
 import { StageSizeProvider } from "@/components/multiview/stage-size"
-import { SyncBar } from "@/components/multiview/sync-bar"
+import { SyncControls } from "@/components/multiview/sync-bar"
 import { Toolbar } from "@/components/multiview/toolbar"
 import { requestLayout } from "@/components/multiview/use-commands"
 import { useShortcuts } from "@/components/multiview/use-shortcuts"
@@ -113,13 +113,13 @@ export default function MultiviewPage() {
             <DropShield />
             <KeyboardFocusTab />
           </StageSizeProvider>
-          {syncBarOpen && <SyncBar />}
+          {syncBarOpen && <SyncControls />}
         </div>
         <VideoPickerDialog />
         <PresetDialog />
         <SaveLayoutDialog />
         <LayoutPromptDialog />
-        <MediaControls />
+        <ControlWindow />
         <ShortcutHelp />
       </MotionConfig>
     </LazyMotion>

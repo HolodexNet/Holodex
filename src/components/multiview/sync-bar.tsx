@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { cn } from "cn"
 import { toast } from "sonner"
 
 import {
@@ -44,8 +45,11 @@ import { ShortcutBadge, useShortcutLabel } from "./shortcut-hint"
 import { StreamAvatar } from "./stream-badge"
 import { useArchiveSync } from "./use-archive-sync"
 
-/** A shared timeline for watching overlapping archives together. */
-export function SyncBar() {
+/**
+ * A shared timeline for watching overlapping archives together. Lies along the
+ * bottom of the page as a bar, or `stacked` when it is sharing a narrow panel.
+ */
+export function SyncControls({ stacked = false }: { stacked?: boolean }) {
   const { t } = useT()
   const sync = useArchiveSync()
   const cells = useMultiview((s) => s.cells)
@@ -90,8 +94,20 @@ export function SyncBar() {
     videoCells(cells).find((cell) => cell.content.video.id === videoId)?.id
 
   return (
-    <div className="relative flex h-25 shrink-0 items-stretch gap-2 border-t bg-card p-2 pb-[max(env(safe-area-inset-bottom),0.5rem)]">
-      <div className="flex w-30 shrink-0 flex-col items-center justify-center gap-0.5">
+    <div
+      className={cn(
+        "relative flex gap-2 p-2",
+        stacked
+          ? "flex-col"
+          : "h-25 shrink-0 items-stretch border-t bg-card pb-[max(env(safe-area-inset-bottom),0.5rem)]"
+      )}
+    >
+      <div
+        className={cn(
+          "flex shrink-0 items-center justify-center gap-0.5",
+          stacked ? "flex-wrap" : "w-30 flex-col"
+        )}
+      >
         {timeline && (
           <div className="text-center text-xs tabular-nums">
             {formatDuration(elapsed)} / {formatDuration(total)}
@@ -184,7 +200,7 @@ export function SyncBar() {
         </div>
       </div>
 
-      <div className="relative min-w-0 flex-1">
+      <div className={cn("relative min-w-0", stacked ? "h-24" : "flex-1")}>
         {!timeline ? (
           <p className="p-2 text-sm text-muted-foreground">
             {t("views.multiview.sync.nothingToSync")}

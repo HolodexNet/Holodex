@@ -13,13 +13,6 @@ import {
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet"
 import { Switch } from "@/components/ui/switch"
 import { useT } from "@/lib/i18n"
 import { videoCells } from "@/lib/multiview/cells"
@@ -61,10 +54,8 @@ function VolumeSlider({
 }
 
 /** Playback for every stream at once, and for each one separately. */
-export function MediaControls() {
+export function Mixer() {
   const { t } = useT()
-  const open = useMultiviewUi((s) => s.mediaControlsOpen)
-  const setUi = useMultiviewUi((s) => s.set)
   const allCells = useMultiview((s) => s.cells)
   const setAllMuted = useMultiview((s) => s.setAllMuted)
   const muteOthers = useMultiview((s) => s.muteOthers)
@@ -87,119 +78,108 @@ export function MediaControls() {
   const muteHint = useShortcutLabel("mute", t("views.multiview.muteAll"))
 
   return (
-    <Sheet
-      open={open}
-      onOpenChange={(next) => setUi({ mediaControlsOpen: next })}
-    >
-      <SheetContent className="gap-0 overflow-y-auto sm:max-w-md">
-        <SheetHeader>
-          <SheetTitle>{t("views.multiview.mediaControls")}</SheetTitle>
-          <SheetDescription className="sr-only">
-            {t("views.multiview.mediaControls")}
-          </SheetDescription>
-        </SheetHeader>
-        <div className="flex flex-wrap items-center gap-0.5 border-b px-4 pb-3">
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="relative"
-            aria-label={t("views.multiview.playAll")}
-            {...playHint}
-            onClick={playAll}
-          >
-            <PlayIcon />
-            <ShortcutBadge id="play-pause" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="relative"
-            aria-label={t("views.multiview.syncAll")}
-            {...catchUpHint}
-            onClick={catchUp}
-          >
-            <FastForwardIcon />
-            <ShortcutBadge id="catch-up" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="relative"
-            aria-label={t("views.multiview.pauseAll")}
-            {...pauseHint}
-            onClick={pauseAll}
-          >
-            <PauseIcon />
-            <ShortcutBadge id="play-pause" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="relative"
-            aria-label={t("views.multiview.reloadAll")}
-            {...reloadHint}
-            onClick={reloadAll}
-          >
-            <ArrowClockwiseIcon />
-            <ShortcutBadge id="reload-all" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="relative"
-            aria-label={t("views.multiview.unmuteAll")}
-            {...unmuteHint}
-            disabled={muteOthers}
-            onClick={() => setAllMuted(false)}
-          >
-            <SpeakerHighIcon />
-            <ShortcutBadge id="unmute-all" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="relative"
-            aria-label={t("views.multiview.muteAll")}
-            {...muteHint}
-            onClick={() => setAllMuted(true)}
-          >
-            <SpeakerSlashIcon />
-            <ShortcutBadge id="mute" />
-          </Button>
-          <MasterVolume cells={cells} />
-        </div>
-        {cells.length === 0 ? (
-          <p className="p-6 text-center text-sm text-muted-foreground">
-            {t("views.multiview.mediaControlsEmpty")}
-          </p>
-        ) : (
-          <ul className="divide-y">
-            {cells.map((cell) => (
-              <CellControls key={cell.id} cell={cell} />
-            ))}
-          </ul>
-        )}
-        <div className="flex items-start justify-between gap-3 border-t p-4">
-          <Label
-            htmlFor="mv-mute-others"
-            className="flex-col items-start gap-0.5"
-          >
-            <span className="flex items-center gap-1.5">
-              {t("views.multiview.muteOthers")}
-              <ShortcutKeys id="audio-focus" />
-            </span>
-            <span className="text-xs font-normal text-muted-foreground">
-              {t("views.multiview.muteOthersDetail")}
-            </span>
-          </Label>
-          <Switch
-            id="mv-mute-others"
-            checked={muteOthers}
-            onCheckedChange={setMuteOthers}
-          />
-        </div>
-      </SheetContent>
-    </Sheet>
+    <div>
+      <div className="flex flex-wrap items-center gap-0.5 border-b px-3 py-1.5">
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="relative"
+          aria-label={t("views.multiview.playAll")}
+          {...playHint}
+          onClick={playAll}
+        >
+          <PlayIcon />
+          <ShortcutBadge id="play-pause" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="relative"
+          aria-label={t("views.multiview.syncAll")}
+          {...catchUpHint}
+          onClick={catchUp}
+        >
+          <FastForwardIcon />
+          <ShortcutBadge id="catch-up" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="relative"
+          aria-label={t("views.multiview.pauseAll")}
+          {...pauseHint}
+          onClick={pauseAll}
+        >
+          <PauseIcon />
+          <ShortcutBadge id="play-pause" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="relative"
+          aria-label={t("views.multiview.reloadAll")}
+          {...reloadHint}
+          onClick={reloadAll}
+        >
+          <ArrowClockwiseIcon />
+          <ShortcutBadge id="reload-all" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="relative"
+          aria-label={t("views.multiview.unmuteAll")}
+          {...unmuteHint}
+          disabled={muteOthers}
+          onClick={() => setAllMuted(false)}
+        >
+          <SpeakerHighIcon />
+          <ShortcutBadge id="unmute-all" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="relative"
+          aria-label={t("views.multiview.muteAll")}
+          {...muteHint}
+          onClick={() => setAllMuted(true)}
+        >
+          <SpeakerSlashIcon />
+          <ShortcutBadge id="mute" />
+        </Button>
+        <MasterVolume cells={cells} />
+      </div>
+      {cells.length === 0 ? (
+        <p className="p-4 text-center text-sm text-muted-foreground">
+          {t("views.multiview.mediaControlsEmpty")}
+        </p>
+      ) : (
+        <ul className="divide-y">
+          {cells.map((cell) => (
+            <CellControls key={cell.id} cell={cell} />
+          ))}
+        </ul>
+      )}
+      <div className="flex items-start justify-between gap-3 border-t p-3">
+        <Label
+          htmlFor="mv-mute-others"
+          className="flex-col items-start gap-0.5"
+        >
+          <span className="flex items-center gap-1.5">
+            {t("views.multiview.muteOthers")}
+            <ShortcutKeys id="audio-focus" />
+          </span>
+          <span className="text-xs font-normal text-muted-foreground">
+            {t("views.multiview.muteOthersDetail")}
+          </span>
+        </Label>
+        <Switch
+          id="mv-mute-others"
+          checked={muteOthers}
+          onCheckedChange={setMuteOthers}
+        />
+      </div>
+    </div>
   )
 }
 
@@ -240,7 +220,7 @@ function CellControls({ cell }: { cell: VideoCell }) {
   const fast = status.playbackRate !== 1
 
   return (
-    <li className="flex gap-2 px-4 py-2">
+    <li className="flex gap-2 px-3 py-1.5">
       {channelId?.startsWith("UC") ? (
         <Link to={`/channel/${channelId}`} className="shrink-0">
           <StreamAvatar video={video} size={36} />

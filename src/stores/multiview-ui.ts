@@ -1,7 +1,9 @@
 import { create } from "zustand"
 
+import type { Point } from "@/lib/multiview/control"
 import type {
   CellId,
+  ControlPanels,
   DecodedLayout,
   MultiviewVideo,
 } from "@/lib/multiview/types"
@@ -46,6 +48,9 @@ interface MultiviewUiStore {
   toolbarCollapsed: boolean
   syncBarOpen: boolean
   mediaControlsOpen: boolean
+  controlWindowPanels: ControlPanels
+  /** Where it was dragged to; until then it keeps to its corner. */
+  controlWindowAt: Point | null
   presetDialogOpen: boolean
   saveDialogOpen: boolean
   helpOpen: boolean
@@ -75,6 +80,8 @@ export const useMultiviewUi = create<MultiviewUiStore>()((set) => ({
   toolbarCollapsed: false,
   syncBarOpen: false,
   mediaControlsOpen: false,
+  controlWindowPanels: { media: true, sync: false },
+  controlWindowAt: null,
   presetDialogOpen: false,
   saveDialogOpen: false,
   helpOpen: false,

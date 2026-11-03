@@ -93,6 +93,7 @@ export function useShortcuts() {
       const { editing, exitEditing } = multiview()
       if (key === "Escape") {
         if (editing) exitEditing()
+        else ui().set({ mediaControlsOpen: false })
         return
       }
 

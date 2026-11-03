@@ -614,6 +614,8 @@ views:
       soundOff: Sound off
       soundOn: Sound on
       volume: '{0}: {1}%'
+    control:
+      close: Close
     keyboardFocus:
       tab: Shortcuts paused · Click to resume
       advertTitle: A video has the keyboard
