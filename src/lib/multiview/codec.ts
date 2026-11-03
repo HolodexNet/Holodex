@@ -46,7 +46,7 @@ const MAX_CELLS = 64
 const TWITCH = "twitch"
 const TWITCH_VOD = "twitch:v"
 
-const encodeRect = ({ x, y, w, h }: Rect) =>
+export const encodeRect = ({ x, y, w, h }: Rect) =>
   [x, y, w, h].map((value) => ALPHABET[value]).join("")
 
 const isEncodable = ({ x, y, w, h }: Rect) =>
@@ -186,7 +186,8 @@ export function encodeLayout(
   return encoded
     .map(({ cell, prefix }) => {
       if (isChatCell(cell)) return prefix + encodeChat(cell.content.target)
-      if (isControlCell(cell)) return prefix + encodeControl(cell.content.panels)
+      if (isControlCell(cell))
+        return prefix + encodeControl(cell.content.panels)
       if (cell.content?.type === "video" && includeVideo) {
         return prefix + encodeStream(cell.content.video)
       }

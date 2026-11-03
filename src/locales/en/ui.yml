@@ -619,6 +619,9 @@ views:
       swap: Put {0} on the big screen
       swapMuted: '{0} is muted'
       noBigScreen: This layout has no big screen. Director Mode makes the biggest video the big screen.
+      layout: Director layout
+      equalsHint: These videos are all the same size. A director layout has one big screen with the rest in a row under it.
+      noLayout: A director layout needs at least two videos, and room for everything in one row.
     control:
       close: Close
       cell: Controls

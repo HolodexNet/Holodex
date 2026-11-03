@@ -31,7 +31,7 @@ import {
   toggleSyncPlayback,
   unmuteAll,
 } from "./media-actions"
-import { useMultiviewCommands } from "./use-commands"
+import { applyDirectorLayout, useMultiviewCommands } from "./use-commands"
 import { toggleFullscreen } from "./use-fullscreen"
 
 /** Anything open that takes the keyboard for itself while it is up. */
@@ -62,6 +62,7 @@ export function useShortcuts() {
       "volume-down": () => nudgeVolume(-1),
 
       director: toggleDirector,
+      "director-layout": applyDirectorLayout,
       "screen-next": () => stepBigScreen(1),
       "screen-previous": () => stepBigScreen(-1),
       "swap-1": () => swapPosition(1),

@@ -40,6 +40,7 @@ export const SHORTCUTS = {
   "volume-down": { group: "audio", key: "ArrowDown", repeat: true },
 
   director: { group: "layout", key: "D" },
+  "director-layout": { group: "layout", key: "Shift+D" },
   "screen-next": { group: "layout", key: "]" },
   "screen-previous": { group: "layout", key: "[" },
   "swap-1": { group: "layout", key: "1" },

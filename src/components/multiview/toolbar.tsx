@@ -51,6 +51,7 @@ import { permalinkPath } from "@/lib/multiview/codec"
 import type { ShortcutId } from "@/lib/multiview/shortcuts"
 import { useMultiview } from "@/stores/multiview"
 import { useMultiviewUi } from "@/stores/multiview-ui"
+import { toggleDirector } from "./media-actions"
 import { PresetMenu } from "./preset-menu"
 import { ShortcutBadge, ShortcutKeys, useShortcutLabel } from "./shortcut-hint"
 import { useMultiviewCommands } from "./use-commands"
@@ -296,7 +297,6 @@ function ViewActions() {
   const audioFocus = useMultiview((s) => s.muteOthers)
   const setAudioFocus = useMultiview((s) => s.setMuteOthers)
   const director = useMultiview((s) => s.directorMode)
-  const setDirector = useMultiview((s) => s.setDirectorMode)
   const { addCell } = useMultiviewCommands()
   const { isFullscreen, toggleFullscreen } = useFullscreen()
   const collapseHint = useShortcutLabel(
@@ -325,7 +325,7 @@ function ViewActions() {
       id: "director",
       label: t("views.multiview.director.mode"),
       icon: <MonitorPlayIcon />,
-      onClick: () => setDirector(!director),
+      onClick: toggleDirector,
       active: director,
       collapse: "md",
       shortcut: "director",

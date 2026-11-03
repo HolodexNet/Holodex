@@ -1,3 +1,5 @@
+import { toast } from "sonner"
+
 import { getT } from "@/lib/i18n"
 import { audibleCells, mainVideoCell, videoCells } from "@/lib/multiview/cells"
 import {
@@ -13,6 +15,7 @@ import { playbackHub } from "@/stores/multiview-playback"
 import { useSettings } from "@/stores/settings"
 import { archiveClock, currentTimeline } from "@/stores/multiview-sync"
 import { useMultiviewUi } from "@/stores/multiview-ui"
+import { applyDirectorLayout } from "./use-commands"
 
 /** What the control surfaces and the keyboard both do to the streams. */
 
@@ -174,8 +177,20 @@ export function nudgeVolume(direction: -1 | 1) {
   })
 }
 
-export const toggleDirector = () =>
-  multiview().setDirectorMode(!multiview().directorMode)
+/** Turning it on over a grid of equals works, but there is a better shape for it. */
+export function toggleDirector() {
+  const store = multiview()
+  store.setDirectorMode(!store.directorMode)
+  if (store.directorMode || findCenterCell(store.cells)) return
+  if (videos().length < 2) return
+  const { t } = getT()
+  toast(t("views.multiview.director.equalsHint"), {
+    action: {
+      label: t("views.multiview.director.layout"),
+      onClick: applyDirectorLayout,
+    },
+  })
+}
 
 /**
  * Puts a video on the big screen. Audio Focus announces the sound moving by itself;

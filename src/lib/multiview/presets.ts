@@ -1,4 +1,5 @@
-import { decodeLayout } from "./codec.ts"
+import { decodeLayout, encodeRect } from "./codec.ts"
+import { directorRects } from "./director.ts"
 import type { DecodedLayout, NamedLayout } from "./types.ts"
 
 export interface PresetDefinition {
@@ -8,6 +9,24 @@ export interface PresetDefinition {
   default?: number
   portrait?: boolean
 }
+
+/** A director layout as a preset string, for this many videos and chats. */
+function encodeDirector(videos: number, chats = 0): string | null {
+  const rects = directorRects(videos - 1, chats)
+  return (
+    rects &&
+    [
+      encodeRect(rects.center),
+      ...rects.row.map(encodeRect),
+      ...rects.chats.map((rect, index) => `${encodeRect(rect)}chat${index}`),
+    ].join(",")
+  )
+}
+
+const directorDefinition = (videos: number, chats = 0): PresetDefinition => ({
+  layout: encodeDirector(videos, chats)!,
+  name: `Director ${videos}${chats ? " 💬" : ""}`,
+})
 
 const DESKTOP_DEFINITIONS: readonly PresetDefinition[] = [
   { layout: "AAYY", name: "1🎞️" },
@@ -104,6 +123,8 @@ const DESKTOP_DEFINITIONS: readonly PresetDefinition[] = [
   { layout: "AAHY,HAHY,OAFYchat,TAFYchat", name: "2📱 2💬" },
   { layout: "AAGY,GAGY,MAGY,SAGYchat", name: "3📱 1💬" },
   { layout: "AAMM,AMMM,MAHY,TAFYchat2", name: "2🎞️ 1📱 1💬" },
+  ...[2, 3, 4, 5, 6, 7, 8, 9].map((videos) => directorDefinition(videos)),
+  ...[2, 3, 4, 5, 6].map((videos) => directorDefinition(videos, 1)),
 ]
 
 const MOBILE_DEFINITIONS: readonly PresetDefinition[] = [
@@ -125,6 +146,22 @@ export const DESKTOP_PRESETS: readonly NamedLayout[] =
   DESKTOP_DEFINITIONS.map(toNamed)
 export const MOBILE_PRESETS: readonly NamedLayout[] =
   MOBILE_DEFINITIONS.map(toNamed)
+
+/** Far more than fit in a row; `directorRects` says where to stop. */
+const MOST_DIRECTOR_VIDEOS = 16
+
+/**
+ * What auto-layout grows and shrinks through in Director Mode, so that adding a
+ * video does not throw away the big screen. Sized for the chats already there.
+ */
+export function directorAutoPresets(chats: number): DecodedLayout[] {
+  return Array.from({ length: MOST_DIRECTOR_VIDEOS }, (_, index) =>
+    encodeDirector(index + 1, chats)
+  ).flatMap((encoded) => {
+    const decoded = encoded ? decodeLayout(encoded) : null
+    return decoded ? [decoded] : []
+  })
+}
 
 export interface SavedPreset {
   name: string

@@ -84,6 +84,10 @@ Which cell is the big screen is worked out from the rects rather than stored. A 
 
 Under Audio Focus the sound goes with the swap. The two changes happen in one store update, and the usual handoff notice shows it on the new big screen: "Unmuting…" until the player has obeyed, then who is now heard, with "Muted" on the video that just left. Without Audio Focus a swap leaves all sound alone, and says so if the new big screen is muted. In Director Mode a player that finishes loading does not take the sound the way a newly started stream otherwise would, since it would undo the director's choice.
 
+A director layout is a big screen with a row of cells under it, and any chats in a column down the side. `Shift+D`, or the button in the presets menu, rearranges what is already on screen into one (`arrangeDirector`), which only changes rects, so no player or chat is touched and the current big screen stays where it is. `Director N` presets offer the same shapes, and turning Director Mode on over a grid of equals offers to switch. On a 16:9 stage a square of grid units is itself 16:9, so the row keeps its cells about square wherever it has room to.
+
+In Director Mode, auto-layout grows and shrinks through these shapes rather than the auto-layout table, so adding or removing a video keeps the big screen.
+
 ## Keyboard
 
 `?` lists every shortcut, grouped by playback, audio, layout and archive sync, and is where they get changed. Clicking a key and pressing another rebinds it, taking the key from whatever had it and saying so; Delete clears one. Only differences from the defaults are stored, so a new default reaches everyone who has not changed that key.

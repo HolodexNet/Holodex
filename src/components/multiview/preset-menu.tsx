@@ -38,8 +38,12 @@ import { useMultiview } from "@/stores/multiview"
 import { useMultiviewPresets } from "@/stores/multiview-presets"
 import { useMultiviewUi } from "@/stores/multiview-ui"
 import { LayoutPreview } from "./layout-preview"
-import { ShortcutBadge, useShortcutLabel } from "./shortcut-hint"
-import { cancelLayoutPrompt, confirmLayoutPrompt } from "./use-commands"
+import { ShortcutBadge, ShortcutKeys, useShortcutLabel } from "./shortcut-hint"
+import {
+  applyDirectorLayout,
+  cancelLayoutPrompt,
+  confirmLayoutPrompt,
+} from "./use-commands"
 
 function usePresetGroups() {
   const custom = useMultiviewPresets((s) => s.custom)
@@ -129,9 +133,20 @@ export function PresetMenu({ className }: { className?: string }) {
         className="max-h-[80vh] w-[min(34rem,calc(100vw-1rem))] gap-1 overflow-y-auto p-2"
       >
         <div className="flex items-center justify-between gap-2 px-1">
-          <span className="text-sm font-medium">
+          <span className="min-w-0 flex-1 truncate text-sm font-medium">
             {t("views.multiview.changeLayout")}
           </span>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              applyDirectorLayout()
+              setOpen(false)
+            }}
+          >
+            {t("views.multiview.director.layout")}
+            <ShortcutKeys id="director-layout" />
+          </Button>
           <Button
             variant="ghost"
             size="sm"

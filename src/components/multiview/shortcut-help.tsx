@@ -57,6 +57,7 @@ function useShortcutLabels(): Record<ShortcutId, string> {
     "volume-down": t("views.multiview.shortcuts.volumeDown"),
 
     director: t("views.multiview.director.mode"),
+    "director-layout": t("views.multiview.director.layout"),
     "screen-next": t("views.multiview.shortcuts.screenNext"),
     "screen-previous": t("views.multiview.shortcuts.screenPrevious"),
     "swap-1": swap(1),

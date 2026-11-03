@@ -3,9 +3,10 @@ import { toast } from "sonner"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { getT } from "@/lib/i18n"
-import { isControlCell, isVideoCell } from "@/lib/multiview/cells"
+import { isChatCell, isControlCell, isVideoCell } from "@/lib/multiview/cells"
 import { DEFAULT_PANELS, TL_PANELS } from "@/lib/multiview/chat"
 import { ALL_CONTROL_PANELS } from "@/lib/multiview/control"
+import { arrangeDirector } from "@/lib/multiview/director"
 import { cellAt } from "@/lib/multiview/grid"
 import {
   addCell as planAddCell,
@@ -18,6 +19,7 @@ import {
 import {
   decodeAutoLayout,
   DESKTOP_PRESETS,
+  directorAutoPresets,
   MOBILE_PRESETS,
 } from "@/lib/multiview/presets"
 import type {
@@ -38,16 +40,19 @@ import {
 export function useAutoLayoutContext(): AutoLayoutContext {
   const isMobile = useIsMobile()
   const auto = useMultiviewPresets((s) => s.auto)
+  const director = useMultiview((s) => s.directorMode)
+  const chats = useMultiview((s) => s.cells.filter(isChatCell).length)
   return useMemo(() => {
     if (isMobile) {
       return { autoPresets: MOBILE_PRESETS, knownPresets: MOBILE_PRESETS }
     }
-    const autoPresets = decodeAutoLayout(auto)
+    const grids = decodeAutoLayout(auto)
+    const autoPresets = director ? directorAutoPresets(chats) : grids
     return {
       autoPresets,
-      knownPresets: [...autoPresets, ...DESKTOP_PRESETS],
+      knownPresets: [...autoPresets, ...grids, ...DESKTOP_PRESETS],
     }
-  }, [isMobile, auto])
+  }, [isMobile, auto, director, chats])
 }
 
 const multiview = () => useMultiview.getState()
@@ -184,6 +189,18 @@ export function useMultiviewCommands() {
     () => ({ addVideo, addCell, removeCell, pick, dropVideo, dockControls }),
     [addVideo, addCell, removeCell, pick, dropVideo, dockControls]
   )
+}
+
+/** Rearranges the grid around one big screen, and directing is why anyone would. */
+export function applyDirectorLayout() {
+  const store = multiview()
+  const cells = arrangeDirector(store.cells)
+  if (!cells) {
+    toast.error(getT().t("views.multiview.director.noLayout"))
+    return
+  }
+  store.replaceCells(cells)
+  store.setDirectorMode(true)
 }
 
 export function makeControlCell(id: CellId) {
