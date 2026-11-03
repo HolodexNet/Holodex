@@ -1,5 +1,6 @@
 import {
   activeVideos,
+  audibleCells,
   generateCellId,
   instantiateSlots,
   isChatCell,
@@ -267,7 +268,7 @@ export function setAllMuted(cells: readonly Cell[], muted: boolean): Cell[] {
   )
 }
 
-/** Silences every video but one, for the "mute others" setting. */
+/** Silences every video but one, which is what Audio Focus keeps true. */
 export function muteAllExcept(cells: readonly Cell[], keep: CellId): Cell[] {
   return cells.map((cell) =>
     isVideoCell(cell)
@@ -276,10 +277,17 @@ export function muteAllExcept(cells: readonly Cell[], keep: CellId): Cell[] {
   )
 }
 
-/** Turning "mute others" on keeps the first video audible, as a starting point. */
-export function muteAllButFirst(cells: readonly Cell[]): Cell[] {
-  const first = cells.find(isVideoCell)
-  return first ? muteAllExcept(cells, first.id) : [...cells]
+/**
+ * Turning Audio Focus on should not change what is being heard if it can help it:
+ * the stream asked for, then the first one with sound, then simply the first.
+ */
+export function focusAudio(cells: readonly Cell[], prefer?: CellId): Cell[] {
+  const videos = cells.filter(isVideoCell)
+  const keep =
+    videos.find((cell) => cell.id === prefer) ??
+    audibleCells(cells)[0] ??
+    videos[0]
+  return keep ? muteAllExcept(cells, keep.id) : [...cells]
 }
 
 /** Applies fresh details to every cell and fixed chat showing these streams. */

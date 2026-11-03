@@ -5,8 +5,8 @@ import { cellsFromLegacy } from "@/lib/multiview/legacy"
 import {
   addCellAt,
   applyLayout,
+  focusAudio,
   mergeVideoData,
-  muteAllButFirst,
   muteAllExcept,
   removeCell,
   restoreLayout,
@@ -36,7 +36,7 @@ export type UrlHistoryKind = "youtube" | "twitch"
 
 interface Persisted {
   cells: Cell[]
-  /** Unmuting one video mutes the rest. */
+  /** Audio Focus, as the interface calls it: unmuting one video mutes the rest. */
   muteOthers: boolean
   /** Video id -> seconds, for archive sync. */
   syncOffsets: Record<string, number>
@@ -197,7 +197,7 @@ export const useMultiview = create<MultiviewStore>()(
         setMuteOthers: (enabled) =>
           set((state) => ({
             muteOthers: enabled,
-            cells: enabled ? muteAllButFirst(state.cells) : state.cells,
+            cells: enabled ? focusAudio(state.cells) : state.cells,
           })),
         mergeVideoData: (fresh, failed) =>
           set((state) => ({

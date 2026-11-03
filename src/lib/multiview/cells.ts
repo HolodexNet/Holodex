@@ -36,6 +36,16 @@ export const videoCells = (cells: readonly Cell[]): VideoCell[] =>
 export const activeVideos = (cells: readonly Cell[]): MultiviewVideo[] =>
   videoCells(cells).map((cell) => cell.content.video)
 
+/** Videos that are not muted. */
+export const audibleCells = (cells: readonly Cell[]): VideoCell[] =>
+  videoCells(cells).filter((cell) => !cell.content.muted)
+
+/** The stream Audio Focus is letting through, once exactly one has sound. */
+export function soleAudibleCell(cells: readonly Cell[]): CellId | null {
+  const audible = audibleCells(cells)
+  return audible.length === 1 ? audible[0].id : null
+}
+
 /** Cells showing or waiting for a video, which is what presets are sized by. */
 export const nonChatCellCount = (cells: readonly Cell[]): number =>
   cells.filter((cell) => !isChatCell(cell)).length

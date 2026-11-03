@@ -70,6 +70,12 @@ A chat's `ChatTarget` says which video it serves:
 
 `resolveChats` turns these into what each chat actually shows. Each video has an accent colour, shared by the chats serving it. The chip at the top of a chat shows and changes its target, and pointing at it outlines the video it serves. Edit mode also draws a line between them.
 
+## Audio Focus
+
+The setting the old UI called Mute Others: one stream has sound at a time, and unmuting another moves the sound to it. The toolbar toggles it directly, and turning it on keeps what is being heard rather than jumping to the first video. In code it is still `muteOthers`, since that is the persisted name and legacy state reads it too.
+
+The sound can move for many reasons (a mixer button, a new stream starting, the player's own mute button), so `multiview-playback` watches the store for it rather than each caller announcing it. `AudioFocusLayer` then shows "Unmuting…" until `PlaybackHub.isMuteSettling` says the player has obeyed, followed by who is now heard. It sits above the frames and takes no pointer input, and a small speaker stays on whichever stream has the sound.
+
 ## Dropping videos
 
 A drag that crosses an iframe disappears into it, so `DropShield` raises a transparent sheet over the stage for as long as a drag is under way. A drop on a video or empty cell shows that stream there, a drop on a chat points the chat at it, and a drop on free space uses auto-layout. A drag from another window that goes straight onto an iframe, without first crossing the page, cannot be seen by the page at all.

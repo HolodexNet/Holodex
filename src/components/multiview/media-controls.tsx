@@ -133,6 +133,7 @@ export function MediaControls() {
             size="icon-sm"
             aria-label={t("views.multiview.unmuteAll")}
             title={t("views.multiview.unmuteAll")}
+            disabled={muteOthers}
             onClick={() => setAllMuted(false)}
           >
             <SpeakerHighIcon />

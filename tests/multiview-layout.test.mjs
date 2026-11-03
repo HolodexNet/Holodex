@@ -4,6 +4,7 @@ import {
   activeVideos,
   frameOrder,
   instantiateSlots,
+  soleAudibleCell,
   videoCells,
 } from "../src/lib/multiview/cells.ts"
 import {
@@ -20,8 +21,8 @@ import {
   applyLayout,
   fillFirstEmptyCell,
   matchesPreset,
+  focusAudio,
   mergeVideoData,
-  muteAllButFirst,
   muteAllExcept,
   pickAutoPreset,
   removeCellAuto,
@@ -60,10 +61,7 @@ const cellsOf = (encoded) => instantiateSlots(decode(encoded).slots)
 const video = (id) => youtubeStub(id.padEnd(11, "x"))
 const context = () => ({
   autoPresets: decodeAutoLayout(defaultAutoLayout()),
-  knownPresets: [
-    ...decodeAutoLayout(defaultAutoLayout()),
-    ...DESKTOP_PRESETS,
-  ],
+  knownPresets: [...decodeAutoLayout(defaultAutoLayout()), ...DESKTOP_PRESETS],
 })
 const filled = (encoded, ...ids) => {
   let cells = cellsOf(encoded)
@@ -305,7 +303,9 @@ test("merging follows what is on screen, not the order cells were added", () => 
 test("merging keeps chat cells alive and pointed at the same video", () => {
   let cells = filled("AAKM,AMKM,UAEYchat", "aaa", "bbb")
   const chat = cells.find((c) => c.content?.type === "chat")
-  const bbb = videoCells(cells).find((c) => c.content.video.id.startsWith("bbb"))
+  const bbb = videoCells(cells).find((c) =>
+    c.content.video.id.startsWith("bbb")
+  )
   cells = setCellContent(cells, chat.id, {
     ...chat.content,
     target: { kind: "cell", cellId: bbb.id },
@@ -321,7 +321,9 @@ test("merging keeps chat cells alive and pointed at the same video", () => {
 test("merging into a smaller layout releases chats whose video was dropped", () => {
   let cells = filled("AAKM,AMKM,UAEYchat", "aaa", "bbb")
   const chat = cells.find((c) => c.content?.type === "chat")
-  const bbb = videoCells(cells).find((c) => c.content.video.id.startsWith("bbb"))
+  const bbb = videoCells(cells).find((c) =>
+    c.content.video.id.startsWith("bbb")
+  )
   cells = setCellContent(cells, chat.id, {
     ...chat.content,
     target: { kind: "cell", cellId: bbb.id },
@@ -374,9 +376,9 @@ test("frame order is stable: updates never reorder two existing frames", () => {
   )
 
   const grown = addVideo(swapped, video("e"), context())
-  const after = frameOrder(
-    grown.kind === "placed" ? grown.cells : swapped
-  ).map((c) => c.id)
+  const after = frameOrder(grown.kind === "placed" ? grown.cells : swapped).map(
+    (c) => c.id
+  )
   const survivors = after.filter((id) => before.includes(id))
   assert.deepEqual(
     survivors,
@@ -390,9 +392,34 @@ test("mute others silences everything but the chosen video", () => {
   const next = videoCells(muteAllExcept(cells, b.id))
   assert.equal(next.find((c) => c.id === a.id).content.muted, true)
   assert.equal(next.find((c) => c.id === b.id).content.muted, false)
-  const first = videoCells(muteAllButFirst(cells))
+  const first = videoCells(focusAudio(cells))
   assert.equal(first[0].content.muted, false)
   assert.equal(first[1].content.muted, true)
+})
+
+test("turning Audio Focus on keeps what is being heard", () => {
+  const cells = instantiateSlots([
+    {
+      rect: { x: 0, y: 0, w: 12, h: 24 },
+      content: { type: "video", video: video("aaa"), muted: true },
+    },
+    {
+      rect: { x: 12, y: 0, w: 12, h: 24 },
+      content: { type: "video", video: video("bbb") },
+    },
+    {
+      rect: { x: 0, y: 0, w: 1, h: 1 },
+      content: { type: "video", video: video("ccc") },
+    },
+  ])
+  const [a, b, c] = cells
+  assert.equal(soleAudibleCell(focusAudio(cells)), b.id)
+  assert.equal(soleAudibleCell(focusAudio(cells, c.id)), c.id)
+  assert.equal(soleAudibleCell(focusAudio(cells, "gone")), b.id)
+  // Nothing has sound, so the first stream gets it rather than leaving silence.
+  const silent = muteAllExcept(cells, "nobody")
+  assert.equal(soleAudibleCell(focusAudio(silent)), a.id)
+  assert.equal(soleAudibleCell(cells), null, "two streams have sound")
 })
 
 test("fresh details reach both cells and fixed chats, and failures are marked", () => {

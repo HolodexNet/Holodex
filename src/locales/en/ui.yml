@@ -604,8 +604,13 @@ views:
     addframe: Add Cell
     muteAll: Mute All
     unmuteAll: Unmute All
-    muteOthers: Mute Others
-    muteOthersDetail: Mute all but one stream
+    muteOthers: Audio Focus
+    muteOthersDetail: One stream has sound at a time. Unmuting another moves the sound to it.
+    audioFocus:
+      unmuting: Unmuting {0}…
+      hearing: Now hearing {0}
+      paused: '{0} has the sound, but is paused'
+      silenced: Muted
     autoLayoutTip: Click on a channel to start watching using auto layout mode
     createLayoutTip: Create your own layout by adding a cell, or using a preset
     openToolbarTip: Open the toolbar to start using multiview

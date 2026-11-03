@@ -7,6 +7,7 @@ import {
   MotionConfig,
 } from "motion/react"
 
+import { AudioFocusLayer } from "@/components/multiview/audio-focus-layer"
 import { EditLayer, useEditShortcuts } from "@/components/multiview/edit-layer"
 import { DropShield } from "@/components/multiview/drop-shield"
 import { FrameLayer, HighlightLayer } from "@/components/multiview/frame-layer"
@@ -102,6 +103,7 @@ export default function MultiviewPage() {
             {isEmpty && !editing && <Hints />}
             <FrameLayer />
             <HighlightLayer />
+            <AudioFocusLayer />
             <AnimatePresence>
               {editing && <EditLayer key="edit" />}
             </AnimatePresence>

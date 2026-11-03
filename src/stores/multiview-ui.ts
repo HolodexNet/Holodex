@@ -25,6 +25,14 @@ export interface LayoutPrompt {
   onCancel?: () => void
 }
 
+/** Audio Focus just moved the sound, whatever moved it. */
+export interface AudioHandoff {
+  /** Tells one handoff from the next, including back to the same stream. */
+  id: number
+  to: CellId
+  from: CellId | null
+}
+
 interface MultiviewUiStore {
   toolbarCollapsed: boolean
   syncBarOpen: boolean
@@ -35,6 +43,7 @@ interface MultiviewUiStore {
   prompt: LayoutPrompt | null
   /** Video cell to outline, while pointing at a chat that serves it. */
   highlightedCell: CellId | null
+  audioHandoff: AudioHandoff | null
   /** Bumped per cell to remount its player. */
   reloads: Record<CellId, number>
 
@@ -54,6 +63,7 @@ export const useMultiviewUi = create<MultiviewUiStore>()((set) => ({
   picker: null,
   prompt: null,
   highlightedCell: null,
+  audioHandoff: null,
   reloads: {},
 
   set: (patch) => set(patch),

@@ -20,6 +20,7 @@ import {
   EraserIcon,
   FloppyDiskIcon,
   GearSixIcon,
+  HeadphonesIcon,
   HeartIcon,
   HouseLineIcon,
   LinkSimpleIcon,
@@ -277,6 +278,8 @@ function ViewActions() {
   const setUi = useMultiviewUi((s) => s.set)
   const syncBarOpen = useMultiviewUi((s) => s.syncBarOpen)
   const clearAll = useMultiview((s) => s.clearAll)
+  const audioFocus = useMultiview((s) => s.muteOthers)
+  const setAudioFocus = useMultiview((s) => s.setMuteOthers)
   const { addCell } = useMultiviewCommands()
   const { isFullscreen, toggleFullscreen } = useFullscreen()
 
@@ -287,6 +290,13 @@ function ViewActions() {
       icon: <PlusIcon />,
       onClick: addCell,
       collapse: "sm",
+    },
+    {
+      id: "audio-focus",
+      label: t("views.multiview.muteOthers"),
+      icon: <HeadphonesIcon />,
+      onClick: () => setAudioFocus(!audioFocus),
+      active: audioFocus,
     },
     {
       id: "media",

@@ -108,7 +108,10 @@ test("timeline math converts between time and slider position", () => {
 })
 
 test("playback starts at the linked time, or where players already agree", () => {
-  const timeline = buildTimeline([archive("a", 0, 1000), archive("b", 100, 1000)])
+  const timeline = buildTimeline([
+    archive("a", 0, 1000),
+    archive("b", 100, 1000),
+  ])
   assert.equal(findStartTime(timeline, new Map(), 500), 500)
   assert.equal(findStartTime(timeline, new Map(), 99999), timeline.maxTs)
 
@@ -323,6 +326,33 @@ test("a player's first play is reported exactly once", () => {
   assert.deepEqual(events, [{ type: "first-play", cellId: "a" }])
 })
 
+test("a mute command is settling until the player is seen to obey it", () => {
+  const { hub, tick } = hubHarness()
+  const player = fakePlayer()
+  hub.register("a", player)
+  tick()
+  let notified = 0
+  hub.subscribe(() => notified++)
+
+  hub.applyMuted("a", true)
+  assert.equal(hub.isMuteSettling("a"), true)
+  // The player has yet to report the change, which is not the viewer undoing it.
+  tick()
+  assert.equal(hub.isMuteSettling("a"), true)
+  assert.equal(hub.getStatus("a").muted, true)
+
+  player.status.muted = true
+  notified = 0
+  tick()
+  assert.equal(hub.isMuteSettling("a"), false)
+  assert.equal(
+    notified,
+    1,
+    "listeners hear that it settled, with no status change"
+  )
+  assert.equal(hub.isMuteSettling("gone"), false)
+})
+
 test("muting from inside the player is reported", () => {
   const { hub, events, tick } = hubHarness()
   const player = fakePlayer()
@@ -414,9 +444,7 @@ test("replay chat uses the extension's route when it is installed", () => {
     status: "past",
     channel: { id: "UC1", name: "Aqua" },
   }
-  const plain = new URL(
-    youtubeChatUrl(video, { hostname: "h", dark: false })
-  )
+  const plain = new URL(youtubeChatUrl(video, { hostname: "h", dark: false }))
   assert.equal(plain.pathname, "/redirect_replay_chat")
   assert.ok(plain.searchParams.get("continuation"))
   const extended = new URL(
@@ -469,11 +497,18 @@ test("messages are timed against the video's start", () => {
   )
   assert.equal(message.timestamp, 5000)
   assert.equal(message.relativeMs, 3000)
-  assert.equal(parseMessage({ name: "TL", message: "hi", timestamp: 5 }, null).relativeMs, 0)
+  assert.equal(
+    parseMessage({ name: "TL", message: "hi", timestamp: 5 }, null).relativeMs,
+    0
+  )
 })
 
 test("live rooms show translators, plus whoever the viewer opted into", () => {
-  const settings = { showVerified: false, showModerator: true, showVtuber: false }
+  const settings = {
+    showVerified: false,
+    showModerator: true,
+    showVtuber: false,
+  }
   const blocked = new Set(["Blocked"])
   const show = (message) => shouldShowLive(message, blocked, settings)
   assert.equal(show({ name: "A", is_tl: true }), true)
@@ -555,7 +590,8 @@ const fakeSocket = () => {
       listeners.get(event)?.delete(listener)
     },
     fire(event, payload) {
-      for (const listener of [...(listeners.get(event) ?? [])]) listener(payload)
+      for (const listener of [...(listeners.get(event) ?? [])])
+        listener(payload)
     },
     count: (event) => listeners.get(event)?.size ?? 0,
   }

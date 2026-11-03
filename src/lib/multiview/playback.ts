@@ -96,6 +96,9 @@ export class PlaybackHub {
     return this.entries.get(cellId)?.controller
   }
 
+  /** Told to change its mute state, and not yet seen to have done so. */
+  isMuteSettling = (cellId: CellId): boolean => !!this.entries.get(cellId)?.mute
+
   /** Applies the wanted mute state, skipping players that already match. */
   applyMuted(cellId: CellId, muted: boolean) {
     const entry = this.entries.get(cellId)
@@ -144,11 +147,13 @@ export class PlaybackHub {
     const next = entry.controller.read()
     const events: PlaybackEvent[] = []
 
+    const before = entry.status
+    let settledNow = false
     const wanted = entry.mute
     if (wanted) {
-      const settled =
+      settledNow =
         next.muted === wanted.value || this.now() - wanted.at >= MUTE_SETTLE_MS
-      if (settled) entry.mute = null
+      if (settledNow) entry.mute = null
       else next.muted = wanted.value
     } else if (next.muted !== entry.status.muted && next.state !== "loading") {
       events.push({ type: "muted-by-player", cellId, muted: next.muted })
@@ -161,6 +166,7 @@ export class PlaybackHub {
 
     // Published first, so anything these events change sees the new status.
     this.publish(cellId, entry, next)
+    if (settledNow && entry.status === before) this.emit()
     for (const event of events) this.options.onEvent(event)
   }
 

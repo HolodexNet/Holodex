@@ -43,6 +43,7 @@ export { GraduationCapIcon } from "./graduation-cap-icon";
 export { GridFourIcon } from "./grid-four-icon";
 export { GridNineIcon } from "./grid-nine-icon";
 export { HashIcon } from "./hash-icon";
+export { HeadphonesIcon } from "./headphones-icon";
 export { HeartFillIcon } from "./heart-fill-icon";
 export { HeartIcon } from "./heart-icon";
 export { HeartStraightIcon } from "./heart-straight-icon";
