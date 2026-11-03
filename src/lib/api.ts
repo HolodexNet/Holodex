@@ -13,11 +13,14 @@ import type {
   ChannelSummary,
   FavoriteChannel,
   Org,
+  SavedPlaylist,
+  SavedPlaylistSummary,
   StaticChannel,
   User,
   V3VideoList,
   Video,
 } from "@/lib/types"
+import type { TlWireMessage } from "@/lib/tldex/messages"
 import { getJwt, useAuth } from "@/stores/auth"
 
 /**
@@ -287,6 +290,55 @@ export const api = {
       items: result.items?.map((video) => withMentionAdditions(video)) ?? [],
     }
   },
+
+  /** Details for specific videos, by id; unknown ids are simply absent. */
+  videosById: async (ids: string[], signal?: AbortSignal) => {
+    const res = await request<Video[]>(`${API}/v2/videos`, {
+      query: { id: ids.join(","), include: "live_info", limit: ids.length },
+      signal,
+    })
+    return Array.isArray(res) ? res.map((v) => withMentionAdditions(v)) : []
+  },
+
+  /** A YouTube video the catalog has never seen; oEmbed has the basics. */
+  youtubeOembed: (id: string, signal?: AbortSignal) =>
+    request<{ title?: string; author_name?: string; author_url?: string }>(
+      `https://www.youtube.com/oembed?${new URLSearchParams({
+        url: `https://www.youtube.com/watch?v=${id}`,
+      })}`,
+      { signal }
+    ),
+
+  /** Popularity metric. A GET that counts, so call it only for real visits. */
+  trackMultiviewLink: (layout: string) =>
+    request<string>(`${API}/v2/multiview/record/${encodeURIComponent(layout)}`),
+
+  /** Oldest first. */
+  chatHistory: (
+    videoId: string,
+    query: {
+      lang: string
+      verified: boolean
+      moderator: boolean
+      vtuber: boolean
+      limit: number
+      before?: number
+    },
+    signal?: AbortSignal
+  ) =>
+    request<TlWireMessage[]>(
+      `${API}/v2/videos/${encodeURIComponent(videoId)}/chats`,
+      { query, signal }
+    ),
+
+  savedPlaylists: (signal?: AbortSignal) =>
+    request<SavedPlaylistSummary[]>(`${API}/v2/users/playlists`, {
+      auth: "required",
+      signal,
+    }),
+
+  savedPlaylist: (id: number, signal?: AbortSignal) =>
+    request<SavedPlaylist>(`${API}/v2/playlist/${id}`, { signal }),
 
   // -- Search ----------------------------------------------------------------
   autocomplete: (q: string, signal?: AbortSignal) =>

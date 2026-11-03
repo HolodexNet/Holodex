@@ -5,10 +5,7 @@ import { SimpleSelect } from "@/components/common/simple-select"
 import { ChannelPicker } from "@/components/common/channel-picker"
 import { MultiCombobox } from "@/components/common/multi-combobox"
 import { SongList } from "@/components/music/song-list"
-import {
-  MagnifyingGlassIcon,
-  XIcon,
-} from "@/components/icons"
+import { MagnifyingGlassIcon, XIcon } from "@/components/icons"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"

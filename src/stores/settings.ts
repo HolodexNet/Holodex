@@ -9,6 +9,7 @@ import { syncAcrossTabs } from "./sync"
 
 export type ThemeMode = "light" | "dark" | "system"
 export type HomeViewMode = "grid" | "list" | "denseList"
+export type MusicSidebarMode = "menu" | "list"
 export type DefaultPage = "home" | "favorites" | "multiview"
 export type GridSize = 0 | 1 | 2
 
@@ -30,6 +31,8 @@ export interface Settings {
   themeColorOverrides: ThemeColorOverrides
 
   defaultOpen: DefaultPage
+  /** How Musicdex links are shown in the sidebar. */
+  musicSidebarMode: MusicSidebarMode
   /** Thumbnails open YouTube directly instead of the Holodex watch page. */
   redirectMode: boolean
   /** Load more results on scroll instead of on request. */
@@ -95,6 +98,7 @@ function defaults(): Settings {
     primaryColor: DEFAULT_PRIMARY,
     themeColorOverrides: {},
     defaultOpen: "home",
+    musicSidebarMode: "list",
     redirectMode: false,
     scrollMode: true,
     homeViewMode: "grid",

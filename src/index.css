@@ -144,6 +144,10 @@
     scrollbar-gutter: stable;
     -webkit-text-size-adjust: 100%;
     }
+  html[data-full-window] {
+    overflow: hidden;
+    scrollbar-gutter: auto;
+    }
   body {
     @apply bg-background text-foreground antialiased;
     overscroll-behavior-y: contain;

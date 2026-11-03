@@ -13,9 +13,9 @@ import { useT } from "@/lib/i18n"
 import { youtubeUrl } from "@/lib/video"
 
 /**
- * Stand-in for routes the rewrite has not reached yet (watch, channels,
- * multiview, ...). It keeps links working by pointing at the same path on the
- * current production site instead of dead-ending.
+ * Stand-in for routes the rewrite has not reached yet (watch, playlists, ...).
+ * It keeps links working by pointing at the same path on the current production
+ * site instead of dead-ending.
  */
 export function NotReadyPage() {
   const { t } = useT()

@@ -7,12 +7,13 @@ Search: header bar with autocomplete for channels, topics, orgs and pasted YouTu
 Settings: language, theme, browsing, feed filters, blocked channels, reset, and configurable timezones for video timestamp tooltips. Common Asian zones and Paris have abbreviation mappings; other zones use browser formatting.
 Theme: primary defaults to aqua-iro pink (#f06292), with 24 talent presets plus a custom picker. Surfaces are computed in OKLCH from the primary: the base hue is the cooler of its two triadic partners, which for pink gives Holodex's own sky blue. Settings can override all 31 colors, including opacity, separately for light and dark mode; individual colors or the active palette can be reset to computed defaults. The palette code is in src/lib/theme/palette.ts.
 Watch: native Twitch IDs (tw:...) and supported Twitch links have a basic embedded player, with source-aware cards and menu links. The rest of the watch experience is still pending.
+Multiview: rebuilt as a full-window route outside the app shell, with a single edit mode instead of pausing cells to edit them. See docs/multiview.md. Also brought over TLdex (live and archive translations, on socket.io-client) since multiview's TL cells need it.
 Build: the bundle visualizer produces stats.html; rollup-plugin-visualizer supports Rolldown despite its name. Editing dialogs load on demand, and cmdk-base replaced cmdk and its Radix dependencies.
 i18n: all 20 existing locale files are used as they are; new strings went into en/ui.yml only and fall back to English elsewhere.
 Things you should know
 The Vue app moved to legacy/ as git renames, for reference only. It is not runnable from there, because the locales stayed at src/locales for Crowdin.
 Channels: ported the directory and profiles from next to attempt-3-channels. Grouped grid/list organization browsing, subscriber/view sorting, favorite/block controls, profile banners, Videos/Clips/Collabs/About, Musicdex and social links. Supports /channel, /channels and /org/:org/channels. Related feeds resolve handles through canonical IDs. Missing imagery has themed/initial fallbacks and absent stats stay unknown. Two independent design branches are planned in dev-docs-handoff/channel-design-experiments.md.
-Unported routes (multiview, playlists, about, TL tools, and non-Twitch watch pages) show a stopgap page linking to the same path on holodex.net.
+Unported routes (playlists, about, TL tools, and non-Twitch watch pages) show a stopgap page linking to the same path on holodex.net.
 Login page: a minimal one supports Google, Discord, and the Twitter return path. The user tried login and reported that it works.
 Existing users: first run imports settings, org, theme and login from the old holodex-v2 localStorage. Also untested against real old data.
 Comment search still uses v2/search/commentSearch (no v3 equivalent). That route times out on the local database after 30s, so I could not see results render.

@@ -51,11 +51,13 @@ import type { ThemeOverrides } from "@/lib/theme/palette"
 import { useResolvedMode } from "@/lib/theme/use-theme"
 import { channelName } from "@/lib/video"
 import { useAuth } from "@/stores/auth"
+import { useMultiview } from "@/stores/multiview"
 import { useOrgStore } from "@/stores/org"
 import {
   useSettings,
   type DefaultPage,
   type GridSize,
+  type MusicSidebarMode,
   type ThemeMode,
 } from "@/stores/settings"
 
@@ -448,6 +450,7 @@ function ResetDialog() {
   const reset = () => {
     useSettings.getState().reset()
     useOrgStore.getState().reset()
+    useMultiview.getState().clearAll()
     useAuth.getState().logout()
     queryClient.clear()
     setOpen(false)
@@ -650,6 +653,27 @@ export function SettingsPage() {
               { value: "multiview", label: t("component.mainNav.multiview") },
             ]}
           />
+        </Row>
+        <Row
+          label={t("views.settings.musicSidebarMode")}
+          description={t("views.settings.musicSidebarModeDescription")}
+        >
+          <ToggleGroup
+            variant="outline"
+            spacing={0}
+            value={[settings.musicSidebarMode]}
+            onValueChange={(next) => {
+              const mode = next[0] as MusicSidebarMode | undefined
+              if (mode) set("musicSidebarMode", mode)
+            }}
+          >
+            <ToggleGroupItem value="menu">
+              {t("views.settings.musicSidebarMenu")}
+            </ToggleGroupItem>
+            <ToggleGroupItem value="list">
+              {t("views.settings.musicSidebarList")}
+            </ToggleGroupItem>
+          </ToggleGroup>
         </Row>
         <SwitchRow
           label={t("views.settings.scrollModeLabel")}

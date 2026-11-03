@@ -1,8 +1,14 @@
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { cn } from "cn"
 import { ChannelCurtain } from "@/components/common/channel-curtain"
-import { useChannel } from "@/lib/channel-queries"
 import type { Channel } from "@/lib/types"
+
+/** Wide banner codes, with the widths the static route serves them at. */
+const WIDE_BANNER_WIDTHS = [
+  { code: 2, width: 1280 },
+  { code: 3, width: 2276 },
+  { code: 4, width: 2560 },
+]
 
 export function ChannelBanner({
   channel,
@@ -10,41 +16,32 @@ export function ChannelBanner({
   curved = false,
   resolveBanner = false,
   curtain = false,
+  sizes,
 }: {
   channel: Channel
   className?: string
   curved?: boolean
   resolveBanner?: boolean
   curtain?: boolean
+  /** Layout width of the banner. Set it on wide layouts to load larger codes. */
+  sizes?: string
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
   const [failed, setFailed] = useState<string | null>(null)
-  // Directory payloads omit banners. Fetch detail only near the viewport and
-  // share the profile query cache instead of requesting every channel at once.
-  const needsDetail = resolveBanner && channel.banner === undefined
-  useEffect(() => {
-    if (!needsDetail || !ref.current) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { rootMargin: "120px" }
-    )
-    observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [needsDetail])
-  const detail = useChannel(channel.id, needsDetail && visible)
-  const rawBanner = channel.banner ?? detail.data?.banner
-  const banner = rawBanner
-    ? `/statics/channelImg/${encodeURIComponent(channel.id)}/banner/1.jpeg`
-    : null
+  // Directory payloads omit banners, so try the banner image itself. The static
+  // route answers 400 when a channel has none, and onError falls back to the gradient.
+  const hasBanner =
+    channel.banner === undefined ? resolveBanner : !!channel.banner
+  const bannerUrl = (code: number) =>
+    `/statics/channelImg/${encodeURIComponent(channel.id)}/banner/${code}.jpeg`
+  const banner = hasBanner ? bannerUrl(1) : null
+  const srcSet =
+    hasBanner && sizes
+      ? WIDE_BANNER_WIDTHS.map(
+          ({ code, width }) => `${bannerUrl(code)} ${width}w`
+        ).join(", ")
+      : undefined
   return (
     <div
-      ref={ref}
       aria-hidden="true"
       className={cn(
         "relative isolate overflow-hidden bg-gradient-to-br from-primary/25 via-muted to-complement/25",
@@ -60,6 +57,8 @@ export function ChannelBanner({
       {!curtain && banner && failed !== banner && (
         <img
           src={banner}
+          srcSet={srcSet}
+          sizes={srcSet ? sizes : undefined}
           alt=""
           loading="lazy"
           decoding="async"

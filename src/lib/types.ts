@@ -93,6 +93,17 @@ export interface Video {
   placeholderType?: "scheduled-yt-stream" | "external-stream" | "event" | null
 }
 
+/** A saved video playlist; unrelated to Musicdex's song playlists. */
+export interface SavedPlaylistSummary {
+  id: number
+  name: string
+  video_ids?: string[] | null
+}
+
+export interface SavedPlaylist extends SavedPlaylistSummary {
+  videos?: Video[]
+}
+
 export interface Org {
   name: string
   short?: string | null

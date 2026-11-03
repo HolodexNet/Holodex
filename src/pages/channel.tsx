@@ -217,7 +217,11 @@ export function ChannelPage() {
   return (
     <main className="mx-auto w-full max-w-[1600px]">
       <div className="relative">
-        <ChannelBanner channel={channel} className="h-28 sm:h-52 lg:h-64" />
+        <ChannelBanner
+          channel={channel}
+          className="h-28 sm:h-52 lg:h-64"
+          sizes="(max-width: 1600px) 100vw, 1600px"
+        />
         <Link
           to={`/channel?${new URLSearchParams({ org: channel.org ?? "All Vtubers" })}`}
           className="absolute top-3 left-3 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-2 text-xs shadow-sm backdrop-blur-sm hover:bg-background"

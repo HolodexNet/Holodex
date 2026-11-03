@@ -7,10 +7,10 @@ import {
   ListIcon,
   MagnifyingGlassIcon,
   MusicNotesFillIcon,
+  PlayIcon,
   VideoCameraIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
-import { ButtonGroup } from "@/components/ui/button-group"
 import { useSidebar } from "@/components/ui/sidebar"
 import { MusicSearchBar } from "@/components/music/search-bar"
 import { useT } from "@/lib/i18n"
@@ -36,14 +36,14 @@ function SearchControl({
 }) {
   return (
     <div className="flex min-w-0 flex-1 items-center gap-1">
-      <ButtonGroup
+      <div
+        role="group"
         aria-label="Search type"
-        className="shrink-0 gap-0.5 rounded-xl border border-input bg-background/60 p-0.5"
+        className="flex shrink-0 gap-0.5 rounded-2xl border border-input bg-background/60 p-0.5"
       >
         <Button
           variant={music ? "ghost" : "secondary"}
           size="icon-sm"
-          className="rounded-lg"
           render={
             <Link
               to="/search"
@@ -54,12 +54,11 @@ function SearchControl({
             />
           }
         >
-          <VideoCameraIcon />
+          <PlayIcon />
         </Button>
         <Button
           variant={music ? "secondary" : "ghost"}
           size="icon-sm"
-          className="rounded-lg"
           render={
             <Link
               to="/music/search"
@@ -72,7 +71,7 @@ function SearchControl({
         >
           <MusicNotesFillIcon />
         </Button>
-      </ButtonGroup>
+      </div>
       {music ? (
         <MusicSearchBar autoFocus={autoFocus} onCommit={onCommit} />
       ) : (

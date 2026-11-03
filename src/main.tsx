@@ -5,6 +5,7 @@ import { createBrowserRouter, Navigate } from "react-router"
 import { RouterProvider } from "react-router/dom"
 
 import "./index.css"
+import { AppRoot } from "@/components/layout/app-root"
 import { AppShell } from "@/components/layout/app-shell"
 import { Spinner } from "@/components/ui/spinner"
 import { setLanguage } from "@/lib/i18n"
@@ -43,7 +44,6 @@ if (
 const PENDING_ROUTES = [
   "/edit/video/:id/:tab?",
   "/add_placeholder",
-  "/multiview/:layout?",
   "/playlists",
   "/library",
   "/about",
@@ -57,7 +57,7 @@ const PENDING_ROUTES = [
 
 const router = createBrowserRouter([
   {
-    element: <AppShell />,
+    element: <AppRoot />,
     HydrateFallback: () => (
       <div
         role="status"
@@ -67,74 +67,91 @@ const router = createBrowserRouter([
       </div>
     ),
     children: [
-      { path: "/", element: <HomePage /> },
-      { path: "/home", element: <Navigate to="/" replace /> },
-      { path: "/favorites", element: <HomePage favorites /> },
-      { path: "/watch/:id?", element: <WatchPage /> },
-      { path: "/channel", element: <ChannelsPage /> },
-      { path: "/channels", element: <Navigate to="/channel" replace /> },
-      { path: "/org/:org/channels", element: <ChannelsPage /> },
-      { path: "/channel/:id/:tab?", element: <ChannelPage /> },
-      { path: "/search", element: <SearchPage /> },
-      { path: "/music", element: <Navigate to="/#music" replace /> },
+      // A full-window application of its own, so outside the app shell.
       {
-        path: "/music/org/:org",
+        path: "/multiview/:layout?",
         lazy: async () => ({
-          Component: (await import("@/pages/music/home")).default,
+          Component: (await import("@/pages/multiview")).default,
         }),
       },
       {
-        path: "/music/favorites",
-        lazy: async () => ({
-          Component: (await import("@/pages/music/home")).MusicFavorites,
-        }),
+        element: <AppShell />,
+        children: [
+          { path: "/", element: <HomePage /> },
+          { path: "/home", element: <Navigate to="/" replace /> },
+          { path: "/favorites", element: <HomePage favorites /> },
+          { path: "/watch/:id?", element: <WatchPage /> },
+          { path: "/channel", element: <ChannelsPage /> },
+          { path: "/channels", element: <Navigate to="/channel" replace /> },
+          { path: "/org/:org/channels", element: <ChannelsPage /> },
+          { path: "/channel/:id/:tab?", element: <ChannelPage /> },
+          { path: "/search", element: <SearchPage /> },
+          { path: "/music", element: <Navigate to="/#music" replace /> },
+          {
+            path: "/music/org/:org",
+            lazy: async () => ({
+              Component: (await import("@/pages/music/home")).default,
+            }),
+          },
+          {
+            path: "/music/favorites",
+            lazy: async () => ({
+              Component: (await import("@/pages/music/home")).MusicFavorites,
+            }),
+          },
+          {
+            path: "/music/search",
+            lazy: async () => ({
+              Component: (await import("@/pages/music/search")).default,
+            }),
+          },
+          {
+            path: "/music/liked",
+            lazy: async () => ({
+              Component: (await import("@/pages/music/home")).MusicLiked,
+            }),
+          },
+          {
+            path: "/music/radios",
+            lazy: async () => ({
+              Component: (await import("@/pages/music/home")).MusicRadios,
+            }),
+          },
+          {
+            path: "/music/browse/:type",
+            lazy: async () => ({
+              Component: (await import("@/pages/music/home")).MusicBrowse,
+            }),
+          },
+          {
+            path: "/music/playlists",
+            lazy: async () => ({
+              Component: (await import("@/pages/music/library"))
+                .MusicLibraryPage,
+            }),
+          },
+          {
+            path: "/music/playlist/:id",
+            lazy: async () => ({
+              Component: (await import("@/pages/music/playlist"))
+                .MusicPlaylistPage,
+            }),
+          },
+          {
+            path: "/music/radio/:id",
+            lazy: async () => ({
+              Component: (await import("@/pages/music/radio")).MusicRadioPage,
+            }),
+          },
+          { path: "/settings", element: <SettingsPage /> },
+          { path: "/login", element: <LoginPage /> },
+          ...PENDING_ROUTES.map((path) => ({
+            path,
+            element: <NotReadyPage />,
+          })),
+          { path: "*", element: <NotFoundPage /> },
+        ],
       },
-      {
-        path: "/music/search",
-        lazy: async () => ({
-          Component: (await import("@/pages/music/search")).default,
-        }),
-      },
-      {
-        path: "/music/liked",
-        lazy: async () => ({
-          Component: (await import("@/pages/music/home")).MusicLiked,
-        }),
-      },
-      {
-        path: "/music/radios",
-        lazy: async () => ({
-          Component: (await import("@/pages/music/home")).MusicRadios,
-        }),
-      },
-      {
-        path: "/music/browse/:type",
-        lazy: async () => ({
-          Component: (await import("@/pages/music/home")).MusicBrowse,
-        }),
-      },
-      {
-        path: "/music/playlists",
-        lazy: async () => ({
-          Component: (await import("@/pages/music/library")).MusicLibraryPage,
-        }),
-      },
-      {
-        path: "/music/playlist/:id",
-        lazy: async () => ({
-          Component: (await import("@/pages/music/playlist")).MusicPlaylistPage,
-        }),
-      },
-      {
-        path: "/music/radio/:id",
-        lazy: async () => ({
-          Component: (await import("@/pages/music/radio")).MusicRadioPage,
-        }),
-      },
-      { path: "/settings", element: <SettingsPage /> },
-      { path: "/login", element: <LoginPage /> },
-      ...PENDING_ROUTES.map((path) => ({ path, element: <NotReadyPage /> })),
-      { path: "*", element: <NotFoundPage /> },
     ],
   },
 ])

@@ -302,11 +302,11 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
       <Tabs
         value={tab}
         onValueChange={(value) => setTab(value as HomeTab)}
-        className="min-w-0 flex-1"
+        className="-ml-3 min-w-0 flex-1 md:ml-0"
       >
         <TabsList
           variant="line"
-          className="h-11! w-full [scrollbar-width:none] justify-start gap-2 overflow-x-auto overflow-y-hidden sm:w-fit sm:gap-3"
+          className="h-11! w-full [scrollbar-width:none] justify-start gap-2 overflow-x-auto overflow-y-hidden pl-0 sm:w-fit sm:gap-3 md:pl-[3px]"
         >
           <TabsTrigger value="live" className="flex-none px-1">
             <BroadcastIcon className="size-4 text-brand" />

@@ -16,6 +16,7 @@ import {
   TrashIcon,
   UserIcon,
   UsersIcon,
+  SquaresFourIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -29,6 +30,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useT } from "@/lib/i18n"
+import { singleVideoPath } from "@/lib/multiview/codec"
+import { toMultiviewVideo } from "@/lib/multiview/stream"
 import {
   availableVideoActions,
   videoActionIssue,
@@ -83,6 +86,7 @@ export function VideoMenu({
   const toggleBlocked = useSettings((s) => s.toggleBlocked)
   const isPlaceholder = isVideoPlaceholder(video)
   const source = videoSource(video)
+  const multiviewStream = toMultiviewVideo(video)
   const title = videoTitle(video, preferEnglish)
   // Group-only actions belong in the selection tray, not on a single video.
   const editActions = availableVideoActions(user)
@@ -156,6 +160,14 @@ export function VideoMenu({
           >
             <CalendarBlankIcon className="text-muted-foreground" />
             {t("component.videoCard.googleCalendar")}
+          </DropdownMenuItem>
+        )}
+        {multiviewStream && (
+          <DropdownMenuItem
+            onClick={() => navigate(singleVideoPath(multiviewStream))}
+          >
+            <SquaresFourIcon className="text-muted-foreground" />
+            {t("component.mainNav.multiview")}
           </DropdownMenuItem>
         )}
         <DropdownMenuItem

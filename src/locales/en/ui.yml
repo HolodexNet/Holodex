@@ -400,6 +400,10 @@ views:
       logo top left.
     videoFeedSettings: Video Feed Settings
     siteNavigationSettings: Site/Navigation
+    musicSidebarMode: Show Musicdex as a Menu / List in the sidebar
+    musicSidebarModeDescription: Choose whether Musicdex links appear together in a menu or separately in the sidebar.
+    musicSidebarMenu: Menu
+    musicSidebarList: List
     languageSettings: Language
     gridSizeLabel: Thumbnail/Grid Size
     gridSizeMsg: Change thumbnail/video grid size on Home/Favorites page
@@ -606,7 +610,70 @@ views:
     createLayoutTip: Create your own layout by adding a cell, or using a preset
     openToolbarTip: Open the toolbar to start using multiview
     archiveSync: Archive Sync
+    chat: Chat
+    tl: TL
+    tlEmpty: No translations yet.
+    addVideo: Add a video
+    refresh: Refresh
+    noRoom: There is no room for another cell. Resize or remove one first.
+    noVideos: Nothing to show here right now.
+    playerLoadFailed: Could not load the player.
+    noVodChat: Twitch has no chat replay for past broadcasts.
+    archiveBefore: Show videos from before this date
+    fillEmptyCells: Fill empty cells with current videos
+    clearAll: Clear all cells
+    collapseToolbar: Hide toolbar
+    expandToolbar: Show toolbar
+    editHint: Edit Layout lets you drag cells to move or swap them, resize them from any edge, and draw new ones
+    play: Play
+    pause: Pause
+    mute: Mute
+    unmute: Unmute
+    fastForward: Double speed
+    volume: Volume
+    volumeAll: Volume for all streams
+    playAll: Play all
+    pauseAll: Pause all
+    reloadAll: Reload all
+    syncAll: Catch up live streams
+    tlMembersOnly: This video is members only. Play the video to see TLdex and translations.
+    tlUnexpectedError: An unexpected error occurred.
+    tlBlockedCount: '{0} blocked messages'
+    tlLoadAll: Load all
+    tlBlock: Block channel
+    tlUnblock: Unblock
+    tlEditBlocked: Edit blocked list
+    tlNothingBlocked: Nobody is blocked.
+    tlBack: Back
+    edit:
+      enter: Edit Layout
+      hint: Drag to move • Drop on a cell to swap • Drag an edge to resize, pushing back whatever it meets • Drag empty space to draw a cell
+      cellLabel: 'Cell, {0} by {1}. Arrow keys move it, Shift and arrow keys resize it, Delete removes it.'
+      undo: Undo
+      redo: Redo
+      discard: Discard changes
+      bind: Drag onto a video to link this chat to it
+      replace: Choose another video
+      reload: Reload
+      clear: Empty this cell
+      delete: Delete this cell
+    chatTarget:
+      change: Choose which video this chat is for
+      onGrid: Videos in this layout
+      offGrid: Not shown
+      offGridHint: '{0} is not one of the videos in this layout'
+      none: No video
+      auto: Automatic
+      autoHint: Follow whichever video has no chat yet
+      other: Another stream…
+      otherHint: Chat for a stream that is not in this layout
+      previous: Previous video
+      next: Next video
+      waiting: Add a video to see its chat here, or choose a stream from the menu above.
+      pickTitle: Choose a stream for this chat
     preset:
+      none: None
+      noCustom: Layouts you save will appear here.
       shareOnDiscord: >-
         Have a cool layout to share? Use the share button and let us know on our
         <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
@@ -638,6 +705,10 @@ views:
     reorderLayout: Reorder Layout
     reorderLayoutDetail: Drag and drop icons to the desired position
     sync:
+      playbackRate: Playback speed
+      shareAtTime: Copy link at this time
+      offset: Offset
+      seconds: sec
       nothingToSync: >-
         Nothing to sync, please open two overlapping archives (eg. collab
         streams)

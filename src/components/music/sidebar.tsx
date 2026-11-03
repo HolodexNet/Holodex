@@ -29,6 +29,8 @@ import {
   useMusicLibrary,
 } from "@/components/music/playlists/shared"
 import type { PlaylistStub } from "@/lib/musicdex/types"
+import { isMusicPath } from "@/lib/music-route"
+import { useSettings } from "@/stores/settings"
 
 function LibraryMenu({
   label,
@@ -93,6 +95,7 @@ function LibraryMenu({
 export function MusicSidebar() {
   const location = useLocation()
   const { setOpenMobile } = useSidebar()
+  const mode = useSettings((state) => state.musicSidebarMode)
   const nav = [
     { to: "/#music", label: "Musicdex", icon: <MusicNotesFillIcon /> },
     {
@@ -108,31 +111,91 @@ export function MusicSidebar() {
       icon: <PlaylistIcon />,
     },
   ]
+  const isActive = (to: string) => {
+    if (to === "/#music") {
+      return (
+        (location.pathname === "/" && location.hash === "#music") ||
+        location.pathname === "/music" ||
+        location.pathname.startsWith("/music/org/") ||
+        location.pathname.startsWith("/music/browse/")
+      )
+    }
+    if (to === "/music/playlists") {
+      return (
+        location.pathname === to ||
+        location.pathname.startsWith("/music/playlist/")
+      )
+    }
+    if (to === "/music/radios") {
+      return (
+        location.pathname === to ||
+        location.pathname.startsWith("/music/radio/")
+      )
+    }
+    return location.pathname === to
+  }
+
   return (
     <SidebarGroup>
       <SidebarGroupContent>
         <SidebarMenu>
-          {nav.map(({ to, label, icon }) => (
-            <SidebarMenuItem key={to}>
-              <SidebarMenuButton
-                tooltip={label}
-                isActive={
-                  location.pathname === to ||
-                  (to === "/music" &&
-                    (location.pathname.startsWith("/music/org/") ||
-                      location.pathname.startsWith("/music/browse/"))) ||
-                  (to === "/music/playlists" &&
-                    location.pathname.startsWith("/music/playlist/")) ||
-                  (to === "/music/radios" &&
-                    location.pathname.startsWith("/music/radio/"))
-                }
-                render={<Link to={to} onClick={() => setOpenMobile(false)} />}
-              >
-                {icon}
-                <span>{label}</span>
-              </SidebarMenuButton>
+          {mode === "menu" ? (
+            <SidebarMenuItem>
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  render={
+                    <SidebarMenuButton
+                      tooltip="Musicdex"
+                      isActive={
+                        nav.some((item) => isActive(item.to)) ||
+                        isMusicPath(location.pathname)
+                      }
+                    />
+                  }
+                >
+                  <MusicNotesFillIcon />
+                  <span>Musicdex</span>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  side="right"
+                  align="start"
+                  className="w-56"
+                >
+                  <DropdownMenuGroup>
+                    {nav.map(({ to, label, icon }) => (
+                      <DropdownMenuItem
+                        key={to}
+                        className={
+                          isActive(to)
+                            ? "bg-accent text-accent-foreground"
+                            : undefined
+                        }
+                        render={
+                          <Link to={to} onClick={() => setOpenMobile(false)} />
+                        }
+                      >
+                        {icon}
+                        <span>{label}</span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </SidebarMenuItem>
-          ))}
+          ) : (
+            nav.map(({ to, label, icon }) => (
+              <SidebarMenuItem key={to}>
+                <SidebarMenuButton
+                  tooltip={label}
+                  isActive={isActive(to)}
+                  render={<Link to={to} onClick={() => setOpenMobile(false)} />}
+                >
+                  {icon}
+                  <span>{label}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))
+          )}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

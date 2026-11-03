@@ -1,5 +1,6 @@
 import { PRIMARY_PRESETS } from "@/lib/consts"
-import type { ChannelSummary, Org, User } from "@/lib/types"
+import type { LegacyMultiviewState } from "@/lib/multiview/legacy"
+import type { ChannelSummary, Org, User, Video } from "@/lib/types"
 
 /**
  * The previous (Vue) UI persisted its whole Vuex state under `holodex-v2`.
@@ -24,7 +25,20 @@ interface LegacyState {
     homeViewMode?: string
     liveTlLang?: string
     blockedChannels?: ChannelSummary[]
+    liveTlStickBottom?: boolean
+    liveTlFontSize?: number
+    liveTlShowVerified?: boolean
+    liveTlShowModerator?: boolean
+    liveTlShowVtuber?: boolean
+    liveTlShowLocalTime?: boolean
+    liveTlWindowSize?: number
+    liveTlShowSubtitle?: boolean
+    liveTlHideSpoiler?: boolean
+    liveTlBlocked?: string[]
   }
+  multiview?: LegacyMultiviewState
+  /** The playlist the old UI had open; only ever kept locally when logged out. */
+  playlist?: { active?: { name?: string; videos?: Video[] } }
   currentOrg?: Org
   orgFavorites?: Org[]
   currentGridSize?: number

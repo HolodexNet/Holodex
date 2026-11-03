@@ -30,75 +30,13 @@ import {
   ShuffleIcon,
 } from "@/components/music/player/icons"
 import { useMusicPlayer } from "@/stores/music-player"
+import {
+  loadYouTube,
+  type YTEvent,
+  type YTPlayer,
+} from "@/lib/player/youtube-api"
 
-type YTPlayer = {
-  loadVideoById: (options: {
-    videoId: string
-    startSeconds?: number
-    endSeconds?: number
-  }) => void
-  playVideo: () => void
-  pauseVideo: () => void
-  seekTo: (seconds: number, allowSeekAhead: boolean) => void
-  getCurrentTime: () => number
-  getDuration: () => number
-  getVideoData: () => { video_id?: string }
-  getIframe: () => HTMLIFrameElement
-  setVolume: (volume: number) => void
-  destroy: () => void
-}
-type YTEvent = { target: YTPlayer; data: number }
-type YTGlobal = {
-  Player: new (element: HTMLElement, options: object) => YTPlayer
-}
-declare global {
-  interface Window {
-    YT?: YTGlobal
-    onYouTubeIframeAPIReady?: () => void
-  }
-}
-let apiPromise: Promise<YTGlobal> | undefined
 let trackedPlaybackId = -1
-function loadYouTube(): Promise<YTGlobal> {
-  if (window.YT?.Player) return Promise.resolve(window.YT)
-  if (apiPromise) return apiPromise
-  apiPromise = new Promise((resolve, reject) => {
-    const previous = window.onYouTubeIframeAPIReady
-    const timeout = window.setTimeout(() => {
-      apiPromise = undefined
-      document
-        .querySelector('script[src="https://www.youtube.com/iframe_api"]')
-        ?.remove()
-      reject(new Error("Timed out loading YouTube"))
-    }, 15000)
-    window.onYouTubeIframeAPIReady = () => {
-      previous?.()
-      if (window.YT) {
-        window.clearTimeout(timeout)
-        resolve(window.YT)
-      }
-    }
-    let script = document.querySelector<HTMLScriptElement>(
-      'script[src="https://www.youtube.com/iframe_api"]'
-    )
-    if (!script) {
-      script = document.createElement("script")
-      script.src = "https://www.youtube.com/iframe_api"
-      document.head.appendChild(script)
-    }
-    script.addEventListener(
-      "error",
-      () => {
-        window.clearTimeout(timeout)
-        script?.remove()
-        apiPromise = undefined
-        reject(new Error("Could not load YouTube player"))
-      },
-      { once: true }
-    )
-  })
-  return apiPromise
-}
 const time = (seconds: number) =>
   `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.floor(Math.max(0, seconds) % 60)).padStart(2, "0")}`
 
