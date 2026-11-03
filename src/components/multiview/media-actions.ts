@@ -1,5 +1,10 @@
 import { getT } from "@/lib/i18n"
 import { audibleCells, mainVideoCell, videoCells } from "@/lib/multiview/cells"
+import {
+  findCenterCell,
+  neighbourOfCenter,
+  screenPositions,
+} from "@/lib/multiview/director"
 import { PLAYBACK_RATES } from "@/lib/multiview/sync"
 import type { CellId, VideoCell } from "@/lib/multiview/types"
 import { channelName } from "@/lib/video"
@@ -19,6 +24,24 @@ const multiview = () => useMultiview.getState()
 const ui = () => useMultiviewUi.getState()
 const videos = () => videoCells(multiview().cells)
 const player = (cell: VideoCell) => playbackHub.controller(cell.id)
+
+const nameOf = (cell: VideoCell) =>
+  channelName(cell.content.video.channel, useSettings.getState().useEnglishName)
+
+const bigScreen = () =>
+  findCenterCell(multiview().cells, { force: multiview().directorMode })
+
+/**
+ * What a command for one video means: the big screen if it has the sound or nothing
+ * does, and otherwise whichever has the sound.
+ */
+function mainCell() {
+  const { cells } = multiview()
+  const screen = bigScreen()
+  return screen && (!screen.content.muted || !audibleCells(cells).length)
+    ? screen
+    : mainVideoCell(cells)
+}
 
 const isPlaying = (cell: VideoCell) => {
   const state = playbackHub.getStatus(cell.id)?.state
@@ -102,7 +125,7 @@ export function toggleSound() {
     return
   }
   const remembered = videos().filter((cell) => silenced.includes(cell.id))
-  const main = mainVideoCell(store.cells)
+  const main = mainCell()
   const targets = remembered.length ? remembered : main ? [main] : []
   if (!targets.length) return
   if (store.muteOthers) store.muteAllExcept(targets[0].id)
@@ -137,22 +160,66 @@ export function moveSound(direction: -1 | 1) {
 }
 
 export function nudgeVolume(direction: -1 | 1) {
-  const cell = mainVideoCell(multiview().cells)
+  const cell = mainCell()
   const controller = cell && playbackHub.controller(cell.id)
   if (!cell || !controller) return
   const current = playbackHub.getStatus(cell.id)?.volume ?? 100
   const volume = Math.min(Math.max(current + direction * VOLUME_STEP, 0), 100)
   controller.setVolume(volume)
   playbackHub.refresh(cell.id)
-  const name = channelName(
-    cell.content.video.channel,
-    useSettings.getState().useEnglishName
-  )
   ui().showNotice({
     cellId: cell.id,
     icon: volume === 0 ? "muted" : "sound",
-    text: getT().t("views.multiview.audioFocus.volume", [name, volume]),
+    text: getT().t("views.multiview.audioFocus.volume", [nameOf(cell), volume]),
   })
+}
+
+export const toggleDirector = () =>
+  multiview().setDirectorMode(!multiview().directorMode)
+
+/**
+ * Puts a video on the big screen. Audio Focus announces the sound moving by itself;
+ * without it the sound stays as it was, so say if the new big screen is silent.
+ */
+export function swapToCenter(id: CellId) {
+  multiview().swapToCenter(id)
+  const cell = videos().find((video) => video.id === id)
+  if (!cell || multiview().muteOthers || !cell.content.muted) return
+  ui().showNotice({
+    cellId: id,
+    icon: "muted",
+    text: getT().t("views.multiview.director.swapMuted", [nameOf(cell)]),
+  })
+}
+
+/** Keys that do nothing look broken, so say why these did nothing. */
+function explainNoBigScreen() {
+  ui().showNotice({
+    cellId: null,
+    icon: "screen",
+    text: getT().t("views.multiview.director.noBigScreen"),
+  })
+}
+
+/** Counts from one, as the numbers on screen do. */
+export function swapPosition(position: number) {
+  const screen = bigScreen()
+  if (!screen) {
+    explainNoBigScreen()
+    return
+  }
+  const target = screenPositions(multiview().cells, screen)[position - 1]
+  if (target) swapToCenter(target.id)
+}
+
+export function stepBigScreen(direction: -1 | 1) {
+  const screen = bigScreen()
+  if (!screen) {
+    explainNoBigScreen()
+    return
+  }
+  const next = neighbourOfCenter(multiview().cells, screen, direction)
+  if (next) swapToCenter(next.id)
 }
 
 /** Sync commands need a clock to act on, so the first one opens the bar for it. */

@@ -5,6 +5,7 @@ import * as m from "motion/react-m"
 
 import {
   CircleNotchIcon,
+  MonitorPlayIcon,
   SpeakerHighIcon,
   SpeakerSlashIcon,
 } from "@/components/icons"
@@ -22,13 +23,19 @@ import { cellMotion } from "./cell-motion"
 import { rectStyle } from "./frame-layer"
 import { StreamAvatar, useStreamName } from "./stream-badge"
 
+const NOTICE_ICONS = {
+  sound: SpeakerHighIcon,
+  muted: SpeakerSlashIcon,
+  screen: MonitorPlayIcon,
+}
+
 /** How long the result stays up once the player has obeyed. */
 const LINGER_MS = 1800
 /** A player that never finishes loading should not hold the notice up for ever. */
 const LONGEST_MS = 6000
 
 /** Draws over a cell, following it through a swap, and never takes pointer input. */
-function OverCell({
+export function OverCell({
   cellId,
   className,
   children,
@@ -103,7 +110,7 @@ function Notice({ notice }: { notice: CellNotice }) {
     return () => clearTimeout(timer)
   }, [id])
 
-  const Icon = icon === "muted" ? SpeakerSlashIcon : SpeakerHighIcon
+  const Icon = NOTICE_ICONS[icon]
   const pill = (
     <m.div
       role="status"

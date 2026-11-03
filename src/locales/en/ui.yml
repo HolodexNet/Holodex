@@ -614,6 +614,11 @@ views:
       soundOff: Sound off
       soundOn: Sound on
       volume: '{0}: {1}%'
+    director:
+      mode: Director Mode
+      swap: Put {0} on the big screen
+      swapMuted: '{0} is muted'
+      noBigScreen: This layout has no big screen. Director Mode makes the biggest video the big screen.
     control:
       close: Close
       cell: Controls
@@ -641,6 +646,10 @@ views:
       volumeDown: Volume down
       toolbar: Show or hide the toolbar
       help: Show this list
+      screenNext: Next stream on the big screen
+      screenPrevious: Previous stream on the big screen
+      swapPosition: Put video {0} on the big screen
+      swapRow: Put a numbered video on the big screen
       syncBar: Show or hide the sync bar
       syncPlayPause: Play or pause the timeline
       syncBack: Timeline back 10 seconds

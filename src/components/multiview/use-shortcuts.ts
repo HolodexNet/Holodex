@@ -20,9 +20,12 @@ import {
   SEEK_SECONDS,
   seekBack,
   seekForward,
+  stepBigScreen,
   stepSyncRate,
+  swapPosition,
   syncSeekBy,
   toggleAudioFocus,
+  toggleDirector,
   togglePlayback,
   toggleSound,
   toggleSyncPlayback,
@@ -58,6 +61,18 @@ export function useShortcuts() {
       "volume-up": () => nudgeVolume(1),
       "volume-down": () => nudgeVolume(-1),
 
+      director: toggleDirector,
+      "screen-next": () => stepBigScreen(1),
+      "screen-previous": () => stepBigScreen(-1),
+      "swap-1": () => swapPosition(1),
+      "swap-2": () => swapPosition(2),
+      "swap-3": () => swapPosition(3),
+      "swap-4": () => swapPosition(4),
+      "swap-5": () => swapPosition(5),
+      "swap-6": () => swapPosition(6),
+      "swap-7": () => swapPosition(7),
+      "swap-8": () => swapPosition(8),
+      "swap-9": () => swapPosition(9),
       edit: () =>
         multiview().editing
           ? multiview().exitEditing()

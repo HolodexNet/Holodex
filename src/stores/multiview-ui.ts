@@ -40,7 +40,7 @@ export interface CellNotice {
   id: number
   /** The stream it concerns, or `null` for the whole view. */
   cellId: CellId | null
-  icon: "sound" | "muted"
+  icon: "sound" | "muted" | "screen"
   text: string
 }
 

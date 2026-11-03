@@ -10,6 +10,7 @@ import {
 import { AudioFocusLayer } from "@/components/multiview/audio-focus-layer"
 import { EditLayer } from "@/components/multiview/edit-layer"
 import { ControlWindow } from "@/components/multiview/control-window"
+import { DirectorLayer } from "@/components/multiview/director-layer"
 import { DropShield } from "@/components/multiview/drop-shield"
 import { FrameLayer, HighlightLayer } from "@/components/multiview/frame-layer"
 import { Hints } from "@/components/multiview/hints"
@@ -107,6 +108,7 @@ export default function MultiviewPage() {
             <FrameLayer />
             <HighlightLayer />
             <AudioFocusLayer />
+            <DirectorLayer />
             <AnimatePresence>
               {editing && <EditLayer key="edit" />}
             </AnimatePresence>

@@ -33,6 +33,7 @@ components/multiview, pages/multiview  Rendering and input
 | `flip` | The transform maths for animations |
 | `control` | The control panel's halves, and keeping its window on screen |
 | `shortcuts` | The keyboard map as data: commands, bindings, and which key presses count |
+| `director` | Which video is the big screen, how the others are numbered, and swapping them |
 | `legacy` | Importing the previous UI's saved layout |
 | `lib/player/*` | `PlayerController`, with one adapter per embed |
 
@@ -74,6 +75,14 @@ The sync bar along the bottom is the same controls again, and any number of them
 The panel also works as a cell, showing both halves to begin with. An empty cell can become one, and the window's grid button docks it (`dockControls`: an empty cell, then free space, then the next bigger preset, but never at the cost of a chat). A cell's picture-in-picture button floats it again. A control cell can be moved, resized and swapped like any other, and is saved in presets and shared links, written `control` (see `codec.ts`). A wide cell puts the two halves side by side.
 
 Controls are the one kind of content that does not have to have its own slot in a preset: on a preset change they take whatever the videos left free, starting from the far end so that a video arriving at the same moment still gets the first free slot. Auto-layout counts them when choosing a preset size, so they do not squeeze a video out.
+
+## Director mode
+
+A layout with one video clearly bigger than the rest, at least 1.5 times the next, has a big screen. The number keys put another video on it, and `[` and `]` step through the streams. Director Mode (`D`) marks the big screen, keeps each video's number on it as a button, and makes the biggest video the big screen even in a layout of equals.
+
+Which cell is the big screen is worked out from the rects rather than stored. A swap is the ordinary `swapCells`, which trades two rects and nothing else, so it is covered by the rules above: no frame moves in the DOM, the iframe resizes once, and the transform animates. Since the old big screen takes the new one's place, a number always means the same place on screen, and pressing it twice swaps back. `[` and `]` go by layout order instead, which swaps leave alone, so that they visit every stream instead of trading the same two.
+
+Under Audio Focus the sound goes with the swap. The two changes happen in one store update, and the usual handoff notice shows it on the new big screen: "Unmuting…" until the player has obeyed, then who is now heard, with "Muted" on the video that just left. Without Audio Focus a swap leaves all sound alone, and says so if the new big screen is muted. In Director Mode a player that finishes loading does not take the sound the way a newly started stream otherwise would, since it would undo the director's choice.
 
 ## Keyboard
 

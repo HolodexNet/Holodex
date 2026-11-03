@@ -1,6 +1,7 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
+import { findCenterCell, swapIntoCenter } from "@/lib/multiview/director"
 import { cellsFromLegacy } from "@/lib/multiview/legacy"
 import {
   addCellAt,
@@ -39,6 +40,8 @@ interface Persisted {
   cells: Cell[]
   /** Audio Focus, as the interface calls it: unmuting one video mutes the rest. */
   muteOthers: boolean
+  /** The biggest video counts as the big screen, even among equals. */
+  directorMode: boolean
   /** Video id -> seconds, for archive sync. */
   syncOffsets: Record<string, number>
   urlHistory: Record<UrlHistoryKind, string[]>
@@ -63,6 +66,8 @@ interface MultiviewStore extends Persisted {
   setControlPanels: (id: CellId, panels: ControlPanels) => void
   setRects: (rects: ReadonlyMap<CellId, Rect>) => void
   swap: (a: CellId, b: CellId) => void
+  /** Puts a video on the big screen, and the sound with it under Audio Focus. */
+  swapToCenter: (id: CellId) => void
 
   enterEditing: () => void
   exitEditing: () => void
@@ -75,6 +80,7 @@ interface MultiviewStore extends Persisted {
   setAllMuted: (muted: boolean) => void
   muteAllExcept: (id: CellId) => void
   setMuteOthers: (enabled: boolean) => void
+  setDirectorMode: (enabled: boolean) => void
   /** Keeps metadata fresh; deliberately not an undoable edit. */
   mergeVideoData: (
     fresh: ReadonlyMap<string, VideoDetails>,
@@ -99,6 +105,7 @@ function initial(): Persisted {
   return {
     cells: legacy ? cellsFromLegacy(legacy) : [],
     muteOthers: legacy?.muteOthers ?? isAppleMobile(),
+    directorMode: false,
     syncOffsets: legacy?.syncOffsets ?? {},
     urlHistory: {
       youtube: legacy?.ytUrlHistory ?? [],
@@ -159,6 +166,13 @@ export const useMultiview = create<MultiviewStore>()(
           ),
         setRects: (rects) => edit((cells) => setRects(cells, rects)),
         swap: (a, b) => edit((cells) => swapCells(cells, a, b)),
+        swapToCenter: (id) =>
+          edit((cells) =>
+            swapIntoCenter(cells, id, {
+              director: get().directorMode,
+              audioFocus: get().muteOthers,
+            })
+          ),
 
         enterEditing: () => set({ editing: true, past: [], future: [] }),
         exitEditing: () => set({ editing: false, past: [], future: [] }),
@@ -203,8 +217,29 @@ export const useMultiview = create<MultiviewStore>()(
         setMuteOthers: (enabled) =>
           set((state) => ({
             muteOthers: enabled,
-            cells: enabled ? focusAudio(state.cells) : state.cells,
+            cells: enabled
+              ? focusAudio(
+                  state.cells,
+                  state.directorMode
+                    ? findCenterCell(state.cells, { force: true })?.id
+                    : undefined
+                )
+              : state.cells,
           })),
+        setDirectorMode: (enabled) =>
+          set((state) => {
+            // The sound goes where the big screen is, from the moment it counts.
+            const center =
+              enabled && state.muteOthers
+                ? findCenterCell(state.cells, { force: true })
+                : null
+            return {
+              directorMode: enabled,
+              cells: center
+                ? muteAllExcept(state.cells, center.id)
+                : state.cells,
+            }
+          }),
         mergeVideoData: (fresh, failed) =>
           set((state) => ({
             cells: mergeVideoData(state.cells, fresh, failed),
@@ -229,9 +264,16 @@ export const useMultiview = create<MultiviewStore>()(
       name: "holodex-v3/multiview",
       version: 1,
       // Editing state and undo history never outlive the page.
-      partialize: ({ cells, muteOthers, syncOffsets, urlHistory }) => ({
+      partialize: ({
         cells,
         muteOthers,
+        directorMode,
+        syncOffsets,
+        urlHistory,
+      }) => ({
+        cells,
+        muteOthers,
+        directorMode,
         syncOffsets,
         urlHistory,
       }),

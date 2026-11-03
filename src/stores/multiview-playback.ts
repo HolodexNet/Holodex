@@ -1,6 +1,10 @@
 import { useSyncExternalStore } from "react"
 
-import { isVideoCell, soleAudibleCell } from "@/lib/multiview/cells"
+import {
+  audibleCells,
+  isVideoCell,
+  soleAudibleCell,
+} from "@/lib/multiview/cells"
 import { PlaybackHub, type PlaybackEvent } from "@/lib/multiview/playback"
 import type { Cell, CellId } from "@/lib/multiview/types"
 import { INITIAL_PLAYER_STATUS } from "@/lib/player/types"
@@ -13,7 +17,9 @@ function handleEvent(event: PlaybackEvent) {
     store.setMuted(event.cellId, event.muted)
     if (!event.muted && store.muteOthers) store.muteAllExcept(event.cellId)
   } else if (store.muteOthers) {
-    // Starting a new stream takes the audio focus.
+    // Starting a new stream takes the audio focus, except from a director, whose
+    // choice a player finishing loading in the row of thumbnails should not undo.
+    if (store.directorMode && audibleCells(store.cells).length) return
     store.muteAllExcept(event.cellId)
   }
 }

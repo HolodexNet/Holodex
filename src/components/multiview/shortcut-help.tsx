@@ -1,4 +1,5 @@
 import { useRef, useState, type KeyboardEvent } from "react"
+import { cn } from "cn"
 
 import { ArrowClockwiseIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -18,12 +19,16 @@ import {
   keyFor,
   keyFromEvent,
   shortcutsInGroup,
+  SWAP_SHORTCUTS,
   type ShortcutGroup,
   type ShortcutId,
 } from "@/lib/multiview/shortcuts"
 import { useMultiviewShortcuts } from "@/stores/multiview-shortcuts"
 import { useMultiviewUi } from "@/stores/multiview-ui"
 import { KeyCaps } from "./shortcut-hint"
+
+const isSwap = (id: ShortcutId) =>
+  (SWAP_SHORTCUTS as readonly ShortcutId[]).includes(id)
 
 /** Laid out by hand, as the groups differ too much in length to flow evenly. */
 const COLUMNS: readonly (readonly ShortcutGroup[])[] = [
@@ -34,6 +39,8 @@ const COLUMNS: readonly (readonly ShortcutGroup[])[] = [
 
 function useShortcutLabels(): Record<ShortcutId, string> {
   const { t } = useT()
+  const swap = (position: number) =>
+    t("views.multiview.shortcuts.swapPosition", [position])
   return {
     "play-pause": t("views.multiview.shortcuts.playPause"),
     "seek-back": t("views.multiview.shortcuts.seekBack"),
@@ -49,6 +56,18 @@ function useShortcutLabels(): Record<ShortcutId, string> {
     "volume-up": t("views.multiview.shortcuts.volumeUp"),
     "volume-down": t("views.multiview.shortcuts.volumeDown"),
 
+    director: t("views.multiview.director.mode"),
+    "screen-next": t("views.multiview.shortcuts.screenNext"),
+    "screen-previous": t("views.multiview.shortcuts.screenPrevious"),
+    "swap-1": swap(1),
+    "swap-2": swap(2),
+    "swap-3": swap(3),
+    "swap-4": swap(4),
+    "swap-5": swap(5),
+    "swap-6": swap(6),
+    "swap-7": swap(7),
+    "swap-8": swap(8),
+    "swap-9": swap(9),
     edit: t("views.multiview.edit.enter"),
     undo: t("views.multiview.edit.undo"),
     redo: t("views.multiview.edit.redo"),
@@ -94,6 +113,25 @@ export function ShortcutHelp() {
   const [message, setMessage] = useState("")
   const title = useRef<HTMLHeadingElement>(null)
 
+  const chooser = (id: ShortcutId): ChooserProps => ({
+    id,
+    label: labels[id],
+    choosing: choosing === id,
+    onChoose: () => {
+      setMessage("")
+      setChoosing(id)
+    },
+    onChosen: (displaced) => {
+      setChoosing(null)
+      setMessage(
+        displaced
+          ? t("views.multiview.shortcuts.displaced", [labels[displaced]])
+          : ""
+      )
+    },
+    onRefused: () => setMessage(t("views.multiview.shortcuts.reserved")),
+  })
+
   const close = () => {
     setChoosing(null)
     setMessage("")
@@ -134,31 +172,12 @@ export function ShortcutHelp() {
                 <section key={group}>
                   <GroupHeading>{groups[group]}</GroupHeading>
                   <ul className="flex flex-col">
-                    {shortcutsInGroup(group).map((id) => (
-                      <ShortcutRow
-                        key={id}
-                        id={id}
-                        label={labels[id]}
-                        choosing={choosing === id}
-                        onChoose={() => {
-                          setMessage("")
-                          setChoosing(id)
-                        }}
-                        onChosen={(displaced) => {
-                          setChoosing(null)
-                          setMessage(
-                            displaced
-                              ? t("views.multiview.shortcuts.displaced", [
-                                  labels[displaced],
-                                ])
-                              : ""
-                          )
-                        }}
-                        onRefused={() =>
-                          setMessage(t("views.multiview.shortcuts.reserved"))
-                        }
-                      />
-                    ))}
+                    {shortcutsInGroup(group)
+                      .filter((id) => !isSwap(id))
+                      .map((id) => (
+                        <ShortcutRow key={id} {...chooser(id)} />
+                      ))}
+                    {group === "layout" && <SwapRow chooser={chooser} />}
                   </ul>
                 </section>
               ))}
@@ -217,26 +236,69 @@ function GroupHeading({ children }: { children: React.ReactNode }) {
   )
 }
 
-function ShortcutRow({
-  id,
-  label,
-  choosing,
-  onChoose,
-  onChosen,
-  onRefused,
-}: {
+interface ChooserProps {
   id: ShortcutId
   label: string
   choosing: boolean
   onChoose: () => void
   onChosen: (displaced: ShortcutId | null) => void
   onRefused: () => void
-}) {
+}
+
+function ShortcutRow(props: ChooserProps) {
+  const { t } = useT()
+  const { id, label } = props
+  const changed = useMultiviewShortcuts((s) => isOverridden(id, s.overrides))
+  const reset = useMultiviewShortcuts((s) => s.reset)
+
+  return (
+    <li className="flex min-h-8 items-center gap-2 border-b border-border/50 py-0.5 text-sm last:border-b-0">
+      <span className="min-w-0 flex-1 truncate" title={label}>
+        {label}
+      </span>
+      {changed && (
+        <Button
+          variant="ghost"
+          size="icon-xs"
+          aria-label={t("views.multiview.shortcuts.reset", [label])}
+          title={t("views.multiview.shortcuts.reset", [label])}
+          onClick={() => reset(id)}
+        >
+          <ArrowClockwiseIcon />
+        </Button>
+      )}
+      <KeyChooser {...props} className="min-w-14" />
+    </li>
+  )
+}
+
+/** Nine keys for one idea, so they share a row, each still changeable. */
+function SwapRow({ chooser }: { chooser: (id: ShortcutId) => ChooserProps }) {
+  const { t } = useT()
+  return (
+    <li className="flex flex-col gap-0.5 border-b border-border/50 py-1 text-sm last:border-b-0">
+      <span>{t("views.multiview.shortcuts.swapRow")}</span>
+      <span className="flex flex-wrap gap-0.5">
+        {SWAP_SHORTCUTS.map((id) => (
+          <KeyChooser key={id} {...chooser(id)} className="min-w-7" />
+        ))}
+      </span>
+    </li>
+  )
+}
+
+function KeyChooser({
+  id,
+  label,
+  choosing,
+  onChoose,
+  onChosen,
+  onRefused,
+  className,
+}: ChooserProps & { className?: string }) {
   const { t } = useT()
   const shortcut = useMultiviewShortcuts((s) => keyFor(id, s.overrides))
-  const changed = useMultiviewShortcuts((s) => isOverridden(id, s.overrides))
   const rebind = useMultiviewShortcuts((s) => s.rebind)
-  const reset = useMultiviewShortcuts((s) => s.reset)
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (!choosing) return
@@ -266,46 +328,33 @@ function ShortcutRow({
   }
 
   return (
-    <li className="flex min-h-8 items-center gap-2 border-b border-border/50 py-0.5 text-sm last:border-b-0">
-      <span className="min-w-0 flex-1 truncate" title={label}>
-        {label}
-      </span>
-      {changed && (
-        <Button
-          variant="ghost"
-          size="icon-xs"
-          aria-label={t("views.multiview.shortcuts.reset", [label])}
-          title={t("views.multiview.shortcuts.reset", [label])}
-          onClick={() => reset(id)}
-        >
-          <ArrowClockwiseIcon />
-        </Button>
+    <button
+      type="button"
+      className={cn(
+        "flex min-h-6 cursor-pointer items-center justify-center rounded-md px-1 outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring aria-pressed:ring-2 aria-pressed:ring-primary",
+        className
       )}
-      <button
-        type="button"
-        className="flex min-h-6 min-w-14 cursor-pointer items-center justify-center rounded-md px-1 outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring aria-pressed:ring-2 aria-pressed:ring-primary"
-        aria-pressed={choosing}
-        aria-label={t("views.multiview.shortcuts.change", [
-          label,
-          shortcut ?? t("views.multiview.shortcuts.none"),
-        ])}
-        onClick={() => (choosing ? onChosen(null) : onChoose())}
-        onBlur={() => choosing && onChosen(null)}
-        onKeyDown={onKeyDown}
-      >
-        {choosing ? (
-          <span className="text-xs text-primary">
-            {t("views.multiview.shortcuts.pressKey")}
-          </span>
-        ) : shortcut ? (
-          <KeyCaps shortcut={shortcut} />
-        ) : (
-          <span className="text-xs text-muted-foreground">
-            {t("views.multiview.shortcuts.none")}
-          </span>
-        )}
-      </button>
-    </li>
+      aria-pressed={choosing}
+      aria-label={t("views.multiview.shortcuts.change", [
+        label,
+        shortcut ?? t("views.multiview.shortcuts.none"),
+      ])}
+      onClick={() => (choosing ? onChosen(null) : onChoose())}
+      onBlur={() => choosing && onChosen(null)}
+      onKeyDown={onKeyDown}
+    >
+      {choosing ? (
+        <span className="text-xs text-primary">
+          {t("views.multiview.shortcuts.pressKey")}
+        </span>
+      ) : shortcut ? (
+        <KeyCaps shortcut={shortcut} />
+      ) : (
+        <span className="text-xs text-muted-foreground">
+          {t("views.multiview.shortcuts.none")}
+        </span>
+      )}
+    </button>
   )
 }
 

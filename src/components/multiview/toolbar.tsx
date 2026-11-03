@@ -26,6 +26,7 @@ import {
   KeyboardIcon,
   LinkSimpleIcon,
   MagnifyingGlassPlusIcon,
+  MonitorPlayIcon,
   PencilSimpleIcon,
   PlusIcon,
   SlidersHorizontalIcon,
@@ -294,6 +295,8 @@ function ViewActions() {
   const clearAll = useMultiview((s) => s.clearAll)
   const audioFocus = useMultiview((s) => s.muteOthers)
   const setAudioFocus = useMultiview((s) => s.setMuteOthers)
+  const director = useMultiview((s) => s.directorMode)
+  const setDirector = useMultiview((s) => s.setDirectorMode)
   const { addCell } = useMultiviewCommands()
   const { isFullscreen, toggleFullscreen } = useFullscreen()
   const collapseHint = useShortcutLabel(
@@ -317,6 +320,15 @@ function ViewActions() {
       onClick: () => setAudioFocus(!audioFocus),
       active: audioFocus,
       shortcut: "audio-focus",
+    },
+    {
+      id: "director",
+      label: t("views.multiview.director.mode"),
+      icon: <MonitorPlayIcon />,
+      onClick: () => setDirector(!director),
+      active: director,
+      collapse: "md",
+      shortcut: "director",
     },
     {
       id: "media",

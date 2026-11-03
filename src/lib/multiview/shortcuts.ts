@@ -39,6 +39,18 @@ export const SHORTCUTS = {
   "volume-up": { group: "audio", key: "ArrowUp", repeat: true },
   "volume-down": { group: "audio", key: "ArrowDown", repeat: true },
 
+  director: { group: "layout", key: "D" },
+  "screen-next": { group: "layout", key: "]" },
+  "screen-previous": { group: "layout", key: "[" },
+  "swap-1": { group: "layout", key: "1" },
+  "swap-2": { group: "layout", key: "2" },
+  "swap-3": { group: "layout", key: "3" },
+  "swap-4": { group: "layout", key: "4" },
+  "swap-5": { group: "layout", key: "5" },
+  "swap-6": { group: "layout", key: "6" },
+  "swap-7": { group: "layout", key: "7" },
+  "swap-8": { group: "layout", key: "8" },
+  "swap-9": { group: "layout", key: "9" },
   edit: { group: "layout", key: "E", scope: "any" },
   undo: { group: "layout", key: "Mod+Z", scope: "edit", repeat: true },
   redo: {
@@ -65,6 +77,19 @@ export const SHORTCUTS = {
 } as const satisfies Record<string, ShortcutDefinition>
 
 export type ShortcutId = keyof typeof SHORTCUTS
+
+/** One key per numbered place on screen, which the list of keys shows as a set. */
+export const SWAP_SHORTCUTS = [
+  "swap-1",
+  "swap-2",
+  "swap-3",
+  "swap-4",
+  "swap-5",
+  "swap-6",
+  "swap-7",
+  "swap-8",
+  "swap-9",
+] as const satisfies readonly ShortcutId[]
 
 const definition = (id: ShortcutId): ShortcutDefinition => SHORTCUTS[id]
 
