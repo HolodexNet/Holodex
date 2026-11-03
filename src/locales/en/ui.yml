@@ -614,6 +614,10 @@ views:
       soundOff: Sound off
       soundOn: Sound on
       volume: '{0}: {1}%'
+    keyboardFocus:
+      tab: Shortcuts paused · Click to resume
+      advertTitle: A video has the keyboard
+      advertDetail: Keys you press now go to that video's player, so multiview shortcuts cannot hear them. This tab appears whenever that happens. Click it to get them back.
     shortcuts:
       title: Keyboard Shortcuts
       detail: Click a key to change it. Shortcuts stay out of the way while you are typing, or using a slider or menu.

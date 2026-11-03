@@ -79,7 +79,9 @@ Keys stay out of the way when they would get in someone's way (`targetOwnsKey`):
 
 Keys are read by what they type, except that on a layout that does not type Latin letters the key in M's position counts as M, so the defaults work on Russian and Korean keyboards.
 
-Keys typed into a player never reach the page at all; see below.
+Keys pressed while a player has focus go to the player, and the page is not told. Clicking a video is the usual way to get there, so `KeyboardFocusTab` watches for an iframe becoming the active element and hangs a tab from the top of the stage, which works with the toolbar hidden and in fullscreen, and clicking it takes focus back. The first time this happens each local day, it also explains itself for a few seconds.
+
+Fullscreen here means the multiview's own, on the whole page. A player's own fullscreen button shows nothing but that player, and no page can draw over it.
 
 ## Chat
 

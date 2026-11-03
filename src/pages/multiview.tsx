@@ -12,6 +12,7 @@ import { EditLayer } from "@/components/multiview/edit-layer"
 import { DropShield } from "@/components/multiview/drop-shield"
 import { FrameLayer, HighlightLayer } from "@/components/multiview/frame-layer"
 import { Hints } from "@/components/multiview/hints"
+import { KeyboardFocusTab } from "@/components/multiview/keyboard-focus-tab"
 import { MediaControls } from "@/components/multiview/media-controls"
 import {
   LayoutPromptDialog,
@@ -110,6 +111,7 @@ export default function MultiviewPage() {
               {editing && <EditLayer key="edit" />}
             </AnimatePresence>
             <DropShield />
+            <KeyboardFocusTab />
           </StageSizeProvider>
           {syncBarOpen && <SyncBar />}
         </div>

@@ -14,11 +14,14 @@ interface MultiviewShortcutStore {
   overrides: ShortcutOverrides
   /** Whether keys with no Ctrl, Alt or Command to them do anything at all. */
   characterKeys: boolean
+  /** The local day the lost-keyboard tab last explained itself. */
+  focusAdvertDay: string | null
   /** Returns the command that lost this key to make way, if any did. */
   rebind: (id: ShortcutId, key: string | null) => ShortcutId | null
   reset: (id: ShortcutId) => void
   resetAll: () => void
   setCharacterKeys: (enabled: boolean) => void
+  setFocusAdvertDay: (day: string) => void
 }
 
 /** Shared between tabs: how someone's keyboard works is not per layout. */
@@ -27,6 +30,7 @@ export const useMultiviewShortcuts = create<MultiviewShortcutStore>()(
     (set, get) => ({
       overrides: {},
       characterKeys: true,
+      focusAdvertDay: null,
       rebind: (id, key) => {
         const { overrides, displaced } = rebind(get().overrides, id, key)
         set({ overrides })
@@ -38,6 +42,7 @@ export const useMultiviewShortcuts = create<MultiviewShortcutStore>()(
         })),
       resetAll: () => set({ overrides: {} }),
       setCharacterKeys: (characterKeys) => set({ characterKeys }),
+      setFocusAdvertDay: (focusAdvertDay) => set({ focusAdvertDay }),
     }),
     { name: "holodex-v3/multiview-shortcuts", version: 1 }
   )
