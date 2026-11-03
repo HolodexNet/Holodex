@@ -10,6 +10,7 @@ import {
   youtubeChatUrl,
 } from "../src/lib/multiview/chat.ts"
 import { replayTimedContinuation } from "../src/lib/multiview/chat-continuation.ts"
+import { ArchiveClock } from "../src/lib/multiview/archive-clock.ts"
 import { PlaybackHub } from "../src/lib/multiview/playback.ts"
 import {
   twitchChannelStub,
@@ -257,6 +258,127 @@ const fakePlayer = (overrides = {}) => {
     destroy() {},
   }
 }
+
+const clockHarness = () => {
+  let time = 0
+  let tick = null
+  let started = 0
+  const commands = []
+  const input = {
+    timeline: {
+      videos: [{ id: "a", startTs: 1000, endTs: 2000, duration: 1000 }],
+      minTs: 1000,
+      maxTs: 2000,
+    },
+    offsets: {},
+    positions: new Map(),
+  }
+  const clock = new ArchiveClock({
+    read: () => input,
+    run: (planned) => commands.push(...planned),
+    now: () => time,
+    schedule: (callback) => {
+      started++
+      tick = callback
+      return () => {
+        tick = null
+      }
+    },
+  })
+  return {
+    clock,
+    commands,
+    input,
+    started: () => started,
+    ticking: () => tick !== null,
+    advance: (ms = 500) => {
+      time += ms
+      tick?.()
+    },
+  }
+}
+
+test("however many controls show the clock, only one ticks", () => {
+  const { clock, started, ticking } = clockHarness()
+  assert.equal(clock.running, false)
+  const first = clock.acquire()
+  const second = clock.acquire()
+  assert.equal(started(), 1)
+  first()
+  first()
+  assert.equal(ticking(), true, "releasing twice does not count twice")
+  assert.equal(clock.running, true)
+  second()
+  assert.equal(ticking(), false)
+  assert.equal(clock.running, false)
+})
+
+test("the clock advances only while playing, at the chosen rate", () => {
+  const { clock, advance } = clockHarness()
+  clock.acquire()
+  advance()
+  const start = clock.getSnapshot().currentTs
+  assert.equal(start, 1000, "starts where every stream has begun")
+  advance()
+  assert.equal(clock.getSnapshot().currentTs, start, "paused")
+  clock.setPaused(false)
+  clock.setRate(2)
+  advance(1000)
+  assert.equal(clock.getSnapshot().currentTs, start + 2)
+})
+
+test("the first seek also starts playback, and later ones keep it as it is", () => {
+  const { clock, advance, commands } = clockHarness()
+  clock.acquire()
+  advance()
+  assert.equal(clock.getSnapshot().paused, true)
+  clock.seek(1500)
+  assert.equal(clock.getSnapshot().paused, false)
+  assert.equal(clock.getSnapshot().currentTs, 1500)
+  assert.deepEqual(commands.at(-1), {
+    kind: "seek",
+    videoId: "a",
+    time: 500,
+    play: true,
+  })
+  clock.setPaused(true)
+  clock.seek(1600)
+  assert.equal(clock.getSnapshot().paused, true)
+  clock.seek(99999)
+  assert.equal(clock.getSnapshot().currentTs, 2000, "stays on the timeline")
+})
+
+test("a rate change reaches every stream on the timeline", () => {
+  const { clock, commands } = clockHarness()
+  clock.acquire()
+  clock.setRate(1.5)
+  assert.deepEqual(commands, [{ kind: "rate", videoId: "a", rate: 1.5 }])
+})
+
+test("closing the last control ends the session", () => {
+  const { clock, advance } = clockHarness()
+  const release = clock.acquire()
+  advance()
+  clock.seek(1500)
+  clock.setRate(2)
+  release()
+  assert.deepEqual(clock.getSnapshot(), { paused: true, rate: 1, currentTs: 0 })
+  clock.acquire()
+  advance()
+  clock.seek(1500)
+  assert.equal(clock.getSnapshot().paused, false, "first seek again")
+})
+
+test("nothing on the timeline means nothing to run", () => {
+  const { clock, advance, commands, input } = clockHarness()
+  input.timeline = null
+  clock.acquire()
+  advance()
+  clock.seek(1500)
+  clock.setPaused(false)
+  clock.setRate(2)
+  assert.deepEqual(commands, [])
+})
 
 const hubHarness = () => {
   let time = 0

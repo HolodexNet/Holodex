@@ -167,6 +167,7 @@ export function findStartTime(
 
 export type SyncCommand =
   | { kind: "pause"; videoId: string }
+  | { kind: "rate"; videoId: string; rate: number }
   | {
       kind: "seek"
       videoId: string

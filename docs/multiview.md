@@ -29,6 +29,7 @@ components/multiview, pages/multiview  Rendering and input
 | `chat` | Which video each chat serves, and embed URLs |
 | `sync` | Archive sync decisions, returned as commands for the caller to run |
 | `playback` | `PlaybackHub`: owns live players and polls them, so fast-changing values never touch the persisted store |
+| `archive-clock` | `ArchiveClock`: the one clock behind archive sync, running while anything on screen shows it |
 | `flip` | The transform maths for animations |
 | `legacy` | Importing the previous UI's saved layout |
 | `lib/player/*` | `PlayerController`, with one adapter per embed |
@@ -39,6 +40,7 @@ components/multiview, pages/multiview  Rendering and input
 | `multiview-presets` | Saved layouts, auto-layout table | Yes; shared between tabs |
 | `multiview-ui` | Which panels and dialogs are open, reload counters | No |
 | `multiview-playback` | The `PlaybackHub` instance, wired to the store | No |
+| `multiview-sync` | The `ArchiveClock` instance, wired to the store and the hub | No |
 
 ## Edit mode
 
