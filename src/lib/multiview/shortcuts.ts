@@ -170,7 +170,7 @@ export interface KeyInput {
   altKey?: boolean
   shiftKey?: boolean
   /** AltGr shows up as Ctrl+Alt, and is how many layouts type ordinary symbols. */
-  getModifierState?: (key: string) => boolean
+  getModifierState?: (key: "AltGraph") => boolean
 }
 
 /** These alone never make a shortcut. */
