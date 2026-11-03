@@ -77,7 +77,12 @@ export interface ControlPanels {
   sync: boolean
 }
 
-export type CellContent = VideoContent | ChatContent
+export interface ControlContent {
+  type: "control"
+  panels: ControlPanels
+}
+
+export type CellContent = VideoContent | ChatContent | ControlContent
 
 export interface Cell {
   /** Owns the player's lifetime; survives every kind of repositioning. */
@@ -89,6 +94,7 @@ export interface Cell {
 
 export type VideoCell = Cell & { content: VideoContent }
 export type ChatCell = Cell & { content: ChatContent }
+export type ControlCell = Cell & { content: ControlContent }
 
 /** A layout with no identity yet: a preset, or a decoded permalink. */
 export interface LayoutSlot {
@@ -100,7 +106,7 @@ export interface DecodedLayout {
   /** The source string; identifies a preset in the auto-layout table. */
   id: string
   slots: LayoutSlot[]
-  /** Slots holding or waiting for a video, i.e. everything but chats. */
+  /** Slots holding or waiting for a video, i.e. no chats or controls. */
   videoCellCount: number
 }
 

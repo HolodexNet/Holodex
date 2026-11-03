@@ -616,6 +616,9 @@ views:
       volume: '{0}: {1}%'
     control:
       close: Close
+      cell: Controls
+      dock: Put in the layout
+      float: Float in a window
     keyboardFocus:
       tab: Shortcuts paused · Click to resume
       advertTitle: A video has the keyboard

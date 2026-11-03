@@ -1,5 +1,6 @@
-import { isChatCell } from "./cells.ts"
+import { isChatCell, isControlCell } from "./cells.ts"
 import { DEFAULT_PANELS } from "./chat.ts"
+import { ALL_CONTROL_PANELS } from "./control.ts"
 import { clampRect } from "./grid.ts"
 import {
   isTwitchLogin,
@@ -11,6 +12,7 @@ import {
 import type {
   Cell,
   ChatTarget,
+  ControlPanels,
   DecodedLayout,
   LayoutSlot,
   MultiviewVideo,
@@ -30,6 +32,10 @@ import type {
  * Chats may carry a number, counting through the layout's videos in decoded
  * order. A fixed chat for a stream that is not in the layout is written
  * `chat-<stream>`; older clients read that as an unbound chat.
+ *
+ * Controls are written `control`, with `m` or `s` when only the media or sync
+ * half is showing. Anything shorter than a video id that is not a chat reads as an
+ * empty cell to older clients and the server.
  */
 const ALPHABET =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_."
@@ -83,6 +89,20 @@ function decodeChat(content: string): ChatTarget | null {
   return null
 }
 
+const CONTROL = "control"
+
+function decodeControl(content: string): ControlPanels | null {
+  if (content === CONTROL) return ALL_CONTROL_PANELS
+  if (content === `${CONTROL}m`) return { media: true, sync: false }
+  if (content === `${CONTROL}s`) return { media: false, sync: true }
+  return null
+}
+
+function encodeControl({ media, sync }: ControlPanels): string {
+  if (media && sync) return CONTROL
+  return `${CONTROL}${media ? "m" : "s"}`
+}
+
 function decodeSlot(part: string): LayoutSlot | null {
   if (part.length < 4) return null
   const [x, y, w, h] = [...part.slice(0, 4)].map((c) => ALPHABET.indexOf(c))
@@ -95,6 +115,8 @@ function decodeSlot(part: string): LayoutSlot | null {
   if (target) {
     return { rect, content: { type: "chat", target, panels: DEFAULT_PANELS } }
   }
+  const panels = decodeControl(content)
+  if (panels) return { rect, content: { type: "control", panels } }
   const video = decodeStream(content)
   return { rect, content: video && { type: "video", video } }
 }
@@ -113,8 +135,9 @@ export function decodeLayout(encoded: string): DecodedLayout | null {
   return {
     id: encoded,
     slots,
-    videoCellCount: slots.filter((slot) => slot.content?.type !== "chat")
-      .length,
+    videoCellCount: slots.filter(
+      ({ content }) => content?.type !== "chat" && content?.type !== "control"
+    ).length,
   }
 }
 
@@ -163,6 +186,7 @@ export function encodeLayout(
   return encoded
     .map(({ cell, prefix }) => {
       if (isChatCell(cell)) return prefix + encodeChat(cell.content.target)
+      if (isControlCell(cell)) return prefix + encodeControl(cell.content.panels)
       if (cell.content?.type === "video" && includeVideo) {
         return prefix + encodeStream(cell.content.video)
       }

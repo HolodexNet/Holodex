@@ -73,6 +73,7 @@ export { NotePencilIcon } from "./note-pencil-icon";
 export { PaletteIcon } from "./palette-icon";
 export { PauseIcon } from "./pause-icon";
 export { PencilSimpleIcon } from "./pencil-simple-icon";
+export { PictureInPictureIcon } from "./picture-in-picture-icon";
 export { PlayIcon } from "./play-icon";
 export { PlaylistIcon } from "./playlist-icon";
 export { PlusIcon } from "./plus-icon";

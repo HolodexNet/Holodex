@@ -4,6 +4,7 @@ import {
   generateCellId,
   instantiateSlots,
   isChatCell,
+  isControlCell,
   isEmptyCell,
   isVideoCell,
   nonChatCellCount,
@@ -15,6 +16,7 @@ import type {
   Cell,
   CellContent,
   CellId,
+  ControlPanels,
   DecodedLayout,
   MultiviewVideo,
   Rect,
@@ -59,7 +61,8 @@ export function pickAutoPreset(
 /**
  * Replaces the layout. With `merge`, what is currently playing moves into the
  * new layout's free slots in on-screen order. Each moved cell keeps its id, so
- * its player keeps running, and each chat keeps following the same video.
+ * its player keeps running, and each chat keeps following the same video. Controls
+ * that have no slot of their own make do with whatever the videos leave free.
  */
 export function applyLayout(
   current: readonly Cell[],
@@ -72,6 +75,7 @@ export function applyLayout(
   const pinned = pinChats(current)
   const videos = sortCells(pinned.filter(isVideoCell))
   const chats = sortCells(pinned.filter(isChatCell))
+  const controls = sortCells(pinned.filter(isControlCell))
 
   const merged = incoming.map((cell) => {
     if (isEmptyCell(cell)) {
@@ -80,9 +84,22 @@ export function applyLayout(
     } else if (isChatCell(cell)) {
       const chat = chats.shift()
       if (chat) return { ...cell, id: chat.id, content: chat.content }
+    } else if (isControlCell(cell)) {
+      const control = controls.shift()
+      if (control) return { ...cell, id: control.id, content: control.content }
     }
     return cell
   })
+  // From the far end, leaving the first free slot for a video on its way in.
+  for (const slot of sortCells(merged.filter(isEmptyCell)).reverse()) {
+    const control = controls.shift()
+    if (!control) break
+    merged[merged.indexOf(slot)] = {
+      ...slot,
+      id: control.id,
+      content: control.content,
+    }
+  }
   return releaseOrphanedChats(merged)
 }
 
@@ -128,7 +145,7 @@ export function addVideo(
 
   const preset = pickAutoPreset(
     context.autoPresets,
-    activeVideos(cells).length + 1
+    activeVideos(cells).length + 1 + cells.filter(isControlCell).length
   )
   if (!preset) return { kind: "no-layout" }
   if (!canReplaceFreely(cells, context)) {
@@ -176,7 +193,11 @@ export function removeCellAuto(
 ): Cell[] {
   const target = cells.find((cell) => cell.id === id)
   if (!target) return [...cells]
-  if (isChatCell(target) || !matchesPreset(cells, context.knownPresets)) {
+  if (
+    isChatCell(target) ||
+    isControlCell(target) ||
+    !matchesPreset(cells, context.knownPresets)
+  ) {
     return removeCell(cells, id)
   }
   const count = nonChatCellCount(cells)
@@ -190,6 +211,33 @@ export function removeCellAuto(
     smaller,
     { merge: true }
   )
+}
+
+/**
+ * Finds the control panel a place on the grid, without losing anything to do so:
+ * an empty cell, then free space, then the next bigger preset if every chat has a
+ * slot in it. `null` means it would have cost something, and the viewer decides.
+ */
+export function dockControls(
+  cells: readonly Cell[],
+  panels: ControlPanels,
+  context: AutoLayoutContext
+): Cell[] | null {
+  const content = { type: "control", panels } as const
+  const lastEmpty = (from: readonly Cell[]) =>
+    sortCells(from.filter(isEmptyCell)).at(-1)
+
+  const empty = lastEmpty(cells)
+  if (empty) return setCellContent(cells, empty.id, content)
+
+  const rect = findFreeRect(cells)
+  if (rect) return [...cells, { id: generateCellId(), rect, content }]
+
+  const grown = addCell(cells, context)
+  const slot = grown && lastEmpty(grown)
+  const chats = (from: readonly Cell[]) => from.filter(isChatCell).length
+  if (!grown || !slot || chats(grown) < chats(cells)) return null
+  return setCellContent(grown, slot.id, content)
 }
 
 export function setCellContent(

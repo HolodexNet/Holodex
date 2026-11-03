@@ -4,8 +4,11 @@ import {
   activeVideos,
   frameOrder,
   instantiateSlots,
+  isControlCell,
+  nonChatCellCount,
   soleAudibleCell,
   videoCells,
+  videoSlotCount,
 } from "../src/lib/multiview/cells.ts"
 import {
   decodeLayout,
@@ -23,6 +26,7 @@ import {
   addCell,
   addVideo,
   applyLayout,
+  dockControls,
   fillFirstEmptyCell,
   matchesPreset,
   focusAudio,
@@ -399,6 +403,153 @@ test("mute others silences everything but the chosen video", () => {
   const first = videoCells(focusAudio(cells))
   assert.equal(first[0].content.muted, false)
   assert.equal(first[1].content.muted, true)
+})
+
+const CONTROLS = { media: true, sync: true }
+const controlAt = (cells, id) =>
+  setCellContent(cells, id, { type: "control", panels: CONTROLS })
+const withControlInLast = (encoded, ...ids) => {
+  const cells = filled(encoded, ...ids)
+  return controlAt(cells, cells.at(-1).id)
+}
+
+test("control cells round-trip through a link, with whichever half is showing", () => {
+  for (const [token, panels] of [
+    ["control", { media: true, sync: true }],
+    ["controlm", { media: true, sync: false }],
+    ["controls", { media: false, sync: true }],
+  ]) {
+    const encoded = `AAMYdQw4w9WgXcQ,MAMY${token}`
+    const layout = decode(encoded)
+    assert.deepEqual(layout.slots[1].content, { type: "control", panels })
+    assert.equal(layout.videoCellCount, 1, "not counted as a place for a video")
+    const cells = instantiateSlots(layout.slots)
+    assert.equal(encodeLayout(cells, { includeVideo: true }), encoded)
+  }
+})
+
+test("a control cell survives being saved as a preset", () => {
+  const cells = withControlInLast("AAMY,MAMM,MMMM", "aaa", "bbb")
+  assert.equal(encodeLayout(cells), "AAMY,MAMM,MMMMcontrol")
+  assert.equal(videoSlotCount(cells), 2)
+  assert.equal(nonChatCellCount(cells), 3)
+})
+
+test("a stream id that merely starts like a control is still a stream", () => {
+  const [slot] = decode("AAYYcontrolABCD").slots
+  assert.equal(slot.content.type, "video")
+  assert.equal(slot.content.video.id, "controlABCD")
+})
+
+test("older clients would read the control token as an empty cell", () => {
+  // The previous UI's parser, in short: chat, twitch, or an 11 character id.
+  const idOrChat = "AAMYcontrolm".slice(4, 15)
+  assert.notEqual(idOrChat.slice(0, 4), "chat")
+  assert.notEqual(idOrChat.slice(0, 6), "twitch")
+  assert.notEqual(idOrChat.length, 11)
+})
+
+test("changing preset keeps a control cell's identity in a slot of its own", () => {
+  const cells = withControlInLast("AAMY,MAMM,MMMM", "aaa", "bbb")
+  const control = cells.find(isControlCell)
+  const next = applyLayout(cells, decode("AAMM,AMMM,MAMY,MMMMcontrol"), {
+    merge: true,
+  })
+  const moved = next.find(isControlCell)
+  assert.equal(moved.id, control.id)
+  assert.deepEqual(moved.rect, { x: 12, y: 12, w: 12, h: 12 })
+})
+
+test("with no slot of its own, a control cell takes what the videos left", () => {
+  const cells = withControlInLast("AAMY,MAMM,MMMM", "aaa", "bbb")
+  const control = cells.find(isControlCell)
+  const next = applyLayout(cells, decode("AAMM,AMMM,MAMM,MMMM"), {
+    merge: true,
+  })
+  assert.equal(videoCells(next).length, 2)
+  const moved = next.find(isControlCell)
+  assert.equal(moved.id, control.id)
+  assert.deepEqual(
+    moved.rect,
+    { x: 12, y: 12, w: 12, h: 12 },
+    "from the far end"
+  )
+})
+
+test("videos come first when a preset is too small for a control cell as well", () => {
+  const cells = withControlInLast("AAMY,MAMM,MMMM", "aaa", "bbb")
+  const next = applyLayout(cells, decode("AAMY,MAMY"), { merge: true })
+  assert.equal(videoCells(next).length, 2)
+  assert.equal(next.filter(isControlCell).length, 0)
+})
+
+test("auto-layout leaves a video room beside a control cell", () => {
+  const cells = withControlInLast("AAMY,MAMY", "aaa")
+  const outcome = addVideo(cells, video("bbb"), context())
+  assert.equal(outcome.kind, "placed")
+  assert.equal(videoCells(outcome.cells).length, 2)
+  assert.equal(outcome.cells.filter(isControlCell).length, 1)
+  for (const a of outcome.cells) {
+    for (const b of outcome.cells) {
+      if (a !== b) assert.equal(rectsCollide(a.rect, b.rect), false)
+    }
+  }
+})
+
+test("removing a control cell leaves the videos where they are", () => {
+  const cells = withControlInLast("AAMY,MAMM,MMMM", "aaa", "bbb")
+  const before = videoCells(cells).map((cell) => cell.rect)
+  const next = removeCellAuto(cells, cells.find(isControlCell).id, context())
+  assert.deepEqual(
+    videoCells(next).map((cell) => cell.rect),
+    before
+  )
+})
+
+test("removing a video reflows the rest, and the control cell comes too", () => {
+  const cells = withControlInLast("AAMY,MAMM,MMMM", "aaa", "bbb")
+  const control = cells.find(isControlCell)
+  const next = removeCellAuto(cells, videoCells(cells)[0].id, context())
+  assert.equal(videoCells(next).length, 1)
+  assert.equal(next.find(isControlCell).id, control.id)
+})
+
+test("docking uses an empty cell first, without moving anything", () => {
+  const cells = filled("AAMY,MAMM,MMMM", "aaa", "bbb")
+  const next = dockControls(cells, CONTROLS, context())
+  assert.equal(next.filter(isControlCell).length, 1)
+  assert.deepEqual(
+    next.map((cell) => cell.rect),
+    cells.map((cell) => cell.rect)
+  )
+})
+
+test("docking then uses free space, then a bigger preset", () => {
+  const roomy = [
+    {
+      id: "a",
+      rect: { x: 0, y: 0, w: 12, h: 12 },
+      content: { type: "video", video: video("aaa") },
+    },
+  ]
+  const free = dockControls(roomy, CONTROLS, context())
+  assert.equal(free[0].rect.w, 12, "the video stayed as it was")
+  assert.equal(free.filter(isControlCell).length, 1)
+
+  const full = filled("AAMY,MAMY", "aaa", "bbb")
+  const grown = dockControls(full, CONTROLS, context())
+  assert.equal(videoCells(grown).length, 2)
+  assert.equal(grown.filter(isControlCell).length, 1)
+  assert.deepEqual(
+    videoCells(grown).map((cell) => cell.id),
+    videoCells(full).map((cell) => cell.id),
+    "players keep running"
+  )
+})
+
+test("docking refuses to cost someone a chat", () => {
+  const cells = filled("AAUY,UAEYchat0", "aaa")
+  assert.equal(dockControls(cells, CONTROLS, context()), null)
 })
 
 test("the control panel always keeps one half showing", () => {

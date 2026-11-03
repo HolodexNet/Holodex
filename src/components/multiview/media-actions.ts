@@ -29,25 +29,30 @@ const isPlaying = (cell: VideoCell) => {
 const runningTimeline = () =>
   archiveClock.running ? currentTimeline(multiview().cells) : null
 
-export const playAll = () => videos().forEach((cell) => player(cell)?.play())
-export const pauseAll = () => videos().forEach((cell) => player(cell)?.pause())
-
-export function togglePlayback() {
+/**
+ * While the clock runs it decides for the archives. Moving those players directly
+ * would only have it seek them straight back.
+ */
+function setAllPlaying(playing: boolean) {
   const timeline = runningTimeline()
-  if (!timeline) {
-    if (videos().some(isPlaying)) pauseAll()
-    else playAll()
-    return
-  }
-  // Pausing only the players would have the clock seek them back into motion.
-  const paused = !archiveClock.getSnapshot().paused
-  archiveClock.setPaused(paused)
-  const onTimeline = new Set(timeline.videos.map((video) => video.id))
+  if (timeline) archiveClock.setPaused(!playing)
+  const onTimeline = new Set(timeline?.videos.map((video) => video.id))
   for (const cell of videos()) {
     if (onTimeline.has(cell.content.video.id)) continue
-    if (paused) player(cell)?.pause()
-    else player(cell)?.play()
+    if (playing) player(cell)?.play()
+    else player(cell)?.pause()
   }
+}
+
+export const playAll = () => setAllPlaying(true)
+export const pauseAll = () => setAllPlaying(false)
+
+export function togglePlayback() {
+  setAllPlaying(
+    runningTimeline()
+      ? archiveClock.getSnapshot().paused
+      : !videos().some(isPlaying)
+  )
 }
 
 export function seekBy(seconds: number) {

@@ -6,12 +6,13 @@ import {
   type PointerEvent,
 } from "react"
 
-import { XIcon } from "@/components/icons"
+import { GridFourIcon, XIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { useT } from "@/lib/i18n"
 import { clampWindow, type Point } from "@/lib/multiview/control"
 import { useMultiviewUi } from "@/stores/multiview-ui"
 import { ControlPanel, ControlPanelToggles } from "./control-panel"
+import { useMultiviewCommands } from "./use-commands"
 
 const viewport = () => ({
   width: window.innerWidth,
@@ -35,6 +36,7 @@ function FloatingPanel() {
   const node = useRef<HTMLElement>(null)
   const grab = useRef<Point | null>(null)
   const [dragging, setDragging] = useState(false)
+  const { dockControls } = useMultiviewCommands()
 
   const close = () => setUi({ mediaControlsOpen: false })
 
@@ -134,6 +136,17 @@ function FloatingPanel() {
             panels={panels}
             onChange={(next) => setUi({ controlWindowPanels: next })}
           />
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            aria-label={t("views.multiview.control.dock")}
+            title={t("views.multiview.control.dock")}
+            onClick={() => {
+              if (dockControls(panels)) close()
+            }}
+          >
+            <GridFourIcon />
+          </Button>
           <Button
             variant="ghost"
             size="icon-xs"

@@ -2,6 +2,7 @@ import type {
   Cell,
   CellId,
   ChatCell,
+  ControlCell,
   LayoutSlot,
   MultiviewVideo,
   VideoCell,
@@ -23,6 +24,9 @@ export const isVideoCell = (cell: Cell): cell is VideoCell =>
 
 export const isChatCell = (cell: Cell): cell is ChatCell =>
   cell.content?.type === "chat"
+
+export const isControlCell = (cell: Cell): cell is ControlCell =>
+  cell.content?.type === "control"
 
 export const isEmptyCell = (cell: Cell) => cell.content === null
 
@@ -50,9 +54,16 @@ export function soleAudibleCell(cells: readonly Cell[]): CellId | null {
   return audible.length === 1 ? audible[0].id : null
 }
 
-/** Cells showing or waiting for a video, which is what presets are sized by. */
+/**
+ * Cells that take up a video's place in a preset. Chats have slots of their own,
+ * but controls have to share, so a preset has to be big enough for them too.
+ */
 export const nonChatCellCount = (cells: readonly Cell[]): number =>
   cells.filter((cell) => !isChatCell(cell)).length
+
+/** Cells showing or waiting for a video, which is what presets are named for. */
+export const videoSlotCount = (cells: readonly Cell[]): number =>
+  cells.filter((cell) => !isChatCell(cell) && !isControlCell(cell)).length
 
 export const instantiateSlots = (slots: readonly LayoutSlot[]): Cell[] =>
   slots.map((slot) => ({

@@ -8,11 +8,12 @@ import {
   EraserIcon,
   LinkSimpleIcon,
   PencilSimpleIcon,
+  SlidersHorizontalIcon,
   TrashIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { useT } from "@/lib/i18n"
-import { isChatCell, isVideoCell } from "@/lib/multiview/cells"
+import { isChatCell, isControlCell, isVideoCell } from "@/lib/multiview/cells"
 import {
   planKeyResize,
   planNudge,
@@ -366,6 +367,14 @@ function CellChrome({
             <StreamAvatar video={video} size={16} />
             <span className="hidden min-w-0 truncate @[11rem]:block">
               {name}
+            </span>
+          </span>
+        )}
+        {isControlCell(cell) && (
+          <span className="flex h-6 max-w-full items-center gap-1.5 rounded-md bg-background/85 px-2 text-xs">
+            <SlidersHorizontalIcon className="shrink-0" />
+            <span className="hidden min-w-0 truncate @[11rem]:block">
+              {t("views.multiview.mediaControls")}
             </span>
           </span>
         )}

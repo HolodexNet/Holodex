@@ -26,7 +26,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useT } from "@/lib/i18n"
-import { activeVideos, nonChatCellCount } from "@/lib/multiview/cells"
+import { activeVideos, videoSlotCount } from "@/lib/multiview/cells"
 import { encodeLayout } from "@/lib/multiview/codec"
 import {
   decodeSavedPresets,
@@ -356,7 +356,7 @@ function SaveLayoutForm({ onDone }: { onDone: () => void }) {
   const setAuto = useMultiviewPresets((s) => s.setAuto)
   const [name, setName] = useState("")
   const [useInAuto, setUseInAuto] = useState(false)
-  const videoCells = nonChatCellCount(cells)
+  const videoCells = videoSlotCount(cells)
   const canSave =
     !!name && !custom.some((preset) => preset.name === name) && cells.length > 0
 

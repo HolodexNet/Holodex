@@ -5,7 +5,7 @@ import type { LayoutSlot } from "@/lib/multiview/types"
 
 const pct = (units: number) => `${(units / GRID_SIZE) * 100}%`
 
-/** A miniature of a layout: videos in one colour, chats in another. */
+/** A miniature of a layout, with videos, chats and controls in their own colours. */
 export function LayoutPreview({
   slots,
   portrait = false,
@@ -41,10 +41,13 @@ export function LayoutPreview({
               "flex size-full items-center justify-center rounded-[2px] text-xs",
               slot.content?.type === "chat"
                 ? "bg-amber-500/35"
-                : "bg-sky-500/35"
+                : slot.content?.type === "control"
+                  ? "bg-emerald-500/35"
+                  : "bg-sky-500/35"
             )}
           >
             {slot.content?.type === "chat" && "💬"}
+            {slot.content?.type === "control" && "🎛️"}
           </div>
         </div>
       ))}

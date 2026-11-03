@@ -23,6 +23,7 @@ import type {
   CellId,
   ChatPanels,
   ChatTarget,
+  ControlPanels,
   DecodedLayout,
   Rect,
 } from "@/lib/multiview/types"
@@ -59,6 +60,7 @@ interface MultiviewStore extends Persisted {
   setContent: (id: CellId, content: CellContent | null) => void
   setChatTarget: (id: CellId, target: ChatTarget) => void
   setChatPanels: (id: CellId, panels: ChatPanels) => void
+  setControlPanels: (id: CellId, panels: ControlPanels) => void
   setRects: (rects: ReadonlyMap<CellId, Rect>) => void
   swap: (a: CellId, b: CellId) => void
 
@@ -151,6 +153,10 @@ export const useMultiview = create<MultiviewStore>()(
           setChat(id, (content) => ({ ...content, target })),
         setChatPanels: (id, panels) =>
           setChat(id, (content) => ({ ...content, panels })),
+        setControlPanels: (id, panels) =>
+          edit((cells) =>
+            setCellContent(cells, id, { type: "control", panels })
+          ),
         setRects: (rects) => edit((cells) => setRects(cells, rects)),
         swap: (a, b) => edit((cells) => swapCells(cells, a, b)),
 

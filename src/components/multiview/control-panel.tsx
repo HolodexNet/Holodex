@@ -15,9 +15,17 @@ import { SyncControls } from "./sync-bar"
  */
 export function ControlPanel({ panels }: { panels: ControlPanels }) {
   return (
-    <div className="flex flex-col divide-y">
-      {panels.media && <Mixer />}
-      {panels.sync && <SyncControls stacked />}
+    <div className="flex flex-col divide-y @3xl:flex-row @3xl:divide-x @3xl:divide-y-0">
+      {panels.media && (
+        <div className="min-w-0 flex-1">
+          <Mixer />
+        </div>
+      )}
+      {panels.sync && (
+        <div className="min-w-0 flex-1">
+          <SyncControls stacked />
+        </div>
+      )}
     </div>
   )
 }

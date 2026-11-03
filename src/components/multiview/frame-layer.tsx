@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowClockwiseIcon, WarningIcon } from "@/components/icons"
 import { cellMotion, pruneCellMotion, useCellFlip } from "./cell-motion"
 import { ChatFrame } from "./chat-frame"
+import { ControlFrame } from "./control-frame"
 import { EmptyCell } from "./empty-cell"
 import { useEditGesture, useEffectiveRect } from "./gesture-store"
 
@@ -110,6 +111,9 @@ function CellBody({ cell }: { cell: Cell }) {
   }
   if (cell.content?.type === "chat") {
     return <ChatFrame cellId={cell.id} content={cell.content} />
+  }
+  if (cell.content?.type === "control") {
+    return <ControlFrame cellId={cell.id} content={cell.content} />
   }
   return <EmptyCell cellId={cell.id} />
 }

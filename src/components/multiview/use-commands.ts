@@ -3,12 +3,14 @@ import { toast } from "sonner"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { getT } from "@/lib/i18n"
-import { isVideoCell } from "@/lib/multiview/cells"
+import { isControlCell, isVideoCell } from "@/lib/multiview/cells"
 import { DEFAULT_PANELS, TL_PANELS } from "@/lib/multiview/chat"
+import { ALL_CONTROL_PANELS } from "@/lib/multiview/control"
 import { cellAt } from "@/lib/multiview/grid"
 import {
   addCell as planAddCell,
   addVideo as planAddVideo,
+  dockControls as planDockControls,
   fillFirstEmptyCell,
   removeCellAuto,
   type AutoLayoutContext,
@@ -20,6 +22,7 @@ import {
 } from "@/lib/multiview/presets"
 import type {
   CellId,
+  ControlPanels,
   DecodedLayout,
   GridPoint,
   MultiviewVideo,
@@ -159,16 +162,32 @@ export function useMultiviewCommands() {
   const dropVideo = useCallback(
     (video: MultiviewVideo, point: GridPoint) => {
       const target = cellAt(multiview().cells, point)
-      if (target) assignVideo(target.id, video)
+      if (target && !isControlCell(target)) assignVideo(target.id, video)
       else addVideo(video)
     },
     [addVideo]
   )
 
-  return useMemo(
-    () => ({ addVideo, addCell, removeCell, pick, dropVideo }),
-    [addVideo, addCell, removeCell, pick, dropVideo]
+  /** Whether it found a place; the viewer is told if it did not. */
+  const dockControls = useCallback(
+    (panels: ControlPanels) => {
+      const store = multiview()
+      const cells = planDockControls(store.cells, panels, context)
+      if (cells) store.replaceCells(cells)
+      else toast.error(getT().t("views.multiview.noRoom"))
+      return !!cells
+    },
+    [context]
   )
+
+  return useMemo(
+    () => ({ addVideo, addCell, removeCell, pick, dropVideo, dockControls }),
+    [addVideo, addCell, removeCell, pick, dropVideo, dockControls]
+  )
+}
+
+export function makeControlCell(id: CellId) {
+  multiview().setContent(id, { type: "control", panels: ALL_CONTROL_PANELS })
 }
 
 /** Turns an empty cell into a chat, in either of its starting forms. */

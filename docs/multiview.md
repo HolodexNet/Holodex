@@ -22,7 +22,7 @@ components/multiview, pages/multiview  Rendering and input
 
 | Module | Responsibility |
 | --- | --- |
-| `types` | The domain model: `Cell`, `CellContent`, `ChatTarget`, `MultiviewVideo` |
+| `types` | The domain model: `Cell`, `CellContent`, `ChatTarget`, `ControlPanels`, `MultiviewVideo` |
 | `grid`, `gestures` | Geometry, and what a drag, resize, draw or key press would do. Plans are computed, then rendered, then committed on release |
 | `layout` | Every layout change, as a function from cells to cells |
 | `codec`, `presets` | The shared link format, and the preset tables |
@@ -67,9 +67,13 @@ Handles sit inside their own cell, so neighbours never compete for the same pixe
 
 ## Controls
 
-`ControlPanel` holds audio, playback and archive sync in one place, and does not mind where it is put. `ControlWindow` floats it above the stage, draggable by its header. Unlike the sheet it replaced it covers neither the view nor the keyboard, so streams can be watched and worked at the same time. The sync half is off until asked for, because showing it starts the clock, which moves every archive onto the shared timeline.
+`ControlPanel` holds audio, playback and archive sync in one place, and does not mind where it is put. `ControlWindow` floats it above the stage, draggable by its header. Unlike the sheet it replaced it covers neither the view nor the keyboard, so streams can be watched and worked at the same time. The window starts on audio and playback. Showing the sync half starts the clock, which pauses the archives and lines them up on the shared timeline, ready to play together. While the clock runs, Play All and Pause All go through it, since moving those players directly would only have it seek them back.
 
 The sync bar along the bottom is the same controls again, and any number of them can be up at once: they all show one `ArchiveClock`.
+
+The panel also works as a cell, showing both halves to begin with. An empty cell can become one, and the window's grid button docks it (`dockControls`: an empty cell, then free space, then the next bigger preset, but never at the cost of a chat). A cell's picture-in-picture button floats it again. A control cell can be moved, resized and swapped like any other, and is saved in presets and shared links, written `control` (see `codec.ts`). A wide cell puts the two halves side by side.
+
+Controls are the one kind of content that does not have to have its own slot in a preset: on a preset change they take whatever the videos left free, starting from the far end so that a video arriving at the same moment still gets the first free slot. Auto-layout counts them when choosing a preset size, so they do not squeeze a video out.
 
 ## Keyboard
 
@@ -108,11 +112,11 @@ The sound can move for many reasons (a mixer button, a new stream starting, the 
 
 ## Dropping videos
 
-A drag that crosses an iframe disappears into it, so `DropShield` raises a transparent sheet over the stage for as long as a drag is under way. A drop on a video or empty cell shows that stream there, a drop on a chat points the chat at it, and a drop on free space uses auto-layout. A drag from another window that goes straight onto an iframe, without first crossing the page, cannot be seen by the page at all.
+A drag that crosses an iframe disappears into it, so `DropShield` raises a transparent sheet over the stage for as long as a drag is under way. A drop on a video or empty cell shows that stream there, a drop on a chat points the chat at it, and a drop on free space or controls uses auto-layout. A drag from another window that goes straight onto an iframe, without first crossing the page, cannot be seen by the page at all.
 
 ## Shared links
 
-Links from the previous UI still work. The format is documented in `codec.ts`, and the server also parses it to render layout images, so `decodeLayout` sorting its parts is part of the format: the number in `chat2` counts through videos in that order. The one addition is `chat-<stream>` for a chat on a stream that is not in the layout, which older clients read as an unbound chat.
+Links from the previous UI still work. The format is documented in `codec.ts`, and the server also parses it to render layout images, so `decodeLayout` sorting its parts is part of the format: the number in `chat2` counts through videos in that order. Two things have been added: `chat-<stream>` for a chat on a stream that is not in the layout, which older clients read as an unbound chat, and `control` for a control cell, which they read as an empty cell.
 
 ## Compared with the previous UI
 

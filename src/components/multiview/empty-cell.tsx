@@ -1,11 +1,16 @@
-import { ChatbubblesIcon, TldexIcon, VideoCameraIcon } from "@/components/icons"
+import {
+  ChatbubblesIcon,
+  SlidersHorizontalIcon,
+  TldexIcon,
+  VideoCameraIcon,
+} from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { useT } from "@/lib/i18n"
 import type { CellId } from "@/lib/multiview/types"
 import { useMultiviewUi } from "@/stores/multiview-ui"
-import { makeChatCell } from "./use-commands"
+import { makeChatCell, makeControlCell } from "./use-commands"
 
-/** What a cell can become: a stream, or a chat for one. */
+/** What a cell can become: a stream, a chat for one, or the controls for them. */
 export function EmptyCellActions({ cellId }: { cellId: CellId }) {
   const { t } = useT()
   const setUi = useMultiviewUi((s) => s.set)
@@ -40,6 +45,15 @@ export function EmptyCellActions({ cellId }: { cellId: CellId }) {
           {t("views.multiview.tl")}
         </Button>
       </div>
+      <Button
+        size="sm"
+        variant="secondary"
+        className="font-normal"
+        onClick={() => makeControlCell(cellId)}
+      >
+        <SlidersHorizontalIcon data-icon="inline-start" />
+        <span className="truncate">{t("views.multiview.control.cell")}</span>
+      </Button>
     </div>
   )
 }
