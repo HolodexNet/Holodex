@@ -237,16 +237,20 @@ export function SmartActionDialog({
   const allConfirmed = outcome?.items.every(
     (item) => item.state === "confirmed"
   )
+  const updatedCount =
+    outcome?.items.filter((item) => item.state === "confirmed").length ?? 0
+  const unconfirmed = outcome?.items.some((item) => item.state === "unverified")
+  const resultError =
+    error ?? (outcome?.error === "unknown" ? undefined : outcome?.error)
   const target = plan?.before.videos.find(
     (video) => video.id === plan.body.targetVideoId
   )
   const summary = plan
     ? tc(
         `curation.smartSummary.${action}`,
-        action === "make-simulcast" ? plan.changes : plan.body.videoIds.length,
+        plan.body.videoIds.length,
         {
           count: plan.body.videoIds.length,
-          changes: plan.changes,
           target: target
             ? videoTitle(target, preferEnglish)
             : targetChannels.get(plan.body.channelId ?? "")
@@ -281,9 +285,9 @@ export function SmartActionDialog({
             {errorText("sessionChanged")}
           </p>
         )}
-        {(error || outcome?.error) && (
+        {resultError && (
           <p role="alert" className="text-destructive">
-            {errorText(error ?? outcome!.error!)}
+            {errorText(resultError)}
           </p>
         )}
         {phase === "params" ? (
@@ -351,7 +355,7 @@ export function SmartActionDialog({
                       variant="outline"
                       onClick={() => void channels.refetch()}
                     >
-                      {t("curation.checkResults")}
+                      {t("curation.tryAgain")}
                     </Button>
                   </>
                 )}
@@ -437,19 +441,23 @@ export function SmartActionDialog({
                   aria-live="polite"
                   className="text-sm text-muted-foreground"
                 >
-                  {t(
-                    busy === "run"
-                      ? stopping
-                        ? "curation.stopping"
-                        : "curation.smartRunning"
-                      : busy === "check"
-                        ? "curation.smartChecking"
-                        : allConfirmed
-                          ? "curation.smartConfirmed"
-                          : outcome?.acknowledged
-                            ? "curation.smartApplied"
-                            : "curation.smartUnconfirmed"
-                  )}
+                  {busy === "run"
+                    ? t(
+                        stopping ? "curation.stopping" : "curation.smartRunning"
+                      )
+                    : busy === "check"
+                      ? t("curation.smartChecking")
+                      : allConfirmed
+                        ? tc("curation.updatedVideos", updatedCount)
+                        : t("curation.partialUpdatedVideos", {
+                            done: updatedCount,
+                            total: plan.body.videoIds.length,
+                          })}
+                </p>
+              )}
+              {phase === "results" && !busy && unconfirmed && (
+                <p className="text-sm text-muted-foreground">
+                  {t("curation.smartUnconfirmed")}
                 </p>
               )}
             </>
@@ -473,7 +481,7 @@ export function SmartActionDialog({
                 variant="ghost"
                 onClick={() => useSelectionAction.getState().close()}
               >
-                {t("selection.close")}
+                {t(phase === "results" ? "curation.done" : "selection.close")}
               </Button>
               {phase === "params" && (
                 <Button

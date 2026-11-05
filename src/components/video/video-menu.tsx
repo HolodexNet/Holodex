@@ -206,13 +206,15 @@ export function VideoMenu({
                   "destructive" in action && action.destructive
                 const previous = editActions[index - 1]
                 const Icon =
-                  action.id === "add-mentions"
-                    ? UsersIcon
-                    : action.id === "dissociate-video"
-                      ? LinkIcon
-                      : action.id === "dissociate-channel"
-                        ? UserIcon
-                        : TrashIcon
+                  action.id === "set-topic"
+                    ? NotePencilIcon
+                    : action.id === "add-mentions"
+                      ? UsersIcon
+                      : action.id === "dissociate-video"
+                        ? LinkIcon
+                        : action.id === "dissociate-channel"
+                          ? UserIcon
+                          : TrashIcon
 
                 return (
                   <Fragment key={action.id}>

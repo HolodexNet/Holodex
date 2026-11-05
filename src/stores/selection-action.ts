@@ -28,7 +28,14 @@ export const useSelectionAction = create<{
     if (
       user &&
       entries.length &&
-      can(user, action === "add-mentions" ? "mention.add" : "smart.edit")
+      can(
+        user,
+        action === "add-mentions"
+          ? "mention.add"
+          : action === "set-topic"
+            ? "topic.set"
+            : "smart.edit"
+      )
     )
       set({
         request: {

@@ -188,14 +188,8 @@ export function MentionActionDialog({
         )
       )
     : []
-  const completed =
-    results?.filter(
-      (result) => result.state === "confirmed" || result.state === "skipped"
-    ).length ?? 0
-  const processed =
-    results?.filter(
-      (result) => result.state !== "pending" && result.state !== "notAttempted"
-    ).length ?? 0
+  const added =
+    results?.filter((result) => result.state === "confirmed").length ?? 0
   const errorText = (key: string) =>
     t(`curation.errors.${key}`, {
       count:
@@ -263,20 +257,10 @@ export function MentionActionDialog({
                 aria-live="polite"
               >
                 {phase === "preview"
-                  ? t("curation.previewSummary", {
-                      requests: plan.requests,
-                      skipped: plan.operations.length - plan.requests,
-                    })
-                  : t(
-                      busy === "run"
-                        ? "curation.runningProgress"
-                        : "curation.progress",
-                      {
-                        processed,
-                        done: completed,
-                        total: plan.operations.length,
-                      }
-                    )}
+                  ? tc("curation.previewSummary", plan.requests)
+                  : busy === "run"
+                    ? t("curation.runningProgress")
+                    : tc("curation.mentionResult", added)}
               </p>
               <ul className="max-h-[40dvh] divide-y overflow-y-auto rounded-xl border px-3">
                 {plan.videos.map((video) => (
@@ -301,10 +285,10 @@ export function MentionActionDialog({
                             >
                               <span>{channelLabel(operation.channelId)}</span>
                               <span>
-                                {result
+                                {result && result.state !== "skipped"
                                   ? t(`curation.states.${result.state}`)
                                   : t(
-                                      `curation.preview.${operation.skip ?? "add"}`
+                                      `curation.preview.${operation.skip ?? (result ? "existing" : "add")}`
                                     )}
                               </span>
                               {result?.error && (
@@ -319,11 +303,6 @@ export function MentionActionDialog({
                   </li>
                 ))}
               </ul>
-              {phase === "results" && (
-                <p className="text-xs text-muted-foreground">
-                  {t("curation.resultsHint")}
-                </p>
-              )}
             </>
           )
         )}
@@ -345,7 +324,7 @@ export function MentionActionDialog({
                 variant="ghost"
                 onClick={() => useSelectionAction.getState().close()}
               >
-                {t("selection.close")}
+                {t(phase === "results" ? "curation.done" : "selection.close")}
               </Button>
               {phase === "params" && (
                 <Button
@@ -367,7 +346,7 @@ export function MentionActionDialog({
                     {t("curation.back")}
                   </Button>
                   <Button disabled={!sessionValid} onClick={() => void run()}>
-                    {t("curation.apply")}
+                    {t("curation.saveMentions")}
                   </Button>
                 </>
               )}

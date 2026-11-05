@@ -32,6 +32,16 @@ const videos = Array.from(
   mentions: [],
 }))
 mentions[videos[0].id] = [guest]
+const topics = ["gaming", "singing", "talk"]
+const videoTopics = Object.fromEntries(
+  videos.map((video, index) => [
+    video.id,
+    {
+      topic_id: index === 1 ? "talk" : null,
+      topic_approver_id: index === 1 ? "another-user" : null,
+    },
+  ])
+)
 const relationships = Object.fromEntries(
   videos.map((video) => [
     video.id,
@@ -80,6 +90,43 @@ const server = await createServer({
           if (path === "/statics/orgsV2.json")
             return send([{ name: "Hololive" }])
           if (path === "/statics/topics.json") return send([])
+          if (path === "/api/v2/topics")
+            return send(topics.map((id) => ({ id, count: 1 })))
+          const topic = /^\/api\/v2\/videos\/([^/]+)\/topic$/.exec(path)
+          if (topic) return send(videoTopics[topic[1]] ?? {})
+          if (path === "/api/v2/topics/videos" && request.method === "POST") {
+            const editor = ["editor", "admin"].includes(user.role)
+            if (
+              !Array.isArray(body.videoIds) ||
+              !body.videoIds.length ||
+              body.videoIds.some(
+                (id) => typeof id !== "string" || !id.trim()
+              ) ||
+              new Set(body.videoIds).size > 2000 ||
+              (!editor && body.topicId == null) ||
+              (body.topicId != null && !topics.includes(body.topicId))
+            ) {
+              response.statusCode = 400
+              return send({ message: "Invalid topic edit" })
+            }
+            const updated_video_ids = [],
+              skipped_video_ids = []
+            for (const id of new Set(body.videoIds)) {
+              const row = videoTopics[id]
+              if (
+                !row ||
+                (!editor && row.topic_id && row.topic_approver_id !== user.id)
+              )
+                skipped_video_ids.push(id)
+              else {
+                row.topic_id = body.topicId ?? null
+                row.topic_approver_id = user.id
+                videos.find((video) => video.id === id).topic_id = row.topic_id
+                updated_video_ids.push(id)
+              }
+            }
+            return send({ updated_video_ids, skipped_video_ids })
+          }
           if (path.startsWith("/statics/channel/"))
             return send(
               videos

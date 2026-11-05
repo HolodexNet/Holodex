@@ -13,11 +13,12 @@ All pass API access. Reads need no JWT; all mutations below require JWT.
 | DELETE `/v2/videos/:id/mentions` | `{channel_ids:string[]}` | Numeric changed count | Users remove their own mentions; editors/admins any |
 | POST `/v3/mentions/get` | `{ids:string[]}` | `{[videoId]:[{id,name,english_name,org}]}` | Missing groups omitted, not empty arrays |
 | POST `/v3/mentions/change` | `{videoIds:string[],mentions:[{id:string}],delete:boolean}` | Empty 204 | Editor/admin; failures sent as 400 serialized error |
-| GET `/v2/topics` | None | `[{id,count}]` | Cache 120 seconds |
+| GET `/v2/topics` | None | `[{id,count}]` | Cache 120 seconds; topic create/delete and the popularity job invalidate it |
 | GET `/v2/topics/search` | `q`, `limit=25`, `offset=0` | Full topic rows | Missing q throws generic error |
 | GET `/v2/videos/:id/topic` | None | `{topic_id,topic_approver_id}` when found | No explicit 404 when absent |
 | POST `/v2/topics` | `{id:string,regex_hint?:string|null}` | Full topic row array when regex provided; numeric result otherwise | Regex editing editor/admin only |
 | POST `/v2/topics/video` | `{videoId:string,topicId?:string|null}` | JSON string `"OK"` | User can set empty topic or their own; editor/admin can clear/replace |
+| POST `/v2/topics/videos` | `{videoIds:string[],topicId?:string|null}` | `{updated_video_ids:string[],skipped_video_ids:string[]}` | Same per-video rules as `/v2/topics/video`: editor/admin can clear or replace any listed video; ordinary users need a non-null topic and may only change videos with no topic or their own. 400 for invalid body, unknown topic, or more than 2000 distinct IDs |
 | PATCH `/v2/topics/:id/approve` | No body | Numeric changed count | Editor/admin only |
 
 Smart routes share body `{videoIds:string[],pageVideoId?:string,pageChannelId?:string}` and require editor/admin claims plus a current stored role check. Each returns `{success:true,result:<below>}`; 401/403 use standard JSON message errors.
@@ -54,19 +55,20 @@ Example smart edit:
 ```
 
 ## Validation Rules / Enums
-Use nonempty video/channel/topic IDs. Delete mentions requires a nonempty array. Simulcast needs at least two distinct existing stream videos, with every supplied video a stream. Refer allows at most four supplied videos. Missing arrays/IDs on several smart routes have no explicit schema validation and can become 500. Many v2 validation and role assertions also become 500.
+Use nonempty video/channel/topic IDs. Delete mentions requires a nonempty array. Simulcast needs at least two distinct existing stream videos, with every supplied video a stream. Refer allows at most four supplied videos. Missing arrays/IDs on several smart routes have no explicit schema validation and can become 500. Many v2 validation and role assertions also become 500. Bulk topic set (`/v2/topics/videos`) returns 400 for an invalid `videoIds` or `topicId` and for more than 2000 distinct IDs.
 
 ## Business Logic & Edge Cases
 - Bulk `/v3/mentions/change` currently inserts changes for **videoIds[0] only**, while marking all IDs for refresh. Do not describe it as a correct multi-video edit; submit one ID per request until fixed.
 - Single add resurrects deleted mentions and records the current contributor. Ordinary-user deletes can succeed with count zero for someone else's mention.
 - Topic assignment returns `"OK"` even when no row changed; read back to confirm. Ordinary users cannot clear topics and cannot overwrite another contributor's assignment.
+- Bulk topic set (`POST /v2/topics/videos`) applies the single-video rules to every listed video in one statement. `updated_video_ids` lists the videos the statement matched, including ones already set to the requested topic. `skipped_video_ids` lists requested videos that are missing or not permitted for the caller; the two cases are not distinguished. Decide what failed from the skipped list, not from a count. Each updated video credits the caller one contribution. Prefer this endpoint over one `/v2/topics/video` call per video, because each of those returns `"OK"` regardless of outcome.
 - Creating a topic without a regex as editor/admin calls approval without forwarding the role, which can assert and return 500 after insertion. Avoid treating that error as proof no change happened.
 - Merge participants unions talent participants and uploaders across selected videos, reviving/inserting missing mentions. Its returned participants may include uploader channels beyond the vtuber set used for insertions.
 - Simulcast links every pair symmetrically. Refer links selected pairs directionally in both directions. Dissociate-video removes selected downstream relationships to target plus reverse simulcast relationships; it does not remove every possible reverse refer/clip link.
-- Remove-mentions soft-deletes participants. Smart edits do not consistently invalidate cached/indexed video responses immediately.
+- Remove-mentions soft-deletes participants. Edits that bump the video (mentions, topics, relationships, songs) republish it and invalidate its cached v2/v3 responses within a few seconds; channel-wide edits converge at the next projector sweep (about a minute).
 
 ## Integration Notes
-Preview selected videos and exact action before posting. Preserve selections on failure; re-fetch canonical mentions/topic/detail after success or ambiguous failure. Do not use a returned zero count as permission confirmation. No curation-specific sockets are registered.
+Preview selected videos and exact action before posting. Preserve selections on failure; re-fetch canonical mentions/topic/detail after success or ambiguous failure. Do not use a returned zero count as permission confirmation. For mass topic edits, send one `/v2/topics/videos` request (at most 2000 IDs), then show `skipped_video_ids` to the user and re-fetch `GET /v2/videos/:id/topic` for the updated videos to confirm the result. No curation-specific sockets are registered.
 
 ## Test Scenarios
 1. Ordinary contributor can add a vtuber, but cannot delete another user's mention.
@@ -74,3 +76,4 @@ Preview selected videos and exact action before posting. Preserve selections on 
 3. Bulk mention requests use one video and handle empty 204.
 4. Non-stream simulcast and more than four refer targets return 400.
 5. Topic set success with no change is detected by read-back.
+6. Bulk topic set with one permitted, one not-permitted, and one missing video reports them in `updated_video_ids` and `skipped_video_ids`; an ordinary user sending a null topic gets 400; 2001 distinct IDs get 400.

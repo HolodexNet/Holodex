@@ -2,6 +2,7 @@ import type { ChannelSummary, Video, VideoRef } from "./types"
 
 export type RelationshipField = "simulcasts" | "refers" | "sources" | "clips"
 export interface VideoCurationEdit {
+  topicId?: string | null
   addMentions?: ChannelSummary[]
   removeMentions?: string[]
   relationships?: Partial<
@@ -52,6 +53,11 @@ export function rememberVideoEdit(
     )
   confirmedEdits.set(id, {
     edit: {
+      ...("topicId" in edit
+        ? { topicId: edit.topicId }
+        : "topicId" in previous
+          ? { topicId: previous.topicId }
+          : {}),
       addMentions: mentions.add,
       removeMentions: mentions.remove,
       relationships,
@@ -92,6 +98,7 @@ export function withMentionAdditions(video: Video, now = Date.now()): Video {
   }
   const edit = stored.edit
   const next = { ...video }
+  if ("topicId" in edit) next.topic_id = edit.topicId
   if (Array.isArray(video.mentions) || edit.addMentions?.length)
     next.mentions = applyChanges(video.mentions ?? [], {
       add: edit.addMentions,

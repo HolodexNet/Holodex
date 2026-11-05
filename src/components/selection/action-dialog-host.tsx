@@ -14,6 +14,12 @@ const SmartActionDialog = lazy(() =>
   }))
 )
 
+const TopicActionDialog = lazy(() =>
+  import("./topic-action-dialog").then((module) => ({
+    default: module.TopicActionDialog,
+  }))
+)
+
 export function SelectionActionHost() {
   const request = useSelectionAction((state) => state.request)
   if (!request) return null
@@ -21,6 +27,8 @@ export function SelectionActionHost() {
     <Suspense fallback={null}>
       {request.action === "add-mentions" ? (
         <MentionActionDialog key={request.id} request={request} />
+      ) : request.action === "set-topic" ? (
+        <TopicActionDialog key={request.id} request={request} />
       ) : (
         <SmartActionDialog
           key={request.id}

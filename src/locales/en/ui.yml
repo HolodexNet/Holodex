@@ -1055,118 +1055,159 @@ selection:
   selectVideo: 'Select {title}'
   deselectVideo: 'Deselect {title}'
   selectGroup: 'Select all {count} perspectives'
-  selectLoaded: 'Select {count} loaded'
+  selectLoaded: 'Select {count} videos'
   copyLinks: Copy links
-  review: Selected videos from all pages
-  clear: Clear
+  review: Selected videos
+  clear: Deselect all
   close: Close
-  remove: Remove
-  limit: 'Selection is limited to {count} videos.'
+  remove: Deselect
+  limit: 'You can select up to {count} videos.'
   actionLimit: 'Select at most {count} videos for this action.'
 curation:
+  topics:
+    title: Set topic…
+    description: Choose a topic for the selected videos.
+    choose: Choose a topic…
+    clear: Clear topic
+    empty: No matching topics.
+    loading: Loading topics…
+    loadFailed: Could not load topics. Try loading the list again.
+    userHint: You can change topics you added, or add a topic where there isn't one yet.
+    summary: 'Set topic to “{topic}” for this video. | Set topic to “{topic}” for {count} videos.'
+    clearSummary: 'Clear the topic from this video. | Clear the topic from {count} videos.'
+    running: Saving topics…
+    checking: Checking updates…
+    stop: Stop
+    stopping: Stopping…
+    save: Save topic
+    done: Done
+    tryAgain: Try again
+    checkAgain: Check again
+    editRemaining: Edit remaining videos
+    resultTopic: 'Topic: {topic}'
+    allUpdated: 'Topic updated on 1 video. | Topic updated on {count} videos.'
+    allCleared: 'Topic cleared from 1 video. | Topic cleared from {count} videos.'
+    partialUpdated: 'Topic updated on {count} of {total} videos.'
+    partialCleared: 'Topic cleared from {count} of {total} videos.'
+    skippedReason: This video is unavailable or you don't have permission to edit it.
+    unconfirmedHint: Some updates couldn't be confirmed. Check again to see whether they were saved.
+    cleared: Cleared
+    states:
+      confirmed: Updated
+      skipped: Not updated
+      unverified: Couldn't confirm
+      failed: Not updated
+      notAttempted: Not updated
+    errors:
+      stopped: Stopped before saving.
+      sessionChanged: Please sign in again to edit topics.
+      forbidden: You don't have permission to edit these topics.
+      rateLimited: Too many requests. Wait a moment before trying again.
+      rejected: Couldn't save the topic. Check your choice and try again.
   editVideos: Edit videos
   addMentions: Add mentions…
   description: 'Add participants to this video. | Add participants to {count} videos.'
   channels: Participants
   pickChannels: Find a talent…
-  limits: 'Up to {videos} videos, {channels} participants, and {requests} changes per run.'
+  limits: 'Up to {videos} videos, {channels} participants, and {requests} new mentions.'
   previewButton: Review changes
-  preparing: Loading current mentions…
-  previewSummary: '{requests} additions; {skipped} skipped. Current mentions are checked again before applying.'
-  progress: '{done} of {total} changes confirmed or skipped.'
-  runningProgress: '{processed} of {total} requests processed; {done} changes confirmed or skipped.'
+  preparing: Loading participants…
+  previewSummary: 'No new mentions needed. | Add 1 mention. | Add {count} mentions.'
+  mentionResult: 'No mentions added. | Added 1 mention. | Added {count} mentions.'
+  runningProgress: Adding mentions…
   back: Back
-  apply: Apply changes
-  stop: Stop and check results
-  stopping: Stopping and checking results…
-  reviewRemaining: Review remaining
-  resultsHint: 'Videos with no remaining changes are cleared from your selection. Review remaining fetches current mentions before another attempt.'
+  apply: Save changes
+  saveMentions: Add mentions
+  stop: Stop
+  stopping: Stopping…
+  done: Done
+  tryAgain: Try again
+  reviewRemaining: Edit remaining videos
   preview:
     add: Add participant
     existing: Already mentioned
-    uploader: Uploading channel — skipped
-    placeholder: Placeholder — skipped
+    uploader: Already the host
+    placeholder: Mentions unavailable
   states:
-    pending: Pending
-    checking: Awaiting verification
-    skipped: Skipped
-    confirmed: Confirmed
-    failed: Not applied
-    unknown: Outcome unknown
-    notAttempted: Not attempted
+    pending: Waiting
+    checking: Checking…
+    confirmed: Added
+    failed: Not added
+    unknown: Couldn't confirm
+    notAttempted: Not added
   errors:
     videoLimit: 'Select at most {count} videos.'
     channelLimit: 'Choose between 1 and {count} participants.'
-    operationLimit: 'This action exceeds {count} additions. Choose fewer videos or participants.'
-    readFailed: Could not load current mentions. No changes were sent.
-    previewChanged: Mentions changed since the preview. Review this video again.
-    forbidden: Permission denied. Check your login and access before continuing.
-    sessionChanged: Your login changed. Close this dialog and start again.
-    rateLimited: The server rate limit was reached. Remaining changes were stopped; wait before reviewing again.
-    rejected: The server rejected this change. Check the video and participant before trying again.
-    unknown: The outcome could not be confirmed. Review current mentions before trying again.
-    notApplied: The participant was absent when the change was checked.
+    operationLimit: 'You can add up to {count} mentions at once. Choose fewer videos or participants.'
+    readFailed: Couldn't load participants. Try again.
+    previewChanged: Participants have changed. Review this video again.
+    forbidden: You don't have permission to add these mentions.
+    sessionChanged: Please reopen the editor to continue with your current account.
+    rateLimited: Too many requests. Wait a moment before trying again.
+    rejected: Couldn't add this participant. Check the video and try again.
+    unknown: Couldn't confirm whether this participant was added.
+    notApplied: This participant wasn't added.
   targetVideo: Target video
   otherVideo: Another video…
   videoIdOrUrl: Video ID or Holodex / YouTube URL
   targetChannel: Participant to remove
   chooseChannel: Choose a mentioned participant…
   includePageVideo: Include this page's video in the group
-  targetExcluded: The target video is excluded from the videos being edited.
-  noParticipants: No talent participants were found.
+  targetExcluded: The chosen video won't be edited.
+  noParticipants: No talents found in these videos.
   confirmRemoval: 'Type {count} to confirm removing all mentions from these videos.'
-  smartLimits: 'Select {minimum}–{maximum} distinct videos for this action.'
-  checkResults: Check results
-  reviewAgain: Review again
-  smartRunning: Applying the group edit and checking results…
-  smartChecking: Checking current results without repeating the edit…
-  smartConfirmed: All selected edits are verified. Their videos have been cleared from your selection.
-  smartApplied: The server accepted the edit. Some catalog results are still unverified; those videos stay selected. Check results does not repeat the edit.
-  smartUnconfirmed: Some edits could not be verified and remain selected. Check the results before reviewing another attempt.
+  smartLimits: 'Choose {minimum}–{maximum} videos.'
+  checkResults: Check again
+  reviewAgain: Edit videos again
+  smartRunning: Saving changes…
+  smartChecking: Checking updates…
+  updatedVideos: 'Updated 1 video. | Updated {count} videos.'
+  partialUpdatedVideos: 'Updated {done} of {total} videos.'
+  smartUnconfirmed: Some updates couldn't be confirmed. Check again to see whether they were saved.
   smart:
     merge-participants: Merge participants
-    make-simulcast: Make simulcast
-    make-refer: Make references
-    dissociate-video: Dissociate from video…
+    make-simulcast: Group as simulcast
+    make-refer: Add references
+    dissociate-video: Unlink from video…
     dissociate-channel: Remove participant…
     remove-mentions: Remove all mentions
   smartDescription:
-    merge-participants: Combine talent mentions and talent uploaders across the selected videos. Existing participants are preserved.
-    make-simulcast: Link every pair of selected streams as simulcasts in both directions.
-    make-refer: Add references between every selected pair in both directions.
-    dissociate-video: Remove the selected videos' source, reference, and simulcast links to the target. Reverse simulcasts are also removed; reverse references are preserved.
-    dissociate-channel: Remove one mentioned participant from every selected video. This does not change the uploading channel.
-    remove-mentions: Remove every current participant mention from the selected videos. Uploading channels and video relationships are preserved.
+    merge-participants: Add the group's talents and hosts to each selected video.
+    make-simulcast: Group these streams as perspectives of the same event.
+    make-refer: Mark each selected video as a reference for the others.
+    dissociate-video: Remove source, reference, and simulcast links to the chosen video, including its simulcast links back to this group.
+    dissociate-channel: Remove one participant from the selected videos. The host stays the same.
+    remove-mentions: Remove all participant mentions from the selected videos. The host stays the same.
   smartSummary:
-    merge-participants: 'Merge talent participants across {count} videos (missing mentions: {changes}).'
-    make-simulcast: 'Link {count} streams as simulcasts (1 pair). | Link {count} streams as simulcasts ({changes} pairs).'
-    make-refer: 'Link {count} videos with references in both directions ({changes} directed links).'
-    dissociate-video: 'Dissociate this video from “{target}”. | Dissociate {count} videos from “{target}”.'
-    dissociate-channel: 'Remove “{target}” from this video. | Remove “{target}” from {count} videos ({changes} current mentions).'
-    remove-mentions: 'Remove all mentions from this video (current mentions: {changes}). | Remove all mentions from {count} videos (current mentions: {changes}).'
+    merge-participants: 'Share participants across {count} videos.'
+    make-simulcast: 'Group {count} streams as a simulcast.'
+    make-refer: 'Add references between {count} videos.'
+    dissociate-video: 'Unlink this video from “{target}”. | Unlink {count} videos from “{target}”.'
+    dissociate-channel: 'Remove “{target}” from this video. | Remove “{target}” from {count} videos.'
+    remove-mentions: 'Remove all mentions from this video. | Remove all mentions from {count} videos.'
   smartStates:
-    confirmed: Verified
-    unverified: Unverified
-    failed: Rejected
-    notAttempted: Not attempted
+    confirmed: Updated
+    unverified: Couldn't confirm
+    failed: Not updated
+    notAttempted: Not updated
   smartErrors:
     tooFew: 'Select at least {minimum} videos to edit.'
     tooMany: 'Select at most {maximum} videos for this action.'
     streamsOnly: Simulcasts require stream videos only.
-    noPlaceholders: This action cannot include placeholder videos.
-    targetRequired: Enter a valid target video ID or URL.
+    noPlaceholders: This edit isn't available for placeholder videos.
+    targetRequired: Enter a video ID or a Holodex / YouTube link.
     channelRequired: Choose the participant to remove.
-    participantTypeUnknown: Could not confirm which participants are talents. No changes were sent.
-    videoMissing: One of the videos could not be loaded. Check the selection and target.
-    tooManyChanges: This merge would add more than 500 mentions. Choose a smaller group.
-    previewChanged: Relevant data changed since the preview. Review the action again before applying it.
-    readFailed: Could not load the data needed to preview or check the edit. No new changes were sent.
-    stopped: Stopped before the edit was sent.
-    sessionChanged: Your login or editing permissions changed. Close this dialog and start again.
-    forbidden: The server denied this edit. Your session was checked; review your access before continuing.
-    rateLimited: The server rate limit was reached. Wait before reviewing another attempt.
-    rejected: The server rejected the edit. Check the selected videos and target.
-    unknown: The request outcome is uncertain. Check current results before reviewing another attempt.
+    participantTypeUnknown: Couldn't identify the talents in these videos. Try again.
+    videoMissing: Couldn't load one of the videos. Check your selection and try again.
+    tooManyChanges: This would add more than 500 mentions. Choose fewer videos.
+    previewChanged: These videos have changed. Review the changes again before saving.
+    readFailed: Couldn't load the video information. Try again.
+    stopped: Stopped before saving.
+    sessionChanged: Please reopen the editor to continue with your current account.
+    forbidden: You don't have permission to make these changes.
+    rateLimited: Too many requests. Wait a moment before trying again.
+    rejected: Couldn't save these changes. Check your selection and try again.
+    unknown: Couldn't confirm whether the changes were saved.
 channelRequest:
   RequestType: 'Request Type:'
   Types:

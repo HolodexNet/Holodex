@@ -1,11 +1,12 @@
 import type { User } from "./types"
 
-export type Capability = "mention.add" | "smart.edit"
+export type Capability =
+  "mention.add" | "topic.set" | "topic.clear" | "smart.edit"
 
 const ROLE_CAPABILITIES: Record<User["role"], ReadonlySet<Capability>> = {
-  user: new Set(["mention.add"]),
-  editor: new Set(["mention.add", "smart.edit"]),
-  admin: new Set(["mention.add", "smart.edit"]),
+  user: new Set(["mention.add", "topic.set"]),
+  editor: new Set(["mention.add", "topic.set", "topic.clear", "smart.edit"]),
+  admin: new Set(["mention.add", "topic.set", "topic.clear", "smart.edit"]),
 }
 
 export function can(user: User | null, capability: Capability): boolean {

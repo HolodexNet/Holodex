@@ -1,6 +1,7 @@
 import { ALL_VTUBERS } from "@/lib/consts"
 import { apiRequestBudget } from "@/lib/api-rate-limit"
 import { withMentionAdditions } from "@/lib/mention-cache"
+import type { TopicPlan } from "@/lib/selection-actions/topics"
 import {
   isMentionSmartAction,
   type SmartActionId,
@@ -458,6 +459,30 @@ export const api = {
   },
 
   curation: {
+    topics: (signal?: AbortSignal) =>
+      request<{ id: string; count: number }[]>(`${API}/v2/topics`, { signal }),
+    async topic(
+      id: string,
+      signal: AbortSignal
+    ): Promise<{ topic_id: string | null }> {
+      const result = await request<{ topic_id?: string | null } | null>(
+        `${API}/v2/videos/${encodeURIComponent(id)}/topic`,
+        { query: { _curation: crypto.randomUUID() }, signal }
+      )
+      if (
+        !result ||
+        !(result.topic_id === null || typeof result.topic_id === "string")
+      )
+        throw new Error("Invalid topic response")
+      return { topic_id: result.topic_id }
+    },
+    setTopics: (plan: TopicPlan, signal: AbortSignal) =>
+      request<unknown>(`${API}/v2/topics/videos`, {
+        method: "POST",
+        body: plan,
+        auth: "required",
+        signal,
+      }),
     async smartSnapshot(
       action: SmartActionId,
       body: SmartBody,
