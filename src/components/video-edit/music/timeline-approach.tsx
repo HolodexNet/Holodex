@@ -31,7 +31,7 @@ import {
 import { MIN_SONG_SECONDS, songCovers } from "@/lib/video-edit/songs"
 import { formatTimecode } from "@/lib/video-edit/timecode"
 import { useSongEditor } from "@/stores/song-editor"
-import { SongForm } from "./song-form"
+import { focusSongName, SongForm } from "./song-form"
 import {
   usePlayheadSecond,
   useSongShortcuts,
@@ -262,6 +262,12 @@ function SongTimeline({ className }: { className?: string }) {
   const onLanePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     const active = drag.current
     if (!active || event.pointerId !== active.pointerId) return
+    // Let go somewhere we couldn't see it, before the drag had really begun.
+    if (event.buttons === 0) {
+      drag.current = null
+      setPreview(null)
+      return
+    }
     if (
       !active.moved &&
       Math.abs(event.clientX - active.originX) < DRAG_THRESHOLD_PX
@@ -390,7 +396,10 @@ function SongTimeline({ className }: { className?: string }) {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => workspace.addAt(clock.now())}
+            onClick={() => {
+              workspace.addAt(clock.now())
+              focusSongName()
+            }}
           >
             <PlusIcon data-icon="inline-start" />
             {t("videoEdit.songs.add")}

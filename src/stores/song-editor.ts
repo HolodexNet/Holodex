@@ -65,6 +65,8 @@ interface SongEditorState extends Snapshot {
   lastGroup: { key: string; at: number } | null
   saving: boolean
   saveResults: Record<string, SongSaveState>
+  /** Someone tried to save with something left to fix, so it's time to point it out. */
+  attemptedSave: boolean
   /** How many unsaved changes were picked up from an earlier visit. */
   restored: number
   matches: Record<string, MatchInfo>
@@ -152,6 +154,7 @@ const EMPTY = {
   lastGroup: null,
   saving: false,
   saveResults: {},
+  attemptedSave: false,
   restored: 0,
   matches: {},
 } satisfies Partial<SongEditorState>
@@ -386,6 +389,7 @@ export const useSongEditor = create<SongEditorState>((set, get) => ({
       .filter((row) => row.state === "removed")
       .map((row) => row.song.id)
     const blocked = writable.length - ready.length
+    set({ attemptedSave: blocked > 0 })
     if (!ready.length && !removals.length)
       return { saved: 0, notSaved: 0, blocked }
 

@@ -13,7 +13,7 @@ import { useT } from "@/lib/i18n"
 import { blocksSaving, type SongRow } from "@/lib/video-edit/songs"
 import { formatTimecode } from "@/lib/video-edit/timecode"
 import { useSongEditor } from "@/stores/song-editor"
-import { SongForm, TrackArt, useSongNotes } from "./song-form"
+import { focusSongName, SongForm, TrackArt, useSongNotes } from "./song-form"
 import { useSongWorkspace } from "./workspace"
 
 function RowStatus({ row }: { row: SongRow }) {
@@ -176,7 +176,10 @@ export function Tracklist({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => workspace.addAt(workspace.clock.now())}
+            onClick={() => {
+              workspace.addAt(workspace.clock.now())
+              focusSongName()
+            }}
           >
             <PlusIcon data-icon="inline-start" />
             {t("videoEdit.songs.add")}

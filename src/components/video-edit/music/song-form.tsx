@@ -188,6 +188,7 @@ export function SongNameField({
   // Only for someone actively looking: a name that's just sitting there, or
   // that matching already filled in, shouldn't spend Apple's search allowance.
   const [looking, setLooking] = useState(false)
+  const attemptedSave = useSongEditor((state) => state.attemptedSave)
   const query = useDebounced(song.name.trim(), 350)
   const results = useQuery({
     queryKey: ["track-search", query],
@@ -218,7 +219,7 @@ export function SongNameField({
         disabled={disabled}
         autoFocus={autoFocus}
         autoHighlight={autoHighlight}
-        invalid={!song.name.trim()}
+        invalid={attemptedSave && !song.name.trim()}
         className="h-8"
         marker="song-name-field"
         onOpenChange={(open) => {
@@ -314,7 +315,7 @@ export function EdgeControl({
                 ? "videoEdit.keys.startEarlier"
                 : "videoEdit.keys.endEarlier"
             )}
-            onClick={() => workspace.nudge(edge, -1)}
+            onClick={() => workspace.nudge(edge, -1, song)}
           >
             <MinusIcon />
           </Button>
@@ -334,7 +335,7 @@ export function EdgeControl({
             title={t(
               isStart ? "videoEdit.keys.startLater" : "videoEdit.keys.endLater"
             )}
-            onClick={() => workspace.nudge(edge, 1)}
+            onClick={() => workspace.nudge(edge, 1, song)}
           >
             <PlusIcon />
           </Button>
@@ -394,7 +395,12 @@ export function useSongNotes(song: SongDraft): {
   const { t } = useT()
   const workspace = useSongWorkspace()
   const result = useSongEditor((state) => state.saveResults[song.id])
-  const issues = songIssues(song, workspace.songs, workspace.duration)
+  const attemptedSave = useSongEditor((state) => state.attemptedSave)
+  // A brand-new song having no name yet isn't a problem until someone tries to
+  // save it, whereas bad times come from an edit and are worth saying at once.
+  const issues = songIssues(song, workspace.songs, workspace.duration).filter(
+    (issue) => issue !== "name" || attemptedSave
+  )
   return {
     issues,
     messages: [
@@ -680,3 +686,13 @@ export function SongForm({
 }
 
 const NO_TRACKS: Track[] = []
+
+/**
+ * After adding a song with a click, naming it is the obvious next step. Adding one
+ * with the S key leaves focus alone, because E has to go on meaning "song ends".
+ */
+export function focusSongName() {
+  requestAnimationFrame(() =>
+    document.querySelector<HTMLInputElement>("[data-song-name-field]")?.focus()
+  )
+}

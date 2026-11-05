@@ -57,7 +57,7 @@ function Transport() {
         onClick={() => clock.skip(-30)}
       >
         <RewindIcon data-icon="inline-start" />
-        30
+        −30
       </Button>
       <Button
         variant="ghost"
@@ -65,7 +65,7 @@ function Transport() {
         aria-label={t("videoEdit.capture.skip", { seconds: -5 })}
         onClick={() => clock.skip(-5)}
       >
-        5
+        −5
       </Button>
       <Button
         variant="secondary"
@@ -82,7 +82,7 @@ function Transport() {
         aria-label={t("videoEdit.capture.skip", { seconds: 5 })}
         onClick={() => clock.skip(5)}
       >
-        5
+        +5
       </Button>
       <Button
         variant="ghost"
@@ -90,7 +90,7 @@ function Transport() {
         aria-label={t("videoEdit.capture.skip", { seconds: 30 })}
         onClick={() => clock.skip(30)}
       >
-        30
+        +30
         <FastForwardIcon data-icon="inline-end" />
       </Button>
     </div>
@@ -175,14 +175,10 @@ export function CaptureApproach() {
       ? {
           hearStart: () => workspace.hear("start", current),
           hearEnd: () => workspace.hear("end", current),
-          startEarlier: () =>
-            workspace.setEdge(current.id, "start", current.start - 1, {
-              group: `nudge:start:${current.id}`,
-            }),
-          startLater: () =>
-            workspace.setEdge(current.id, "start", current.start + 1, {
-              group: `nudge:start:${current.id}`,
-            }),
+          startEarlier: () => workspace.nudge("start", -1, current),
+          startLater: () => workspace.nudge("start", 1, current),
+          endEarlier: () => workspace.nudge("end", -1, current),
+          endLater: () => workspace.nudge("end", 1, current),
         }
       : {}),
   })

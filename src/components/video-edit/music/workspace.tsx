@@ -72,7 +72,7 @@ interface SongWorkspace {
   /** Sets the selected song's edge to the playhead; S with nothing selected starts one. */
   mark: (edge: SongEdge) => void
   /** Moves an edge and plays the result, since hearing it is the point of moving it. */
-  nudge: (edge: SongEdge, delta: number) => void
+  nudge: (edge: SongEdge, delta: number, song?: SongDraft | null) => void
   hear: (edge: SongEdge, song?: SongDraft | null) => void
   /** Selects a song and takes the player to it. */
   openSong: (id: string, options?: { seek?: boolean }) => void
@@ -340,11 +340,11 @@ export function SongWorkspaceProvider({
       if (selected && canEdit(selected)) setEdge(selected.id, edge, now)
       else if (edge === "start" && canAdd) addAt(now)
     },
-    nudge: (edge, delta) => {
-      if (!selected || !canEdit(selected)) return
-      const value = selected[edge] + delta
-      setEdge(selected.id, edge, value, {
-        group: `nudge:${edge}:${selected.id}`,
+    nudge: (edge, delta, song = selected) => {
+      if (!song || !canEdit(song)) return
+      const value = song[edge] + delta
+      setEdge(song.id, edge, value, {
+        group: `nudge:${edge}:${song.id}`,
       })
       if (edge === "start") clock.hearFrom(value)
       else clock.hearUntil(value, 3)
