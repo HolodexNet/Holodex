@@ -243,7 +243,9 @@ function FavoritesSection() {
         )
       })}
       {entries.length > COLLAPSED_FAVORITES && (
-        <SidebarMenuItem>
+        <SidebarMenuItem
+          className={cn(expanded && "sticky bottom-0 z-10 bg-sidebar py-0.5")}
+        >
           <SidebarMenuButton
             className="text-muted-foreground"
             tooltip={

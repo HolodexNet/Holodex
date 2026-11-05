@@ -18,6 +18,7 @@ import { ALL_VTUBERS } from "@/lib/consts"
 import { useT } from "@/lib/i18n"
 import type { Org } from "@/lib/types"
 import { useOrgStore } from "@/stores/org"
+import { ToolbarTip } from "./toolbar-tip"
 import type { VideoSourceChoice } from "./use-source-videos"
 
 const rowClass =
@@ -141,11 +142,25 @@ export function SourcePicker({
 }) {
   const { t } = useT()
   const [open, setOpen] = useState(false)
+  const label = t("views.multiview.tips.videoSource")
+  const current = sourceLabel(value, t)
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
+      <ToolbarTip
+        label={label}
+        detail={t("views.multiview.tips.videoSourceDetail")}
+        disabled={open}
         render={
-          <Button variant="outline" size="sm" className="max-w-36 shrink-0" />
+          <PopoverTrigger
+            render={
+              <Button
+                variant="outline"
+                size="sm"
+                className="max-w-36 shrink-0"
+                aria-label={`${label}: ${current}`}
+              />
+            }
+          />
         }
       >
         {value.kind === "url" &&
@@ -154,9 +169,9 @@ export function SourcePicker({
           ) : (
             <LogoYoutubeIcon data-icon="inline-start" />
           ))}
-        <span className="truncate">{sourceLabel(value, t)}</span>
+        <span className="truncate">{current}</span>
         <CaretDownIcon data-icon="inline-end" className="size-3" />
-      </PopoverTrigger>
+      </ToolbarTip>
       <PopoverContent
         align="start"
         className="max-h-[70vh] w-60 gap-0 overflow-y-auto p-1"

@@ -690,6 +690,33 @@ views:
     clearAll: Clear all cells
     collapseToolbar: Hide toolbar
     expandToolbar: Show toolbar
+    tips:
+      siteMenu: Back to Holodex
+      siteMenuDetail: Exit multiview
+      videoSource: Change orgs for Quick Access
+      videoSourceDetail: Change Quick Access to show another org or your favorited channels. You can even add a video by URL.
+      refresh: Click to check for new streams
+      addVideo: Find a stream or paste a link, and it gets a spot of its own on the screen.
+      edit: Lets you drag videos around, resize them and drag-to-create new cells, until the screen looks how you want.
+      presets: Pick a ready-made arrangement or configure the autolayout defaults.
+      addCell: Adds an empty cell to the screen, which you can fill with a video or a chat.
+      director: Makes the biggest video your main screen, so one click or number-key swaps the other video onto it.
+      mediaControls: Play, pause and set the volume of every video in one place.
+      archiveSync: Lines up past streams on one timeline, so they play in-sync as if live. Fine tune the offsets to get it perfect.
+      save: Keeps this layout arrangement under a name you choose, ready to pick again from Presets.
+      clear: Takes everything off the screen to start over. This cannot be undone.
+      clearEditing: Takes everything off the screen to start over. Undo brings it back.
+      fullScreen: Makes multiview full screen using your browser's fullscreen function.
+      exitFullScreen: Go back to a normal browser window.
+      shortcuts: List key-bindings that control multiview. You can rebind and customize.
+      permalink: Gives you a link to this exact layout, videos included, to share or come back to later.
+      moreActions: Hiding some tools due to screen size
+      collapseToolbar: Collapse this quick access toolbar. A small arrow in the corner brings the bar back.
+      expandToolbar: Bring back the toolbar.
+      undo: Take back your last change to the layout.
+      redo: Bring back the change you just undid.
+      discard: Put the layout back the way it was when you started editing.
+      done: Finish editing and keep changes.
     editHint: Edit Layout lets you drag cells to move or swap them, resize them from any edge, and draw new ones
     play: Play
     pause: Pause
@@ -757,6 +784,7 @@ views:
       selectLive: Select Live
       addCustomVideo: Add Custom Video
     fullScreen: Fullscreen
+    exitFullScreen: Exit fullscreen
     mediaControls: Media Controls
     mediaControlsEmpty: Videos being played will appear here
     editAutoLayout: Edit Auto Layout

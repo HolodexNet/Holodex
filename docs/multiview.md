@@ -107,6 +107,14 @@ Keys pressed while a player has focus go to the player, and the page is not told
 
 Fullscreen here means the multiview's own, on the whole page. A player's own fullscreen button shows nothing but that player, and no page can draw over it.
 
+## Toolbar tips
+
+Every control on the toolbar goes in a `ToolbarTip`, which names it and gives its key straight away, then says what clicking it does if the pointer stays a second longer. Once one button has explained itself, the rest do so at once for as long as the tip stays up, since the viewer is evidently reading. The explanations are written for someone deciding whether they want the button, in `views.multiview.tips`.
+
+All of them share one tooltip, so moving along the bar moves the tip rather than closing one and opening another. Two things differ from an ordinary tooltip because of what the toolbar sits above. The pointer cannot rest on the tip: a tip that can be hovered waits for mouse moves to decide when to close, and those stop once the pointer is over an iframe, which would leave it stuck on a video. Esc closes the tip and still reaches the page, so that it can leave Edit Layout while the pointer is on the bar.
+
+A disabled button takes no pointer input, and so could not show a tip, so Undo, Redo and Discard use `focusableWhenDisabled`. In the overflow menu the label is already visible, so an item's `title` carries only the explanation.
+
 ## Chat
 
 A chat's `ChatTarget` says which video it serves:

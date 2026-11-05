@@ -23,6 +23,7 @@ import { useAuth } from "@/stores/auth"
 import { useMultiview } from "@/stores/multiview"
 import { useSettings } from "@/stores/settings"
 import { SourcePicker } from "./source-picker"
+import { ToolbarTip } from "./toolbar-tip"
 import { UrlField } from "./url-field"
 import { useMultiviewCommands } from "./use-commands"
 import {
@@ -81,16 +82,20 @@ export function VideoTray({ className }: { className?: string }) {
     >
       <SourcePicker value={source} onChange={setChoice} />
       {showsFeed && (
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="shrink-0"
-          aria-label={t("views.multiview.refresh")}
-          title={t("views.multiview.refresh")}
-          onClick={() => void refetch()}
+        <ToolbarTip
+          label={t("views.multiview.refresh")}
+          detail={t("views.multiview.tips.refresh")}
+          render={
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              className="shrink-0"
+              onClick={() => void refetch()}
+            />
+          }
         >
           <ArrowClockwiseIcon className={cn(isFetching && "animate-spin")} />
-        </Button>
+        </ToolbarTip>
       )}
       {source.kind === "url" ? (
         <UrlField

@@ -53,7 +53,8 @@ import { useMultiview } from "@/stores/multiview"
 import { useMultiviewUi } from "@/stores/multiview-ui"
 import { toggleDirector } from "./media-actions"
 import { PresetMenu } from "./preset-menu"
-import { ShortcutBadge, ShortcutKeys, useShortcutLabel } from "./shortcut-hint"
+import { ShortcutBadge, ShortcutKeys } from "./shortcut-hint"
+import { ToolbarTip, ToolbarTips } from "./toolbar-tip"
 import { useMultiviewCommands } from "./use-commands"
 import { useFullscreen } from "./use-fullscreen"
 import { VideoTray } from "./video-tray"
@@ -74,9 +75,19 @@ const IN_MENU: Record<Collapse, string> = {
   xl: "xl:hidden",
 }
 
+/**
+ * For `focusableWhenDisabled`, which keeps a button pointable and focusable so that
+ * its tip can still say what it is for. That leaves the button's `disabled:` styles
+ * unused, so the look is repeated here.
+ */
+const DISABLED_WITH_TIP =
+  "aria-disabled:cursor-default aria-disabled:opacity-50 aria-disabled:hover:bg-transparent dark:aria-disabled:hover:bg-transparent"
+
 interface ToolAction {
   id: string
   label: string
+  /** What clicking it does, for someone deciding whether they want that. */
+  detail: string
   icon: ReactNode
   onClick: () => void
   collapse?: Collapse
@@ -85,49 +96,57 @@ interface ToolAction {
 }
 
 function ToolButton({ action }: { action: ToolAction }) {
-  const hint = useShortcutLabel(action.shortcut, action.label)
   return (
-    <Button
-      variant="ghost"
-      size="icon-sm"
-      aria-label={action.label}
-      {...hint}
-      aria-pressed={action.active}
-      className={cn(
-        "relative",
-        action.collapse && IN_BAR[action.collapse],
-        action.active && "bg-muted text-primary"
-      )}
-      onClick={action.onClick}
+    <ToolbarTip
+      label={action.label}
+      detail={action.detail}
+      shortcut={action.shortcut}
+      render={
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          aria-pressed={action.active}
+          className={cn(
+            "relative",
+            action.collapse && IN_BAR[action.collapse],
+            action.active && "bg-muted text-primary"
+          )}
+          onClick={action.onClick}
+        />
+      }
     >
       {action.icon}
       {action.shortcut && <ShortcutBadge id={action.shortcut} />}
-    </Button>
+    </ToolbarTip>
   )
 }
 
 function OverflowMenu({ actions }: { actions: ToolAction[] }) {
   const { t } = useT()
+  const [open, setOpen] = useState(false)
   if (!actions.length) return null
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <ToolbarTip
+        label={t("component.videoCard.moreActions")}
+        detail={t("views.multiview.tips.moreActions")}
+        disabled={open}
         render={
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="xl:hidden"
-            aria-label={t("component.videoCard.moreActions")}
+          <DropdownMenuTrigger
+            render={
+              <Button variant="ghost" size="icon-sm" className="xl:hidden" />
+            }
           />
         }
       >
         <DotsThreeVerticalIcon />
-      </DropdownMenuTrigger>
+      </ToolbarTip>
       <DropdownMenuContent align="end">
         {actions.map((action) => (
           <DropdownMenuItem
             key={action.id}
             className={IN_MENU[action.collapse!]}
+            title={action.detail}
             onClick={action.onClick}
           >
             {action.icon}
@@ -146,6 +165,7 @@ function OverflowMenu({ actions }: { actions: ToolAction[] }) {
 function SiteMenu() {
   const { t } = useT()
   const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
   const items = [
     { to: "/", label: t("component.mainNav.home"), icon: <HouseLineIcon /> },
     {
@@ -165,19 +185,21 @@ function SiteMenu() {
     },
   ]
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <ToolbarTip
+        label={t("views.multiview.tips.siteMenu")}
+        detail={t("views.multiview.tips.siteMenuDetail")}
+        disabled={open}
         render={
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="shrink-0"
-            aria-label={t("component.mainNav.toggleSidebar")}
+          <DropdownMenuTrigger
+            render={
+              <Button variant="ghost" size="icon-sm" className="shrink-0" />
+            }
           />
         }
       >
         <Logo className="size-5" />
-      </DropdownMenuTrigger>
+      </ToolbarTip>
       <DropdownMenuContent align="start">
         {items.map((item) => (
           <DropdownMenuItem key={item.to} onClick={() => navigate(item.to)}>
@@ -208,19 +230,20 @@ function ShareButton({ className }: { className?: string }) {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
+      <ToolbarTip
+        label={t("views.multiview.permalink")}
+        detail={t("views.multiview.tips.permalink")}
+        disabled={open}
         render={
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className={className}
-            aria-label={t("views.multiview.permalink")}
-            title={t("views.multiview.permalink")}
+          <PopoverTrigger
+            render={
+              <Button variant="ghost" size="icon-sm" className={className} />
+            }
           />
         }
       >
         <LinkSimpleIcon />
-      </PopoverTrigger>
+      </ToolbarTip>
       <PopoverContent
         align="end"
         className="w-[min(26rem,calc(100vw-1rem))] p-2"
@@ -250,19 +273,23 @@ function ShareButton({ className }: { className?: string }) {
 function AddVideoButton() {
   const { t } = useT()
   const setUi = useMultiviewUi((s) => s.set)
-  const hint = useShortcutLabel("add-video", t("views.multiview.addVideo"))
   return (
-    <Button
-      variant="ghost"
-      size="icon-sm"
-      className="relative shrink-0"
-      aria-label={t("views.multiview.addVideo")}
-      {...hint}
-      onClick={() => setUi({ picker: { kind: "auto" } })}
+    <ToolbarTip
+      label={t("views.multiview.addVideo")}
+      detail={t("views.multiview.tips.addVideo")}
+      shortcut="add-video"
+      render={
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="relative shrink-0"
+          onClick={() => setUi({ picker: { kind: "auto" } })}
+        />
+      }
     >
       <MagnifyingGlassPlusIcon />
       <ShortcutBadge id="add-video" />
-    </Button>
+    </ToolbarTip>
   )
 }
 
@@ -270,21 +297,26 @@ function AddVideoButton() {
 function EditToggle() {
   const { t } = useT()
   const enterEditing = useMultiview((s) => s.enterEditing)
-  const hint = useShortcutLabel("edit", t("views.multiview.edit.enter"))
   return (
-    <Button
-      variant="secondary"
-      size="sm"
-      className="shrink-0"
-      {...hint}
-      onClick={enterEditing}
+    <ToolbarTip
+      label={t("views.multiview.edit.enter")}
+      detail={t("views.multiview.tips.edit")}
+      shortcut="edit"
+      render={
+        <Button
+          variant="secondary"
+          size="sm"
+          className="shrink-0"
+          onClick={enterEditing}
+        />
+      }
     >
       <PencilSimpleIcon data-icon="inline-start" />
       <span className="hidden sm:inline">
         {t("views.multiview.edit.enter")}
       </span>
       <ShortcutKeys id="edit" className="hidden lg:inline-flex" />
-    </Button>
+    </ToolbarTip>
   )
 }
 
@@ -299,15 +331,12 @@ function ViewActions() {
   const director = useMultiview((s) => s.directorMode)
   const { addCell } = useMultiviewCommands()
   const { isFullscreen, toggleFullscreen } = useFullscreen()
-  const collapseHint = useShortcutLabel(
-    "toolbar",
-    t("views.multiview.collapseToolbar")
-  )
 
   const actions: ToolAction[] = [
     {
       id: "add",
       label: t("views.multiview.addframe"),
+      detail: t("views.multiview.tips.addCell"),
       icon: <PlusIcon />,
       onClick: addCell,
       collapse: "sm",
@@ -316,6 +345,7 @@ function ViewActions() {
     {
       id: "audio-focus",
       label: t("views.multiview.muteOthers"),
+      detail: t("views.multiview.muteOthersDetail"),
       icon: <HeadphonesIcon />,
       onClick: () => setAudioFocus(!audioFocus),
       active: audioFocus,
@@ -324,6 +354,7 @@ function ViewActions() {
     {
       id: "director",
       label: t("views.multiview.director.mode"),
+      detail: t("views.multiview.tips.director"),
       icon: <MonitorPlayIcon />,
       onClick: toggleDirector,
       active: director,
@@ -333,6 +364,7 @@ function ViewActions() {
     {
       id: "media",
       label: t("views.multiview.mediaControls"),
+      detail: t("views.multiview.tips.mediaControls"),
       icon: <SlidersHorizontalIcon />,
       onClick: () => setUi({ mediaControlsOpen: !controlsOpen }),
       active: controlsOpen,
@@ -341,6 +373,7 @@ function ViewActions() {
     {
       id: "sync",
       label: t("views.multiview.archiveSync"),
+      detail: t("views.multiview.tips.archiveSync"),
       icon: <ArrowsClockwiseIcon />,
       onClick: () => setUi({ syncBarOpen: !syncBarOpen }),
       active: syncBarOpen,
@@ -350,6 +383,7 @@ function ViewActions() {
     {
       id: "save",
       label: t("views.multiview.presetEditor.title"),
+      detail: t("views.multiview.tips.save"),
       icon: <FloppyDiskIcon />,
       onClick: () => setUi({ saveDialogOpen: true }),
       collapse: "lg",
@@ -357,13 +391,19 @@ function ViewActions() {
     {
       id: "clear",
       label: t("views.multiview.clearAll"),
+      detail: t("views.multiview.tips.clear"),
       icon: <TrashIcon />,
       onClick: clearAll,
       collapse: "md",
     },
     {
       id: "fullscreen",
-      label: t("views.multiview.fullScreen"),
+      label: isFullscreen
+        ? t("views.multiview.exitFullScreen")
+        : t("views.multiview.fullScreen"),
+      detail: isFullscreen
+        ? t("views.multiview.tips.exitFullScreen")
+        : t("views.multiview.tips.fullScreen"),
       icon: isFullscreen ? <CornersInIcon /> : <CornersOutIcon />,
       onClick: toggleFullscreen,
       collapse: "lg",
@@ -372,6 +412,7 @@ function ViewActions() {
     {
       id: "shortcuts",
       label: t("views.multiview.shortcuts.title"),
+      detail: t("views.multiview.tips.shortcuts"),
       icon: <KeyboardIcon />,
       onClick: () => setUi({ helpOpen: true }),
       collapse: "lg",
@@ -388,17 +429,22 @@ function ViewActions() {
       ))}
       <ShareButton />
       <OverflowMenu actions={actions.filter((a) => a.collapse)} />
-      <Button
-        variant="ghost"
-        size="icon-sm"
-        className="relative"
-        aria-label={t("views.multiview.collapseToolbar")}
-        {...collapseHint}
-        onClick={() => setUi({ toolbarCollapsed: true })}
+      <ToolbarTip
+        label={t("views.multiview.collapseToolbar")}
+        detail={t("views.multiview.tips.collapseToolbar")}
+        shortcut="toolbar"
+        render={
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="relative"
+            onClick={() => setUi({ toolbarCollapsed: true })}
+          />
+        }
       >
         <CaretUpIcon />
         <ShortcutBadge id="toolbar" />
-      </Button>
+      </ToolbarTip>
     </>
   )
 }
@@ -414,76 +460,95 @@ function EditActions() {
   const exitEditing = useMultiview((s) => s.exitEditing)
   const clearAll = useMultiview((s) => s.clearAll)
   const { addCell } = useMultiviewCommands()
-  const undoHint = useShortcutLabel("undo", t("views.multiview.edit.undo"))
-  const redoHint = useShortcutLabel("redo", t("views.multiview.edit.redo"))
-  const addHint = useShortcutLabel("add-cell", t("views.multiview.addframe"))
 
   return (
     <>
-      <Button
-        variant="ghost"
-        size="icon-sm"
-        disabled={!canUndo}
-        className="relative"
-        aria-label={t("views.multiview.edit.undo")}
-        {...undoHint}
-        onClick={undo}
+      <ToolbarTip
+        label={t("views.multiview.edit.undo")}
+        detail={t("views.multiview.tips.undo")}
+        shortcut="undo"
+        render={
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            disabled={!canUndo}
+            focusableWhenDisabled
+            className={cn("relative", DISABLED_WITH_TIP)}
+            onClick={undo}
+          />
+        }
       >
         <ArrowUUpLeftIcon />
         <ShortcutBadge id="undo" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon-sm"
-        disabled={!canRedo}
-        className="relative"
-        aria-label={t("views.multiview.edit.redo")}
-        {...redoHint}
-        onClick={redo}
+      </ToolbarTip>
+      <ToolbarTip
+        label={t("views.multiview.edit.redo")}
+        detail={t("views.multiview.tips.redo")}
+        shortcut="redo"
+        render={
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            disabled={!canRedo}
+            focusableWhenDisabled
+            className={cn("relative", DISABLED_WITH_TIP)}
+            onClick={redo}
+          />
+        }
       >
         <ArrowUUpRightIcon />
         <ShortcutBadge id="redo" />
-      </Button>
+      </ToolbarTip>
       <PresetMenu />
-      <Button
-        variant="ghost"
-        size="icon-sm"
-        className="relative"
-        aria-label={t("views.multiview.addframe")}
-        {...addHint}
-        onClick={addCell}
+      <ToolbarTip
+        label={t("views.multiview.addframe")}
+        detail={t("views.multiview.tips.addCell")}
+        shortcut="add-cell"
+        render={
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="relative"
+            onClick={addCell}
+          />
+        }
       >
         <PlusIcon />
         <ShortcutBadge id="add-cell" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon-sm"
-        aria-label={t("views.multiview.clearAll")}
-        title={t("views.multiview.clearAll")}
-        onClick={clearAll}
+      </ToolbarTip>
+      <ToolbarTip
+        label={t("views.multiview.clearAll")}
+        detail={t("views.multiview.tips.clearEditing")}
+        render={<Button variant="ghost" size="icon-sm" onClick={clearAll} />}
       >
         <TrashIcon />
-      </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        disabled={!canUndo}
-        className="hidden shrink-0 sm:inline-flex"
-        onClick={discardEdits}
+      </ToolbarTip>
+      <ToolbarTip
+        label={t("views.multiview.edit.discard")}
+        detail={t("views.multiview.tips.discard")}
+        render={
+          <Button
+            variant="ghost"
+            size="sm"
+            disabled={!canUndo}
+            focusableWhenDisabled
+            className={cn("hidden shrink-0 sm:inline-flex", DISABLED_WITH_TIP)}
+            onClick={discardEdits}
+          />
+        }
       >
         <EraserIcon data-icon="inline-start" />
         {t("views.multiview.edit.discard")}
-      </Button>
-      <Button
-        size="sm"
-        className="shrink-0"
-        title={`${t("views.multiview.done")} (Esc)`}
-        onClick={exitEditing}
+      </ToolbarTip>
+      <ToolbarTip
+        label={t("views.multiview.done")}
+        detail={t("views.multiview.tips.done")}
+        fixedKey="Escape"
+        render={<Button size="sm" className="shrink-0" onClick={exitEditing} />}
       >
         <CheckIcon data-icon="inline-start" />
         {t("views.multiview.done")}
-      </Button>
+      </ToolbarTip>
     </>
   )
 }
@@ -493,46 +558,48 @@ export function Toolbar() {
   const editing = useMultiview((s) => s.editing)
   const collapsed = useMultiviewUi((s) => s.toolbarCollapsed)
   const setUi = useMultiviewUi((s) => s.set)
-  const expandHint = useShortcutLabel(
-    "toolbar",
-    t("views.multiview.expandToolbar")
-  )
-
-  if (collapsed) {
-    return (
-      <Button
-        variant="secondary"
-        size="icon-xs"
-        className="absolute top-0 right-0 z-40 rounded-none rounded-bl-md opacity-50 hover:opacity-100"
-        aria-label={t("views.multiview.expandToolbar")}
-        {...expandHint}
-        onClick={() => setUi({ toolbarCollapsed: false })}
-      >
-        <CaretDownIcon />
-      </Button>
-    )
-  }
 
   return (
-    <header className="box-content flex h-12 shrink-0 items-center gap-1.5 border-b bg-card px-1.5 pt-[env(safe-area-inset-top,0px)]">
-      <SiteMenu />
-      <AddVideoButton />
-      <VideoTray className="hidden sm:flex" />
-      <div className="flex-1 sm:hidden" />
-      <div className="flex shrink-0 items-center gap-0.5">
-        <AnimatePresence mode="popLayout" initial={false}>
-          <m.div
-            key={editing ? "edit" : "view"}
-            className="flex items-center gap-0.5"
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 6 }}
-            transition={{ duration: 0.12 }}
-          >
-            {editing ? <EditActions /> : <ViewActions />}
-          </m.div>
-        </AnimatePresence>
-      </div>
-    </header>
+    <>
+      <ToolbarTips />
+      {collapsed ? (
+        <ToolbarTip
+          label={t("views.multiview.expandToolbar")}
+          detail={t("views.multiview.tips.expandToolbar")}
+          shortcut="toolbar"
+          render={
+            <Button
+              variant="secondary"
+              size="icon-xs"
+              className="absolute top-0 right-0 z-40 rounded-none rounded-bl-md opacity-50 hover:opacity-100"
+              onClick={() => setUi({ toolbarCollapsed: false })}
+            />
+          }
+        >
+          <CaretDownIcon />
+        </ToolbarTip>
+      ) : (
+        <header className="box-content flex h-12 shrink-0 items-center gap-1.5 border-b bg-card px-1.5 pt-[env(safe-area-inset-top,0px)]">
+          <SiteMenu />
+          <AddVideoButton />
+          <VideoTray className="hidden sm:flex" />
+          <div className="flex-1 sm:hidden" />
+          <div className="flex shrink-0 items-center gap-0.5">
+            <AnimatePresence mode="popLayout" initial={false}>
+              <m.div
+                key={editing ? "edit" : "view"}
+                className="flex items-center gap-0.5"
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 6 }}
+                transition={{ duration: 0.12 }}
+              >
+                {editing ? <EditActions /> : <ViewActions />}
+              </m.div>
+            </AnimatePresence>
+          </div>
+        </header>
+      )}
+    </>
   )
 }

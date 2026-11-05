@@ -38,7 +38,8 @@ import { useMultiview } from "@/stores/multiview"
 import { useMultiviewPresets } from "@/stores/multiview-presets"
 import { useMultiviewUi } from "@/stores/multiview-ui"
 import { LayoutPreview } from "./layout-preview"
-import { ShortcutBadge, ShortcutKeys, useShortcutLabel } from "./shortcut-hint"
+import { ShortcutBadge, ShortcutKeys } from "./shortcut-hint"
+import { ToolbarTip } from "./toolbar-tip"
 import {
   applyDirectorLayout,
   cancelLayoutPrompt,
@@ -104,7 +105,6 @@ export function PresetMenu({ className }: { className?: string }) {
   const apply = useApplyPreset()
   const { groups } = usePresetGroups()
   const count = activeVideos(cells).length
-  const hint = useShortcutLabel("presets", t("views.multiview.presets"))
 
   const quick = isMobile
     ? MOBILE_PRESETS
@@ -114,20 +114,26 @@ export function PresetMenu({ className }: { className?: string }) {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
+      <ToolbarTip
+        label={t("views.multiview.presets")}
+        detail={t("views.multiview.tips.presets")}
+        shortcut="presets"
+        disabled={open}
         render={
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className={cn("relative", className)}
-            aria-label={t("views.multiview.presets")}
-            {...hint}
+          <PopoverTrigger
+            render={
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className={cn("relative", className)}
+              />
+            }
           />
         }
       >
         <GridFourIcon />
         <ShortcutBadge id="presets" />
-      </PopoverTrigger>
+      </ToolbarTip>
       <PopoverContent
         align="end"
         className="max-h-[80vh] w-[min(34rem,calc(100vw-1rem))] gap-1 overflow-y-auto p-2"

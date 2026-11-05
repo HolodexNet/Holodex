@@ -63,7 +63,7 @@ export function KeyCaps({
 
 /**
  * The key beside the action, tucked into the corner of an icon button where a key
- * cap would not fit. The button needs `relative`; the title spells it out in full.
+ * cap would not fit. The button needs `relative`; its title or tip spells it out.
  */
 export function ShortcutBadge({
   id,
