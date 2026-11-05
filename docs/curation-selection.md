@@ -10,7 +10,7 @@ The basket holds at most 200 videos in session storage and survives navigation a
 
 ## Editing actions
 
-Copy links is available to everyone. Logged-in contributors can add mentions and set topics from the tray's **Edit videos** menu or an individual video's menu. Editors and admins also see all six smart actions and can clear topics. Disabled actions explain their count/type requirements. Ordinary-user mention removal, undo, and command-palette integration are deferred.
+Copy links is available to everyone. Logged-in contributors can add mentions and set topics in bulk from the tray's **Edit videos** menu, or open one video at a time in [the video editor](video-editing.md) with **Edit one at a time**. An individual video's menu goes straight to that editor, which also handles removing mentions and undo. Editors and admins also see all six smart actions and can clear topics, and the smart actions that work on one video remain on its menu under **More edits**. Disabled actions explain their count/type requirements. Command-palette integration is deferred.
 
 Editor copy describes the user's action and result: **Add mentions**, **Save changes**, **Updated**, and **Not updated**. Results use short counts, with reasons beside affected items. Keep request, verification, cache, and selection-cleanup mechanics in developer documentation. Only show explanations that help the user choose an action or resolve a problem; successful edits need no instructional footer.
 

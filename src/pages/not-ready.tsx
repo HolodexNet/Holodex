@@ -5,12 +5,15 @@ import {
   ArrowSquareOutIcon,
   HouseLineIcon,
   LogoYoutubeIcon,
+  NotePencilIcon,
   WarningIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { useDocumentTitle } from "@/hooks/use-document-title"
 import { useT } from "@/lib/i18n"
 import { youtubeUrl } from "@/lib/video"
+import { editPath } from "@/lib/video-edit/routes"
+import { useAuth } from "@/stores/auth"
 
 /**
  * Stand-in for routes the rewrite has not reached yet (watch, playlists, ...).
@@ -21,6 +24,7 @@ export function NotReadyPage() {
   const { t } = useT()
   const location = useLocation()
   const { id } = useParams()
+  const user = useAuth((state) => state.user)
   const isWatch = location.pathname.startsWith("/watch/")
   const legacyUrl = `https://holodex.net${location.pathname}${location.search}${location.hash}`
 
@@ -44,6 +48,16 @@ export function NotReadyPage() {
           >
             <LogoYoutubeIcon data-icon="inline-start" />
             {t("views.settings.redirectModeLabel")}
+          </Button>
+        )}
+        {isWatch && id && user && (
+          <Button
+            nativeButton={false}
+            variant="outline"
+            render={<Link to={editPath(id)} />}
+          >
+            <NotePencilIcon data-icon="inline-start" />
+            {t("component.videoCard.editVideo")}
           </Button>
         )}
         <Button
