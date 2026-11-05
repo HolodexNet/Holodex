@@ -46,7 +46,18 @@ const ALL_ORG: Org = { name: ALL_VTUBERS, short: "Vtuber" }
 export const orgShortName = (org: Org) =>
   ORGS_PREFIX[org.name] ?? org.short ?? org.name
 
-export function OrgIcon({ org, className }: { org: Org; className?: string }) {
+export const orgIconSrc = (icon: string, size = 50) =>
+  `/statics/channelImg/${icon}/${size}.png`
+
+export function OrgIcon({
+  org,
+  size,
+  className,
+}: {
+  org: Org
+  size?: number
+  className?: string
+}) {
   const [failedIcon, setFailedIcon] = useState<string | null>(null)
   return (
     <span
@@ -60,7 +71,7 @@ export function OrgIcon({ org, className }: { org: Org; className?: string }) {
         <GlobeIcon className="size-4" />
       ) : org.icon && org.icon !== failedIcon ? (
         <img
-          src={`/statics/channelImg/${org.icon}/50.png`}
+          src={orgIconSrc(org.icon, size)}
           alt=""
           loading="lazy"
           decoding="async"

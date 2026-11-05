@@ -24,6 +24,44 @@
 .music-artwork-radio .music-artwork-fallback { align-items: center; justify-content: center; text-align: center; }
 .music-artwork-radio .music-artwork-fallback > strong { display: none; }
 .music-record-center { position: absolute; z-index: 2; inset: 44%; border: 5px solid #fff9; border-radius: 50%; background: color-mix(in srgb, var(--art-color) 70%, #fff); box-shadow: 0 0 0 1px #0002; }
+/* "Best of" mixes press like Japanese CD releases: art behind a paper obi strip carrying the org's mark. Sizes use cqw so the print scales from rail card to hero. */
+.music-jacket { --jacket-paper: #f6f2e9; --jacket-ink: #17181c; --jacket-rule: #17181c24; container-type: inline-size; }
+.music-jacket::after { content: ""; position: absolute; z-index: 3; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(112deg, transparent 34%, #ffffff26 44%, #ffffff0d 50%, transparent 60%) 30% 0 / 240% 100% no-repeat; box-shadow: inset 0 0 0 1px #0000001f; transition: background-position 0.7s ease; }
+.group:hover .music-jacket::after { background-position: 0 0; }
+.music-jacket-art { position: absolute; inset: 0; isolation: isolate; overflow: hidden; background: linear-gradient(145deg, #fff1, #0004), var(--art-color); }
+/* Center the art in the area the obi leaves visible. */
+.music-jacket-art > img { translate: 13cqw 0; scale: 1.26; transition: transform 0.4s, filter 0.3s; }
+/* hqdefault letterboxes 16:9 inside 4:3; 1.34x pushes the black bars out of frame. */
+.music-jacket-art > img[src*="ytimg"] { translate: none; scale: 1.34; object-position: 25% 50%; }
+.group:hover .music-jacket-art > img { transform: scale(1.04); }
+.music-jacket-obi { position: absolute; z-index: 2; inset: 0 auto 0 0; display: flex; flex-direction: column; width: 26cqw; overflow: hidden; background: var(--jacket-paper); color: var(--jacket-ink); box-shadow: 0.6cqw 0 3cqw #0008; }
+/* A blurred copy of the logo tints the paper with the org's own color. */
+.music-jacket-obi::before { content: ""; position: absolute; inset: -5cqw -5cqw auto; height: 46cqw; background: var(--org-icon) center / 120% no-repeat; filter: blur(3.5cqw) saturate(2); opacity: 0.55; mask-image: linear-gradient(#000 45%, transparent); }
+.music-jacket-mark { position: relative; display: flex; flex: none; align-items: center; justify-content: center; height: 26cqw; padding: 2.5cqw; box-shadow: 0 0.3cqw var(--jacket-rule); }
+.music-jacket-mark > span { width: 100%; height: 100%; border-radius: 3cqw; background: transparent; color: inherit; font-size: 12cqw; font-weight: 800; }
+/* Org logos are mostly on pure white; multiply prints them onto the paper. */
+.music-jacket-mark img { mix-blend-mode: multiply; }
+.music-jacket-mark svg { width: 17cqw; height: 17cqw; }
+.music-jacket-type { position: relative; display: flex; flex: 1; flex-direction: column; align-items: flex-start; justify-content: center; gap: 1.2cqw; min-height: 0; padding-inline: 2cqw 3cqw; overflow: hidden; line-height: 1; white-space: nowrap; writing-mode: vertical-rl; }
+.music-jacket-type > strong { font-size: 16cqw; font-weight: 850; line-height: 0.82; letter-spacing: -0.03em; text-transform: uppercase; }
+.music-jacket-type > small { font-size: 4.4cqw; font-weight: 650; letter-spacing: 0.01em; opacity: 0.78; }
+/* Special editions swap the press finish for a two-color print; hovering a card reveals the original art. */
+.music-jacket[data-edition] .music-jacket-art { background: var(--duo-light); transition: background-color 0.3s; }
+.music-jacket[data-edition] .music-jacket-art > img { filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
+.music-jacket[data-edition] .music-jacket-art::before, .music-jacket[data-edition] .music-jacket-art::after { content: ""; position: absolute; z-index: 1; inset: 0; transition: opacity 0.3s; }
+.music-jacket[data-edition] .music-jacket-art::before { background: var(--jacket-screen); opacity: 0.2; mix-blend-mode: multiply; }
+.music-jacket[data-edition] .music-jacket-art::after { background: var(--duo-dark); mix-blend-mode: lighten; }
+.group:hover .music-jacket[data-edition] .music-jacket-art { background-color: #fff; }
+.group:hover .music-jacket[data-edition] .music-jacket-art > img { filter: none; }
+.group:hover .music-jacket[data-edition] .music-jacket-art::before, .group:hover .music-jacket[data-edition] .music-jacket-art::after { opacity: 0; }
+/* Independents have no label to press them, so theirs is self-released: a risograph print, masking tape, and a rubber stamp. */
+.music-jacket[data-edition="indie"] { --jacket-paper: #f6e7aaf2; --jacket-ink: #1d2b7a; --jacket-rule: transparent; --duo-light: #ff86a8; --duo-dark: #1d2b7a; --jacket-screen: radial-gradient(#1d2b7a 30%, transparent 34%) 0 0 / 3px 3px; }
+.music-jacket[data-edition="indie"] .music-jacket-obi { inset: -5cqw auto auto 2.5cqw; height: 101cqw; padding-top: 5cqw; box-shadow: none; rotate: -2.5deg; clip-path: polygon(0 0, 100% 0, 100% 98.6%, 88% 99.6%, 76% 98.4%, 64% 100%, 52% 98.6%, 40% 99.8%, 28% 98.4%, 16% 99.7%, 6% 98.5%, 0 99.4%); }
+.music-jacket-mark > .music-jacket-stamp { display: grid; place-items: center; border: 0.9cqw solid; border-radius: 50%; outline: 0.35cqw solid; outline-offset: -1.7cqw; color: #e0315f; font-size: 5.4cqw; font-weight: 900; line-height: 1; letter-spacing: 0.01em; rotate: -14deg; mix-blend-mode: multiply; }
+/* Twitch Independents' obi is cut into the Twitch chat bubble, chamfer and tail included. */
+.music-jacket[data-edition="twitch"] { --jacket-paper: #9146ff; --jacket-ink: #fff; --jacket-rule: #ffffff38; --duo-light: #d9c6ff; --duo-dark: #2a1166; --jacket-screen: repeating-linear-gradient(#22104d 0 1px, transparent 1px 3px); }
+.music-jacket[data-edition="twitch"] .music-jacket-obi { box-shadow: none; clip-path: polygon(0 0, 100% 0, 100% 86%, 70% 93%, 52% 93%, 30% 99%, 12% 99%, 12% 93%, 0 93%); }
+.music-jacket[data-edition="twitch"] .music-jacket-type > strong { font-size: 15cqw; }
 .music-equalizer { display: inline-flex; align-items: center; gap: 2px; height: 18px; color: var(--brand); }
 .music-equalizer > i { width: 3px; height: 7px; border-radius: 1px; background: currentColor; animation: music-equalize 0.8s ease-in-out infinite alternate; }
 .music-equalizer > i:nth-child(2) { height: 14px; animation-delay: -0.5s; }
@@ -45,4 +83,5 @@
 @media (prefers-reduced-motion: reduce) {
   .music-equalizer > i { animation: none; }
   .music-artwork-image > img { transition: none; }
+  .music-jacket::after, .music-jacket-art > img { transition: none; }
 }

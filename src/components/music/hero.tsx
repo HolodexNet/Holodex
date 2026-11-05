@@ -145,7 +145,7 @@ export function MusicHero({
           ) : featured ? (
             <PlayPlaylistButton
               playlist={featured}
-              label={formatted?.radio ? "Launch Talent Radio" : "Play Curator Mix"}
+              label={formatted?.radio ? "Launch Talent Radio" : "Play Spotlight Mix"}
             />
           ) : loading ? (
             <Button disabled className="gap-2">
@@ -191,6 +191,7 @@ export function MusicHero({
                   title={cover.title}
                   seed={playlist.id}
                   label={cover.coverLabel}
+                  bestOf={cover.bestOf}
                   radio={cover.radio}
                   priority={index === 0}
                 />

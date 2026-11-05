@@ -29,7 +29,7 @@ import {
   PreviousIcon,
   ShuffleIcon,
 } from "@/components/music/player/icons"
-import { useMusicPlayer } from "@/stores/music-player"
+import { canAutoSkip, useMusicPlayer } from "@/stores/music-player"
 import {
   loadYouTube,
   type YTEvent,
@@ -42,6 +42,18 @@ const time = (seconds: number) =>
 
 /** Shared by every part of the player so they travel as one surface. */
 const PLAYER_TRANSITION = { type: "spring", duration: 0.45, bounce: 0 } as const
+/** How long a song that cannot play stays on screen before the next one starts. */
+const AUTO_SKIP_DELAY_MS = 2500
+/** Failures in a row before giving up, since the songs are then rarely the cause. */
+const MAX_FAILED_SONGS = 5
+
+type PlaybackError = {
+  message: string
+  /** The playback this is about. Unset when the player itself failed to load. */
+  playbackId?: number
+  /** Set for failures of one song, which the next song would not repeat. */
+  autoSkip?: boolean
+}
 
 export function MusicPlayer() {
   const hasMusic = useMusicPlayer((s) => !!s.current)
@@ -79,9 +91,10 @@ function MusicPlayerBar() {
   const finishedId = useRef(-1)
   const ready = useRef(false)
   const switching = useRef(false)
+  const failedSongs = useRef(0)
   const [position, setPosition] = useState(0)
   const [duration, setDuration] = useState(0)
-  const [error, setError] = useState("")
+  const [error, setError] = useState<PlaybackError | null>(null)
   const [attempt, setAttempt] = useState(0)
   const [radioError, setRadioError] = useState<{
     source: NonNullable<typeof source>
@@ -91,6 +104,21 @@ function MusicPlayerBar() {
   // Closing clears the store, but the last song stays visible as the bar leaves.
   const [shown, setShown] = useState(current)
   if (current && current !== shown) setShown(current)
+  // A failure stops mattering once another playback starts, which also cancels
+  // a pending skip.
+  const failure =
+    error && (error.playbackId ?? playbackId) === playbackId ? error : null
+  const hasNextSong = useMusicPlayer(canAutoSkip)
+  const skipping = !!failure?.autoSkip && hasNextSong
+
+  useEffect(() => {
+    if (!skipping) return
+    const timer = window.setTimeout(
+      () => useMusicPlayer.getState().next(),
+      AUTO_SKIP_DELAY_MS
+    )
+    return () => window.clearTimeout(timer)
+  }, [skipping])
 
   useEffect(() => {
     if (!current || !host.current) return
@@ -153,7 +181,8 @@ function MusicPlayerBar() {
                     (state.current.end > start && now >= state.current.end))
                 )
                   return
-                setError("")
+                failedSongs.current = 0
+                setError(null)
                 const shouldRecord = state.playing || !switching.current
                 if (switching.current && !state.playing)
                   event.target.pauseVideo()
@@ -181,7 +210,15 @@ function MusicPlayerBar() {
               )
                 return
               switching.current = false
-              setError("This video cannot be played here.")
+              failedSongs.current += 1
+              const givingUp = failedSongs.current >= MAX_FAILED_SONGS
+              setError({
+                message: givingUp
+                  ? "Several songs in a row could not be played."
+                  : "This video cannot be played here.",
+                playbackId: state.playbackId,
+                autoSkip: !givingUp,
+              })
               state.pause()
             },
             onAutoplayBlocked: (event: YTEvent) => {
@@ -195,14 +232,19 @@ function MusicPlayerBar() {
               )
                 return
               switching.current = false
-              setError("Playback was blocked. Press play to try again.")
+              // The next song would be blocked too, so this one waits for the user.
+              setError({
+                message: "Playback was blocked. Press play to try again.",
+                playbackId: state.playbackId,
+              })
               state.pause()
             },
           },
         })
       })
       .catch(() => {
-        if (!disposed) setError("Could not load the YouTube player.")
+        if (!disposed)
+          setError({ message: "Could not load the YouTube player." })
       })
     return () => {
       disposed = true
@@ -539,13 +581,17 @@ function MusicPlayerBar() {
                 From {source.title}
               </p>
             )}
-            {error && (
+            {failure && (
               <div role="alert" className="text-xs text-destructive">
-                {error}{" "}
+                {skipping && <SkipCountdown />}
+                {skipping
+                  ? "Cannot be played here. Skipping…"
+                  : failure.message}{" "}
                 <button
                   className="underline"
                   onClick={() => {
-                    setError("")
+                    failedSongs.current = 0
+                    setError(null)
                     setAttempt((value) => value + 1)
                     useMusicPlayer.getState().play()
                   }}
@@ -819,6 +865,30 @@ function MusicPlayerBar() {
         </m.div>
       )}
     </m.div>
+  )
+}
+
+/** Drains over the skip delay, so a pending skip does not look stuck. */
+function SkipCountdown() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden="true"
+      className="mr-1 inline-block size-3 -rotate-90 align-[-2px]"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={3}
+    >
+      <circle cx={8} cy={8} r={6} opacity={0.25} />
+      <m.circle
+        cx={8}
+        cy={8}
+        r={6}
+        initial={{ pathLength: 1 }}
+        animate={{ pathLength: 0 }}
+        transition={{ duration: AUTO_SKIP_DELAY_MS / 1000, ease: "linear" }}
+      />
+    </svg>
   )
 }
 

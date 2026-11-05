@@ -58,6 +58,17 @@ interface MusicPlayerState {
 const valid = (songs: Song[]) =>
   songs.filter((song) => song?.id && song.video_id)
 
+/**
+ * Whether a song that cannot play should give way to another by itself. Repeat
+ * one asks for this song alone, and an empty radio queue waits for its refill.
+ */
+export const canAutoSkip = (
+  state: Pick<MusicPlayerState, "queue" | "playlist" | "radio" | "repeat">
+) =>
+  state.repeat !== "one" &&
+  (state.queue.length > 0 ||
+    (state.repeat === "all" && !state.radio && state.playlist.length > 1))
+
 export const useMusicPlayer = create<MusicPlayerState>((set, get) => ({
   current: null,
   queue: [],

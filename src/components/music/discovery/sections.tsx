@@ -69,6 +69,7 @@ export function MusicPlaylistCard({
             title={formatted.title}
             seed={playlist.id}
             label={formatted.coverLabel}
+            bestOf={formatted.bestOf}
           />
         </Link>
         <PlayPlaylistButton

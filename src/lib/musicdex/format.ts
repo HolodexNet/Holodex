@@ -1,3 +1,4 @@
+import { ALL_VTUBERS } from "../consts.ts"
 import type { Playlist, PlaylistStub } from "./types"
 
 /** Musicdex generated playlist IDs carry their display context in the ID and description. */
@@ -22,7 +23,8 @@ export function formatMusicPlaylist(
   }
   const name =
     (preferEnglish && data.channel?.english_name) || data.channel?.name
-  const org = params.get("org") || ""
+  // Discovery spells the all-organizations scope with an underscore.
+  const org = params.get("org")?.replace(/^All_Vtubers$/, ALL_VTUBERS) || ""
   let title = playlist.title
   switch (type) {
     case ":artist":
@@ -98,6 +100,10 @@ export function formatMusicPlaylist(
         : type === ":weekly" || type === ":userweekly"
           ? "WEEKLY MIX"
           : undefined,
+    bestOf:
+      type === ":mv" && org && params.get("sort") === "random"
+        ? org
+        : undefined,
     description: playlist.id.startsWith(":")
       ? radio
         ? `A station built around ${title || "the music you love"}.`

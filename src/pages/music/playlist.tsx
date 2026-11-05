@@ -362,6 +362,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
             seed={id}
             radio={radio}
             label={formatted.coverLabel}
+            bestOf={formatted.bestOf}
           />
         </div>
         <div className="relative min-w-0">
