@@ -1335,6 +1335,31 @@ videoEdit:
         session: Please log in again to save.
         rateLimited: Too many requests. Wait a moment, then save again.
         connection: Lost the connection. Your changes are still here, so save again.
+  setlist:
+    tab: Setlist
+    commentsTab: 'All comments ({count})'
+    fromComment: From a comment
+    fromDescription: From the description
+    fromPaste: Pasted
+    sourcePosition: '{label} ({index} of {total})'
+    previousSource: Previous setlist
+    nextSource: Next setlist
+    allAdded: All added
+    added: Already added
+    playFrom: Play from here
+    noText: No description
+    noneFound: No setlist in the comments yet.
+    renew: Check for new comments
+    renewLimited: Comments were checked recently. Try again in a few minutes.
+    renewFailed: Couldn't check for new comments.
+    commentsFound: 'No comments with timestamps found. | Found 1 comment with timestamps. | Found {count} comments with timestamps.'
+    pasteTitle: Paste a setlist
+    pasteDescription: One song per line, with a time on each line.
+    pasteFound: 'No songs found yet | 1 song found | {count} songs found'
+    pasteUse: Use this setlist
+    confirmNext: Looks right, next
+    checkedProgress: '{checked} of {total} checked'
+    emptyList: Add the setlist from the comments, or press S when a song starts.
   keys:
     title: Keyboard shortcuts
     description: The same keys work whichever way you add songs.
