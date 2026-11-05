@@ -8,6 +8,9 @@ import { queryClient } from "@/lib/queries"
 import type { ChannelSummary } from "@/lib/types"
 import { useSelection } from "@/stores/selection"
 
+/** Every query holding video records that a confirmed edit should show up in. */
+const VIDEO_QUERY_PREFIXES = ["live", "videos", "search", "video", "video-edit"]
+
 let reconciliation: ReturnType<typeof setTimeout> | undefined
 
 export function reconcileMentionAdditions(
@@ -27,7 +30,7 @@ export function reconcileMentionAdditions(
 export function reconcileVideoEdits(edits: Record<string, VideoCurationEdit>) {
   if (!Object.keys(edits).length) return
   for (const [id, edit] of Object.entries(edits)) rememberVideoEdit(id, edit)
-  for (const prefix of ["live", "videos", "search", "video"]) {
+  for (const prefix of VIDEO_QUERY_PREFIXES) {
     queryClient.setQueriesData({ queryKey: [prefix] }, patchMentionLists)
     void queryClient.invalidateQueries({
       queryKey: [prefix],
@@ -44,7 +47,7 @@ export function reconcileVideoEdits(edits: Record<string, VideoCurationEdit>) {
   }))
   clearTimeout(reconciliation)
   reconciliation = setTimeout(() => {
-    for (const prefix of ["live", "videos", "search", "video"])
+    for (const prefix of VIDEO_QUERY_PREFIXES)
       void queryClient.invalidateQueries({ queryKey: [prefix] })
   }, 180_000)
 }

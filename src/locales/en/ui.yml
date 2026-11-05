@@ -1236,6 +1236,39 @@ curation:
     rateLimited: Too many requests. Wait a moment before trying again.
     rejected: Couldn't save these changes. Check your selection and try again.
     unknown: Couldn't confirm whether the changes were saved.
+videoEdit:
+  undo: Undo
+  saved: Saved
+  logIn: Log in
+  moreEdits: More edits
+  tabs:
+    label: What to edit
+    details: Topic & participants
+    music: Songs
+  player:
+    failed: This video can't be played here. You can still type in times.
+    keyboardLost: Shortcuts paused · Click to resume
+  queue:
+    start: 'Edit this video | Edit one at a time ({count})'
+    position: '{index} of {total}'
+    previous: Previous video
+    next: Next
+    finish: Finish
+  topic:
+    title: Topic
+    none: No topic yet
+    cleared: Topic cleared
+    loadFailed: Couldn't load this video's topic.
+    locked: Another contributor set this topic. Only they or an editor can change it.
+    ownHint: You set this topic, so you can change it. Only editors can remove one.
+  mentions:
+    title: Participants
+    host: Host
+    add: 'Add {name}'
+    remove: 'Remove {name}'
+    removed: '{name} removed'
+    removeFailed: Couldn't remove this participant. Try again.
+    notYours: Someone else added this participant. Only they or an editor can remove them.
 channelRequest:
   RequestType: 'Request Type:'
   Types:

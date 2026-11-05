@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
@@ -6,6 +7,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -20,14 +22,18 @@ import {
   videoActionIssue,
 } from "@/lib/selection-actions"
 import { videoTitle, watchPath } from "@/lib/video"
+import { editPath } from "@/lib/video-edit/routes"
 import { useAuth } from "@/stores/auth"
 import { useSelection, useSelectionScopes } from "@/stores/selection"
 import { useSelectionAction } from "@/stores/selection-action"
 import { useSettings } from "@/stores/settings"
+import { useEditQueue } from "@/stores/video-edit"
 import { toastSelectionLimit } from "./use-selectable-video"
 
 export function SelectionTray() {
-  const { t } = useT()
+  const { t, tc } = useT()
+  const navigate = useNavigate()
+  const location = useLocation()
   const items = useSelection((state) => state.items)
   const selecting = useSelection((state) => state.selecting)
   const scopes = useSelectionScopes((state) => state.scopes)
@@ -39,6 +45,13 @@ export function SelectionTray() {
   const actions = availableVideoActions(user)
   const editActions = actions.filter((action) => action.id !== "copy-links")
   const loaded = active ? scopes[active] : undefined
+  const editOneAtATime = () => {
+    const ids = entries.map((entry) => entry.video.id)
+    useEditQueue
+      .getState()
+      .start(ids, `${location.pathname}${location.search}${location.hash}`)
+    void navigate(editPath(ids[0]))
+  }
   const selectLoaded = () => {
     if (loaded && useSelection.getState().set(loaded, true))
       toastSelectionLimit()
@@ -168,6 +181,10 @@ export function SelectionTray() {
               align="center"
               className="w-80 max-w-[calc(100vw-2rem)]"
             >
+              <DropdownMenuItem onClick={editOneAtATime}>
+                {tc("videoEdit.queue.start", entries.length)}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               {editActions.map((action) => {
                 const issue = videoActionIssue(
                   action,

@@ -43,7 +43,6 @@ if (
 
 /** Routes of the previous UI that have not been rebuilt yet. */
 const PENDING_ROUTES = [
-  "/edit/video/:id/:tab?",
   "/add_placeholder",
   "/playlists",
   "/library",
@@ -73,6 +72,13 @@ const router = createBrowserRouter([
         path: "/multiview/:layout?",
         lazy: async () => ({
           Component: (await import("@/pages/multiview")).default,
+        }),
+      },
+      // Also a full window: editing wants the room, and the video's own audio.
+      {
+        path: "/edit/video/:id/:tab?/:approach?",
+        lazy: async () => ({
+          Component: (await import("@/pages/edit-video")).default,
         }),
       },
       {

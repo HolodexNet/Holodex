@@ -20,6 +20,7 @@ import type {
   User,
   V3VideoList,
   Video,
+  VideoComment,
 } from "@/lib/types"
 import type { TlWireMessage } from "@/lib/tldex/messages"
 import { getJwt, useAuth } from "@/stores/auth"
@@ -292,6 +293,15 @@ export const api = {
     }
   },
 
+  /** One video in full, with its description and saved timestamp comments. */
+  videoWithComments: async (id: string, signal?: AbortSignal) =>
+    withMentionAdditions(
+      await request<Video>(`${API}/v2/videos/${encodeURIComponent(id)}`, {
+        query: { c: 1 },
+        signal,
+      })
+    ),
+
   /** Details for specific videos, by id; unknown ids are simply absent. */
   videosById: async (ids: string[], signal?: AbortSignal) => {
     const res = await request<Video[]>(`${API}/v2/videos`, {
@@ -464,17 +474,26 @@ export const api = {
     async topic(
       id: string,
       signal: AbortSignal
-    ): Promise<{ topic_id: string | null }> {
-      const result = await request<{ topic_id?: string | null } | null>(
-        `${API}/v2/videos/${encodeURIComponent(id)}/topic`,
-        { query: { _curation: crypto.randomUUID() }, signal }
-      )
+    ): Promise<{
+      topic_id: string | null
+      topic_approver_id: string | number | null
+    }> {
+      const result = await request<{
+        topic_id?: string | null
+        topic_approver_id?: string | number | null
+      } | null>(`${API}/v2/videos/${encodeURIComponent(id)}/topic`, {
+        query: { _curation: crypto.randomUUID() },
+        signal,
+      })
       if (
         !result ||
         !(result.topic_id === null || typeof result.topic_id === "string")
       )
         throw new Error("Invalid topic response")
-      return { topic_id: result.topic_id }
+      return {
+        topic_id: result.topic_id,
+        topic_approver_id: result.topic_approver_id ?? null,
+      }
     },
     setTopics: (plan: TopicPlan, signal: AbortSignal) =>
       request<unknown>(`${API}/v2/topics/videos`, {
@@ -600,6 +619,41 @@ export const api = {
         })
       )
     },
+    /** Unlike the batched read, this includes each talent's photo. */
+    videoMentions: (id: string, signal?: AbortSignal) =>
+      request<ChannelSummary[]>(
+        `${API}/v2/videos/${encodeURIComponent(id)}/mentions`,
+        { signal }
+      ),
+    /** Resolves to how many were removed: 0 means they were not the caller's to remove. */
+    removeMentions: async (
+      videoId: string,
+      channelIds: string[],
+      signal?: AbortSignal
+    ) =>
+      Number(
+        await request<unknown>(
+          `${API}/v2/videos/${encodeURIComponent(videoId)}/mentions`,
+          {
+            method: "DELETE",
+            body: { channel_ids: channelIds },
+            auth: "required",
+            signal,
+          }
+        )
+      ) || 0,
+    /** A unique query, so that this skips the route's URL-keyed cache. */
+    comments: (id: string, signal?: AbortSignal) =>
+      request<VideoComment[]>(
+        `${API}/v2/videos/${encodeURIComponent(id)}/comments`,
+        { query: { limit: 200, _curation: crypto.randomUUID() }, signal }
+      ),
+    /** A GET that crawls YouTube, so only ever call this for a deliberate click. */
+    renewComments: (id: string, signal?: AbortSignal) =>
+      request<unknown>(`${API}/v2/comments/renew/${encodeURIComponent(id)}`, {
+        auth: "required",
+        signal,
+      }),
     addMention: (videoId: string, channelId: string, signal?: AbortSignal) =>
       request<unknown>(
         `${API}/v2/videos/${encodeURIComponent(videoId)}/mentions`,

@@ -29,6 +29,12 @@ export interface YoutubePlayerOptions extends PlayerCallbacks {
   onLoadError: (error: Error) => void
 }
 
+/** YouTube can also say how long the video is, which not every provider can. */
+export interface YoutubeController extends PlayerController {
+  /** Seconds, or 0 while that is not known yet. */
+  duration(): number
+}
+
 export function createYoutubePlayer({
   host,
   videoId,
@@ -37,7 +43,7 @@ export function createYoutubePlayer({
   onReady,
   onStateChange,
   onLoadError,
-}: YoutubePlayerOptions): PlayerController {
+}: YoutubePlayerOptions): YoutubeController {
   // YT.Player replaces this element, so React's own node is never involved.
   const mount = document.createElement("div")
   host.appendChild(mount)
@@ -110,6 +116,7 @@ export function createYoutubePlayer({
       }),
     setVolume: (volume) => whenReady((p) => p.setVolume(volume)),
     setPlaybackRate: (rate) => whenReady((p) => p.setPlaybackRate(rate)),
+    duration: () => (ready && player ? player.getDuration() || 0 : 0),
     read(): PlayerStatus {
       if (!ready || !player || destroyed) {
         return { ...INITIAL_PLAYER_STATUS, state: lastState, muted }

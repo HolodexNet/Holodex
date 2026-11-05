@@ -1,5 +1,5 @@
 import { Fragment } from "react"
-import { useNavigate } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { toast } from "sonner"
 
 import {
@@ -15,7 +15,6 @@ import {
   NotePencilIcon,
   TrashIcon,
   UserIcon,
-  UsersIcon,
   SquaresFourIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -38,6 +37,7 @@ import {
 } from "@/lib/selection-actions"
 import type { Video } from "@/lib/types"
 import { videoTitle, watchPath } from "@/lib/video"
+import { editPath } from "@/lib/video-edit/routes"
 import { isVideoPlaceholder, videoSource } from "@/lib/video-source"
 import { useSettings } from "@/stores/settings"
 import { useAuth } from "@/stores/auth"
@@ -88,9 +88,15 @@ export function VideoMenu({
   const source = videoSource(video)
   const multiviewStream = toMultiviewVideo(video)
   const title = videoTitle(video, preferEnglish)
-  // Group-only actions belong in the selection tray, not on a single video.
+  // Group-only actions belong in the selection tray, not on a single video, and
+  // the editor covers mentions and topics better than a bulk dialog of one.
   const editActions = availableVideoActions(user)
-    .filter((action) => action.id !== "copy-links")
+    .filter(
+      (action) =>
+        action.id !== "copy-links" &&
+        action.id !== "add-mentions" &&
+        action.id !== "set-topic"
+    )
     .filter((action) => !videoActionIssue(action, [video]))
   const canSelect = scope && !selecting
 
@@ -176,9 +182,7 @@ export function VideoMenu({
           <UserIcon className="text-muted-foreground" />
           {t("component.videoCard.viewChannel")}
         </DropdownMenuItem>
-        {(canSelect || editActions.length > 0) && (
-          <DropdownMenuSeparator className="mx-1.5" />
-        )}
+        {(canSelect || user) && <DropdownMenuSeparator className="mx-1.5" />}
         {canSelect && (
           <DropdownMenuItem
             onClick={() => {
@@ -190,11 +194,17 @@ export function VideoMenu({
             {t("selection.startHere")}
           </DropdownMenuItem>
         )}
+        {user && (
+          <DropdownMenuItem render={<Link to={editPath(video.id)} />}>
+            <NotePencilIcon className="text-muted-foreground" />
+            {t("component.videoCard.editVideo")}
+          </DropdownMenuItem>
+        )}
         {editActions.length > 0 && (
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="gap-2.5 [&>svg]:text-muted-foreground">
-              <NotePencilIcon />
-              {t("component.videoCard.editVideo")}
+              <LinkIcon />
+              {t("videoEdit.moreEdits")}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent
               className={menuClassName}
@@ -206,15 +216,11 @@ export function VideoMenu({
                   "destructive" in action && action.destructive
                 const previous = editActions[index - 1]
                 const Icon =
-                  action.id === "set-topic"
-                    ? NotePencilIcon
-                    : action.id === "add-mentions"
-                      ? UsersIcon
-                      : action.id === "dissociate-video"
-                        ? LinkIcon
-                        : action.id === "dissociate-channel"
-                          ? UserIcon
-                          : TrashIcon
+                  action.id === "dissociate-video"
+                    ? LinkIcon
+                    : action.id === "dissociate-channel"
+                      ? UserIcon
+                      : TrashIcon
 
                 return (
                   <Fragment key={action.id}>
