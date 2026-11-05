@@ -44,7 +44,7 @@ export function BottomNav() {
         },
         {
           label: "Musicdex Playlists",
-          to: "/music/playlists",
+          to: "/#playlists",
           icon: <PlaylistIcon />,
           activeIcon: <PlaylistIcon />,
         },

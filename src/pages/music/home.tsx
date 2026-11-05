@@ -15,7 +15,6 @@ import {
   PlaySongsButton,
 } from "@/components/music/hero"
 import {
-  MusicNavigation,
   MusicSectionHeading,
   MusicLoading,
 } from "@/components/music/page-header"
@@ -121,9 +120,8 @@ export function MusicHomeTab() {
   )
 }
 
-/** Musicdex for favorited channels, shown as a tab of the favorites page. */
-export function MusicFavoritesTab() {
-  const userId = useAuth((s) => s.user?.id ?? null)
+/** Public discovery composed from favorite channels, ten channels at a time. */
+function useFavoriteDiscovery() {
   const favorites = useFavorites()
   const blocked = useSettings((s) => s.blockedChannels)
   const [visibleCount, setVisibleCount] = useState(10)
@@ -154,33 +152,98 @@ export function MusicFavoritesTab() {
         .map((stream) => [stream.video.id, stream])
     ).values(),
   ]
+  return {
+    favorites,
+    favoriteChannels,
+    discovery,
+    playlists,
+    streams,
+    hasMore: favoriteChannels.length < eligibleChannels.length,
+    loadMore: () => setVisibleCount((count) => count + 10),
+  }
+}
+
+function FavoriteDiscoveryStatus({
+  discovery,
+  hasMore,
+  loadMore,
+}: Pick<
+  ReturnType<typeof useFavoriteDiscovery>,
+  "discovery" | "hasMore" | "loadMore"
+>) {
+  return (
+    <>
+      {discovery.some((item) => item.isPending) && (
+        <p className="text-sm text-muted-foreground">
+          Loading music from favorite channels…
+        </p>
+      )}
+      {discovery.some((item) => item.isError) && (
+        <ErrorMessage
+          error={discovery.find((item) => item.isError)?.error}
+          onRetry={() => {
+            discovery.forEach((item) => {
+              if (item.isError) void item.refetch()
+            })
+          }}
+        />
+      )}
+      {hasMore && (
+        <Button
+          variant="outline"
+          disabled={discovery.some((item) => item.isPending)}
+          onClick={loadMore}
+        >
+          Load more favorite channels
+        </Button>
+      )}
+    </>
+  )
+}
+
+function FavoritesSignIn() {
+  return (
+    <div className="space-y-9 max-md:space-y-7">
+      <div className="relative flex min-h-72.5 items-center justify-between gap-9 overflow-hidden rounded-2xl border border-border bg-[color-mix(in_oklch,var(--complement-soft)_13%,var(--card))] p-[clamp(24px,4vw,48px)] max-md:min-h-70 max-md:p-6.5">
+        <div className="max-md:relative max-md:z-1">
+          <h2 className="text-[clamp(24px,3vw,36px)] leading-[1.2] font-bold tracking-tighter">
+            Make yourself at home.
+          </h2>
+          <p className="mt-3 mb-6 max-w-97.5 text-[13px] leading-[1.8] text-muted-foreground">
+            Sign in with your Holodex account to bring your favorite channels
+            into the listening room.
+          </p>
+          <Button nativeButton={false} render={<Link to="/login" />}>
+            Sign in to Holodex
+          </Button>
+        </div>
+        <div className="mr-6 w-[220px] shrink-0 rotate-[9deg] max-md:pointer-events-none max-md:absolute max-md:-right-[115px] max-md:-bottom-[30px] max-md:w-[250px] max-md:opacity-15">
+          <MusicArtwork title="Your favorites" seed="favorites" radio />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** Musicdex for favorited channels, shown as a tab of the favorites page. */
+export function MusicFavoritesTab() {
+  const userId = useAuth((s) => s.user?.id ?? null)
+  const blocked = useSettings((s) => s.blockedChannels)
+  const {
+    favorites,
+    favoriteChannels,
+    discovery,
+    playlists,
+    streams,
+    hasMore,
+    loadMore,
+  } = useFavoriteDiscovery()
   const liked = useQuery({
     queryKey: ["musicdex", "liked", userId, 1],
     queryFn: ({ signal }) => musicApi.likedSongs(1, signal),
     enabled: !!userId,
   })
-  if (!userId)
-    return (
-      <div className="space-y-9 max-md:space-y-7">
-        <div className="relative flex min-h-72.5 items-center justify-between gap-9 overflow-hidden rounded-2xl border border-border bg-[color-mix(in_oklch,var(--complement-soft)_13%,var(--card))] p-[clamp(24px,4vw,48px)] max-md:min-h-70 max-md:p-6.5">
-          <div className="max-md:relative max-md:z-1">
-            <h2 className="text-[clamp(24px,3vw,36px)] leading-[1.2] font-bold tracking-tighter">
-              Make yourself at home.
-            </h2>
-            <p className="mt-3 mb-6 max-w-97.5 text-[13px] leading-[1.8] text-muted-foreground">
-              Sign in with your Holodex account to bring your favorite channels
-              into the listening room.
-            </p>
-            <Button nativeButton={false} render={<Link to="/login" />}>
-              Sign in to Holodex
-            </Button>
-          </div>
-          <div className="mr-6 w-[220px] shrink-0 rotate-[9deg] max-md:pointer-events-none max-md:absolute max-md:-right-[115px] max-md:-bottom-[30px] max-md:w-[250px] max-md:opacity-15">
-            <MusicArtwork title="Your favorites" seed="favorites" radio />
-          </div>
-        </div>
-      </div>
-    )
+  if (!userId) return <FavoritesSignIn />
   return (
     <div className="container mx-auto space-y-9 max-md:space-y-7">
       <MusicHero
@@ -210,30 +273,11 @@ export function MusicFavoritesTab() {
             }}
             scope={{ type: "favorites" }}
           />
-          {discovery.some((item) => item.isPending) && (
-            <p className="text-sm text-muted-foreground">
-              Loading music from favorite channels…
-            </p>
-          )}
-          {discovery.some((item) => item.isError) && (
-            <ErrorMessage
-              error={discovery.find((item) => item.isError)?.error}
-              onRetry={() => {
-                discovery.forEach((item) => {
-                  if (item.isError) void item.refetch()
-                })
-              }}
-            />
-          )}
-          {favoriteChannels.length < eligibleChannels.length && (
-            <Button
-              variant="outline"
-              disabled={discovery.some((item) => item.isPending)}
-              onClick={() => setVisibleCount((count) => count + 10)}
-            >
-              Load more favorite channels
-            </Button>
-          )}
+          <FavoriteDiscoveryStatus
+            discovery={discovery}
+            hasMore={hasMore}
+            loadMore={loadMore}
+          />
         </>
       ) : (
         <p className="text-sm text-muted-foreground">
@@ -300,8 +344,7 @@ export function MusicLiked() {
     .map((song) => ({ ...song, liked: true }))
   const source = { id: "liked", title: "Liked songs" }
   return (
-    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
-      <MusicNavigation />
+    <div className="container mx-auto space-y-9 max-md:space-y-7">
       {liked.isPending ? (
         <MusicLikedSkeleton />
       ) : liked.isError ? (
@@ -345,14 +388,46 @@ export function MusicLiked() {
           </div>
         </>
       )}
-    </main>
+    </div>
   )
 }
 
-export function MusicRadios() {
-  useDocumentTitle("Music Radios")
-  const org = useOrgStore((s) => s.currentOrg.name)
+function SavedRadios() {
   const userId = useAuth((s) => s.user?.id ?? null)
+  const starred = useQuery({
+    queryKey: ["musicdex", "starredPlaylists", userId],
+    queryFn: ({ signal }) => musicApi.starredPlaylists(signal),
+    enabled: !!userId,
+  })
+  const saved =
+    starred.data?.filter(
+      (playlist) =>
+        playlist.type.startsWith("radio") ||
+        playlist.id.startsWith(":artist") ||
+        playlist.id.startsWith(":hot")
+    ) ?? []
+  return (
+    <section>
+      {starred.isPending ? (
+        <p>Loading saved radios…</p>
+      ) : starred.isError ? (
+        <ErrorMessage
+          error={starred.error}
+          onRetry={() => void starred.refetch()}
+        />
+      ) : saved.length ? (
+        <PlaylistCards title="Saved radios" playlists={saved} grid />
+      ) : (
+        <p className="text-sm text-muted-foreground">
+          You have no saved radios yet.
+        </p>
+      )}
+    </section>
+  )
+}
+
+function OrgRadios() {
+  const org = useOrgStore((s) => s.currentOrg.name)
   const radios = useInfiniteQuery({
     queryKey: ["musicdex", "discovery", "playlists", org, "radio"],
     queryFn: ({ pageParam, signal }) =>
@@ -364,72 +439,100 @@ export function MusicRadios() {
         ? pages.reduce((n, page) => n + page.items.length, 0)
         : undefined,
   })
-  const starred = useQuery({
-    queryKey: ["musicdex", "starredPlaylists", userId],
-    queryFn: ({ signal }) => musicApi.starredPlaylists(signal),
-    enabled: !!userId,
-  })
   const items = radios.data?.pages.flatMap((page) => page.items) ?? []
-  const saved =
-    starred.data?.filter(
-      (playlist) =>
-        playlist.type.startsWith("radio") ||
-        playlist.id.startsWith(":artist") ||
-        playlist.id.startsWith(":hot")
-    ) ?? []
   return (
-    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
-      <MusicNavigation />
-      {!!userId && (
-        <section>
-          {starred.isPending ? (
-            <p>Loading saved radios…</p>
-          ) : starred.isError ? (
+    <section className="space-y-3">
+      {radios.isPending ? (
+        <MusicLoading label="Loading radios" />
+      ) : radios.isError && !radios.data ? (
+        <ErrorMessage
+          error={radios.error}
+          onRetry={() => void radios.refetch()}
+        />
+      ) : items.length ? (
+        <>
+          <PlaylistCards title="Tune in" playlists={items} grid />
+          {radios.isFetchNextPageError && (
             <ErrorMessage
-              error={starred.error}
-              onRetry={() => void starred.refetch()}
+              error={radios.error}
+              onRetry={() => void radios.fetchNextPage()}
             />
-          ) : saved.length ? (
-            <PlaylistCards title="Saved radios" playlists={saved} grid />
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              You have no saved radios yet.
-            </p>
           )}
-        </section>
+          {radios.hasNextPage && (
+            <Button
+              variant="outline"
+              disabled={radios.isFetchingNextPage}
+              onClick={() => void radios.fetchNextPage()}
+            >
+              {radios.isFetchingNextPage ? "Loading…" : "Load more"}
+            </Button>
+          )}
+        </>
+      ) : (
+        <StateMessage title={`No radios found for ${org}`} />
       )}
-      <section className="space-y-3">
-        {radios.isPending ? (
-          <MusicLoading label="Loading radios" />
-        ) : radios.isError && !radios.data ? (
-          <ErrorMessage
-            error={radios.error}
-            onRetry={() => void radios.refetch()}
-          />
-        ) : items.length ? (
-          <>
-            <PlaylistCards title="Tune in" playlists={items} grid />
-            {radios.isFetchNextPageError && (
-              <ErrorMessage
-                error={radios.error}
-                onRetry={() => void radios.fetchNextPage()}
-              />
-            )}
-            {radios.hasNextPage && (
-              <Button
-                variant="outline"
-                disabled={radios.isFetchingNextPage}
-                onClick={() => void radios.fetchNextPage()}
-              >
-                {radios.isFetchingNextPage ? "Loading…" : "Load more"}
-              </Button>
-            )}
-          </>
-        ) : (
-          <StateMessage title={`No radios found for ${org}`} />
-        )}
-      </section>
-    </main>
+    </section>
+  )
+}
+
+function FavoriteRadios() {
+  const {
+    favorites,
+    favoriteChannels,
+    discovery,
+    playlists,
+    hasMore,
+    loadMore,
+  } = useFavoriteDiscovery()
+  const radios = playlists.filter((playlist) =>
+    playlist.type?.startsWith("radio")
+  )
+  const loading = discovery.some((item) => item.isPending)
+  if (favorites.isPending)
+    return <MusicLoading label="Loading favorite channels" />
+  if (favorites.isError)
+    return (
+      <ErrorMessage
+        error={favorites.error}
+        onRetry={() => void favorites.refetch()}
+      />
+    )
+  if (!favoriteChannels.length)
+    return (
+      <p className="text-sm text-muted-foreground">
+        Favorite channels to discover their radios here.
+      </p>
+    )
+  return (
+    <section className="space-y-3">
+      {radios.length || loading ? (
+        <PlaylistCards
+          title="Oshi Radios"
+          playlists={radios}
+          grid
+          loading={loading && !radios.length}
+        />
+      ) : (
+        <StateMessage title="No radios found for your favorite channels" />
+      )}
+      <FavoriteDiscoveryStatus
+        discovery={discovery}
+        hasMore={hasMore}
+        loadMore={loadMore}
+      />
+    </section>
+  )
+}
+
+/** Saved radios plus the catalog for the home page's scope, as a home tab. */
+export function MusicRadiosTab({ favorites = false }: { favorites?: boolean }) {
+  const loggedIn = useAuth((s) => !!s.user)
+  if (favorites && !loggedIn) return <FavoritesSignIn />
+  return (
+    <div className="container mx-auto space-y-9 max-md:space-y-7">
+      {loggedIn && <SavedRadios />}
+      {favorites ? <FavoriteRadios /> : <OrgRadios />}
+    </div>
   )
 }
 
@@ -451,8 +554,7 @@ export function MusicBrowse() {
   })
   const items = listing.data?.pages.flatMap((page) => page.items) ?? []
   return (
-    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
-      <MusicNavigation />
+    <div className="container mx-auto space-y-9 max-md:space-y-7">
       {listing.isPending ? (
         <MusicLoading label="Loading playlists" />
       ) : listing.isError && !listing.data ? (
@@ -482,6 +584,6 @@ export function MusicBrowse() {
       ) : (
         <StateMessage title={`No playlists found for ${org}`} />
       )}
-    </main>
+    </div>
   )
 }

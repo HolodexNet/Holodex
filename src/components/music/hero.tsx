@@ -1,7 +1,7 @@
 import { Link } from "react-router"
 import { toast } from "sonner"
 import { cn } from "cn"
-import { CaretRightIcon, PlayIcon, PlusIcon } from "@/components/icons"
+import { CaretRightIcon, MagnifyingGlassIcon, PlayIcon, PlusIcon } from "@/components/icons"
 import { MusicArtwork } from "@/components/music/artwork"
 import type { DiscoveryScope } from "@/components/music/discovery/sections"
 import { PlayPlaylistButton } from "@/components/music/play-playlist"
@@ -112,54 +112,57 @@ export function MusicHero({
   const formatted = featured ? formatMusicPlaylist(featured, english) : null
   const covers = featured
     ? [
-        featured,
-        ...picks.filter((playlist) => playlist.id !== featured.id),
-      ].slice(0, 3)
+      featured,
+      ...picks.filter((playlist) => playlist.id !== featured.id),
+    ].slice(0, 3)
     : []
   const label = scope.type === "org" ? scope.name : "Favorites"
   return (
     <section className="relative isolate grid min-h-87.5 grid-cols-[1.1fr_1fr] overflow-clip rounded-[22px] border border-[color-mix(in_oklch,var(--complement)_13%,var(--border))] bg-[color-mix(in_oklch,var(--complement-soft)_22%,var(--card))] before:absolute before:right-[-8%] before:bottom-[-65%] before:-z-1 before:aspect-square before:w-[45%] before:rounded-full before:bg-primary before:opacity-[0.14] before:blur-[100px] before:content-[''] max-md:grid-cols-[minmax(0,1fr)]">
-      <div className="relative z-5 self-center px-[clamp(24px,3vw,48px)] py-10 max-md:px-6 max-md:pt-7 max-md:pb-2.5">
-        <h1 className="mt-6 max-w-140 text-[clamp(38px,4.6vw,68px)] leading-[1.04] font-[760] tracking-[-0.065em] text-balance max-md:mt-5 max-md:text-[44px]">
-          {favorites
-            ? "Your favorites"
-            : label === ALL_VTUBERS
-              ? "The whole scene"
-              : label}
-          <span className="block text-brand">on repeat.</span>
+      <div className="relative z-5 flex flex-col items-start px-[clamp(24px,3vw,48px)] py-12 max-md:px-6">
+        {/* Bold Title */}
+        <h1 className="mt-4 max-w-2xl text-[clamp(36px,4.5vw,64px)] font-black tracking-tight leading-[1.05] text-balance">
+          Music<span className="text-brand">dex</span> is all about <span className="text-brand">{
+            favorites ? "your oshis" : label
+          }</span>
         </h1>
-        <p className="mt-4.75 max-w-77.5 text-[13px] leading-[1.8] text-muted-foreground max-md:mt-4 max-md:hidden max-md:max-w-65 max-md:text-[12px]">
+
+        {/* Detailed Metadata Subtext */}
+        <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-muted-foreground/90 max-md:hidden">
           {favorites
-            ? "Familiar voices. Favorite performances. A little more of what you love."
-            : "The covers, originals, and late-night karaoke that stay with you."}
+            ? "Jump straight into your bookmarked performances, saved karaoke streams, and favorite VTuber tracks."
+            : "Listen and assemble playlists from their singing streams and YouTube uploads, thanks to our community-submitted tags."}
         </p>
-        <div className="mt-6.5 flex flex-wrap items-center gap-5.5 *:data-[slot=button]:h-10.5 *:data-[slot=button]:px-5 *:data-[slot=button]:shadow-[0_5px_20px_color-mix(in_oklch,var(--primary)_18%,transparent)] max-md:mt-5 max-md:gap-4">
+
+        {/* Actions */}
+        <div className="mt-8 flex flex-wrap items-center gap-4">
           {favorites && songs.length ? (
             <PlaySongsButton
               songs={songs}
               source={{ id: "liked", title: "Liked songs" }}
-              label="Play your favorites"
+              label="Queue Saved Tracks"
             />
           ) : featured ? (
             <PlayPlaylistButton
               playlist={featured}
-              label={formatted?.radio ? "Start radio" : "Play the mix"}
+              label={formatted?.radio ? "Launch Talent Radio" : "Play Curator Mix"}
             />
           ) : loading ? (
-            <Button disabled>
-              <Spinner /> Finding your mix
+            <Button disabled className="gap-2">
+              <Spinner /> Indexing tracks...
             </Button>
           ) : (
             <Button nativeButton={false} render={<Link to="/music/search" />}>
-              <PlayIcon /> Find your first song
+              <MagnifyingGlassIcon className="size-4" /> Search VTubers or MVs
             </Button>
           )}
+
           <Link
-            to={favorites ? "/music/liked" : "/music/radios"}
-            className="inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
+            to={favorites ? "/music/liked" : "/#radio"}
+            className="inline-flex items-center gap-2 rounded-lg border border-border/50 bg-secondary/40 px-4 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition-colors"
           >
-            {favorites ? "Your liked songs" : "Find a radio"}
-            <CaretRightIcon className="size-4" />
+            {favorites ? "Manage Library" : "Explore Radios & Tags"}
+            <CaretRightIcon className="size-4 opacity-70" />
           </Link>
         </div>
       </div>

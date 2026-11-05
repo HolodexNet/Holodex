@@ -7,6 +7,7 @@ import { RouterProvider } from "react-router/dom"
 import "./index.css"
 import { AppRoot } from "@/components/layout/app-root"
 import { AppShell } from "@/components/layout/app-shell"
+import { MusicPageLayout } from "@/components/layout/home-tabs-layout"
 import { Spinner } from "@/components/ui/spinner"
 import { setLanguage } from "@/lib/i18n"
 import { queryClient } from "@/lib/queries"
@@ -99,49 +100,47 @@ const router = createBrowserRouter([
               Component: (await import("@/pages/music/home")).MusicFavorites,
             }),
           },
-          {
-            path: "/music/search",
-            lazy: async () => ({
-              Component: (await import("@/pages/music/search")).default,
-            }),
-          },
-          {
-            path: "/music/liked",
-            lazy: async () => ({
-              Component: (await import("@/pages/music/home")).MusicLiked,
-            }),
-          },
-          {
-            path: "/music/radios",
-            lazy: async () => ({
-              Component: (await import("@/pages/music/home")).MusicRadios,
-            }),
-          },
-          {
-            path: "/music/browse/:type",
-            lazy: async () => ({
-              Component: (await import("@/pages/music/home")).MusicBrowse,
-            }),
-          },
+          { path: "/music/radios", element: <Navigate to="/#radio" replace /> },
           {
             path: "/music/playlists",
-            lazy: async () => ({
-              Component: (await import("@/pages/music/library"))
-                .MusicLibraryPage,
-            }),
+            element: <Navigate to="/#playlists" replace />,
           },
           {
-            path: "/music/playlist/:id",
-            lazy: async () => ({
-              Component: (await import("@/pages/music/playlist"))
-                .MusicPlaylistPage,
-            }),
-          },
-          {
-            path: "/music/radio/:id",
-            lazy: async () => ({
-              Component: (await import("@/pages/music/radio")).MusicRadioPage,
-            }),
+            element: <MusicPageLayout />,
+            children: [
+              {
+                path: "/music/search",
+                lazy: async () => ({
+                  Component: (await import("@/pages/music/search")).default,
+                }),
+              },
+              {
+                path: "/music/liked",
+                lazy: async () => ({
+                  Component: (await import("@/pages/music/home")).MusicLiked,
+                }),
+              },
+              {
+                path: "/music/browse/:type",
+                lazy: async () => ({
+                  Component: (await import("@/pages/music/home")).MusicBrowse,
+                }),
+              },
+              {
+                path: "/music/playlist/:id",
+                lazy: async () => ({
+                  Component: (await import("@/pages/music/playlist"))
+                    .MusicPlaylistPage,
+                }),
+              },
+              {
+                path: "/music/radio/:id",
+                lazy: async () => ({
+                  Component: (await import("@/pages/music/radio"))
+                    .MusicRadioPage,
+                }),
+              },
+            ],
           },
           { path: "/settings", element: <SettingsPage /> },
           { path: "/login", element: <LoginPage /> },

@@ -8,19 +8,22 @@ separate settings store or UI dependencies.
 
 | Route | Purpose |
 | --- | --- |
-| `/music` | Music discovery for the selected organization |
-| `/music/org/:org` | Shareable organization music home |
-| `/music/favorites` | Music discovery from favorite channels and liked songs |
+| `/#music`, `/favorites#music` | Music discovery tab of the home and favorites pages |
+| `/#radio`, `/favorites#radio` | Radio tab: saved radios plus the organization's or favorite channels' radios |
+| `/#playlists`, `/favorites#playlists` | Playlists tab: owned Musicdex playlists and starred playlists/radios |
+| `/music`, `/music/org/:org`, `/music/favorites`, `/music/radios`, `/music/playlists` | Old addresses that redirect to the home tabs |
 | `/music/search` | Music search with independent URL filters |
 | `/music/browse/sgp` | Generated organization playlists |
 | `/music/browse/ugp` | Community organization playlists |
-| `/music/radios` | Organization radio catalog and saved radios |
 | `/music/liked` | Paginated liked songs |
-| `/music/playlists` | Owned Musicdex playlists and starred playlists/radios |
 | `/music/playlist/:id` | Playlist playback and owner editing |
 | `/music/radio/:id` | Radio playback |
 | `/channel/:id/music` | Channel music overview and songs |
 | `/channel/:id/music?songs=all` | Channel's paginated song catalog |
+
+The home tabs and the remaining `/music/*` pages share one header,
+`HomeTabsLayout` in `src/components/layout/home-tabs-layout.tsx`. Its tabs lead
+back to the home page from any music page.
 
 Musicdex playlists retain their string identifiers and `/api/v2/musicdex`
 endpoints. They do not use Holodex's saved-video playlists or `/playlists` route.

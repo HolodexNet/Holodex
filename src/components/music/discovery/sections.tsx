@@ -257,7 +257,7 @@ export function DiscoverySections({
         title={
           scope.type === "favorites" ? "Oshi Radios" : `${scope.name} Radios`
         }
-        seeAll={browse ? "/music/radios" : undefined}
+        seeAll={browse ? "/#radio" : undefined}
         playlists={playlists.filter((p) => p.type?.startsWith("radio"))}
         loading={loading}
       />

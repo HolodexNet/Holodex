@@ -14,7 +14,6 @@ import {
 import { PauseIcon, ShuffleIcon } from "@/components/music/player/icons"
 import { MusicArtwork } from "@/components/music/artwork"
 import { AddToQueueButton } from "@/components/music/hero"
-import { MusicNavigation } from "@/components/music/page-header"
 import { MusicDetailSkeleton } from "@/components/music/skeletons"
 import { formatMusicPlaylist } from "@/lib/musicdex/format"
 import { useSettings } from "@/stores/settings"
@@ -308,20 +307,19 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
       await invalidate()
       toast.success("Playlist deleted")
       setDeleteOpen(false)
-      navigate("/music/playlists")
+      navigate("/#playlists")
     },
     onError: () => toast.error("Could not delete playlist"),
   })
   if (query.isLoading)
     return (
-      <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
-        <MusicNavigation />
+      <div className="container mx-auto space-y-9 max-md:space-y-7">
         <MusicDetailSkeleton radio={radio} />
-      </main>
+      </div>
     )
   if (!query.data)
     return (
-      <main className="space-y-3 p-8">
+      <div className="space-y-3">
         <h1 className="text-2xl font-bold">
           Could not load {radio ? "radio" : "playlist"}
         </h1>
@@ -331,7 +329,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
         <Button variant="outline" onClick={() => void query.refetch()}>
           Try again
         </Button>
-      </main>
+      </div>
     )
   const playlist = query.data
   const formatted = formatMusicPlaylist(playlist, english)
@@ -347,8 +345,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
     0
   )
   return (
-    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
-      <MusicNavigation />
+    <div className="container mx-auto space-y-9 max-md:space-y-7">
       {query.isError && (
         <p role="alert" className="text-sm text-destructive">
           Could not refresh this playlist; showing previously loaded data.{" "}
@@ -368,10 +365,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
           />
         </div>
         <div className="relative min-w-0">
-          <Link
-            to={radio ? "/music/radios" : "/#music"}
-            className="music-eyebrow"
-          >
+          <Link to={radio ? "/#radio" : "/#music"} className="music-eyebrow">
             MUSICDEX
             <CaretRightIcon className="size-3" />
             {formatted.kind}
@@ -528,7 +522,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
           )}
         </>
       )}
-    </main>
+    </div>
   )
 }
 

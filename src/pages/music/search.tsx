@@ -20,7 +20,6 @@ import {
 } from "@/lib/musicdex/types"
 import { channelName } from "@/lib/video"
 import { useSettings } from "@/stores/settings"
-import { MusicNavigation } from "@/components/music/page-header"
 
 const fields = [
   "q",
@@ -206,8 +205,7 @@ export default function MusicSearch() {
   if (selected.to) chip("to", `To ${selected.to}`, { to: "" })
 
   return (
-    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
-      <MusicNavigation />
+    <div className="container mx-auto space-y-9 max-md:space-y-7">
       <form
         onSubmit={submit}
         className="rounded-[16px] border border-border bg-card/75 p-5 max-md:p-4"
@@ -425,6 +423,6 @@ export default function MusicSearch() {
           </>
         )}
       </section>
-    </main>
+    </div>
   )
 }

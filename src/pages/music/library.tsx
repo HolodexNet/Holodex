@@ -10,13 +10,11 @@ import {
   useMusicLibrary,
 } from "@/components/music/playlists/shared"
 import { musicApi } from "@/lib/musicdex/api"
-import { useDocumentTitle } from "@/hooks/use-document-title"
 import { useAuth } from "@/stores/auth"
 import type { PlaylistStub } from "@/lib/musicdex/types"
 import { MusicPlaylistCard } from "@/components/music/discovery/sections"
 import { MusicArtwork } from "@/components/music/artwork"
 import {
-  MusicNavigation,
   MusicSectionHeading,
   musicCollectionGridClass,
 } from "@/components/music/page-header"
@@ -44,8 +42,8 @@ function PlaylistGrid({
   )
 }
 
-export function MusicLibraryPage() {
-  useDocumentTitle("Musicdex Playlists")
+/** The viewer's own Musicdex playlists, shown as a tab of the main home page. */
+export function MusicLibraryTab() {
   const { mine, starred, loggedIn, user } = useMusicLibrary()
   const invalidate = useMusicInvalidation()
   const navigate = useNavigate()
@@ -99,8 +97,7 @@ export function MusicLibraryPage() {
     if (title.trim() && user) create.mutate()
   }
   return (
-    <main className="mx-auto w-full max-w-370 min-w-0 space-y-9 px-[clamp(16px,3vw,44px)] pt-6 pb-14 max-md:space-y-7 max-md:p-4 max-md:pb-9">
-      <MusicNavigation />
+    <div className="container mx-auto space-y-9 max-md:space-y-7">
       {!loggedIn ? (
         <div className="relative flex min-h-72.5 items-center justify-between gap-9 overflow-hidden rounded-2xl border border-border bg-[color-mix(in_oklch,var(--complement-soft)_13%,var(--card))] p-[clamp(24px,4vw,48px)] max-md:min-h-70 max-md:p-6.5">
           <div className="max-md:relative max-md:z-1">
@@ -221,6 +218,6 @@ export function MusicLibraryPage() {
           </section>
         </>
       )}
-    </main>
+    </div>
   )
 }

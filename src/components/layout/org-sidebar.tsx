@@ -17,6 +17,7 @@ import { isMusicPath } from "@/lib/music-route"
 import { useOrgs } from "@/lib/queries"
 import type { Org } from "@/lib/types"
 import { useOrgStore } from "@/stores/org"
+import { TAB_BY_HASH } from "./home-tabs-layout"
 import { OrgDialog, OrgIcon, OrgSelector, orgShortName } from "./org-selector"
 
 /** The rewrite's organization navigation, using attempt-3's feed and theme. */
@@ -31,10 +32,10 @@ export function OrgSidebar() {
   const setCurrentOrg = useOrgStore((s) => s.setCurrentOrg)
   const [manageOpen, setManageOpen] = useState(false)
   const music = isMusicPath(location.pathname)
-  // Organization links keep the feed's archive/clips tab when switching orgs.
+  // Organization links keep the current home tab when switching orgs.
   const hash =
     ["/", "/favorites"].includes(location.pathname) &&
-    ["#archive", "#clips", "#music"].includes(location.hash)
+    TAB_BY_HASH[location.hash]
       ? location.hash
       : ""
   const to = music ? "/#music" : `/${hash}`

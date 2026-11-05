@@ -219,7 +219,7 @@ export function ChannelPage() {
       <div className="relative">
         <ChannelBanner
           channel={channel}
-          className="h-28 sm:h-52 lg:h-64"
+          className="h-28 sm:h-52 lg:h-64 rounded-b-lg"
           sizes="(max-width: 1600px) 100vw, 1600px"
         />
         <Link

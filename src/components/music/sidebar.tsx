@@ -77,10 +77,7 @@ function LibraryMenu({
             )}
             <DropdownMenuItem
               render={
-                <Link
-                  to="/music/playlists"
-                  onClick={() => setOpenMobile(false)}
-                />
+                <Link to="/#playlists" onClick={() => setOpenMobile(false)} />
               }
             >
               Open music library
@@ -104,32 +101,32 @@ export function MusicSidebar() {
       icon: <MagnifyingGlassIcon />,
     },
     { to: "/music/liked", label: "Liked songs", icon: <HeartIcon /> },
-    { to: "/music/radios", label: "Radios", icon: <RadioIcon /> },
+    { to: "/#radio", label: "Radios", icon: <RadioIcon /> },
     {
-      to: "/music/playlists",
+      to: "/#playlists",
       label: "Musicdex Playlists",
       icon: <PlaylistIcon />,
     },
   ]
+  const homeHash = location.pathname === "/" ? location.hash : null
   const isActive = (to: string) => {
     if (to === "/#music") {
       return (
-        (location.pathname === "/" && location.hash === "#music") ||
+        homeHash === "#music" ||
         location.pathname === "/music" ||
         location.pathname.startsWith("/music/org/") ||
         location.pathname.startsWith("/music/browse/")
       )
     }
-    if (to === "/music/playlists") {
+    if (to === "/#playlists") {
       return (
-        location.pathname === to ||
+        homeHash === "#playlists" ||
         location.pathname.startsWith("/music/playlist/")
       )
     }
-    if (to === "/music/radios") {
+    if (to === "/#radio") {
       return (
-        location.pathname === to ||
-        location.pathname.startsWith("/music/radio/")
+        homeHash === "#radio" || location.pathname.startsWith("/music/radio/")
       )
     }
     return location.pathname === to

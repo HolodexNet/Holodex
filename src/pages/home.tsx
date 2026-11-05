@@ -1,5 +1,5 @@
 import { lazy, Suspense, useId, useMemo, useState } from "react"
-import { Link, useLocation, useNavigate } from "react-router"
+import { Link, useLocation } from "react-router"
 
 import { FeedFilters, SwitchRow } from "@/components/common/feed-filters"
 import { LoadMore } from "@/components/common/load-more"
@@ -7,12 +7,16 @@ import { SimpleSelect } from "@/components/common/simple-select"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import {
   HeartIcon,
-  BroadcastIcon,
-  MusicNotesFillIcon,
   CalendarBlankIcon,
   SlidersHorizontalIcon,
   TelevisionSimpleIcon,
 } from "@/components/icons"
+import {
+  HomeTabsLayout,
+  MusicSearchLink,
+  TAB_BY_HASH,
+  type HomeTab,
+} from "@/components/layout/home-tabs-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -22,7 +26,6 @@ import {
 } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { VideoList, VideoListSkeleton } from "@/components/video/video-list"
 import { ViewMenu } from "@/components/video/view-menu"
 import { useDocumentTitle } from "@/hooks/use-document-title"
@@ -41,14 +44,7 @@ import { useAuth } from "@/stores/auth"
 import { useOrgStore } from "@/stores/org"
 import { useSettings } from "@/stores/settings"
 
-type HomeTab = "live" | "archive" | "clips" | "music"
 type LiveSort = "latest" | "viewers"
-
-const TAB_BY_HASH: Record<string, HomeTab> = {
-  "#archive": "archive",
-  "#clips": "clips",
-  "#music": "music",
-}
 
 const MusicHomeTab = lazy(() =>
   import("@/pages/music/home").then((module) => ({
@@ -58,6 +54,16 @@ const MusicHomeTab = lazy(() =>
 const MusicFavoritesTab = lazy(() =>
   import("@/pages/music/home").then((module) => ({
     default: module.MusicFavoritesTab,
+  }))
+)
+const MusicRadiosTab = lazy(() =>
+  import("@/pages/music/home").then((module) => ({
+    default: module.MusicRadiosTab,
+  }))
+)
+const MusicLibraryTab = lazy(() =>
+  import("@/pages/music/library").then((module) => ({
+    default: module.MusicLibraryTab,
   }))
 )
 
@@ -182,9 +188,9 @@ function sortUpcoming(videos: Video[]): Video[] {
 export function HomePage({ favorites = false }: { favorites?: boolean }) {
   const { t } = useT()
   const location = useLocation()
-  const navigate = useNavigate()
 
   const tab = TAB_BY_HASH[location.hash] ?? "live"
+  const musicTab = tab === "music" || tab === "radio" || tab === "playlists"
   const [liveSort, setLiveSort] = useState<LiveSort>("latest")
   const [before, setBefore] = useState("")
   const upcomingHeadingId = useId()
@@ -200,12 +206,18 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
   // The favorites feed is unfiltered when the list is empty, so never ask.
   const feedEnabled = !favorites || (loggedIn && hasFavorites)
 
-  useDocumentTitle(favorites ? t("component.mainNav.favorites") : null)
-
-  const orgLive = useOrgLive(orgName, !favorites && tab !== "music")
-  const favoritesLive = useFavoritesLive(
-    favorites && hasFavorites && tab !== "music"
+  useDocumentTitle(
+    tab === "radio"
+      ? "Music Radios"
+      : tab === "playlists"
+        ? "Musicdex Playlists"
+        : favorites
+          ? t("component.mainNav.favorites")
+          : null
   )
+
+  const orgLive = useOrgLive(orgName, !favorites && !musicTab)
+  const favoritesLive = useFavoritesLive(favorites && hasFavorites && !musicTab)
   const live = favorites ? favoritesLive : orgLive
 
   const {
@@ -285,48 +297,10 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
     [feed.data, filter]
   )
 
-  const setTab = (next: HomeTab) => {
-    window.scrollTo({ top: 0 })
-    void navigate(
-      { search: location.search, hash: next === "live" ? "" : next },
-      { replace: true }
-    )
-  }
-
-  // "Live / Upcoming" is one translated string; split it to place the counts.
-  const [, liveLabel, upcomingLabel] =
-    /^(.+?)\s*([/／・].+)$/.exec(t("views.home.liveOrUpcomingHeading")) ?? []
-
-  const toolbar = (
-    <div className="sticky top-[calc(var(--header-height)+env(safe-area-inset-top,0px))] z-30 -mx-3 flex items-center border-b border-border/50 bg-background/95 px-3 backdrop-blur-md md:-mx-8 md:px-8">
-      <Tabs
-        value={tab}
-        onValueChange={(value) => setTab(value as HomeTab)}
-        className="-ml-3 min-w-0 flex-1 md:ml-0"
-      >
-        <TabsList
-          variant="line"
-          className="h-11! w-full [scrollbar-width:none] justify-start gap-2 overflow-x-auto overflow-y-hidden pl-0 sm:w-fit sm:gap-3 md:pl-[3px]"
-        >
-          <TabsTrigger value="live" className="flex-none px-1">
-            <BroadcastIcon className="size-4 text-brand" />
-            {liveLabel ?? t("views.home.liveOrUpcomingHeading")}
-            <CountBadge value={liveVideos.live.length} live />
-            {upcomingLabel}
-            {upcomingLabel && <CountBadge value={liveVideos.upcoming.length} />}
-          </TabsTrigger>
-          <TabsTrigger value="archive" className="flex-none px-1">
-            {t("views.home.recentVideoToggles.official")}
-          </TabsTrigger>
-          <TabsTrigger value="clips" className="flex-none px-1">
-            {t("views.home.recentVideoToggles.subber")}
-          </TabsTrigger>
-          <TabsTrigger value="music" className="flex-none px-1">
-            <MusicNotesFillIcon className="size-4 text-brand" />
-            Musicdex
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
+  const controls = musicTab ? (
+    <MusicSearchLink />
+  ) : (
+    <>
       {tab === "live" && (
         <div className="mr-3 hidden shrink-0 items-center gap-4 xl:flex">
           <LiveSortControl value={liveSort} onChange={setLiveSort} />
@@ -343,28 +317,32 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
           </label>
         </div>
       )}
-      {tab !== "music" && (
-        <>
-          <FilterPopover
-            tab={tab}
-            liveSort={liveSort}
-            onLiveSort={setLiveSort}
-            before={before}
-            onBefore={setBefore}
-          />
-          <ViewMenu />
-        </>
-      )}
-    </div>
+      <FilterPopover
+        tab={tab}
+        liveSort={liveSort}
+        onLiveSort={setLiveSort}
+        before={before}
+        onBefore={setBefore}
+      />
+      <ViewMenu />
+    </>
   )
 
   let content: React.ReactNode
-  if (tab === "music") {
+  if (musicTab) {
     content = (
       <Suspense
         fallback={<VideoListSkeleton mode={mode} gridSize={gridSize} />}
       >
-        {favorites ? <MusicFavoritesTab /> : <MusicHomeTab />}
+        {tab === "radio" ? (
+          <MusicRadiosTab favorites={favorites} />
+        ) : tab === "playlists" ? (
+          <MusicLibraryTab />
+        ) : favorites ? (
+          <MusicFavoritesTab />
+        ) : (
+          <MusicHomeTab />
+        )}
       </Suspense>
     )
   } else if (favorites && !loggedIn) {
@@ -496,30 +474,14 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
   }
 
   return (
-    <div className="flex flex-1 flex-col px-3 pb-10 md:px-8">
-      {toolbar}
-      <div className="flex flex-1 flex-col pt-6">{content}</div>
-    </div>
-  )
-}
-
-function CountBadge({
-  value,
-  live = false,
-}: {
-  value: number
-  live?: boolean
-}) {
-  return (
-    <span
-      className={
-        live && value > 0
-          ? "min-w-5 rounded-md bg-live px-1 text-center text-xs leading-5 font-medium text-white tabular-nums"
-          : "min-w-5 rounded-md bg-muted px-1 text-center text-xs leading-5 font-medium text-muted-foreground tabular-nums"
-      }
+    <HomeTabsLayout
+      tab={tab}
+      liveCount={live.data ? liveVideos.live.length : undefined}
+      upcomingCount={live.data ? liveVideos.upcoming.length : undefined}
+      controls={controls}
     >
-      {value}
-    </span>
+      {content}
+    </HomeTabsLayout>
   )
 }
 
