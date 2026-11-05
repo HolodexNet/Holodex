@@ -124,6 +124,10 @@ The same keys work in every approach; `?` lists them. Letters go by physical key
 
 Clicking inside the YouTube embed moves the keyboard into it, where the page can't hear anything. When the click starts or pauses the video the keyboard is taken straight back, since the click has done its job by then. Otherwise a tab on the player says shortcuts are paused and clicking it resumes them.
 
+## Quick edit, for editors
+
+Editors also get **Quick edit…** on every video's menu: a small dialog with the same topic and participant editors, so a feed can be corrected without leaving it. It takes the place of the quick editor the previous UI had inside the card menu. Selecting a video and opening the editor reaches the same place in a few more clicks, so this is a convenience and nothing depends on it. It lives in `quick-edit.tsx` and `quick-edit-dialog.tsx`, plus one line each in `video-menu.tsx` and `app-shell.tsx`, and arrived as a single commit that can be reverted cleanly.
+
 ## Testing status
 
 Static checks and the existing test suite pass. Parsing, matching and the save runner were checked by hand against realistic inputs. None of this has been exercised in a browser, or against the real API.

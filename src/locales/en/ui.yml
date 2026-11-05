@@ -1241,6 +1241,9 @@ videoEdit:
   saved: Saved
   logIn: Log in
   moreEdits: More edits
+  quick:
+    menu: Quick edit…
+    openEditor: Open full editor
   tabs:
     label: What to edit
     details: Topic & participants

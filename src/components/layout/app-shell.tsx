@@ -4,6 +4,7 @@ import { Outlet, useLocation } from "react-router"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { SelectionActionHost } from "@/components/selection/action-dialog-host"
 import { SelectionTray } from "@/components/selection/selection-tray"
+import { QuickEditHost } from "@/components/video-edit/quick-edit"
 import { useUi } from "@/stores/ui"
 import { useMusicPlayer } from "@/stores/music-player"
 import { AppSidebar } from "./app-sidebar"
@@ -54,6 +55,7 @@ export function AppShell() {
       )}
       <SelectionTray />
       <SelectionActionHost />
+      <QuickEditHost />
     </SidebarProvider>
   )
 }

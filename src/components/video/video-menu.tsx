@@ -44,6 +44,7 @@ import { useAuth } from "@/stores/auth"
 import { useSelectionAction } from "@/stores/selection-action"
 import { useSelection, useSelectionScopes } from "@/stores/selection"
 import { useSelectionScope } from "@/components/selection/selection-scope"
+import { QuickEditItem } from "@/components/video-edit/quick-edit"
 
 /** `YYYYMMDDTHHmmssZ`, the UTC timestamp format calendar links expect. */
 const calendarStamp = (date: Date) =>
@@ -200,6 +201,7 @@ export function VideoMenu({
             {t("component.videoCard.editVideo")}
           </DropdownMenuItem>
         )}
+        <QuickEditItem video={video} />
         {editActions.length > 0 && (
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="gap-2.5 [&>svg]:text-muted-foreground">
