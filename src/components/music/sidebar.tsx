@@ -29,7 +29,7 @@ import {
   useMusicLibrary,
 } from "@/components/music/playlists/shared"
 import type { PlaylistStub } from "@/lib/musicdex/types"
-import { isMusicPath } from "@/lib/music-route"
+import { isMusicLocation } from "@/lib/music-route"
 import { useSettings } from "@/stores/settings"
 
 function LibraryMenu({
@@ -145,7 +145,7 @@ export function MusicSidebar() {
                       tooltip="Musicdex"
                       isActive={
                         nav.some((item) => isActive(item.to)) ||
-                        isMusicPath(location.pathname)
+                        isMusicLocation(location)
                       }
                     />
                   }

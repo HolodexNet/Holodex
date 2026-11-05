@@ -31,6 +31,7 @@ import { ViewMenu } from "@/components/video/view-menu"
 import { useDocumentTitle } from "@/hooks/use-document-title"
 import { ALL_VTUBERS } from "@/lib/consts"
 import { useT } from "@/lib/i18n"
+import { isMusicTabHash } from "@/lib/music-route"
 import {
   flattenPages,
   useFavorites,
@@ -190,7 +191,7 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
   const location = useLocation()
 
   const tab = TAB_BY_HASH[location.hash] ?? "live"
-  const musicTab = tab === "music" || tab === "radio" || tab === "playlists"
+  const musicTab = isMusicTabHash(location.hash)
   const [liveSort, setLiveSort] = useState<LiveSort>("latest")
   const [before, setBefore] = useState("")
   const upcomingHeadingId = useId()

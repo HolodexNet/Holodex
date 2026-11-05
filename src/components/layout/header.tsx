@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button"
 import { useSidebar } from "@/components/ui/sidebar"
 import { MusicSearchBar } from "@/components/music/search-bar"
 import { useT } from "@/lib/i18n"
-import { isMusicPath } from "@/lib/music-route"
+import { isMusicLocation } from "@/lib/music-route"
 import { useSettings } from "@/stores/settings"
 import { SearchBar } from "./search-bar"
 import { UserMenu } from "./user-menu"
@@ -86,7 +86,7 @@ export function Header() {
   const { toggleSidebar } = useSidebar()
   const defaultOpen = useSettings((s) => s.defaultOpen)
   const [mobileSearch, setMobileSearch] = useState(false)
-  const music = isMusicPath(useLocation().pathname)
+  const music = isMusicLocation(useLocation())
 
   return (
     <header className="sticky top-0 z-40 border-b bg-header pt-safe">

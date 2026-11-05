@@ -31,8 +31,8 @@ Generated IDs must be encoded as a single path segment. The sidebar provides
 floating menus for owned Musicdex playlists and starred playlists/radios.
 
 The header switches between music and video search according to the current
-route, with an explicit scope menu. Music queries never populate video search
-state. Organization switching remains in music while browsing music pages.
+route, including the home page's Musicdex tabs, with an explicit scope menu.
+Music queries never populate video search state. Organization switching remains in music while browsing music pages.
 
 Channel music has its own artist layout: five popular performances (expandable
 to ten), latest streams, one combined featuring shelf, and up to ten related
