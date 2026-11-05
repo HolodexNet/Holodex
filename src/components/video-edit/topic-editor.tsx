@@ -12,6 +12,7 @@ import {
   ComboboxItem,
   ComboboxList,
 } from "@/components/ui/combobox"
+import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
 import { api, ApiError } from "@/lib/api"
 import { useChannel } from "@/lib/channel-queries"
@@ -151,6 +152,8 @@ export function TopicEditor({ video }: { video: Video }) {
             {t("curation.topics.tryAgain")}
           </Button>
         </div>
+      ) : current.isPending ? (
+        <Skeleton className="h-9 w-full rounded-4xl" />
       ) : editable ? (
         <>
           <div className="flex items-center gap-2">

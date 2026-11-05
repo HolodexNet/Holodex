@@ -1269,6 +1269,105 @@ videoEdit:
     removed: '{name} removed'
     removeFailed: Couldn't remove this participant. Try again.
     notYours: Someone else added this participant. Only they or an editor can remove them.
+  approach:
+    label: How to add songs
+    setlist:
+      title: From comments
+      hint: Turn a setlist from the comments into songs, then check each one.
+  songs:
+    count: 'No songs yet | 1 song | {count} songs'
+    none: No songs have been added to this video yet.
+    add: Add song
+    addOne: 'Add {name}'
+    addAll: 'Add 1 song | Add {count} songs'
+    addedMany: 'Added 1 song | Added {count} songs'
+    writtenAs: 'Written as “{text}”'
+    useWritten: Use as written
+    untitled: Untitled song
+    namePlaceholder: Find a track, or type a name
+    artistPlaceholder: Who the song is by
+    endLabel: End
+    usePlayhead: 'Use the current position ({time})'
+    hearStart: Hear start
+    hearEnd: Hear ending
+    onHolodex: On Holodex
+    searchPartial: Couldn't reach every music source. Try again in a moment.
+    noTracks: No matching tracks. The name you typed works too.
+    markedForRemoval: This song will be removed when you save.
+    restore: Keep song
+    remove: Remove
+    locked: Another contributor added this song. Only they or an editor can change it.
+    didYouMean: Is it one of these?
+    commentsSay: 'Comments around {time}:'
+    useThis: Use this
+    endIsGuess: The end is a guess. Listen to check it.
+    useTrackLength: 'Use track length ({time})'
+    openTrack: Open track
+    length: 'Length {time}'
+    done: Done
+    needsAttention: Needs attention
+    loadFailed: Couldn't load this video's songs.
+    restored: 'Picked up 1 unsaved change from earlier. | Picked up {count} unsaved changes from earlier.'
+    discard: Discard
+    states:
+      new: New
+      edited: Edited
+      removed: Removing
+      checked: Checked
+    issues:
+      name: Needs a name.
+      order: The end has to come after the start.
+      short: Too short to be a song. It needs at least 13 seconds.
+      pastEnd: Ends after the video does.
+      overlap: Overlaps another song.
+    saveResults:
+      refused: You don't have permission to change this song.
+      failed: Couldn't save this song.
+      unknown: Couldn't confirm this was saved. Save again to be sure.
+    save:
+      action: 'Save 1 change | Save {count} changes'
+      saving: Saving…
+      allSaved: All saved
+      done: 'Saved 1 change. | Saved {count} changes.'
+      partial: 'Saved {saved} of {total} changes.'
+      blocked: '1 song needs fixing before it can be saved. | {count} songs need fixing before they can be saved.'
+      stopped:
+        session: Please log in again to save.
+        rateLimited: Too many requests. Wait a moment, then save again.
+        connection: Lost the connection. Your changes are still here, so save again.
+  keys:
+    title: Keyboard shortcuts
+    description: The same keys work whichever way you add songs.
+    groups:
+      playback: Playback
+      marking: Marking songs
+      list: The list
+    toggle: Play or pause
+    back5: Back 5 seconds
+    forward5: Forward 5 seconds
+    back1: Back 1 second
+    forward1: Forward 1 second
+    back10: Back 10 seconds
+    forward10: Forward 10 seconds
+    nextHint: Skip to the next song in the comments
+    markStart: Song starts here
+    markEnd: Song ends here
+    hearStart: Hear the start
+    hearEnd: Hear the ending
+    startEarlier: Start 1 second earlier
+    startLater: Start 1 second later
+    endEarlier: End 1 second earlier
+    endLater: End 1 second later
+    previous: Previous song
+    next: Next song
+    confirm: Confirm and go on
+    cancel: Close
+    remove: Remove song
+    search: Find a track
+    undo: Undo
+    redo: Redo
+    save: Save
+    help: Show this list
 channelRequest:
   RequestType: 'Request Type:'
   Types:

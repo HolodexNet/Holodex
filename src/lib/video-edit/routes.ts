@@ -13,7 +13,7 @@ import { videoSource } from "../video-source.ts"
  * The previous UI's /topic and /mentions tabs still resolve, to `details`.
  */
 
-export const SONG_APPROACHES = ["setlist", "timeline", "capture"] as const
+export const SONG_APPROACHES = ["setlist"] as const
 export type SongApproach = (typeof SONG_APPROACHES)[number]
 
 export type EditTab = "details" | "music"
@@ -49,8 +49,13 @@ export function editableParts(video: Video) {
   return {
     topic: video.type === "stream" || placeholder,
     mentions: !placeholder,
-    // Songs are timed against a player and YouTube is the one we can read.
-    songs: video.type === "stream" && videoSource(video).provider === "youtube",
+    // Songs are timed against a player, YouTube's is the one that can be read,
+    // and there's nothing to time until a stream has started.
+    songs:
+      video.type === "stream" &&
+      videoSource(video).provider === "youtube" &&
+      video.status !== "upcoming" &&
+      video.status !== "new",
   }
 }
 

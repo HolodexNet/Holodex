@@ -33,6 +33,8 @@ export function SuggestField<Item>({
   className,
   onOpenChange,
   onKeyDown,
+  onBlur,
+  marker,
   "aria-label": ariaLabel,
 }: {
   value: string
@@ -56,6 +58,9 @@ export function SuggestField<Item>({
   className?: string
   onOpenChange?: (open: boolean) => void
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void
+  onBlur?: () => void
+  /** A `data-` attribute to find the input by, as the search shortcut does. */
+  marker?: string
   "aria-label"?: string
 }) {
   return (
@@ -83,6 +88,8 @@ export function SuggestField<Item>({
             aria-invalid={invalid || undefined}
             className={className}
             onKeyDown={onKeyDown}
+            onBlur={onBlur}
+            {...(marker ? { [`data-${marker}`]: "" } : {})}
           />
         }
       />

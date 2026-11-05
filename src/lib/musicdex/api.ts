@@ -1,6 +1,7 @@
 import { ApiError } from "@/lib/api"
 import { apiRequestBudget } from "@/lib/api-rate-limit"
 import { getJwt } from "@/stores/auth"
+import type { SongPayload } from "@/lib/video-edit/songs"
 import type {
   MusicDiscovery,
   MusicSearchParams,
@@ -101,6 +102,86 @@ export const musicApi = {
       body: params,
       signal,
     }),
+  /** Every song of one video. A POST, so nothing between here and the database caches it. */
+  videoSongs: async (
+    channelId: string,
+    videoId: string,
+    signal?: AbortSignal
+  ) =>
+    (
+      await request<{ total: number | string; items: Song[] }>(
+        "/songs/latest",
+        {
+          method: "POST",
+          body: {
+            channel_id: channelId,
+            video_id: videoId,
+            limit: 200,
+            paginated: true,
+          },
+          signal,
+        }
+      )
+    ).items ?? [],
+  /** Resolves to how many rows changed: 0 means the song isn't the caller's to change. */
+  saveSong: (song: SongPayload, signal?: AbortSignal) =>
+    request<number>("/songs", {
+      method: "PUT",
+      body: song,
+      auth: "required",
+      signal,
+    }),
+  deleteSong: (
+    target: { id: string; video_id: string },
+    signal?: AbortSignal
+  ) =>
+    request<number>("/songs", {
+      method: "DELETE",
+      body: target,
+      auth: "required",
+      signal,
+    }),
+  /** Songs like a free-text query, for finding the track someone means. */
+  findSongs: async (query: string, signal?: AbortSignal) => {
+    const body = {
+      query: {
+        bool: {
+          must: [
+            {
+              multi_match: {
+                query,
+                fields: [
+                  "general^3",
+                  "general.romaji^0.5",
+                  "original_artist^2",
+                  "original_artist.romaji^0.5",
+                ],
+                type: "most_fields",
+              },
+            },
+            {
+              multi_match: {
+                query,
+                fields: ["name.ngram", "name"],
+                type: "most_fields",
+              },
+            },
+          ],
+        },
+      },
+      size: 12,
+      from: 0,
+      sort: [{ _score: { order: "desc" } }],
+    }
+    const response = await request<{
+      responses?: { hits?: { hits?: { _source: Song }[] } }[]
+    }>("/musicdex/elasticsearch/search", {
+      method: "POST",
+      ndjson: `{}\n${JSON.stringify(body)}\n`,
+      signal,
+    })
+    return response.responses?.[0]?.hits?.hits?.map((hit) => hit._source) ?? []
+  },
   search: async (
     params: MusicSearchParams,
     signal?: AbortSignal

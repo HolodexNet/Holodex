@@ -41,8 +41,8 @@ function QueueStepper({ video, tab }: { video: Video; tab: EditTab }) {
   const ids = useEditQueue((state) => state.ids)
   const index = ids.indexOf(video.id)
   if (index < 0 || ids.length < 2) return null
-  const go = (id: string) =>
-    navigate(editPath(id, tab === "music" ? undefined : tab), { replace: true })
+  // Stays on the same tab where the next video allows it.
+  const go = (id: string) => navigate(editPath(id, tab), { replace: true })
   const last = index === ids.length - 1
   const finish = () => {
     const { returnTo, clear } = useEditQueue.getState()

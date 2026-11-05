@@ -47,6 +47,12 @@ export default defineConfig({
       "selection.copyLinks",
       "curation.addMentions",
       "curation.smart.*",
+      "videoEdit.approach.*",
+      "videoEdit.keys.*",
+      "videoEdit.songs.issues.*",
+      "videoEdit.songs.save.stopped.*",
+      "videoEdit.songs.saveResults.*",
+      "videoEdit.songs.states.*",
     ],
   },
   plugins: [
