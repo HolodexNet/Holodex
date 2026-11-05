@@ -13,7 +13,7 @@ import { videoSource } from "../video-source.ts"
  * The previous UI's /topic and /mentions tabs still resolve, to `details`.
  */
 
-export const SONG_APPROACHES = ["setlist", "timeline"] as const
+export const SONG_APPROACHES = ["setlist", "timeline", "capture"] as const
 export type SongApproach = (typeof SONG_APPROACHES)[number]
 
 export type EditTab = "details" | "music"

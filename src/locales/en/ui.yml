@@ -1277,6 +1277,9 @@ videoEdit:
     timeline:
       title: Timeline
       hint: See the whole stream at once, and drag songs into place.
+    capture:
+      title: Tap along
+      hint: Watch the stream and mark each song as it happens.
   songs:
     count: 'No songs yet | 1 song | {count} songs'
     none: No songs have been added to this video yet.
@@ -1370,6 +1373,15 @@ videoEdit:
     fit: Show the whole stream
     nothingSelected: From the comments
     howTo: Drag along the strip below to draw a song, or press S when one starts.
+  capture:
+    songStarted: A song just started
+    songEnded: The song just ended
+    nextSong: Done, next song
+    skip: 'Skip {seconds} seconds'
+    skipTo: 'Skip to {time} · {text}'
+    skipToEnd: 'Skip near the end ({time} long)'
+    empty: Songs you mark will appear here.
+    tapToChange: Tap one to change it
   keys:
     title: Keyboard shortcuts
     description: The same keys work whichever way you add songs.
