@@ -13,6 +13,7 @@ import { EditorHeader } from "@/components/video-edit/editor-header"
 import { EditorPlayer } from "@/components/video-edit/editor-player"
 import { SetlistApproach } from "@/components/video-edit/music/setlist-approach"
 import { SongToolbar } from "@/components/video-edit/music/song-toolbar"
+import { TimelineApproach } from "@/components/video-edit/music/timeline-approach"
 import { SongWorkspaceProvider } from "@/components/video-edit/music/workspace"
 import { useDocumentTitle } from "@/hooks/use-document-title"
 import { api } from "@/lib/api"
@@ -36,6 +37,7 @@ import { useVideoEditPrefs } from "@/stores/video-edit"
 /** One song-authoring approach per URL. Each is self-contained, to keep or to drop. */
 const APPROACHES: Record<SongApproach, () => React.ReactNode> = {
   setlist: SetlistApproach,
+  timeline: TimelineApproach,
 }
 
 /**
@@ -48,6 +50,8 @@ const LAYOUTS: Record<"details" | SongApproach, string> = {
     "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:grid-rows-[auto_minmax(0,1fr)] lg:[grid-template-areas:'player_main'_'info_main']",
   setlist:
     "lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:grid-rows-[auto_minmax(0,1fr)] lg:[grid-template-areas:'player_list'_'source_list']",
+  timeline:
+    "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)_17rem] lg:[grid-template-areas:'player_inspector'_'timeline_timeline']",
 }
 
 /** A full window of its own: editing wants the room, and no second audio source. */
@@ -149,7 +153,9 @@ function VideoEditor({ video }: { video: Video }) {
           video={video}
           clock={clock}
           className={cn(
-            "sticky top-0 z-20 aspect-video w-full lg:static lg:[grid-area:player]"
+            "sticky top-0 z-20 aspect-video w-full lg:static lg:[grid-area:player]",
+            active === "timeline" &&
+              "lg:aspect-auto lg:h-full"
           )}
         />
         {Approach ? (

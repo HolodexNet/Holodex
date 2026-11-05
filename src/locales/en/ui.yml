@@ -1274,6 +1274,9 @@ videoEdit:
     setlist:
       title: From comments
       hint: Turn a setlist from the comments into songs, then check each one.
+    timeline:
+      title: Timeline
+      hint: See the whole stream at once, and drag songs into place.
   songs:
     count: 'No songs yet | 1 song | {count} songs'
     none: No songs have been added to this video yet.
@@ -1360,6 +1363,13 @@ videoEdit:
     confirmNext: Looks right, next
     checkedProgress: '{checked} of {total} checked'
     emptyList: Add the setlist from the comments, or press S when a song starts.
+  timeline:
+    follow: Follow the video
+    zoomIn: Zoom in
+    zoomOut: Zoom out
+    fit: Show the whole stream
+    nothingSelected: From the comments
+    howTo: Drag along the strip below to draw a song, or press S when one starts.
   keys:
     title: Keyboard shortcuts
     description: The same keys work whichever way you add songs.
