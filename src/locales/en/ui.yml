@@ -429,11 +429,10 @@ views:
     themeLight: Light
     themeDark: Dark
     themeSystem: System
-    primaryColor: Primary color
+    primaryColor: Change Primary Color
     customColor: Custom
     resetColor: Reset
-    computedPalette: Base colors
-    computedPaletteMsg: Colors follow your primary color automatically. Customize any color below, or reset it to its computed default.
+    computedPalette: Current Theme Colors
     colorPicker: "Choose {color}"
     colorHex: "{color} hex color"
     colorOpacity: "{color} opacity"
@@ -442,12 +441,41 @@ views:
     colorAutomatic: Automatic
     editingPalette: "Editing the {mode} palette. Light and dark custom colors are saved separately."
     resetPalette: Reset palette
-    allColors: Customize all colors
+    themeColors: Theme colors
+    secondaryColor: Secondary color
+    secondaryColorMsg: Tints backgrounds and text. Also used for secondary accents.
+    secondaryAuto: Auto
+    secondaryTriadA: Triadic (+120°)
+    secondaryTriadB: Triadic (−120°)
+    secondaryComplementary: Complementary (180°)
+    surfaceTint: Surface tint
+    surfaceTintMsg: How strongly the secondary color tints backgrounds and text. 0% is neutral grey.
+    contrast: Contrast
+    contrastMsg: At 100%, dark mode is pure black and light mode is pure white.
+    shareTheme: Share theme
+    shareThemeMsg: Back up your theme or move it to another device. Share it with us on Discord and it might become a preset!
+    copyTheme: Copy theme
+    themeCopied: Theme copied to clipboard.
+    themeCopyFailed: Could not copy the theme.
+    importTheme: Import theme
+    importThemeMsg: Paste a copied theme. It replaces your current theme colors in both light and dark mode.
+    importThemeApply: Use this theme
+    importThemeInvalid: This isn't a Holodex theme.
+    themeImported: Theme imported.
+    colorGroupsTitle: Color groups
+    colorGroupsMsg: Related colors follow the group color.
+    individualColors: "Individual colors ({count})"
+    customCount: "{count} custom"
+    contrastRatio: "Contrast {ratio}:1"
+    contrastLow: "Low contrast {ratio}:1"
     colorGroups:
-      surfaces: Backgrounds and surfaces
+      surfaces: Backgrounds
       text: Text
-      accents: Accents and borders
-      sidebar: Sidebar
+      brand: Primary accents
+      onPrimary: Text on primary
+      secondary: Secondary accents
+      borders: Borders
+      status: Status colors
     colors:
       complement: Complementary color
       background: Page background

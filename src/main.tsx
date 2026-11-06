@@ -12,6 +12,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { setLanguage } from "@/lib/i18n"
 import { queryClient } from "@/lib/queries"
 import { applyTheme, systemMode } from "@/lib/theme/apply"
+import { themeConfig } from "@/lib/theme/use-theme"
 import { WatchPage } from "@/pages/watch"
 import { ChannelPage } from "@/pages/channel"
 import { ChannelsPage } from "@/pages/channels"
@@ -26,9 +27,8 @@ const settings = useSettings.getState()
 
 // Apply the theme and language before the first render so nothing flashes.
 applyTheme(
-  settings.primaryColor,
-  settings.themeMode === "system" ? systemMode() : settings.themeMode,
-  settings.themeColorOverrides
+  themeConfig(settings),
+  settings.themeMode === "system" ? systemMode() : settings.themeMode
 )
 void setLanguage(settings.lang)
 

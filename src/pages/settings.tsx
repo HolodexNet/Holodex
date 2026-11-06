@@ -1,5 +1,6 @@
 import { useId, useState, type ReactNode } from "react"
 import { cn } from "cn"
+import { toast } from "sonner"
 
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { FeedFilters, SwitchRow } from "@/components/common/feed-filters"
@@ -7,10 +8,14 @@ import { MultiCombobox } from "@/components/common/multi-combobox"
 import { SimpleSelect } from "@/components/common/simple-select"
 import {
   ArrowCounterClockwiseIcon,
+  CaretRightIcon,
   CheckIcon,
+  ClipboardTextIcon,
+  CopyIcon,
   MonitorIcon,
   MoonIcon,
   SunIcon,
+  WarningIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -25,6 +30,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useDocumentTitle } from "@/hooks/use-document-title"
 import {
@@ -40,15 +46,39 @@ import {
   getSupportedTimeZones,
   LOCAL_TIME_ZONE,
 } from "@/lib/time"
-import { isHexColor, normalizeHex } from "@/lib/theme/color"
 import {
+  contrastRatio,
+  hexToOklch,
+  hueDistance,
+  isHexColor,
+  normalizeHex,
+  wrapHue,
+} from "@/lib/theme/color"
+import {
+  applyGroups,
+  applyOverrides,
+  exportTheme,
+  importTheme,
   isThemeColor,
   normalizeThemeColor,
-  resolvePalette,
+  THEME_GROUPS,
   themeColorToHex,
+  type GroupDef,
+  type ThemeGroup,
 } from "@/lib/theme/overrides"
-import type { ThemeOverrides } from "@/lib/theme/palette"
-import { useResolvedMode } from "@/lib/theme/use-theme"
+import {
+  complementHex,
+  DEFAULT_TUNING,
+  deriveBaseHue,
+  derivePalette,
+  normalizeTuning,
+  resolveBaseHue,
+  triadicHues,
+  type ThemeOverrides,
+  type ThemePalette,
+  type ThemeTuning,
+} from "@/lib/theme/palette"
+import { useResolvedMode, useThemeConfig } from "@/lib/theme/use-theme"
 import { channelName } from "@/lib/video"
 import { useAuth } from "@/stores/auth"
 import { useMultiview } from "@/stores/multiview"
@@ -94,7 +124,7 @@ function Row({
   stacked = false,
 }: {
   label: string
-  description?: string
+  description?: ReactNode
   htmlFor?: string
   children: ReactNode
   /** Put the control under the label instead of beside it. */
@@ -224,6 +254,90 @@ function ColorPicker({
   )
 }
 
+/** A circular colour choice, as used by the primary and secondary presets. */
+function Swatch({
+  color,
+  label,
+  selected,
+  onClick,
+}: {
+  color: string
+  label: string
+  selected: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      title={label}
+      aria-label={label}
+      aria-pressed={selected}
+      className={cn(
+        "flex size-8 shrink-0 items-center justify-center rounded-full transition-transform outline-none hover:scale-110 focus-visible:ring-[3px] focus-visible:ring-ring",
+        selected && "ring-2 ring-foreground ring-offset-2 ring-offset-card"
+      )}
+      style={{ backgroundColor: color }}
+      onClick={onClick}
+    >
+      {selected && (
+        <CheckIcon className="size-4 text-white mix-blend-difference" />
+      )}
+    </button>
+  )
+}
+
+/**
+ * A collapsible block. The theme editor nests these from broad to specific
+ * so only the level someone opens is on screen.
+ */
+function Disclosure({
+  title,
+  description,
+  hint,
+  defaultOpen = false,
+  nested = false,
+  children,
+}: {
+  title: string
+  description?: string
+  /** Short status shown at the end of the summary, e.g. "2 custom". */
+  hint?: string
+  defaultOpen?: boolean
+  nested?: boolean
+  children: ReactNode
+}) {
+  return (
+    <details open={defaultOpen} className={cn(!nested && "py-1")}>
+      <summary className="flex cursor-pointer list-none items-center gap-2 rounded-lg py-2.5 outline-none focus-visible:ring-[3px] focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+        <CaretRightIcon className="size-3.5 shrink-0 text-muted-foreground transition-transform [[open]>summary>&]:rotate-90" />
+        <span className="min-w-0 flex-1">
+          <span
+            className={cn(
+              "block font-medium",
+              nested ? "text-[13px]" : "text-sm"
+            )}
+          >
+            {title}
+          </span>
+          {description && (
+            <span className="block text-[13px] text-muted-foreground">
+              {description}
+            </span>
+          )}
+        </span>
+        {hint && (
+          <span className="shrink-0 rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">
+            {hint}
+          </span>
+        )}
+      </summary>
+      <div className={cn(nested ? "ml-1.5 border-l pl-4" : "pb-2")}>
+        {children}
+      </div>
+    </details>
+  )
+}
+
 function PrimaryColorPicker() {
   const { t } = useT()
   const primary = useSettings((s) => s.primaryColor)
@@ -235,29 +349,15 @@ function PrimaryColorPicker() {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap gap-2">
-        {PRIMARY_PRESETS.map((preset) => {
-          const selected = preset.color === primary
-          return (
-            <button
-              key={preset.name}
-              type="button"
-              title={preset.name}
-              aria-label={preset.name}
-              aria-pressed={selected}
-              className={cn(
-                "flex size-8 items-center justify-center rounded-full transition-transform outline-none hover:scale-110 focus-visible:ring-[3px] focus-visible:ring-ring",
-                selected &&
-                  "ring-2 ring-foreground ring-offset-2 ring-offset-card"
-              )}
-              style={{ backgroundColor: preset.color }}
-              onClick={() => choose(preset.color)}
-            >
-              {selected && (
-                <CheckIcon className="size-4 text-white mix-blend-difference" />
-              )}
-            </button>
-          )
-        })}
+        {PRIMARY_PRESETS.map((preset) => (
+          <Swatch
+            key={preset.name}
+            color={preset.color}
+            label={preset.name}
+            selected={preset.color === primary}
+            onClick={() => choose(preset.color)}
+          />
+        ))}
       </div>
       <ColorPicker
         label={t("views.settings.primaryColor")}
@@ -270,45 +370,217 @@ function PrimaryColorPicker() {
   )
 }
 
-const COLOR_GROUPS = {
-  surfaces: [
-    "--background",
-    "--card",
-    "--popover",
-    "--header",
-    "--secondary",
-    "--muted",
-    "--accent",
-  ],
-  text: [
-    "--foreground",
-    "--card-foreground",
-    "--popover-foreground",
-    "--primary-foreground",
-    "--secondary-foreground",
-    "--muted-foreground",
-    "--accent-foreground",
-  ],
-  accents: [
-    "--brand",
-    "--complement-soft",
-    "--border",
-    "--input",
-    "--ring",
-    "--destructive",
-    "--live",
-  ],
-  sidebar: [
-    "--sidebar",
-    "--sidebar-foreground",
-    "--sidebar-primary",
-    "--sidebar-primary-foreground",
-    "--sidebar-accent",
-    "--sidebar-accent-foreground",
-    "--sidebar-border",
-    "--sidebar-ring",
-  ],
-} as const satisfies Record<string, readonly (keyof ThemeOverrides)[]>
+function useTuning() {
+  const tuning = normalizeTuning(useSettings((s) => s.themeTuning))
+  const set = useSettings((s) => s.set)
+  const update = (patch: Partial<ThemeTuning>) =>
+    set("themeTuning", {
+      ...normalizeTuning(useSettings.getState().themeTuning),
+      ...patch,
+    })
+  return [tuning, update] as const
+}
+
+/** The secondary drives the hue of every neutral and of the complement. */
+function SecondaryColorPicker() {
+  const { t } = useT()
+  const mode = useResolvedMode()
+  const primary = hexToOklch(useSettings((s) => s.primaryColor))
+  const [tuning, update] = useTuning()
+  const current = resolveBaseHue(primary, tuning)
+  const [triadA, triadB] = triadicHues(primary.h)
+  const presets = [
+    { label: t("views.settings.secondaryTriadA"), hue: triadA },
+    { label: t("views.settings.secondaryTriadB"), hue: triadB },
+    {
+      label: t("views.settings.secondaryComplementary"),
+      hue: wrapHue(primary.h + 180),
+    },
+  ]
+  const auto = tuning.secondary === undefined
+  const autoHex = complementHex(deriveBaseHue(primary), mode)
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          aria-pressed={auto}
+          className={cn(
+            "flex h-8 items-center gap-2 rounded-full border py-1 ps-1 pe-3 text-sm outline-none focus-visible:ring-[3px] focus-visible:ring-ring",
+            auto && "ring-2 ring-foreground ring-offset-2 ring-offset-card"
+          )}
+          onClick={() => update({ secondary: undefined })}
+        >
+          <span
+            aria-hidden="true"
+            className="size-6 rounded-full"
+            style={{ backgroundColor: autoHex }}
+          />
+          {t("views.settings.secondaryAuto")}
+        </button>
+        {presets.map((preset) => {
+          const hex = complementHex(preset.hue, mode)
+          return (
+            <Swatch
+              key={preset.label}
+              color={hex}
+              label={preset.label}
+              selected={!auto && hueDistance(current, preset.hue) < 1.5}
+              onClick={() => update({ secondary: hex })}
+            />
+          )
+        })}
+      </div>
+      <ColorPicker
+        label={t("views.settings.secondaryColor")}
+        value={tuning.secondary ?? autoHex}
+        onChange={(color) => update({ secondary: normalizeHex(color) })}
+        onReset={() => update({ secondary: undefined })}
+        resetDisabled={auto}
+      />
+    </div>
+  )
+}
+
+function TuningSlider({
+  id,
+  label,
+  value,
+  min,
+  max,
+  step,
+  defaultValue,
+  format,
+  onChange,
+}: {
+  id: string
+  label: string
+  value: number
+  min: number
+  max: number
+  step: number
+  defaultValue: number
+  format: (value: number) => string
+  onChange: (value: number) => void
+}) {
+  const { t } = useT()
+  return (
+    <div className="flex items-center gap-3">
+      <input
+        id={id}
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        aria-valuetext={format(value)}
+        onChange={(event) => onChange(Number(event.target.value))}
+        className="h-9 w-full min-w-0 cursor-pointer accent-primary sm:w-48"
+      />
+      <output
+        htmlFor={id}
+        className="w-12 shrink-0 text-end text-sm text-muted-foreground tabular-nums"
+      >
+        {format(value)}
+      </output>
+      <Button
+        variant="ghost"
+        size="sm"
+        disabled={value === defaultValue}
+        aria-label={t("views.settings.resetNamedColor", { color: label })}
+        onClick={() => onChange(defaultValue)}
+      >
+        <ArrowCounterClockwiseIcon data-icon="inline-start" />
+        {t("views.settings.resetColor")}
+      </Button>
+    </div>
+  )
+}
+
+/** Level one: the seed colours and the knobs on how the palette is derived. */
+function ThemeColors() {
+  const { t } = useT()
+  const [tuning, update] = useTuning()
+  const ids = { tint: useId(), contrast: useId() }
+  const percent = (n: number) => `${Math.round(n * 100)}%`
+
+  return (
+    <Disclosure
+      title={t("views.settings.themeColors")}
+      defaultOpen
+    >
+      <div className="divide-y">
+        <Row label={t("views.settings.primaryColor")} stacked>
+          <PrimaryColorPicker />
+        </Row>
+        <Row
+          label={t("views.settings.secondaryColor")}
+          description={t("views.settings.secondaryColorMsg")}
+          stacked
+        >
+          <SecondaryColorPicker />
+        </Row>
+        <Row
+          label={t("views.settings.surfaceTint")}
+          description={t("views.settings.surfaceTintMsg")}
+          htmlFor={ids.tint}
+        >
+          <TuningSlider
+            id={ids.tint}
+            label={t("views.settings.surfaceTint")}
+            value={tuning.tint}
+            min={0}
+            max={2}
+            step={0.05}
+            defaultValue={DEFAULT_TUNING.tint}
+            format={percent}
+            onChange={(tint) => update({ tint })}
+          />
+        </Row>
+        <Row
+          label={t("views.settings.contrast")}
+          description={t("views.settings.contrastMsg")}
+          htmlFor={ids.contrast}
+        >
+          <TuningSlider
+            id={ids.contrast}
+            label={t("views.settings.contrast")}
+            value={tuning.contrast}
+            min={-1}
+            max={1}
+            step={0.05}
+            defaultValue={DEFAULT_TUNING.contrast}
+            format={(n) => (n > 0 ? `+${percent(n)}` : percent(n))}
+            onChange={(contrast) => update({ contrast })}
+          />
+        </Row>
+      </div>
+    </Disclosure>
+  )
+}
+
+/** "Contrast 12.3:1", flagged when it falls below WCAG AA for body text. */
+function ContrastHint({ fg, bg }: { fg: string; bg: string }) {
+  const { t } = useT()
+  const ratio = contrastRatio(
+    themeColorToHex(fg).slice(0, 7),
+    themeColorToHex(bg).slice(0, 7)
+  )
+  const low = ratio < 4.5
+  const text = t(
+    low ? "views.settings.contrastLow" : "views.settings.contrastRatio",
+    { ratio: ratio.toFixed(1) }
+  )
+  return (
+    <span
+      className={cn("inline-flex items-center gap-1", low && "text-destructive")}
+    >
+      {low && <WarningIcon className="size-3.5" />}
+      {text}
+    </span>
+  )
+}
 
 function ThemeColorRow({
   color,
@@ -346,33 +618,60 @@ function ThemeColorRow({
   )
 }
 
-function PaletteEditor() {
+/** Level two (a colour per group) with level three (each token) inside. */
+function ColorGroups() {
   const { t } = useT()
   const mode = useResolvedMode()
-  const primary = useSettings((s) => s.primaryColor)
-  const overrides = useSettings((s) => s.themeColorOverrides)
+  const theme = useThemeConfig()
   const set = useSettings((s) => s.set)
-  const palette = resolvePalette(primary, mode, overrides)
-  const choose = (color: keyof ThemeOverrides, value?: string) => {
+  const groups = theme.groups?.[mode] ?? {}
+  const overrides = theme.overrides?.[mode] ?? {}
+
+  const derived = derivePalette(
+    theme.primary,
+    mode,
+    normalizeTuning(theme.tuning)
+  )
+  const grouped = applyGroups(derived, groups)
+  const final = applyOverrides(grouped, overrides)
+
+  const customCount = Object.keys(groups).length + Object.keys(overrides).length
+
+  const chooseGroup = (group: ThemeGroup, value?: string) => {
+    const current = useSettings.getState().themeGroupOverrides
+    const next = { ...current[mode] }
+    if (value === undefined) delete next[group]
+    else next[group] = value
+    set("themeGroupOverrides", { ...current, [mode]: next })
+  }
+  const chooseColor = (color: keyof ThemeOverrides, value?: string) => {
     const current = useSettings.getState().themeColorOverrides
     const next = { ...current[mode] }
     if (value === undefined) delete next[color]
     else next[color] = value
     set("themeColorOverrides", { ...current, [mode]: next })
   }
-  const renderColor = (color: keyof ThemeOverrides) => (
-    <ThemeColorRow
-      key={`${mode}:${primary}:${color}`}
-      color={color}
-      value={palette.vars[color]}
-      custom={overrides[mode]?.[color] !== undefined}
-      onChange={(value) => choose(color, value)}
-    />
-  )
+  const resetMode = () => {
+    const state = useSettings.getState()
+    const nextGroups = { ...state.themeGroupOverrides }
+    const nextColors = { ...state.themeColorOverrides }
+    delete nextGroups[mode]
+    delete nextColors[mode]
+    set("themeGroupOverrides", nextGroups)
+    set("themeColorOverrides", nextColors)
+  }
 
   return (
-    <div className="py-3">
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+    <Disclosure
+      title={t("views.settings.colorGroupsTitle")}
+      description={t("views.settings.colorGroupsMsg")}
+      hint={
+        customCount
+          ? t("views.settings.customCount", { count: customCount })
+          : undefined
+      }
+    >
+      <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
         <p className="text-[13px] text-muted-foreground">
           {t("views.settings.editingPalette", {
             mode: t(
@@ -385,33 +684,201 @@ function PaletteEditor() {
         <Button
           variant="outline"
           size="sm"
-          disabled={!Object.keys(overrides[mode] ?? {}).length}
-          onClick={() => {
-            const next = { ...useSettings.getState().themeColorOverrides }
-            delete next[mode]
-            set("themeColorOverrides", next)
-          }}
+          disabled={!customCount}
+          onClick={resetMode}
         >
           <ArrowCounterClockwiseIcon data-icon="inline-start" />
           {t("views.settings.resetPalette")}
         </Button>
       </div>
-      {renderColor("--complement")}
-      <details className="group mt-2">
-        <summary className="cursor-pointer rounded-lg py-2 text-sm font-medium outline-none focus-visible:ring-[3px] focus-visible:ring-ring">
-          {t("views.settings.allColors")}
-        </summary>
-        <div className="mt-2 space-y-4">
-          {Object.entries(COLOR_GROUPS).map(([group, colors]) => (
-            <fieldset key={group} className="min-w-0">
-              <legend className="text-sm font-medium">
-                {t(`views.settings.colorGroups.${group}`)}
-              </legend>
-              <div className="divide-y">{colors.map(renderColor)}</div>
-            </fieldset>
+      <div className="divide-y">
+        {(Object.keys(THEME_GROUPS) as ThemeGroup[]).map((group) => (
+          <ColorGroupRow
+            key={`${mode}:${group}`}
+            group={group}
+            groupValue={grouped.vars[THEME_GROUPS[group].seed]}
+            groupCustom={groups[group] !== undefined}
+            final={final.vars}
+            overrides={overrides}
+            onGroupChange={(value) => chooseGroup(group, value)}
+            onColorChange={chooseColor}
+          />
+        ))}
+      </div>
+    </Disclosure>
+  )
+}
+
+function ColorGroupRow({
+  group,
+  groupValue,
+  groupCustom,
+  final,
+  overrides,
+  onGroupChange,
+  onColorChange,
+}: {
+  group: ThemeGroup
+  /** The seed colour with group overrides applied but not individual ones. */
+  groupValue: string
+  groupCustom: boolean
+  final: ThemePalette["vars"]
+  overrides: ThemeOverrides
+  onGroupChange: (value?: string) => void
+  onColorChange: (color: keyof ThemeOverrides, value?: string) => void
+}) {
+  const { t } = useT()
+  const id = useId()
+  const def: GroupDef = THEME_GROUPS[group]
+  const label = t(`views.settings.colorGroups.${group}`)
+  const customMembers = def.members.filter((m) => overrides[m] !== undefined)
+
+  return (
+    <div className="py-1">
+      <Row
+        label={label}
+        htmlFor={id}
+        description={
+          <>
+            {t(
+              groupCustom
+                ? "views.settings.colorCustom"
+                : "views.settings.colorAutomatic"
+            )}
+            {def.contrastWith && (
+              <>
+                {" · "}
+                <ContrastHint
+                  fg={final[def.seed]}
+                  bg={final[def.contrastWith]}
+                />
+              </>
+            )}
+          </>
+        }
+      >
+        <ColorPicker
+          id={id}
+          label={label}
+          value={groupValue}
+          onChange={onGroupChange}
+          onReset={() => onGroupChange()}
+          resetDisabled={!groupCustom}
+          allowOpacity
+        />
+      </Row>
+      <Disclosure
+        nested
+        title={t("views.settings.individualColors", {
+          count: def.members.length,
+        })}
+        hint={
+          customMembers.length
+            ? t("views.settings.customCount", { count: customMembers.length })
+            : undefined
+        }
+      >
+        <div className="divide-y">
+          {def.members.map((color) => (
+            <ThemeColorRow
+              key={color}
+              color={color}
+              value={final[color]}
+              custom={overrides[color] !== undefined}
+              onChange={(value) => onColorChange(color, value)}
+            />
           ))}
         </div>
-      </details>
+      </Disclosure>
+    </div>
+  )
+}
+
+/** Copies the theme as text, or replaces it with pasted theme text. */
+function ThemeShare() {
+  const { t } = useT()
+  const theme = useThemeConfig()
+  const set = useSettings((s) => s.set)
+  const [open, setOpen] = useState(false)
+  const [text, setText] = useState("")
+  const [invalid, setInvalid] = useState(false)
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(exportTheme(theme))
+      toast.success(t("views.settings.themeCopied"))
+    } catch {
+      toast.error(t("views.settings.themeCopyFailed"))
+    }
+  }
+
+  const apply = () => {
+    const imported = importTheme(text)
+    if (!imported) {
+      setInvalid(true)
+      return
+    }
+    set("primaryColor", imported.primary)
+    set("themeTuning", imported.tuning)
+    set("themeGroupOverrides", imported.groups)
+    set("themeColorOverrides", imported.overrides)
+    toast.success(t("views.settings.themeImported"))
+    setOpen(false)
+  }
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Button variant="outline" size="sm" onClick={copy}>
+        <CopyIcon data-icon="inline-start" />
+        {t("views.settings.copyTheme")}
+      </Button>
+      <Dialog
+        open={open}
+        onOpenChange={(next) => {
+          setOpen(next)
+          if (next) {
+            setText("")
+            setInvalid(false)
+          }
+        }}
+      >
+        <DialogTrigger render={<Button variant="outline" size="sm" />}>
+          <ClipboardTextIcon data-icon="inline-start" />
+          {t("views.settings.importTheme")}
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("views.settings.importTheme")}</DialogTitle>
+            <DialogDescription>
+              {t("views.settings.importThemeMsg")}
+            </DialogDescription>
+          </DialogHeader>
+          <Textarea
+            aria-label={t("views.settings.importTheme")}
+            value={text}
+            spellCheck={false}
+            aria-invalid={invalid}
+            className="max-h-60 font-mono text-xs md:text-xs"
+            onChange={(event) => {
+              setText(event.target.value)
+              setInvalid(false)
+            }}
+          />
+          {invalid && (
+            <p className="text-sm text-destructive">
+              {t("views.settings.importThemeInvalid")}
+            </p>
+          )}
+          <DialogFooter>
+            <DialogClose render={<Button variant="outline" />}>
+              {t("views.app.close_btn")}
+            </DialogClose>
+            <Button disabled={!text.trim()} onClick={apply}>
+              {t("views.settings.importThemeApply")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
@@ -608,16 +1075,17 @@ export function SettingsPage() {
             </ToggleGroupItem>
           </ToggleGroup>
         </Row>
-        <Row label={t("views.settings.primaryColor")} stacked>
-          <PrimaryColorPicker />
-        </Row>
-        <Row
-          label={t("views.settings.computedPalette")}
-          description={t("views.settings.computedPaletteMsg")}
-        >
+        <Row label={t("views.settings.computedPalette")}>
           <PalettePreview />
         </Row>
-        <PaletteEditor />
+        <ThemeColors />
+        <ColorGroups />
+        <Row
+          label={t("views.settings.shareTheme")}
+          description={t("views.settings.shareThemeMsg")}
+        >
+          <ThemeShare />
+        </Row>
         <Row
           label={t("views.settings.gridSizeLabel")}
           description={t("views.settings.gridSizeMsg")}

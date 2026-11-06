@@ -2,6 +2,7 @@ import {
   contrastRatio,
   hexToOklch,
   hueDistance,
+  isHexColor,
   normalizeHex,
   oklchCss,
   oklchToHex,
@@ -38,9 +39,71 @@ const clamp = (n: number, min: number, max: number) =>
  */
 export function deriveBaseHue(primary: Oklch): number {
   if (primary.c < ACHROMATIC) return COOL_ANCHOR
-  const a = wrapHue(primary.h + 120)
-  const b = wrapHue(primary.h + 240)
+  const [a, b] = triadicHues(primary.h)
   return hueDistance(a, COOL_ANCHOR) <= hueDistance(b, COOL_ANCHOR) ? a : b
+}
+
+export function triadicHues(hue: number): [number, number] {
+  return [wrapHue(hue + 120), wrapHue(hue + 240)]
+}
+
+/**
+ * Knobs that steer the derivation itself, so the palette stays coherent
+ * however far they are turned. Shared by light and dark mode.
+ */
+export interface ThemeTuning {
+  /**
+   * Secondary colour. Its hue tints every neutral and becomes the complement;
+   * omitted means the cooler triadic partner of the primary.
+   */
+  secondary?: string
+  /** Multiplier on how strongly neutrals are tinted, 0 (grey) .. 2. */
+  tint: number
+  /**
+   * -1..1. Positive pushes surfaces towards black in dark mode (1 = OLED) and
+   * white in light mode, and text the other way; negative softens both.
+   */
+  contrast: number
+}
+
+export const DEFAULT_TUNING: ThemeTuning = { tint: 1, contrast: 0 }
+
+/** Coerces stored tuning into range, dropping anything malformed. */
+export function normalizeTuning(value: unknown): ThemeTuning {
+  const v = (value ?? {}) as Partial<Record<keyof ThemeTuning, unknown>>
+  const num = (n: unknown, min: number, max: number, fallback: number) =>
+    typeof n === "number" && Number.isFinite(n) ? clamp(n, min, max) : fallback
+  return {
+    secondary:
+      typeof v.secondary === "string" && isHexColor(v.secondary)
+        ? normalizeHex(v.secondary)
+        : undefined,
+    tint: num(v.tint, 0, 2, DEFAULT_TUNING.tint),
+    contrast: num(v.contrast, -1, 1, DEFAULT_TUNING.contrast),
+  }
+}
+
+/** The secondary's hue and chroma, or undefined when it should be automatic. */
+function secondarySeed(tuning: ThemeTuning): Oklch | undefined {
+  return tuning.secondary === undefined
+    ? undefined
+    : hexToOklch(tuning.secondary)
+}
+
+/** Hue the neutrals and complement use for a primary and tuning. */
+export function resolveBaseHue(primary: Oklch, tuning: ThemeTuning): number {
+  const secondary = secondarySeed(tuning)
+  if (!secondary) return deriveBaseHue(primary)
+  return secondary.c < ACHROMATIC ? COOL_ANCHOR : secondary.h
+}
+
+/** The complement as shown for a given hue and mode, as hex. */
+export function complementHex(hue: number, mode: ResolvedMode): string {
+  return oklchToHex(autoComplement(hue, mode === "dark"))
+}
+
+function autoComplement(hue: number, dark: boolean): Oklch {
+  return dark ? { l: 0.77, c: 0.115, h: hue } : { l: 0.5, c: 0.13, h: hue }
 }
 
 /**
@@ -54,45 +117,68 @@ export function deriveBaseHue(primary: Oklch): number {
  *   scales with the primary's own chroma, so a muted primary gets quiet
  *   neutrals and a vivid one gets surfaces with a little more character.
  * - `--complement` is the base hue at full strength.
+ *
+ * `tuning` adjusts the inputs of that derivation; see {@link ThemeTuning}.
  */
-export function derivePalette(primaryHex: string, mode: ResolvedMode) {
+export function derivePalette(
+  primaryHex: string,
+  mode: ResolvedMode,
+  tuning: ThemeTuning = DEFAULT_TUNING
+) {
   const hex = normalizeHex(primaryHex)
   const primary = hexToOklch(hex)
-  const baseHue = deriveBaseHue(primary)
+  const baseHue = resolveBaseHue(primary, tuning)
+  const secondary = secondarySeed(tuning)
   const dark = mode === "dark"
 
-  // 0.35..1 multiplier applied to every neutral's chroma.
+  // 0.35..1 multiplier applied to every neutral's chroma, then the user's.
   const tint =
-    primary.c < ACHROMATIC ? 0.2 : clamp(primary.c / FULL_CHROMA, 0.35, 1)
+    (primary.c < ACHROMATIC ? 0.2 : clamp(primary.c / FULL_CHROMA, 0.35, 1)) *
+    tuning.tint
   const base = (l: number, c: number): Oklch => ({
     l,
     c: c * tint,
     h: baseHue,
   })
 
+  // Contrast moves surfaces towards the page's extreme (black in dark mode,
+  // white in light) and text towards the opposite one. At +1 the dark page is
+  // pure black; at -1 everything sits closer to mid grey.
+  const k = tuning.contrast
+  const surfaceShift = dark
+    ? k > 0
+      ? -0.165 * k
+      : -0.12 * k
+    : k > 0
+      ? 0.017 * k
+      : 0.08 * k
+  const textShift = (dark ? 1 : -1) * (k > 0 ? 0.1 * k : 0.12 * k)
+  const s = (l: number, c: number) => base(clamp(l + surfaceShift, 0, 1), c)
+  const tx = (l: number, c: number) => base(clamp(l + textShift, 0, 1), c)
+
   const surface = dark
     ? {
-        background: base(0.165, 0.014),
-        card: base(0.205, 0.017),
-        popover: base(0.225, 0.019),
-        muted: base(0.262, 0.019),
-        secondary: base(0.285, 0.026),
-        sidebar: base(0.188, 0.016),
-        header: base(0.215, 0.034),
-        foreground: base(0.972, 0.006),
-        mutedForeground: base(0.715, 0.022),
+        background: s(0.165, 0.014),
+        card: s(0.205, 0.017),
+        popover: s(0.225, 0.019),
+        muted: s(0.262, 0.019),
+        secondary: s(0.285, 0.026),
+        sidebar: s(0.188, 0.016),
+        header: s(0.215, 0.034),
+        foreground: tx(0.972, 0.006),
+        mutedForeground: tx(0.715, 0.022),
         border: base(0.93, 0.03),
       }
     : {
-        background: base(0.983, 0.005),
-        card: base(0.998, 0.002),
-        popover: base(0.998, 0.002),
-        muted: base(0.951, 0.009),
-        secondary: base(0.932, 0.016),
-        sidebar: base(0.968, 0.008),
-        header: base(0.96, 0.02),
-        foreground: base(0.215, 0.022),
-        mutedForeground: base(0.49, 0.024),
+        background: s(0.983, 0.005),
+        card: s(0.998, 0.002),
+        popover: s(0.998, 0.002),
+        muted: s(0.951, 0.009),
+        secondary: s(0.932, 0.016),
+        sidebar: s(0.968, 0.008),
+        header: s(0.96, 0.02),
+        foreground: tx(0.215, 0.022),
+        mutedForeground: tx(0.49, 0.024),
         border: base(0.895, 0.014),
       }
 
@@ -109,9 +195,15 @@ export function derivePalette(primaryHex: string, mode: ResolvedMode) {
     h: primary.h,
   }
 
-  const complement: Oklch = dark
-    ? { l: 0.77, c: 0.115, h: baseHue }
-    : { l: 0.5, c: 0.13, h: baseHue }
+  // A chosen secondary keeps its own chroma; like --brand its lightness is
+  // only pulled as far as needed to stay readable on the page.
+  const complement: Oklch = secondary
+    ? {
+        l: dark ? Math.max(secondary.l, 0.7) : Math.min(secondary.l, 0.55),
+        c: Math.min(secondary.c, 0.2),
+        h: baseHue,
+      }
+    : autoComplement(baseHue, dark)
   const complementSoft: Oklch = dark
     ? { l: 0.36, c: 0.06 * tint, h: baseHue }
     : { l: 0.9, c: 0.045 * tint, h: baseHue }

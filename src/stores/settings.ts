@@ -2,7 +2,12 @@ import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
 import { DEFAULT_PRIMARY, TL_LANGS, UI_LANGS } from "@/lib/consts"
-import type { ThemeColorOverrides } from "@/lib/theme/palette"
+import type { ThemeGroupOverrides } from "@/lib/theme/overrides"
+import {
+  DEFAULT_TUNING,
+  type ThemeColorOverrides,
+  type ThemeTuning,
+} from "@/lib/theme/palette"
 import type { ChannelSummary } from "@/lib/types"
 import { defined, readLegacyPrimary, readLegacyState } from "./legacy"
 import { syncAcrossTabs } from "./sync"
@@ -27,7 +32,11 @@ export interface Settings {
 
   themeMode: ThemeMode
   primaryColor: string
-  /** Only explicit overrides are stored; omitted colours follow the primary. */
+  /** Knobs on the palette derivation, shared by light and dark mode. */
+  themeTuning: ThemeTuning
+  /** Colour-group overrides per mode; members follow their group's seed. */
+  themeGroupOverrides: ThemeGroupOverrides
+  /** Only explicit overrides are stored; omitted colours follow the layers above. */
   themeColorOverrides: ThemeColorOverrides
 
   defaultOpen: DefaultPage
@@ -96,6 +105,8 @@ function defaults(): Settings {
     timestampTimeZones: ["local", "Asia/Tokyo"],
     themeMode: "dark",
     primaryColor: DEFAULT_PRIMARY,
+    themeTuning: DEFAULT_TUNING,
+    themeGroupOverrides: {},
     themeColorOverrides: {},
     defaultOpen: "home",
     musicSidebarMode: "list",
