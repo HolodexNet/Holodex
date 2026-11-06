@@ -1,27 +1,40 @@
-import { useEffect, useRef, type ReactNode } from "react"
+import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react"
 import { cn } from "cn"
 
 import {
   CheckCircleIcon,
   LockSimpleIcon,
+  PlayIcon,
   PlusIcon,
   WarningIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useT } from "@/lib/i18n"
-import { blocksSaving, type SongRow } from "@/lib/video-edit/songs"
+import {
+  blocksSaving,
+  type SongDraft,
+  type SongRow,
+} from "@/lib/video-edit/songs"
 import { formatTimecode } from "@/lib/video-edit/timecode"
 import { useSongEditor } from "@/stores/song-editor"
-import { focusSongName, SongForm, TrackArt, useSongNotes } from "./song-form"
-import { useSongWorkspace } from "./workspace"
+import { TrackArt } from "./song-fields"
+import { SongForm, useSongIssues } from "./song-form"
+import { focusSongField, useSongWorkspace } from "./workspace"
 
 function RowStatus({ row }: { row: SongRow }) {
   const { t } = useT()
   const workspace = useSongWorkspace()
   const saving = useSongEditor((state) => state.saving)
   const result = useSongEditor((state) => state.saveResults[row.song.id])
-  const { issues } = useSongNotes(row.song)
+  const issues = useSongIssues(row.song)
+  // Worth a look, though it won't stop the song being saved.
+  const caution = issues.length > 0 && (
+    <WarningIcon
+      className="size-3.5 shrink-0 text-muted-foreground"
+      aria-label={t("videoEdit.songs.needsAttention")}
+    />
+  )
   if (saving && row.state !== "saved") return <Spinner />
   if (row.state === "removed")
     return (
@@ -38,17 +51,22 @@ function RowStatus({ row }: { row: SongRow }) {
     )
   if (row.song.checked)
     return (
-      <CheckCircleIcon
-        className="size-4 text-complement"
-        aria-label={t("videoEdit.songs.states.checked")}
-      />
+      <span className="flex items-center gap-1">
+        {caution}
+        <CheckCircleIcon
+          className="size-4 text-complement"
+          aria-label={t("videoEdit.songs.states.checked")}
+        />
+      </span>
     )
   if (row.state === "new" || row.state === "edited")
     return (
-      <span className="text-xs font-medium text-brand">
+      <span className="flex items-center gap-1 text-xs font-medium text-brand">
+        {caution}
         {t(`videoEdit.songs.states.${row.state}`)}
       </span>
     )
+  if (caution) return caution
   if (!workspace.canEdit(row.song))
     return (
       <LockSimpleIcon
@@ -57,6 +75,22 @@ function RowStatus({ row }: { row: SongRow }) {
       />
     )
   return null
+}
+
+/** Marks the song the video is in right now, without redrawing the list to do it. */
+function NowPlayingMark({ song }: { song: SongDraft }) {
+  const { t } = useT()
+  const { clock } = useSongWorkspace()
+  const here = useSyncExternalStore(clock.subscribeSecond, () => {
+    const second = clock.getSecond()
+    return second >= song.start && second < song.end
+  })
+  return here ? (
+    <PlayIcon
+      className="size-2.5 shrink-0 text-brand"
+      aria-label={t("videoEdit.songs.playingNow")}
+    />
+  ) : null
 }
 
 function SongListItem({
@@ -110,6 +144,7 @@ function SongListItem({
           )}
         >
           <span
+            title={song.name.trim() || undefined}
             className={cn(
               "block truncate text-sm",
               !song.name.trim() && "text-muted-foreground italic"
@@ -117,13 +152,21 @@ function SongListItem({
           >
             {name}
           </span>
-          <span className="block truncate text-xs text-muted-foreground">
+          <span
+            title={song.original_artist.trim() || undefined}
+            className="block truncate text-xs text-muted-foreground"
+          >
             {song.original_artist || " "}
           </span>
         </span>
         <span className="shrink-0 text-right text-xs text-muted-foreground tabular-nums">
-          <span className="block">
+          <span className="flex items-center justify-end gap-1">
+            <NowPlayingMark song={song} />
             {formatTimecode(song.start)} – {formatTimecode(song.end)}
+          </span>
+          {/* A length that looks wrong is the quickest way to spot a wrong time. */}
+          <span className="block opacity-70">
+            {formatTimecode(Math.max(0, song.end - song.start))}
           </span>
         </span>
         <span className="flex w-14 shrink-0 justify-end">
@@ -178,7 +221,7 @@ export function Tracklist({
             size="sm"
             onClick={() => {
               workspace.addAt(workspace.clock.now())
-              focusSongName()
+              focusSongField("name")
             }}
           >
             <PlusIcon data-icon="inline-start" />

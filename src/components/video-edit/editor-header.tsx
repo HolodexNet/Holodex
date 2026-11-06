@@ -12,12 +12,7 @@ import { Button } from "@/components/ui/button"
 import { useT } from "@/lib/i18n"
 import type { Video } from "@/lib/types"
 import { channelName, videoThumbnail, videoTitle, watchPath } from "@/lib/video"
-import {
-  editableParts,
-  editPath,
-  type EditTab,
-  type SongApproach,
-} from "@/lib/video-edit/routes"
+import { editableParts, editPath, type EditTab } from "@/lib/video-edit/routes"
 import { useSelection } from "@/stores/selection"
 import { useSettings } from "@/stores/settings"
 import { useEditQueue } from "@/stores/video-edit"
@@ -97,12 +92,10 @@ function QueueStepper({ video, tab }: { video: Video; tab: EditTab }) {
 export function EditorHeader({
   video,
   tab,
-  approach,
   children,
 }: {
   video: Video
   tab: EditTab
-  approach?: SongApproach
   /** The active tab's own controls, on a row of their own when space runs out. */
   children?: ReactNode
 }) {
@@ -121,7 +114,7 @@ export function EditorHeader({
           {
             id: "music" as const,
             label: t("videoEdit.tabs.music"),
-            to: editPath(video.id, "music", approach),
+            to: editPath(video.id, "music"),
           },
         ]
       : []),

@@ -1272,17 +1272,6 @@ videoEdit:
     removed: '{name} removed'
     removeFailed: Couldn't remove this participant. Try again.
     notYours: Someone else added this participant. Only they or an editor can remove them.
-  approach:
-    label: How to add songs
-    setlist:
-      title: From comments
-      hint: Turn a setlist from the comments into songs, then check each one.
-    timeline:
-      title: Timeline
-      hint: See the whole stream at once, and drag songs into place.
-    capture:
-      title: Tap along
-      hint: Watch the stream and mark each song as it happens.
   songs:
     count: 'No songs yet | 1 song | {count} songs'
     none: No songs have been added to this video yet.
@@ -1311,9 +1300,24 @@ videoEdit:
     useThis: Use this
     endIsGuess: The end is a guess. Listen to check it.
     useTrackLength: 'Use track length ({time})'
-    openTrack: Open track
-    length: 'Length {time}'
+    openTrack: Open track in Apple Music
+    unlink: Dissassociate Track Info
+    unlinkHint: Keep the name, without this track's cover and details.
+    lengthLabel: Length
     done: Done
+    searchTracks: Search for tracks
+    enterKeeps: keeps what you typed
+    enterTakes: takes the first match
+    swap: Swap
+    swapHint: Swap the name and the artist, for when they came out the wrong way round.
+    playingNow: The video is in this song right now
+    removedOne: 'Removed “{name}”'
+    goToOther: Go to it
+    fixes:
+      length: 'Make it {time} long'
+      videoEnd: 'End with the video ({time})'
+      beforeNext: 'End when it starts ({time})'
+      afterPrevious: 'Start when it ends ({time})'
     needsAttention: Needs attention
     loadFailed: Couldn't load this video's songs.
     restored: 'Picked up 1 unsaved change from earlier. | Picked up {count} unsaved changes from earlier.'
@@ -1328,7 +1332,7 @@ videoEdit:
       order: The end has to come after the start.
       short: Too short to be a song. It needs at least 13 seconds.
       pastEnd: Ends after the video does.
-      overlap: Overlaps another song.
+      overlap: 'Overlaps “{name}” by {time}.'
     saveResults:
       refused: You don't have permission to change this song.
       failed: Couldn't save this song.
@@ -1340,14 +1344,15 @@ videoEdit:
       done: 'Saved 1 change. | Saved {count} changes.'
       partial: 'Saved {saved} of {total} changes.'
       blocked: '1 song needs fixing before it can be saved. | {count} songs need fixing before they can be saved.'
+      show: Show
       stopped:
         session: Please log in again to save.
         rateLimited: Too many requests. Wait a moment, then save again.
         connection: Lost the connection. Your changes are still here, so save again.
   setlist:
-    tab: Setlist
+    tab: Setlist Comments
     commentsTab: 'All comments ({count})'
-    fromComment: From a comment
+    fromComment: Switch to another comment for setlist extraction
     fromDescription: From the description
     fromPaste: Pasted
     sourcePosition: '{label} ({index} of {total})'
@@ -1365,29 +1370,26 @@ videoEdit:
     pasteTitle: Paste a setlist
     pasteDescription: One song per line, with a time on each line.
     pasteFound: 'No songs found yet | 1 song found | {count} songs found'
+    pasteUnread: '1 line has no time on it, so it was left out. | {count} lines have no time on them, so they were left out.'
     pasteUse: Use this setlist
     confirmNext: Looks right, next
     checkedProgress: '{checked} of {total} checked'
     emptyList: Add the setlist from the comments, or press S when a song starts.
-  timeline:
-    follow: Follow the video
-    zoomIn: Zoom in
-    zoomOut: Zoom out
-    fit: Show the whole stream
-    nothingSelected: From the comments
-    howTo: Drag along the strip below to draw a song, or press S when one starts.
-  capture:
-    songStarted: A song just started
-    songEnded: The song just ended
-    nextSong: Done, next song
-    skip: 'Skip {seconds} seconds'
-    skipTo: 'Skip to {time} · {text}'
-    skipToEnd: 'Skip near the end ({time} long)'
-    empty: Songs you mark will appear here.
-    tapToChange: Tap one to change it
+  time:
+    notATime: Not a time
+    clamped: 'Video ends at {time}'
+    formats: '1:02:03, 3m20s, or +30. ↑ ↓ or scrolling step it.'
+    help:
+      title: Typing a time
+      clock: Hours, minutes, seconds
+      words: In words, in any language (1時間2分3秒)
+      relative: Later or earlier than it is now
+      step: Step the part the caret is in
+      stepMore: Step by five
+      scroll: Scroll over a time to step it by a second
   keys:
     title: Keyboard shortcuts
-    description: The same keys work whichever way you add songs.
+    description: Keys for adding and checking songs.
     groups:
       playback: Playback
       marking: Marking songs

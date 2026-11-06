@@ -1,6 +1,5 @@
 /**
- * The song editor's keyboard map, as data. The same keys do the same things in
- * every approach. Letters go by physical key so that they keep working while a
+ * The song editor's keyboard map, as data. Letters go by physical key so that they keep working while a
  * Japanese input method is on, and digits work on every layout, which brackets
  * and punctuation do not.
  */
@@ -71,20 +70,51 @@ const BINDINGS: Readonly<Record<SongShortcut, readonly KeyCombo[]>> = {
   help: [{ code: "Slash", shift: true }],
 }
 
+const REPEATING: ReadonlySet<SongShortcut> = new Set<SongShortcut>([
+  "back5",
+  "forward5",
+  "back1",
+  "forward1",
+  "back10",
+  "forward10",
+  "startEarlier",
+  "startLater",
+  "endEarlier",
+  "endLater",
+  "previous",
+  "next",
+  "undo",
+  "redo",
+])
+
+/**
+ * Whether holding the key down should keep going. Moving through time or a list
+ * should, but a held Enter must not confirm its way through every song in the list,
+ * and a held Space must not flicker between playing and paused.
+ */
+export const shortcutRepeats = (shortcut: SongShortcut) =>
+  REPEATING.has(shortcut)
+
+const APPLE =
+  typeof navigator !== "undefined" &&
+  /mac|iphone|ipad/i.test(navigator.platform ?? "")
+/** How to print the modifier key on this platform. */
+export const MOD_KEY = APPLE ? "⌘" : "Ctrl"
+
 /** What to print on the key caps, for the help sheet and hints. */
 export const SONG_SHORTCUT_KEYS: Readonly<Record<SongShortcut, string>> = {
   toggle: "Space",
   back5: "←",
   forward5: "→",
-  back1: "⇧ ←",
-  forward1: "⇧ →",
+  back1: "Shift ←",
+  forward1: "Shift →",
   back10: "J",
   forward10: "L",
   nextHint: "N",
   markStart: "S",
   markEnd: "E",
-  hearStart: "⇧ S",
-  hearEnd: "⇧ E",
+  hearStart: "Shift S",
+  hearEnd: "Shift E",
   startEarlier: "1",
   startLater: "2",
   endEarlier: "3",
@@ -95,9 +125,9 @@ export const SONG_SHORTCUT_KEYS: Readonly<Record<SongShortcut, string>> = {
   cancel: "Esc",
   remove: "Del",
   search: "/",
-  undo: "Ctrl Z",
-  redo: "Ctrl ⇧ Z",
-  save: "Ctrl S",
+  undo: `${MOD_KEY} Z`,
+  redo: `${MOD_KEY} Shift Z`,
+  save: `${MOD_KEY} S`,
   help: "?",
 }
 

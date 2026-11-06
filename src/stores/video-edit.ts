@@ -1,26 +1,20 @@
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
 
-import type { SongApproach } from "@/lib/video-edit/routes"
 import type { ChannelSummary } from "@/lib/types"
 
 const RECENT_MENTION_LIMIT = 8
 
 interface VideoEditPrefs {
-  /** The approach `/music` opens, so that people stay with the one they like. */
-  approach: SongApproach | null
   /** Collabs come in series, so the next video often has the same guests. */
   recentMentions: ChannelSummary[]
-  setApproach: (approach: SongApproach) => void
   rememberMention: (channel: ChannelSummary) => void
 }
 
 export const useVideoEditPrefs = create<VideoEditPrefs>()(
   persist(
     (set) => ({
-      approach: null,
       recentMentions: [],
-      setApproach: (approach) => set({ approach }),
       rememberMention: (channel) =>
         set((state) => ({
           recentMentions: [

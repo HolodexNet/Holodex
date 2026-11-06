@@ -11,10 +11,8 @@ import {
 } from "@/components/video-edit/details-panel"
 import { EditorHeader } from "@/components/video-edit/editor-header"
 import { EditorPlayer } from "@/components/video-edit/editor-player"
-import { CaptureApproach } from "@/components/video-edit/music/capture-approach"
 import { SetlistApproach } from "@/components/video-edit/music/setlist-approach"
 import { SongToolbar } from "@/components/video-edit/music/song-toolbar"
-import { TimelineApproach } from "@/components/video-edit/music/timeline-approach"
 import { SongWorkspaceProvider } from "@/components/video-edit/music/workspace"
 import { useDocumentTitle } from "@/hooks/use-document-title"
 import { api } from "@/lib/api"
@@ -26,37 +24,23 @@ import {
   defaultTab,
   editableParts,
   editPath,
-  isSongApproach,
   resolveTab,
-  type SongApproach,
 } from "@/lib/video-edit/routes"
 import { useAuth } from "@/stores/auth"
 import { useMusicPlayer } from "@/stores/music-player"
 import { useSettings } from "@/stores/settings"
-import { useVideoEditPrefs } from "@/stores/video-edit"
-
-/** One song-authoring approach per URL. Each is self-contained, to keep or to drop. */
-const APPROACHES: Record<SongApproach, () => React.ReactNode> = {
-  setlist: SetlistApproach,
-  timeline: TimelineApproach,
-  capture: CaptureApproach,
-}
 
 /**
- * The player sits in the same DOM position for all of these, because moving an
+ * The player sits in the same DOM position for both of these, because moving an
  * iframe reloads it. Only the grid around it changes, which is what lets someone
- * switch tab or approach without the video so much as hiccuping.
+ * switch tab without the video so much as hiccuping.
  */
-const LAYOUTS: Record<"details" | SongApproach, string> = {
+const LAYOUTS = {
   details:
     "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:grid-rows-[auto_minmax(0,1fr)] lg:[grid-template-areas:'player_main'_'info_main']",
-  setlist:
+  music:
     "lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:grid-rows-[auto_minmax(0,1fr)] lg:[grid-template-areas:'player_list'_'source_list']",
-  timeline:
-    "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)_17rem] lg:[grid-template-areas:'player_inspector'_'timeline_timeline']",
-  capture:
-    "lg:grid-cols-[minmax(0,1fr)_26rem] lg:grid-rows-[minmax(0,1fr)_auto] lg:[grid-template-areas:'player_rail'_'transport_rail']",
-}
+} as const
 
 /** A full window of its own: editing wants the room, and no second audio source. */
 export default function EditVideoPage() {
@@ -96,10 +80,9 @@ export default function EditVideoPage() {
 }
 
 function VideoEditor({ video }: { video: Video }) {
-  const { tab: tabParam, approach: approachParam } = useParams()
+  const { tab: tabParam } = useParams()
   const [search] = useSearchParams()
   const preferEnglish = useSettings((state) => state.useEnglishName)
-  const preferred = useVideoEditPrefs((state) => state.approach) ?? "setlist"
   const user = useAuth((state) => state.user)
   const [clock] = useState(() => new PlayerClock())
   useDocumentTitle(videoTitle(video, preferEnglish))
@@ -110,60 +93,46 @@ function VideoEditor({ video }: { video: Video }) {
     if (startAt > 0) clock.seek(startAt)
   }, [clock, startAt])
 
-  const approach = isSongApproach(approachParam) ? approachParam : null
-  useEffect(() => {
-    if (approach) useVideoEditPrefs.getState().setApproach(approach)
-  }, [approach])
-
   // The address always says what's on screen, so any view can be linked to.
   const songsAllowed = editableParts(video).songs
   const requested =
     resolveTab(tabParam) ?? (tabParam ? null : defaultTab(video))
   const tab = requested === "music" && songsAllowed ? "music" : "details"
-  const canonical =
-    tab === "music"
-      ? editPath(video.id, "music", approach ?? preferred)
-      : editPath(video.id, "details")
+  const canonical = editPath(video.id, tab)
   const current = editPath(
     video.id,
     tabParam === "music"
       ? "music"
       : tabParam === "details"
         ? "details"
-        : undefined,
-    approach ?? undefined
+        : undefined
   )
   if (current !== canonical) {
     const query = search.toString()
     return <Navigate to={query ? `${canonical}?${query}` : canonical} replace />
   }
 
-  const active = tab === "music" ? approach : null
-  const Approach = active ? APPROACHES[active] : null
-
   return (
     <SongWorkspaceProvider video={video} clock={clock}>
-      <EditorHeader video={video} tab={tab} approach={approach ?? preferred}>
-        {active && <SongToolbar approach={active} />}
+      <EditorHeader video={video} tab={tab}>
+        {tab === "music" && <SongToolbar />}
       </EditorHeader>
-      {!user && active && <LoginPrompt className="m-2 mb-0" />}
+      {!user && tab === "music" && <LoginPrompt className="m-2 mb-0" />}
       <main
         className={cn(
           "min-h-0 flex-1 overflow-y-auto lg:grid lg:overflow-hidden",
-          LAYOUTS[active ?? "details"]
+          LAYOUTS[tab]
         )}
       >
         <EditorPlayer
           video={video}
           clock={clock}
-          className={cn(
-            "sticky top-0 z-20 aspect-video w-full lg:static lg:[grid-area:player]",
-            (active === "timeline" || active === "capture") &&
-              "lg:aspect-auto lg:h-full"
-          )}
+          // Capped by height as well, or on a very wide window the 16:9 box grows
+          // taller than the screen and pushes what's below it out of reach.
+          className="sticky top-0 z-20 aspect-video w-full lg:relative lg:max-h-[55dvh] lg:[grid-area:player]"
         />
-        {Approach ? (
-          <Approach />
+        {tab === "music" ? (
+          <SetlistApproach />
         ) : (
           <>
             <div className="hidden min-h-0 lg:block lg:overflow-hidden lg:[grid-area:info]">

@@ -3,6 +3,7 @@ export { ArrowCounterClockwiseIcon } from "./arrow-counter-clockwise-icon";
 export { ArrowDownIcon } from "./arrow-down-icon";
 export { ArrowLeftIcon } from "./arrow-left-icon";
 export { ArrowsClockwiseIcon } from "./arrows-clockwise-icon";
+export { ArrowsLeftRightIcon } from "./arrows-left-right-icon";
 export { ArrowsOutLineHorizontalIcon } from "./arrows-out-line-horizontal-icon";
 export { ArrowSquareOutIcon } from "./arrow-square-out-icon";
 export { ArrowUpIcon } from "./arrow-up-icon";

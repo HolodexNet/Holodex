@@ -85,6 +85,8 @@ interface SongEditorState extends Snapshot {
   ) => void
   remove: (id: string) => void
   restore: (id: string) => void
+  /** Puts back a song that was never saved, which has no row left to restore from. */
+  reinstate: (song: SongDraft) => void
   undo: () => void
   redo: () => void
   discardAll: () => void
@@ -330,6 +332,15 @@ export const useSongEditor = create<SongEditorState>((set, get) => ({
         removed: omit(state.removed, id),
       })
     ),
+
+  reinstate: (song) =>
+    set((state) => ({
+      ...withHistory(state, {
+        edits: { ...state.edits, [song.id]: song },
+        removed: state.removed,
+      }),
+      selectedId: song.id,
+    })),
 
   undo: () =>
     set((state) => {

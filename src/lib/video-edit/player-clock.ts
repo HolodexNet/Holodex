@@ -30,6 +30,7 @@ export class PlayerClock {
   private rate = 1
   private second = 0
   private stopAt: number | null = null
+  private listening: { from: number; to: number } | null = null
   private seeking: { target: number; until: number } | null = null
   private pendingSeek: number | null = null
   private statusListeners = new Set<() => void>()
@@ -72,6 +73,7 @@ export class PlayerClock {
   seek(seconds: number) {
     const target = Math.max(0, seconds)
     this.stopAt = null
+    this.listening = null
     if (!this.controller || !this.status.ready) {
       this.pendingSeek = target
       this.anchor(target)
@@ -113,9 +115,20 @@ export class PlayerClock {
    * where it should: the cut is what you are listening for.
    */
   hearUntil(seconds: number, lead = 6) {
-    this.seek(Math.max(0, seconds - lead))
+    const from = Math.max(0, seconds - lead)
+    this.seek(from)
     this.stopAt = seconds
+    this.listening = { from, to: seconds }
     this.play()
+  }
+
+  /**
+   * The stretch last played by `hearUntil`, for showing how far along it is. It
+   * stays after playback stops at the end, and is only meaningful while the
+   * playhead is still inside it.
+   */
+  get hearing(): { from: number; to: number } | null {
+    return this.listening
   }
 
   subscribeStatus = (listener: () => void) => {

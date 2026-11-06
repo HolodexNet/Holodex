@@ -76,7 +76,7 @@ const router = createBrowserRouter([
       },
       // Also a full window: editing wants the room, and the video's own audio.
       {
-        path: "/edit/video/:id/:tab?/:approach?",
+        path: "/edit/video/:id/:tab?",
         lazy: async () => ({
           Component: (await import("@/pages/edit-video")).default,
         }),

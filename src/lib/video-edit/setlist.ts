@@ -105,7 +105,13 @@ export function decodeMessage(message: string): string {
  * first: when a comment has it the other way round, matching against real tracks
  * is what notices (see `scoreTrack`).
  */
-export function splitTitleArtist(text: string): {
+export function splitTitleArtist(
+  text: string,
+  options?: {
+    /** Only separators someone clearly meant, for a title that may hold others. */
+    strict?: boolean
+  }
+): {
   title: string
   artist: string
 } {
@@ -125,7 +131,7 @@ export function splitTitleArtist(text: string): {
     /\s+[-–—―ー~〜～]\s+/,
     /\s+by\s+/i,
     /\s*[|｜]\s*/,
-    /\s*\/\s*/,
+    ...(options?.strict ? [] : [/\s*\/\s*/]),
   ]) {
     const match = separator.exec(text)
     if (!match || match.index === 0) continue
@@ -133,6 +139,7 @@ export function splitTitleArtist(text: string): {
     const artist = cleanText(text.slice(match.index + match[0].length))
     if (title && artist) return { title, artist }
   }
+  if (options?.strict) return { title: text, artist: "" }
   const tail = /^(.+?)\s*[(（【［[]([^)）】］\]]+)[)）】］\]]\s*$/.exec(text)
   if (tail && !NOT_AN_ARTIST.test(tail[2].trim()))
     return { title: tail[1].trim(), artist: tail[2].trim() }
@@ -232,6 +239,38 @@ export function parseSetlist(
   return duration
     ? entries.filter((entry) => entry.start <= duration + 30)
     : entries
+}
+
+export type PastedSong =
+  /** Several timed lines: that's a setlist, not a name. */
+  | { kind: "many" }
+  | { kind: "one"; title: string; artist: string; start?: number; end?: number }
+  /** Nothing to read into it, so it's only text. */
+  | { kind: "plain" }
+
+/**
+ * What pasting into a song's name means. A copied `12:34 Lemon / 米津玄師` holds the
+ * whole song, and a text box would otherwise keep all of it as the name.
+ */
+export function readPastedSong(raw: string, duration?: number): PastedSong {
+  const text = raw.trim()
+  if (/^https?:\/\//i.test(text)) return { kind: "plain" }
+  const entries = parseSetlist(text, duration)
+  if (entries.length > 1) return { kind: "many" }
+  const [entry] = entries
+  if (entry)
+    return entry.title
+      ? {
+          kind: "one",
+          title: entry.title,
+          artist: entry.artist,
+          start: entry.start,
+          ...(entry.end !== undefined ? { end: entry.end } : {}),
+        }
+      : { kind: "plain" }
+  if (/\n/.test(text)) return { kind: "plain" }
+  const { title, artist } = splitTitleArtist(cleanText(text), { strict: true })
+  return artist ? { kind: "one", title, artist } : { kind: "plain" }
 }
 
 function scoreSetlist(

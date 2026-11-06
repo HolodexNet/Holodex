@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useMutation } from "@tanstack/react-query"
 import { cn } from "cn"
 import { toast } from "sonner"
@@ -22,6 +22,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { Kbd } from "@/components/ui/kbd"
 import { Spinner } from "@/components/ui/spinner"
 import { Textarea } from "@/components/ui/textarea"
 import { api, ApiError } from "@/lib/api"
@@ -31,9 +32,11 @@ import type { Video } from "@/lib/types"
 import {
   decodeMessage,
   makeSource,
+  parseSetlist,
   type SetlistEntry,
   type SetlistSource,
 } from "@/lib/video-edit/setlist"
+import { MOD_KEY, SONG_SHORTCUT_KEYS } from "@/lib/video-edit/shortcuts"
 import { songCovers } from "@/lib/video-edit/songs"
 import {
   formatTimecode,
@@ -78,12 +81,27 @@ function PasteDialog({
   const { t, tc } = useT()
   const workspace = useSongWorkspace()
   const [text, setText] = useState("")
-  const preview = makeSource(
-    "preview",
-    "paste",
-    text,
-    workspace.video.duration || undefined
+  const duration = workspace.video.duration || undefined
+  const preview = useMemo(
+    () => makeSource("preview", "paste", text, duration),
+    [text, duration]
   )
+  // Said out loud, as a line with no time on it is otherwise just quietly gone.
+  const unread = useMemo(
+    () =>
+      text
+        .split(/\r?\n/)
+        .filter((line) => line.trim() && !parseSetlist(line, duration).length)
+        .length,
+    [text, duration]
+  )
+  const submit = () => {
+    if (!preview.songCount) return
+    const source = workspace.addPastedSource(text)
+    if (source) onSource(source)
+    setText("")
+    onOpenChange(false)
+  }
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
@@ -97,24 +115,56 @@ function PasteDialog({
           value={text}
           rows={9}
           autoFocus
+          spellCheck={false}
           aria-label={t("videoEdit.setlist.pasteTitle")}
           placeholder={"0:02:10 怪物 / YOASOBI\n0:07:30 Lemon - 米津玄師"}
           onChange={(event) => setText(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
+              event.preventDefault()
+              submit()
+            }
+          }}
         />
+        {preview.entries.length > 0 && (
+          <ul className="grid max-h-40 gap-px overflow-y-auto rounded-xl border p-1.5 text-xs">
+            {preview.entries.map((entry, position) => (
+              <li
+                key={`${entry.start}-${position}`}
+                className={cn(
+                  "flex items-baseline gap-2",
+                  entry.kind === "note" && "opacity-55"
+                )}
+              >
+                <span className="shrink-0 text-muted-foreground tabular-nums">
+                  {formatTimecode(entry.start)}
+                  {entry.end !== undefined && ` – ${formatTimecode(entry.end)}`}
+                </span>
+                <span className="min-w-0 truncate" title={entry.text}>
+                  {entry.title || t("videoEdit.setlist.noText")}
+                  {entry.artist && (
+                    <span className="text-muted-foreground">
+                      {" "}
+                      · {entry.artist}
+                    </span>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
         <DialogFooter className="items-center">
-          <span className="mr-auto text-xs text-muted-foreground">
-            {tc("videoEdit.setlist.pasteFound", preview.songCount)}
+          <span className="mr-auto grid text-xs text-muted-foreground">
+            <span>{tc("videoEdit.setlist.pasteFound", preview.songCount)}</span>
+            {unread > 0 && (
+              <span>{tc("videoEdit.setlist.pasteUnread", unread)}</span>
+            )}
           </span>
-          <Button
-            disabled={!preview.songCount}
-            onClick={() => {
-              const source = workspace.addPastedSource(text)
-              if (source) onSource(source)
-              setText("")
-              onOpenChange(false)
-            }}
-          >
+          <Button disabled={!preview.songCount} onClick={submit}>
             {t("videoEdit.setlist.pasteUse")}
+            <Kbd className="ml-1 hidden bg-primary-foreground/20 text-primary-foreground lg:inline-flex">
+              {MOD_KEY} {SONG_SHORTCUT_KEYS.confirm}
+            </Kbd>
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -148,7 +198,7 @@ function EntryRow({
       >
         {formatTimecode(entry.start)}
       </button>
-      <span className="min-w-0 flex-1 truncate text-sm">
+      <span className="min-w-0 flex-1 truncate text-sm" title={entry.text}>
         {entry.title || t("videoEdit.setlist.noText")}
         {entry.artist && (
           <span className="text-muted-foreground"> · {entry.artist}</span>
@@ -310,8 +360,8 @@ export function SourcePanel({ className }: { className?: string }) {
         )
       ) : source ? (
         <>
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 px-2 py-1.5">
-            <div className="flex items-center gap-0.5">
+          <div className="flex items-center gap-2 px-2 py-1.5">
+            <div className="flex min-w-0 flex-1 items-center gap-0.5">
               {sources.length > 1 && (
                 <Button
                   variant="ghost"
@@ -323,7 +373,10 @@ export function SourcePanel({ className }: { className?: string }) {
                   <CaretLeftIcon />
                 </Button>
               )}
-              <span className="text-xs text-muted-foreground">
+              <span
+                className="min-w-0 truncate text-xs text-muted-foreground"
+                title={sourceLabel}
+              >
                 {sources.length > 1
                   ? t("videoEdit.setlist.sourcePosition", {
                       label: sourceLabel,
@@ -344,38 +397,48 @@ export function SourcePanel({ className }: { className?: string }) {
                 </Button>
               )}
             </div>
-            <span className="flex-1" />
+          </div>
+          <div className="relative flex min-h-0 flex-1 flex-col">
+            <ul
+              className={cn(
+                // A grid's single column is as wide as its widest row unless told it can shrink.
+                "grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] content-start gap-px overflow-y-auto px-1.5",
+                // Room for the button to float over, so the last rows can scroll clear of it.
+                canAdd ? "pb-16" : "pb-3"
+              )}
+            >
+              {source.entries.map((entry, position) => (
+                <EntryRow
+                  key={`${entry.start}-${position}`}
+                  source={source}
+                  entry={entry}
+                />
+              ))}
+            </ul>
             {canAdd && (
-              <Button
-                size="sm"
-                variant={remaining ? "default" : "ghost"}
-                disabled={!remaining}
-                onClick={() => {
-                  const added = workspace.addAllEntries(source)
-                  if (added)
-                    toast.success(tc("videoEdit.songs.addedMany", added))
-                }}
-              >
-                {remaining ? (
-                  <PlusIcon data-icon="inline-start" />
-                ) : (
-                  <CheckIcon data-icon="inline-start" />
-                )}
-                {remaining
-                  ? tc("videoEdit.songs.addAll", remaining)
-                  : t("videoEdit.setlist.allAdded")}
-              </Button>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-end p-3">
+                <Button
+                  className="pointer-events-auto shadow-lg"
+                  variant={remaining ? "default" : "secondary"}
+                  disabled={!remaining}
+                  onClick={() => {
+                    const added = workspace.addAllEntries(source)
+                    if (added)
+                      toast.success(tc("videoEdit.songs.addedMany", added))
+                  }}
+                >
+                  {remaining ? (
+                    <PlusIcon data-icon="inline-start" />
+                  ) : (
+                    <CheckIcon data-icon="inline-start" />
+                  )}
+                  {remaining
+                    ? tc("videoEdit.songs.addAll", remaining)
+                    : t("videoEdit.setlist.allAdded")}
+                </Button>
+              </div>
             )}
           </div>
-          <ul className="grid min-h-0 flex-1 content-start gap-px overflow-y-auto px-1.5 pb-3">
-            {source.entries.map((entry, position) => (
-              <EntryRow
-                key={`${entry.start}-${position}`}
-                source={source}
-                entry={entry}
-              />
-            ))}
-          </ul>
         </>
       ) : (
         <EmptySource

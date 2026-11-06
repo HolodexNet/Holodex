@@ -45,6 +45,29 @@ export function similarity(a: string, b: string): number {
   return (2 * shared) / (left.length + right.length - 2)
 }
 
+/**
+ * Whether a name is still the track's: corrected, shortened or added to, not
+ * replaced. Replacing one fails this within its first two letters, so the bar only
+ * has to be low enough for a typo fixed in place.
+ */
+export function stillSameTrack(name: string, trackName: string): boolean {
+  const typed = foldName(name)
+  const track = foldName(trackName)
+  if (!typed || !track) return false
+  return (
+    typed.includes(track) ||
+    track.includes(typed) ||
+    similarity(name, trackName) >= 0.5
+  )
+}
+
+/**
+ * Enough to search on. One letter of the alphabet isn't, but one kanji may well be
+ * the whole title: 春, 虹, 鏡.
+ */
+export const isSearchable = (query: string) =>
+  query.length >= 2 || /[^ -\u024f]/.test(query)
+
 /** Many tracks are stored as "怪物 / Monster", and a comment may use either half. */
 function nameVariants(name: string): string[] {
   const parts = name.split(/\s+\/\s+/)

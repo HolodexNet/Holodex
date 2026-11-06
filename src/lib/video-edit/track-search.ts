@@ -152,44 +152,41 @@ async function musicdexSearch(
   return (await musicApi.findSongs(query, signal)).map(musicdexTrack)
 }
 
-export interface TrackResults {
-  tracks: Track[]
-  /** Results are incomplete: say so, rather than that nothing exists. */
-  partial: boolean
+/**
+ * Songs already on Holodex. They're usually spelled the way this community spells
+ * them and include originals that were never on iTunes, so they go first, and they
+ * arrive separately because Apple's limit can keep iTunes waiting for a minute.
+ */
+export async function searchMusicdexTracks(
+  query: string,
+  signal?: AbortSignal
+): Promise<Track[]> {
+  return (await musicdexSearch(query, signal)).slice(0, 4)
 }
 
 /**
- * Everything matching what someone is typing, with songs already on Holodex
- * first: they're usually spelled the way this community spells them, and include
- * originals that were never on iTunes. Japan's store has the better catalog for
- * this music, and the US listing supplies an English name where one exists.
+ * Japan's store has the better catalog for this music, and the US listing supplies
+ * an English name where one exists.
  */
-export async function searchTracks(
+export async function searchItunesTracks(
   query: string,
   signal?: AbortSignal
-): Promise<TrackResults> {
-  const [musicdex, japanese, english] = await Promise.allSettled([
-    musicdexSearch(query, signal),
+): Promise<Track[]> {
+  const [japanese, english] = await Promise.allSettled([
     itunesSearch(query, "ja_jp", "JP", 10, signal),
     itunesSearch(query, "en_us", "US", 10, signal),
   ])
   signal?.throwIfAborted()
+  if (japanese.status === "rejected") throw japanese.reason
   const englishNames = new Map(
     (english.status === "fulfilled" ? english.value : []).map((result) => [
       result.trackId,
       result.trackCensoredName || result.trackName,
     ])
   )
-  const itunes = japanese.status === "fulfilled" ? japanese.value : []
-  return {
-    tracks: dedupeTracks([
-      ...(musicdex.status === "fulfilled" ? musicdex.value.slice(0, 4) : []),
-      ...itunes.map((result) =>
-        itunesTrack(result, englishNames.get(result.trackId))
-      ),
-    ]),
-    partial: musicdex.status === "rejected" || japanese.status === "rejected",
-  }
+  return japanese.value.map((result) =>
+    itunesTrack(result, englishNames.get(result.trackId))
+  )
 }
 
 export interface MatchResult {

@@ -6,32 +6,16 @@ import { videoSource } from "../video-source.ts"
  *
  *   /edit/video/:id                    Opens on what this video most likely needs
  *   /edit/video/:id/details            Topic and participants
- *   /edit/video/:id/music/setlist      Songs, starting from the comments
- *   /edit/video/:id/music/timeline     Songs, laid out over the whole stream
- *   /edit/video/:id/music/capture      Songs, tapped out while watching
+ *   /edit/video/:id/music              Songs, starting from the comments
  *
  * The previous UI's /topic and /mentions tabs still resolve, to `details`.
  */
 
-export const SONG_APPROACHES = ["setlist", "timeline", "capture"] as const
-export type SongApproach = (typeof SONG_APPROACHES)[number]
-
 export type EditTab = "details" | "music"
 
-export function isSongApproach(value: unknown): value is SongApproach {
-  return SONG_APPROACHES.includes(value as SongApproach)
-}
-
-export function editPath(
-  id: string,
-  tab?: EditTab,
-  approach?: SongApproach
-): string {
+export function editPath(id: string, tab?: EditTab): string {
   const base = `/edit/video/${encodeURIComponent(id)}`
-  if (!tab) return base
-  return tab === "music" && approach
-    ? `${base}/music/${approach}`
-    : `${base}/${tab}`
+  return tab ? `${base}/${tab}` : base
 }
 
 /** A tab from the URL, including those of the previous UI. */
