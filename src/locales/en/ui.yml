@@ -463,7 +463,7 @@ views:
     importThemeInvalid: This isn't a Holodex theme.
     themeImported: Theme imported.
     colorGroupsTitle: Color groups
-    colorGroupsMsg: Related colors follow the group color.
+    colorGroupsMsg: Slightly more granular color settings
     individualColors: "Individual colors ({count})"
     customCount: "{count} custom"
     contrastRatio: "Contrast {ratio}:1"
