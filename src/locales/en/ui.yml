@@ -661,7 +661,7 @@ views:
     shortcuts:
       title: Keyboard Shortcuts
       detail: Click a key to change it. Shortcuts stay out of the way while you are typing, or using a slider or menu.
-      hint: Press ? to see every keyboard shortcut, and change any of them
+      hint: Press <b>?</b> to check and re-bind keyboard shortcuts
       groupPlayback: Playback
       groupAudio: Audio
       groupLayout: Layout
@@ -744,7 +744,7 @@ views:
       redo: Bring back the change you just undid.
       discard: Put the layout back the way it was when you started editing.
       done: Finish editing and keep changes.
-    editHint: Edit Layout lets you drag cells to move or swap them, resize them from any edge, and draw new ones
+    editHint: <b>Edit Layout</b> lets you drag cells to move or swap them, resize them from any edge, and draw new ones
     play: Play
     pause: Pause
     mute: Mute
@@ -818,9 +818,8 @@ views:
     changeLayout: Change Layout
     done: Done
     hints: Hints
-    presetsHint: Open presets menu to switch layouts and configure auto layout
-    mediaControlsHint1: Use Media Controls to mute and sync (
-    mediaControlsHint2: ) live streams
+    presetsHint: Open <b>Presets menu</b> to switch layouts and configure auto layout
+    mediaControlsHint1: Use <b>Media Controls</b> to mute and sync live streams
     dragDropHint: Drag and drop streams from toolbar to cells to organize streams
     reorderHint: Use Reorder Layout menu to change video/chat positions
     reorderLayout: Reorder Layout
