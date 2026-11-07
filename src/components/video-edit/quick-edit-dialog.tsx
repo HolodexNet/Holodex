@@ -35,7 +35,7 @@ export function QuickEditDialog({
         if (!open) onClose()
       }}
     >
-      <DialogContent className="max-h-[calc(100dvh-2rem)] gap-3 overflow-y-auto sm:max-w-lg">
+      <DialogContent className="max-h-[calc(100dvh-2rem)] grid-cols-[minmax(0,1fr)] gap-3 overflow-x-hidden overflow-y-auto sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="truncate pr-8">
             {videoTitle(video, preferEnglish)}

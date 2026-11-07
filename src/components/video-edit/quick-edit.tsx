@@ -32,10 +32,13 @@ const QuickEditDialog = lazy(() =>
   }))
 )
 
+export const canQuickEdit = (user: Parameters<typeof can>[0]) =>
+  can(user, "smart.edit")
+
 export function QuickEditItem({ video }: { video: Video }) {
   const { t } = useT()
   const user = useAuth((state) => state.user)
-  if (!can(user, "smart.edit")) return null
+  if (!canQuickEdit(user)) return null
   return (
     <DropdownMenuItem onClick={() => useQuickEdit.getState().open(video)}>
       <PencilSimpleIcon className="text-muted-foreground" />

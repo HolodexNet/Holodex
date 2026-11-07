@@ -8,6 +8,7 @@ import {
   DotsThreeVerticalIcon,
   EyeIcon,
   EyeSlashIcon,
+  KeyboardIcon,
   LinkIcon,
   LogoYoutubeIcon,
   LogoTwitchIcon,
@@ -44,7 +45,10 @@ import { useAuth } from "@/stores/auth"
 import { useSelectionAction } from "@/stores/selection-action"
 import { useSelection, useSelectionScopes } from "@/stores/selection"
 import { useSelectionScope } from "@/components/selection/selection-scope"
-import { QuickEditItem } from "@/components/video-edit/quick-edit"
+import {
+  QuickEditItem,
+  canQuickEdit,
+} from "@/components/video-edit/quick-edit"
 
 /** `YYYYMMDDTHHmmssZ`, the UTC timestamp format calendar links expect. */
 const calendarStamp = (date: Date) =>
@@ -100,6 +104,10 @@ export function VideoMenu({
     )
     .filter((action) => !videoActionIssue(action, [video]))
   const canSelect = scope && !selecting
+  // One "Edit video" entry: a plain link to the editor when that's all there is,
+  // otherwise a single submenu holding quick edit, the editor, and the rest.
+  const editSubmenu =
+    !!user && (canQuickEdit(user) || editActions.length > 0)
 
   const copyLink = async () => {
     try {
@@ -177,6 +185,18 @@ export function VideoMenu({
             {t("component.mainNav.multiview")}
           </DropdownMenuItem>
         )}
+        {user && (video.status === "live" || video.status === "upcoming") && (
+          <DropdownMenuItem
+            render={
+              <Link
+                to={`/tlclient?${new URLSearchParams({ video: video.id })}`}
+              />
+            }
+          >
+            <KeyboardIcon className="text-muted-foreground" />
+            {t("component.videoCard.openClient")}
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem
           onClick={() => navigate(`/channel/${video.channel.id}`)}
         >
@@ -195,24 +215,31 @@ export function VideoMenu({
             {t("selection.startHere")}
           </DropdownMenuItem>
         )}
-        {user && (
+        {user && !editSubmenu && (
           <DropdownMenuItem render={<Link to={editPath(video.id)} />}>
             <NotePencilIcon className="text-muted-foreground" />
             {t("component.videoCard.editVideo")}
           </DropdownMenuItem>
         )}
-        <QuickEditItem video={video} />
-        {editActions.length > 0 && (
+        {editSubmenu && (
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="gap-2.5 [&>svg]:text-muted-foreground">
-              <LinkIcon />
-              {t("videoEdit.moreEdits")}
+              <NotePencilIcon />
+              {t("component.videoCard.editVideo")}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent
               className={menuClassName}
               sideOffset={6}
               alignOffset={-6}
             >
+              <QuickEditItem video={video} />
+              <DropdownMenuItem render={<Link to={editPath(video.id)} />}>
+                <NotePencilIcon className="text-muted-foreground" />
+                {t("videoEdit.quick.openEditor")}
+              </DropdownMenuItem>
+              {editActions.length > 0 && (
+                <DropdownMenuSeparator className="mx-1.5" />
+              )}
               {editActions.map((action, index) => {
                 const destructive =
                   "destructive" in action && action.destructive

@@ -248,6 +248,7 @@ export function MentionEditor({ video }: { video: Video }) {
           itemKey={(channel) => channel.id}
           itemText={label}
           placeholder={t("curation.pickChannels")}
+          popupClassName="w-(--anchor-width)"
           onPick={addChannel}
           empty={
             query.length < 2
