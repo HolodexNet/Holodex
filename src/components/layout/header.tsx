@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link, useLocation } from "react-router"
 
-import { Logo } from "@/components/common/logo"
+import { Logo, LogoOutline } from "@/components/common/logo"
 import {
   ArrowLeftIcon,
   ListIcon,
@@ -90,7 +90,14 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b bg-header pt-safe">
-      <div className="flex h-(--header-height) items-center gap-1 px-2 sm:gap-2 sm:px-3">
+      {/* Decorative oversized outline mark bleeding off behind the brand. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <LogoOutline className="absolute top-1/2 left-24 h-[260%] -translate-y-1/2 -rotate-12 opacity-25 blur-[0.5px] drop-shadow-[0_0_10px_var(--primary)] sm:left-40 dark:opacity-30" />
+      </div>
+      <div className="relative flex h-(--header-height) items-center gap-1 px-2 sm:gap-2 sm:px-3">
         {mobileSearch ? (
           <>
             <Button
