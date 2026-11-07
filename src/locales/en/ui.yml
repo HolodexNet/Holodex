@@ -1266,7 +1266,6 @@ videoEdit:
   undo: Undo
   saved: Saved
   logIn: Log in
-  moreEdits: More edits
   quick:
     menu: Quick edit…
     openEditor: Open full editor
@@ -1493,3 +1492,134 @@ channelRequest:
     provide contact information so we can verify this.
   PageTitle: Holodex Channel Request
   ChannelURLErrorFeedback: Must be https://www.youtube.com/channel/UC_____ or https://www.youtube.com/@_____
+tlClient:
+  title: TL Client
+  tagline: Translate a stream as it happens, into TLdex and into the stream's own chat.
+  finding: Finding the stream…
+  errors:
+    sendFailed: A line could not be posted
+    editFailed: Could not edit the line
+    deleteFailed: Could not delete the line
+    editMerged: Nothing to edit. TLdex had merged this line into an identical one another translator posted at the same moment. Your correction is still in the box; press Enter to send it as a new line.
+    deleteMerged: Only removed here. TLdex had merged this line into an identical one another translator posted at the same moment, and that one stays.
+  setup:
+    streamLabel: Stream
+    streamPlaceholder: YouTube or Twitch link, video ID, or a custom room name
+    choose: Use
+    language: Translating into
+    start: Start translating
+    loginNeeded: Log in to post translations. You can still set up a session first.
+    recent: Recent sessions
+    liveNow: Live and upcoming
+    filter: Filter by title or channel
+    noStreams: No live or upcoming streams match.
+    customRoom: 'Holodex does not list this stream. Lines will go to a custom TLdex room named exactly "{0}", where other tools can find them under that name.'
+    collabs: Collab streams
+    collabsHint: Every line also goes to each of these streams' TLdex rooms, so viewers on any POV get it.
+    suggested: Other POVs of this stream
+    addCollab: Add another stream by link or ID
+    add: Add
+    change: Change
+    remove: Remove
+  layout:
+    resize: Resize panels
+    player: Stream player
+    togglePlayer: Player
+    toggleChat: Chat
+  chat:
+    title: Live chat
+    noExtension: Lines are typed into chat by the Holodex+ extension, which was not found. Install it and reload this page to post into chat.
+  feed:
+    title: Room
+    live: Live
+    connecting: Connecting…
+    roomClosed: Opens 15 minutes before the stream
+    translators: No other translators | 1 other translator | {n} other translators
+    loadOlder: Load earlier lines
+    empty: Nothing translated yet. Your lines will appear here as you send them.
+    newLines: New lines
+    you: You
+    edited: (edited)
+    tooLongForChat: Too long for chat, so it only went to TLdex
+    sending: Sending
+    failed: Not posted everywhere
+    sent: Posted
+    edit: Edit
+    delete: Delete
+    confirmDelete: Delete?
+  composer:
+    label: Translation
+    placeholder: Type a translation, then Enter
+    placeholderEditing: Change the line, then Enter to save
+    send: Send
+    save: Save
+    login: Log in to post
+    noDestinations: Turn on at least one place to post to.
+    editing: Editing your line from {0}
+    editingHint: Enter saves, Esc cancels. Fixes reach the archive and later viewers; anyone watching live, and chat, keep what they saw.
+    stamp: Timed to {0}, when you started typing. Click to time it to now instead.
+    keyboardAwayPlayer: The keyboard is in the player.
+    keyboardAwayChat: The keyboard is in the chat.
+    keyboardBack: Back to translating
+    tooLong: '{0} characters over the {1} chat limit. This line will only go to TLdex.'
+    charsLeft: '{0} left for chat'
+  speakers:
+    label: Speaker
+    none: No speaker
+    add: Add speaker
+    namePlaceholder: Speaker name
+    edit: Edit speakers
+    fromStream: Add participants
+    fromStreamHint: A speaker for each channel in this stream
+    title: Speakers
+    hint: The selected speaker's prefix and suffix go around every line you send. Tab and Shift+Tab switch between speakers. {0}+1 is no speaker, and {0}+2 to 9 pick the speakers by their number.
+    name: Name
+    prefix: Prefix
+    suffix: Suffix
+    moveUp: Move up
+    moveDown: Move down
+    empty: No speakers yet. Add the people you will be translating, or a tag such as ♪ for lyrics.
+    replace: Use participants
+    full: Up to 8 speakers
+  destinations:
+    label: Posting to
+    room: TLdex room
+    customRoom: Custom TLdex room
+    youtubeChat: YouTube chat
+    twitchChat: Twitch chat
+    connecting: Connecting to chat
+    off: Off for new lines
+    chatTagHint: Chat copies start with {0}
+  header:
+    back: Leave TL Client
+    streams: Streams
+    streamsTitle: Streams in this session
+    main: Main
+    makeMain: Make main
+    newSession: New session
+    custom: Custom room
+    live: Live
+    upcoming: Upcoming
+    ended: Ended
+    shortcuts: Keyboard shortcuts
+    settings: TL Client settings
+  shortcuts:
+    send: Send the line
+    nextSpeaker: Next speaker
+    previousSpeaker: Previous speaker
+    pickSpeaker: Pick a speaker by its number
+    noSpeaker: No speaker
+    editLast: Edit your last line, from an empty box
+    walkLines: Step through your lines while editing
+    cancel: Cancel editing, or clear the box
+    anywhere: Typing anywhere on the page goes into the box
+  settings:
+    postingAs: Posting as
+    chatTag: Chat tag
+    chatTagHint: Goes in front of lines typed into chat, so viewers and TLdex can tell they are translations. Leave empty to follow the language.
+    stampOnType: Time lines from the first keystroke
+    stampOnTypeHint: Archived subtitles then line up with when it was said, not when you finished typing. Drafts left for over a minute are timed when sent.
+    tabCycles: Tab switches speakers
+    tabCyclesHint: Turn off to keep Tab for moving between controls.
+    fontSize: Room text size (px)
+    localTime: Show clock time instead of stream time

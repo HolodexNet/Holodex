@@ -23,6 +23,7 @@ import type {
   VideoComment,
 } from "@/lib/types"
 import type { TlWireMessage } from "@/lib/tldex/messages"
+import type { TlRoom } from "@/lib/tlclient/session"
 import { getJwt, useAuth } from "@/stores/auth"
 
 /**
@@ -146,6 +147,15 @@ function normalizeLive(videos: Video[]): Video[] {
     .filter((v) => !isStale(v))
     .sort(byStartTime)
 }
+
+/** A TLdex room's chat route: a catalog video, or `custom` plus its id. */
+function roomChatsPath(room: TlRoom): string {
+  const id = room.kind === "video" ? room.videoId : "custom"
+  return `${API}/v2/videos/${encodeURIComponent(id)}/chats`
+}
+
+const roomQuery = (room: TlRoom): Query =>
+  room.kind === "custom" ? { custom_video_id: room.customId } : {}
 
 /** v3 has no "All Vtubers" pseudo-org; the filter is simply omitted. */
 const orgParam = (org: string) => (org === ALL_VTUBERS ? undefined : org)
@@ -324,7 +334,7 @@ export const api = {
   trackMultiviewLink: (layout: string) =>
     request<string>(`${API}/v2/multiview/record/${encodeURIComponent(layout)}`),
 
-  /** Oldest first. */
+  /** Oldest first. `videoId` "custom" reads the room named by `custom_video_id`. */
   chatHistory: (
     videoId: string,
     query: {
@@ -334,6 +344,7 @@ export const api = {
       vtuber: boolean
       limit: number
       before?: number
+      custom_video_id?: string
     },
     signal?: AbortSignal
   ) =>
@@ -341,6 +352,53 @@ export const api = {
       `${API}/v2/videos/${encodeURIComponent(videoId)}/chats`,
       { query, signal }
     ),
+
+  /** Posts a translated line to a TLdex room, which also broadcasts it live. */
+  postTranslation: (
+    room: TlRoom,
+    lang: string,
+    body: { name: string; message: string; timestamp: number },
+    signal?: AbortSignal
+  ) =>
+    request<{ res?: number; id?: string }>(roomChatsPath(room), {
+      method: "POST",
+      query: { lang, ...roomQuery(room) },
+      body: { ...body, source: "user" },
+      auth: "required",
+      signal,
+    }),
+
+  /**
+   * Rewrites one of the account's own lines, and answers with how many rows
+   * changed: 0, still with status 200, when the id is not the account's own.
+   * Nothing is broadcast, so live viewers keep the old text.
+   */
+  editTranslation: async (
+    room: TlRoom,
+    lang: string,
+    body: { id: string; message: string; timestamp: number }
+  ) =>
+    Number(
+      await request<number>(roomChatsPath(room), {
+        method: "PUT",
+        query: { lang, ...roomQuery(room) },
+        body,
+        auth: "required",
+      })
+    ) || 0,
+
+  /**
+   * Answers with how many rows went. The server does not check that the line
+   * is the account's own, so only ever pass an id confirmed with an edit first.
+   */
+  deleteTranslation: async (room: TlRoom, id: string) =>
+    Number(
+      await request<number>(roomChatsPath(room), {
+        method: "DELETE",
+        query: { cid: id, ...roomQuery(room) },
+        auth: "required",
+      })
+    ) || 0,
 
   savedPlaylists: (signal?: AbortSignal) =>
     request<SavedPlaylistSummary[]>(`${API}/v2/users/playlists`, {

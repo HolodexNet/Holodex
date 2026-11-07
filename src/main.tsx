@@ -48,7 +48,6 @@ const PENDING_ROUTES = [
   "/library",
   "/about",
   "/extension",
-  "/tlclient",
   "/scripteditor",
   "/scriptmanager",
   "/relaybot",
@@ -72,6 +71,13 @@ const router = createBrowserRouter([
         path: "/multiview/:layout?",
         lazy: async () => ({
           Component: (await import("@/pages/multiview")).default,
+        }),
+      },
+      // A full window too: translating wants the room and the stream's audio.
+      {
+        path: "/tlclient",
+        lazy: async () => ({
+          Component: (await import("@/pages/tlclient")).default,
         }),
       },
       // Also a full window: editing wants the room, and the video's own audio.
