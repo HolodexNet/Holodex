@@ -186,7 +186,7 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
           <MusicSectionHeading title="Popular">
             {!!popular.length && (
               <Button
-                variant="ghost"
+                variant="default"
                 size="sm"
                 onClick={() => {
                   useMusicPlayer.getState().queueSongs(popular)

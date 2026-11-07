@@ -154,9 +154,7 @@ export function TimeField({
   const settled = useRef(false)
   const limit = max && max > 0 ? max : undefined
   const reading =
-    typed === null
-      ? null
-      : readTime(typed, { base: value, after, max: limit })
+    typed === null ? null : readTime(typed, { base: value, after, max: limit })
 
   useLayoutEffect(() => {
     const target = reselect.current

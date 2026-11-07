@@ -624,7 +624,7 @@ function MessageRow({
         <button
           type="button"
           className={cn(
-            "max-w-full cursor-pointer text-left text-[0.85em] [overflow-wrap:anywhere] hover:underline",
+            "max-w-full cursor-pointer text-left text-[0.85em] wrap-anywhere hover:underline",
             message.is_owner
               ? "text-primary"
               : message.is_verified || message.is_moderator || message.is_vtuber
@@ -641,7 +641,7 @@ function MessageRow({
       )}
       <div
         className={cn(
-          "[overflow-wrap:anywhere]",
+          "wrap-anywhere",
           active && "rounded-sm bg-primary/25",
           onSeek && "cursor-pointer hover:bg-muted/60"
         )}

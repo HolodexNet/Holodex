@@ -246,21 +246,17 @@ export function SmartActionDialog({
     (video) => video.id === plan.body.targetVideoId
   )
   const summary = plan
-    ? tc(
-        `curation.smartSummary.${action}`,
-        plan.body.videoIds.length,
-        {
-          count: plan.body.videoIds.length,
-          target: target
-            ? videoTitle(target, preferEnglish)
-            : targetChannels.get(plan.body.channelId ?? "")
-              ? channelName(
-                  targetChannels.get(plan.body.channelId!)!,
-                  preferEnglish
-                )
-              : (plan.body.channelId ?? ""),
-        }
-      )
+    ? tc(`curation.smartSummary.${action}`, plan.body.videoIds.length, {
+        count: plan.body.videoIds.length,
+        target: target
+          ? videoTitle(target, preferEnglish)
+          : targetChannels.get(plan.body.channelId ?? "")
+            ? channelName(
+                targetChannels.get(plan.body.channelId!)!,
+                preferEnglish
+              )
+            : (plan.body.channelId ?? ""),
+      })
     : ""
 
   return (

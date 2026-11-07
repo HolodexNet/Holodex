@@ -158,6 +158,7 @@ function ColorPicker({
   onReset,
   resetDisabled,
   allowOpacity = false,
+  selected = false,
 }: {
   id?: string
   label: string
@@ -166,6 +167,8 @@ function ColorPicker({
   onReset: () => void
   resetDisabled: boolean
   allowOpacity?: boolean
+  /** Ring the swatch like a chosen preset, for a custom colour. */
+  selected?: boolean
 }) {
   const { t } = useT()
   const [draft, setDraft] = useState<string | null>(null)
@@ -183,7 +186,10 @@ function ColorPicker({
         value={hex.slice(0, 7)}
         aria-label={t("views.settings.colorPicker", { color: label })}
         onChange={(event) => choose(event.target.value + hex.slice(7))}
-        className="size-9 cursor-pointer rounded-full border border-input bg-transparent p-1 [&::-moz-color-swatch]:rounded-full [&::-moz-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch-wrapper]:p-0"
+        className={cn(
+          "size-9 cursor-pointer rounded-full border border-input bg-transparent p-1 [&::-moz-color-swatch]:rounded-full [&::-moz-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch-wrapper]:p-0",
+          selected && "ring-2 ring-foreground ring-offset-2 ring-offset-card"
+        )}
       />
       <Input
         id={id}
@@ -365,6 +371,7 @@ function PrimaryColorPicker() {
         onChange={choose}
         onReset={() => choose(DEFAULT_PRIMARY)}
         resetDisabled={primary === DEFAULT_PRIMARY}
+        selected={!PRIMARY_PRESETS.some((preset) => preset.color === primary)}
       />
     </div>
   )
@@ -399,6 +406,9 @@ function SecondaryColorPicker() {
   ]
   const auto = tuning.secondary === undefined
   const autoHex = complementHex(deriveBaseHue(primary), mode)
+  const presetSelected = (hue: number) =>
+    !auto && hueDistance(current, hue) < 1.5
+  const custom = !auto && !presets.some((preset) => presetSelected(preset.hue))
 
   return (
     <div className="flex flex-col gap-3">
@@ -426,7 +436,7 @@ function SecondaryColorPicker() {
               key={preset.label}
               color={hex}
               label={preset.label}
-              selected={!auto && hueDistance(current, preset.hue) < 1.5}
+              selected={presetSelected(preset.hue)}
               onClick={() => update({ secondary: hex })}
             />
           )
@@ -438,6 +448,7 @@ function SecondaryColorPicker() {
         onChange={(color) => update({ secondary: normalizeHex(color) })}
         onReset={() => update({ secondary: undefined })}
         resetDisabled={auto}
+        selected={custom}
       />
     </div>
   )
@@ -506,10 +517,7 @@ function ThemeColors() {
   const percent = (n: number) => `${Math.round(n * 100)}%`
 
   return (
-    <Disclosure
-      title={t("views.settings.themeColors")}
-      defaultOpen
-    >
+    <Disclosure title={t("views.settings.themeColors")} defaultOpen>
       <div className="divide-y">
         <Row label={t("views.settings.primaryColor")} stacked>
           <PrimaryColorPicker />
@@ -555,6 +563,7 @@ function ThemeColors() {
             onChange={(contrast) => update({ contrast })}
           />
         </Row>
+        <ColorGroups />
       </div>
     </Disclosure>
   )
@@ -574,7 +583,10 @@ function ContrastHint({ fg, bg }: { fg: string; bg: string }) {
   )
   return (
     <span
-      className={cn("inline-flex items-center gap-1", low && "text-destructive")}
+      className={cn(
+        "inline-flex items-center gap-1",
+        low && "text-destructive"
+      )}
     >
       {low && <WarningIcon className="size-3.5" />}
       {text}
@@ -1079,7 +1091,6 @@ export function SettingsPage() {
           <PalettePreview />
         </Row>
         <ThemeColors />
-        <ColorGroups />
         <Row
           label={t("views.settings.shareTheme")}
           description={t("views.settings.shareThemeMsg")}

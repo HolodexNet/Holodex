@@ -1,7 +1,12 @@
 import { Link } from "react-router"
 import { toast } from "sonner"
 import { cn } from "cn"
-import { CaretRightIcon, MagnifyingGlassIcon, PlayIcon, PlusIcon } from "@/components/icons"
+import {
+  CaretRightIcon,
+  MagnifyingGlassIcon,
+  PlayIcon,
+  PlusIcon,
+} from "@/components/icons"
 import { MusicArtwork } from "@/components/music/artwork"
 import type { DiscoveryScope } from "@/components/music/discovery/sections"
 import { PlayPlaylistButton } from "@/components/music/play-playlist"
@@ -112,19 +117,18 @@ export function MusicHero({
   const formatted = featured ? formatMusicPlaylist(featured, english) : null
   const covers = featured
     ? [
-      featured,
-      ...picks.filter((playlist) => playlist.id !== featured.id),
-    ].slice(0, 3)
+        featured,
+        ...picks.filter((playlist) => playlist.id !== featured.id),
+      ].slice(0, 3)
     : []
   const label = scope.type === "org" ? scope.name : "Favorites"
   return (
     <section className="relative isolate grid min-h-87.5 grid-cols-[1.1fr_1fr] overflow-clip rounded-[22px] border border-[color-mix(in_oklch,var(--complement)_13%,var(--border))] bg-[color-mix(in_oklch,var(--complement-soft)_22%,var(--card))] before:absolute before:right-[-8%] before:bottom-[-65%] before:-z-1 before:aspect-square before:w-[45%] before:rounded-full before:bg-primary before:opacity-[0.14] before:blur-[100px] before:content-[''] max-md:grid-cols-[minmax(0,1fr)]">
       <div className="relative z-5 flex flex-col items-start px-[clamp(24px,3vw,48px)] py-12 max-md:px-6">
         {/* Bold Title */}
-        <h1 className="mt-4 max-w-2xl text-[clamp(36px,4.5vw,64px)] font-black tracking-tight leading-[1.05] text-balance">
-          Music<span className="text-brand">dex</span> is all about <span className="text-brand">{
-            favorites ? "your oshis" : label
-          }</span>
+        <h1 className="mt-4 max-w-2xl text-[clamp(36px,4.5vw,64px)] leading-[1.05] font-black tracking-tight text-balance">
+          Music<span className="text-brand">dex</span> is all about{" "}
+          <span className="text-brand">{favorites ? "your oshis" : label}</span>
         </h1>
 
         {/* Detailed Metadata Subtext */}
@@ -145,7 +149,9 @@ export function MusicHero({
           ) : featured ? (
             <PlayPlaylistButton
               playlist={featured}
-              label={formatted?.radio ? "Launch Talent Radio" : "Play Spotlight Mix"}
+              label={
+                formatted?.radio ? "Launch Talent Radio" : "Play Spotlight Mix"
+              }
             />
           ) : loading ? (
             <Button disabled className="gap-2">
@@ -159,7 +165,7 @@ export function MusicHero({
 
           <Link
             to={favorites ? "/music/liked" : "/#radio"}
-            className="inline-flex items-center gap-2 rounded-lg border border-border/50 bg-secondary/40 px-4 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg border border-border/50 bg-secondary/40 px-4 py-2 text-xs font-semibold text-foreground transition-colors hover:bg-secondary"
           >
             {favorites ? "Manage Library" : "Explore Radios & Tags"}
             <CaretRightIcon className="size-4 opacity-70" />

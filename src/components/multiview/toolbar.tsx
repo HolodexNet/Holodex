@@ -579,7 +579,7 @@ export function Toolbar() {
           <CaretDownIcon />
         </ToolbarTip>
       ) : (
-        <header className="box-content flex h-12 shrink-0 items-center gap-1.5 border-b bg-card px-1.5 pt-[env(safe-area-inset-top,0px)]">
+        <header className="box-content flex h-12 shrink-0 items-center gap-1.5 border-b bg-card px-1.5 pt-safe">
           <SiteMenu />
           <AddVideoButton />
           <VideoTray className="hidden sm:flex" />

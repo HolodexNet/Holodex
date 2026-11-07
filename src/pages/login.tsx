@@ -248,7 +248,7 @@ export function LoginPage() {
               {!user?.discord_id && (
                 <Button
                   size="lg"
-                  className="w-full max-w-[400px] bg-[#5865F2] text-white hover:bg-[#4752c4]"
+                  className="w-full max-w-100 bg-[#5865F2] text-white hover:bg-[#4752c4]"
                   onClick={loginDiscord}
                 >
                   <LogoDiscordIcon data-icon="inline-start" />

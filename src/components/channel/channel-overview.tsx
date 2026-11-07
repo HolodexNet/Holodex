@@ -184,7 +184,7 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
                     video={spotlight}
                     sizes="(min-width: 768px) 720px, 100vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/35 to-transparent" />
                   <span className="absolute bottom-4 left-4 flex size-11 items-center justify-center rounded-full bg-background/95 text-foreground shadow-lg transition-transform group-hover:scale-110">
                     <PlayIcon className="size-5" />
                   </span>
@@ -297,7 +297,7 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
           <section className="rounded-2xl border bg-card p-5">
             <h2 className="mb-3 text-lg font-semibold">{name}</h2>
             {channel.description ? (
-              <p className="line-clamp-5 text-sm leading-6 break-words whitespace-pre-line text-muted-foreground">
+              <p className="line-clamp-5 text-sm leading-6 wrap-break-word whitespace-pre-line text-muted-foreground">
                 {channel.description}
               </p>
             ) : (
@@ -350,14 +350,11 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
               </dl>
             )}
           </section>
-          <section className="overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/10 via-card to-complement/10 p-5">
+          <section className="overflow-hidden rounded-2xl border bg-linear-to-br from-primary/10 via-card to-complement/10 p-5">
             <MusicNotesFillIcon className="mb-5 size-7 text-brand" />
             <h2 className="font-semibold">{t("talentHome.musicTitle")}</h2>
-            <p className="mt-2 text-xs leading-5 text-muted-foreground">
-              {t("talentHome.musicHint")}
-            </p>
             {music[0] && (
-              <div className="mt-4 border-t pt-4">
+              <div className="">
                 <p className="mb-2 text-xs text-muted-foreground">
                   {t("talentHome.recentMusic")}
                 </p>

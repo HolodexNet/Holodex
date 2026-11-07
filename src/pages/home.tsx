@@ -414,9 +414,6 @@ export function HomePage({ favorites = false }: { favorites?: boolean }) {
           {liveVideos.upcoming.length > 0 && (
             <section
               aria-labelledby={!favorites ? upcomingHeadingId : undefined}
-              className={
-                !favorites && liveVideos.live.length > 0 ? "mt-9" : undefined
-              }
             >
               {!favorites && (
                 <div className="mb-4 flex min-h-8 items-center gap-2.5">

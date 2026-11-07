@@ -38,7 +38,7 @@ export function LayoutPreview({
         >
           <div
             className={cn(
-              "flex size-full items-center justify-center rounded-[2px] text-xs",
+              "flex size-full items-center justify-center rounded-xs text-xs",
               slot.content?.type === "chat"
                 ? "bg-amber-500/35"
                 : slot.content?.type === "control"

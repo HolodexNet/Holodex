@@ -177,7 +177,7 @@ export function PlaylistCards({
             ? musicCollectionGridClass
             : cn(
                 railClass,
-                "max-md:-mr-4 max-md:max-w-[calc(100%_+_16px)] max-md:gap-4 max-md:pr-4"
+                "max-md:-mr-4 max-md:max-w-[calc(100%+16px)] max-md:gap-4 max-md:pr-4"
               )
         }
       >
@@ -304,7 +304,7 @@ export function DiscoverySections({
                         className="size-full object-cover transition-transform duration-300 ease-[ease] group-hover:scale-[1.035]"
                         loading="lazy"
                       />
-                      <span className="absolute bottom-[10px] left-[10px] flex items-center gap-[5px] rounded-[5px] bg-[#0009] px-[7px] py-[5px] text-[9px] font-semibold text-white backdrop-blur-[10px]">
+                      <span className="absolute bottom-2.5 left-2.5 flex items-center gap-1.25 rounded-[5px] bg-[#0009] px-1.75 py-1.25 text-[9px] font-semibold text-white backdrop-blur-[10px]">
                         <PlayIcon className="size-3" />
                         {playlist!.content!.length}{" "}
                         {playlist!.content!.length === 1

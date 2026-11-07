@@ -77,7 +77,7 @@ export function MusicHomeTab() {
           loading={discovery.isPending}
         />
       )}
-      <section className="rounded-[16px] border border-border bg-[color-mix(in_oklch,var(--card)_70%,transparent)] p-6 max-md:px-2.5 max-md:py-[18px] [&_.music-section-heading]:mb-[18px] max-md:[&_.music-section-heading]:px-1.5 max-md:[&_.music-section-heading_button]:text-[11px]">
+      <section className="rounded-[16px] border border-border bg-[color-mix(in_oklch,var(--card)_70%,transparent)] p-6 max-md:px-2.5 max-md:py-4.5 [&_.music-section-heading]:mb-4.5 max-md:[&_.music-section-heading]:px-1.5 max-md:[&_.music-section-heading_button]:text-[11px]">
         <MusicSectionHeading
           title="Popular songs"
           description="Trending songs according to listeners on musicdex."
@@ -217,7 +217,7 @@ function FavoritesSignIn() {
             Sign in to Holodex
           </Button>
         </div>
-        <div className="mr-6 w-[220px] shrink-0 rotate-[9deg] max-md:pointer-events-none max-md:absolute max-md:-right-[115px] max-md:-bottom-[30px] max-md:w-[250px] max-md:opacity-15">
+        <div className="mr-6 w-55 shrink-0 rotate-[9deg] max-md:pointer-events-none max-md:absolute max-md:-right-28.75 max-md:-bottom-7.5 max-md:w-62.5 max-md:opacity-15">
           <MusicArtwork title="Your favorites" seed="favorites" radio />
         </div>
       </div>

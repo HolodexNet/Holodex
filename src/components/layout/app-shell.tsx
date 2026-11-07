@@ -43,7 +43,7 @@ export function AppShell() {
       <Header />
       <div className="flex flex-1">
         <AppSidebar />
-        <SidebarInset className="min-w-0 pb-[calc(var(--music-player-height,0px)+3.5rem+env(safe-area-inset-bottom,0px))] md:pb-[var(--music-player-height,0px)]">
+        <SidebarInset className="min-w-0 pb-[calc(var(--music-player-height,0px)+3.5rem+env(safe-area-inset-bottom,0px))] md:pb-(--music-player-height,0px)">
           <Outlet />
         </SidebarInset>
       </div>

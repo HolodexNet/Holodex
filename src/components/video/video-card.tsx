@@ -46,7 +46,7 @@ export type VideoCardVariant = "grid" | "list" | "dense"
 interface VideoCardProps {
   video: Video
   variant?: VideoCardVariant
-  /** Smaller type for the compact grid sizes. */
+  /** Smaller type for compact grid sizes. */
   compact?: boolean
   discovery?: boolean
   /** Parent card surface: flush thumbnail, inset details, single-line title. */
@@ -151,7 +151,7 @@ function Mentions({
         />
       ))}
       {rest > 0 && (
-        <span className="relative ml-2! rounded-full bg-black/75 px-1.5 text-[11px] leading-[22px] font-medium text-white">
+        <span className="relative ml-2! rounded-full bg-black/75 px-1.5 text-[11px] leading-5.5 font-medium text-white">
           +{rest}
         </span>
       )}
@@ -457,7 +457,7 @@ function VideoCardImpl({
             side="top"
             align="start"
             sideOffset={8}
-            className="block max-w-[min(20rem,calc(100vw_-_1rem))] rounded-xl border border-border bg-popover px-3.5 py-1 text-left font-normal whitespace-normal text-popover-foreground shadow-lg [&>[aria-hidden=true]]:bg-popover"
+            className="block max-w-[min(20rem,calc(100vw-1rem))] rounded-xl border border-border bg-popover px-3.5 py-1 text-left font-normal whitespace-normal text-popover-foreground shadow-lg *:aria-hidden:bg-popover"
           >
             <div className="divide-y divide-border">
               {formatAbsoluteInTimeZones(
@@ -467,7 +467,7 @@ function VideoCardImpl({
               ).map(({ timeZone, value }) => (
                 <p
                   key={timeZone}
-                  className="py-2 text-[13px] leading-snug font-medium break-words tabular-nums"
+                  className="py-2 text-[13px] leading-snug font-medium wrap-break-word tabular-nums"
                 >
                   {value}
                 </p>
@@ -529,7 +529,7 @@ function VideoCardImpl({
     <article
       {...selection.itemProps}
       className={cn(
-        "group/card relative flex min-w-0 rounded-xl card-offscreen data-selected:bg-brand/10 data-selected:ring-2 data-selected:ring-brand",
+        "group/card relative flex min-w-0 card-offscreen data-selected:rounded-xl data-selected:bg-brand/10 data-selected:ring-2 data-selected:ring-brand",
         variant === "list" ? "flex-row gap-3" : "flex-col gap-2.5"
       )}
     >

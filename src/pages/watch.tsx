@@ -55,7 +55,7 @@ export function WatchPage() {
           title={title ?? "Twitch"}
           allow="autoplay; fullscreen; picture-in-picture"
           allowFullScreen
-          className="aspect-video min-h-[300px] w-full min-w-[400px] border-0"
+          className="aspect-video min-h-75 w-full min-w-100 border-0"
         />
       </div>
       <div className="flex items-start justify-between gap-4">

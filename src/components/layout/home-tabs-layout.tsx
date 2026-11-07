@@ -148,7 +148,7 @@ export function HomeTabsLayout({
           <TabsList
             ref={tabListRef}
             variant="line"
-            className="h-11! w-full [scrollbar-width:none] justify-start gap-2 overflow-x-auto overflow-y-hidden pl-0 sm:w-fit sm:gap-3 md:h-16! md:gap-1 md:py-0 md:pl-[3px] md:transition-[height] md:duration-200 md:group-data-stuck/toolbar:h-11! md:motion-reduce:transition-none"
+            className="h-11! w-full scrollbar-none justify-start gap-2 overflow-x-auto overflow-y-hidden pl-0 sm:w-fit sm:gap-3 md:h-16! md:gap-1 md:py-0 md:pl-0.75 md:transition-[height] md:duration-200 md:group-data-stuck/toolbar:h-11! md:motion-reduce:transition-none"
           >
             <TabsTrigger {...tabProps("live")}>
               <BroadcastIcon className="size-4 text-brand" />
@@ -168,7 +168,8 @@ export function HomeTabsLayout({
               className="mx-1 h-5 w-px flex-none bg-foreground/30 md:mx-2 md:h-7"
             />
             <TabsTrigger {...tabProps("music")} aria-label="Musicdex">
-              <MusicdexLogo className="text-[15px] md:text-[16px] xl:text-[18px]" />
+              {/* Centered larger text sits lower; lift it onto the labels' baseline. */}
+              <MusicdexLogo className="text-[15px] md:-translate-y-px md:text-[16px] xl:-translate-y-0.5 xl:text-[18px]" />
             </TabsTrigger>
             <TabsTrigger {...tabProps("radio")}>Radio</TabsTrigger>
             <TabsTrigger {...tabProps("playlists")}>Playlists</TabsTrigger>

@@ -112,7 +112,7 @@ export function MusicLibraryTab() {
               Sign in to start collecting
             </Button>
           </div>
-          <div className="mr-6 w-[220px] shrink-0 rotate-[9deg] max-md:pointer-events-none max-md:absolute max-md:-right-[115px] max-md:-bottom-[30px] max-md:w-[250px] max-md:opacity-15">
+          <div className="mr-6 w-55 shrink-0 rotate-[9deg] max-md:pointer-events-none max-md:absolute max-md:-right-28.75 max-md:-bottom-7.5 max-md:w-62.5 max-md:opacity-15">
             <MusicArtwork
               title="Your collection"
               seed="library"

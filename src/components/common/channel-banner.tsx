@@ -44,12 +44,12 @@ export function ChannelBanner({
     <div
       aria-hidden="true"
       className={cn(
-        "relative isolate overflow-hidden bg-gradient-to-br from-primary/25 via-muted to-complement/25",
+        "relative isolate overflow-hidden bg-linear-to-br from-primary/25 via-muted to-complement/25",
         curved && "bg-card bg-none",
         className
       )}
     >
-      <div className="absolute -top-24 -right-12 size-80 rounded-full border-[40px] border-primary/10" />
+      <div className="absolute -top-24 -right-12 size-80 rounded-full border-40 border-primary/10" />
       <div className="absolute -bottom-40 left-[15%] size-96 rounded-full border border-complement/20" />
       {curved && (
         <div className="absolute inset-0 bg-primary/50 [clip-path:ellipse(90%_103%_at_30%_0%)]" />

@@ -100,7 +100,7 @@ function ChannelVideos({ id, tab }: { id: string; tab: ChannelTab }) {
 /** Only linkify explicit web URLs; descriptions remain text, never HTML. */
 function Description({ text }: { text: string }) {
   return (
-    <p className="text-sm leading-7 break-words whitespace-pre-wrap">
+    <p className="text-sm leading-7 wrap-break-word whitespace-pre-wrap">
       {text.split(/(https?:\/\/[^\s<>]+)/g).map((part, i) =>
         /^https?:\/\//.test(part) ? (
           <a
@@ -219,7 +219,7 @@ export function ChannelPage() {
       <div className="relative">
         <ChannelBanner
           channel={channel}
-          className="h-28 sm:h-52 lg:h-64 rounded-b-lg"
+          className="h-28 rounded-b-lg sm:h-52 lg:h-64"
           sizes="(max-width: 1600px) 100vw, 1600px"
         />
         <Link
@@ -244,7 +244,7 @@ export function ChannelPage() {
               <p className="mb-1 text-xs font-medium text-muted-foreground">
                 {[channel.org, channel.group].filter(Boolean).join(" / ")}
               </p>
-              <h1 className="text-2xl font-bold tracking-tight break-words sm:text-3xl">
+              <h1 className="text-2xl font-bold tracking-tight wrap-break-word sm:text-3xl">
                 {name}
               </h1>
               {channel.english_name && name !== channel.english_name && (

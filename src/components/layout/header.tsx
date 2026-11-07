@@ -121,12 +121,12 @@ export function Header() {
             <div className="flex min-w-0 items-center gap-2 sm:gap-3 md:max-w-[40%]">
               <Link
                 to={HOME_PATHS[defaultOpen]}
-                aria-label="Holodex"
+                aria-label="holodex"
                 className="flex shrink-0 items-center gap-2 rounded-lg p-1 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
               >
                 <Logo />
-                <span className="hidden text-xl font-medium tracking-tight sm:inline">
-                  Holo<span className="text-brand">dex.</span>
+                <span className="hidden text-xl font-[750] tracking-tighter sm:inline">
+                  holo<span className="text-brand">dex.</span>
                 </span>
               </Link>
             </div>

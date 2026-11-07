@@ -118,7 +118,7 @@ export function VideoTray({ className }: { className?: string }) {
         </div>
       ) : (
         <div
-          className="flex min-w-0 flex-1 [scrollbar-width:thin] gap-1 overflow-x-auto overflow-y-hidden py-0.5"
+          className="flex min-w-0 flex-1 scrollbar-thin gap-1 overflow-x-auto overflow-y-hidden py-0.5"
           onWheel={onWheel}
         >
           {tray.map((video) => {

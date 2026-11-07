@@ -229,7 +229,9 @@ const MODES: readonly ResolvedMode[] = ["light", "dark"]
 /** A theme as shareable text. Default layers are left out to keep it short. */
 export function exportTheme(theme: ThemeConfig): string {
   const tuning = normalizeTuning(theme.tuning)
-  const nonEmpty = <T extends object>(byMode: Partial<Record<ResolvedMode, T>> = {}) => {
+  const nonEmpty = <T extends object>(
+    byMode: Partial<Record<ResolvedMode, T>> = {}
+  ) => {
     const kept = Object.fromEntries(
       MODES.filter((m) => Object.keys(byMode[m] ?? {}).length).map((m) => [
         m,
@@ -242,7 +244,9 @@ export function exportTheme(theme: ThemeConfig): string {
     holodexTheme: EXPORT_VERSION,
     primary: normalizeHex(theme.primary),
     tuning:
-      tuning.secondary === undefined && tuning.tint === 1 && tuning.contrast === 0
+      tuning.secondary === undefined &&
+      tuning.tint === 1 &&
+      tuning.contrast === 0
         ? undefined
         : tuning,
     groups: nonEmpty(theme.groups),

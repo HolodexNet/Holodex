@@ -125,9 +125,7 @@ export function MusicArtwork({
         {radio ? <RadioIcon /> : <MusicNotesFillIcon />}
         {!hasImage && title && !label && <strong>{title}</strong>}
       </div>
-      {(!mix || hasImage) && (
-        <div className="music-artwork-image">{image}</div>
-      )}
+      {(!mix || hasImage) && <div className="music-artwork-image">{image}</div>}
       {radio && !hasImage && (
         <span className="music-record-center" aria-hidden="true" />
       )}

@@ -267,7 +267,7 @@ export function PresetDialog() {
                       type="button"
                       onClick={() => setAuto(videoCount, null)}
                       className={cn(
-                        "flex h-[108px] w-24 items-center justify-center self-start rounded-lg border border-dashed text-sm hover:bg-muted",
+                        "flex h-27 w-24 items-center justify-center self-start rounded-lg border border-dashed text-sm hover:bg-muted",
                         !auto[videoCount] && "border-primary text-primary"
                       )}
                     >
