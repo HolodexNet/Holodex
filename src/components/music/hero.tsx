@@ -135,7 +135,7 @@ export function MusicHero({
         <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-muted-foreground/90 max-md:hidden">
           {favorites
             ? "Jump straight into your bookmarked performances, saved karaoke streams, and favorite VTuber tracks."
-            : "Listen and assemble playlists from their singing streams and YouTube uploads, thanks to our community-submitted tags."}
+            : "Listen and assemble playlists from their singing streams and YouTube uploads, thanks to our community-submitted tagging."}
         </p>
 
         {/* Actions */}
@@ -167,7 +167,7 @@ export function MusicHero({
             to={favorites ? "/music/liked" : "/#radio"}
             className="inline-flex items-center gap-2 rounded-lg border border-border/50 bg-secondary/40 px-4 py-2 text-xs font-semibold text-foreground transition-colors hover:bg-secondary"
           >
-            {favorites ? "Manage Library" : "Explore Radios & Tags"}
+            {favorites ? "Manage Library" : "Explore Radios"}
             <CaretRightIcon className="size-4 opacity-70" />
           </Link>
         </div>

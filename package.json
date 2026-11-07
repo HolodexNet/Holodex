@@ -13,6 +13,7 @@
     "i18n:check": "x18n check",
     "i18n:doctor": "x18n doctor",
     "i18n:ui": "x18n ui",
+    "i18n:report": "node scripts/i18n-report.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
