@@ -70,6 +70,10 @@ component:
     unblock: Unblock this channel
     block: Block this channel's content across Holodex
     blocked: Blocked
+    blockedNotice: You blocked this channel. Its videos, clips and streams are hidden across Holodex.
+    blockedToast: Blocked {0}. Their videos are now hidden.
+    unblockedToast: Unblocked {0}.
+    undo: Undo
   loadMore: Load more
   orgSelector:
     search: Search organizations…

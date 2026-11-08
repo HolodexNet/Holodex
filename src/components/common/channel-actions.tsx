@@ -37,6 +37,38 @@ export function ChannelActions({
     s.blockedChannels.some((c) => c.id === channel.id)
   )
   const toggleBlocked = useSettings((s) => s.toggleBlocked)
+  const blockLabel = t(
+    `component.channelSocials.${blocked ? "unblock" : "block"}`
+  )
+  const onToggleBlocked = () => {
+    toggleBlocked(channel)
+    const name = channel.english_name || channel.name
+    toast(
+      t(
+        `component.channelSocials.${blocked ? "unblockedToast" : "blockedToast"}`,
+        [name]
+      ),
+      {
+        action: {
+          label: t("component.channelSocials.undo"),
+          onClick: () => toggleBlocked(channel),
+        },
+      }
+    )
+  }
+  const blockButton = (
+    <Button
+      variant={blocked ? "destructive" : "ghost"}
+      size={compact ? "icon-sm" : blocked ? "default" : "icon"}
+      aria-pressed={blocked}
+      title={blockLabel}
+      aria-label={blockLabel}
+      onClick={onToggleBlocked}
+    >
+      <ProhibitIcon />
+      {blocked && !compact && t("component.channelSocials.blocked")}
+    </Button>
+  )
   const label = t(
     `component.channelSocials.${favorite ? "removeFromFavorites" : "addToFavorites"}`
   )
@@ -137,22 +169,11 @@ export function ChannelActions({
               <LogoTwitchIcon />
             </Button>
           )}
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-pressed={blocked}
-            title={t(
-              `component.channelSocials.${blocked ? "unblock" : "block"}`
-            )}
-            aria-label={t(
-              `component.channelSocials.${blocked ? "unblock" : "block"}`
-            )}
-            onClick={() => toggleBlocked(channel)}
-          >
-            <ProhibitIcon />
-          </Button>
+          {blockButton}
         </>
       )}
+      {/* Cards only offer the way back out; blocking lives on the channel page. */}
+      {compact && blocked && blockButton}
     </div>
   )
 }

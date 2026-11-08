@@ -10,6 +10,7 @@ import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import {
   GraduationCapIcon,
   GridFourIcon,
+  ProhibitIcon,
   RowsIcon,
   UsersThreeIcon,
 } from "@/components/icons"
@@ -38,16 +39,23 @@ export function ChannelCard({
   const { t, lang } = useT()
   const english = useSettings((s) => s.useEnglishName)
   const name = channelName(channel, english)
+  const blocked = useSettings((s) =>
+    s.blockedChannels.some((c) => c.id === channel.id)
+  )
   // Keep some color at rest; inactive talent should feel quiet, not memorialized.
-  const inactiveStyle = channel.inactive
-    ? "saturate-45 transition-[filter] duration-300 ease-out group-hover:saturate-100 group-focus-within:saturate-100 motion-reduce:transition-none"
-    : undefined
+  // Blocked channels recede further, but still lift on hover so they stay findable.
+  const inactiveStyle = blocked
+    ? "opacity-50 grayscale transition-[filter,opacity] duration-300 ease-out group-hover:opacity-100 group-hover:grayscale-0 group-focus-within:opacity-100 group-focus-within:grayscale-0 motion-reduce:transition-none"
+    : channel.inactive
+      ? "saturate-45 transition-[filter] duration-300 ease-out group-hover:saturate-100 group-focus-within:saturate-100 motion-reduce:transition-none"
+      : undefined
   return (
     <article
       className={cn(
         "group relative flex overflow-hidden rounded-2xl border bg-card transition-colors hover:border-primary/50",
         list ? "items-center gap-3 p-3" : "flex-col",
-        channel.inactive && "focus-within:border-primary/50"
+        (channel.inactive || blocked) && "focus-within:border-primary/50",
+        blocked && "border-dashed"
       )}
     >
       <Link
@@ -92,6 +100,12 @@ export function ChannelCard({
           <h3 className="line-clamp-2 text-sm font-semibold group-hover:text-brand">
             {name}
           </h3>
+          {blocked && (
+            <p className="mt-1 inline-flex items-center gap-1 rounded bg-destructive/10 px-1.5 py-0.5 text-[10px] font-medium text-destructive">
+              <ProhibitIcon className="size-3" />
+              {t("component.channelSocials.blocked")}
+            </p>
+          )}
           {channel.english_name && channel.english_name !== name && (
             <p className="truncate text-xs text-muted-foreground">
               {channel.english_name}

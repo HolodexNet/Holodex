@@ -7,7 +7,7 @@ import { ChannelBanner } from "@/components/common/channel-banner"
 import { ChannelOverview } from "@/components/channel/channel-overview"
 import { LoadMore } from "@/components/common/load-more"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
-import { ArrowLeftIcon } from "@/components/icons"
+import { ArrowLeftIcon, ProhibitIcon } from "@/components/icons"
 import { ChannelMusicSkeleton } from "@/components/music/skeletons"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -164,6 +164,34 @@ export function ChannelAbout({ channel }: { channel: Channel }) {
   )
 }
 
+/** Explains why this channel's own tabs look empty, with the way out beside it. */
+function BlockedNotice({ channel }: { channel: Channel }) {
+  const { t } = useT()
+  const blocked = useSettings((s) =>
+    s.blockedChannels.some((c) => c.id === channel.id)
+  )
+  const toggleBlocked = useSettings((s) => s.toggleBlocked)
+  if (!blocked) return null
+  return (
+    <div
+      role="status"
+      className="mb-4 flex flex-wrap items-center gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive"
+    >
+      <ProhibitIcon className="size-4 shrink-0" />
+      <p className="min-w-0 flex-1">
+        {t("component.channelSocials.blockedNotice")}
+      </p>
+      <Button
+        size="sm"
+        variant="outline"
+        onClick={() => toggleBlocked(channel)}
+      >
+        {t("component.channelSocials.unblock")}
+      </Button>
+    </div>
+  )
+}
+
 export function ChannelPage() {
   const { id = "", tab: routeTab } = useParams()
   const query = useChannel(id)
@@ -264,6 +292,7 @@ export function ChannelPage() {
           </div>
           <ChannelActions channel={channel} />
         </div>
+        <BlockedNotice channel={channel} />
         {channel.inactive && (
           <p className="mb-4 rounded-lg bg-muted p-3 text-sm text-muted-foreground">
             {t("component.channelInfo.inactiveChannel")}
