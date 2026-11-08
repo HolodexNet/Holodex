@@ -73,13 +73,6 @@ const router = createBrowserRouter([
           Component: (await import("@/pages/multiview")).default,
         }),
       },
-      // A full window too: translating wants the room and the stream's audio.
-      {
-        path: "/tlclient",
-        lazy: async () => ({
-          Component: (await import("@/pages/tlclient")).default,
-        }),
-      },
       // Also a full window: editing wants the room, and the video's own audio.
       {
         path: "/edit/video/:id/:tab?",
@@ -94,6 +87,12 @@ const router = createBrowserRouter([
           { path: "/home", element: <Navigate to="/" replace /> },
           { path: "/favorites", element: <HomePage favorites /> },
           { path: "/watch/:id?", element: <WatchPage /> },
+          {
+            path: "/tlclient",
+            lazy: async () => ({
+              Component: (await import("@/pages/tlclient")).default,
+            }),
+          },
           { path: "/channel", element: <ChannelsPage /> },
           { path: "/channels", element: <Navigate to="/channel" replace /> },
           { path: "/org/:org/channels", element: <ChannelsPage /> },

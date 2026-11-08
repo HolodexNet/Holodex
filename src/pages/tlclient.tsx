@@ -13,8 +13,8 @@ import {
 import { useMusicPlayer } from "@/stores/music-player"
 
 /**
- * A full window for translating a stream live. The session lives in the
- * address (`?video=…&collab=…&lang=…`), as links from the old UI expect.
+ * The picker and full-window workspace share the same route. The session lives
+ * in the address (`?video=…&collab=…&lang=…`), as links from the old UI expect.
  */
 export default function TlClientPage() {
   const { t } = useT()
@@ -22,17 +22,19 @@ export default function TlClientPage() {
   const key = search.toString()
   // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed by content
   const params = useMemo(() => readSessionParams(search), [key])
+  const hasSession = !!params.main
   useDocumentTitle(t("tlClient.title"))
 
   // The stream's audio is what is being translated; nothing should play over it.
   useEffect(() => {
+    if (!hasSession) return
     useMusicPlayer.getState().pause()
     const root = document.documentElement
     root.dataset.fullWindow = ""
     return () => {
       delete root.dataset.fullWindow
     }
-  }, [])
+  }, [hasSession])
 
   const update = (next: SessionParams) => {
     // Starting or leaving a session is a step Back can undo; changes within
@@ -41,17 +43,13 @@ export default function TlClientPage() {
     setSearch(writeSessionParams(next), { replace })
   }
 
+  if (!hasSession) {
+    return <TlSetup initialLang={params.lang} onStart={update} />
+  }
+
   return (
     <div className="fixed inset-0 flex flex-col bg-background">
-      {params.main ? (
-        <TlWorkspace
-          key={params.main}
-          params={params}
-          onParamsChange={update}
-        />
-      ) : (
-        <TlSetup initialLang={params.lang} onStart={update} />
-      )}
+      <TlWorkspace key={params.main} params={params} onParamsChange={update} />
     </div>
   )
 }

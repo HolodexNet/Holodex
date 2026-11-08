@@ -1,10 +1,11 @@
 import { lazy, Suspense, useState, type CSSProperties } from "react"
-import { Outlet, useLocation } from "react-router"
+import { matchPath, Outlet, useLocation } from "react-router"
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { SelectionActionHost } from "@/components/selection/action-dialog-host"
 import { SelectionTray } from "@/components/selection/selection-tray"
 import { QuickEditHost } from "@/components/video-edit/quick-edit"
+import { readSessionParams } from "@/lib/tlclient/session"
 import { useUi } from "@/stores/ui"
 import { useMusicPlayer } from "@/stores/music-player"
 import { AppSidebar } from "./app-sidebar"
@@ -26,6 +27,13 @@ export function AppShell() {
   // Stays mounted after the first song so the player can animate its own exit.
   const [playerLoaded, setPlayerLoaded] = useState(hasMusic)
   if (hasMusic && !playerLoaded) setPlayerLoaded(true)
+
+  if (
+    matchPath("/tlclient", location.pathname) &&
+    readSessionParams(new URLSearchParams(location.search)).main
+  ) {
+    return <Outlet />
+  }
 
   return (
     <SidebarProvider
