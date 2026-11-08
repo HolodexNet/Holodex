@@ -1,6 +1,7 @@
 import { ALL_VTUBERS } from "@/lib/consts"
 import { apiRequestBudget } from "@/lib/api-rate-limit"
 import { withMentionAdditions } from "@/lib/mention-cache"
+import type { ReportField } from "@/lib/report"
 import type { TopicPlan } from "@/lib/selection-actions/topics"
 import {
   isMentionSmartAction,
@@ -481,6 +482,20 @@ export const api = {
       items: (res.items ?? []).map((video) => withMentionAdditions(video)),
     }
   },
+
+  // -- Reports ---------------------------------------------------------------
+  /**
+   * Sends a report to the moderators. A 200 means it was accepted, not that it
+   * reached anyone: the server also answers 200 when it discards one. Sending
+   * posts a moderator message, so never retry this automatically.
+   */
+  reportVideo: (id: string, fields: ReportField[], signal?: AbortSignal) =>
+    request<unknown>(`${API}/v2/reports/video/${encodeURIComponent(id)}`, {
+      method: "POST",
+      body: fields,
+      auth: true,
+      signal,
+    }),
 
   // -- Account ---------------------------------------------------------------
   login: (service: "google" | "discord" | "twitter", token: string) =>

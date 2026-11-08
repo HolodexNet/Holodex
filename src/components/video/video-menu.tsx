@@ -49,6 +49,7 @@ import {
   QuickEditItem,
   canQuickEdit,
 } from "@/components/video-edit/quick-edit"
+import { ReportItem } from "./report"
 
 /** `YYYYMMDDTHHmmssZ`, the UTC timestamp format calendar links expect. */
 const calendarStamp = (date: Date) =>
@@ -290,6 +291,7 @@ export function VideoMenu({
             ? t("component.videoCard.unblockChannel")
             : t("component.videoCard.blockChannel")}
         </DropdownMenuItem>
+        <ReportItem video={video} />
       </DropdownMenuContent>
     </DropdownMenu>
   )

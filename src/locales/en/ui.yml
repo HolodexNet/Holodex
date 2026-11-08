@@ -214,6 +214,32 @@ component:
     comments: What actions should Holodex take?
     success: Report sent, thank you!
     consider: Consider using the filter and discarding this report instead.
+    reasonsLabel: What's wrong?
+    submit: Send report
+    commentsHint: English / 日本語 / 繁體中文 OK
+    commentOptional: Optional. Your suggested changes are included.
+    commentMissing: Tell the moderators what should change.
+    commentShort: Add a little more detail. Very short reports are discarded.
+    commentLong: Keep it under {max} characters.
+    failed: Couldn't send the report. Nothing you wrote was lost, so try again in a moment.
+    notFound: Holodex no longer has this video, so it can't be reported.
+    blockInstead: Block channel instead
+    fixedDirectly: You can fix this yourself, and changes save right away. Report only what you couldn't change.
+    signInToFix: Sign in to fix this yourself instead.
+    topicCurrent: Current topic
+    topicSuggest: Suggest a topic
+    topicSuggestNone: Suggest removing it
+    topicSuggestedNone: Suggesting no topic
+    mentionsFlagged: Someone else added these, so they'll go in your report for removal.
+    mentionsMarkRemove: Mark {name} as wrong
+    mentionsUnmark: Keep {name}
+    mentionsUnsuggest: Don't suggest {name}
+    mentionsSuggestAdd: Suggest someone who's missing
+    dispute: >-
+      Reports are for harmful or misleading content, not for disagreeing with
+      a channel's style or translation choices. For small issues, leave the
+      creator a comment instead. If you'd rather not see this channel at all,
+      you can block it.
     reasons:
       - Video tagged incorrectly
       - Dangerously Low Quality/Misleading Content

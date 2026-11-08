@@ -39,6 +39,7 @@ export { EyeSlashIcon } from "./eye-slash-icon";
 export { FastForwardIcon } from "./fast-forward-icon";
 export { FilesIcon } from "./files-icon";
 export { FilmStripIcon } from "./film-strip-icon";
+export { FlagIcon } from "./flag-icon";
 export { FloppyDiskIcon } from "./floppy-disk-icon";
 export { FunnelIcon } from "./funnel-icon";
 export { GearSixFillIcon } from "./gear-six-fill-icon";

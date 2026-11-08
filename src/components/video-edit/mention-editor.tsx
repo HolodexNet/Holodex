@@ -30,7 +30,14 @@ import { SuggestField } from "./suggest-field"
 const WRITE_TIMEOUT_MS = 20_000
 
 /** One video's participants. Adding or removing one applies at once. */
-export function MentionEditor({ video }: { video: Video }) {
+export function MentionEditor({
+  video,
+  onRefused,
+}: {
+  video: Video
+  /** A removal the server turned down, as the mention was someone else's. */
+  onRefused?: (channel: ChannelSummary) => void
+}) {
   const { t } = useT()
   const fieldId = useId()
   const user = useAuth((state) => state.user)
@@ -138,7 +145,8 @@ export function MentionEditor({ video }: { video: Video }) {
     onSuccess: (count, channel) => {
       if (!count) {
         setRefused((set) => new Set(set).add(channel.id))
-        toast.info(t("videoEdit.mentions.notYours"))
+        if (onRefused) onRefused(channel)
+        else toast.info(t("videoEdit.mentions.notYours"))
         return
       }
       queryClient.setQueryData<ChannelSummary[]>(mentionsKey, (list) =>

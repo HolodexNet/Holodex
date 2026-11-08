@@ -5,6 +5,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { SelectionActionHost } from "@/components/selection/action-dialog-host"
 import { SelectionTray } from "@/components/selection/selection-tray"
 import { QuickEditHost } from "@/components/video-edit/quick-edit"
+import { ReportHost } from "@/components/video/report"
 import { readSessionParams } from "@/lib/tlclient/session"
 import { useUi } from "@/stores/ui"
 import { useMusicPlayer } from "@/stores/music-player"
@@ -64,6 +65,7 @@ export function AppShell() {
       <SelectionTray />
       <SelectionActionHost />
       <QuickEditHost />
+      <ReportHost />
     </SidebarProvider>
   )
 }
