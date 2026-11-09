@@ -17,6 +17,7 @@ import type {
   Org,
   SavedPlaylist,
   SavedPlaylistSummary,
+  SiteStats,
   StaticChannel,
   User,
   V3VideoList,
@@ -263,6 +264,9 @@ export const api = {
 
   topics: (signal?: AbortSignal) =>
     request<{ id: string }[]>("/statics/topics.json", { signal }),
+
+  stats: (signal?: AbortSignal) =>
+    request<SiteStats>("/statics/stats.json", { signal }),
 
   channelInfo: (id: string, signal?: AbortSignal) =>
     request<StaticChannel>(`/statics/channel/${encodeURIComponent(id)}.json`, {

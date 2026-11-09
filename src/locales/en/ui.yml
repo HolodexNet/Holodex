@@ -891,6 +891,12 @@ views:
       four: >-
         Fixes experimental flags on Youtube player (Like disabling multiple
         streams, waiting room thumbnail not showing) and more!
+    raycast:
+      features:
+        - Show ongoing live streams
+        - Search archives
+        - Search clips
+        - Search channels
   tlClient:
     menu:
       title: Menu
@@ -996,7 +1002,7 @@ about:
   quicklinks: Quick Links
   discordBtn: Holodex Discord
   faq:
-    title: FAQ
+    title: FAQ means Love
     ytchatHeader: My Youtube Chat is not logged in!
     ytchatContent: >-
       Please disable the browser security feature known as 3rd Party Cookies
@@ -1123,6 +1129,9 @@ about:
       - Derivative Work License Agreement
   changelog:
     title: Changelog
+    heading: What's new
+    full: Full changelog
+    unavailable: The changelog could not be loaded.
   news:
     title: News
   bookmarklet:
@@ -1130,6 +1139,185 @@ about:
     description: >-
       Drag these bookmarklets to your bookmark bar to open YouTube watch page in
       Holodex easily:
+    open: Open in Holodex
+    openBeta: Open in Holodex Beta
+    dragHint: Drag me to your bookmarks bar
+    clickHint: >-
+      Bookmarklets run from your bookmarks bar, so drag this button there
+      instead of clicking it.
+  nav:
+    label: On this page
+    numbers: Database Stats
+    thanks: Thank you
+    pitchIn: Pitch in
+    extras: Extras
+    faq: FAQ
+    updates: Updates
+    contact: Say hi
+    finePrint: Fine print
+  hero:
+    since: Fan-made since 2020
+    title: Made by fans, for fans.
+    readFaq: Read the FAQ
+    liveNow: '{n} talent live in {org} right now | {n} talents live in {org} right now'
+    liveNowAll: '{n} talent live right now | {n} talents live right now'
+  general:
+    summary:
+      '1': >-
+        Holodex organize clips and collaborations by featured talents, catalog songs
+        performed in videos and karaoke streams, tabulate agencies and groups by
+        generation and branch, provide personalized features for saving
+        favorites, and enhance livestream viewing with community caption tools.
+      '2': >-
+        We adhere to hololive production's Derivative Work Agreement and aim to
+        extend similar respect to other organizations. Our platform operates
+        within YouTube's Data API and Embed Player Terms of Service guidelines.
+        For inquiries about our service, please contact us via Discord or
+        Twitter DM.
+    credits:
+      addRequest: >-
+        (If you'd like to add your name to this list, drop us a poke on
+        Discord!)
+  stats:
+    title: Inside the archive
+    vtubers: VTubers
+    subbers: Clippers & subbers
+    videos: Videos
+    songs: Songs timed
+    lastMonth: '+{n} in the last month'
+    yesterday: '+{n} yesterday'
+    updated: 'Counted {time}'
+    updatedNow: Counted just now
+    orgs: 'Spanning {n} organizations, and a whole lot of indies.'
+    unavailable: The numbers are taking a break. Try again in a bit.
+  thanks:
+    title: Super thanks
+    description: >-
+      Holodex is a hobby project, the server lives in a basement on a box of scraps
+    sender: Holodex
+    amount: thanks
+    talents:
+      to: To the talents
+      message: >-
+        You're the reason any of this exists. Thank you for every stream, every
+        song, and every "just one more game".
+    subbers:
+      to: To the clippers & translators
+    editors:
+      to: To our editors
+      message: >-
+        Over 100 of you tag topics, time karaoke songs and link collabs, so
+        everyone else can find the moment they're looking for.
+    holotools:
+      to: To HoloTools
+    translators:
+      to: To our translators
+      message: >-
+        Holodex speaks {n} languages (a couple of them very silly) because
+        volunteers translated it a little at a time.
+    contributors:
+      to: To everyone who sent a fix
+      message: >-
+        Bug reports, pull requests and late-night ideas in Discord: Holodex has
+        been shaped by all of it since 2020.
+    you:
+      to: And to you
+      message: >-
+        For watching, sharing clips with your friends, and telling us when
+        something breaks.
+    crew: The crew
+    staff: Staff
+    editorsCount: 100+ editors
+    editorsCountRole: Tagging, timing and linking, every day
+    yourName: Your name here?
+    translatorsTitle: Translated by fans
+  roles:
+    creator: Creator
+    admin: Admin
+    developer: Developer
+    designer: Designer
+    twitch: Twitch support
+    editor: Editor
+  pitchIn:
+    eyebrow: Pitch in
+    title: Come chill out with us!
+    discord:
+      title: Hang out on Discord
+      body: >-
+        Report bugs, suggest features, or complain about some weird bug on the site
+    translate:
+      title: Translate Holodex
+      body: Help bring Holodex to your language on Crowdin.
+      action: Open Crowdin
+    edit:
+      title: Time songs & tag streams
+      body: >-
+        Logged-in fans can add songs, topics and collab mentions to any video.
+        Every edit helps someone find their favorite moment.
+      action: Log in to start editing
+      loggedIn: Open any video's menu and choose “Edit video”.
+    request:
+      body: Know a VTuber or clipper we're missing? Let us know.
+    github:
+      title: Send a pull request
+      body: The site you're looking at is open source.
+    api:
+      title: Build something
+      body: >-
+        Our API powers bots, extensions and fan projects. Grab a key from your
+        account page.
+    kofi:
+      title: Keep the servers humming
+      body: >-
+        We started a Ko-fi to cover server costs. Totally optional, always
+        appreciated.
+  quicklink:
+    apiDocs: API
+  extensions:
+    eyebrow: Extras
+    heading: Take Holodex further
+    description: Little tools that make watching a bit nicer.
+    github: Install from GitHub
+    raycast: Raycast Extension (macOS)
+    raycastStore: Get it on Raycast Store
+  faqGroups:
+    watching: Watching
+    account: Your account & data
+    creators: For clippers & subbers
+    project: About the project
+  faqExtra:
+    copyLink: Copy a link to this answer
+    linkCopied: Link copied.
+    ytchatWhy: >-
+      Since Holodex isn't YouTube, your browser refuses to share YouTube's
+      sign-in cookie, which makes you appear logged out. This affects YouTube
+      chat, watch history and other personalized features.
+    ytchatQuickFix: Quick fix
+    ytchatLearnMore: >-
+      Click the “Learn more” link that appears in the embed right after
+      refreshing. This tells your browser to treat Holodex as trusted, so
+      YouTube's cookies work after another refresh.
+    ytchatFirefox: Firefox
+    ytchatFirefoxSteps:
+      '0': 'Open {0} in your address bar.'
+      '1': 'Search for {0}.'
+      '2': 'Set the value to {0}.'
+    ytchatOther: Other browsers
+    autoplayHint: >-
+      Most browsers keep this under the site settings icon in the address bar,
+      in a setting called Autoplay or Sound.
+  outro:
+    eyebrow: That's the stream!
+    title: Thanks for stopping by
+    body: Questions, ideas, or just want to say hi? We're around.
+    issues: Report a bug on GitHub
+  contact:
+    discord: Join Holodex Discord
+    twitter: DM us on Twitter
+  finePrint:
+    title: The fine print
+    youtubeTos: 'By using this site you are agreeing to be bound by the {0}.'
+    youtubeTosLink: YouTube Terms of Service
 selection:
   label: Video selection
   start: Select videos

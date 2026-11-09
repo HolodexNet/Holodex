@@ -160,6 +160,17 @@
     }
 }
 
+/* A strip holding two identical halves; sliding one half's width loops it. */
+@theme {
+  /* Users set their own animation-duration; 60s is only a fallback. */
+  --animate-marquee: marquee 60s linear infinite;
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
 @utility pb-safe {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }

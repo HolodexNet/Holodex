@@ -46,6 +46,15 @@ export function useTopics(enabled = true) {
   })
 }
 
+/** Catalog totals; the file is regenerated daily, so an hour is plenty. */
+export function useSiteStats() {
+  return useQuery({
+    queryKey: ["stats"],
+    queryFn: ({ signal }) => api.stats(signal),
+    staleTime: 60 * 60_000,
+  })
+}
+
 export function useOrgLive(org: string, enabled = true) {
   return useQuery({
     queryKey: ["live", "org", org],

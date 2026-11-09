@@ -43,6 +43,8 @@ export default defineConfig({
     derivedKeys: ["{key}.*"],
     // These labels come from action/sort tables rather than literal calls.
     keysInUse: [
+      "about.nav.*",
+      "about.roles.*",
       "views.search.sort.*",
       "selection.copyLinks",
       "curation.addMentions",

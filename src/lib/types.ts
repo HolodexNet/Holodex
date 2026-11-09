@@ -144,6 +144,19 @@ export interface AutocompleteResult {
   topic?: { id: string }[]
 }
 
+/** Catalog totals from /statics/stats.json, regenerated daily. */
+export interface SiteStats {
+  /** Epoch milliseconds. */
+  generatedAt?: number
+  statistics?: {
+    channelCount?: { vtuber?: number; subber?: number }
+    monthlyChannels?: { vtuber?: number; subber?: number }
+    totalVideos?: { count?: number }
+    dailyVideos?: { count?: number }
+    totalSongs?: { count?: number }
+  }
+}
+
 export interface StaticChannel {
   id: string
   name: string

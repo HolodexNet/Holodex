@@ -15,7 +15,7 @@ type Params = Record<string, string | number> | (string | number)[]
 
 const loaders = import.meta.glob<{ default: Messages }>("../locales/*/ui.yml")
 
-const fallback = enMessages as Messages
+let fallback = enMessages as Messages
 
 interface I18nStore {
   lang: string
@@ -130,6 +130,19 @@ export async function setLanguage(lang: string): Promise<void> {
   } catch {
     if (requested === lang) useI18nStore.setState({ lang, messages: fallback })
   }
+}
+
+// Dev only: apply edits to the English bundle without a page reload. The
+// store gets a fresh state object so useT() consumers re-render.
+if (import.meta.hot) {
+  import.meta.hot.accept("../locales/en/ui.yml", (mod) => {
+    if (!mod) return
+    const next = mod.default as Messages
+    const { lang, messages } = useI18nStore.getState()
+    const wasFallback = messages === fallback
+    fallback = next
+    useI18nStore.setState({ lang, messages: wasFallback ? next : messages })
+  })
 }
 
 const INTL_OVERRIDES: Record<string, string> = {

@@ -46,8 +46,6 @@ const PENDING_ROUTES = [
   "/add_placeholder",
   "/playlists",
   "/library",
-  "/about",
-  "/extension",
   "/scripteditor",
   "/scriptmanager",
   "/relaybot",
@@ -152,6 +150,17 @@ const router = createBrowserRouter([
                 }),
               },
             ],
+          },
+          {
+            path: "/about/:section?",
+            lazy: async () => ({
+              Component: (await import("@/pages/about")).default,
+            }),
+          },
+          // The extensions page of the previous UI now lives on About.
+          {
+            path: "/extension",
+            element: <Navigate to="/about/extensions" replace />,
           },
           { path: "/settings", element: <SettingsPage /> },
           { path: "/login", element: <LoginPage /> },
