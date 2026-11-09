@@ -304,7 +304,7 @@ views:
     blockedAreEmpty: You have no blocked channels.
   home:
     collateCollabs: Group collabs
-    collateCollabsHint: Group streams that all mention each other, share a topic, and start within 30 minutes. Every perspective stays available.
+    collateCollabsHint: Group streams that are guessed as collabs to reduce clutter
     collabPerspectives: '{n} perspective | {n} perspectives'
     collabViewers: '{0} across streams'
     previewPerspective: 'Preview {0} perspective'

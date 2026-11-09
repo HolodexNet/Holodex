@@ -1,14 +1,11 @@
 import type { Video } from "./types.ts"
 
-const MINUTE = 60_000
-const COLLAB_WINDOW = 30 * MINUTE
+const HOUR = 60 * 60_000
+const COLLAB_WINDOW = 8 * HOUR
 
-/** Live streams compare by when they went on air; schedules can slip apart. */
 function start(video: Video): number {
   const value =
-    video.status === "live"
-      ? (video.start_actual ?? video.start_scheduled ?? video.available_at)
-      : (video.start_scheduled ?? video.start_actual ?? video.available_at)
+    video.start_scheduled ?? video.start_actual ?? video.available_at
   return value == null ? NaN : new Date(value).getTime()
 }
 
@@ -26,8 +23,10 @@ export function areCollaborating(a: Video, b: Video): boolean {
   )
     return false
 
-  const gap = Math.abs(start(a) - start(b))
-  if (!Number.isFinite(gap) || gap > COLLAB_WINDOW) return false
+  if (a.status === "upcoming") {
+    const gap = Math.abs(start(a) - start(b))
+    if (!Number.isFinite(gap) || gap > COLLAB_WINDOW) return false
+  }
 
   const aMentionsB = !!a.mentions?.some(
     (channel) => channel.id === b.channel.id
