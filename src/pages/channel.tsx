@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react"
 import { Link, NavLink, useParams } from "react-router"
-import { cn } from "cn"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { ChannelActions } from "@/components/common/channel-actions"
 import { ChannelBanner } from "@/components/common/channel-banner"
@@ -11,6 +10,7 @@ import { ArrowLeftIcon, ProhibitIcon } from "@/components/icons"
 import { ChannelMusicSkeleton } from "@/components/music/skeletons"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
+import { underlineTabVariants } from "@/components/ui/tabs"
 import { VideoList, VideoListSkeleton } from "@/components/video/video-list"
 import { ViewMenu } from "@/components/video/view-menu"
 import { useDocumentTitle } from "@/hooks/use-document-title"
@@ -308,12 +308,7 @@ export function ChannelPage() {
               end
               to={item.id === "overview" ? base : `${base}/${item.id}`}
               aria-current={tab === item.id ? "page" : undefined}
-              className={cn(
-                "shrink-0 border-b-2 px-4 py-3 text-sm font-medium transition-colors",
-                tab === item.id
-                  ? "border-primary text-brand"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-              )}
+              className={underlineTabVariants({ active: tab === item.id })}
             >
               {item.label}
             </NavLink>

@@ -14,6 +14,7 @@ import {
   PlusIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
+import { segmentedItemVariants, segmentedListClass } from "@/components/ui/tabs"
 import {
   Dialog,
   DialogContent,
@@ -285,18 +286,16 @@ export function SourcePanel({ className }: { className?: string }) {
   return (
     <div className={cn("flex min-h-0 flex-col", className)}>
       <div className="flex flex-wrap items-center gap-1 border-b px-2 py-1.5">
-        <div className="flex items-center gap-0.5 rounded-4xl bg-muted p-0.5">
+        <div className={segmentedListClass}>
           {(["setlist", "comments"] as const).map((item) => (
             <button
               key={item}
               type="button"
               aria-pressed={view === item}
-              className={cn(
-                "cursor-pointer rounded-4xl px-2.5 py-0.5 text-xs font-medium transition-colors outline-none focus-ring",
-                view === item
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
+              className={segmentedItemVariants({
+                size: "sm",
+                active: view === item,
+              })}
               onClick={() => setView(item)}
             >
               {item === "setlist"

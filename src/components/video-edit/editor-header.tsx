@@ -1,6 +1,5 @@
 import type { ReactNode } from "react"
 import { Link, useNavigate } from "react-router"
-import { cn } from "cn"
 
 import {
   ArrowLeftIcon,
@@ -9,6 +8,7 @@ import {
   CheckIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
+import { segmentedItemVariants, segmentedListClass } from "@/components/ui/tabs"
 import { useT } from "@/lib/i18n"
 import type { Video } from "@/lib/types"
 import { channelName, videoThumbnail, videoTitle, watchPath } from "@/lib/video"
@@ -159,7 +159,7 @@ export function EditorHeader({
       {tabs.length > 1 && (
         <nav
           aria-label={t("videoEdit.tabs.label")}
-          className="flex items-center gap-0.5 rounded-4xl bg-muted p-0.5"
+          className={segmentedListClass}
         >
           {tabs.map((item) => (
             <Link
@@ -167,12 +167,7 @@ export function EditorHeader({
               to={item.to}
               replace
               aria-current={item.id === tab ? "page" : undefined}
-              className={cn(
-                "rounded-4xl px-3 py-1 text-sm font-medium transition-colors outline-none focus-ring",
-                item.id === tab
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
+              className={segmentedItemVariants({ active: item.id === tab })}
             >
               {item.label}
             </Link>

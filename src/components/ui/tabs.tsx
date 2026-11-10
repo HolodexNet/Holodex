@@ -76,4 +76,51 @@ function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
   )
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }
+/**
+ * Class helpers for tab-like controls that aren't Base UI tabs: router links
+ * (`aria-current`) and toggle buttons (`aria-pressed`). Same look as the
+ * "default"/"line" tabs, without the tablist semantics.
+ */
+const segmentedListClass =
+  "flex items-center gap-0.5 rounded-4xl bg-muted p-0.5"
+
+const segmentedItemVariants = cva(
+  "rounded-4xl font-medium focus-ring transition-colors",
+  {
+    variants: {
+      size: {
+        sm: "px-2.5 py-0.5 text-xs",
+        md: "px-3 py-1 text-sm",
+      },
+      active: {
+        true: "bg-background text-foreground shadow-sm",
+        false: "text-muted-foreground hover:text-foreground",
+      },
+    },
+    defaultVariants: { size: "md", active: false },
+  }
+)
+
+const underlineTabVariants = cva(
+  "shrink-0 border-b-2 px-4 py-3 text-sm font-medium transition-colors",
+  {
+    variants: {
+      active: {
+        true: "border-primary text-brand",
+        false: "border-transparent text-muted-foreground hover:text-foreground",
+      },
+    },
+    defaultVariants: { active: false },
+  }
+)
+
+export {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  tabsListVariants,
+  segmentedListClass,
+  segmentedItemVariants,
+  underlineTabVariants,
+}
