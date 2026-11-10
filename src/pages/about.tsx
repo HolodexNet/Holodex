@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { useLocation, useParams } from "react-router"
 import { cn } from "cn"
 
+import { PageShell } from "@/components/layout/page-shell"
 import { Changelog } from "@/components/about/changelog"
 import { FAQ_IDS, Faq } from "@/components/about/faq"
 import { Extras } from "@/components/about/extras"
@@ -119,7 +120,7 @@ export default function AboutPage() {
 
   return (
     // On desktop the right padding leaves the index rail its own lane.
-    <div className="mx-auto flex w-full max-w-6xl flex-col px-4 pt-4 pb-16 md:px-8 md:pt-6 md:pointer-fine:pr-14">
+    <PageShell width="6xl" className="md:pointer-fine:pr-14">
       <AboutHero />
       <AboutToc items={contents} />
       <div className="mt-10 flex flex-col gap-16 md:mt-14 md:gap-24">
@@ -131,6 +132,6 @@ export default function AboutPage() {
         <Updates />
         <FinePrint />
       </div>
-    </div>
+    </PageShell>
   )
 }

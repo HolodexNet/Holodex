@@ -2,6 +2,7 @@ import { useId, useState, type ReactNode } from "react"
 import { cn } from "cn"
 import { toast } from "sonner"
 
+import { PageShell } from "@/components/layout/page-shell"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { FeedFilters, SwitchRow } from "@/components/common/feed-filters"
 import { MultiCombobox } from "@/components/common/multi-combobox"
@@ -999,7 +1000,7 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-3 py-6 md:px-6">
+    <PageShell width="3xl" padding="none" className="gap-8 px-3 py-6 md:px-6">
       <h1 className="text-2xl font-medium tracking-tight">
         {t("views.settings.title")}
       </h1>
@@ -1213,6 +1214,6 @@ export function SettingsPage() {
       <div className="flex justify-end">
         <ResetDialog />
       </div>
-    </div>
+    </PageShell>
   )
 }

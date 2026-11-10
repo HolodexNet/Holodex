@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
 
+import { PageShell } from "@/components/layout/page-shell"
 import { userAvatar } from "@/components/layout/user-menu"
 import { LogoDiscordIcon, SignOutIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -180,7 +181,11 @@ export function LoginPage() {
   ]
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center gap-6 px-4 py-10">
+    <PageShell
+      width="md"
+      padding="none"
+      className="flex-1 justify-center gap-6 px-4 py-10"
+    >
       {user ? (
         <div
           className={cn(
@@ -266,6 +271,6 @@ export function LoginPage() {
           )}
         </div>
       )}
-    </div>
+    </PageShell>
   )
 }

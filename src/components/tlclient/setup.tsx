@@ -2,6 +2,7 @@ import { useMemo, useState } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
 
+import { PageShell } from "@/components/layout/page-shell"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { SimpleSelect } from "@/components/common/simple-select"
 import {
@@ -75,7 +76,11 @@ export function TlSetup({
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-8 sm:py-12">
+      <PageShell
+        width="3xl"
+        padding="none"
+        className="gap-6 px-4 py-8 sm:py-12"
+      >
         <header className="flex flex-col gap-1">
           <h1 className="text-2xl font-semibold tracking-tight">
             {t("tlClient.title")}
@@ -116,7 +121,7 @@ export function TlSetup({
         ) : (
           <StreamChooser onChoose={choose} onResume={onStart} />
         )}
-      </div>
+      </PageShell>
     </div>
   )
 }

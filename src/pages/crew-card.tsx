@@ -9,6 +9,7 @@ import {
   type CrewMember,
   type Role,
 } from "@/components/about/thanks"
+import { PageShell } from "@/components/layout/page-shell"
 import { ChannelPicker } from "@/components/common/channel-picker"
 import { CopyIcon, XIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -172,7 +173,7 @@ export default function CrewCardPage() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col px-4 pt-4 pb-16 md:px-8 md:pt-6">
+    <PageShell width="4xl">
       <h1 className="text-2xl font-bold tracking-tight">Crew card maker</h1>
       <p className="mt-1 text-pretty text-muted-foreground">
         Fill in your card for the crew section of the About page, check the
@@ -363,6 +364,6 @@ export default function CrewCardPage() {
           {code}
         </pre>
       </div>
-    </div>
+    </PageShell>
   )
 }
