@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { AddSongToPlaylist } from "@/components/music/playlists/shared"
+import { useT } from "@/lib/i18n"
 import { musicApi } from "@/lib/musicdex/api"
 import type { Song } from "@/lib/musicdex/types"
 import { useAuth } from "@/stores/auth"
@@ -37,6 +38,7 @@ function SongRow({
   contextChannelId?: string
   previewGrid: boolean
 }) {
+  const { t } = useT()
   const preferEnglish = useSettings((s) => s.useEnglishName)
   const loggedIn = useAuth((s) => !!s.jwt)
   const queryClient = useQueryClient()
@@ -48,7 +50,7 @@ function SongRow({
   const sourceUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(song.video_id)}&t=${Math.max(0, Math.floor(song.start || 0))}`
   const toggleLike = async () => {
     if (!loggedIn) {
-      toast.error("Sign in to like songs")
+      toast.error(t("musicdex.songList.signInToLike"))
       return
     }
     setSaving(true)
@@ -59,7 +61,7 @@ function SongRow({
         queryClient.invalidateQueries({ queryKey: ["musicdex", "like-check"] }),
       ])
     } catch {
-      toast.error("Could not update liked song")
+      toast.error(t("musicdex.songList.likeFailed"))
     } finally {
       setSaving(false)
     }
@@ -76,12 +78,15 @@ function SongRow({
         variant="ghost"
         size="icon-sm"
         className="hidden sm:inline-flex"
-        aria-label={`Play ${song.name}`}
+        aria-label={t("musicdex.common.playLabel", { title: song.name })}
         onClick={onPlay}
       >
         <span className="text-xs text-muted-foreground group-hover:hidden">
           {playing ? (
-            <span className="music-equalizer" aria-label="Now playing">
+            <span
+              className="music-equalizer"
+              aria-label={t("musicdex.songList.nowPlaying")}
+            >
               <i />
               <i />
               <i />
@@ -128,9 +133,9 @@ function SongRow({
             </Link>
           ) : !song.original_artist ? (
             song.is_mv ? (
-              "Music video"
+              t("musicdex.songList.musicVideo")
             ) : (
-              "Singing stream"
+              t("musicdex.songList.singingStream")
             )
           ) : null}
         </div>
@@ -144,7 +149,7 @@ function SongRow({
             "hidden shrink-0 text-xs text-muted-foreground hover:underline",
             !previewGrid && "lg:block"
           )}
-          title="Open this performance on YouTube"
+          title={t("musicdex.songList.openOnYoutube")}
         >
           <time dateTime={performed.toISOString()}>
             {performed.toLocaleDateString()}
@@ -160,7 +165,11 @@ function SongRow({
       <Button
         variant="ghost"
         size="icon-sm"
-        aria-label={liked ? "Unlike song" : "Like song"}
+        aria-label={
+          liked
+            ? t("musicdex.songList.unlikeSong")
+            : t("musicdex.songList.likeSong")
+        }
         disabled={saving}
         onClick={() => void toggleLike()}
       >
@@ -170,10 +179,10 @@ function SongRow({
         variant="ghost"
         size="icon-sm"
         className={previewGrid ? "hidden" : undefined}
-        aria-label="Add to queue"
+        aria-label={t("musicdex.common.addToQueue")}
         onClick={() => {
           useMusicPlayer.getState().queueSongs([song])
-          toast.success("Added to queue")
+          toast.success(t("musicdex.songList.addedToQueue"))
         }}
       >
         <PlaylistIcon />
@@ -184,9 +193,10 @@ function SongRow({
 }
 
 export function SongListSkeleton() {
+  const { t } = useT()
   return (
-    <div role="status" aria-label="Loading songs">
-      <span className="sr-only">Loading songs</span>
+    <div role="status" aria-label={t("musicdex.songList.loadingSongs")}>
+      <span className="sr-only">{t("musicdex.songList.loadingSongs")}</span>
       <div
         className="grid min-w-0 grid-cols-2 gap-x-6 gap-y-1 max-[1101px]:grid-cols-1"
         aria-hidden="true"
@@ -229,6 +239,7 @@ export function SongList({
   contextChannelId?: string
   indexOffset?: number
 }) {
+  const { t } = useT()
   const user = useAuth((s) => s.user)
   const loggedIn = useAuth((s) => !!s.jwt)
   const [visibleCount, setVisibleCount] = useState(100)
@@ -247,7 +258,11 @@ export function SongList({
     staleTime: 30 * 60 * 1000,
   })
   if (!songs.length)
-    return <p className="py-6 text-sm text-muted-foreground">No songs found.</p>
+    return (
+      <p className="py-6 text-sm text-muted-foreground">
+        {t("musicdex.songList.noSongsFound")}
+      </p>
+    )
   return (
     <div>
       {!preview && (
@@ -256,11 +271,13 @@ export function SongList({
           aria-hidden="true"
         >
           <span className="w-8 text-center">#</span>
-          <span className="flex-1">Track / Artist</span>
+          <span className="flex-1">{t("musicdex.songList.trackArtist")}</span>
           <span className="ml-auto hidden w-30 text-right lg:block">
-            Performed
+            {t("musicdex.songList.performed")}
           </span>
-          <span className="hidden w-12 text-right sm:block">Time</span>
+          <span className="hidden w-12 text-right sm:block">
+            {t("musicdex.songList.time")}
+          </span>
           <span className="w-28" />
         </div>
       )}
@@ -293,7 +310,10 @@ export function SongList({
           className="mt-4"
           onClick={() => setVisibleCount((count) => count + 100)}
         >
-          Show more songs ({visible.length} of {songs.length})
+          {t("musicdex.songList.showMore", {
+            shown: visible.length,
+            total: songs.length,
+          })}
         </Button>
       )}
     </div>

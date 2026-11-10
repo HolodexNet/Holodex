@@ -98,7 +98,7 @@ function Question({ item }: { item: Item }) {
         onClick={copyLink}
         title={t("about.faqExtra.copyLink")}
         aria-label={`${t("about.faqExtra.copyLink")}: ${item.question}`}
-        className="absolute top-3.5 right-7 rounded-md p-1 text-muted-foreground opacity-0 focus-ring transition-opacity outline-none group-hover/item:opacity-100 peer-open:opacity-100 hover:text-foreground focus-visible:opacity-100"
+        className="absolute top-4 right-0 rounded-md p-1 text-muted-foreground opacity-0 focus-ring transition-opacity outline-none group-hover/item:opacity-100 peer-open:opacity-100 hover:text-foreground focus-visible:opacity-100"
       >
         <LinkSimpleIcon className="size-4" aria-hidden="true" />
       </button>

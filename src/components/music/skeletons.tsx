@@ -5,6 +5,7 @@ import {
   musicDetailCoverClass,
   musicDetailHeaderClass,
 } from "@/components/music/shared"
+import { useT } from "@/lib/i18n"
 import "./skeletons.css"
 
 function TrackRowsSkeleton({
@@ -43,6 +44,7 @@ function TrackRowsSkeleton({
 
 /** Playlist and radio pages: hero, action row, then the track list. */
 export function MusicDetailSkeleton({ radio = false }: { radio?: boolean }) {
+  const { t } = useT()
   return (
     <>
       <header className={musicDetailHeaderClass} aria-hidden="true">
@@ -61,37 +63,54 @@ export function MusicDetailSkeleton({ radio = false }: { radio?: boolean }) {
         <Skeleton className="music-skeleton-button-primary" />
         <Skeleton className="music-skeleton-button-secondary" />
       </div>
-      <TrackRowsSkeleton label={radio ? "Loading radio" : "Loading playlist"} />
+      <TrackRowsSkeleton
+        label={
+          radio
+            ? t("musicdex.common.loadingRadio")
+            : t("musicdex.common.loadingPlaylist")
+        }
+      />
     </>
   )
 }
 
 /** Liked songs page: play-all row, then the track list. */
 export function MusicLikedSkeleton() {
+  const { t } = useT()
   return (
     <>
       <div className={musicActionBarClass} aria-hidden="true">
         <Skeleton className="music-skeleton-button-primary" />
       </div>
-      <TrackRowsSkeleton label="Loading liked songs" />
+      <TrackRowsSkeleton label={t("musicdex.common.loadingLikedSongs")} />
     </>
   )
 }
 
 /** Popular songs on a channel's music tab. */
 export function PopularSkeleton() {
-  return <TrackRowsSkeleton label="Loading popular songs" rows={5} popular />
+  const { t } = useT()
+  return (
+    <TrackRowsSkeleton
+      label={t("musicdex.common.loadingPopularSongs")}
+      rows={5}
+      popular
+    />
+  )
 }
 
 /** Artist shelves on a channel's music tab. */
 export function ChannelDiscoverySkeleton() {
+  const { t } = useT()
   return (
     <div
       role="status"
-      aria-label="Loading artist collections"
+      aria-label={t("musicdex.common.loadingArtistCollections")}
       className="music-skeleton-stack"
     >
-      <span className="sr-only">Loading artist collections</span>
+      <span className="sr-only">
+        {t("musicdex.common.loadingArtistCollections")}
+      </span>
       {Array.from({ length: 2 }, (_, shelf) => (
         <section
           key={shelf}

@@ -28,6 +28,7 @@ import {
   playlistTitle,
   useMusicLibrary,
 } from "@/components/music/playlists/shared"
+import { useT } from "@/lib/i18n"
 import type { PlaylistStub } from "@/lib/musicdex/types"
 import { isMusicLocation } from "@/lib/music-route"
 import { useSettings } from "@/stores/settings"
@@ -43,6 +44,7 @@ function LibraryMenu({
   loading: boolean
   error: boolean
 }) {
+  const { t } = useT()
   const { setOpenMobile } = useSidebar()
   return (
     <SidebarMenuItem>
@@ -55,11 +57,17 @@ function LibraryMenu({
           <DropdownMenuGroup>
             <DropdownMenuLabel>{label}</DropdownMenuLabel>
             {loading ? (
-              <DropdownMenuItem disabled>Loading…</DropdownMenuItem>
+              <DropdownMenuItem disabled>
+                {t("musicdex.sidebar.loading")}
+              </DropdownMenuItem>
             ) : error ? (
-              <DropdownMenuItem disabled>Could not load items</DropdownMenuItem>
+              <DropdownMenuItem disabled>
+                {t("musicdex.sidebar.loadFailed")}
+              </DropdownMenuItem>
             ) : !items.length ? (
-              <DropdownMenuItem disabled>No items yet</DropdownMenuItem>
+              <DropdownMenuItem disabled>
+                {t("musicdex.sidebar.noItems")}
+              </DropdownMenuItem>
             ) : (
               items.map((item) => (
                 <DropdownMenuItem
@@ -80,7 +88,7 @@ function LibraryMenu({
                 <Link to="/#playlists" onClick={() => setOpenMobile(false)} />
               }
             >
-              Open music library
+              {t("musicdex.sidebar.openLibrary")}
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
@@ -90,6 +98,7 @@ function LibraryMenu({
 }
 
 export function MusicSidebar() {
+  const { t } = useT()
   const location = useLocation()
   const { setOpenMobile } = useSidebar()
   const mode = useSettings((state) => state.musicSidebarMode)
@@ -97,14 +106,18 @@ export function MusicSidebar() {
     { to: "/#music", label: "Musicdex", icon: <MusicNotesFillIcon /> },
     {
       to: "/music/search",
-      label: "Search music",
+      label: t("musicdex.sidebar.searchMusic"),
       icon: <MagnifyingGlassIcon />,
     },
-    { to: "/music/liked", label: "Liked songs", icon: <HeartIcon /> },
-    { to: "/#radio", label: "Radios", icon: <RadioIcon /> },
+    {
+      to: "/music/liked",
+      label: t("musicdex.sidebar.likedSongs"),
+      icon: <HeartIcon />,
+    },
+    { to: "/#radio", label: t("musicdex.sidebar.radios"), icon: <RadioIcon /> },
     {
       to: "/#playlists",
-      label: "Musicdex Playlists",
+      label: t("musicdex.sidebar.playlists"),
       icon: <PlaylistIcon />,
     },
   ]

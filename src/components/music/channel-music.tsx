@@ -30,7 +30,7 @@ import {
 } from "@/components/music/skeletons"
 import { SongList } from "@/components/music/song-list"
 import { Button } from "@/components/ui/button"
-import { intlLocale } from "@/lib/i18n"
+import { intlLocale, useT } from "@/lib/i18n"
 import { musicApi } from "@/lib/musicdex/api"
 import { formatMusicPlaylist } from "@/lib/musicdex/format"
 import { useMusicDiscovery, useMusicTrending } from "@/lib/musicdex/queries"
@@ -60,6 +60,7 @@ function ChannelShelf({
   count: number
   children: ReactNode
 }) {
+  const { t } = useT()
   const rail = useRef<HTMLDivElement>(null)
   const [edges, setEdges] = useState({ back: false, forward: false })
   useEffect(() => {
@@ -99,7 +100,7 @@ function ChannelShelf({
             <Button
               variant="ghost"
               size="icon-sm"
-              aria-label={`Scroll ${title} left`}
+              aria-label={t("musicdex.discovery.scrollLeft", { title })}
               disabled={!edges.back}
               onClick={() => scroll(-1)}
             >
@@ -108,7 +109,7 @@ function ChannelShelf({
             <Button
               variant="ghost"
               size="icon-sm"
-              aria-label={`Scroll ${title} right`}
+              aria-label={t("musicdex.discovery.scrollRight", { title })}
               disabled={!edges.forward}
               onClick={() => scroll(1)}
             >
@@ -125,6 +126,7 @@ function ChannelShelf({
 }
 
 function ChannelMusicOverview({ channel }: { channel: Channel }) {
+  const { t, tc } = useT()
   const [expanded, setExpanded] = useState(false)
   const english = useSettings((s) => s.useEnglishName)
   const lang = useSettings((s) => s.lang)
@@ -184,18 +186,20 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
     <div className="music-channel-overview">
       {(trending.isPending || trending.isError || popular.length > 0) && (
         <section className="music-channel-popular">
-          <MusicSectionHeading title="Popular">
+          <MusicSectionHeading title={t("musicdex.channel.popular")}>
             {!!popular.length && (
               <Button
                 variant="default"
                 size="sm"
                 onClick={() => {
                   useMusicPlayer.getState().queueSongs(popular)
-                  toast.success(`Added ${popular.length} songs to the queue`)
+                  toast.success(
+                    tc("musicdex.channel.addedToQueue", popular.length)
+                  )
                 }}
               >
                 <PlaylistIcon />
-                Queue ({popular.length})
+                {t("musicdex.channel.queueCount", { count: popular.length })}
               </Button>
             )}
           </MusicSectionHeading>
@@ -214,7 +218,7 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
               contextChannelId={channel.id}
               source={{
                 id: `channel:${channel.id}:popular`,
-                title: `${name} · Popular`,
+                title: `${name} · ${t("musicdex.channel.popular")}`,
               }}
             />
           )}
@@ -226,7 +230,9 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
                 aria-expanded={expanded}
                 onClick={() => setExpanded(!expanded)}
               >
-                {expanded ? "Show less" : "Show more"}
+                {expanded
+                  ? t("musicdex.channel.showLess")
+                  : t("musicdex.channel.showMore")}
               </Button>
             )}
             <div className="music-channel-catalog-links">
@@ -235,14 +241,14 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
                 className={cn("music-text-link", musicTextLinkClass)}
               >
                 <MagnifyingGlassIcon className="size-4" />
-                Search songs
+                {t("musicdex.channel.searchSongs")}
               </Link>
               <Link
                 to={`${base}?songs=all`}
                 className={cn("music-text-link", musicTextLinkClass)}
               >
                 <ListBulletsIcon className="size-4" />
-                See all songs
+                {t("musicdex.channel.seeAllSongs")}
               </Link>
             </div>
           </div>
@@ -250,8 +256,8 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
       )}
       {noMusic && (
         <StateMessage
-          title="No music indexed yet"
-          description={`Indexed performances from ${name} will appear here.`}
+          title={t("musicdex.channel.noMusicTitle")}
+          description={t("musicdex.channel.noMusicDescription", { name })}
         />
       )}
       {discovery.isPending ? (
@@ -264,7 +270,10 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
       ) : (
         <>
           {!!streams.length && (
-            <ChannelShelf title="Latest streams" count={streams.length}>
+            <ChannelShelf
+              title={t("musicdex.channel.latestStreams")}
+              count={streams.length}
+            >
               {streams.map(({ video, playlist }) => {
                 const formatted = formatMusicPlaylist(playlist!, english)
                 const performed = date(video.available_at ?? video.published_at)
@@ -286,7 +295,7 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
                           seed={video.id}
                         />
                         <span className="music-channel-stream-count">
-                          {count} {count === 1 ? "song" : "songs"}
+                          {tc("musicdex.channel.songCount", count)}
                         </span>
                       </Link>
                       <PlayPlaylistButton
@@ -302,7 +311,7 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
                     </Link>
                     {performed && (
                       <p className={musicCardCaptionClass}>
-                        Performed {performed}
+                        {t("musicdex.channel.performedOn", { date: performed })}
                       </p>
                     )}
                   </article>
@@ -312,7 +321,7 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
           )}
           {!!collections.length && (
             <ChannelShelf
-              title={`Featuring ${name}`}
+              title={t("musicdex.channel.featuring", { name })}
               count={collections.length}
             >
               {collections.map((playlist) => (
@@ -324,8 +333,10 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
             <ChannelShelf
               title={
                 channel.org
-                  ? `Discover more from ${channel.org}`
-                  : "Discover more artists"
+                  ? t("musicdex.channel.discoverMoreFrom", {
+                      org: channel.org,
+                    })
+                  : t("musicdex.channel.discoverMoreArtists")
               }
               count={related.length}
             >
@@ -344,7 +355,9 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
                     {channelName(artist, english)}
                   </span>
                   <span className={musicCardCaptionClass}>
-                    {artist.song_count.toLocaleString()} performances
+                    {tc("musicdex.discovery.performances", artist.song_count, {
+                      count: artist.song_count.toLocaleString(),
+                    })}
                   </span>
                 </Link>
               ))}
@@ -357,6 +370,7 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
 }
 
 function ChannelSongs({ channel }: { channel: Channel }) {
+  const { t, tc } = useT()
   const [params, setParams] = useSearchParams()
   const english = useSettings((s) => s.useEnglishName)
   const blocked = useSettings((s) => s.blockedChannels)
@@ -388,13 +402,20 @@ function ChannelSongs({ channel }: { channel: Channel }) {
         className={musicTextLinkClass}
       >
         <CaretLeftIcon className="size-4" />
-        Back to music overview
+        {t("musicdex.channel.backToOverview")}
       </Link>
       <MusicSectionHeading
-        title="All songs"
+        title={t("musicdex.channel.allSongs")}
         description={
           query.data
-            ? `${Number(query.data.total).toLocaleString()} indexed performances from ${name}.`
+            ? tc(
+                "musicdex.channel.indexedPerformances",
+                Number(query.data.total),
+                {
+                  total: Number(query.data.total).toLocaleString(),
+                  name,
+                }
+              )
             : undefined
         }
       >
@@ -403,7 +424,7 @@ function ChannelSongs({ channel }: { channel: Channel }) {
           to={`/music/search?${new URLSearchParams({ channelId: channel.id })}`}
         >
           <MagnifyingGlassIcon className="size-4" />
-          Search songs
+          {t("musicdex.channel.searchSongs")}
         </Link>
       </MusicSectionHeading>
       {query.isPending ? (
@@ -423,11 +444,11 @@ function ChannelSongs({ channel }: { channel: Channel }) {
             indexOffset={(page - 1) * 24}
             source={{
               id: `channel:${channel.id}:songs:${page}`,
-              title: `${name} · All songs`,
+              title: `${name} · ${t("musicdex.channel.allSongs")}`,
             }}
           />
           <nav
-            aria-label="Song pages"
+            aria-label={t("musicdex.channel.songPages")}
             className="flex items-center justify-between gap-3 border-t pt-4"
           >
             <Button
@@ -437,13 +458,15 @@ function ChannelSongs({ channel }: { channel: Channel }) {
               onClick={() => changePage(page - 1)}
             >
               <CaretLeftIcon />
-              Previous
+              {t("musicdex.channel.previous")}
             </Button>
             <span className="text-xs text-muted-foreground">
-              Page {page}
               {Number(query.data.total) > 0
-                ? ` of ${Math.ceil(Number(query.data.total) / 24)}`
-                : ""}
+                ? t("musicdex.channel.pageOf", {
+                    page,
+                    pages: Math.ceil(Number(query.data.total) / 24),
+                  })
+                : t("musicdex.channel.page", { page })}
             </span>
             <Button
               variant="outline"
@@ -451,7 +474,7 @@ function ChannelSongs({ channel }: { channel: Channel }) {
               disabled={page * 24 >= Number(query.data.total)}
               onClick={() => changePage(page + 1)}
             >
-              Next
+              {t("musicdex.channel.next")}
               <CaretRightIcon />
             </Button>
           </nav>

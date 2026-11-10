@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useDocumentTitle } from "@/hooks/use-document-title"
+import { useT } from "@/lib/i18n"
 import { useChannelInfos } from "@/lib/queries"
 import { useMusicSearch } from "@/lib/musicdex/queries"
 import {
@@ -74,7 +75,8 @@ const parseSort = (value: string) =>
   MUSIC_SEARCH_SORTS.find((option) => option === value)
 
 export default function MusicSearch() {
-  useDocumentTitle("Music Search")
+  const { t, tc } = useT()
+  useDocumentTitle(t("musicdex.search.documentTitle"))
   const [url, setUrl] = useSearchParams()
   const [draft, setDraft] = useState(() => fromParams(url))
   const [draftUrl, setDraftUrl] = useState(() => url.toString())
@@ -164,7 +166,7 @@ export default function MusicSearch() {
 
   const orgs = result.data?.orgs ?? []
   const orgOptions = [
-    { value: "", label: "All organizations" },
+    { value: "", label: t("musicdex.search.allOrganizations") },
     ...orgs.map((org) => ({
       value: org.name,
       label: `${org.name.replace(/_/g, " ")} (${org.count.toLocaleString()})`,
@@ -178,13 +180,24 @@ export default function MusicSearch() {
   const chips: { key: string; label: string; clear: () => void }[] = []
   const chip = (key: string, label: string, patch: Partial<Filters>) =>
     chips.push({ key, label, clear: () => choose(patch) })
-  if (selected.song) chip("song", `Song: ${selected.song}`, { song: "" })
-  if (selected.artist)
-    chip("artist", `Artist: ${selected.artist}`, { artist: "" })
-  if (type)
-    chip("type", type === "mv" ? "Music video" : "Stream", {
-      type: "",
+  if (selected.song)
+    chip("song", t("musicdex.search.songChip", { value: selected.song }), {
+      song: "",
     })
+  if (selected.artist)
+    chip(
+      "artist",
+      t("musicdex.search.artistChip", { value: selected.artist }),
+      { artist: "" }
+    )
+  if (type)
+    chip(
+      "type",
+      type === "mv"
+        ? t("musicdex.songList.musicVideo")
+        : t("musicdex.search.typeStream"),
+      { type: "" }
+    )
   if (selected.org)
     chip("org", selected.org.replace(/_/g, " "), { org: "", suborg: "" })
   for (const name of list(selected.suborg))
@@ -201,8 +214,12 @@ export default function MusicSearch() {
         .join("\n"),
     })
   })
-  if (selected.from) chip("from", `From ${selected.from}`, { from: "" })
-  if (selected.to) chip("to", `To ${selected.to}`, { to: "" })
+  if (selected.from)
+    chip("from", t("musicdex.search.fromChip", { date: selected.from }), {
+      from: "",
+    })
+  if (selected.to)
+    chip("to", t("musicdex.search.toChip", { date: selected.to }), { to: "" })
 
   return (
     <div className="container mx-auto space-y-9 max-md:space-y-7">
@@ -217,8 +234,8 @@ export default function MusicSearch() {
               className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground"
             />
             <Input
-              aria-label="Search music"
-              placeholder="Search songs or artists"
+              aria-label={t("musicdex.search.queryLabel")}
+              placeholder={t("musicdex.search.queryPlaceholder")}
               className="h-11 rounded-lg bg-background pr-4 pl-10"
               autoFocus
               value={draft.q}
@@ -226,47 +243,55 @@ export default function MusicSearch() {
             />
           </div>
           <Button type="submit" className="h-11 px-6">
-            Search
+            {t("component.search.searchLabel")}
           </Button>
         </div>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-1.5 text-sm">
-            <span className="font-medium">Type</span>
+            <span className="font-medium">
+              {t("views.search.typeDropdownLabel")}
+            </span>
             <ToggleGroup
               variant="outline"
               spacing={0}
-              aria-label="Type"
+              aria-label={t("views.search.typeDropdownLabel")}
               value={selected.type ? [draft.type] : []}
               onValueChange={(next) => choose({ type: next[0] ?? "" })}
             >
-              <ToggleGroupItem value="mv">Music video</ToggleGroupItem>
-              <ToggleGroupItem value="stream">Stream</ToggleGroupItem>
+              <ToggleGroupItem value="mv">
+                {t("musicdex.songList.musicVideo")}
+              </ToggleGroupItem>
+              <ToggleGroupItem value="stream">
+                {t("musicdex.search.typeStream")}
+              </ToggleGroupItem>
             </ToggleGroup>
           </div>
           <label className="space-y-1.5 text-sm">
-            <span className="font-medium">Song name</span>
+            <span className="font-medium">{t("musicdex.search.songName")}</span>
             <Input
               value={draft.song}
               onChange={(event) => update("song", event.target.value)}
-              placeholder="Title of the song"
+              placeholder={t("musicdex.search.songPlaceholder")}
             />
           </label>
           <label className="space-y-1.5 text-sm">
-            <span className="font-medium">Original artist</span>
+            <span className="font-medium">
+              {t("musicdex.search.originalArtist")}
+            </span>
             <Input
               value={draft.artist}
               onChange={(event) => update("artist", event.target.value)}
-              placeholder="Who wrote or first sang it"
+              placeholder={t("musicdex.search.artistPlaceholder")}
             />
           </label>
           <div className="space-y-1.5 text-sm sm:col-span-2 lg:col-span-3">
             <label htmlFor="music-channel" className="font-medium">
-              Channels
+              {t("musicdex.search.channels")}
             </label>
             <ChannelPicker
               id="music-channel"
-              placeholder="Type a talent's name"
+              placeholder={t("musicdex.search.channelPlaceholder")}
               value={channelIds}
               onChange={(ids) => choose({ channelId: ids.join("\n") })}
             />
@@ -274,7 +299,7 @@ export default function MusicSearch() {
           {showOrg && (
             <div className="space-y-1.5 text-sm">
               <label htmlFor="music-org" className="font-medium">
-                Organization
+                {t("musicdex.search.organization")}
               </label>
               <SimpleSelect
                 id="music-org"
@@ -288,11 +313,11 @@ export default function MusicSearch() {
           {showSuborg && (
             <div className="space-y-1.5 text-sm sm:col-span-2">
               <label htmlFor="music-suborg" className="font-medium">
-                Sub-organizations
+                {t("musicdex.search.subOrganizations")}
               </label>
               <MultiCombobox
                 id="music-suborg"
-                placeholder="Any sub-organization"
+                placeholder={t("musicdex.search.anySubOrganization")}
                 items={[
                   ...new Set([...(result.data?.suborgs ?? []), ...suborgs]),
                 ]}
@@ -302,7 +327,7 @@ export default function MusicSearch() {
             </div>
           )}
           <label className="space-y-1.5 text-sm">
-            <span className="font-medium">From date</span>
+            <span className="font-medium">{t("musicdex.search.fromDate")}</span>
             <Input
               type="date"
               value={draft.from}
@@ -311,7 +336,7 @@ export default function MusicSearch() {
             />
           </label>
           <label className="space-y-1.5 text-sm">
-            <span className="font-medium">To date</span>
+            <span className="font-medium">{t("musicdex.search.toDate")}</span>
             <Input
               type="date"
               value={draft.to}
@@ -326,20 +351,24 @@ export default function MusicSearch() {
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <p className="text-sm text-muted-foreground" aria-live="polite">
             {result.data
-              ? `${result.data.found.toLocaleString()} songs found`
-              : "Searching music…"}
+              ? tc("musicdex.search.found", result.data.found, {
+                  total: result.data.found.toLocaleString(),
+                })
+              : t("musicdex.search.searching")}
           </p>
           <div className="ml-auto flex items-center gap-2 text-sm">
-            <span className="text-muted-foreground">Sort by</span>
+            <span className="text-muted-foreground">
+              {t("musicdex.search.sortBy")}
+            </span>
             <SimpleSelect
-              aria-label="Sort"
+              aria-label={t("musicdex.search.sort")}
               size="sm"
               value={sort}
               onChange={changeSort}
               options={[
-                { value: "relevance", label: "Relevance" },
-                { value: "latest", label: "Latest" },
-                { value: "oldest", label: "Oldest" },
+                { value: "relevance", label: t("views.search.sort.relevance") },
+                { value: "latest", label: t("musicdex.search.sortLatest") },
+                { value: "oldest", label: t("views.search.sort.oldest") },
               ]}
             />
           </div>
@@ -351,7 +380,7 @@ export default function MusicSearch() {
                 <span className="max-w-48 truncate">{label}</span>
                 <button
                   type="button"
-                  aria-label={`Remove ${label}`}
+                  aria-label={t("component.search.removeFilter", [label])}
                   onClick={clear}
                   className="rounded-full p-0.5 hover:bg-foreground/10"
                 >
@@ -360,7 +389,7 @@ export default function MusicSearch() {
               </Badge>
             ))}
             <Button type="button" variant="ghost" size="xs" onClick={clearAll}>
-              Clear all
+              {t("musicdex.search.clearAll")}
             </Button>
           </div>
         )}
@@ -383,13 +412,13 @@ export default function MusicSearch() {
                 songs={songs}
                 source={{
                   id: `search:${url.toString()}`,
-                  title: "Music search",
+                  title: t("musicdex.search.sourceTitle"),
                 }}
               />
             ) : (
               <StateMessage
-                title="No songs found"
-                description="Try a different search or change the filters."
+                title={t("musicdex.search.noResults")}
+                description={t("musicdex.search.noResultsHint")}
               />
             )}
           </div>
@@ -399,8 +428,9 @@ export default function MusicSearch() {
           <>
             {result.data.found > 5000 && page * 24 >= 5000 && (
               <p className="text-sm text-muted-foreground">
-                Showing the first 5,000 results. Refine your search or filters
-                to find more songs.
+                {t("musicdex.search.resultCap", {
+                  limit: (5000).toLocaleString(),
+                })}
               </p>
             )}
             <div className="flex items-center gap-3">
@@ -409,15 +439,17 @@ export default function MusicSearch() {
                 disabled={page <= 1}
                 onClick={() => changePage(page - 1)}
               >
-                Previous
+                {t("musicdex.channel.previous")}
               </Button>
-              <span className="text-sm">Page {page}</span>
+              <span className="text-sm">
+                {t("musicdex.channel.page", { page })}
+              </span>
               <Button
                 variant="outline"
                 disabled={page * 24 >= Math.min(result.data.found, 5000)}
                 onClick={() => changePage(page + 1)}
               >
-                Next
+                {t("musicdex.channel.next")}
               </Button>
             </div>
           </>

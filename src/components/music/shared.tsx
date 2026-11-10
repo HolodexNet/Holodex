@@ -28,6 +28,19 @@ export const musicTextLinkClass =
 export const musicBannerArtClass =
   "mr-6 w-55 shrink-0 rotate-[9deg] max-md:pointer-events-none max-md:absolute max-md:-right-28.75 max-md:-bottom-7.5 max-md:w-62.5 max-md:opacity-15"
 
+const htmlEntities: Record<string, string> = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;",
+}
+
+/** Escapes a dynamic value before it is placed into a translated markup string. */
+export function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (char) => htmlEntities[char])
+}
+
 /** Logged-out call to action shown in place of a music tab's content. */
 export function MusicSignInBanner({
   title,

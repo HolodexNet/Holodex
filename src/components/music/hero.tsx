@@ -11,10 +11,12 @@ import { MusicArtwork } from "@/components/music/artwork"
 import type { DiscoveryScope } from "@/components/music/discovery/sections"
 import { PlayPlaylistButton } from "@/components/music/play-playlist"
 import { PauseIcon } from "@/components/music/player/icons"
+import { escapeHtml } from "@/components/music/shared"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ALL_VTUBERS } from "@/lib/consts"
+import { useT } from "@/lib/i18n"
 import { formatMusicPlaylist } from "@/lib/musicdex/format"
 import type { PlaylistStub, Song } from "@/lib/musicdex/types"
 import { useMusicPlayer, type MusicSource } from "@/stores/music-player"
@@ -23,12 +25,13 @@ import { useSettings } from "@/stores/settings"
 export function PlaySongsButton({
   songs,
   source,
-  label = "Play all",
+  label,
 }: {
   songs: Song[]
   source: MusicSource
   label?: string
 }) {
+  const { t } = useT()
   const active = useMusicPlayer(
     (s) => s.source?.id === source.id && !!s.current
   )
@@ -44,33 +47,32 @@ export function PlaySongsButton({
       className="gap-2"
     >
       {playing ? <PauseIcon /> : <PlayIcon />}
-      {playing ? "Pause" : label}
+      {playing
+        ? t("views.multiview.pause")
+        : (label ?? t("musicdex.common.playAll"))}
     </Button>
   )
 }
 
 export function AddToQueueButton({
   songs,
-  label = "Add to queue",
+  label,
 }: {
   songs: Song[]
   label?: string
 }) {
+  const { t, tc } = useT()
   return (
     <Button
       variant="outline"
       disabled={!songs.length}
       onClick={() => {
         useMusicPlayer.getState().addToQueue(songs)
-        toast.success(
-          songs.length === 1
-            ? "Added 1 song to queue"
-            : `Added ${songs.length} songs to queue`
-        )
+        toast.success(tc("musicdex.common.addedToQueue", songs.length))
       }}
       className="gap-2"
     >
-      <PlusIcon /> {label}
+      <PlusIcon /> {label ?? t("musicdex.common.addToQueue")}
     </Button>
   )
 }
@@ -98,6 +100,7 @@ export function MusicHero({
   songs?: Song[]
   loading?: boolean
 }) {
+  const { t } = useT()
   const english = useSettings((s) => s.useEnglishName)
   const blocked = useSettings((s) => s.blockedChannels)
   const picks = playlists.filter(
@@ -122,20 +125,28 @@ export function MusicHero({
       ].slice(0, 3)
     : []
   const label = scope.type === "org" ? scope.name : "Favorites"
+  const subject = favorites
+    ? t("musicdex.hero.yourOshis")
+    : scope.type === "org"
+      ? scope.name
+      : t("component.mainNav.favorites")
+  const titleHtml = {
+    __html: t("musicdex.hero.title", { subject: escapeHtml(subject) }),
+  }
   return (
     <section className="relative isolate grid min-h-87.5 grid-cols-[1.1fr_1fr] overflow-clip rounded-[22px] border border-[color-mix(in_oklch,var(--complement)_13%,var(--border))] bg-[color-mix(in_oklch,var(--complement-soft)_22%,var(--card))] before:absolute before:right-[-8%] before:bottom-[-65%] before:-z-1 before:aspect-square before:w-[45%] before:rounded-full before:bg-primary before:opacity-[0.14] before:blur-[100px] before:content-[''] max-md:grid-cols-[minmax(0,1fr)]">
       <div className="relative z-5 flex flex-col items-start px-[clamp(24px,3vw,48px)] py-12 max-md:px-6">
         {/* Bold Title */}
-        <h1 className="mt-4 max-w-2xl text-[clamp(36px,4.5vw,64px)] leading-[1.05] font-black tracking-tight text-balance">
-          Music<span className="text-brand">dex</span> is all about{" "}
-          <span className="text-brand">{favorites ? "your oshis" : label}</span>
-        </h1>
+        <h1
+          className="mt-4 max-w-2xl text-[clamp(36px,4.5vw,64px)] leading-[1.05] font-black tracking-tight text-balance"
+          dangerouslySetInnerHTML={titleHtml}
+        />
 
         {/* Detailed Metadata Subtext */}
         <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-muted-foreground/90 max-md:hidden">
           {favorites
-            ? "Jump straight into your bookmarked performances, saved karaoke streams, and favorite VTuber tracks."
-            : "Listen and assemble playlists from their singing streams and YouTube uploads, thanks to our community-submitted tagging."}
+            ? t("musicdex.hero.favoritesDescription")
+            : t("musicdex.hero.description")}
         </p>
 
         {/* Actions */}
@@ -143,23 +154,26 @@ export function MusicHero({
           {favorites && songs.length ? (
             <PlaySongsButton
               songs={songs}
-              source={{ id: "liked", title: "Liked songs" }}
-              label="Queue Saved Tracks"
+              source={{ id: "liked", title: t("musicdex.sidebar.likedSongs") }}
+              label={t("musicdex.hero.queueSavedTracks")}
             />
           ) : featured ? (
             <PlayPlaylistButton
               playlist={featured}
               label={
-                formatted?.radio ? "Launch Talent Radio" : "Play Spotlight Mix"
+                formatted?.radio
+                  ? t("musicdex.hero.launchTalentRadio")
+                  : t("musicdex.hero.playSpotlightMix")
               }
             />
           ) : loading ? (
             <Button disabled className="gap-2">
-              <Spinner /> Indexing tracks...
+              <Spinner /> {t("musicdex.hero.indexingTracks")}
             </Button>
           ) : (
             <Button nativeButton={false} render={<Link to="/music/search" />}>
-              <MagnifyingGlassIcon className="size-4" /> Search VTubers or MVs
+              <MagnifyingGlassIcon className="size-4" />{" "}
+              {t("musicdex.hero.searchVtubersOrMvs")}
             </Button>
           )}
 
@@ -167,7 +181,9 @@ export function MusicHero({
             to={favorites ? "/music/liked" : "/#radio"}
             className="inline-flex items-center gap-2 rounded-lg border border-border/50 bg-secondary/40 px-4 py-2 text-xs font-semibold text-foreground transition-colors hover:bg-secondary"
           >
-            {favorites ? "Manage Library" : "Explore Radios"}
+            {favorites
+              ? t("musicdex.hero.manageLibrary")
+              : t("musicdex.hero.exploreRadios")}
             <CaretRightIcon className="size-4 opacity-70" />
           </Link>
         </div>
@@ -187,7 +203,9 @@ export function MusicHero({
                 className={cn(heroCover, heroCoverLayout[index])}
                 aria-label={
                   index === 0
-                    ? `Featured collection: ${cover.title}`
+                    ? t("musicdex.hero.featuredCollection", {
+                        title: cover.title,
+                      })
                     : cover.title
                 }
                 tabIndex={index === 0 ? undefined : -1}
@@ -218,7 +236,7 @@ export function MusicHero({
         ) : (
           <div className={cn(heroCover, heroCoverLayout[0])}>
             <MusicArtwork
-              title="Your next favorite"
+              title={t("musicdex.hero.yourNextFavorite")}
               seed={label}
               label="MUSICDEX"
             />
@@ -226,7 +244,9 @@ export function MusicHero({
         )}
         {formatted ? (
           <Link to={formatted.href} className={heroCaption}>
-            <span className="music-eyebrow">IN THE SPOTLIGHT</span>
+            <span className="music-eyebrow">
+              {t("musicdex.hero.inTheSpotlight")}
+            </span>
             <span className="truncate">{formatted.title}</span>
             <CaretRightIcon className="size-4 shrink-0" />
           </Link>

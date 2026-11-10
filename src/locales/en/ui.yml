@@ -1640,6 +1640,312 @@ videoEdit:
     redo: Redo
     save: Save
     help: Show this list
+musicdex:
+  common:
+    bestOf: Best of
+    loadingMusic: Loading music
+    keepListening: Keep listening
+    playLabel: Play {title}
+    pauseLabel: Pause {title}
+    noPlayableSongs: No playable songs in this collection yet.
+    couldNotStart: Could not start this collection.
+    loadingPlaylist: Loading playlist
+    loadingRadio: Loading radio
+    loadingLikedSongs: Loading liked songs
+    loadingPopularSongs: Loading popular songs
+    loadingArtistCollections: Loading artist collections
+    playAll: Play all
+    addToQueue: Add to queue
+    addedToQueue: 'Added 1 song to queue | Added {count} songs to queue'
+  format:
+    title:
+      artistRadio: Artist radio
+      trending: Trending songs
+      dailyMix: Daily Mix
+      dailyMixFor: 'Daily Mix: {name}'
+      weeklyMix: Weekly Mix
+      orgWeeklyMix: '{org} Weekly Mix'
+      myWeeklyMix: My Weekly Mix
+      history: Recently played
+      latest: Latest songs
+      orgLatest: Catch up on {org}
+      coversAndOriginals: Covers & originals
+      orgBestOf: Best of {org}
+      orgRecentCovers: Recent {org} covers & originals
+      singingStream: Singing stream
+      untitled: Untitled playlist
+    kind:
+      artistRadio: Artist radio
+      singingSession: Singing session
+      dailyMix: Daily mix
+      weeklyMix: Weekly mix
+      coversAndOriginals: Covers & originals
+      newDiscoveries: New discoveries
+      community: Community playlist
+      musicdexMix: Musicdex mix
+    cover:
+      dailyMix: DAILY MIX
+      weeklyMix: WEEKLY MIX
+    description:
+      radio: A station built around {title}.
+      radioFallback: A station built around the music you love.
+      video: The songs, in the order they happened.
+      mix: Covers, originals, and performances worth coming back to.
+  search:
+    formLabel: Musicdex search
+    inputLabel: Search Musicdex songs and artists
+    placeholder: Search songs and artists
+    submitLabel: Search music
+    documentTitle: Music Search
+    sourceTitle: Music search
+    queryLabel: Search music
+    queryPlaceholder: Search songs or artists
+    songName: Song name
+    songPlaceholder: Title of the song
+    songChip: 'Song: {value}'
+    originalArtist: Original artist
+    artistPlaceholder: Who wrote or first sang it
+    artistChip: 'Artist: {value}'
+    channels: Channels
+    channelPlaceholder: Type a talent's name
+    organization: Organization
+    allOrganizations: All organizations
+    subOrganizations: Sub-organizations
+    anySubOrganization: Any sub-organization
+    fromDate: From date
+    toDate: To date
+    fromChip: From {date}
+    toChip: To {date}
+    typeStream: Stream
+    sortBy: Sort by
+    sort: Sort
+    sortLatest: Latest
+    clearAll: Clear all
+    searching: Searching music…
+    found: 'No songs found | 1 song found | {total} songs found'
+    noResults: No songs found
+    noResultsHint: Try a different search or change the filters.
+    resultCap: Showing the first {limit} results. Refine your search or filters to find more songs.
+  playlists:
+    addToPlaylist: Add to playlist
+    addMenuLabel: Add to Musicdex playlist
+    signInToAdd: Sign in to add songs
+    loadingPlaylists: Loading playlists…
+    loadPlaylistsFailed: Could not load playlists
+    noPlaylists: No playlists yet
+    songAdded: Added to playlist
+    addFailed: Could not confirm the song was added. Refresh the playlist before trying again.
+  sidebar:
+    loading: Loading…
+    loadFailed: Could not load items
+    noItems: No items yet
+    openLibrary: Open music library
+    searchMusic: Search music
+    likedSongs: Liked songs
+    radios: Radios
+    playlists: Musicdex Playlists
+  hero:
+    title: 'Music<span class="text-brand">dex</span> is all about <span class="text-brand">{subject}</span>'
+    yourOshis: your oshis
+    description: Listen and assemble playlists from their singing streams and YouTube uploads, thanks to our community-submitted tagging.
+    favoritesDescription: Jump straight into your bookmarked performances, saved karaoke streams, and favorite VTuber tracks.
+    queueSavedTracks: Queue Saved Tracks
+    launchTalentRadio: Launch Talent Radio
+    playSpotlightMix: Play Spotlight Mix
+    indexingTracks: Indexing tracks...
+    searchVtubersOrMvs: Search VTubers or MVs
+    manageLibrary: Manage Library
+    exploreRadios: Explore Radios
+    featuredCollection: 'Featured collection: {title}'
+    yourNextFavorite: Your next favorite
+    inTheSpotlight: IN THE SPOTLIGHT
+  songList:
+    signInToLike: Sign in to like songs
+    likeFailed: Could not update liked song
+    likeSong: Like song
+    unlikeSong: Unlike song
+    addedToQueue: Added to queue
+    nowPlaying: Now playing
+    musicVideo: Music video
+    singingStream: Singing stream
+    openOnYoutube: Open this performance on YouTube
+    loadingSongs: Loading songs
+    noSongsFound: No songs found.
+    trackArtist: Track / Artist
+    performed: Performed
+    time: Time
+    showMore: Show more songs ({shown} of {total})
+  discovery:
+    seeAll: See all
+    explore: Explore {title}
+    scrollLeft: Scroll {title} left
+    scrollRight: Scroll {title} right
+    oshiMixes: Oshi Mixes
+    orgMixes: '{name} Mixes'
+    oshiRadios: Oshi Radios
+    orgRadios: '{name} Radios'
+    freshFromStage: Fresh from the stage
+    freshFromStageDescription: Latest songs
+    loading: Loading music discovery
+    performances: '{count} performance | {count} performances'
+    community: From the community
+    communityDescription: Fan-curated collections.
+    nextFavoriteVoice: Meet your next favorite voice
+  channel:
+    popular: Popular
+    queueCount: Queue ({count})
+    addedToQueue: 'Added 1 song to the queue | Added {count} songs to the queue'
+    showMore: Show more
+    showLess: Show less
+    noMusicTitle: No music indexed yet
+    noMusicDescription: Indexed performances from {name} will appear here.
+    latestStreams: Latest streams
+    songCount: '1 song | {count} songs'
+    performedOn: Performed {date}
+    featuring: Featuring {name}
+    discoverMoreFrom: Discover more from {org}
+    discoverMoreArtists: Discover more artists
+    backToOverview: Back to music overview
+    allSongs: All songs
+    searchSongs: Search songs
+    seeAllSongs: See all songs
+    indexedPerformances: '1 indexed performance from {name}. | {total} indexed performances from {name}.'
+    songPages: Song pages
+    previous: Previous
+    next: Next
+    page: Page {page}
+    pageOf: Page {page} of {pages}
+  player:
+    videoFrame: Music video player
+    musicPlayer: Music player
+    unknownArtist: Unknown artist
+    from: From {title}
+    skipping: Cannot be played here. Skipping…
+    cannotPlay: This video cannot be played here.
+    autoplayBlocked: Playback was blocked. Press play to try again.
+    youtubeLoadFailed: Could not load the YouTube player.
+    tooManyFailures: Several songs in a row could not be played.
+    radioEmpty: No more radio songs were returned.
+    radioFailed: Could not load more radio songs.
+    retryRadio: Retry radio
+    skip: Skip
+    shuffle: Shuffle
+    repeatLabel: 'Repeat: {mode}'
+    repeatNone: none
+    repeatAll: all
+    repeatOne: one
+    seek: Seek
+    upNext: Up next
+    upNextCount: 'Up next: no songs | Up next: 1 song | Up next: {count} songs'
+    enterFullscreen: Enter fullscreen
+    expandPlayer: Expand player
+    collapsePlayer: Collapse player
+    openListeningView: Open listening view
+    backToBrowsing: Back to browsing
+    closePlayer: Close player
+    onAirRadio: ON AIR / ARTIST RADIO
+    nowPlayingEyebrow: NOW PLAYING
+    clearQueue: Clear
+    removeFromQueue: Remove {name} from queue
+    emptyQueue: A little quiet in here.
+    emptyQueueHint: Add a song from any collection.
+  library:
+    bannerTitle: A place for your good finds.
+    bannerDescription: Make a mix for the commute, keep a favorite karaoke session, or save an artist radio for later.
+    bannerAction: Sign in to start collecting
+    artworkTitle: Your collection
+    playlistName: Playlist name
+    description: Description
+    create: Create
+    creating: Creating…
+    cancel: Cancel
+    newPlaylist: New playlist
+    playlistCreated: Playlist created
+    createFailed: Could not confirm playlist creation. Check your library before trying again.
+    yourPlaylists: Your Playlists
+    playlistCount: '1 Musicdex playlist in your collection. | {count} Musicdex playlists in your collection.'
+    blankPage: It's a blank page right now, go make one!
+    loadMineFailed: Could not load your playlists.
+    loadingStarred: Loading starred items…
+    loadStarredFailed: Could not load starred items.
+    noPlaylists: You have not created a playlist yet.
+    savedPlaylists: Saved Playlists & Radios
+    noStarred: Star a playlist or radio to find it here.
+  radio:
+    documentTitle: Music Radio
+    couldNotLoad: Could not load radio
+    startRadio: Start radio
+    moreSongs: More songs as you listen
+    songCount: '1 song to get you started | {count} songs to get you started'
+  playlist:
+    documentTitle: Music Playlist
+    couldNotLoad: Could not load playlist
+    unavailableOrPrivate: It may be unavailable or private.
+    playCollection: Play collection
+    saveToLibrary: Save to library
+    saved: Saved
+    edit: Edit playlist
+    deleteTitle: Delete playlist?
+    deleteDescription: This will permanently delete {title}.
+    deleteConfirm: Delete playlist
+    deleting: Deleting...
+    deleted: Playlist deleted
+    deleteFailed: Could not delete playlist
+    starFailed: Could not update star
+    starStatusFailed: Could not load star status.
+    refreshFailed: Could not refresh this playlist; showing previously loaded data.
+    noSongs: No songs yet.
+    publicPlaylist: Public playlist
+    onlyYou: Only you
+    durationHours: '{hours} hr'
+    durationMinutes: '{minutes} min'
+    songs: Songs
+    noSongsEditor: No songs in this playlist yet. Add songs from a song list.
+    moveUp: Move {name} up
+    moveDown: Move {name} down
+    removeSong: Remove {name}
+    playlistSaved: Playlist saved
+    saveFailed: Could not save playlist. Your draft has been kept.
+    sessionChanged: Your session changed. Your draft has been kept.
+    changedSinceEdit: This playlist changed since you started editing. Your draft has been kept; cancel and reopen it to see the latest version.
+    notOwner: You no longer own this playlist. Your draft has been kept.
+    saveUnconfirmed: The save was sent, but could not be confirmed. Your draft has been kept; check the playlist before retrying.
+    serverMismatch: The server returned different playlist contents. Your draft has been kept; refresh the playlist to review it.
+  home:
+    popularSongs: Popular songs
+    popularSongsDescription: Trending songs according to listeners on musicdex.
+    trendingSongs: Trending {org} songs
+    noTrendingSongs: No trending songs found.
+    loadMoreFavorites: Load more favorite channels
+    loadingFavoriteMusic: Loading music from favorite channels…
+    loadingFavorites: Loading favorite channels…
+    favoritesEmptyMusic: Favorite channels to discover their music here.
+    favoritesEmptyRadios: Favorite channels to discover their radios here.
+    signInTitle: Make yourself at home.
+    signInDescription: Sign in with your Holodex account to bring your favorite channels into the listening room.
+    signInAction: Sign in to Holodex
+    signIn: Sign in
+    signInToSeeLiked: Sign in to see your liked songs
+    favoritesArtworkTitle: Your favorites
+    loadingLikedSongs: Loading liked songs…
+    noLikedSongs: No liked songs yet.
+    noLikedSongsTitle: No liked songs yet
+    likedDocumentTitle: Liked Songs
+    playSongsOnPage: Play songs on page
+    addPageToQueue: Add page to queue
+    loadingSavedRadios: Loading saved radios…
+    savedRadios: Saved radios
+    noSavedRadios: You have no saved radios yet.
+    loadingRadios: Loading radios
+    loadingFavoriteChannels: Loading favorite channels
+    noRadiosForOrg: No radios found for {org}
+    noRadiosForFavorites: No radios found for your favorite channels
+    tuneIn: Tune in
+    communityPlaylists: Community playlists
+    playlists: Playlists
+    browseDocumentTitle: '{org} {title}'
+    loadingPlaylists: Loading playlists
+    noPlaylistsForOrg: No playlists found for {org}
 channelRequest:
   RequestType: 'Request Type:'
   Types:

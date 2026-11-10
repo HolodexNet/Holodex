@@ -17,6 +17,7 @@ import {
 import { PlayPlaylistButton } from "@/components/music/play-playlist"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useT } from "@/lib/i18n"
 import { formatMusicPlaylist } from "@/lib/musicdex/format"
 import type { MusicDiscovery, PlaylistStub } from "@/lib/musicdex/types"
 import { useSettings } from "@/stores/settings"
@@ -48,6 +49,7 @@ export function MusicPlaylistCard({
   playlist: PlaylistStub
   className?: string
 }) {
+  useT() // formatMusicPlaylist translates through getT(); re-render on language change
   const english = useSettings((s) => s.useEnglishName)
   const formatted = formatMusicPlaylist(playlist, english)
   return (
@@ -109,6 +111,7 @@ export function PlaylistCards({
   description?: string
   loading?: boolean
 }) {
+  const { t } = useT()
   const blocked = useSettings((s) => s.blockedChannels)
   const rail = useRef<HTMLDivElement>(null)
   const visible = [
@@ -122,7 +125,7 @@ export function PlaylistCards({
   if (!loading && !visible.length)
     return seeAll ? (
       <Link to={seeAll} className={musicTextLinkClass}>
-        Explore {title.toLowerCase()}
+        {t("musicdex.discovery.explore", { title: title.toLowerCase() })}
         <CaretRightIcon className="size-4" />
       </Link>
     ) : null
@@ -138,7 +141,7 @@ export function PlaylistCards({
       <MusicSectionHeading title={title} description={description}>
         {seeAll && (
           <Link className={musicTextLinkClass} to={seeAll}>
-            See all
+            {t("musicdex.discovery.seeAll")}
             <CaretRightIcon className="size-3.5" />
           </Link>
         )}
@@ -147,7 +150,7 @@ export function PlaylistCards({
             <Button
               variant="outline"
               size="icon-sm"
-              aria-label={`Scroll ${title} left`}
+              aria-label={t("musicdex.discovery.scrollLeft", { title })}
               disabled={loading}
               onClick={() => scroll(-1)}
             >
@@ -156,7 +159,7 @@ export function PlaylistCards({
             <Button
               variant="outline"
               size="icon-sm"
-              aria-label={`Scroll ${title} right`}
+              aria-label={t("musicdex.discovery.scrollRight", { title })}
               disabled={loading}
               onClick={() => scroll(1)}
             >
@@ -221,6 +224,7 @@ export function DiscoverySections({
   browse?: boolean
   loading?: boolean
 }) {
+  const { t, tc } = useT()
   const blocked = useSettings((s) => s.blockedChannels)
   const english = useSettings((s) => s.useEnglishName)
   const channels = (discovery?.channels ?? []).filter(
@@ -236,12 +240,14 @@ export function DiscoverySections({
     <div className="grid min-w-0 gap-11 max-md:gap-8" aria-busy={loading}>
       {loading && (
         <span role="status" className="sr-only">
-          Loading music discovery
+          {t("musicdex.discovery.loading")}
         </span>
       )}
       <PlaylistCards
         title={
-          scope.type === "favorites" ? "Oshi Mixes" : `${scope.name} Mixes`
+          scope.type === "favorites"
+            ? t("musicdex.discovery.oshiMixes")
+            : t("musicdex.discovery.orgMixes", { name: scope.name })
         }
         seeAll={browse ? "/music/browse/sgp" : undefined}
         playlists={playlists.filter(
@@ -251,7 +257,9 @@ export function DiscoverySections({
       />
       <PlaylistCards
         title={
-          scope.type === "favorites" ? "Oshi Radios" : `${scope.name} Radios`
+          scope.type === "favorites"
+            ? t("musicdex.discovery.oshiRadios")
+            : t("musicdex.discovery.orgRadios", { name: scope.name })
         }
         seeAll={browse ? "/#radio" : undefined}
         playlists={playlists.filter((p) => p.type?.startsWith("radio"))}
@@ -260,8 +268,8 @@ export function DiscoverySections({
       {(loading || !!streams.length) && (
         <section className="min-w-0 space-y-5">
           <MusicSectionHeading
-            title="Fresh from the stage"
-            description="Latest songs"
+            title={t("musicdex.discovery.freshFromStage")}
+            description={t("musicdex.discovery.freshFromStageDescription")}
           />
           <div className={railClass}>
             {loading &&
@@ -301,10 +309,10 @@ export function DiscoverySections({
                       />
                       <span className="absolute bottom-2.5 left-2.5 flex items-center gap-1.25 rounded-[5px] bg-[#0009] px-1.75 py-1.25 text-[9px] font-semibold text-white backdrop-blur-[10px]">
                         <PlayIcon className="size-3" />
-                        {playlist!.content!.length}{" "}
-                        {playlist!.content!.length === 1
-                          ? "performance"
-                          : "performances"}
+                        {tc(
+                          "musicdex.discovery.performances",
+                          playlist!.content!.length
+                        )}
                       </span>
                     </Link>
                     <PlayPlaylistButton
@@ -337,15 +345,17 @@ export function DiscoverySections({
         </section>
       )}
       <PlaylistCards
-        title="From the community"
-        description="Fan-curated collections."
+        title={t("musicdex.discovery.community")}
+        description={t("musicdex.discovery.communityDescription")}
         seeAll={browse ? "/music/browse/ugp" : undefined}
         playlists={playlists.filter((p) => p.type === "ugp")}
         loading={loading}
       />
       {(loading || !!channels.length) && (
         <section className="min-w-0 space-y-5">
-          <MusicSectionHeading title="Meet your next favorite voice" />
+          <MusicSectionHeading
+            title={t("musicdex.discovery.nextFavoriteVoice")}
+          />
           <div className={railClass}>
             {loading &&
               Array.from({ length: 8 }, (_, index) => (
@@ -383,7 +393,9 @@ export function DiscoverySections({
                   {(english && channel.english_name) || channel.name}
                 </span>
                 <span className={musicCardCaptionClass}>
-                  {channel.song_count.toLocaleString()} performances
+                  {tc("musicdex.discovery.performances", channel.song_count, {
+                    count: channel.song_count.toLocaleString(),
+                  })}
                 </span>
               </Link>
             ))}

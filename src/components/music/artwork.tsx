@@ -6,6 +6,7 @@ import {
   RadioIcon,
 } from "@/components/icons"
 import { OrgIcon, orgIconSrc } from "@/components/layout/org-selector"
+import { useT } from "@/lib/i18n"
 import { useOrgs } from "@/lib/queries"
 import type { Org } from "@/lib/types"
 
@@ -27,6 +28,7 @@ function BestOfJacket({
   className?: string
   children: ReactNode
 }) {
+  const { t } = useT()
   const orgs = useOrgs()
   const edition = JACKET_EDITIONS[org]
   const resolved: Org = orgs.data?.find((item) => item.name === org) ?? {
@@ -59,7 +61,7 @@ function BestOfJacket({
           )}
         </span>
         <span className="music-jacket-type">
-          <strong>Best of</strong>
+          <strong>{t("musicdex.common.bestOf")}</strong>
           <small>{org}</small>
         </span>
       </div>

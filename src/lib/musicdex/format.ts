@@ -1,11 +1,16 @@
 import { ALL_VTUBERS } from "../consts.ts"
+import { getT } from "../i18n"
 import type { Playlist, PlaylistStub } from "./types"
 
-/** Musicdex generated playlist IDs carry their display context in the ID and description. */
+/**
+ * Musicdex generated playlist IDs carry their display context in the ID and description.
+ * Labels come from getT(), so callers must subscribe with useT() to re-render on language change.
+ */
 export function formatMusicPlaylist(
   playlist: PlaylistStub | Playlist,
   preferEnglish = true
 ) {
+  const { t } = getT()
   const [type, raw = ""] = playlist.id.split(/[[\]]/)
   const params = new URLSearchParams(raw.replace(/,/g, "&"))
   let data: {
@@ -28,35 +33,41 @@ export function formatMusicPlaylist(
   let title = playlist.title
   switch (type) {
     case ":artist":
-      title = name || title || "Artist radio"
+      title = name || title || t("musicdex.format.title.artistRadio")
       break
     case ":hot":
-      title = "Trending songs"
+      title = t("musicdex.format.title.trending")
       break
     case ":dailyrandom":
-      title = name ? `Daily Mix: ${name}` : title || "Daily Mix"
+      title = name
+        ? t("musicdex.format.title.dailyMixFor", { name })
+        : title || t("musicdex.format.title.dailyMix")
       break
     case ":weekly":
-      title = org ? `${org} Weekly Mix` : title || "Weekly Mix"
+      title = org
+        ? t("musicdex.format.title.orgWeeklyMix", { org })
+        : title || t("musicdex.format.title.weeklyMix")
       break
     case ":userweekly":
-      title = "My Weekly Mix"
+      title = t("musicdex.format.title.myWeeklyMix")
       break
     case ":history":
-      title = "Recently played"
+      title = t("musicdex.format.title.history")
       break
     case ":latest":
-      title = org ? `Catch up on ${org}` : title || "Latest songs"
+      title = org
+        ? t("musicdex.format.title.orgLatest", { org })
+        : title || t("musicdex.format.title.latest")
       break
     case ":mv":
       title = org
         ? params.get("sort") === "random"
-          ? `Best of ${org}`
-          : `Recent ${org} covers & originals`
-        : title || "Covers & originals"
+          ? t("musicdex.format.title.orgBestOf", { org })
+          : t("musicdex.format.title.orgRecentCovers", { org })
+        : title || t("musicdex.format.title.coversAndOriginals")
       break
     case ":video":
-      title = data.title || title || "Singing stream"
+      title = data.title || title || t("musicdex.format.title.singingStream")
       break
   }
   const radio =
@@ -76,29 +87,29 @@ export function formatMusicPlaylist(
         ? `https://i.ytimg.com/vi/${encodeURIComponent(video)}/hqdefault.jpg`
         : undefined
   return {
-    title: title || "Untitled playlist",
+    title: title || t("musicdex.format.title.untitled"),
     image,
     radio,
     kind: radio
-      ? "Artist radio"
+      ? t("musicdex.format.kind.artistRadio")
       : type === ":video"
-        ? "Singing session"
+        ? t("musicdex.format.kind.singingSession")
         : type === ":dailyrandom"
-          ? "Daily mix"
+          ? t("musicdex.format.kind.dailyMix")
           : type === ":weekly" || type === ":userweekly"
-            ? "Weekly mix"
+            ? t("musicdex.format.kind.weeklyMix")
             : type === ":mv"
-              ? "Covers & originals"
+              ? t("musicdex.format.kind.coversAndOriginals")
               : type === ":latest"
-                ? "New discoveries"
+                ? t("musicdex.format.kind.newDiscoveries")
                 : playlist.type === "ugp"
-                  ? "Community playlist"
-                  : "Musicdex mix",
+                  ? t("musicdex.format.kind.community")
+                  : t("musicdex.format.kind.musicdexMix"),
     coverLabel:
       type === ":dailyrandom"
-        ? "DAILY MIX"
+        ? t("musicdex.format.cover.dailyMix")
         : type === ":weekly" || type === ":userweekly"
-          ? "WEEKLY MIX"
+          ? t("musicdex.format.cover.weeklyMix")
           : undefined,
     bestOf:
       type === ":mv" && org && params.get("sort") === "random"
@@ -106,10 +117,12 @@ export function formatMusicPlaylist(
         : undefined,
     description: playlist.id.startsWith(":")
       ? radio
-        ? `A station built around ${title || "the music you love"}.`
+        ? title
+          ? t("musicdex.format.description.radio", { title })
+          : t("musicdex.format.description.radioFallback")
         : type === ":video"
-          ? "The songs, in the order they happened."
-          : "Covers, originals, and performances worth coming back to."
+          ? t("musicdex.format.description.video")
+          : t("musicdex.format.description.mix")
       : description,
     href: `/music/${radio ? "radio" : "playlist"}/${encodeURIComponent(playlist.id)}`,
   }

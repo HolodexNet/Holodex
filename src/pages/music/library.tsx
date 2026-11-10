@@ -21,6 +21,7 @@ import {
   musicCollectionGridClass,
 } from "@/components/music/page-header"
 import { PlusIcon } from "@/components/icons"
+import { useT } from "@/lib/i18n"
 
 function PlaylistGrid({
   items,
@@ -42,6 +43,7 @@ function PlaylistGrid({
 
 /** The viewer's own Musicdex playlists, shown as a tab of the main home page. */
 export function MusicLibraryTab() {
+  const { t, tc } = useT()
   const { mine, starred, loggedIn, user } = useMusicLibrary()
   const invalidate = useMusicInvalidation()
   const navigate = useNavigate()
@@ -77,7 +79,7 @@ export function MusicLibraryTab() {
     },
     onSuccess: async (playlist) => {
       await invalidate()
-      toast.success("Playlist created")
+      toast.success(t("musicdex.library.playlistCreated"))
       setCreating(false)
       setTitle("")
       setDescription("")
@@ -85,9 +87,7 @@ export function MusicLibraryTab() {
     },
     onError: () => {
       void invalidate()
-      toast.error(
-        "Could not confirm playlist creation. Check your library before trying again."
-      )
+      toast.error(t("musicdex.library.createFailed"))
     },
   })
   function submit(e: FormEvent) {
@@ -98,12 +98,12 @@ export function MusicLibraryTab() {
     <div className="container mx-auto space-y-9 max-md:space-y-7">
       {!loggedIn ? (
         <MusicSignInBanner
-          title="A place for your good finds."
-          description="Make a mix for the commute, keep a favorite karaoke session, or save an artist radio for later."
-          action="Sign in to start collecting"
+          title={t("musicdex.library.bannerTitle")}
+          description={t("musicdex.library.bannerDescription")}
+          action={t("musicdex.library.bannerAction")}
           art={
             <MusicArtwork
-              title="Your collection"
+              title={t("musicdex.library.artworkTitle")}
               seed="library"
               label="SIDE A"
               radio
@@ -122,7 +122,7 @@ export function MusicLibraryTab() {
                   className="block text-sm font-medium"
                   htmlFor="music-new-title"
                 >
-                  Playlist name
+                  {t("musicdex.library.playlistName")}
                 </label>
                 <Input
                   id="music-new-title"
@@ -135,7 +135,7 @@ export function MusicLibraryTab() {
                   className="block text-sm font-medium"
                   htmlFor="music-new-description"
                 >
-                  Description
+                  {t("musicdex.library.description")}
                 </label>
                 <Textarea
                   id="music-new-description"
@@ -146,62 +146,68 @@ export function MusicLibraryTab() {
                   type="submit"
                   disabled={!user || !title.trim() || create.isPending}
                 >
-                  {create.isPending ? "Creating…" : "Create"}
+                  {create.isPending
+                    ? t("musicdex.library.creating")
+                    : t("musicdex.library.create")}
                 </Button>
               </fieldset>
             </form>
           )}
           <section className="space-y-4">
             <MusicSectionHeading
-              title="Your Playlists"
+              title={t("musicdex.library.yourPlaylists")}
               description={
                 mine.data?.length
-                  ? `${mine.data.length} Musicdex playlists in your collection.`
-                  : "It's a blank page right now, go make one!"
+                  ? tc("musicdex.library.playlistCount", mine.data.length)
+                  : t("musicdex.library.blankPage")
               }
             >
               <Button onClick={() => setCreating(!creating)}>
                 <PlusIcon />
-                {creating ? "Cancel" : "New playlist"}
+                {creating
+                  ? t("musicdex.library.cancel")
+                  : t("musicdex.library.newPlaylist")}
               </Button>
             </MusicSectionHeading>
             {mine.isLoading ? (
-              <p>Loading playlists…</p>
+              <p>{t("musicdex.playlists.loadingPlaylists")}</p>
             ) : mine.isError ? (
               <p role="alert" className="text-destructive">
-                Could not load your playlists.{" "}
+                {t("musicdex.library.loadMineFailed")}{" "}
                 <button
                   className="underline"
                   onClick={() => void mine.refetch()}
                 >
-                  Try again
+                  {t("component.apiError.retry")}
                 </button>
               </p>
             ) : (
               <PlaylistGrid
                 items={mine.data ?? []}
-                empty="You have not created a playlist yet."
+                empty={t("musicdex.library.noPlaylists")}
               />
             )}
           </section>
           <section className="space-y-4">
-            <MusicSectionHeading title="Saved Playlists & Radios" />
+            <MusicSectionHeading
+              title={t("musicdex.library.savedPlaylists")}
+            />
             {starred.isLoading ? (
-              <p>Loading starred items…</p>
+              <p>{t("musicdex.library.loadingStarred")}</p>
             ) : starred.isError ? (
               <p role="alert" className="text-destructive">
-                Could not load starred items.{" "}
+                {t("musicdex.library.loadStarredFailed")}{" "}
                 <button
                   className="underline"
                   onClick={() => void starred.refetch()}
                 >
-                  Try again
+                  {t("component.apiError.retry")}
                 </button>
               </p>
             ) : (
               <PlaylistGrid
                 items={starred.data ?? []}
-                empty="Star a playlist or radio to find it here."
+                empty={t("musicdex.library.noStarred")}
               />
             )}
           </section>

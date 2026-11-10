@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 import { cn } from "cn"
 import { MusicNotesFillIcon } from "@/components/icons"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useT } from "@/lib/i18n"
 
 export const musicCollectionGridClass =
   "grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-x-5 gap-y-7 max-md:grid-cols-2 max-md:gap-x-4 max-md:gap-y-6"
@@ -45,7 +46,9 @@ export function MusicSectionHeading({
   )
 }
 
-export function MusicLoading({ label = "Loading music" }: { label?: string }) {
+export function MusicLoading({ label: labelProp }: { label?: string }) {
+  const { t } = useT()
+  const label = labelProp ?? t("musicdex.common.loadingMusic")
   return (
     <div role="status" aria-label={label} className="space-y-5">
       <span className="sr-only">{label}</span>

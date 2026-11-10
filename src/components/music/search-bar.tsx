@@ -7,6 +7,7 @@ import {
   SEARCH_BAR_INPUT_CLASS,
   SEARCH_BAR_SUBMIT_CLASS,
 } from "@/components/search/search-bar-styles"
+import { useT } from "@/lib/i18n"
 
 /** Keeps song queries and filters separate from Holodex video search. */
 export function MusicSearchBar({
@@ -16,6 +17,7 @@ export function MusicSearchBar({
   autoFocus?: boolean
   onCommit?: () => void
 }) {
+  const { t } = useT()
   const location = useLocation()
   const navigate = useNavigate()
   const input = useRef<HTMLInputElement>(null)
@@ -45,7 +47,7 @@ export function MusicSearchBar({
   return (
     <form
       role="search"
-      aria-label="Musicdex search"
+      aria-label={t("musicdex.search.formLabel")}
       className={`${SEARCH_BAR_FRAME_CLASS} min-w-0 flex-1`}
       onSubmit={(event) => {
         event.preventDefault()
@@ -63,8 +65,8 @@ export function MusicSearchBar({
         ref={input}
         defaultValue={query}
         autoFocus={autoFocus}
-        aria-label="Search Musicdex songs and artists"
-        placeholder="Search songs and artists"
+        aria-label={t("musicdex.search.inputLabel")}
+        placeholder={t("musicdex.search.placeholder")}
         type="text"
         inputMode="search"
         enterKeyHint="search"
@@ -73,7 +75,7 @@ export function MusicSearchBar({
       />
       <button
         type="submit"
-        aria-label="Search music"
+        aria-label={t("musicdex.search.submitLabel")}
         className={SEARCH_BAR_SUBMIT_CLASS}
       >
         <MagnifyingGlassIcon className="size-4" />

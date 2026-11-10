@@ -43,6 +43,7 @@ import {
 import { useDocumentTitle } from "@/hooks/use-document-title"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { useT } from "@/lib/i18n"
 import { musicApi } from "@/lib/musicdex/api"
 import type { Playlist, Song } from "@/lib/musicdex/types"
 import { useAuth } from "@/stores/auth"
@@ -66,6 +67,7 @@ function PlaylistEditor({
   playlist: Playlist
   onDone: () => void
 }) {
+  const { t } = useT()
   const [title, setTitle] = useState(playlist.title)
   const [description, setDescription] = useState(playlist.description ?? "")
   const [listed, setListed] = useState(playlist.listed)
@@ -84,17 +86,17 @@ function PlaylistEditor({
         useAuth.getState().jwt === session.jwt &&
         useAuth.getState().user?.id === session.userId
       if (!sameSession())
-        throw new Error("Your session changed. Your draft has been kept.")
+        throw new Error(t("musicdex.playlist.sessionChanged"))
       const current = await musicApi.playlist(playlist.id)
       if (!sameSession())
-        throw new Error("Your session changed. Your draft has been kept.")
+        throw new Error(t("musicdex.playlist.sessionChanged"))
       if (playlistSnapshot(current) !== baseline)
         throw new Error(
-          "This playlist changed since you started editing. Your draft has been kept; cancel and reopen it to see the latest version."
+          t("musicdex.playlist.changedSinceEdit")
         )
       if (String(current.owner) !== String(session.userId))
         throw new Error(
-          "You no longer own this playlist. Your draft has been kept."
+          t("musicdex.playlist.notOwner")
         )
       const ids = songs.map((song) => song.id)
       await musicApi.writePlaylist({
@@ -108,17 +110,17 @@ function PlaylistEditor({
         updated_at: current.updated_at,
       })
       if (!sameSession())
-        throw new Error("Your session changed. Your draft has been kept.")
+        throw new Error(t("musicdex.playlist.sessionChanged"))
       let saved: Playlist
       try {
         saved = await musicApi.playlist(playlist.id)
       } catch {
         throw new Error(
-          "The save was sent, but could not be confirmed. Your draft has been kept; check the playlist before retrying."
+          t("musicdex.playlist.saveUnconfirmed")
         )
       }
       if (!sameSession())
-        throw new Error("Your session changed. Your draft has been kept.")
+        throw new Error(t("musicdex.playlist.sessionChanged"))
       if (
         saved.title !== title.trim() ||
         (saved.description ?? "") !== description ||
@@ -127,13 +129,13 @@ function PlaylistEditor({
           JSON.stringify(ids)
       ) {
         throw new Error(
-          "The server returned different playlist contents. Your draft has been kept; refresh the playlist to review it."
+          t("musicdex.playlist.serverMismatch")
         )
       }
     },
     onSuccess: async () => {
       await invalidate()
-      toast.success("Playlist saved")
+      toast.success(t("musicdex.playlist.playlistSaved"))
       onDone()
     },
   })
@@ -154,7 +156,7 @@ function PlaylistEditor({
       <fieldset disabled={save.isPending} className="space-y-4">
         <div className="grid max-w-2xl gap-3">
           <label htmlFor="music-edit-title" className="text-sm font-medium">
-            Name
+            {t("views.multiview.presetEditor.name")}
           </label>
           <Input
             id="music-edit-title"
@@ -167,7 +169,7 @@ function PlaylistEditor({
             htmlFor="music-edit-description"
             className="text-sm font-medium"
           >
-            Description
+            {t("musicdex.library.description")}
           </label>
           <Textarea
             id="music-edit-description"
@@ -175,13 +177,15 @@ function PlaylistEditor({
             onChange={(e) => setDescription(e.target.value)}
           />
           <label className="flex items-center gap-2 text-sm">
-            <Checkbox checked={listed} onCheckedChange={setListed} /> Public
-            playlist
+            <Checkbox checked={listed} onCheckedChange={setListed} />{" "}
+            {t("musicdex.playlist.publicPlaylist")}
           </label>
         </div>
         <div className="flex gap-2">
           <Button type="submit" disabled={save.isPending || !title.trim()}>
-            {save.isPending ? "Saving…" : "Save changes"}
+            {save.isPending
+              ? t("videoEdit.songs.save.saving")
+              : t("curation.apply")}
           </Button>
           <Button
             type="button"
@@ -189,19 +193,19 @@ function PlaylistEditor({
             onClick={onDone}
             disabled={save.isPending}
           >
-            Cancel
+            {t("musicdex.library.cancel")}
           </Button>
         </div>
         {save.isError && (
           <p role="alert" className="text-sm text-destructive">
             {save.error.message ||
-              "Could not save playlist. Your draft has been kept."}
+              t("musicdex.playlist.saveFailed")}
           </p>
         )}
-        <h2 className="text-lg font-semibold">Songs</h2>
+        <h2 className="text-lg font-semibold">{t("musicdex.playlist.songs")}</h2>
         {!songs.length ? (
           <p className="text-muted-foreground">
-            No songs in this playlist yet. Add songs from a song list.
+            {t("musicdex.playlist.noSongsEditor")}
           </p>
         ) : (
           <ol className="divide-y rounded-xl border">
@@ -224,7 +228,9 @@ function PlaylistEditor({
                   type="button"
                   size="icon-sm"
                   variant="ghost"
-                  aria-label={`Move ${song.name} up`}
+                  aria-label={t("musicdex.playlist.moveUp", {
+                    name: song.name,
+                  })}
                   disabled={i === 0}
                   onClick={() => move(i, -1)}
                 >
@@ -234,7 +240,9 @@ function PlaylistEditor({
                   type="button"
                   size="icon-sm"
                   variant="ghost"
-                  aria-label={`Move ${song.name} down`}
+                  aria-label={t("musicdex.playlist.moveDown", {
+                    name: song.name,
+                  })}
                   disabled={i === songs.length - 1}
                   onClick={() => move(i, 1)}
                 >
@@ -244,7 +252,9 @@ function PlaylistEditor({
                   type="button"
                   size="icon-sm"
                   variant="ghost"
-                  aria-label={`Remove ${song.name}`}
+                  aria-label={t("musicdex.playlist.removeSong", {
+                    name: song.name,
+                  })}
                   onClick={() =>
                     setSongs((items) => items.filter((_, index) => index !== i))
                   }
@@ -261,6 +271,7 @@ function PlaylistEditor({
 }
 
 export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
+  const { t, tc } = useT()
   const { id = "" } = useParams()
   const jwt = useAuth((s) => s.jwt)
   const { user, starred, loggedIn } = useMusicLibrary()
@@ -287,15 +298,15 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
     query.data
       ? playlistTitle(query.data)
       : radio
-        ? "Music Radio"
-        : "Music Playlist"
+        ? t("musicdex.radio.documentTitle")
+        : t("musicdex.playlist.documentTitle")
   )
   const toggleStar = useMutation({
     mutationFn: (star: boolean) => musicApi.starPlaylist(id, star),
     onSuccess: async () => {
       await invalidate()
     },
-    onError: () => toast.error("Could not update star"),
+    onError: () => toast.error(t("musicdex.playlist.starFailed")),
   })
   const remove = useMutation({
     mutationFn: async () => {
@@ -310,11 +321,11 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
     },
     onSuccess: async () => {
       await invalidate()
-      toast.success("Playlist deleted")
+      toast.success(t("musicdex.playlist.deleted"))
       setDeleteOpen(false)
       navigate("/#playlists")
     },
-    onError: () => toast.error("Could not delete playlist"),
+    onError: () => toast.error(t("musicdex.playlist.deleteFailed")),
   })
   if (query.isLoading)
     return (
@@ -326,13 +337,15 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
     return (
       <div className="space-y-3">
         <h1 className="text-2xl font-bold">
-          Could not load {radio ? "radio" : "playlist"}
+          {radio
+            ? t("musicdex.radio.couldNotLoad")
+            : t("musicdex.playlist.couldNotLoad")}
         </h1>
         <p className="text-muted-foreground">
-          It may be unavailable or private.
+          {t("musicdex.playlist.unavailableOrPrivate")}
         </p>
         <Button variant="outline" onClick={() => void query.refetch()}>
-          Try again
+          {t("curation.tryAgain")}
         </Button>
       </div>
     )
@@ -353,9 +366,9 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
     <div className="container mx-auto space-y-9 max-md:space-y-7">
       {query.isError && (
         <p role="alert" className="text-sm text-destructive">
-          Could not refresh this playlist; showing previously loaded data.{" "}
+          {t("musicdex.playlist.refreshFailed")}{" "}
           <button className="underline" onClick={() => void query.refetch()}>
-            Try again
+            {t("curation.tryAgain")}
           </button>
         </p>
       )}
@@ -386,18 +399,28 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
           )}
           <div className="mt-4.5 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground [&>span+span]:before:mr-2 [&>span+span]:before:opacity-60 [&>span+span]:before:content-['·']">
             <span>
-              {songs.length} {radio ? "songs to get you started" : "songs"}
+              {radio
+                ? tc("musicdex.radio.songCount", songs.length)
+                : tc("musicdex.channel.songCount", songs.length)}
             </span>
             {!radio && duration > 0 && (
               <span>
-                {duration >= 3600 ? `${Math.floor(duration / 3600)} hr ` : ""}
-                {Math.floor(duration / 60) % 60} min
+                {duration >= 3600
+                  ? `${t("musicdex.playlist.durationHours", { hours: Math.floor(duration / 3600) })} `
+                  : ""}
+                {t("musicdex.playlist.durationMinutes", {
+                  minutes: Math.floor(duration / 60) % 60,
+                })}
               </span>
             )}
             {owner && (
-              <span>{playlist.listed ? "Public playlist" : "Only you"}</span>
+              <span>
+                {playlist.listed
+                  ? t("musicdex.playlist.publicPlaylist")
+                  : t("musicdex.playlist.onlyYou")}
+              </span>
             )}
-            {radio && <span>More songs as you listen</span>}
+            {radio && <span>{t("musicdex.radio.moreSongs")}</span>}
           </div>
         </div>
       </header>
@@ -421,12 +444,12 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
             >
               {playing ? <PauseIcon /> : <PlayIcon />}
               {playing
-                ? "Pause"
+                ? t("views.multiview.pause")
                 : active
-                  ? "Keep listening"
+                  ? t("musicdex.common.keepListening")
                   : radio
-                    ? "Start radio"
-                    : "Play collection"}
+                    ? t("musicdex.radio.startRadio")
+                    : t("musicdex.playlist.playCollection")}
             </Button>
             <Button
               variant="outline"
@@ -440,7 +463,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
                 })
               }
             >
-              <ShuffleIcon /> Shuffle
+              <ShuffleIcon /> {t("musicdex.player.shuffle")}
             </Button>
             <AddToQueueButton songs={songs} />
             {loggedIn && !owner && (
@@ -456,7 +479,9 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
                 ) : (
                   <StarIcon />
                 )}
-                {isStarred ? "Saved" : "Save to library"}
+                {isStarred
+                  ? t("musicdex.playlist.saved")
+                  : t("musicdex.playlist.saveToLibrary")}
               </Button>
             )}
             {!loggedIn && (
@@ -465,23 +490,23 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
                 variant="outline"
                 render={<Link to="/login" />}
               >
-                <StarIcon /> Save to library
+                <StarIcon /> {t("musicdex.playlist.saveToLibrary")}
               </Button>
             )}
             {owner && (
               <>
                 <Button variant="outline" onClick={() => setEditingId(id)}>
-                  Edit playlist
+                  {t("musicdex.playlist.edit")}
                 </Button>
                 <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
                   <DialogTrigger render={<Button variant="destructive" />}>
-                    Delete
+                    {t("views.library.deleteConfirmationOK")}
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Delete playlist?</DialogTitle>
+                      <DialogTitle>{t("musicdex.playlist.deleteTitle")}</DialogTitle>
                       <DialogDescription>
-                        This will permanently delete {title}.
+                        {t("musicdex.playlist.deleteDescription", { title })}
                       </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
@@ -493,14 +518,16 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
                           />
                         }
                       >
-                        Cancel
+                        {t("musicdex.library.cancel")}
                       </DialogClose>
                       <Button
                         variant="destructive"
                         disabled={remove.isPending}
                         onClick={() => remove.mutate()}
                       >
-                        {remove.isPending ? "Deleting..." : "Delete playlist"}
+                        {remove.isPending
+                          ? t("musicdex.playlist.deleting")
+                          : t("musicdex.playlist.deleteConfirm")}
                       </Button>
                     </DialogFooter>
                   </DialogContent>
@@ -510,12 +537,12 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
           </div>
           {starred.isError && loggedIn && !owner && (
             <p role="alert" className="text-sm text-destructive">
-              Could not load star status.{" "}
+              {t("musicdex.playlist.starStatusFailed")}{" "}
               <button
                 className="underline"
                 onClick={() => void starred.refetch()}
               >
-                Try again
+                {t("curation.tryAgain")}
               </button>
             </p>
           )}
@@ -523,7 +550,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
             <SongList songs={songs} source={source} radio={radio} />
           ) : (
             <p className="rounded-xl border p-6 text-muted-foreground">
-              No songs yet.
+              {t("musicdex.playlist.noSongs")}
             </p>
           )}
         </>

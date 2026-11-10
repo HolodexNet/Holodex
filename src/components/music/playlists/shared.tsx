@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
+import { useT } from "@/lib/i18n"
 import { musicApi } from "@/lib/musicdex/api"
 import type { PlaylistStub, Song } from "@/lib/musicdex/types"
 import { formatMusicPlaylist } from "@/lib/musicdex/format"
@@ -48,6 +49,7 @@ export function playlistTitle(
 }
 
 export function AddSongToPlaylist({ song }: { song: Song }) {
+  const { t } = useT()
   const { mine, loggedIn, user } = useMusicLibrary()
   const invalidate = useMusicInvalidation()
   const add = useMutation({
@@ -76,13 +78,11 @@ export function AddSongToPlaylist({ song }: { song: Song }) {
     },
     onSuccess: async () => {
       await invalidate()
-      toast.success("Added to playlist")
+      toast.success(t("musicdex.playlists.songAdded"))
     },
     onError: () => {
       void invalidate()
-      toast.error(
-        "Could not confirm the song was added. Refresh the playlist before trying again."
-      )
+      toast.error(t("musicdex.playlists.addFailed"))
     },
   })
   return (
@@ -92,8 +92,8 @@ export function AddSongToPlaylist({ song }: { song: Song }) {
           <Button
             variant="ghost"
             size="icon"
-            aria-label="Add to playlist"
-            title="Add to playlist"
+            aria-label={t("musicdex.playlists.addToPlaylist")}
+            title={t("musicdex.playlists.addToPlaylist")}
           />
         }
       >
@@ -101,17 +101,25 @@ export function AddSongToPlaylist({ song }: { song: Song }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuGroup>
-          <DropdownMenuLabel>Add to Musicdex playlist</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {t("musicdex.playlists.addMenuLabel")}
+          </DropdownMenuLabel>
           {!loggedIn ? (
-            <DropdownMenuItem disabled>Sign in to add songs</DropdownMenuItem>
+            <DropdownMenuItem disabled>
+              {t("musicdex.playlists.signInToAdd")}
+            </DropdownMenuItem>
           ) : mine.isLoading ? (
-            <DropdownMenuItem disabled>Loading playlists…</DropdownMenuItem>
+            <DropdownMenuItem disabled>
+              {t("musicdex.playlists.loadingPlaylists")}
+            </DropdownMenuItem>
           ) : mine.isError ? (
             <DropdownMenuItem disabled>
-              Could not load playlists
+              {t("musicdex.playlists.loadPlaylistsFailed")}
             </DropdownMenuItem>
           ) : !mine.data?.length ? (
-            <DropdownMenuItem disabled>No playlists yet</DropdownMenuItem>
+            <DropdownMenuItem disabled>
+              {t("musicdex.playlists.noPlaylists")}
+            </DropdownMenuItem>
           ) : (
             mine.data.map((p) => (
               <DropdownMenuItem

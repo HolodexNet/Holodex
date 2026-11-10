@@ -22,6 +22,7 @@ import {
 import { MusicArtwork } from "@/components/music/artwork"
 import { MusicLikedSkeleton } from "@/components/music/skeletons"
 import { useDocumentTitle } from "@/hooks/use-document-title"
+import { useT } from "@/lib/i18n"
 import { musicApi } from "@/lib/musicdex/api"
 import { musicHomeQueryOptions } from "@/lib/musicdex/queries"
 import { useFavorites, useOrgs } from "@/lib/queries"
@@ -36,6 +37,7 @@ export function MusicFavorites() {
 
 /** The old standalone /music/org/:org address: pick that org, land on the home tab. */
 export default function MusicOrgRedirect() {
+  const { t } = useT()
   const { org: routeOrg } = useParams()
   const setCurrentOrg = useOrgStore((s) => s.setCurrentOrg)
   const orgs = useOrgs()
@@ -43,12 +45,14 @@ export default function MusicOrgRedirect() {
   useEffect(() => {
     if (match) setCurrentOrg(match)
   }, [match, setCurrentOrg])
-  if (orgs.isPending) return <MusicLoading label="Loading music" />
+  if (orgs.isPending)
+    return <MusicLoading label={t("musicdex.common.loadingMusic")} />
   return <Navigate to="/#music" replace />
 }
 
 /** The Musicdex discovery page, shown as a tab of the main home page. */
 export function MusicHomeTab() {
+  const { t } = useT()
   const org = useOrgStore((s) => s.currentOrg.name)
   const blocked = useSettings((s) => s.blockedChannels)
   const queries = musicHomeQueryOptions(org)
@@ -80,8 +84,8 @@ export function MusicHomeTab() {
       )}
       <section className="rounded-[16px] border border-border bg-[color-mix(in_oklch,var(--card)_70%,transparent)] p-6 max-md:px-2.5 max-md:py-4.5 [&_.music-section-heading]:mb-4.5 max-md:[&_.music-section-heading]:px-1.5 max-md:[&_.music-section-heading_button]:text-[11px]">
         <MusicSectionHeading
-          title="Popular songs"
-          description="Trending songs according to listeners on musicdex."
+          title={t("musicdex.home.popularSongs")}
+          description={t("musicdex.home.popularSongsDescription")}
         >
           {trending.isPending ? (
             <Skeleton className="h-8 w-24" aria-hidden="true" />
@@ -91,7 +95,7 @@ export function MusicHomeTab() {
                 songs={songs}
                 source={{
                   id: `trending:${org}`,
-                  title: `Trending ${org} songs`,
+                  title: t("musicdex.home.trendingSongs", { org }),
                 }}
               />
               <AddToQueueButton songs={songs} />
@@ -108,12 +112,15 @@ export function MusicHomeTab() {
         ) : songs.length ? (
           <SongList
             songs={songs}
-            source={{ id: `trending:${org}`, title: `Trending ${org} songs` }}
+            source={{
+              id: `trending:${org}`,
+              title: t("musicdex.home.trendingSongs", { org }),
+            }}
             preview={20}
           />
         ) : (
           <p className="text-sm text-muted-foreground">
-            No trending songs found.
+            {t("musicdex.home.noTrendingSongs")}
           </p>
         )}
       </section>
@@ -172,11 +179,12 @@ function FavoriteDiscoveryStatus({
   ReturnType<typeof useFavoriteDiscovery>,
   "discovery" | "hasMore" | "loadMore"
 >) {
+  const { t } = useT()
   return (
     <>
       {discovery.some((item) => item.isPending) && (
         <p className="text-sm text-muted-foreground">
-          Loading music from favorite channels…
+          {t("musicdex.home.loadingFavoriteMusic")}
         </p>
       )}
       {discovery.some((item) => item.isError) && (
@@ -195,7 +203,7 @@ function FavoriteDiscoveryStatus({
           disabled={discovery.some((item) => item.isPending)}
           onClick={loadMore}
         >
-          Load more favorite channels
+          {t("musicdex.home.loadMoreFavorites")}
         </Button>
       )}
     </>
@@ -203,13 +211,20 @@ function FavoriteDiscoveryStatus({
 }
 
 function FavoritesSignIn() {
+  const { t } = useT()
   return (
     <div className="space-y-9 max-md:space-y-7">
       <MusicSignInBanner
-        title="Make yourself at home."
-        description="Sign in with your Holodex account to bring your favorite channels into the listening room."
-        action="Sign in to Holodex"
-        art={<MusicArtwork title="Your favorites" seed="favorites" radio />}
+        title={t("musicdex.home.signInTitle")}
+        description={t("musicdex.home.signInDescription")}
+        action={t("musicdex.home.signInAction")}
+        art={
+          <MusicArtwork
+            title={t("musicdex.home.favoritesArtworkTitle")}
+            seed="favorites"
+            radio
+          />
+        }
       />
     </div>
   )
@@ -217,6 +232,7 @@ function FavoritesSignIn() {
 
 /** Musicdex for favorited channels, shown as a tab of the favorites page. */
 export function MusicFavoritesTab() {
+  const { t } = useT()
   const userId = useAuth((s) => s.user?.id ?? null)
   const blocked = useSettings((s) => s.blockedChannels)
   const {
@@ -246,7 +262,7 @@ export function MusicFavoritesTab() {
       />
       {favorites.isPending ? (
         <p className="text-sm text-muted-foreground">
-          Loading favorite channels…
+          {t("musicdex.home.loadingFavorites")}
         </p>
       ) : favorites.isError ? (
         <ErrorMessage
@@ -271,21 +287,25 @@ export function MusicFavoritesTab() {
         </>
       ) : (
         <p className="text-sm text-muted-foreground">
-          Favorite channels to discover their music here.
+          {t("musicdex.home.favoritesEmptyMusic")}
         </p>
       )}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Liked songs</h2>
+          <h2 className="text-lg font-semibold">
+            {t("musicdex.sidebar.likedSongs")}
+          </h2>
           <Link
             to="/music/liked"
             className="text-sm text-primary hover:underline"
           >
-            See all
+            {t("musicdex.discovery.seeAll")}
           </Link>
         </div>
         {liked.isPending ? (
-          <p className="text-sm text-muted-foreground">Loading liked songs…</p>
+          <p className="text-sm text-muted-foreground">
+            {t("musicdex.home.loadingLikedSongs")}
+          </p>
         ) : liked.isError ? (
           <ErrorMessage
             error={liked.error}
@@ -299,10 +319,12 @@ export function MusicFavoritesTab() {
                   !blocked.some((channel) => channel.id === song.channel_id)
               )
               .map((song) => ({ ...song, liked: true }))}
-            source={{ id: "liked", title: "Liked songs" }}
+            source={{ id: "liked", title: t("musicdex.sidebar.likedSongs") }}
           />
         ) : (
-          <p className="text-sm text-muted-foreground">No liked songs yet.</p>
+          <p className="text-sm text-muted-foreground">
+            {t("musicdex.home.noLikedSongs")}
+          </p>
         )}
       </section>
     </div>
@@ -310,7 +332,8 @@ export function MusicFavoritesTab() {
 }
 
 export function MusicLiked() {
-  useDocumentTitle("Liked Songs")
+  const { t } = useT()
+  useDocumentTitle(t("musicdex.home.likedDocumentTitle"))
   const userId = useAuth((s) => s.user?.id ?? null)
   const blocked = useSettings((s) => s.blockedChannels)
   const [page, setPage] = useState(1)
@@ -321,9 +344,9 @@ export function MusicLiked() {
   })
   if (!userId)
     return (
-      <StateMessage title="Sign in to see your liked songs">
+      <StateMessage title={t("musicdex.home.signInToSeeLiked")}>
         <Link className="text-primary underline" to="/login">
-          Sign in
+          {t("musicdex.home.signIn")}
         </Link>
       </StateMessage>
     )
@@ -332,7 +355,7 @@ export function MusicLiked() {
       (song) => !blocked.some((channel) => channel.id === song.channel_id)
     )
     .map((song) => ({ ...song, liked: true }))
-  const source = { id: "liked", title: "Liked songs" }
+  const source = { id: "liked", title: t("musicdex.sidebar.likedSongs") }
   return (
     <div className="container mx-auto space-y-9 max-md:space-y-7">
       {liked.isPending ? (
@@ -350,14 +373,17 @@ export function MusicLiked() {
                 <PlaySongsButton
                   songs={songs}
                   source={source}
-                  label="Play songs on page"
+                  label={t("musicdex.home.playSongsOnPage")}
                 />
-                <AddToQueueButton songs={songs} label="Add page to queue" />
+                <AddToQueueButton
+                  songs={songs}
+                  label={t("musicdex.home.addPageToQueue")}
+                />
               </div>
               <SongList songs={songs} source={source} />
             </>
           ) : (
-            <StateMessage title="No liked songs yet" />
+            <StateMessage title={t("musicdex.home.noLikedSongsTitle")} />
           )}
           <div className="flex items-center gap-3">
             <Button
@@ -365,15 +391,17 @@ export function MusicLiked() {
               disabled={page <= 1}
               onClick={() => setPage(page - 1)}
             >
-              Previous
+              {t("musicdex.channel.previous")}
             </Button>
-            <span className="text-sm">Page {page}</span>
+            <span className="text-sm">
+              {t("musicdex.channel.page", { page })}
+            </span>
             <Button
               variant="outline"
               disabled={page >= liked.data.page_count}
               onClick={() => setPage(page + 1)}
             >
-              Next
+              {t("musicdex.channel.next")}
             </Button>
           </div>
         </>
@@ -383,6 +411,7 @@ export function MusicLiked() {
 }
 
 function SavedRadios() {
+  const { t } = useT()
   const userId = useAuth((s) => s.user?.id ?? null)
   const starred = useQuery({
     queryKey: ["musicdex", "starredPlaylists", userId],
@@ -399,17 +428,21 @@ function SavedRadios() {
   return (
     <section>
       {starred.isPending ? (
-        <p>Loading saved radios…</p>
+        <p>{t("musicdex.home.loadingSavedRadios")}</p>
       ) : starred.isError ? (
         <ErrorMessage
           error={starred.error}
           onRetry={() => void starred.refetch()}
         />
       ) : saved.length ? (
-        <PlaylistCards title="Saved radios" playlists={saved} grid />
+        <PlaylistCards
+          title={t("musicdex.home.savedRadios")}
+          playlists={saved}
+          grid
+        />
       ) : (
         <p className="text-sm text-muted-foreground">
-          You have no saved radios yet.
+          {t("musicdex.home.noSavedRadios")}
         </p>
       )}
     </section>
@@ -417,6 +450,7 @@ function SavedRadios() {
 }
 
 function OrgRadios() {
+  const { t } = useT()
   const org = useOrgStore((s) => s.currentOrg.name)
   const radios = useInfiniteQuery({
     queryKey: ["musicdex", "discovery", "playlists", org, "radio"],
@@ -433,7 +467,7 @@ function OrgRadios() {
   return (
     <section className="space-y-3">
       {radios.isPending ? (
-        <MusicLoading label="Loading radios" />
+        <MusicLoading label={t("musicdex.home.loadingRadios")} />
       ) : radios.isError && !radios.data ? (
         <ErrorMessage
           error={radios.error}
@@ -441,7 +475,11 @@ function OrgRadios() {
         />
       ) : items.length ? (
         <>
-          <PlaylistCards title="Tune in" playlists={items} grid />
+          <PlaylistCards
+            title={t("musicdex.home.tuneIn")}
+            playlists={items}
+            grid
+          />
           {radios.isFetchNextPageError && (
             <ErrorMessage
               error={radios.error}
@@ -454,18 +492,21 @@ function OrgRadios() {
               disabled={radios.isFetchingNextPage}
               onClick={() => void radios.fetchNextPage()}
             >
-              {radios.isFetchingNextPage ? "Loading…" : "Load more"}
+              {radios.isFetchingNextPage
+                ? t("musicdex.sidebar.loading")
+                : t("component.loadMore")}
             </Button>
           )}
         </>
       ) : (
-        <StateMessage title={`No radios found for ${org}`} />
+        <StateMessage title={t("musicdex.home.noRadiosForOrg", { org })} />
       )}
     </section>
   )
 }
 
 function FavoriteRadios() {
+  const { t } = useT()
   const {
     favorites,
     favoriteChannels,
@@ -479,7 +520,7 @@ function FavoriteRadios() {
   )
   const loading = discovery.some((item) => item.isPending)
   if (favorites.isPending)
-    return <MusicLoading label="Loading favorite channels" />
+    return <MusicLoading label={t("musicdex.home.loadingFavoriteChannels")} />
   if (favorites.isError)
     return (
       <ErrorMessage
@@ -490,20 +531,20 @@ function FavoriteRadios() {
   if (!favoriteChannels.length)
     return (
       <p className="text-sm text-muted-foreground">
-        Favorite channels to discover their radios here.
+        {t("musicdex.home.favoritesEmptyRadios")}
       </p>
     )
   return (
     <section className="space-y-3">
       {radios.length || loading ? (
         <PlaylistCards
-          title="Oshi Radios"
+          title={t("musicdex.discovery.oshiRadios")}
           playlists={radios}
           grid
           loading={loading && !radios.length}
         />
       ) : (
-        <StateMessage title="No radios found for your favorite channels" />
+        <StateMessage title={t("musicdex.home.noRadiosForFavorites")} />
       )}
       <FavoriteDiscoveryStatus
         discovery={discovery}
@@ -527,11 +568,15 @@ export function MusicRadiosTab({ favorites = false }: { favorites?: boolean }) {
 }
 
 export function MusicBrowse() {
+  const { t } = useT()
   const { type } = useParams()
   const org = useOrgStore((s) => s.currentOrg.name)
   const category = type === "ugp" ? "ugp" : "sgp"
-  const title = category === "ugp" ? "Community playlists" : "Playlists"
-  useDocumentTitle(`${org} ${title}`)
+  const title =
+    category === "ugp"
+      ? t("musicdex.home.communityPlaylists")
+      : t("musicdex.home.playlists")
+  useDocumentTitle(t("musicdex.home.browseDocumentTitle", { org, title }))
   const listing = useInfiniteQuery({
     queryKey: ["musicdex", "discovery", "playlists", org, category],
     queryFn: ({ pageParam, signal }) =>
@@ -546,7 +591,7 @@ export function MusicBrowse() {
   return (
     <div className="container mx-auto space-y-9 max-md:space-y-7">
       {listing.isPending ? (
-        <MusicLoading label="Loading playlists" />
+        <MusicLoading label={t("musicdex.home.loadingPlaylists")} />
       ) : listing.isError && !listing.data ? (
         <ErrorMessage
           error={listing.error}
@@ -567,12 +612,14 @@ export function MusicBrowse() {
               disabled={listing.isFetchingNextPage}
               onClick={() => void listing.fetchNextPage()}
             >
-              {listing.isFetchingNextPage ? "Loading…" : "Load more"}
+              {listing.isFetchingNextPage
+                ? t("musicdex.sidebar.loading")
+                : t("component.loadMore")}
             </Button>
           )}
         </>
       ) : (
-        <StateMessage title={`No playlists found for ${org}`} />
+        <StateMessage title={t("musicdex.home.noPlaylistsForOrg", { org })} />
       )}
     </div>
   )

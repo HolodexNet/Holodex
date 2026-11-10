@@ -22,6 +22,7 @@ import {
 import { useSettings } from "@/stores/settings"
 import { Button } from "@/components/ui/button"
 import { musicApi } from "@/lib/musicdex/api"
+import { getT, useT } from "@/lib/i18n"
 import {
   FullscreenIcon,
   NextIcon,
@@ -83,6 +84,7 @@ function MusicPlayerBar() {
   const shuffle = useMusicPlayer((s) => s.shuffle)
   const repeat = useMusicPlayer((s) => s.repeat)
   const english = useSettings((s) => s.useEnglishName)
+  const { t, tc } = useT()
   const host = useRef<HTMLDivElement>(null)
   const overlay = useRef<HTMLDivElement>(null)
   const expandButton = useRef<HTMLButtonElement>(null)
@@ -141,7 +143,9 @@ function MusicPlayerBar() {
               if (disposed) return
               player.current = event.target
               ready.current = true
-              event.target.getIframe().title = "Music video player"
+              event.target.getIframe().title = getT().t(
+                "musicdex.player.videoFrame"
+              )
               const state = useMusicPlayer.getState()
               if (!state.current) return
               const song = state.current
@@ -214,8 +218,8 @@ function MusicPlayerBar() {
               const givingUp = failedSongs.current >= MAX_FAILED_SONGS
               setError({
                 message: givingUp
-                  ? "Several songs in a row could not be played."
-                  : "This video cannot be played here.",
+                  ? getT().t("musicdex.player.tooManyFailures")
+                  : getT().t("musicdex.player.cannotPlay"),
                 playbackId: state.playbackId,
                 autoSkip: !givingUp,
               })
@@ -234,7 +238,7 @@ function MusicPlayerBar() {
               switching.current = false
               // The next song would be blocked too, so this one waits for the user.
               setError({
-                message: "Playback was blocked. Press play to try again.",
+                message: getT().t("musicdex.player.autoplayBlocked"),
                 playbackId: state.playbackId,
               })
               state.pause()
@@ -244,7 +248,7 @@ function MusicPlayerBar() {
       })
       .catch(() => {
         if (!disposed)
-          setError({ message: "Could not load the YouTube player." })
+          setError({ message: getT().t("musicdex.player.youtubeLoadFailed") })
       })
     return () => {
       disposed = true
@@ -314,7 +318,7 @@ function MusicPlayerBar() {
         if (!songs.length) {
           setRadioError({
             source,
-            message: "No more radio songs were returned.",
+            message: getT().t("musicdex.player.radioEmpty"),
           })
           return
         }
@@ -324,7 +328,10 @@ function MusicPlayerBar() {
       })
       .catch(() => {
         if (!controller.signal.aborted)
-          setRadioError({ source, message: "Could not load more radio songs." })
+          setRadioError({
+            source,
+            message: getT().t("musicdex.player.radioFailed"),
+          })
       })
     return () => controller.abort()
   }, [radio, source, queueLength, playbackId, radioError, radioRetry])
@@ -461,6 +468,13 @@ function MusicPlayerBar() {
   const artist = (english && shown.channel?.english_name) || shown.channel?.name
   const artwork =
     shown.art || `https://i.ytimg.com/vi/${shown.video_id}/hqdefault.jpg`
+  const repeatMode =
+    repeat === "one"
+      ? t("musicdex.player.repeatOne")
+      : repeat === "all"
+        ? t("musicdex.player.repeatAll")
+        : t("musicdex.player.repeatNone")
+  const repeatLabel = t("musicdex.player.repeatLabel", { mode: repeatMode })
   // layoutDependency keeps the seek timer's re-renders from measuring layout.
   return (
     <m.div
@@ -471,7 +485,11 @@ function MusicPlayerBar() {
       exit={{ y: "100%", opacity: 0 }}
       role={expanded ? "dialog" : "region"}
       aria-modal={expanded ? true : undefined}
-      aria-label={expanded ? "Music player" : "Now playing"}
+      aria-label={
+        expanded
+          ? t("musicdex.player.musicPlayer")
+          : t("musicdex.songList.nowPlaying")
+      }
       tabIndex={expanded ? -1 : undefined}
       className={cn(
         "fixed inset-x-0 isolate z-50",
@@ -573,19 +591,19 @@ function MusicPlayerBar() {
                   expanded ? "text-[13px]" : "text-[11px] max-md:text-[10px]"
                 )}
               >
-                {artist || "Unknown artist"}
+                {artist || t("musicdex.player.unknownArtist")}
               </Link>
             </m.div>
             {expanded && source && (
               <p className="mt-1 truncate text-xs text-muted-foreground">
-                From {source.title}
+                {t("musicdex.player.from", { title: source.title })}
               </p>
             )}
             {failure && (
               <div role="alert" className="text-xs text-destructive">
                 {skipping && <SkipCountdown />}
                 {skipping
-                  ? "Cannot be played here. Skipping…"
+                  ? t("musicdex.player.skipping")
                   : failure.message}{" "}
                 <button
                   className="underline"
@@ -596,13 +614,13 @@ function MusicPlayerBar() {
                     useMusicPlayer.getState().play()
                   }}
                 >
-                  Retry
+                  {t("views.watch.chat.retryBtn")}
                 </button>{" "}
                 <button
                   className="underline"
                   onClick={() => useMusicPlayer.getState().next()}
                 >
-                  Skip
+                  {t("musicdex.player.skip")}
                 </button>
               </div>
             )}
@@ -616,7 +634,7 @@ function MusicPlayerBar() {
                     setRadioRetry((value) => value + 1)
                   }}
                 >
-                  Retry radio
+                  {t("musicdex.player.retryRadio")}
                 </button>
               </div>
             )}
@@ -647,8 +665,8 @@ function MusicPlayerBar() {
             )}
             variant="ghost"
             size="icon-sm"
-            aria-label="Shuffle"
-            title="Shuffle"
+            aria-label={t("musicdex.player.shuffle")}
+            title={t("musicdex.player.shuffle")}
             aria-pressed={shuffle}
             onClick={actions.toggleShuffle}
           >
@@ -657,8 +675,8 @@ function MusicPlayerBar() {
           <Button
             variant="ghost"
             size="icon-sm"
-            aria-label="Previous song"
-            title="Previous song"
+            aria-label={t("videoEdit.keys.previous")}
+            title={t("videoEdit.keys.previous")}
             className={expanded ? undefined : "max-md:hidden"}
             onClick={actions.previous}
           >
@@ -670,7 +688,9 @@ function MusicPlayerBar() {
               expanded ? "size-11.5" : "size-9 max-md:size-8.5"
             )}
             size="icon-lg"
-            aria-label={playing ? "Pause" : "Play"}
+            aria-label={
+              playing ? t("views.multiview.pause") : t("views.multiview.play")
+            }
             onClick={() => {
               if (!playing && finishedId.current === playbackId)
                 actions.restart()
@@ -682,8 +702,8 @@ function MusicPlayerBar() {
           <Button
             variant="ghost"
             size="icon-sm"
-            aria-label="Next song"
-            title="Next song"
+            aria-label={t("videoEdit.keys.next")}
+            title={t("videoEdit.keys.next")}
             className={expanded ? undefined : "max-md:w-7"}
             onClick={() => actions.next()}
           >
@@ -696,8 +716,8 @@ function MusicPlayerBar() {
             )}
             variant="ghost"
             size="icon-sm"
-            aria-label={`Repeat: ${repeat}`}
-            title={`Repeat: ${repeat}`}
+            aria-label={repeatLabel}
+            title={repeatLabel}
             onClick={actions.toggleRepeat}
           >
             {repeat === "one" ? (
@@ -722,7 +742,7 @@ function MusicPlayerBar() {
             {time(position)}
           </span>
           <input
-            aria-label="Seek"
+            aria-label={t("musicdex.player.seek")}
             type="range"
             className="h-3 w-full min-w-0 cursor-pointer accent-primary"
             min={0}
@@ -763,10 +783,10 @@ function MusicPlayerBar() {
               expanded && "max-md:mr-0.75 max-md:gap-0 max-md:[&_svg]:hidden"
             )}
           >
-            <span className="sr-only">Volume</span>
+            <span className="sr-only">{t("views.multiview.volume")}</span>
             <MusicNotesFillIcon className="size-4 text-muted-foreground" />
             <input
-              aria-label="Volume"
+              aria-label={t("views.multiview.volume")}
               type="range"
               className={cn(
                 "h-3 w-16.25 min-w-0 cursor-pointer accent-primary",
@@ -783,8 +803,8 @@ function MusicPlayerBar() {
           {!expanded && (
             <Popover>
               <PopoverTrigger
-                aria-label={`Up next: ${queue.length} songs`}
-                title="Up next"
+                aria-label={tc("musicdex.player.upNextCount", queue.length)}
+                title={t("musicdex.player.upNext")}
                 render={
                   <Button
                     className="max-md:hidden"
@@ -808,8 +828,8 @@ function MusicPlayerBar() {
             <Button
               variant="ghost"
               size="icon-sm"
-              aria-label="Enter fullscreen"
-              title="Enter fullscreen"
+              aria-label={t("musicdex.player.enterFullscreen")}
+              title={t("musicdex.player.enterFullscreen")}
               onClick={() => {
                 if (overlay.current?.requestFullscreen)
                   void overlay.current.requestFullscreen().catch(() => {})
@@ -822,8 +842,16 @@ function MusicPlayerBar() {
             ref={expandButton}
             variant="ghost"
             size="icon-sm"
-            aria-label={expanded ? "Collapse player" : "Expand player"}
-            title={expanded ? "Back to browsing" : "Open listening view"}
+            aria-label={
+              expanded
+                ? t("musicdex.player.collapsePlayer")
+                : t("musicdex.player.expandPlayer")
+            }
+            title={
+              expanded
+                ? t("musicdex.player.backToBrowsing")
+                : t("musicdex.player.openListeningView")
+            }
             onClick={() => actions.setExpanded(!expanded)}
           >
             {expanded ? <CaretDownIcon /> : <CaretUpIcon />}
@@ -832,8 +860,8 @@ function MusicPlayerBar() {
             className="text-muted-foreground hover:text-muted-foreground"
             variant="ghost"
             size="icon-sm"
-            aria-label="Close player"
-            title="Close player"
+            aria-label={t("musicdex.player.closePlayer")}
+            title={t("musicdex.player.closePlayer")}
             onClick={actions.close}
           >
             <XIcon />
@@ -860,7 +888,9 @@ function MusicPlayerBar() {
             musicdex.
           </span>
           <p className="music-eyebrow">
-            {radio ? "ON AIR / ARTIST RADIO" : "NOW PLAYING"}
+            {radio
+              ? t("musicdex.player.onAirRadio")
+              : t("musicdex.player.nowPlayingEyebrow")}
           </p>
         </m.div>
       )}
@@ -895,12 +925,13 @@ function SkipCountdown() {
 function MusicQueue({ docked = false }: { docked?: boolean }) {
   const queue = useMusicPlayer((s) => s.queue)
   const english = useSettings((s) => s.useEnglishName)
+  const { t } = useT()
   return (
     <div className={docked ? "flex h-full flex-col p-0" : "p-5"}>
       <div className="music-queue-heading flex items-center justify-between gap-4 pb-4.5">
         <div>
           <h2 className="mt-2 flex items-center gap-2.25 text-[22px] font-[650] tracking-[-0.04em]">
-            Up next
+            {t("musicdex.player.upNext")}
             <span className="rounded-[20px] bg-muted px-1.75 py-0.75 text-[10px] font-medium tracking-normal text-muted-foreground">
               {queue.length}
             </span>
@@ -912,7 +943,7 @@ function MusicQueue({ docked = false }: { docked?: boolean }) {
             variant="ghost"
             onClick={() => useMusicPlayer.getState().clearQueue()}
           >
-            Clear
+            {t("musicdex.player.clearQueue")}
           </Button>
         )}
       </div>
@@ -959,7 +990,9 @@ function MusicQueue({ docked = false }: { docked?: boolean }) {
                 variant="ghost"
                 size="icon-xs"
                 className="text-muted-foreground hover:text-muted-foreground"
-                aria-label={`Remove ${song.name} from queue`}
+                aria-label={t("musicdex.player.removeFromQueue", {
+                  name: song.name,
+                })}
                 onClick={() => useMusicPlayer.getState().removeFromQueue(index)}
               >
                 <XIcon />
@@ -970,8 +1003,10 @@ function MusicQueue({ docked = false }: { docked?: boolean }) {
       ) : (
         <div className="flex flex-col items-start gap-3 py-7.5 text-[12px] text-muted-foreground">
           <PlaylistIcon className="size-7" />
-          <p>A little quiet in here.</p>
-          <span className="text-[11px]">Add a song from any collection.</span>
+          <p>{t("musicdex.player.emptyQueue")}</p>
+          <span className="text-[11px]">
+            {t("musicdex.player.emptyQueueHint")}
+          </span>
         </div>
       )}
     </div>
