@@ -1,3 +1,5 @@
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -352,7 +354,12 @@ export default function CrewCardPage() {
             ? `Add ${missing.join(" and ")} to finish your card.`
             : "It goes in CREW in src/components/about/thanks.tsx."}
         </p>
-        <pre className="mt-3 overflow-x-auto rounded-2xl border bg-card p-4 font-mono text-sm">
+        <pre
+          className={cn(
+            cardVariants({ radius: "2xl", padding: "md" }),
+            "mt-3 overflow-x-auto font-mono text-sm"
+          )}
+        >
           {code}
         </pre>
       </div>

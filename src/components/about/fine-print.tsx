@@ -1,3 +1,5 @@
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 import type { ReactNode } from "react"
 
 import { CaretDownIcon, ShieldCheckIcon } from "@/components/icons"
@@ -168,7 +170,7 @@ export function FinePrint() {
         </div>
         <ExternalLink
           href="https://developers.google.com/youtube"
-          className="self-start rounded-lg outline-none focus-ring"
+          className="self-start rounded-lg focus-ring outline-none"
         >
           <img
             src={
@@ -185,9 +187,12 @@ export function FinePrint() {
 
       <details
         id="privacy"
-        className="group/privacy mt-6 scroll-mt-[calc(var(--header-height)+env(safe-area-inset-top,0px)+1.5rem)] rounded-2xl border bg-card"
+        className={cn(
+          cardVariants({ radius: "2xl" }),
+          "group/privacy mt-6 scroll-mt-[calc(var(--header-height)+env(safe-area-inset-top,0px)+1.5rem)]"
+        )}
       >
-        <summary className="flex cursor-pointer list-none items-center gap-3 rounded-2xl px-5 py-4 font-semibold outline-none select-none focus-ring [&::-webkit-details-marker]:hidden">
+        <summary className="flex cursor-pointer list-none items-center gap-3 rounded-2xl px-5 py-4 font-semibold focus-ring outline-none select-none [&::-webkit-details-marker]:hidden">
           <ShieldCheckIcon className="size-5 text-brand" aria-hidden="true" />
           <span className="flex-1">{t("about.privacyPolicy")}</span>
           <CaretDownIcon

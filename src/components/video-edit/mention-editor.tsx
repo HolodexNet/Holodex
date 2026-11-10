@@ -1,3 +1,4 @@
+import { cardVariants } from "@/components/ui/card"
 import { useId, useMemo, useState } from "react"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { cn } from "cn"
@@ -170,7 +171,12 @@ export function MentionEditor({
   }
 
   return (
-    <section className="grid gap-3 rounded-2xl border bg-card p-4">
+    <section
+      className={cn(
+        cardVariants({ radius: "2xl", padding: "md" }),
+        "grid gap-3"
+      )}
+    >
       <header className="flex items-center gap-2">
         <UsersIcon className="size-4 text-muted-foreground" />
         <h2 className="text-sm font-semibold">

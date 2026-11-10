@@ -1,3 +1,4 @@
+import { cardVariants } from "@/components/ui/card"
 import { useMemo, type ReactNode } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
@@ -29,7 +30,12 @@ interface StatProps {
 function Stat({ icon, label, value, delta, tone, format }: StatProps) {
   return (
     // The label comes first for screen readers; flex order puts the number first.
-    <div className="@container flex flex-col items-start rounded-2xl border bg-card p-4 md:p-5">
+    <div
+      className={cn(
+        cardVariants({ radius: "2xl", padding: "md" }),
+        "@container flex flex-col items-start md:p-5"
+      )}
+    >
       <span
         aria-hidden="true"
         className={cn(
@@ -83,7 +89,7 @@ function OrgConstellation() {
             <Link
               to={`/channel?${new URLSearchParams({ org: org.name })}`}
               title={org.name}
-              className="block rounded-full transition-transform duration-150 outline-none hover:z-10 hover:scale-125 focus-ring-sm motion-reduce:transition-none"
+              className="block rounded-full focus-ring-sm transition-transform duration-150 outline-none hover:z-10 hover:scale-125 motion-reduce:transition-none"
             >
               <span className="sr-only">{org.name}</span>
               <OrgIcon

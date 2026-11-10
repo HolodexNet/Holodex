@@ -1,3 +1,4 @@
+import { cardVariants } from "@/components/ui/card"
 import { useId, useState, type ReactNode } from "react"
 import { cn } from "cn"
 import { toast } from "sonner"
@@ -109,7 +110,12 @@ function Section({
       {description && (
         <p className="mt-0.5 text-sm text-muted-foreground">{description}</p>
       )}
-      <div className="mt-3 divide-y rounded-2xl border bg-card px-4 py-1.5">
+      <div
+        className={cn(
+          cardVariants({ radius: "2xl" }),
+          "mt-3 divide-y px-4 py-1.5"
+        )}
+      >
         {children}
       </div>
     </section>

@@ -1,3 +1,5 @@
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 import { useId, useMemo, useState, type ReactNode } from "react"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { Link, useSearchParams } from "react-router"
@@ -182,7 +184,12 @@ function FilterPanel({
   const langs = state.langs ?? clipLangs
 
   return (
-    <div className="grid gap-x-6 gap-y-4 rounded-2xl border bg-card p-4 md:grid-cols-2 xl:grid-cols-3">
+    <div
+      className={cn(
+        cardVariants({ radius: "2xl", padding: "md" }),
+        "grid gap-x-6 gap-y-4 md:grid-cols-2 xl:grid-cols-3"
+      )}
+    >
       <FilterField
         label={t("component.search.type.channel")}
         htmlFor={ids.channels}

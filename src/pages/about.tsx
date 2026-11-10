@@ -1,3 +1,4 @@
+import { cardVariants } from "@/components/ui/card"
 import { useEffect } from "react"
 import { useLocation, useParams } from "react-router"
 import { cn } from "cn"
@@ -87,7 +88,10 @@ function Updates() {
         </ExternalLink>
       }
     >
-      <div ref={ref} className="rounded-3xl border bg-card p-5 md:p-7">
+      <div
+        ref={ref}
+        className={cn(cardVariants({ radius: "3xl" }), "p-5 md:p-7")}
+      >
         <Changelog enabled={seen} />
       </div>
     </AboutSection>

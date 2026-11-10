@@ -1,3 +1,4 @@
+import { cardVariants } from "@/components/ui/card"
 import { Link } from "react-router"
 import { cn } from "cn"
 
@@ -41,7 +42,12 @@ export function DetailsPanel({ video }: { video: Video }) {
       {parts.mentions ? (
         <MentionEditor key={`mentions-${video.id}`} video={video} />
       ) : (
-        <p className="flex items-center gap-2 rounded-2xl border bg-card p-4 text-sm text-muted-foreground">
+        <p
+          className={cn(
+            cardVariants({ radius: "2xl", padding: "md" }),
+            "flex items-center gap-2 text-sm text-muted-foreground"
+          )}
+        >
           <WarningIcon className="size-4 shrink-0" />
           {t("curation.preview.placeholder")}
         </p>

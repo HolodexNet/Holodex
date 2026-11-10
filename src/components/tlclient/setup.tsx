@@ -1,3 +1,4 @@
+import { cardVariants } from "@/components/ui/card"
 import { useMemo, useState } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
@@ -83,7 +84,12 @@ export function TlSetup({
           </p>
         </header>
         {!user && (
-          <div className="flex flex-wrap items-center gap-3 rounded-xl border bg-card px-4 py-3 text-sm">
+          <div
+            className={cn(
+              cardVariants({ radius: "xl" }),
+              "flex flex-wrap items-center gap-3 px-4 py-3 text-sm"
+            )}
+          >
             <span className="min-w-0 flex-1">
               {t("tlClient.setup.loginNeeded")}
             </span>
@@ -296,7 +302,7 @@ function StreamRow({ video, onClick }: { video: Video; onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-3 rounded-lg p-1.5 text-left outline-none hover:bg-muted focus-ring-sm"
+      className="flex w-full items-center gap-3 rounded-lg p-1.5 text-left focus-ring-sm outline-none hover:bg-muted"
     >
       <span className="relative aspect-video w-24 shrink-0 overflow-hidden rounded-md bg-muted">
         <VideoThumbnail video={video} sizes="96px" />
@@ -366,7 +372,12 @@ function SessionPlan({
 
   return (
     <div className="flex flex-col gap-5">
-      <section className="flex items-start gap-3 rounded-xl border bg-card p-3">
+      <section
+        className={cn(
+          cardVariants({ radius: "xl", padding: "sm" }),
+          "flex items-start gap-3"
+        )}
+      >
         {mainSource.pending ? (
           <div className="flex flex-1 items-center gap-2 py-3 text-sm text-muted-foreground">
             <Spinner /> {t("tlClient.finding")}

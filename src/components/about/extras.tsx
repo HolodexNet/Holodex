@@ -1,3 +1,5 @@
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 import { toast } from "sonner"
 
 import {
@@ -55,7 +57,7 @@ function Bookmarklet({ host, label }: { host: string; label: string }) {
       }}
       title={t("about.bookmarklet.dragHint")}
       draggable
-      className="group inline-flex cursor-grab items-center gap-2 rounded-full border-2 border-dashed border-primary/50 bg-primary/8 px-4 py-2 text-sm font-semibold text-brand transition-colors outline-none hover:border-primary hover:bg-primary/12 focus-ring active:cursor-grabbing"
+      className="group inline-flex cursor-grab items-center gap-2 rounded-full border-2 border-dashed border-primary/50 bg-primary/8 px-4 py-2 text-sm font-semibold text-brand focus-ring transition-colors outline-none hover:border-primary hover:bg-primary/12 active:cursor-grabbing"
     >
       <BookmarkSimpleIcon className="size-4" aria-hidden="true" />
       {label}
@@ -72,7 +74,12 @@ export function Extras() {
       title={t("about.extensions.heading")}
       description={t("about.extensions.description")}
     >
-      <article className="grid overflow-hidden rounded-3xl border bg-card md:grid-cols-[1.1fr_1fr]">
+      <article
+        className={cn(
+          cardVariants({ radius: "3xl" }),
+          "grid overflow-hidden md:grid-cols-[1.1fr_1fr]"
+        )}
+      >
         <div className="bg-muted/50 p-4 md:p-6">
           <img
             src="/img/holodex-plus/holodex-plus-screenshot.webp"
@@ -107,7 +114,7 @@ export function Extras() {
             <ExternalLink
               href={HOLODEX_PLUS.chrome}
               title="Chrome Web Store"
-              className="rounded-lg outline-none focus-ring"
+              className="rounded-lg focus-ring outline-none"
             >
               <img
                 src="/img/holodex-plus/chrome-webstore.png"
@@ -120,7 +127,7 @@ export function Extras() {
             <ExternalLink
               href={HOLODEX_PLUS.firefox}
               title="Firefox Add-ons"
-              className="rounded-lg outline-none focus-ring"
+              className="rounded-lg focus-ring outline-none"
             >
               <img
                 src="/img/holodex-plus/firefox-amo.png"
@@ -144,7 +151,12 @@ export function Extras() {
       </article>
 
       <div className="mt-3 grid gap-3 md:grid-cols-2">
-        <article className="flex flex-col gap-4 rounded-3xl border bg-card p-5 md:p-6">
+        <article
+          className={cn(
+            cardVariants({ radius: "3xl", padding: "lg" }),
+            "flex flex-col gap-4"
+          )}
+        >
           <h3 className="flex items-center gap-3 text-lg font-bold tracking-tight">
             <span
               aria-hidden="true"
@@ -173,7 +185,12 @@ export function Extras() {
           </div>
         </article>
 
-        <article className="flex flex-col gap-4 rounded-3xl border bg-card p-5 md:p-6">
+        <article
+          className={cn(
+            cardVariants({ radius: "3xl", padding: "lg" }),
+            "flex flex-col gap-4"
+          )}
+        >
           <h3 className="flex items-center gap-3 text-lg font-bold tracking-tight">
             <span
               aria-hidden="true"

@@ -1,3 +1,4 @@
+import { cardVariants } from "@/components/ui/card"
 import { useState, type CSSProperties, type ReactNode } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
@@ -177,7 +178,12 @@ export function CrewCard({
   const [bannerFailedFor, setBannerFailedFor] = useState<string>()
 
   return (
-    <li className="flex flex-col overflow-hidden rounded-2xl border bg-card">
+    <li
+      className={cn(
+        cardVariants({ radius: "2xl" }),
+        "flex flex-col overflow-hidden"
+      )}
+    >
       <div
         aria-hidden="true"
         className="relative h-14 bg-muted"
@@ -212,7 +218,7 @@ export function CrewCard({
         {member.oshi && (
           <Link
             to={`/channel/${member.oshi}`}
-            className="mt-auto flex items-center gap-2 rounded-xl pt-3 outline-none hover:text-brand focus-ring"
+            className="mt-auto flex items-center gap-2 rounded-xl pt-3 focus-ring outline-none hover:text-brand"
           >
             <ChannelAvatar
               channel={{ id: member.oshi, name: oshi?.name ?? "" }}
@@ -359,7 +365,10 @@ export function Thanks() {
       </h3>
       <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {TRANSLATIONS.map((lang) => (
-          <li key={lang.val} className="rounded-xl border bg-card px-4 py-3">
+          <li
+            key={lang.val}
+            className={cn(cardVariants({ radius: "xl" }), "px-4 py-3")}
+          >
             <p className="font-semibold text-pretty">
               {translatorNames(lang.credit)}
             </p>

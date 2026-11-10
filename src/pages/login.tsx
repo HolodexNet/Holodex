@@ -1,3 +1,5 @@
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
@@ -180,7 +182,12 @@ export function LoginPage() {
   return (
     <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center gap-6 px-4 py-10">
       {user ? (
-        <div className="flex flex-col gap-5 rounded-2xl border bg-card p-6">
+        <div
+          className={cn(
+            cardVariants({ radius: "2xl" }),
+            "flex flex-col gap-5 p-6"
+          )}
+        >
           <div className="flex items-center gap-4">
             <img
               src={userAvatar(user.id)}

@@ -1,3 +1,4 @@
+import { cardVariants } from "@/components/ui/card"
 import { Link } from "react-router"
 import { cn } from "cn"
 import {
@@ -146,7 +147,7 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
     <div className="space-y-9">
       <section
         aria-labelledby="talent-start"
-        className="overflow-hidden rounded-2xl border bg-card"
+        className={cn(cardVariants({ radius: "2xl" }), "overflow-hidden")}
       >
         <div className="flex flex-wrap items-center justify-between gap-2 border-b px-5 py-4 md:px-6">
           <h2
@@ -294,7 +295,7 @@ export function ChannelOverview({ channel }: { channel: Channel }) {
             hasShelves ? "space-y-5" : "grid items-start gap-5 md:grid-cols-2"
           )}
         >
-          <section className="rounded-2xl border bg-card p-5">
+          <section className={cn(cardVariants({ radius: "2xl" }), "p-5")}>
             <h2 className="mb-3 text-lg font-semibold">{name}</h2>
             {channel.description ? (
               <p className="line-clamp-5 text-sm leading-6 wrap-break-word whitespace-pre-line text-muted-foreground">

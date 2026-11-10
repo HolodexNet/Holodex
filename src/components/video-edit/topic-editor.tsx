@@ -1,3 +1,5 @@
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 import { useId, useMemo, useState } from "react"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
@@ -125,7 +127,12 @@ export function TopicEditor({ video }: { video: Video }) {
   }
 
   return (
-    <section className="grid gap-3 rounded-2xl border bg-card p-4">
+    <section
+      className={cn(
+        cardVariants({ radius: "2xl", padding: "md" }),
+        "grid gap-3"
+      )}
+    >
       <header className="flex items-center gap-2">
         <TagIcon className="size-4 text-muted-foreground" />
         <h2 className="text-sm font-semibold">

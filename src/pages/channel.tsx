@@ -1,3 +1,5 @@
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 import { lazy, Suspense } from "react"
 import { Link, NavLink, useParams } from "react-router"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
@@ -130,7 +132,9 @@ export function ChannelAbout({ channel }: { channel: Channel }) {
   ] as const
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
-      <section className="min-w-0 rounded-xl border bg-card p-5 md:p-6">
+      <section
+        className={cn(cardVariants({ radius: "xl", padding: "lg" }), "min-w-0")}
+      >
         <h2 className="mb-4 text-lg font-semibold">
           {t("views.channel.about")}
         </h2>
@@ -142,7 +146,7 @@ export function ChannelAbout({ channel }: { channel: Channel }) {
           </p>
         )}
       </section>
-      <aside className="h-fit rounded-xl border bg-card p-5">
+      <aside className={cn(cardVariants({ radius: "xl" }), "h-fit p-5")}>
         <h2 className="mb-4 font-semibold">
           {t("component.channelInfo.stats")}
         </h2>

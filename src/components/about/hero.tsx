@@ -1,3 +1,4 @@
+import { cardVariants } from "@/components/ui/card"
 import { useMemo, useState, type ReactNode } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
@@ -64,21 +65,21 @@ function useWallFaces() {
       // A live face opens the stream itself, the way its video card would.
       const stream = isLive && !isVideoPlaceholder(video)
       const external = stream && redirectMode ? videoSource(video).url : null
-        ; (isLive ? onAir : soon).push({
-          id: channel.id,
-          label: stream ? `${name} · ${videoTitle(video, preferEnglish)}` : name,
-          ...(external
-            ? { href: external }
-            : { to: stream ? watchPath(video.id) : `/channel/${channel.id}` }),
-          render: (size) => (
-            <ChannelAvatar
-              channel={channel}
-              size={size}
-              live={isLive}
-              className="ring-offset-card"
-            />
-          ),
-        })
+      ;(isLive ? onAir : soon).push({
+        id: channel.id,
+        label: stream ? `${name} · ${videoTitle(video, preferEnglish)}` : name,
+        ...(external
+          ? { href: external }
+          : { to: stream ? watchPath(video.id) : `/channel/${channel.id}` }),
+        render: (size) => (
+          <ChannelAvatar
+            channel={channel}
+            size={size}
+            live={isLive}
+            className="ring-offset-card"
+          />
+        ),
+      })
     }
 
     let faces = [...onAir, ...soon].slice(0, MAX_FACES)
@@ -221,7 +222,7 @@ function OshiWall() {
         <div className="px-6 pb-3 md:px-10">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 rounded-full bg-live/10 px-3 py-1 text-xs font-semibold text-live transition-colors outline-none hover:bg-live/15 focus-ring"
+            className="inline-flex items-center gap-2 rounded-full bg-live/10 px-3 py-1 text-xs font-semibold text-live focus-ring transition-colors outline-none hover:bg-live/15"
           >
             <span className="relative flex size-2" aria-hidden="true">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-live opacity-60 motion-reduce:animate-none" />
@@ -260,7 +261,10 @@ export function AboutHero() {
   return (
     <header
       id="hello"
-      className="relative isolate scroll-mt-[calc(var(--header-height)+env(safe-area-inset-top,0px)+1.5rem)] overflow-hidden rounded-3xl border bg-card"
+      className={cn(
+        cardVariants({ radius: "3xl" }),
+        "relative isolate scroll-mt-[calc(var(--header-height)+env(safe-area-inset-top,0px)+1.5rem)] overflow-hidden"
+      )}
     >
       <div className="absolute inset-0 -z-10">
         <LogoOutline className="pointer-events-none absolute -top-12 -right-14 -z-10 size-72 rotate-12 opacity-25 md:size-96" />
