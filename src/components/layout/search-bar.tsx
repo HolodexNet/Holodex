@@ -415,7 +415,7 @@ export function SearchBar({ autoFocus, onCommit, className }: SearchBarProps) {
         <ul
           id={listId}
           role="listbox"
-          className="absolute inset-x-0 top-full z-50 mt-1.5 max-h-[min(24rem,70svh)] overflow-y-auto rounded-2xl bg-popover p-1 text-popover-foreground shadow-2xl ring-1 ring-foreground/10"
+          className="absolute inset-x-0 top-full z-50 mt-1.5 max-h-[min(24rem,70svh)] overflow-y-auto rounded-2xl surface-floating p-1 shadow-2xl"
         >
           {suggestions.map((suggestion, index) => {
             const item = describe(suggestion)

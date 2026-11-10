@@ -129,7 +129,7 @@ export function EditorPlayer({
         <button
           type="button"
           onClick={returnKeyboard}
-          className="absolute inset-x-0 top-0 mx-auto flex w-fit max-w-full cursor-pointer items-center gap-1.5 rounded-b-lg bg-popover px-3 py-1 text-xs text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-none hover:bg-accent focus-ring-sm"
+          className="absolute inset-x-0 top-0 mx-auto flex w-fit max-w-full cursor-pointer items-center gap-1.5 rounded-b-lg surface-floating px-3 py-1 text-xs shadow-lg focus-ring-sm outline-none hover:bg-accent"
         >
           <KeyboardIcon className="size-4 shrink-0" />
           <span className="truncate">{t("videoEdit.player.keyboardLost")}</span>

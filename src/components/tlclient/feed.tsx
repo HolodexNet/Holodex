@@ -357,7 +357,7 @@ function OwnRow({
       </span>
       <span
         className={cn(
-          "absolute top-0 right-1 flex items-center gap-0.5 rounded-md bg-popover p-0.5 shadow-sm ring-1 ring-foreground/10",
+          "absolute top-0 right-1 flex items-center gap-0.5 rounded-md surface-floating p-0.5 shadow-sm",
           state === "failed" || confirming
             ? "flex"
             : "hidden group-focus-within:flex group-hover:flex"

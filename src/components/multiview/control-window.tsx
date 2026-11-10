@@ -116,7 +116,7 @@ function FloatingPanel() {
         tabIndex={-1}
         aria-label={t("views.multiview.mediaControls")}
         data-control-window=""
-        className="fixed z-40 flex max-h-[calc(100dvh-1rem)] w-[min(26rem,calc(100vw-1rem))] flex-col overflow-hidden rounded-xl bg-popover text-sm text-popover-foreground shadow-2xl ring-1 ring-foreground/10 outline-none"
+        className="fixed z-40 flex max-h-[calc(100dvh-1rem)] w-[min(26rem,calc(100vw-1rem))] flex-col overflow-hidden rounded-xl surface-floating text-sm shadow-2xl outline-none"
         style={
           at ? { left: at.x, top: at.y } : { top: "3.5rem", right: "0.5rem" }
         }
