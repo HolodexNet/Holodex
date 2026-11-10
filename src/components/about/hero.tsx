@@ -64,21 +64,21 @@ function useWallFaces() {
       // A live face opens the stream itself, the way its video card would.
       const stream = isLive && !isVideoPlaceholder(video)
       const external = stream && redirectMode ? videoSource(video).url : null
-      ;(isLive ? onAir : soon).push({
-        id: channel.id,
-        label: stream ? `${name} · ${videoTitle(video, preferEnglish)}` : name,
-        ...(external
-          ? { href: external }
-          : { to: stream ? watchPath(video.id) : `/channel/${channel.id}` }),
-        render: (size) => (
-          <ChannelAvatar
-            channel={channel}
-            size={size}
-            live={isLive}
-            className="ring-offset-card"
-          />
-        ),
-      })
+        ; (isLive ? onAir : soon).push({
+          id: channel.id,
+          label: stream ? `${name} · ${videoTitle(video, preferEnglish)}` : name,
+          ...(external
+            ? { href: external }
+            : { to: stream ? watchPath(video.id) : `/channel/${channel.id}` }),
+          render: (size) => (
+            <ChannelAvatar
+              channel={channel}
+              size={size}
+              live={isLive}
+              className="ring-offset-card"
+            />
+          ),
+        })
     }
 
     let faces = [...onAir, ...soon].slice(0, MAX_FACES)
@@ -262,35 +262,22 @@ export function AboutHero() {
       id="hello"
       className="relative isolate scroll-mt-[calc(var(--header-height)+env(safe-area-inset-top,0px)+1.5rem)] overflow-hidden rounded-3xl border bg-card"
     >
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10"
-        style={{
-          backgroundImage: [
-            "radial-gradient(55% 75% at 100% 0%, color-mix(in oklch, var(--primary) 24%, transparent), transparent)",
-            "radial-gradient(45% 65% at 0% 100%, color-mix(in oklch, var(--complement) 20%, transparent), transparent)",
-          ].join(", "),
-        }}
-      />
-      <LogoOutline className="pointer-events-none absolute -top-12 -right-14 -z-10 size-72 rotate-12 opacity-25 md:size-96" />
-      <SparkleIcon
-        aria-hidden="true"
-        className="pointer-events-none absolute top-8 right-[38%] -z-10 hidden size-5 text-primary/60 md:block"
-      />
-      <SparkleIcon
-        aria-hidden="true"
-        className="pointer-events-none absolute top-[45%] right-10 -z-10 size-3 text-complement/70"
-      />
-
-      <div className="px-6 pt-8 pb-6 md:px-10 md:pt-12">
-        <p className="inline-flex items-center gap-1.5 rounded-full border bg-background/70 px-3 py-1 text-xs font-semibold text-brand backdrop-blur">
-          <HeartFillIcon className="size-3.5" aria-hidden="true" />
-          {t("about.hero.since")}
-        </p>
-        <h1 className="mt-4 max-w-3xl bg-linear-to-r from-brand via-brand to-complement bg-clip-text pb-1 text-4xl font-extrabold tracking-tight text-balance text-transparent sm:text-5xl md:text-6xl">
+      <div className="absolute inset-0 -z-10">
+        <LogoOutline className="pointer-events-none absolute -top-12 -right-14 -z-10 size-72 rotate-12 opacity-25 md:size-96" />
+        <SparkleIcon
+          aria-hidden="true"
+          className="pointer-events-none absolute top-8 right-[38%] -z-10 hidden size-5 text-primary/60 md:block"
+        />
+        <SparkleIcon
+          aria-hidden="true"
+          className="pointer-events-none absolute top-[45%] right-10 -z-10 size-3 text-complement/70"
+        />
+      </div>
+      <div className="px-6 pt-8 pb-6 md:px-10 md:pt-10">
+        <h1 className="max-w-3xl text-3xl font-extrabold tracking-tight text-balance md:text-4xl">
           {t("about.hero.title")}
         </h1>
-        <p className="mt-3 max-w-2xl text-base text-pretty text-muted-foreground md:text-lg">
+        <p className="mt-3 max-w-2xl text-base text-pretty text-muted-foreground">
           {t("about.general.summary.1")}
         </p>
         <div className="mt-6 flex flex-wrap gap-2">
@@ -311,7 +298,7 @@ export function AboutHero() {
             render={<HashLink to="faq" />}
           >
             <QuestionIcon data-icon="inline-start" />
-            {t("about.hero.readFaq")}
+            {t("about.nav.faq")}
           </Button>
         </div>
       </div>

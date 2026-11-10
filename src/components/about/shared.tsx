@@ -29,19 +29,16 @@ export type SectionId =
   | "extras"
   | "faq"
   | "updates"
-  | "contact"
   | "fine-print"
 
 export function AboutSection({
   id,
-  eyebrow,
   title,
   description,
   children,
   className,
 }: {
   id: SectionId
-  eyebrow: string
   title: string
   description?: ReactNode
   children: ReactNode
@@ -57,12 +54,9 @@ export function AboutSection({
         className
       )}
     >
-      <p className="text-xs font-semibold tracking-[0.14em] text-brand uppercase">
-        {eyebrow}
-      </p>
       <h2
         id={`${id}-title`}
-        className="mt-1.5 text-2xl font-bold tracking-tight text-balance md:text-3xl"
+        className="text-2xl font-bold tracking-tight text-balance md:text-3xl"
       >
         {title}
       </h2>

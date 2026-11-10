@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react"
+import { useMemo, type ReactNode } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
 
@@ -15,53 +15,21 @@ import { ALL_VTUBERS } from "@/lib/consts"
 import { intlLocale, useT } from "@/lib/i18n"
 import { useOrgs, useSiteStats } from "@/lib/queries"
 import { formatDistance } from "@/lib/time"
-import { AboutSection, useSeenOnce } from "./shared"
-
-/** Eases from zero up to `target` once `run` turns true. */
-function useCountUp(target: number, run: boolean): number {
-  const [value, setValue] = useState(0)
-
-  useEffect(() => {
-    if (!run) return
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches
-    const duration = reduced ? 0 : 1600
-    const start = performance.now()
-    let frame = requestAnimationFrame(function tick(now) {
-      const progress = duration ? Math.min((now - start) / duration, 1) : 1
-      setValue(Math.round(target * (1 - Math.pow(1 - progress, 4))))
-      if (progress < 1) frame = requestAnimationFrame(tick)
-    })
-    return () => cancelAnimationFrame(frame)
-  }, [target, run])
-
-  return value
-}
+import { AboutSection } from "./shared"
 
 interface StatProps {
   icon: ReactNode
   label: string
   value: number
   delta?: string
-  run: boolean
   tone: "brand" | "complement"
   format: Intl.NumberFormat
 }
 
-function Stat({ icon, label, value, delta, run, tone, format }: StatProps) {
-  const shown = useCountUp(value, run)
-
+function Stat({ icon, label, value, delta, tone, format }: StatProps) {
   return (
     // The label comes first for screen readers; flex order puts the number first.
-    <div className="@container relative flex flex-col items-start overflow-hidden rounded-2xl border bg-card p-4 md:p-5">
-      <span
-        aria-hidden="true"
-        className={cn(
-          "absolute -top-6 -right-6 size-20 rounded-full opacity-15 blur-xl",
-          tone === "brand" ? "bg-primary" : "bg-complement"
-        )}
-      />
+    <div className="@container flex flex-col items-start rounded-2xl border bg-card p-4 md:p-5">
       <span
         aria-hidden="true"
         className={cn(
@@ -76,14 +44,8 @@ function Stat({ icon, label, value, delta, run, tone, format }: StatProps) {
       <dt className="order-3 mt-1.5 text-sm font-medium text-muted-foreground">
         {label}
       </dt>
-      <dd className="order-2 mt-4 w-full">
-        <span className="sr-only">{format.format(value)}</span>
-        <span
-          aria-hidden="true"
-          className="block text-[min(2.5rem,14cqi)] leading-none font-extrabold tracking-tight tabular-nums"
-        >
-          {format.format(shown)}
-        </span>
+      <dd className="order-2 mt-4 w-full text-[min(2.5rem,14cqi)] leading-none font-extrabold tracking-tight tabular-nums">
+        {format.format(value)}
       </dd>
       {delta && (
         <dd
@@ -142,7 +104,6 @@ export function ArchiveStats() {
   const { t, lang } = translator
   const now = useNowMinutes()
   const stats = useSiteStats()
-  const [ref, seen] = useSeenOnce<HTMLDListElement>()
   const format = useMemo(() => new Intl.NumberFormat(intlLocale(lang)), [lang])
   const s = stats.data?.statistics
   const generatedAt = stats.data?.generatedAt
@@ -153,11 +114,7 @@ export function ArchiveStats() {
     n ? t("about.stats.yesterday", { n: format.format(n) }) : undefined
 
   return (
-    <AboutSection
-      id="numbers"
-      eyebrow={t("about.nav.numbers")}
-      title={t("about.stats.title")}
-    >
+    <AboutSection id="numbers" title={t("about.stats.title")}>
       {stats.isError ? (
         <p className="rounded-2xl border border-dashed p-6 text-center text-sm text-muted-foreground">
           {t("about.stats.unavailable")}
@@ -169,14 +126,13 @@ export function ArchiveStats() {
           ))}
         </div>
       ) : (
-        <dl ref={ref} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <dl className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <Stat
             icon={<UsersThreeFillIcon />}
             label={t("about.stats.vtubers")}
             value={s.channelCount?.vtuber ?? 0}
             delta={lastMonth(s.monthlyChannels?.vtuber)}
             tone="brand"
-            run={seen}
             format={format}
           />
           <Stat
@@ -185,7 +141,6 @@ export function ArchiveStats() {
             value={s.channelCount?.subber ?? 0}
             delta={lastMonth(s.monthlyChannels?.subber)}
             tone="complement"
-            run={seen}
             format={format}
           />
           <Stat
@@ -194,7 +149,6 @@ export function ArchiveStats() {
             value={s.totalVideos?.count ?? 0}
             delta={yesterday(s.dailyVideos?.count)}
             tone="brand"
-            run={seen}
             format={format}
           />
           <Stat
@@ -202,7 +156,6 @@ export function ArchiveStats() {
             label={t("about.stats.songs")}
             value={s.totalSongs?.count ?? 0}
             tone="complement"
-            run={seen}
             format={format}
           />
         </dl>

@@ -114,7 +114,10 @@ interface FavoriteEntry {
   host?: ChannelSummary
 }
 
-function useFavoriteEntries(): FavoriteEntry[] {
+/** Upcoming streams further out than this show as plain channels, not countdowns. */
+const COUNTDOWN_WINDOW_MS = 32 * 60 * 60 * 1000
+
+function useFavoriteEntries(now: number): FavoriteEntry[] {
   const { favorites } = useFavorites()
   const live = useFavoritesLive()
   const blocked = useSettings((s) => s.blockedChannels)
@@ -124,7 +127,12 @@ function useFavoriteEntries(): FavoriteEntry[] {
     const favoriteIds = new Set(favorites.map((f) => f.id))
     const blockedIds = new Set(blocked.map((c) => c.id))
     const streaming = new Map<string, FavoriteEntry>()
-    const videos = live.data ?? []
+    const videos = (live.data ?? []).filter(
+      (video) =>
+        video.status === "live" ||
+        video.available_at == null ||
+        new Date(video.available_at).getTime() - now <= COUNTDOWN_WINDOW_MS
+    )
 
     // The list is sorted by start time, so the first hit is the next stream.
     for (const video of videos) {
@@ -160,7 +168,7 @@ function useFavoriteEntries(): FavoriteEntry[] {
       .map((channel) => ({ channel }))
 
     return [...streaming.values(), ...idle]
-  }, [favorites, live.data, blocked, preferEnglish])
+  }, [favorites, live.data, blocked, preferEnglish, now])
 }
 
 const COLLAPSED_FAVORITES = 8
@@ -172,7 +180,7 @@ function FavoritesSection() {
   const { setOpenMobile } = useSidebar()
   const loggedIn = useAuth((s) => !!s.jwt)
   const preferEnglish = useSettings((s) => s.useEnglishName)
-  const entries = useFavoriteEntries()
+  const entries = useFavoriteEntries(now)
   const [expanded, setExpanded] = useState(false)
 
   const visible =
@@ -205,7 +213,7 @@ function FavoritesSection() {
       </Button>
     </div>
   ) : (
-    <SidebarMenu>
+    <SidebarMenu className="max-h-[30vh] overflow-y-auto">
       {visible.map(({ channel, video, host }) => {
         const isLive = video?.status === "live"
         const name = channelName(channel, preferEnglish)
@@ -243,9 +251,7 @@ function FavoritesSection() {
         )
       })}
       {entries.length > COLLAPSED_FAVORITES && (
-        <SidebarMenuItem
-          className={cn(expanded && "sticky bottom-0 z-10 bg-sidebar py-0.5")}
-        >
+        <SidebarMenuItem className="sticky bottom-0 z-10 bg-sidebar py-0.5">
           <SidebarMenuButton
             className="text-muted-foreground"
             tooltip={

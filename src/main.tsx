@@ -151,6 +151,13 @@ const router = createBrowserRouter([
               },
             ],
           },
+          // Unlinked: crew members build their About page card here.
+          {
+            path: "/about/crew-card",
+            lazy: async () => ({
+              Component: (await import("@/pages/crew-card")).default,
+            }),
+          },
           {
             path: "/about/:section?",
             lazy: async () => ({

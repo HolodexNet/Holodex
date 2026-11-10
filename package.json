@@ -14,6 +14,7 @@
     "i18n:doctor": "x18n doctor",
     "i18n:ui": "x18n ui",
     "i18n:report": "node scripts/i18n-report.mjs",
+    "tailwind:report": "node scripts/tailwind-class-report.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

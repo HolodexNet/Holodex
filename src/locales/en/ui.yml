@@ -1153,12 +1153,9 @@ about:
     extras: Extras
     faq: FAQ
     updates: Updates
-    contact: Say hi
     finePrint: Fine print
   hero:
-    since: Fan-made since 2020
     title: Made by fans, for fans.
-    readFaq: Read the FAQ
     liveNow: '{n} talent live in {org} right now | {n} talents live in {org} right now'
     liveNowAll: '{n} talent live right now | {n} talents live right now'
   general:
@@ -1198,38 +1195,25 @@ about:
     amount: thanks
     talents:
       to: To the talents
-      message: >-
-        You're the reason any of this exists. Thank you for every stream, every
-        song, and every "just one more game".
+      message: The reason any of this exists, thanks for all the streams!
     subbers:
       to: To the clippers & translators
     editors:
       to: To our editors
       message: >-
-        Over 100 of you tag topics, time karaoke songs and link collabs, so
-        everyone else can find the moment they're looking for.
+        Over 100 of you tag topics, time karaoke songs and fix all the wrong collab links. We'd be a right mess without you.
     holotools:
       to: To HoloTools
     translators:
       to: To our translators
       message: >-
-        Holodex speaks {n} languages (a couple of them very silly) because
-        volunteers translated it a little at a time.
+        Holodex is in {n} languages (a couple of them very silly), all
+        translated by volunteers.
     contributors:
       to: To everyone who sent a fix
-      message: >-
-        Bug reports, pull requests and late-night ideas in Discord: Holodex has
-        been shaped by all of it since 2020.
-    you:
-      to: And to you
-      message: >-
-        For watching, sharing clips with your friends, and telling us when
-        something breaks.
+      message: Hundreds of the bug reports, pull requests and ideas you've sent in
     crew: The crew
-    staff: Staff
-    editorsCount: 100+ editors
-    editorsCountRole: Tagging, timing and linking, every day
-    yourName: Your name here?
+    oshi: Oshi
     translatorsTitle: Translated by fans
   roles:
     creator: Creator
@@ -1239,7 +1223,6 @@ about:
     twitch: Twitch support
     editor: Editor
   pitchIn:
-    eyebrow: Pitch in
     title: Come chill out with us!
     discord:
       title: Hang out on Discord
@@ -1247,41 +1230,39 @@ about:
         Report bugs, suggest features, or complain about some weird bug on the site
     translate:
       title: Translate Holodex
-      body: Help bring Holodex to your language on Crowdin.
+      body: Fix a translation or add a missing one on Crowdin.
       action: Open Crowdin
     edit:
       title: Time songs & tag streams
       body: >-
-        Logged-in fans can add songs, topics and collab mentions to any video.
-        Every edit helps someone find their favorite moment.
+        Anyone with an account can add songs, topics and collab mentions to any
+        video.
       action: Log in to start editing
       loggedIn: Open any video's menu and choose “Edit video”.
     request:
-      body: Know a VTuber or clipper we're missing? Let us know.
+      title: Missing a channel?
+      body: Request a VTuber or clipper channel we don't list yet.
     github:
       title: Send a pull request
       body: The site you're looking at is open source.
     api:
-      title: Build something
+      title: Use the API
       body: >-
-        Our API powers bots, extensions and fan projects. Grab a key from your
-        account page.
+        Holodex has a public API for bots, extensions and fan sites. Get a key
+        from your account page.
     kofi:
-      title: Keep the servers humming
-      body: >-
-        We started a Ko-fi to cover server costs. Totally optional, always
-        appreciated.
+      title: Chip in
+      body: Ko-fi donations help pay for the server.
   quicklink:
     apiDocs: API
   extensions:
-    eyebrow: Extras
     heading: Take Holodex further
     description: Little tools that make watching a bit nicer.
     github: Install from GitHub
     raycast: Raycast Extension (macOS)
     raycastStore: Get it on Raycast Store
   faqGroups:
-    watching: Watching
+    watching: Watching & chatting
     account: Your account & data
     creators: For clippers & subbers
     project: About the project
@@ -1306,14 +1287,10 @@ about:
     autoplayHint: >-
       Most browsers keep this under the site settings icon in the address bar,
       in a setting called Autoplay or Sound.
-  outro:
-    eyebrow: That's the stream!
-    title: Thanks for stopping by
-    body: Questions, ideas, or just want to say hi? We're around.
-    issues: Report a bug on GitHub
   contact:
     discord: Join Holodex Discord
     twitter: DM us on Twitter
+    issues: Report a bug on GitHub
   finePrint:
     title: The fine print
     youtubeTos: 'By using this site you are agreeing to be bound by the {0}.'

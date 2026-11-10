@@ -1,21 +1,17 @@
-import type { CSSProperties, ReactNode } from "react"
+import { useState, type CSSProperties, type ReactNode } from "react"
+import { Link } from "react-router"
 import { cn } from "cn"
 
+import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { Logo } from "@/components/common/logo"
-import {
-  InfinityBoldIcon,
-  PlusIcon,
-  UsersThreeFillIcon,
-} from "@/components/icons"
+import { InfinityBoldIcon } from "@/components/icons"
 import { UI_LANGS } from "@/lib/consts"
 import { useT } from "@/lib/i18n"
-import {
-  AboutSection,
-  ExternalLink,
-  LINKS,
-  textLink,
-  useSeenOnce,
-} from "./shared"
+import { useChannelInfos } from "@/lib/queries"
+import type { StaticChannel } from "@/lib/types"
+import { channelName } from "@/lib/video"
+import { useSettings } from "@/stores/settings"
+import { AboutSection, ExternalLink, useSeenOnce } from "./shared"
 
 /** Live-chat Super Chat tiers, highest first: header, body, text. */
 const TIERS = [
@@ -66,8 +62,10 @@ function SuperThanks({
         </span>
         <div className="min-w-0 leading-tight">
           <p className="text-[13px] opacity-75">{t("about.thanks.sender")}</p>
-          
-          <p className="text-[15px] font-bold"><InfinityBoldIcon className="size-4 inline-block mr-1" />{t("about.thanks.amount")}</p>
+          <p className="text-[15px] font-bold">
+            <InfinityBoldIcon className="mr-1 inline-block size-4" />
+            {t("about.thanks.amount")}
+          </p>
         </div>
       </header>
       <div className="px-4 py-3 text-[15px]" style={{ background: body }}>
@@ -78,58 +76,161 @@ function SuperThanks({
   )
 }
 
-const CREW = [
-  { name: "RiceCakes", roles: ["creator", "admin"] },
-  { name: "Xrave", roles: ["admin"] },
-  { name: "Uetchy", roles: ["developer", "designer"] },
-  { name: "MadeT", roles: ["designer"] },
-  { name: "NeloBlivion", roles: ["twitch", "editor"] },
+export const ROLES = [
+  "creator",
+  "admin",
+  "developer",
+  "designer",
+  "twitch",
+  "editor",
 ] as const
+export type Role = (typeof ROLES)[number]
 
-function StaffPass({
-  avatar,
-  name,
-  roles,
-  dashed = false,
-  hue,
+/**
+ * A crew member's fan profile. Only `name` and `roles` are required; each
+ * other field is a personal touch that appears on the card once it is set.
+ * New members can build theirs at /about/crew-card (pages/crew-card.tsx).
+ */
+export interface CrewMember {
+  name: string
+  roles: readonly Role[]
+  /** Profile picture URL; `github()` gives any GitHub account's. */
+  avatar?: string
+  /**
+   * YouTube channel id of their oshi. The oshi's avatar and name go on the
+   * card, linked to their channel, and the channel banner becomes its header.
+   */
+  oshi?: string
+  /** Oshi mark: the emoji a fan puts after their name, e.g. "🌸". */
+  mark?: string
+  /** Any CSS colour; fills the header where there is no oshi banner. */
+  color?: string
+  /** A line of their own: a greeting, a catchphrase, a favourite clip. */
+  line?: string
+}
+
+export const github = (user: string) =>
+  `https://github.com/${user}.png?size=128`
+export const discord = (user: string, sha: string) =>
+  `https://cdn.discordapp.com/avatars/${user}/${sha}.png?size=1024`
+export const CREW: CrewMember[] = [
+  {
+    name: "RiceCakes",
+    roles: ["creator", "admin"],
+    avatar: discord("113871822914584584", "94aecc290deaa0a62686d799ef00c007"),
+  },
+  {
+    name: "Xrave",
+    roles: ["admin", "developer"],
+    avatar: discord("140425843108216832", "db2bafe69eab71a91fe3aabd83509c3b"),
+    color: "#f13da3",
+  },
+  {
+    name: "Uetchy",
+    roles: ["developer", "designer"],
+    avatar: github("uetchy"),
+  },
+  { name: "MadeT", roles: ["designer"] },
+  {
+    name: "NeloBlivion",
+    roles: ["admin", "editor"],
+    avatar: github("NeloBlivion"),
+  },
+]
+
+const OSHI_IDS = CREW.flatMap((member) => (member.oshi ? [member.oshi] : []))
+
+function CrewAvatar({ member }: { member: CrewMember }) {
+  // Keyed by URL so a new avatar gets its own chance to load.
+  const [failedSrc, setFailedSrc] = useState<string>()
+  return (
+    // Positioned so it paints over the banner it overlaps.
+    <span className="relative -mt-8 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-xl font-bold text-muted-foreground ring-4 ring-card">
+      {member.avatar && member.avatar !== failedSrc ? (
+        <img
+          src={member.avatar}
+          alt=""
+          width={64}
+          height={64}
+          loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
+          className="size-full object-cover"
+          onError={() => setFailedSrc(member.avatar)}
+        />
+      ) : (
+        <span aria-hidden="true">{Array.from(member.name)[0]}</span>
+      )}
+    </span>
+  )
+}
+
+export function CrewCard({
+  member,
+  oshi,
 }: {
-  avatar: ReactNode
-  name: ReactNode
-  roles: ReactNode
-  dashed?: boolean
-  hue?: number
+  member: CrewMember
+  oshi?: StaticChannel
 }) {
   const { t } = useT()
+  const preferEnglish = useSettings((s) => s.useEnglishName)
+  const [bannerFailedFor, setBannerFailedFor] = useState<string>()
+
   return (
-    <li
-      className={cn(
-        "relative flex flex-col items-center rounded-2xl bg-card px-3 pt-6 pb-4 text-center transition-transform duration-200 hover:-rotate-1 motion-reduce:transition-none",
-        dashed ? "border-2 border-dashed" : "border"
-      )}
-    >
-      {/* The lanyard slot of a staff pass. */}
-      <span
+    <li className="flex flex-col overflow-hidden rounded-2xl border bg-card">
+      <div
         aria-hidden="true"
-        className="absolute top-2.5 left-1/2 h-1.5 w-10 -translate-x-1/2 rounded-full bg-muted"
-      />
-      <span className="mt-1 rounded bg-primary px-2 py-px text-[10px] font-bold tracking-[0.2em] text-primary-foreground uppercase">
-        {t("about.thanks.staff")}
-      </span>
-      <span
-        aria-hidden="true"
-        className="mt-3 flex size-14 items-center justify-center rounded-full text-xl font-bold text-white shadow-inner"
-        style={
-          hue === undefined
-            ? undefined
-            : {
-                background: `linear-gradient(${hue}deg, var(--primary), var(--complement))`,
-              }
-        }
+        className="relative h-14 bg-muted"
+        style={member.color ? { backgroundColor: member.color } : undefined}
       >
-        {avatar}
-      </span>
-      <p className="mt-2 font-bold">{name}</p>
-      <p className="mt-0.5 text-xs text-muted-foreground">{roles}</p>
+        {member.oshi && member.oshi !== bannerFailedFor && (
+          <img
+            src={`/statics/channelImg/${encodeURIComponent(member.oshi)}/banner/1.jpeg`}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="absolute inset-0 size-full object-cover"
+            onError={() => setBannerFailedFor(member.oshi)}
+          />
+        )}
+      </div>
+      <div className="flex flex-1 flex-col px-4 pb-4">
+        <CrewAvatar member={member} />
+        <p className="mt-2 font-bold">
+          {member.name}
+          {member.mark && (
+            <span className="ml-1 font-normal">{member.mark}</span>
+          )}
+        </p>
+        <p className="text-xs text-muted-foreground">
+          {member.roles.map((r) => t(`about.roles.${r}`)).join(" · ")}
+        </p>
+        {member.line && (
+          <p className="mt-2 text-sm text-pretty">{member.line}</p>
+        )}
+        {member.oshi && (
+          <Link
+            to={`/channel/${member.oshi}`}
+            className="mt-auto flex items-center gap-2 rounded-xl pt-3 outline-none hover:text-brand focus-visible:ring-[3px] focus-visible:ring-ring/50"
+          >
+            <ChannelAvatar
+              channel={{ id: member.oshi, name: oshi?.name ?? "" }}
+              size={28}
+            />
+            <span className="min-w-0 leading-tight">
+              <span className="block text-[11px] text-muted-foreground">
+                {t("about.thanks.oshi")}
+              </span>
+              {oshi && (
+                <span className="block truncate text-sm font-medium">
+                  {channelName(oshi, preferEnglish)}
+                </span>
+              )}
+            </span>
+          </Link>
+        )}
+      </div>
     </li>
   )
 }
@@ -177,6 +278,7 @@ export function Thanks() {
   const { t, tl } = useT()
   const [ref, seen] = useSeenOnce<HTMLDivElement>()
   const credits = tl("about.credits.contents")
+  const oshis = useChannelInfos(OSHI_IDS)
 
   const thanks: { to: string; message: ReactNode }[] = [
     {
@@ -220,13 +322,11 @@ export function Thanks() {
       to: t("about.thanks.contributors.to"),
       message: t("about.thanks.contributors.message"),
     },
-    { to: t("about.thanks.you.to"), message: t("about.thanks.you.message") },
   ]
 
   return (
     <AboutSection
       id="thanks"
-      eyebrow={t("about.credits.title")}
       title={t("about.thanks.title")}
       description={t("about.thanks.description")}
     >
@@ -241,56 +341,36 @@ export function Thanks() {
       <h3 className="mt-10 text-lg font-bold tracking-tight">
         {t("about.thanks.crew")}
       </h3>
-      <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        {CREW.map((member, i) => (
-          <StaffPass
+      <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {CREW.map((member) => (
+          <CrewCard
             key={member.name}
-            hue={120 + i * 45}
-            avatar={member.name.slice(0, 1)}
-            name={member.name}
-            roles={member.roles.map((r) => t(`about.roles.${r}`)).join(" · ")}
+            member={member}
+            oshi={member.oshi ? oshis.get(member.oshi) : undefined}
           />
         ))}
-        <StaffPass
-          hue={300}
-          avatar={<UsersThreeFillIcon className="size-7" />}
-          name={t("about.thanks.editorsCount")}
-          roles={t("about.thanks.editorsCountRole")}
-        />
-        <StaffPass
-          dashed
-          avatar={
-            <span className="flex size-full items-center justify-center rounded-full border-2 border-dashed text-muted-foreground">
-              <PlusIcon className="size-6" />
-            </span>
-          }
-          name={
-            <ExternalLink href={LINKS.discord} className={textLink}>
-              {t("about.thanks.yourName")}
-            </ExternalLink>
-          }
-          roles={t("about.general.credits.addRequest")}
-        />
       </ul>
+      <p className="mt-3 text-sm text-muted-foreground">
+        {t("about.general.credits.addRequest")}
+      </p>
 
       <h3 className="mt-10 text-lg font-bold tracking-tight">
         {t("about.thanks.translatorsTitle")}
       </h3>
       <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {TRANSLATIONS.map((lang) => (
-          <li
-            key={lang.val}
-            lang={lang.val.startsWith("lol-") ? "en" : lang.val}
-            className="rounded-xl border bg-card px-4 py-3"
-          >
-            <p className="text-lg font-bold text-brand">
-              {THANK_YOU[lang.val] ?? "Thank you!"}
+          <li key={lang.val} className="rounded-xl border bg-card px-4 py-3">
+            <p className="font-semibold text-pretty">
+              {translatorNames(lang.credit)}
             </p>
-            <p className="mt-0.5 text-sm">
-              <span className="font-medium">{lang.display}</span>
-              <span className="text-muted-foreground">
-                {" · "}
-                {translatorNames(lang.credit)}
+            <p
+              lang={lang.val.startsWith("lol-") ? "en" : lang.val}
+              className="mt-0.5 text-sm text-muted-foreground"
+            >
+              {lang.display}
+              {" · "}
+              <span className="text-brand">
+                {THANK_YOU[lang.val] ?? "Thank you!"}
               </span>
             </p>
           </li>

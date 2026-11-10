@@ -36,7 +36,7 @@ function TileCard({ tile }: { tile: Tile }) {
       <span
         aria-hidden="true"
         className={cn(
-          "flex size-11 shrink-0 items-center justify-center rounded-2xl transition-transform duration-200 group-hover:scale-105 group-hover:-rotate-6 motion-reduce:transition-none [&_svg]:size-6",
+          "flex size-11 shrink-0 items-center justify-center rounded-2xl [&_svg]:size-6",
           tile.chip
         )}
       >
@@ -61,7 +61,7 @@ function TileCard({ tile }: { tile: Tile }) {
     </>
   )
   const className = cn(
-    "group flex h-full gap-4 rounded-2xl border bg-card p-4 md:p-5",
+    "flex h-full gap-4 rounded-2xl border bg-card p-4 md:p-5",
     (tile.href || tile.to) &&
       "transition-colors outline-none hover:border-primary/40 hover:bg-primary/[0.03] focus-visible:ring-[3px] focus-visible:ring-ring/50"
   )
@@ -120,7 +120,7 @@ export function PitchIn() {
       key: "request",
       icon: <UserCircleIcon />,
       chip: "bg-primary/12 text-brand",
-      title: t("views.about.add_my_channel"),
+      title: t("about.pitchIn.request.title"),
       body: t("about.pitchIn.request.body"),
       action: t("views.about.add_my_channel"),
       to: "/addChannel",
@@ -155,12 +155,7 @@ export function PitchIn() {
   ]
 
   return (
-    <AboutSection
-      id="pitch-in"
-      eyebrow={t("about.pitchIn.eyebrow")}
-      title={t("about.pitchIn.title")}
-      description={t("about.pitchIn.description")}
-    >
+    <AboutSection id="pitch-in" title={t("about.pitchIn.title")}>
       <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {tiles.map((tile) => (
           <li key={tile.key} className={cn(tile.wide && "sm:col-span-2")}>

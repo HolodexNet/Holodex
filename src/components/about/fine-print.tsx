@@ -140,11 +140,7 @@ export function FinePrint() {
   const credits = tl("about.credits.contents")
 
   return (
-    <AboutSection
-      id="fine-print"
-      eyebrow={t("about.nav.finePrint")}
-      title={t("about.finePrint.title")}
-    >
+    <AboutSection id="fine-print" title={t("about.finePrint.title")}>
       <div className="grid gap-6 text-sm leading-relaxed text-muted-foreground md:grid-cols-[1fr_auto]">
         <div className="space-y-3">
           <p>

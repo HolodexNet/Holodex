@@ -270,8 +270,11 @@ export function Faq() {
               <ExternalLink href={LINKS.discord} className={textLink}>
                 {t("about.contact.discord")}
               </ExternalLink>
+              <ExternalLink href={LINKS.twitterDm} className={textLink}>
+                {t("about.contact.twitter")}
+              </ExternalLink>
               <ExternalLink href={LINKS.issues} className={textLink}>
-                {t("about.outro.issues")}
+                {t("about.contact.issues")}
               </ExternalLink>
             </p>
           </>
@@ -288,11 +291,7 @@ export function Faq() {
   ]
 
   return (
-    <AboutSection
-      id="faq"
-      eyebrow={t("about.nav.faq")}
-      title={t("about.faq.title")}
-    >
+    <AboutSection id="faq" title={t("about.faq.title")}>
       <div className="divide-y rounded-3xl border bg-card">
         {groups.map((group) => (
           <div

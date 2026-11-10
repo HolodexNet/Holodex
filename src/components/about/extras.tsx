@@ -69,7 +69,6 @@ export function Extras() {
   return (
     <AboutSection
       id="extras"
-      eyebrow={t("about.extensions.eyebrow")}
       title={t("about.extensions.heading")}
       description={t("about.extensions.description")}
     >
