@@ -196,7 +196,7 @@ function ColorPicker({
         onChange={(event) => choose(event.target.value + hex.slice(7))}
         className={cn(
           "size-9 cursor-pointer rounded-full border border-input bg-transparent p-1 [&::-moz-color-swatch]:rounded-full [&::-moz-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch-wrapper]:p-0",
-          selected && "ring-2 ring-foreground ring-offset-2 ring-offset-card"
+          selected && "ring-selected"
         )}
       />
       <Input
@@ -288,7 +288,7 @@ function Swatch({
       aria-pressed={selected}
       className={cn(
         "flex size-8 shrink-0 items-center justify-center rounded-full focus-ring transition-transform outline-none hover:scale-110",
-        selected && "ring-2 ring-foreground ring-offset-2 ring-offset-card"
+        selected && "ring-selected"
       )}
       style={{ backgroundColor: color }}
       onClick={onClick}

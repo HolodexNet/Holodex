@@ -502,7 +502,7 @@ function VideoCardImpl({
       <article
         {...selection.itemProps}
         className={cn(
-          "group/card group/reveal flex items-center gap-3 border-b py-1.5 text-[13px] row-offscreen last:border-b-0 data-selected:bg-brand/10 data-selected:ring-2 data-selected:ring-brand",
+          "group/card group/reveal flex items-center gap-3 border-b selectable py-1.5 text-[13px] row-offscreen last:border-b-0",
           embedded && "px-2"
         )}
       >
@@ -530,7 +530,7 @@ function VideoCardImpl({
     <article
       {...selection.itemProps}
       className={cn(
-        "group/card group/reveal relative flex min-w-0 card-offscreen data-selected:rounded-xl data-selected:bg-brand/10 data-selected:ring-2 data-selected:ring-brand",
+        "group/card group/reveal relative flex min-w-0 selectable card-offscreen data-selected:rounded-xl",
         variant === "list" ? "flex-row gap-3" : "flex-col gap-2.5"
       )}
     >

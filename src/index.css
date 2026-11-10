@@ -353,3 +353,10 @@
     }
   }
 }
+
+/* Highlight for a card or row whose `data-selected` attribute is set. */
+@utility selectable {
+  &[data-selected] {
+    @apply bg-brand/10 ring-2 ring-brand;
+  }
+}
