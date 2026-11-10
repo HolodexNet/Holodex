@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { Link } from "react-router"
 import { toast } from "sonner"
 
 import {
@@ -238,12 +239,9 @@ export function Faq() {
           t("about.faq.subber.title"),
           <p>
             {subber[0]}{" "}
-            <ExternalLink
-              href="https://forms.gle/xkN4w8fyPr6YTGfx6"
-              className={textLink}
-            >
+            <Link to="/addChannel?type=clipper" className={textLink}>
               {subber[1]}
-            </ExternalLink>
+            </Link>
             {subber[2]}
           </p>
         ),
@@ -255,7 +253,14 @@ export function Faq() {
         item(
           "quit",
           t("about.faq.quitHolodex"),
-          <p>{t("about.faq.quitHolodexContent")}</p>
+          <>
+            <p>{t("about.faq.quitHolodexContent")}</p>
+            <p>
+              <Link to="/addChannel?type=remove" className={textLink}>
+                {t("channelRequest.Types.DeleteChannel")}
+              </Link>
+            </p>
+          </>
         ),
       ],
     },

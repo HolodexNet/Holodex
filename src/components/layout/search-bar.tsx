@@ -398,6 +398,23 @@ export function SearchBar({ autoFocus, onCommit, className }: SearchBarProps) {
         {autocomplete.isFetching && canLookup && (
           <Spinner className="text-muted-foreground" />
         )}
+        {(text || tokens.length > 0) && (
+          <button
+            type="button"
+            aria-label={t("component.search.clearAll")}
+            title={t("component.search.clearAll")}
+            className={SEARCH_BAR_SUBMIT_CLASS}
+            onClick={(event) => {
+              event.stopPropagation()
+              setText("")
+              setTokens([])
+              setActive(0)
+              inputRef.current?.focus()
+            }}
+          >
+            <XIcon className="size-4" />
+          </button>
+        )}
         <button
           type="button"
           aria-label={t("component.search.searchLabel")}

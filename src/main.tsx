@@ -49,7 +49,6 @@ const PENDING_ROUTES = [
   "/scripteditor",
   "/scriptmanager",
   "/relaybot",
-  "/addChannel",
 ]
 
 const router = createBrowserRouter([
@@ -168,6 +167,13 @@ const router = createBrowserRouter([
           {
             path: "/extension",
             element: <Navigate to="/about/extensions" replace />,
+          },
+          // The previous UI's address, which links in the wild still use.
+          {
+            path: "/addChannel",
+            lazy: async () => ({
+              Component: (await import("@/pages/channel-request")).default,
+            }),
           },
           { path: "/settings", element: <SettingsPage /> },
           { path: "/login", element: <LoginPage /> },

@@ -11,7 +11,7 @@ import {
   LogoGithubIcon,
   MusicNotesFillIcon,
   TranslateIcon,
-  UserCircleIcon,
+  UserPlusIcon,
 } from "@/components/icons"
 import { useT } from "@/lib/i18n"
 import { useAuth } from "@/stores/auth"
@@ -118,7 +118,7 @@ export function PitchIn() {
     },
     {
       key: "request",
-      icon: <UserCircleIcon />,
+      icon: <UserPlusIcon />,
       chip: "bg-primary/12 text-brand",
       title: t("about.pitchIn.request.title"),
       body: t("about.pitchIn.request.body"),

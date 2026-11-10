@@ -122,6 +122,7 @@ export { TranslateIcon } from "./translate-icon";
 export { TrashIcon } from "./trash-icon";
 export { UserCircleIcon } from "./user-circle-icon";
 export { UserIcon } from "./user-icon";
+export { UserPlusIcon } from "./user-plus-icon";
 export { UsersIcon } from "./users-icon";
 export { UsersThreeFillIcon } from "./users-three-fill-icon";
 export { UsersThreeIcon } from "./users-three-icon";

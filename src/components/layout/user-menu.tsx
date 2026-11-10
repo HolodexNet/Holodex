@@ -9,6 +9,7 @@ import {
   SunIcon,
   UserCircleIcon,
   UserIcon,
+  UserPlusIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -104,6 +105,10 @@ export function UserMenu() {
         <DropdownMenuItem render={<Link to="/settings" />}>
           <GearSixIcon />
           {t("component.mainNav.settings")}
+        </DropdownMenuItem>
+        <DropdownMenuItem render={<Link to="/addChannel" />}>
+          <UserPlusIcon />
+          {t("views.about.add_my_channel")}
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />

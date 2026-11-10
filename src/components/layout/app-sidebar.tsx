@@ -22,6 +22,7 @@ import {
   SquaresFourIcon,
   UsersThreeFillIcon,
   UsersThreeIcon,
+  UserPlusIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -325,6 +326,11 @@ export function AppSidebar() {
     },
   ]
   const tools: NavItem[] = [
+    {
+      label: t("views.about.add_my_channel"),
+      to: "/addChannel",
+      icon: <UserPlusIcon />,
+    },
     { label: "TL Client", to: "/tlclient", icon: <KeyboardIcon /> },
     { label: "Script Editor", to: "/scripteditor", icon: <NotePencilIcon /> },
     { label: "Script Manager", to: "/scriptmanager", icon: <FilesIcon /> },

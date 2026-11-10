@@ -29,6 +29,26 @@ function safeHref(attrs: string): string | null {
   return href && /^https?:\/\//i.test(href) ? href : null
 }
 
+const ENTITIES: Record<string, string> = {
+  lt: "<",
+  gt: ">",
+  amp: "&",
+  quot: '"',
+  apos: "'",
+  nbsp: " ",
+}
+
+/** Text only: tags are already parsed, so `&lt;` can't become markup. */
+const decodeEntities = (text: string) =>
+  text.replace(
+    /&(?:#(\d+)|#x([\da-f]+)|([a-z]+));/gi,
+    (match, dec?: string, hex?: string, name?: string) => {
+      if (name) return ENTITIES[name.toLowerCase()] ?? match
+      const code = dec ? Number(dec) : parseInt(hex!, 16)
+      return code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : match
+    }
+  )
+
 export function parseRichText(html: string): RichNode[] {
   const root: RichNode[] = []
   const stack: (Open & { children: RichNode[] })[] = []
@@ -37,7 +57,8 @@ export function parseRichText(html: string): RichNode[] {
 
   for (const match of html.matchAll(TAG)) {
     const [whole, closing, rawName, attrs] = match
-    if (match.index > last) out().push(html.slice(last, match.index))
+    if (match.index > last)
+      out().push(decodeEntities(html.slice(last, match.index)))
     last = match.index + whole.length
 
     const tag = NAMES[rawName.toLowerCase()]
@@ -59,7 +80,7 @@ export function parseRichText(html: string): RichNode[] {
       )
     }
   }
-  if (last < html.length) out().push(html.slice(last))
+  if (last < html.length) out().push(decodeEntities(html.slice(last)))
   // Unclosed tags keep their text rather than dropping it. Pop before
   // asking for the parent: out() reads the top of the stack.
   while (stack.length) {

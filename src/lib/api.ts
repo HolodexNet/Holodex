@@ -1,5 +1,6 @@
 import { ALL_VTUBERS } from "@/lib/consts"
 import { apiRequestBudget } from "@/lib/api-rate-limit"
+import type { ChannelRequestBody } from "@/lib/channel-request"
 import { withMentionAdditions } from "@/lib/mention-cache"
 import type { ReportField } from "@/lib/report"
 import type { TopicPlan } from "@/lib/selection-actions/topics"
@@ -498,6 +499,17 @@ export const api = {
       method: "POST",
       body: fields,
       auth: true,
+      signal,
+    }),
+
+  /**
+   * Same caveats as a video report. A 400 also comes back when the channel was
+   * requested in the last three days; see `isDuplicateRequest`.
+   */
+  requestChannel: (body: ChannelRequestBody, signal?: AbortSignal) =>
+    request<unknown>(`${API}/v2/reports/channel`, {
+      method: "POST",
+      body,
       signal,
     }),
 

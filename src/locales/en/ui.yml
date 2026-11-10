@@ -145,6 +145,7 @@ component:
     searchLabel: Search
     placeholder: Search videos, channels, topics
     removeFilter: Remove {0}
+    clearAll: Clear all
     noMatch: No matches
     typeToSearch: Type to search
     searching: Searching…
@@ -555,7 +556,7 @@ views:
       Tip: You can change the organization here!
     loginCallToAction: Login to set your own favorites.
   about:
-    add_my_channel: Channel Request
+    add_my_channel: Request a channel
   watch:
     loading: Loading video…
     theaterMode: Theater Mode (alt + t)
@@ -1027,9 +1028,9 @@ about:
       require linkage to a vtuber known to holodex.
     quitHolodex: "I'm a subber and I would like to have my channel removed from Holodex\r\n"
     quitHolodexContent: >-
-      Sad to see you go :(, please let me know if there's any issue I can help
-      you with. If you would still like to have it removed, please send us a
-      message on Discord.
+      Sad to see you go! If something's wrong, let us know and we'll try to
+      help. If you'd still like your channel removed, send a removal request or
+      message us on Discord.
     favorite:
       title: What are favorites?
       Contents:
@@ -1071,13 +1072,13 @@ about:
       title: I'm a subber and can't find my channel or clips on Holodex
       contents:
         - >-
-          Please check on the Channels page to see if you are listed as a
-          subber, if not please fill out
-        - this form
+          The channel request page checks right away whether you're listed. If
+          you aren't,
+        - request your channel
         - >-
-          , and we will add you manually. If you are already on the list, please
-          make sure your video descriptions have the correct youtube
-          source/channel links.
+          , and a moderator will add it by hand. If you're already listed, make
+          sure your video descriptions link the original YouTube streams and
+          channels.
     feedback:
       title: I have feedback/want to contribute to this project
       contents:
@@ -1947,52 +1948,106 @@ musicdex:
     loadingPlaylists: Loading playlists
     noPlaylistsForOrg: No playlists found for {org}
 channelRequest:
-  RequestType: 'Request Type:'
+  PageTitle: Request a channel
+  intro: >-
+    Ask the moderators to add a channel, fix a listed channel's details, or
+    remove your own. Every request is reviewed by hand.
+  RequestType: What would you like to do?
   Types:
-    AddVtuber: Add a Vtuber ▶️ for Holodex to track the channel and clips.
-    AddClipper: Add a clipping/subbing channel to Holodex
-    ModifyExistingInfo: Modify existing channel information
-    DeleteChannel: Delete my channel
-  DirectContactDisclaimer: >-
-    Feel free to leave your discord id, email or twitter. In case you need to be
-    contacted (this info will stay private) so we can provide feedback. Only
-    holodex administrators will see this information.
-  DirectContactLabel: Contact Method (optional)
-  TwitterHandle: This Channel's Twitter Handle (optional)
-  VtuberGroupLabel: VTuber Group (optional)
-  VtuberGroupHint: Which org / group does this vtuber belong to?
-  ChannelLanguageLabel: Channel's main language
+    AddVtuber: Add a VTuber
+    AddClipper: Add a clipper or subber
+    ModifyExistingInfo: Fix a channel's details
+    DeleteChannel: Remove my channel
+  typeHints:
+    AddVtuber: Track their streams, and the clips made about them.
+    AddClipper: List a channel that clips or translates VTuber streams.
+    ModifyExistingInfo: Correct the name, group, language or links of a listed channel.
+    DeleteChannel: For channel owners who want their channel taken off Holodex.
+  ChannelLabel: YouTube channel
+  ChannelPlaceholder: youtube.com/@handle, or a channel name
+  ChannelHint: >-
+    Paste the channel's YouTube link. Not sure it's missing? Type its name to
+    check first.
+  ChannelPickPlaceholder: Search by name, or paste a link
+  ChannelPickHint: Find the channel by name, or paste its YouTube link.
+  finder:
+    clear: Clear
+    checking: Checking Holodex…
+    searching: Searching Holodex…
+    matchesHeading: Already on Holodex?
+    pickHeading: Pick the channel
+    noMatches: Nothing on Holodex matches “{query}”.
+    pasteLink: Not listed? Paste the channel's YouTube link to request it.
+    listed: Already on Holodex
+    listedHint: No need to request it. If something about it is wrong, ask for a fix instead.
+    openChannel: Open channel
+    fixInstead: Fix its details instead
+    change: Change
+    notListed: Not on Holodex yet, so you can request it.
+    notListedUpdate: This channel isn't on Holodex, so there's nothing to change yet.
+    notListedRemove: This channel isn't on Holodex, so there's nothing to remove.
+    addVtuberInstead: Request it as a VTuber
+    addClipperInstead: Request it as a clipper
+    lookupFailed: Couldn't check Holodex right now. You can still send the request.
+    videoLink: That's a video link. Open the channel and copy its address instead.
+    vanityLink: >-
+      Links with /c/ or /user/ can't be checked. Use the channel's @handle link
+      or its /channel/UC… link instead.
+  ChannelURLErrorFeedback: Use a link like https://www.youtube.com/@handle or https://www.youtube.com/channel/UC…
+  EnglishNameLabel: English name (optional)
   EnglishNameHint: >-
     Provide an English name if the channel name is not in English. Follow
     name-order conventions from the native locale of this vtuber (Natsuiro
     Matsuri), or a preferred EN brand name (Elu the Elf, Emma★August).
-  EnglishNameLabel: English Channel Name
+  VtuberGroupLabel: VTuber group (optional)
+  VtuberGroupHint: Which org or group do they belong to?
+  ChannelLanguageLabel: Channel's main language
+  TwitterHandle: Channel's X / Twitter (optional)
+  DirectContactLabel: Contact (optional)
+  DirectContactRequiredLabel: How can we reach you?
+  DirectContactDisclaimer: >-
+    Discord, email or X. Only Holodex admins see this, and only to follow up on
+    your request.
   Comments: Comments
-  CommentsHint: Other comments you'd like to tell us.
+  CommentsHint: Anything else the moderators should know.
+  UpdateCommentsHint: Describe what's wrong, and what it should be.
   VtuberRequirementText: >-
-    A minimum of 15K subscribers is required for independents. Vtubers as part
-    of existing orgs will be accepted. <br /><br />New Orgs will be created
-    depending on the average subscriber count.<br /><br />Twitch streamers must
-    have an official YouTube channel to be indexed.<br /><br /><strong>Any 
-    mention of "Past-Lives" / alternate identities will automatically be 
-    rejected.</strong>
+    Independent VTubers need at least 15K subscribers. VTubers in an org Holodex
+    already lists are accepted.<br /><br />New orgs are added based on their
+    members' average subscriber count.<br /><br />Twitch streamers need an
+    official YouTube channel to be listed.<br /><br /><strong>Requests that
+    mention “past lives” or other identities are rejected.</strong>
   ClipperRequirementText: >-
-    For clippers, it must be at least 2 months old and post regularly, or post
-    more than 20 clips in one month. Spamming of short clips every day, posting
-    only short &lt;1min clips, or using unflattering thumbnails will all count
-    against the channel. Content quality might be judged as well. <br /><br
-    />It's important to note that clippers should cite their sources via channel
-    links, @Youtube channel mentions, and video links. Overciting (e.g. Linking
-    to everyone at Nijisanji) creates work for Holodex editors, and underciting
-    (no links) will make clips hidden. <br /><br /> Holodex contains algorithms
-    to detect overciting and correct them automatically, but it may not always
-    work perfectly. Clippers who overcite may be removed from platform to reduce
-    noise.
+    The channel should be at least 2 months old and post regularly, or have
+    posted more than 20 clips in a month. Daily floods of short clips, posting
+    only clips under a minute, and unflattering thumbnails all count against it,
+    and quality may be judged too.<br /><br />Clips should credit their sources
+    with channel links, @mentions and video links. Overciting (say, linking all
+    of Nijisanji) makes work for Holodex editors, and underciting (no links)
+    hides the clips.<br /><br />Holodex corrects overciting automatically, but
+    not perfectly, so clippers who overcite may be removed to reduce noise.
   DeletionRequirementText: >-
-    Deletion should only be requested if you are the channel owner(s), please
-    provide contact information so we can verify this.
-  PageTitle: Holodex Channel Request
-  ChannelURLErrorFeedback: Must be https://www.youtube.com/channel/UC_____ or https://www.youtube.com/@_____
+    Only channel owners can request removal. Leave a way to reach you, so we can
+    confirm it's your channel.
+  errors:
+    channelMissing: Paste the channel's YouTube link.
+    channelPick: Pick a channel that's on Holodex.
+    langMissing: Choose the language this channel mostly uses.
+    twitterInvalid: Enter an @handle or an x.com link.
+    contactMissing: Leave a way to reach you, so we can confirm you own the channel.
+    nothingToChange: Tell us what should change.
+    commentsLong: Keep it under {max} characters.
+    duplicate: >-
+      This channel was already requested in the last few days and is waiting
+      for a moderator, so there's no need to send it again.
+    failed: Couldn't send the request. Check your connection and try again.
+  send: Send request
+  sent:
+    title: Request sent
+    body: >-
+      Thanks! A moderator reviews every request by hand. It can take a while,
+      and not every request is accepted.
+    another: Send another request
 tlClient:
   title: TL Client
   tagline: Translate a stream as it happens, into TLdex and into the stream's own chat.
