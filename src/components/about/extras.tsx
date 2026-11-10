@@ -55,7 +55,7 @@ function Bookmarklet({ host, label }: { host: string; label: string }) {
       }}
       title={t("about.bookmarklet.dragHint")}
       draggable
-      className="group inline-flex cursor-grab items-center gap-2 rounded-full border-2 border-dashed border-primary/50 bg-primary/8 px-4 py-2 text-sm font-semibold text-brand transition-colors outline-none hover:border-primary hover:bg-primary/12 focus-visible:ring-[3px] focus-visible:ring-ring/50 active:cursor-grabbing"
+      className="group inline-flex cursor-grab items-center gap-2 rounded-full border-2 border-dashed border-primary/50 bg-primary/8 px-4 py-2 text-sm font-semibold text-brand transition-colors outline-none hover:border-primary hover:bg-primary/12 focus-ring active:cursor-grabbing"
     >
       <BookmarkSimpleIcon className="size-4" aria-hidden="true" />
       {label}
@@ -107,7 +107,7 @@ export function Extras() {
             <ExternalLink
               href={HOLODEX_PLUS.chrome}
               title="Chrome Web Store"
-              className="rounded-lg outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+              className="rounded-lg outline-none focus-ring"
             >
               <img
                 src="/img/holodex-plus/chrome-webstore.png"
@@ -120,7 +120,7 @@ export function Extras() {
             <ExternalLink
               href={HOLODEX_PLUS.firefox}
               title="Firefox Add-ons"
-              className="rounded-lg outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+              className="rounded-lg outline-none focus-ring"
             >
               <img
                 src="/img/holodex-plus/firefox-amo.png"

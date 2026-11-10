@@ -279,7 +279,7 @@ function Swatch({
       aria-label={label}
       aria-pressed={selected}
       className={cn(
-        "flex size-8 shrink-0 items-center justify-center rounded-full transition-transform outline-none hover:scale-110 focus-visible:ring-[3px] focus-visible:ring-ring",
+        "flex size-8 shrink-0 items-center justify-center rounded-full transition-transform outline-none hover:scale-110 focus-ring",
         selected && "ring-2 ring-foreground ring-offset-2 ring-offset-card"
       )}
       style={{ backgroundColor: color }}
@@ -314,7 +314,7 @@ function Disclosure({
 }) {
   return (
     <details open={defaultOpen} className={cn(!nested && "py-1")}>
-      <summary className="flex cursor-pointer list-none items-center gap-2 rounded-lg py-2.5 outline-none focus-visible:ring-[3px] focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+      <summary className="flex cursor-pointer list-none items-center gap-2 rounded-lg py-2.5 outline-none focus-ring [&::-webkit-details-marker]:hidden">
         <CaretRightIcon className="size-3.5 shrink-0 text-muted-foreground transition-transform [[open]>summary>&]:rotate-90" />
         <span className="min-w-0 flex-1">
           <span
@@ -417,7 +417,7 @@ function SecondaryColorPicker() {
           type="button"
           aria-pressed={auto}
           className={cn(
-            "flex h-8 items-center gap-2 rounded-full border py-1 ps-1 pe-3 text-sm outline-none focus-visible:ring-[3px] focus-visible:ring-ring",
+            "flex h-8 items-center gap-2 rounded-full border py-1 ps-1 pe-3 text-sm outline-none focus-ring",
             auto && "ring-2 ring-foreground ring-offset-2 ring-offset-card"
           )}
           onClick={() => update({ secondary: undefined })}

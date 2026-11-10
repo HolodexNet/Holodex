@@ -91,7 +91,7 @@ function Chip({
       onMouseDown={keepFocus}
       onClick={onClick}
       className={cn(
-        "flex h-6 max-w-48 min-w-0 items-center gap-1.5 rounded-md border px-2 text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "flex h-6 max-w-48 min-w-0 items-center gap-1.5 rounded-md border px-2 text-xs transition-colors outline-none focus-ring-sm",
         off
           ? "border-dashed text-muted-foreground line-through decoration-muted-foreground/50 hover:bg-muted/50"
           : "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"

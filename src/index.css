@@ -303,3 +303,12 @@
     --music-player-height: 5rem;
   }
 }
+
+/* Keyboard focus ring for bare buttons/links that don't go through shadcn. */
+@utility focus-ring {
+  @apply outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50;
+}
+
+@utility focus-ring-sm {
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-ring;
+}

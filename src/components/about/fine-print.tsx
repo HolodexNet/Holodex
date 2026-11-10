@@ -168,7 +168,7 @@ export function FinePrint() {
         </div>
         <ExternalLink
           href="https://developers.google.com/youtube"
-          className="self-start rounded-lg outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+          className="self-start rounded-lg outline-none focus-ring"
         >
           <img
             src={
@@ -187,7 +187,7 @@ export function FinePrint() {
         id="privacy"
         className="group/privacy mt-6 scroll-mt-[calc(var(--header-height)+env(safe-area-inset-top,0px)+1.5rem)] rounded-2xl border bg-card"
       >
-        <summary className="flex cursor-pointer list-none items-center gap-3 rounded-2xl px-5 py-4 font-semibold outline-none select-none focus-visible:ring-[3px] focus-visible:ring-ring/50 [&::-webkit-details-marker]:hidden">
+        <summary className="flex cursor-pointer list-none items-center gap-3 rounded-2xl px-5 py-4 font-semibold outline-none select-none focus-ring [&::-webkit-details-marker]:hidden">
           <ShieldCheckIcon className="size-5 text-brand" aria-hidden="true" />
           <span className="flex-1">{t("about.privacyPolicy")}</span>
           <CaretDownIcon

@@ -74,7 +74,7 @@ function Tab() {
     >
       <button
         type="button"
-        className="pointer-events-auto flex max-w-full cursor-pointer items-center gap-1.5 rounded-b-lg bg-popover px-3 py-1 text-xs text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-none hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring"
+        className="pointer-events-auto flex max-w-full cursor-pointer items-center gap-1.5 rounded-b-lg bg-popover px-3 py-1 text-xs text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-none hover:bg-accent hover:text-accent-foreground focus-ring-sm"
         onClick={restoreKeyboard}
       >
         <KeyboardIcon className="size-4 shrink-0" />

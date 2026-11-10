@@ -140,7 +140,7 @@ function SpeakerChip({
       onMouseDown={keepFocus}
       onClick={() => onSelect(slot)}
       className={cn(
-        "flex h-6 max-w-40 shrink-0 items-center gap-1.5 rounded-full border pr-2.5 pl-1 text-xs whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "flex h-6 max-w-40 shrink-0 items-center gap-1.5 rounded-full border pr-2.5 pl-1 text-xs whitespace-nowrap transition-colors outline-none focus-ring-sm",
         active
           ? "border-primary bg-primary text-primary-foreground"
           : "border-border bg-card hover:bg-muted",

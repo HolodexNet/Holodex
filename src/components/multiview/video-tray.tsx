@@ -165,7 +165,7 @@ const TrayItem = memo(function TrayItem({
             type="button"
             draggable
             aria-label={name}
-            className="relative size-10 shrink-0 cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="relative size-10 shrink-0 cursor-pointer rounded-full outline-none focus-ring-sm"
             onDragStart={(event) => setDragVideo(event, video)}
             onClick={() => onAdd(stream)}
           />

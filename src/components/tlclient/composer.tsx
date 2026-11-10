@@ -420,7 +420,7 @@ export function Composer({
           <button
             type="button"
             onClick={focusComposer}
-            className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-background/85 text-sm backdrop-blur-[2px] outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-background/85 text-sm backdrop-blur-[2px] outline-none focus-ring-sm"
           >
             <KeyboardIcon className="size-4 shrink-0" />
             <span className="text-muted-foreground">

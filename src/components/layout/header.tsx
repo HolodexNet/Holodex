@@ -129,7 +129,7 @@ export function Header() {
               <Link
                 to={HOME_PATHS[defaultOpen]}
                 aria-label="holodex"
-                className="flex shrink-0 items-center gap-2 rounded-lg p-1 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                className="flex shrink-0 items-center gap-2 rounded-lg p-1 outline-none focus-ring"
               >
                 <Logo />
                 <span className="hidden text-xl font-[750] tracking-tighter sm:inline">

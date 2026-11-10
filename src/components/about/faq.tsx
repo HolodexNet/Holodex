@@ -80,7 +80,7 @@ function Question({ item }: { item: Item }) {
         id={`faq-${item.id}`}
         className="peer group/faq scroll-mt-[calc(var(--header-height)+env(safe-area-inset-top,0px)+1.5rem)]"
       >
-        <summary className="flex cursor-pointer list-none items-start gap-3 rounded-lg py-4 pr-10 font-semibold outline-none select-none focus-visible:ring-[3px] focus-visible:ring-ring/50 [&::-webkit-details-marker]:hidden">
+        <summary className="flex cursor-pointer list-none items-start gap-3 rounded-lg py-4 pr-10 font-semibold outline-none select-none focus-ring [&::-webkit-details-marker]:hidden">
           <span className="flex-1 text-pretty">{item.question}</span>
           <CaretDownIcon
             aria-hidden="true"
@@ -96,7 +96,7 @@ function Question({ item }: { item: Item }) {
         onClick={copyLink}
         title={t("about.faqExtra.copyLink")}
         aria-label={`${t("about.faqExtra.copyLink")}: ${item.question}`}
-        className="absolute top-3.5 right-7 rounded-md p-1 text-muted-foreground opacity-0 transition-opacity outline-none group-hover/item:opacity-100 peer-open:opacity-100 hover:text-foreground focus-visible:opacity-100 focus-visible:ring-[3px] focus-visible:ring-ring/50"
+        className="absolute top-3.5 right-7 rounded-md p-1 text-muted-foreground opacity-0 transition-opacity outline-none group-hover/item:opacity-100 peer-open:opacity-100 hover:text-foreground focus-visible:opacity-100 focus-ring"
       >
         <LinkSimpleIcon className="size-4" aria-hidden="true" />
       </button>

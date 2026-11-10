@@ -168,7 +168,7 @@ export function EditorHeader({
               replace
               aria-current={item.id === tab ? "page" : undefined}
               className={cn(
-                "rounded-4xl px-3 py-1 text-sm font-medium transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+                "rounded-4xl px-3 py-1 text-sm font-medium transition-colors outline-none focus-ring",
                 item.id === tab
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"

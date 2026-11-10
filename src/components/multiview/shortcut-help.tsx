@@ -332,7 +332,7 @@ function KeyChooser({
     <button
       type="button"
       className={cn(
-        "flex min-h-6 cursor-pointer items-center justify-center rounded-md px-1 outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring aria-pressed:ring-2 aria-pressed:ring-primary",
+        "flex min-h-6 cursor-pointer items-center justify-center rounded-md px-1 outline-none hover:bg-muted focus-ring-sm aria-pressed:ring-2 aria-pressed:ring-primary",
         className
       )}
       aria-pressed={choosing}

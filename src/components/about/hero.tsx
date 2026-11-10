@@ -221,7 +221,7 @@ function OshiWall() {
         <div className="px-6 pb-3 md:px-10">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 rounded-full bg-live/10 px-3 py-1 text-xs font-semibold text-live transition-colors outline-none hover:bg-live/15 focus-visible:ring-[3px] focus-visible:ring-ring/50"
+            className="inline-flex items-center gap-2 rounded-full bg-live/10 px-3 py-1 text-xs font-semibold text-live transition-colors outline-none hover:bg-live/15 focus-ring"
           >
             <span className="relative flex size-2" aria-hidden="true">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-live opacity-60 motion-reduce:animate-none" />

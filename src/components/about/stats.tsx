@@ -83,7 +83,7 @@ function OrgConstellation() {
             <Link
               to={`/channel?${new URLSearchParams({ org: org.name })}`}
               title={org.name}
-              className="block rounded-full transition-transform duration-150 outline-none hover:z-10 hover:scale-125 focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
+              className="block rounded-full transition-transform duration-150 outline-none hover:z-10 hover:scale-125 focus-ring-sm motion-reduce:transition-none"
             >
               <span className="sr-only">{org.name}</span>
               <OrgIcon

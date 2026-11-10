@@ -286,7 +286,7 @@ const EditCell = memo(function EditCell({
       tabIndex={0}
       aria-label={t("views.multiview.edit.cellLabel", [rect.w, rect.h])}
       className={cn(
-        "@container absolute cursor-grab overflow-visible rounded-[3px] bg-background/10 outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "@container absolute cursor-grab overflow-visible rounded-[3px] bg-background/10 outline-none focus-ring-sm",
         lifted && "z-20 cursor-grabbing shadow-2xl",
         (swapTarget || bindTarget) && "bg-primary/25"
       )}

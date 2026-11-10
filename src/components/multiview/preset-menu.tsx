@@ -78,7 +78,7 @@ function PresetCard({
       <button
         type="button"
         onClick={onClick}
-        className="flex flex-col items-center gap-1 rounded-lg p-1.5 outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+        className="flex flex-col items-center gap-1 rounded-lg p-1.5 outline-none hover:bg-muted focus-ring-sm"
       >
         <LayoutPreview
           slots={preset.slots}

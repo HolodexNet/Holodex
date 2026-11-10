@@ -94,7 +94,7 @@ function TocRail({
               <HashLink
                 to={item.id}
                 aria-current={current ? "location" : undefined}
-                className="flex h-7 items-center justify-end rounded-lg px-1 outline-none hover:bg-muted focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                className="flex h-7 items-center justify-end rounded-lg px-1 outline-none hover:bg-muted focus-ring"
               >
                 <span
                   className={cn(
@@ -182,7 +182,7 @@ function TocButton({
       <PopoverTrigger
         aria-hidden={!shown || undefined}
         className={cn(
-          "fixed right-4 bottom-[calc(var(--music-player-height,0px)+3.5rem+env(safe-area-inset-bottom,0px)+1rem)] z-30 flex h-11 max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full border bg-popover/95 pr-4 pl-1.5 shadow-lg backdrop-blur-md transition-[opacity,translate] duration-200 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 motion-reduce:transition-none md:bottom-[calc(var(--music-player-height,0px)+1.5rem)] md:pointer-fine:hidden",
+          "fixed right-4 bottom-[calc(var(--music-player-height,0px)+3.5rem+env(safe-area-inset-bottom,0px)+1rem)] z-30 flex h-11 max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full border bg-popover/95 pr-4 pl-1.5 shadow-lg backdrop-blur-md transition-[opacity,translate] duration-200 outline-none focus-ring motion-reduce:transition-none md:bottom-[calc(var(--music-player-height,0px)+1.5rem)] md:pointer-fine:hidden",
           !shown && "pointer-events-none translate-y-3 opacity-0"
         )}
         tabIndex={shown ? undefined : -1}

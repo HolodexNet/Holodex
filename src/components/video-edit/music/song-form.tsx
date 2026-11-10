@@ -119,7 +119,7 @@ function SongNotes({ song, locked }: { song: SongDraft; locked: boolean }) {
             {fix && (
               <button
                 type="button"
-                className="cursor-pointer rounded-sm font-medium underline underline-offset-2 outline-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                className="cursor-pointer rounded-sm font-medium underline underline-offset-2 outline-none hover:text-foreground focus-ring"
                 onClick={() =>
                   "start" in fix
                     ? workspace.commitEdge(song.id, "start", fix.start, "enter")
@@ -132,7 +132,7 @@ function SongNotes({ song, locked }: { song: SongDraft; locked: boolean }) {
             {other && (
               <button
                 type="button"
-                className="cursor-pointer rounded-sm text-muted-foreground underline underline-offset-2 outline-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                className="cursor-pointer rounded-sm text-muted-foreground underline underline-offset-2 outline-none hover:text-foreground focus-ring"
                 onClick={() => workspace.openSong(other.id)}
               >
                 {t("videoEdit.songs.goToOther")}
@@ -226,7 +226,7 @@ export function SongForm({
                 key={track.key}
                 type="button"
                 title={[track.name, track.artist].filter(Boolean).join(" · ")}
-                className="flex max-w-full cursor-pointer items-center gap-2 rounded-lg border bg-background py-1 pr-2.5 pl-1 text-left text-xs transition-colors outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                className="flex max-w-full cursor-pointer items-center gap-2 rounded-lg border bg-background py-1 pr-2.5 pl-1 text-left text-xs transition-colors outline-none hover:bg-accent focus-ring"
                 onClick={() => workspace.pickTrack(song.id, track)}
               >
                 <TrackArt song={{ id: track.key, art: track.art }} size={28} />
@@ -282,7 +282,7 @@ export function SongForm({
               <li key={hint.start}>
                 <button
                   type="button"
-                  className="flex w-full cursor-pointer items-baseline gap-2 rounded-md px-1.5 py-0.5 text-left text-xs transition-colors outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                  className="flex w-full cursor-pointer items-baseline gap-2 rounded-md px-1.5 py-0.5 text-left text-xs transition-colors outline-none hover:bg-accent focus-ring"
                   title={`${t("videoEdit.songs.useThis")}: ${hint.text}`}
                   onClick={() => workspace.applyHint(song.id, hint)}
                 >

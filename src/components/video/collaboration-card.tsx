@@ -160,7 +160,7 @@ export function CollaborationCard({
                     aria-label={t("views.home.previewPerspective", [name])}
                     title={t("views.home.previewPerspective", [name])}
                     className={cn(
-                      "relative inline-flex shrink-0 items-center justify-center overflow-hidden bg-muted outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card",
+                      "relative inline-flex shrink-0 items-center justify-center overflow-hidden bg-muted outline-none focus-ring-sm focus-visible:ring-offset-2 focus-visible:ring-offset-card",
                       variant === "dense"
                         ? "size-7 rounded-full"
                         : hideThumbnail

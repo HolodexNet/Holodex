@@ -128,7 +128,7 @@ export function OrgSelector({
               aria-label={t("component.orgSelector.change", [currentOrg.name])}
               title={t("component.orgSelector.change", [currentOrg.name])}
               className={cn(
-                "group flex h-9 min-w-0 items-center gap-2 rounded-lg border border-border bg-background/40 px-3 text-sm font-medium outline-none hover:bg-foreground/5 focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-expanded:bg-foreground/5",
+                "group flex h-9 min-w-0 items-center gap-2 rounded-lg border border-border bg-background/40 px-3 text-sm font-medium outline-none hover:bg-foreground/5 focus-ring aria-expanded:bg-foreground/5",
                 sidebar
                   ? "w-full group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
                   : "max-w-44"

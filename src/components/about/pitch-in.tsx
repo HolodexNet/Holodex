@@ -63,7 +63,7 @@ function TileCard({ tile }: { tile: Tile }) {
   const className = cn(
     "flex h-full gap-4 rounded-2xl border bg-card p-4 md:p-5",
     (tile.href || tile.to) &&
-      "transition-colors outline-none hover:border-primary/40 hover:bg-primary/[0.03] focus-visible:ring-[3px] focus-visible:ring-ring/50"
+      "transition-colors outline-none hover:border-primary/40 hover:bg-primary/[0.03] focus-ring"
   )
 
   if (tile.href)

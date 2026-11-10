@@ -292,7 +292,7 @@ export function SourcePanel({ className }: { className?: string }) {
               type="button"
               aria-pressed={view === item}
               className={cn(
-                "cursor-pointer rounded-4xl px-2.5 py-0.5 text-xs font-medium transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+                "cursor-pointer rounded-4xl px-2.5 py-0.5 text-xs font-medium transition-colors outline-none focus-ring",
                 view === item
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"

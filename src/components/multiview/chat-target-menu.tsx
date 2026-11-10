@@ -68,7 +68,7 @@ export function ChatTargetMenu({
             onPointerLeave={() => {
               if (!open) setUi({ highlightedCell: null })
             }}
-            className="flex h-6 min-w-0 flex-1 items-center gap-1.5 rounded-md bg-muted/60 pr-1 pl-1.5 text-xs outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex h-6 min-w-0 flex-1 items-center gap-1.5 rounded-md bg-muted/60 pr-1 pl-1.5 text-xs outline-none hover:bg-muted focus-ring-sm"
           />
         }
       >

@@ -52,7 +52,7 @@ function SwapButton({ cell, position }: { cell: VideoCell; position: number }) {
       data-swap-button=""
       aria-label={label}
       title={key ? `${label} (${key})` : label}
-      className="pointer-events-auto absolute top-1 left-1 flex h-6 min-w-6 cursor-pointer items-center justify-center rounded-md bg-black/75 px-1 text-xs font-medium text-white ring-1 ring-white/25 outline-none hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-ring"
+      className="pointer-events-auto absolute top-1 left-1 flex h-6 min-w-6 cursor-pointer items-center justify-center rounded-md bg-black/75 px-1 text-xs font-medium text-white ring-1 ring-white/25 outline-none hover:bg-primary hover:text-primary-foreground focus-ring-sm"
       onClick={() => swapToCenter(cell.id)}
     >
       {key ? compactKey(key, IS_MAC) : position + 1}

@@ -346,7 +346,7 @@ function VideoRow({
       onDragStart={(event) => setDragVideo(event, video)}
       onClick={() => stream && onChoose(stream)}
       className={cn(
-        "flex gap-2 rounded-lg p-1 text-left outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-40",
+        "flex gap-2 rounded-lg p-1 text-left outline-none hover:bg-muted focus-ring-sm disabled:opacity-40",
         onScreen && "opacity-60"
       )}
     >

@@ -296,7 +296,7 @@ function StreamRow({ video, onClick }: { video: Video; onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-3 rounded-lg p-1.5 text-left outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+      className="flex w-full items-center gap-3 rounded-lg p-1.5 text-left outline-none hover:bg-muted focus-ring-sm"
     >
       <span className="relative aspect-video w-24 shrink-0 overflow-hidden rounded-md bg-muted">
         <VideoThumbnail video={video} sizes="96px" />

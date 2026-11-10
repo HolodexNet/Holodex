@@ -212,7 +212,7 @@ export function CrewCard({
         {member.oshi && (
           <Link
             to={`/channel/${member.oshi}`}
-            className="mt-auto flex items-center gap-2 rounded-xl pt-3 outline-none hover:text-brand focus-visible:ring-[3px] focus-visible:ring-ring/50"
+            className="mt-auto flex items-center gap-2 rounded-xl pt-3 outline-none hover:text-brand focus-ring"
           >
             <ChannelAvatar
               channel={{ id: member.oshi, name: oshi?.name ?? "" }}

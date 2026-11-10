@@ -137,7 +137,7 @@ function ChatTab({
       aria-selected={selected}
       onClick={onSelect}
       className={cn(
-        "flex max-w-40 min-w-0 shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-xs outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring",
+        "flex max-w-40 min-w-0 shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-xs outline-none hover:bg-muted focus-ring-sm",
         selected && "bg-muted font-medium",
         off && "opacity-50"
       )}
