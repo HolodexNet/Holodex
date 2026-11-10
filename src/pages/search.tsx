@@ -100,7 +100,7 @@ function Comment({
   const long = text.length > 280 || text.split("\n").length > 4
 
   return (
-    <li className="group/comment relative border-l-2 border-border py-0.5 pr-6 pl-3">
+    <li className="group/reveal relative border-l-2 border-border py-0.5 pr-6 pl-3">
       <p
         className={
           expanded || !long
@@ -126,7 +126,7 @@ function Comment({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={t("views.settings.redirectModeLabel")}
-        className="absolute top-0.5 right-0 text-muted-foreground hover:text-foreground pointer-fine:opacity-0 pointer-fine:group-hover/comment:opacity-100"
+        className="absolute top-0.5 right-0 text-muted-foreground reveal-on-hover hover:text-foreground"
       >
         <ArrowSquareOutIcon className="size-4" />
       </a>

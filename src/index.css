@@ -336,3 +336,20 @@
 @utility surface-floating {
   @apply bg-popover text-popover-foreground ring-1 ring-foreground/10;
 }
+
+/*
+ * Hidden until the nearest `group/reveal` ancestor is hovered or focused, or
+ * the element itself is focused or expanded. Touch devices always show it.
+ */
+@utility reveal-on-hover {
+  @media (pointer: fine) {
+    opacity: 0;
+    &:focus-visible,
+    &[aria-expanded="true"] {
+      opacity: 1;
+    }
+    :where(.group\/reveal:hover, .group\/reveal:focus-within) & {
+      opacity: 1;
+    }
+  }
+}
