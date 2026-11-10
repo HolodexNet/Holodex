@@ -93,8 +93,23 @@ function EmptyContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/** A one-line dashed placeholder for an empty list or section. */
+function EmptyNote({ className, ...props }: React.ComponentProps<"p">) {
+  return (
+    <p
+      data-slot="empty-note"
+      className={cn(
+        "rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 export {
   Empty,
+  EmptyNote,
   EmptyHeader,
   EmptyTitle,
   EmptyDescription,

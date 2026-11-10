@@ -1,5 +1,3 @@
-import { cn } from "cn"
-import { cardVariants } from "@/components/ui/card"
 import { useId, useMemo, useState } from "react"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
@@ -26,6 +24,8 @@ import { planTopicEdit } from "@/lib/selection-actions/topics"
 import type { Video } from "@/lib/types"
 import { suggestTopics, topicLabel } from "@/lib/video-edit/suggestions"
 import { useAuth } from "@/stores/auth"
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 
 class TopicNotPermitted extends Error {}
 

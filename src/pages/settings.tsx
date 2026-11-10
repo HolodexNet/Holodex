@@ -1,4 +1,3 @@
-import { cardVariants } from "@/components/ui/card"
 import { useId, useState, type ReactNode } from "react"
 import { cn } from "cn"
 import { toast } from "sonner"
@@ -92,6 +91,7 @@ import {
   type MusicSidebarMode,
   type ThemeMode,
 } from "@/stores/settings"
+import { cardVariants } from "@/components/ui/card"
 
 const TIME_ZONE_OPTIONS = getSupportedTimeZones()
 

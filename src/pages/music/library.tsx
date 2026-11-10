@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
+import { EmptyNote } from "@/components/ui/empty"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import {
@@ -28,11 +29,7 @@ function PlaylistGrid({
   empty: string
 }) {
   if (!items.length)
-    return (
-      <p className="rounded-xl border border-dashed px-5 py-8 text-sm text-muted-foreground">
-        {empty}
-      </p>
-    )
+    return <EmptyNote className="px-5 py-8 text-left">{empty}</EmptyNote>
   return (
     <div className={musicCollectionGridClass}>
       {items.map((playlist) => (

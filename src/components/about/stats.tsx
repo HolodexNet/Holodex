@@ -1,4 +1,3 @@
-import { cardVariants } from "@/components/ui/card"
 import { useMemo, type ReactNode } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
@@ -10,6 +9,7 @@ import {
   UsersThreeFillIcon,
 } from "@/components/icons"
 import { OrgIcon } from "@/components/layout/org-selector"
+import { EmptyNote } from "@/components/ui/empty"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useNowMinutes } from "@/hooks/use-now"
 import { ALL_VTUBERS } from "@/lib/consts"
@@ -17,6 +17,7 @@ import { intlLocale, useT } from "@/lib/i18n"
 import { useOrgs, useSiteStats } from "@/lib/queries"
 import { formatDistance } from "@/lib/time"
 import { AboutSection } from "./shared"
+import { cardVariants } from "@/components/ui/card"
 
 interface StatProps {
   icon: ReactNode
@@ -122,9 +123,9 @@ export function ArchiveStats() {
   return (
     <AboutSection id="numbers" title={t("about.stats.title")}>
       {stats.isError ? (
-        <p className="rounded-2xl border border-dashed p-6 text-center text-sm text-muted-foreground">
+        <EmptyNote className="rounded-2xl">
           {t("about.stats.unavailable")}
-        </p>
+        </EmptyNote>
       ) : !s ? (
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {Array.from({ length: 4 }, (_, i) => (

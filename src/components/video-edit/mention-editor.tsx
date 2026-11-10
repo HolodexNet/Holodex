@@ -1,4 +1,3 @@
-import { cardVariants } from "@/components/ui/card"
 import { useId, useMemo, useState } from "react"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { cn } from "cn"
@@ -28,6 +27,7 @@ import { useAuth } from "@/stores/auth"
 import { useSettings } from "@/stores/settings"
 import { useVideoEditPrefs } from "@/stores/video-edit"
 import { SuggestField } from "./suggest-field"
+import { cardVariants } from "@/components/ui/card"
 
 const WRITE_TIMEOUT_MS = 20_000
 

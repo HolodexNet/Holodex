@@ -1,4 +1,3 @@
-import { cardVariants } from "@/components/ui/card"
 import { Link } from "react-router"
 import { cn } from "cn"
 import {
@@ -18,6 +17,7 @@ import { formatCount } from "@/lib/time"
 import { channelName, videoTitle, watchPath } from "@/lib/video"
 import { isVideoPlaceholder } from "@/lib/video-source"
 import { useSettings } from "@/stores/settings"
+import { cardVariants } from "@/components/ui/card"
 
 function recent(videos: Video[]) {
   return videos

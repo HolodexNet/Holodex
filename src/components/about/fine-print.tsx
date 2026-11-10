@@ -1,11 +1,11 @@
-import { cn } from "cn"
-import { cardVariants } from "@/components/ui/card"
 import type { ReactNode } from "react"
 
 import { CaretDownIcon, ShieldCheckIcon } from "@/components/icons"
 import { useT } from "@/lib/i18n"
 import { useResolvedMode } from "@/lib/theme/use-theme"
 import { AboutSection, ExternalLink, textLink, withSlot } from "./shared"
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 
 function H4({ children }: { children: ReactNode }) {
   return <h4 className="mt-6 font-semibold text-foreground">{children}</h4>

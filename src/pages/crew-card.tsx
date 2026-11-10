@@ -1,5 +1,3 @@
-import { cn } from "cn"
-import { cardVariants } from "@/components/ui/card"
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -27,6 +25,8 @@ import { useDebounced } from "@/hooks/use-debounced"
 import { useDocumentTitle } from "@/hooks/use-document-title"
 import { useT } from "@/lib/i18n"
 import { useChannelInfos } from "@/lib/queries"
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 
 /**
  * Unlinked page (/about/crew-card) where a crew member fills in their fan

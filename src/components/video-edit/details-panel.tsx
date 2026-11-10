@@ -1,4 +1,3 @@
-import { cardVariants } from "@/components/ui/card"
 import { Link } from "react-router"
 import { cn } from "cn"
 
@@ -11,6 +10,7 @@ import { editableParts } from "@/lib/video-edit/routes"
 import { useAuth } from "@/stores/auth"
 import { MentionEditor } from "./mention-editor"
 import { TopicEditor } from "./topic-editor"
+import { cardVariants } from "@/components/ui/card"
 
 /** Shown wherever editing would need an account, in place of a dead end. */
 export function LoginPrompt({ className }: { className?: string }) {

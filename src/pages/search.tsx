@@ -1,5 +1,3 @@
-import { cn } from "cn"
-import { cardVariants } from "@/components/ui/card"
 import { useId, useMemo, useState, type ReactNode } from "react"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { Link, useSearchParams } from "react-router"
@@ -39,6 +37,8 @@ import {
 import type { Video, VideoComment } from "@/lib/types"
 import { youtubeUrl } from "@/lib/video"
 import { useSettings } from "@/stores/settings"
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 
 const PAGE_SIZE = 30
 /** The search index refuses to page past this many results. */

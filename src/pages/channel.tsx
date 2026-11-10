@@ -1,5 +1,3 @@
-import { cn } from "cn"
-import { cardVariants } from "@/components/ui/card"
 import { lazy, Suspense } from "react"
 import { Link, NavLink, useParams } from "react-router"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
@@ -29,6 +27,8 @@ import type { Channel } from "@/lib/types"
 import { formatCount } from "@/lib/time"
 import { channelName } from "@/lib/video"
 import { useSettings } from "@/stores/settings"
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 
 const ChannelMusic = lazy(() =>
   import("@/components/music/channel-music").then((module) => ({

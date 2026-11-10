@@ -1,4 +1,3 @@
-import { cardVariants } from "@/components/ui/card"
 import { useMemo, useState, type ReactNode } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
@@ -23,6 +22,7 @@ import { isVideoPlaceholder, videoSource } from "@/lib/video-source"
 import { useOrgStore } from "@/stores/org"
 import { useSettings } from "@/stores/settings"
 import { ExternalLink, HashLink, LINKS } from "./shared"
+import { cardVariants } from "@/components/ui/card"
 
 interface Face {
   id: string

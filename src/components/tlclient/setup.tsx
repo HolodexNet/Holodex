@@ -1,4 +1,3 @@
-import { cardVariants } from "@/components/ui/card"
 import { useMemo, useState } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
@@ -33,6 +32,7 @@ import { useSettings } from "@/stores/settings"
 import { useTlClient } from "@/stores/tlclient"
 import { postableLangOptions, sourceLabel } from "./helpers"
 import { useSources } from "./use-sources"
+import { cardVariants } from "@/components/ui/card"
 
 /** The old client remembered the last stream it was pointed at. */
 function legacyLastLink(): string {

@@ -1,4 +1,3 @@
-import { cardVariants } from "@/components/ui/card"
 import { useEffect } from "react"
 import { useLocation, useParams } from "react-router"
 import { cn } from "cn"
@@ -23,6 +22,7 @@ import { AboutToc, type TocItem } from "@/components/about/toc"
 import { ArrowSquareOutIcon } from "@/components/icons"
 import { useDocumentTitle } from "@/hooks/use-document-title"
 import { useT } from "@/lib/i18n"
+import { cardVariants } from "@/components/ui/card"
 
 /** Index entries, in page order; labels are message keys. */
 const CONTENTS = [

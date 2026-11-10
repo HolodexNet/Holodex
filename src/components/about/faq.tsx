@@ -1,5 +1,3 @@
-import { cn } from "cn"
-import { cardVariants } from "@/components/ui/card"
 import type { ReactNode } from "react"
 import { toast } from "sonner"
 
@@ -23,6 +21,8 @@ import {
   textLink,
   withSlot,
 } from "./shared"
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 
 /**
  * Answer ids, reachable as `/about#faq-<id>` (and `/about/faq#<id>`, the

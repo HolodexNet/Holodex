@@ -1,5 +1,3 @@
-import { cn } from "cn"
-import { cardVariants } from "@/components/ui/card"
 import { toast } from "sonner"
 
 import {
@@ -11,6 +9,8 @@ import {
 import { Button } from "@/components/ui/button"
 import { useT } from "@/lib/i18n"
 import { AboutSection, ExternalLink } from "./shared"
+import { cn } from "cn"
+import { cardVariants } from "@/components/ui/card"
 
 const HOLODEX_PLUS = {
   chrome:

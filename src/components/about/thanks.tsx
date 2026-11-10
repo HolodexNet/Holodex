@@ -1,4 +1,3 @@
-import { cardVariants } from "@/components/ui/card"
 import { useState, type CSSProperties, type ReactNode } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
@@ -13,6 +12,7 @@ import type { StaticChannel } from "@/lib/types"
 import { channelName } from "@/lib/video"
 import { useSettings } from "@/stores/settings"
 import { AboutSection, ExternalLink, useSeenOnce } from "./shared"
+import { cardVariants } from "@/components/ui/card"
 
 /** Live-chat Super Chat tiers, highest first: header, body, text. */
 const TIERS = [
