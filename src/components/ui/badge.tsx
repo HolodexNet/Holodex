@@ -18,10 +18,23 @@ const badgeVariants = cva(
         ghost:
           "hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50",
         link: "text-primary underline-offset-4 hover:underline",
+        live: "bg-live text-white",
+        muted: "bg-muted text-muted-foreground",
+        // Over video or artwork, where theme colors can't be relied on.
+        scrim: "bg-black/75 text-white",
+      },
+      size: {
+        default: "",
+        // Tiny all-caps tag, e.g. LIVE / UPCOMING.
+        label:
+          "h-auto rounded-sm px-1.5 py-px text-[10px] tracking-wide uppercase",
+        // Numeric counter.
+        count: "h-auto min-w-5 rounded-md px-1 leading-5 tabular-nums",
       },
     },
     defaultVariants: {
       variant: "default",
+      size: "default",
     },
   }
 )
@@ -29,6 +42,7 @@ const badgeVariants = cva(
 function Badge({
   className,
   variant = "default",
+  size = "default",
   render,
   ...props
 }: useRender.ComponentProps<"span"> & VariantProps<typeof badgeVariants>) {
@@ -36,7 +50,7 @@ function Badge({
     defaultTagName: "span",
     props: mergeProps<"span">(
       {
-        className: cn(badgeVariants({ variant }), className),
+        className: cn(badgeVariants({ variant, size }), className),
       },
       props
     ),

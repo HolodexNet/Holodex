@@ -13,6 +13,7 @@ import {
   XIcon,
 } from "@/components/icons"
 import { OrgIcon } from "@/components/layout/org-selector"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -178,9 +179,13 @@ function StreamChooser({
                       +{session.collabs.length}
                     </span>
                   )}
-                  <span className="shrink-0 rounded-sm bg-muted px-1.5 py-px text-[10px] font-medium uppercase">
+                  <Badge
+                    variant="muted"
+                    size="label"
+                    className="text-foreground"
+                  >
                     {session.lang}
-                  </span>
+                  </Badge>
                 </button>
                 <Button
                   variant="ghost"

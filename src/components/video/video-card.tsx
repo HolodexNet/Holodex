@@ -40,6 +40,7 @@ import { isVideoPlaceholder, videoSource } from "@/lib/video-source"
 import { useSettings } from "@/stores/settings"
 import { PlaceholderDialog } from "./placeholder-dialog"
 import { VideoMenu } from "./video-menu"
+import { Badge } from "@/components/ui/badge"
 
 export type VideoCardVariant = "grid" | "list" | "dense"
 
@@ -151,9 +152,12 @@ function Mentions({
         />
       ))}
       {rest > 0 && (
-        <span className="relative ml-2! rounded-full bg-black/75 px-1.5 text-[11px] leading-5.5 font-medium text-white">
+        <Badge
+          variant="scrim"
+          className="relative ml-2! h-auto px-1.5 text-[11px] leading-5.5"
+        >
           +{rest}
-        </span>
+        </Badge>
       )}
     </div>
   )

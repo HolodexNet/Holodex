@@ -4,6 +4,7 @@ import { cn } from "cn"
 
 import { BroadcastIcon, MagnifyingGlassIcon } from "@/components/icons"
 import { MusicdexLogo } from "@/components/music/page-header"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useT } from "@/lib/i18n"
@@ -37,15 +38,9 @@ function CountBadge({
   live?: boolean
 }) {
   return (
-    <span
-      className={
-        live && value
-          ? "min-w-5 rounded-md bg-live px-1 text-center text-xs leading-5 font-medium text-white tabular-nums"
-          : "min-w-5 rounded-md bg-muted px-1 text-center text-xs leading-5 font-medium text-muted-foreground tabular-nums"
-      }
-    >
+    <Badge variant={live && value ? "live" : "muted"} size="count">
       {value ?? "–"}
-    </span>
+    </Badge>
   )
 }
 

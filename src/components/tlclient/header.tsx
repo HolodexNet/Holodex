@@ -15,6 +15,7 @@ import {
   TrashIcon,
   UsersThreeIcon,
 } from "@/components/icons"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Kbd } from "@/components/ui/kbd"
@@ -190,9 +191,9 @@ function StatusBadge({ status }: { status: string | undefined }) {
   const { t } = useT()
   if (status === "live")
     return (
-      <span className="shrink-0 rounded-sm bg-live px-1.5 py-px text-[10px] font-bold tracking-wide text-white uppercase">
+      <Badge variant="live" size="label" className="font-bold">
         {t("tlClient.header.live")}
-      </span>
+      </Badge>
     )
   const label =
     status === "upcoming"
@@ -204,9 +205,9 @@ function StatusBadge({ status }: { status: string | undefined }) {
           : null
   if (!label) return null
   return (
-    <span className="shrink-0 rounded-sm bg-muted px-1.5 py-px text-[10px] font-medium text-muted-foreground uppercase">
+    <Badge variant="muted" size="label">
       {label}
-    </span>
+    </Badge>
   )
 }
 
