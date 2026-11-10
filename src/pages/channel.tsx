@@ -9,6 +9,7 @@ import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import { ArrowLeftIcon, ProhibitIcon } from "@/components/icons"
 import { ChannelMusicSkeleton } from "@/components/music/skeletons"
 import { Button } from "@/components/ui/button"
+import { Callout } from "@/components/ui/callout"
 import { Skeleton } from "@/components/ui/skeleton"
 import { underlineTabVariants } from "@/components/ui/tabs"
 import { VideoList, VideoListSkeleton } from "@/components/video/video-list"
@@ -173,11 +174,12 @@ function BlockedNotice({ channel }: { channel: Channel }) {
   const toggleBlocked = useSettings((s) => s.toggleBlocked)
   if (!blocked) return null
   return (
-    <div
+    <Callout
       role="status"
-      className="mb-4 flex flex-wrap items-center gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive"
+      tone="destructive"
+      className="mb-4 flex-wrap items-center rounded-lg [&>svg]:mt-0"
     >
-      <ProhibitIcon className="size-4 shrink-0" />
+      <ProhibitIcon />
       <p className="min-w-0 flex-1">
         {t("component.channelSocials.blockedNotice")}
       </p>
@@ -188,7 +190,7 @@ function BlockedNotice({ channel }: { channel: Channel }) {
       >
         {t("component.channelSocials.unblock")}
       </Button>
-    </div>
+    </Callout>
   )
 }
 

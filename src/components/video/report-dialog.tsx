@@ -15,6 +15,7 @@ import {
   XIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
+import { Callout } from "@/components/ui/callout"
 import { Chip } from "@/components/ui/chip"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -304,17 +305,10 @@ function Notice({
   children: React.ReactNode
 }) {
   return (
-    <div
-      className={cn(
-        "flex gap-3 rounded-xl border p-3 text-sm [&>svg]:mt-0.5 [&>svg]:size-4 [&>svg]:shrink-0",
-        tone === "warning"
-          ? "border-amber-500/30 bg-amber-500/10 [&>svg]:text-amber-600 dark:[&>svg]:text-amber-400"
-          : "bg-muted/50 [&>svg]:text-muted-foreground"
-      )}
-    >
+    <Callout tone={tone === "warning" ? "warning" : "muted"}>
       {icon}
       <div className="grid min-w-0 flex-1 gap-1">{children}</div>
-    </div>
+    </Callout>
   )
 }
 
