@@ -19,6 +19,7 @@ import { chatEmbedUrl, extensionDetected } from "@/lib/tlclient/relay"
 import type { ChatRelay } from "@/lib/tlclient/session"
 import { chatRegistry, type RelayStatus } from "./chat-registry"
 import type { Destination } from "./helpers"
+import { StatusDot } from "@/components/ui/status-dot"
 
 type ChatDestination = Extract<Destination, { kind: "chat" }>
 
@@ -137,30 +138,24 @@ function ChatTab({
       aria-selected={selected}
       onClick={onSelect}
       className={cn(
-        "flex max-w-40 min-w-0 shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-xs outline-none hover:bg-muted focus-ring-sm",
+        "flex max-w-40 min-w-0 shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-xs focus-ring-sm outline-none hover:bg-muted",
         selected && "bg-muted font-medium",
         off && "opacity-50"
       )}
     >
       <Icon className="size-3.5 shrink-0" />
       <span className="truncate">{chat.label}</span>
-      <StatusDot status={status} />
+      <RelayStatusDot status={status} />
     </button>
   )
 }
 
-export function StatusDot({ status }: { status: RelayStatus }) {
+export function RelayStatusDot({ status }: { status: RelayStatus }) {
   return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        "size-1.5 shrink-0 rounded-full",
-        status === "ready"
-          ? "bg-emerald-500"
-          : status === "connecting"
-            ? "animate-pulse bg-amber-500"
-            : "bg-muted-foreground/40"
-      )}
+    <StatusDot
+      tone={
+        status === "ready" ? "ok" : status === "connecting" ? "warn" : "idle"
+      }
     />
   )
 }

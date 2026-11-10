@@ -9,6 +9,7 @@ import {
   TrashIcon,
   WarningIcon,
 } from "@/components/icons"
+import { StatusDot } from "@/components/ui/status-dot"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useT } from "@/lib/i18n"
@@ -106,18 +107,15 @@ export function TlFeed({
       <header className="flex shrink-0 items-center gap-2 border-b px-3 py-1.5 text-xs">
         <span className="font-medium">{t("tlClient.feed.title")}</span>
         <span className="flex items-center gap-1.5 text-muted-foreground">
-          <span
-            aria-hidden="true"
-            className={cn(
-              "size-2 rounded-full",
-              state.tone === "ok"
-                ? "bg-emerald-500"
-                : state.tone === "warn"
-                  ? "animate-pulse bg-amber-500"
-                  : state.tone === "error"
-                    ? "bg-destructive"
-                    : "bg-muted-foreground/40"
-            )}
+          <StatusDot
+            size="md"
+            tone={
+              state.tone === "ok" ||
+              state.tone === "warn" ||
+              state.tone === "error"
+                ? state.tone
+                : "idle"
+            }
           />
           {state.label}
         </span>

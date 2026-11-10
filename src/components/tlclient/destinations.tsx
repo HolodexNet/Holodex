@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { cn } from "cn"
+import { StatusDot } from "@/components/ui/status-dot"
 import { Chip as UiChip } from "@/components/ui/chip"
 
 import {
@@ -10,7 +10,11 @@ import {
 } from "@/components/icons"
 import { useT } from "@/lib/i18n"
 import type { DeliveryState, OwnLine } from "@/lib/tlclient/lines"
-import { StatusDot, useExtensionDetected, useRelayStatus } from "./chat-column"
+import {
+  RelayStatusDot,
+  useExtensionDetected,
+  useRelayStatus,
+} from "./chat-column"
 import type { Destination } from "./helpers"
 
 const keepFocus = (event: React.MouseEvent) => event.preventDefault()
@@ -128,18 +132,16 @@ function RoomChip({
       <TldexIcon className="size-3.5 shrink-0" />
       <span className="truncate">{destination.label}</span>
       {!off && (
-        <span
-          aria-hidden="true"
-          className={cn(
-            "size-1.5 shrink-0 rounded-full",
+        <StatusDot
+          tone={
             state === "failed"
-              ? "bg-destructive"
+              ? "error"
               : state === "sending"
-                ? "animate-pulse bg-amber-500"
+                ? "warn"
                 : state === "sent"
-                  ? "bg-emerald-500"
-                  : "bg-muted-foreground/40"
-          )}
+                  ? "ok"
+                  : "idle"
+          }
         />
       )}
     </Chip>
@@ -186,7 +188,7 @@ function ChatChip({
       <span className="truncate">{destination.label}</span>
       {!off &&
         (detected ? (
-          <StatusDot status={status} />
+          <RelayStatusDot status={status} />
         ) : (
           <WarningIcon className="size-3 shrink-0 text-amber-500" />
         ))}
