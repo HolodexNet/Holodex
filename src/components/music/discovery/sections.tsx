@@ -1,6 +1,7 @@
 import { useRef } from "react"
 import { Link } from "react-router"
 import { cn } from "cn"
+import { musicTextLinkClass } from "@/components/music/shared"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import {
   BroadcastIcon,
@@ -120,10 +121,7 @@ export function PlaylistCards({
   )
   if (!loading && !visible.length)
     return seeAll ? (
-      <Link
-        to={seeAll}
-        className="inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
-      >
+      <Link to={seeAll} className={musicTextLinkClass}>
         Explore {title.toLowerCase()}
         <CaretRightIcon className="size-4" />
       </Link>
@@ -139,10 +137,7 @@ export function PlaylistCards({
     <section className="min-w-0 space-y-5" aria-busy={loading}>
       <MusicSectionHeading title={title} description={description}>
         {seeAll && (
-          <Link
-            className="inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
-            to={seeAll}
-          >
+          <Link className={musicTextLinkClass} to={seeAll}>
             See all
             <CaretRightIcon className="size-3.5" />
           </Link>

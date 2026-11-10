@@ -6,6 +6,7 @@ import {
   DiscoverySections,
   PlaylistCards,
 } from "@/components/music/discovery/sections"
+import { MusicSignInBanner } from "@/components/music/shared"
 import { Button } from "@/components/ui/button"
 import { SongList, SongListSkeleton } from "@/components/music/song-list"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -204,23 +205,12 @@ function FavoriteDiscoveryStatus({
 function FavoritesSignIn() {
   return (
     <div className="space-y-9 max-md:space-y-7">
-      <div className="relative flex min-h-72.5 items-center justify-between gap-9 overflow-hidden rounded-2xl border border-border bg-[color-mix(in_oklch,var(--complement-soft)_13%,var(--card))] p-[clamp(24px,4vw,48px)] max-md:min-h-70 max-md:p-6.5">
-        <div className="max-md:relative max-md:z-1">
-          <h2 className="text-[clamp(24px,3vw,36px)] leading-[1.2] font-bold tracking-tighter">
-            Make yourself at home.
-          </h2>
-          <p className="mt-3 mb-6 max-w-97.5 text-[13px] leading-[1.8] text-muted-foreground">
-            Sign in with your Holodex account to bring your favorite channels
-            into the listening room.
-          </p>
-          <Button nativeButton={false} render={<Link to="/login" />}>
-            Sign in to Holodex
-          </Button>
-        </div>
-        <div className="mr-6 w-55 shrink-0 rotate-[9deg] max-md:pointer-events-none max-md:absolute max-md:-right-28.75 max-md:-bottom-7.5 max-md:w-62.5 max-md:opacity-15">
-          <MusicArtwork title="Your favorites" seed="favorites" radio />
-        </div>
-      </div>
+      <MusicSignInBanner
+        title="Make yourself at home."
+        description="Sign in with your Holodex account to bring your favorite channels into the listening room."
+        action="Sign in to Holodex"
+        art={<MusicArtwork title="Your favorites" seed="favorites" radio />}
+      />
     </div>
   )
 }

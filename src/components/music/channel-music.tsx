@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { cn } from "cn"
+import { musicTextLinkClass } from "@/components/music/shared"
 import { ChannelAvatar } from "@/components/common/channel-avatar"
 import { ErrorMessage, StateMessage } from "@/components/common/state-message"
 import {
@@ -231,14 +232,14 @@ function ChannelMusicOverview({ channel }: { channel: Channel }) {
             <div className="music-channel-catalog-links">
               <Link
                 to={search}
-                className="music-text-link inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
+                className={cn("music-text-link", musicTextLinkClass)}
               >
                 <MagnifyingGlassIcon className="size-4" />
                 Search songs
               </Link>
               <Link
                 to={`${base}?songs=all`}
-                className="music-text-link inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
+                className={cn("music-text-link", musicTextLinkClass)}
               >
                 <ListBulletsIcon className="size-4" />
                 See all songs
@@ -384,7 +385,7 @@ function ChannelSongs({ channel }: { channel: Channel }) {
     <section className="music-channel-catalog space-y-5">
       <Link
         to={`/channel/${encodeURIComponent(channel.id)}/music`}
-        className="inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
+        className={musicTextLinkClass}
       >
         <CaretLeftIcon className="size-4" />
         Back to music overview
@@ -398,7 +399,7 @@ function ChannelSongs({ channel }: { channel: Channel }) {
         }
       >
         <Link
-          className="inline-flex items-center gap-1.75 text-[12px] font-semibold text-muted-foreground transition-[color] duration-200 ease-[ease] hover:text-brand"
+          className={musicTextLinkClass}
           to={`/music/search?${new URLSearchParams({ channelId: channel.id })}`}
         >
           <MagnifyingGlassIcon className="size-4" />

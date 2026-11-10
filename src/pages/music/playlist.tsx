@@ -15,6 +15,11 @@ import { PauseIcon, ShuffleIcon } from "@/components/music/player/icons"
 import { MusicArtwork } from "@/components/music/artwork"
 import { AddToQueueButton } from "@/components/music/hero"
 import { MusicDetailSkeleton } from "@/components/music/skeletons"
+import {
+  musicActionBarClass,
+  musicDetailCoverClass,
+  musicDetailHeaderClass,
+} from "@/components/music/shared"
 import { formatMusicPlaylist } from "@/lib/musicdex/format"
 import { useSettings } from "@/stores/settings"
 import { SongList } from "@/components/music/song-list"
@@ -354,8 +359,8 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
           </button>
         </p>
       )}
-      <header className="relative isolate flex items-center gap-8 overflow-hidden rounded-[20px] bg-[color-mix(in_oklch,var(--complement-soft)_20%,var(--card))] p-8 max-md:block max-md:p-6">
-        <div className="w-[clamp(160px,20vw,230px)] shrink-0 rounded-[12px] shadow-[0_12px_30px_#0003] max-md:mx-auto max-md:mb-6.25 max-md:w-42.5">
+      <header className={musicDetailHeaderClass}>
+        <div className={musicDetailCoverClass}>
           <MusicArtwork
             src={formatted.image}
             title={title}
@@ -404,7 +409,7 @@ export function MusicPlaylistDetail({ radio = false }: { radio?: boolean }) {
         />
       ) : (
         <>
-          <div className="flex flex-wrap items-center gap-2.5 border-b border-border pt-1 pb-4">
+          <div className={musicActionBarClass}>
             <Button
               className="h-11 px-6 shadow-[0_4px_16px_color-mix(in_oklch,var(--primary)_16%,transparent)]"
               disabled={!songs.length}
