@@ -278,7 +278,7 @@ export default function CrewCardPage() {
                   /^#[0-9a-f]{6}$/i.test(draft.color) ? draft.color : "#808080"
                 }
                 onChange={(event) => set({ color: event.target.value })}
-                className="size-9 shrink-0 cursor-pointer rounded-full border border-input bg-transparent p-1 [&::-moz-color-swatch]:rounded-full [&::-moz-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch-wrapper]:p-0"
+                className="color-swatch-input"
               />
               <Input
                 id="crew-color"

@@ -194,10 +194,7 @@ function ColorPicker({
         value={hex.slice(0, 7)}
         aria-label={t("views.settings.colorPicker", { color: label })}
         onChange={(event) => choose(event.target.value + hex.slice(7))}
-        className={cn(
-          "size-9 cursor-pointer rounded-full border border-input bg-transparent p-1 [&::-moz-color-swatch]:rounded-full [&::-moz-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch-wrapper]:p-0",
-          selected && "ring-selected"
-        )}
+        className={cn("color-swatch-input", selected && "ring-selected")}
       />
       <Input
         id={id}

@@ -360,3 +360,8 @@
     @apply bg-brand/10 ring-2 ring-brand;
   }
 }
+
+/* Native color input restyled as a round swatch. */
+@utility color-swatch-input {
+  @apply size-9 shrink-0 cursor-pointer rounded-full border border-input bg-transparent p-1 [&::-moz-color-swatch]:rounded-full [&::-moz-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch-wrapper]:p-0;
+}
