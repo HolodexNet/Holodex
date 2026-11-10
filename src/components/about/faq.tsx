@@ -2,7 +2,6 @@ import type { ReactNode } from "react"
 import { toast } from "sonner"
 
 import {
-  CaretDownIcon,
   DotsThreeVerticalIcon,
   ExportIcon,
   FilmStripIcon,
@@ -22,6 +21,10 @@ import {
   withSlot,
 } from "./shared"
 import { cn } from "cn"
+import {
+  DisclosureChevron,
+  DisclosureSummary,
+} from "@/components/ui/disclosure"
 import { cardVariants } from "@/components/ui/card"
 
 /**
@@ -82,13 +85,10 @@ function Question({ item }: { item: Item }) {
         id={`faq-${item.id}`}
         className="peer group/faq scroll-mt-[calc(var(--header-height)+env(safe-area-inset-top,0px)+1.5rem)]"
       >
-        <summary className="flex cursor-pointer list-none items-start gap-3 rounded-lg py-4 pr-10 font-semibold focus-ring outline-none select-none [&::-webkit-details-marker]:hidden">
+        <DisclosureSummary className="items-start rounded-lg py-4 pr-10">
           <span className="flex-1 text-pretty">{item.question}</span>
-          <CaretDownIcon
-            aria-hidden="true"
-            className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-open/faq:rotate-180 motion-reduce:transition-none"
-          />
-        </summary>
+          <DisclosureChevron className="mt-1" />
+        </DisclosureSummary>
         <div className="pr-2 pb-5 text-sm leading-relaxed text-pretty text-muted-foreground [&_li]:mt-1.5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p+p]:mt-2 [&_ul]:list-disc [&_ul]:pl-5">
           {item.answer}
         </div>

@@ -17,6 +17,7 @@ import {
   SunIcon,
   WarningIcon,
 } from "@/components/icons"
+import { DisclosureSummary } from "@/components/ui/disclosure"
 import { Button } from "@/components/ui/button"
 import { Chip } from "@/components/ui/chip"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -321,7 +322,7 @@ function Disclosure({
 }) {
   return (
     <details open={defaultOpen} className={cn(!nested && "py-1")}>
-      <summary className="flex cursor-pointer list-none items-center gap-2 rounded-lg py-2.5 focus-ring outline-none [&::-webkit-details-marker]:hidden">
+      <DisclosureSummary className="items-center gap-2 rounded-lg py-2.5 font-normal">
         <CaretRightIcon className="size-3.5 shrink-0 text-muted-foreground transition-transform [[open]>summary>&]:rotate-90" />
         <span className="min-w-0 flex-1">
           <span
@@ -343,7 +344,7 @@ function Disclosure({
             {hint}
           </span>
         )}
-      </summary>
+      </DisclosureSummary>
       <div className={cn(nested ? "ml-1.5 border-l pl-4" : "pb-2")}>
         {children}
       </div>

@@ -1,6 +1,10 @@
 import type { ReactNode } from "react"
 
-import { CaretDownIcon, ShieldCheckIcon } from "@/components/icons"
+import { ShieldCheckIcon } from "@/components/icons"
+import {
+  DisclosureChevron,
+  DisclosureSummary,
+} from "@/components/ui/disclosure"
 import { useT } from "@/lib/i18n"
 import { useResolvedMode } from "@/lib/theme/use-theme"
 import { AboutSection, ExternalLink, textLink, withSlot } from "./shared"
@@ -192,14 +196,11 @@ export function FinePrint() {
           "group/privacy mt-6 scroll-mt-[calc(var(--header-height)+env(safe-area-inset-top,0px)+1.5rem)]"
         )}
       >
-        <summary className="flex cursor-pointer list-none items-center gap-3 rounded-2xl px-5 py-4 font-semibold focus-ring outline-none select-none [&::-webkit-details-marker]:hidden">
+        <DisclosureSummary className="items-center rounded-2xl px-5 py-4">
           <ShieldCheckIcon className="size-5 text-brand" aria-hidden="true" />
           <span className="flex-1">{t("about.privacyPolicy")}</span>
-          <CaretDownIcon
-            aria-hidden="true"
-            className="size-4 text-muted-foreground transition-transform duration-200 group-open/privacy:rotate-180 motion-reduce:transition-none"
-          />
-        </summary>
+          <DisclosureChevron />
+        </DisclosureSummary>
         <div className="border-t px-5 py-5">
           <PrivacyPolicy />
         </div>
