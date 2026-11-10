@@ -15,6 +15,7 @@ import {
   XIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
+import { Chip } from "@/components/ui/chip"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Combobox,
@@ -673,11 +674,11 @@ function ChannelChip({
   onAction: () => void
 }) {
   return (
-    <li
-      className={cn(
-        "flex h-8 items-center gap-1.5 rounded-full border bg-background pr-1 pl-1 text-sm",
-        struck && "border-destructive/40 bg-destructive/5"
-      )}
+    <Chip
+      render={<li />}
+      avatar
+      tone={struck ? "danger" : "outline"}
+      className="pr-1"
     >
       <ChannelAvatar
         channel={channel}
@@ -701,7 +702,7 @@ function ChannelChip({
       >
         {actionIcon ?? <XIcon />}
       </Button>
-    </li>
+    </Chip>
   )
 }
 

@@ -1,5 +1,6 @@
 import { useMemo } from "react"
 import { cn } from "cn"
+import { Chip as UiChip } from "@/components/ui/chip"
 
 import {
   LogoTwitchIcon,
@@ -84,21 +85,19 @@ function Chip({
   children: React.ReactNode
 }) {
   return (
-    <button
-      type="button"
+    <UiChip
+      render={<button type="button" />}
+      size="sm"
+      shape="rounded"
+      tone={off ? "off" : "secondary"}
       aria-pressed={!off}
       title={title}
       onMouseDown={keepFocus}
       onClick={onClick}
-      className={cn(
-        "flex h-6 max-w-48 min-w-0 items-center gap-1.5 rounded-md border px-2 text-xs transition-colors outline-none focus-ring-sm",
-        off
-          ? "border-dashed text-muted-foreground line-through decoration-muted-foreground/50 hover:bg-muted/50"
-          : "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
-      )}
+      className="max-w-48"
     >
       {children}
-    </button>
+    </UiChip>
   )
 }
 

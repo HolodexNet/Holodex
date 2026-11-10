@@ -12,6 +12,7 @@ import {
   XIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
+import { Chip } from "@/components/ui/chip"
 import { Spinner } from "@/components/ui/spinner"
 import { useDebounced } from "@/hooks/use-debounced"
 import { api } from "@/lib/api"
@@ -195,23 +196,24 @@ export function MentionEditor({
         </div>
       ) : (
         <ul className="flex flex-wrap gap-1.5">
-          <li className="flex h-8 items-center gap-1.5 rounded-full bg-muted pr-3 pl-1 text-sm">
+          <Chip render={<li />} tone="muted" avatar>
             <ChannelAvatar channel={video.channel} size={24} />
             <span className="max-w-48 truncate">{label(video.channel)}</span>
             <span className="text-xs text-muted-foreground">
               {t("videoEdit.mentions.host")}
             </span>
-          </li>
+          </Chip>
           {mentions.data?.map((channel) => {
             const removing =
               remove.isPending && remove.variables?.id === channel.id
             const blocked =
               refused.has(channel.id) && !can(user, "mention.remove-any")
             return (
-              <li
+              <Chip
                 key={channel.id}
+                render={<li />}
+                avatar
                 className={cn(
-                  "flex h-8 items-center gap-1.5 rounded-full border bg-background pl-1 text-sm",
                   blocked ? "pr-3" : "pr-1",
                   removing && "opacity-50"
                 )}
@@ -241,7 +243,7 @@ export function MentionEditor({
                     </Button>
                   )
                 )}
-              </li>
+              </Chip>
             )
           })}
         </ul>

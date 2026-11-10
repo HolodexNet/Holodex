@@ -18,6 +18,7 @@ import {
   WarningIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
+import { Chip } from "@/components/ui/chip"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
@@ -279,7 +280,7 @@ function Swatch({
       aria-label={label}
       aria-pressed={selected}
       className={cn(
-        "flex size-8 shrink-0 items-center justify-center rounded-full transition-transform outline-none hover:scale-110 focus-ring",
+        "flex size-8 shrink-0 items-center justify-center rounded-full focus-ring transition-transform outline-none hover:scale-110",
         selected && "ring-2 ring-foreground ring-offset-2 ring-offset-card"
       )}
       style={{ backgroundColor: color }}
@@ -314,7 +315,7 @@ function Disclosure({
 }) {
   return (
     <details open={defaultOpen} className={cn(!nested && "py-1")}>
-      <summary className="flex cursor-pointer list-none items-center gap-2 rounded-lg py-2.5 outline-none focus-ring [&::-webkit-details-marker]:hidden">
+      <summary className="flex cursor-pointer list-none items-center gap-2 rounded-lg py-2.5 focus-ring outline-none [&::-webkit-details-marker]:hidden">
         <CaretRightIcon className="size-3.5 shrink-0 text-muted-foreground transition-transform [[open]>summary>&]:rotate-90" />
         <span className="min-w-0 flex-1">
           <span
@@ -413,13 +414,11 @@ function SecondaryColorPicker() {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center gap-2">
-        <button
-          type="button"
+        <Chip
+          render={<button type="button" />}
+          avatar
           aria-pressed={auto}
-          className={cn(
-            "flex h-8 items-center gap-2 rounded-full border py-1 ps-1 pe-3 text-sm outline-none focus-ring",
-            auto && "ring-2 ring-foreground ring-offset-2 ring-offset-card"
-          )}
+          className={cn("gap-2", auto && "ring-selected")}
           onClick={() => update({ secondary: undefined })}
         >
           <span
@@ -428,7 +427,7 @@ function SecondaryColorPicker() {
             style={{ backgroundColor: autoHex }}
           />
           {t("views.settings.secondaryAuto")}
-        </button>
+        </Chip>
         {presets.map((preset) => {
           const hex = complementHex(preset.hue, mode)
           return (

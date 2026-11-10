@@ -312,3 +312,8 @@
 @utility focus-ring-sm {
   @apply outline-none focus-visible:ring-2 focus-visible:ring-ring;
 }
+
+/* Selected swatch / option marker. */
+@utility ring-selected {
+  @apply ring-2 ring-foreground ring-offset-2 ring-offset-card;
+}

@@ -10,6 +10,7 @@ import {
   UsersThreeIcon,
 } from "@/components/icons"
 import { Button } from "@/components/ui/button"
+import { Chip } from "@/components/ui/chip"
 import {
   Dialog,
   DialogContent,
@@ -131,8 +132,11 @@ function SpeakerChip({
 }) {
   const key = slotKey(slot)
   return (
-    <button
-      type="button"
+    <Chip
+      render={<button type="button" />}
+      size="sm"
+      avatar
+      tone={active ? "active" : "card"}
       role="radio"
       aria-checked={active}
       aria-keyshortcuts={`Alt+${key}`}
@@ -140,10 +144,7 @@ function SpeakerChip({
       onMouseDown={keepFocus}
       onClick={() => onSelect(slot)}
       className={cn(
-        "flex h-6 max-w-40 shrink-0 items-center gap-1.5 rounded-full border pr-2.5 pl-1 text-xs whitespace-nowrap transition-colors outline-none focus-ring-sm",
-        active
-          ? "border-primary bg-primary text-primary-foreground"
-          : "border-border bg-card hover:bg-muted",
+        "max-w-40 shrink-0 whitespace-nowrap",
         !active && muted && "text-muted-foreground"
       )}
     >
@@ -156,7 +157,7 @@ function SpeakerChip({
         {key}
       </span>
       <span className="truncate">{label}</span>
-    </button>
+    </Chip>
   )
 }
 
