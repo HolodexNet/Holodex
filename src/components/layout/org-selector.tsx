@@ -128,15 +128,20 @@ export function OrgSelector({
               aria-label={t("component.orgSelector.change", [currentOrg.name])}
               title={t("component.orgSelector.change", [currentOrg.name])}
               className={cn(
-                "group flex h-9 min-w-0 items-center gap-2 rounded-lg border border-border bg-background/40 px-3 text-sm font-medium outline-none hover:bg-foreground/5 focus-ring aria-expanded:bg-foreground/5",
+                "group flex h-9 min-w-0 items-center rounded-lg border border-border bg-background/40 text-sm font-medium outline-none hover:bg-foreground/5 focus-ring aria-expanded:bg-foreground/5",
+                // In the sidebar, match menu rows: 24px icon column at the
+                // same inset (pl-4 minus the 1px border) and gap-3.
                 sidebar
-                  ? "w-full group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
-                  : "max-w-44"
+                  ? "w-full gap-3 pr-3 pl-[15px] group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
+                  : "max-w-44 gap-2 px-3"
               )}
             />
           }
         >
-          <OrgIcon org={selected} className="size-5" />
+          <OrgIcon
+            org={selected}
+            className={sidebar ? "size-6 rounded-md text-xs" : "size-5"}
+          />
           <span
             className={cn(
               "flex-1 truncate text-left",

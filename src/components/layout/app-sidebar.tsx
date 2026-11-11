@@ -16,8 +16,8 @@ import {
   KeyboardIcon,
   LogoTwitterIcon,
   NotePencilIcon,
-  PlaylistIcon,
   QuestionIcon,
+  QueueIcon,
   RobotIcon,
   SquaresFourIcon,
   UsersThreeFillIcon,
@@ -89,7 +89,6 @@ function NavList({ items }: { items: NavItem[] }) {
             <SidebarMenuButton
               isActive={active}
               tooltip={item.label}
-              className={cn(active && "text-brand!")}
               render={
                 item.external ? (
                   <a href={item.to} target="_blank" rel="noopener noreferrer" />
@@ -214,7 +213,7 @@ function FavoritesSection() {
       </Button>
     </div>
   ) : (
-    <SidebarMenu className="max-h-[30vh] overflow-y-auto">
+    <SidebarMenu className="max-h-[30vh] overflow-y-auto overflow-x-hidden">
       {visible.map(({ channel, video, host }) => {
         const isLive = video?.status === "live"
         const name = channelName(channel, preferEnglish)
@@ -224,7 +223,7 @@ function FavoritesSection() {
             <SidebarMenuButton
               isActive={location.pathname.startsWith(to)}
               tooltip={name}
-              className="group-data-[collapsible=icon]:p-0.5!"
+              className="group-data-[collapsible=icon]:pl-0.5!"
               render={<Link to={to} onClick={() => setOpenMobile(false)} />}
             >
               <ChannelAvatar
@@ -257,7 +256,7 @@ function FavoritesSection() {
             className="text-muted-foreground"
             tooltip={
               expanded
-                ? t("views.favorites.close")
+                ? t("component.description.showLess")
                 : t("views.favorites.showall")
             }
             onClick={() => setExpanded(!expanded)}
@@ -267,7 +266,7 @@ function FavoritesSection() {
             />
             <span>
               {expanded
-                ? t("views.favorites.close")
+                ? t("component.description.showLess")
                 : t("views.favorites.showall")}
             </span>
           </SidebarMenuButton>
@@ -309,7 +308,7 @@ export function AppSidebar() {
     {
       label: t("component.mainNav.playlist"),
       to: "/playlists",
-      icon: <PlaylistIcon />,
+      icon: <QueueIcon />,
     },
   ]
   const site: NavItem[] = [
@@ -346,9 +345,8 @@ export function AppSidebar() {
         <OrgSidebar />
         <SidebarSeparator className="mx-0" />
         <SidebarGroup>
-          <SidebarGroupContent>
+          <SidebarGroupContent className="flex flex-col gap-2">
             <NavList items={favoritesNav} />
-            <div className="py-1"></div>
             <FavoritesSection />
           </SidebarGroupContent>
         </SidebarGroup>
@@ -362,19 +360,12 @@ export function AppSidebar() {
         </SidebarGroup>
         <SidebarSeparator className="mx-0" />
         <MusicSidebar />
-        {/* <SidebarSeparator className="mx-0" />
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <NavList items={apps} />
-          </SidebarGroupContent>
-        </SidebarGroup> */}
         <SidebarSeparator className="mx-0" />
         <SidebarGroup>
-          <SidebarGroupContent>
+          <SidebarGroupContent className="flex flex-col gap-1">
             <NavList items={site} />
-            <div className="mt-1" />
             {showTools && <NavList items={tools} />}
-            <SidebarMenu className="mt-1">
+            <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton
                   size="sm"
@@ -403,7 +394,6 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarSeparator className="mx-0" />
       </SidebarContent>
 
       {SidebarBottoms(lang)}

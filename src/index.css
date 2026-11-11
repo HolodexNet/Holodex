@@ -207,18 +207,6 @@
   background: var(--background);
 }
 
-.home-shell [data-slot="sidebar-menu-button"] {
-  border-radius: 0.5rem;
-}
-
-.home-shell [data-collapsible="icon"] [data-slot="sidebar-menu-button"] {
-  margin-inline: auto;
-}
-
-.home-shell [data-collapsible="icon"] [data-slot="sidebar-group"] {
-  padding-block: 1rem;
-}
-
 /* Only span two tracks when the feed actually has room for two columns. */
 .video-feed[data-view-mode="grid"] {
   container-type: inline-size;

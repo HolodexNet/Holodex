@@ -45,7 +45,7 @@ export function AppShell() {
       style={
         {
           "--sidebar-width": "15rem",
-          "--sidebar-width-icon": "4rem",
+          "--sidebar-width-icon": "3rem",
         } as CSSProperties
       }
     >

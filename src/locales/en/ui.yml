@@ -92,7 +92,7 @@ component:
     about: About
     library: Library
     settings: Settings
-    login: Login
+    login: Log in
     logout: Logout
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Account Settings
@@ -133,8 +133,8 @@ component:
   video:
     comment: {}
   description:
-    showLess: Show Less
-    showMore: Show More
+    showLess: Show less
+    showMore: Show more
   watch:
     streamingFor: Streaming for {0}
     nextUpInMugen: Next Up
@@ -301,7 +301,7 @@ views:
       Subber: Subber
       Favorites: Favorites
       Blocked: Blocked
-    favoritesAreEmpty: You have no favorites!
+    favoritesAreEmpty: No favorites yet
     blockedAreEmpty: You have no blocked channels.
   home:
     collateCollabs: Group collabs
@@ -554,7 +554,7 @@ views:
     check_about_page: Visit the About page to see new changes
     nowSupportsMultiOrg: >-
       Tip: You can change the organization here!
-    loginCallToAction: Login to set your own favorites.
+    loginCallToAction: Log in to set your own favorites
   about:
     add_my_channel: Request a channel
   watch:
@@ -610,9 +610,9 @@ views:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on
       this page.
-    manageFavorites: Manage Favorites
+    manageFavorites: Manage favorites
     close: Close
-    showall: Show All
+    showall: Show all
   editor:
     needlogin: You'll need to login to make edits to Holodex video and song metadata.
     changeTopic:
@@ -1744,7 +1744,7 @@ musicdex:
     searchMusic: Search music
     likedSongs: Liked songs
     radios: Radios
-    playlists: Musicdex Playlists
+    playlists: Musicdex playlists
   hero:
     title: 'Music<span class="text-brand">dex</span> is all about <span class="text-brand">{subject}</span>'
     yourOshis: your oshis

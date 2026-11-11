@@ -31,3 +31,4 @@ pnpm-debug.log*
 
 # rollup-bundle-visualizer output
 stats.html
+.claude/skills/unslop

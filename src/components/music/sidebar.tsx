@@ -1,8 +1,11 @@
+import type { ReactNode } from "react"
 import { Link, useLocation } from "react-router"
 import {
+  HeartFillIcon,
   HeartIcon,
   MagnifyingGlassIcon,
   MusicNotesFillIcon,
+  MusicNotesIcon,
   PlaylistIcon,
   RadioIcon,
   StarIcon,
@@ -102,8 +105,18 @@ export function MusicSidebar() {
   const location = useLocation()
   const { setOpenMobile } = useSidebar()
   const mode = useSettings((state) => state.musicSidebarMode)
-  const nav = [
-    { to: "/#music", label: "Musicdex", icon: <MusicNotesFillIcon /> },
+  const nav: {
+    to: string
+    label: string
+    icon: ReactNode
+    activeIcon?: ReactNode
+  }[] = [
+    {
+      to: "/#music",
+      label: "Musicdex",
+      icon: <MusicNotesIcon />,
+      activeIcon: <MusicNotesFillIcon />,
+    },
     {
       to: "/music/search",
       label: t("musicdex.sidebar.searchMusic"),
@@ -113,6 +126,7 @@ export function MusicSidebar() {
       to: "/music/liked",
       label: t("musicdex.sidebar.likedSongs"),
       icon: <HeartIcon />,
+      activeIcon: <HeartFillIcon />,
     },
     { to: "/#radio", label: t("musicdex.sidebar.radios"), icon: <RadioIcon /> },
     {
@@ -145,6 +159,9 @@ export function MusicSidebar() {
     return location.pathname === to
   }
 
+  const inMusic =
+    nav.some((item) => isActive(item.to)) || isMusicLocation(location)
+
   return (
     <SidebarGroup>
       <SidebarGroupContent>
@@ -154,16 +171,10 @@ export function MusicSidebar() {
               <DropdownMenu>
                 <DropdownMenuTrigger
                   render={
-                    <SidebarMenuButton
-                      tooltip="Musicdex"
-                      isActive={
-                        nav.some((item) => isActive(item.to)) ||
-                        isMusicLocation(location)
-                      }
-                    />
+                    <SidebarMenuButton tooltip="Musicdex" isActive={inMusic} />
                   }
                 >
-                  <MusicNotesFillIcon />
+                  {inMusic ? <MusicNotesFillIcon /> : <MusicNotesIcon />}
                   <span>Musicdex</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
@@ -193,14 +204,14 @@ export function MusicSidebar() {
               </DropdownMenu>
             </SidebarMenuItem>
           ) : (
-            nav.map(({ to, label, icon }) => (
+            nav.map(({ to, label, icon, activeIcon }) => (
               <SidebarMenuItem key={to}>
                 <SidebarMenuButton
                   tooltip={label}
                   isActive={isActive(to)}
                   render={<Link to={to} onClick={() => setOpenMobile(false)} />}
                 >
-                  {icon}
+                  {isActive(to) ? (activeIcon ?? icon) : icon}
                   <span>{label}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>

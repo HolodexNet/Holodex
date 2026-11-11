@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router"
-import { cn } from "cn"
 
 import { StarIcon } from "@/components/icons"
 import {
@@ -47,12 +46,12 @@ export function OrgSidebar() {
 
   return (
     <>
-      <SidebarHeader className="pb-1">
+      <SidebarHeader>
         <OrgSelector sidebar onSelect={select} />
       </SidebarHeader>
-      <SidebarGroup className="pt-1">
+      <SidebarGroup className="pt-2">
         <SidebarGroupContent>
-          <SidebarMenu className="mt-1">
+          <SidebarMenu>
             {favorites.map((favorite) => {
               const org =
                 orgs.data?.find((org) => org.name === favorite.name) ?? favorite
@@ -64,10 +63,7 @@ export function OrgSidebar() {
                     isActive={active}
                     aria-current={active ? "page" : undefined}
                     tooltip={org.name}
-                    className={cn(
-                      "h-10 gap-2.5 group-data-[collapsible=icon]:p-1!",
-                      active && "bg-primary/10! text-brand!"
-                    )}
+                    className="group-data-[collapsible=icon]:pl-1!"
                     render={
                       <Link
                         to={to}
