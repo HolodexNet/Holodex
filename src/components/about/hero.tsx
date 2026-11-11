@@ -9,6 +9,7 @@ import {
   LogoDiscordIcon,
   QuestionIcon,
   SparkleIcon,
+  UserPlusIcon,
 } from "@/components/icons"
 import { OrgIcon } from "@/components/layout/org-selector"
 import { Button } from "@/components/ui/button"
@@ -303,6 +304,16 @@ export function AboutHero() {
           >
             <QuestionIcon data-icon="inline-start" />
             {t("about.nav.faq")}
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            nativeButton={false}
+            className="bg-background/60 backdrop-blur"
+            render={<Link to="/addChannel" />}
+          >
+            <UserPlusIcon data-icon="inline-start" />
+            {t("views.about.add_my_channel")}
           </Button>
         </div>
       </div>
