@@ -170,6 +170,7 @@ export function MusicSidebar() {
             <SidebarMenuItem>
               <DropdownMenu>
                 <DropdownMenuTrigger
+                  openOnHover
                   render={
                     <SidebarMenuButton tooltip="Musicdex" isActive={inMusic} />
                   }
@@ -182,15 +183,11 @@ export function MusicSidebar() {
                   align="start"
                   className="w-56"
                 >
-                  <DropdownMenuGroup>
+                  <DropdownMenuGroup className={"space-y-1"}>
                     {nav.map(({ to, label, icon }) => (
                       <DropdownMenuItem
                         key={to}
-                        className={
-                          isActive(to)
-                            ? "bg-accent text-accent-foreground"
-                            : undefined
-                        }
+                        className={isActive(to) ? "bg-accent text-accent-foreground cursor-pointer" : 'cursor-pointer'}
                         render={
                           <Link to={to} onClick={() => setOpenMobile(false)} />
                         }
